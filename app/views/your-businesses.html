@@ -1,0 +1,104 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+
+
+{% block content %}
+
+
+    
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <h1 class="govuk-heading-xl">Your businesses and messages
+      <span class="govuk-caption-l">Alfred Waldron</span>
+    </h1>
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">
+        Contents
+      </h2>
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected-special">
+          <a class="govuk-tabs__tab" href="#past-day">
+            Overview
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item-special">
+          <a class="govuk-tabs__tab" href="#past-week">
+            All messages
+            <div class="unread-message">1 unread</div>
+          </a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel govuk-tabs__panel-special" id="past-day">
+        
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Business</th>
+                  <th scope="col" class="govuk-table__header">View or check</th>
+                  <th scope="col" class="govuk-table__header">Messages</th>
+                  <th scope="col" class="govuk-table__header"></th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Dairy farm</th>
+                  <td class="govuk-table__cell"><a href="">View business</a></td>
+                  <td class="govuk-table__cell"><a href="">View messages</a></td>
+                  <td class="govuk-table__cell"></td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">MCBRIDE PARTNERSHIP LTD,<p class="govuk-!-margin-bottom-0">SBI: 108364021</p></th>
+                  <td class="govuk-table__cell"><a href="business-overview">View business</a></td>
+                  <td class="govuk-table__cell"><a href="">View messages</a></td>
+                  <td class="govuk-table__cell"><div class="unread-message">1 unread</div></td>
+                </tr>
+              </tbody>
+            </table>
+    
+            <p style="text-align: right;"><strong>Page 1 of 1</strong></p>
+    
+          </div>
+        
+          <div class="govuk-grid-column-one-third">
+            <hr class="options-border">
+    
+          <div class="account-options">
+    
+    
+            <h2 class="govuk-body">Account options</h2>
+    
+            <p class="govuk-body"><a href="personal-details.html">View and amend personal details</a></p>
+    
+            <p class="govuk-body govuk-!-margin-bottom-6"><a href="">Register a business</a></p>
+    
+            <p class="govuk-body"><a href="">Create or view a query</a></p>
+            <hr>
+          </div>
+        </div>
+      </div>
+
+
+      </div>
+      <div class="govuk-tabs__panel govuk-tabs__panel-special govuk-tabs__panel--hidden" id="past-week">
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+{% endblock %}

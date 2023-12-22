@@ -1,0 +1,128 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to Your businesses</a>
+{% endblock beforeContent%}
+
+{% block content %}
+        
+    
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-9">Personal details
+      <span class="govuk-caption-l">Alfred Waldron</span>
+    </h1>
+
+
+    <p class="govuk-body govuk-!-font-size-24 govuk-!-margin-bottom-9">Check that your address, email address and phone numbers are up to date. We'll use them to contact you, so it's important they are correct.</p>
+</div>
+</div>
+
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+
+        <h2 class="govuk-heading-m">Personal details</h2>
+
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Full name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              Mr Alfred Waldron
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Date of birth
+            </dt>
+            <dd class="govuk-summary-list__value">
+              2 November 1970
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Customer reference number
+            </dt>
+            <dd class="govuk-summary-list__value">
+              1101996862
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Personal identifier
+            </dt>
+            <dd class="govuk-summary-list__value">
+              110764804
+            </dd>
+          </div>
+        </dl>
+
+
+        <p class="govuk-body"><a href="">Find out more about customer reference number</a></p>
+
+        <h2 class="govuk-heading-m">Contact details</h2>
+
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Address
+            </dt>
+            <dd class="govuk-summary-list__value">
+              Maidstone<br>Sk22 1DL
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Landline
+            </dt>
+            <dd class="govuk-summary-list__value">
+              01234484667
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Mobile
+            </dt>
+            <dd class="govuk-summary-list__value">
+              
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Email
+            </dt>
+            <dd class="govuk-summary-list__value">
+              alfredwaldronf@nordlawderflac.com.test
+            </dd>
+          </div>
+        </dl>
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Amend your details
+        </button>
+
+  
+</div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+<div class="govuk-inset-text">
+  Defra is the data controller for personal data you give to use or we hold about you. We use it in line with the Data Protection Act. For more information <a href="">visit our website</a>.
+</div>
+
+</div>
+</div>
+
+
+{% endblock %}
