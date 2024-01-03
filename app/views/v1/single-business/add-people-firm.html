@@ -1,0 +1,74 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Give people permission
+      <span class="govuk-caption-l">MCBRIDE PARTNERSHIP LTD,</span>
+    </h1>
+
+    <p class="govuk-body">You're responsible for all information provided to us in the application, either by you or someone acting for you, including its accuracy. You are liable for any reductions or financial penalties if these occur when the application is processed.</p>
+
+  </div>
+</div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <span class="govuk-caption-s">Step 1 of 3</span>
+        <h2 class="govuk-body inline">
+          Find a firm
+        </h2>
+            </div>
+      <div class="govuk-grid-column-one-half">
+        <button type="submit" class="govuk-button inline float-right" data-module="govuk-button">
+          Next
+        </button>
+    
+        <p class="govuk-body inline float-right govuk-!-margin-right-2"><a href="" class="govuk-link">Cancel</a></p>
+          </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+<hr class="overview-line">
+
+
+    <p class="govuk-body">Enter the business name or firm reference number of the firm you want to give permission to, and click 'Find'.</p>
+    
+    <p class="govuk-body">The firm reference is a number given to each firm of agents that uses the Rural Payments service. It is specific to them and made up of 10 digits. If you do not have the firm reference number of the firm you want to give permission to, as them for it or use their business name.</p>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label inline" for="event-name">
+        Find a firm
+      </label>
+      <input class="govuk-input govuk-input--width-20 govuk-!-margin-bottom-2" id="event-name" name="eventName" type="text">
+      <button type="submit" class="govuk-button govuk-!-margin-left-2 govuk-!-margin-bottom-0 govuk-!-margin-right-2" data-module="govuk-button">
+        Find 
+      </button>
+      <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+        Clear
+      </button>
+      <div id="person-hint" class="govuk-hint">
+        For example, "1234567890" or "John Smith Associates"
+      </div>
+    </div>
+
+
+    <hr class="overview-line">
+
+    <button type="submit" class="govuk-button inline float-right" data-module="govuk-button">
+      Next
+    </button>
+
+    <p class="govuk-body inline float-right govuk-!-margin-right-2"><a href="" class="govuk-link">Cancel</a></p>
+
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Give people permission
+      <span class="govuk-caption-l">MCBRIDE PARTNERSHIP LTD,</span>
+    </h1>
+
+    <p class="govuk-body">You're responsible for all information provided to us in the application, either by you or someone acting for you, including its accuracy. You are liable for any reductions or financial penalties if these occur when the application is processed.</p>
+
+    <p class="govuk-body">Find a person and select their relationship to <strong>MCBRIDE PARTNERSHIP LTD,</strong></p>
+
+    <p class="govuk-body">1. Who do you want to give permission to?</p>
+    
+    <p class="govuk-body">Enter the customer reference or personal identifier (PI) of the person you want to give permission to.</p>
+    
+    <p class="govuk-body govuk-!-margin-bottom-7"><a href="" class="govuk-link">Find out more about customer reference and PI</a></p>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="event-name">
+        Find a person
+      </label>
+      <input class="govuk-input govuk-input--width-10 govuk-!-margin-bottom-2" id="event-name" name="eventName" type="text">
+      <button type="submit" class="govuk-button govuk-!-margin-left-2 govuk-!-margin-bottom-0" data-module="govuk-button">
+        Find person
+      </button>
+      <div id="person-hint" class="govuk-hint">
+        Example, customer reference '1234567890' or personal identifier '123456789'
+      </div>
+    </div>
+
+    <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+      Cancel
+    </button>
+
+  </div>
+</div>
+
+
+{% endblock %}
