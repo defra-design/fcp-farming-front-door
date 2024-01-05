@@ -1,0 +1,103 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to your businesses and messages</a>
+{% endblock beforeContent%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Your messages
+      <span class="govuk-caption-l govuk-!-margin-bottom-6">Alfred Waldron</span>
+    </h1>
+    </div>
+
+      <div class="govuk-grid-column-one-half govuk-!-margin-bottom-5">
+      <p class="govuk-body"><a href=""><strong>View deleted messages</strong></a></p>
+    </div>
+
+    <div class="govuk-grid-column-one-half govuk-!-margin-bottom-5">
+     <fieldset class="govuk-fieldset">
+      <b class="filter-style">
+      Filter by:
+    </b>
+      <div class="filter-unread-messages">
+          <input data-ng-model="filter.unread" type="checkbox" id="unreadmessages" name="notifications" value="unread" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false">
+          <label for="unreadmessages" class="filter-label">Unread messages</label>
+      </div>
+      <div class="filter-read-messages">
+          <input data-ng-model="filter.read" type="checkbox" id="readmessages" name="notifications" value="read" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false">
+          <label for="readmessages" class="filter-label">Read messages</label>
+      </div>
+    </fieldset>
+    </div>
+
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m govuk-!-padding-left-2">Messages for Mr & Mrs NJ Houlston</h2>
+      </div>
+
+        <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">Date</h2>
+    </div>
+
+    <div class="govuk-grid-column-full">
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Message 1
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+            20 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          Message content here
+        </div>
+      </details>
+
+      <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Message 2
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+            20 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          Message content here
+        </div>
+      </details>
+
+      <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Message 3
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+            20 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          Message content here
+        </div>
+      </details>
+     
+      
+
+    </div>
+
+
+
+  </div>
+
+
+
+{% endblock %}

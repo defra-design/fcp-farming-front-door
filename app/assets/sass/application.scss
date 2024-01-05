@@ -5,6 +5,17 @@
 
 // Add extra styles here
 
+
+.govuk-button-teeny {
+  font-size: 1rem;
+}
+
+@media (min-width: 40.0625em) {
+.govuk-button-teeny {
+    font-size: 1rem;
+}
+}
+
 .govuk-width-container--wide {
   @include govuk-width-container(1400px);
 }
@@ -21,44 +32,31 @@
     border-top: 8px solid #1d70b8;
   }
   
+// Custom tabs
 
-
+.govuk-tabs__list-item-ffd {
+  background-color: #fff;
+  border-bottom: 1;
+}
 
 @media (min-width: 40.0625em) {
-.govuk-frontend-supported .govuk-tabs__panel-special {
-    margin-bottom: 0;
-    padding: 30px 20px;
-    border-top: 0;
+.govuk-frontend-supported .govuk-tabs__list-item-ffd {
+    background-color: #fff;
+}
+}
+
+@media (min-width: 40.0625em) {
+.govuk-frontend-supported .govuk-tabs__list-item--selected {
+    border-bottom: 1px solid #b1b4b6;
+}
+}
+
+@media (min-width: 40.0625em) {
+.govuk-frontend-supported .govuk-tabs__panel {
     border: none;
 }
 }
 
-@media (min-width: 40.0625em) {
-.govuk-frontend-supported .govuk-tabs__list-item--selected-special {
-  position: relative;
-  margin-top: -5px;
-  margin-bottom: -1px;
-  padding-top: 14px;
-  padding-right: 19px;
-  padding-bottom: 16px;
-  padding-left: 19px;
-  border: 1px solid #b1b4b6;
-  background-color: #ffffff;
-}
-}
-
-
-@media (min-width: 40.0625em) {
-.govuk-frontend-supported .govuk-tabs__list-item-special {
-    position: relative;
-    margin-right: 5px;
-    margin-bottom: 0;
-    margin-left: 0;
-    padding: 10px 20px;
-    float: left;
-    text-align: center;
-}
-}
 
 .unread-message {
     padding: 0 5px;
@@ -213,5 +211,279 @@
 .float-right {
   float: right;
 }
+
+// Messages dropdrown
+
+.govuk-details-message {
+  border-style: solid;
+  padding: 10px 10px 10px 20px;
+  border-top-width: thin;
+  border-left-width: thick;
+  border-bottom: none;
+  border-right: none;
+  border-color: #b1b4b6;
+}
+
+.govuk-details-message-unread {
+  border-style: solid;
+  padding: 10px 10px 10px 20px;
+  border-top-width: thin;
+  border-left-width: thick;
+  border-bottom: none;
+  border-right: none;
+  border-top-color: #b1b4b6;
+  border-left-color: #00703c;
+  background-color: #eeeeee;
+  font-weight: bold;
+}
+
+
+.govuk-details__text-message {
+  border-left: none;
+}
+
+.govuk-details__summary-message {
+  width: 100%;
+  color: #0b0c0c;
+}
+
+.govuk-details__summary-text-message {
+  text-decoration: none;
+}
+
+.govuk-details__summary-text-message2 {
+  width: 29%;
+  float: right;
+}
+
+
+// Permissions dropdown
+
+.govuk-details-permissions {
+  border-style: solid;
+  padding: 10px 10px 10px 20px;
+  border-top-width: thin;
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+  border-color: #b1b4b6;
+  margin-bottom: 5px;
+}
+
+.govuk-details__text-permissions {
+  border-left: none;
+}
+
+.govuk-details__summary-permissions {
+  width: 100%;
+}
+
+.govuk-details__summary-permissions::before {
+  top: -30px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.govuk-details__summary-text-permissions2 {
+  width: 22%;
+  float: right;
+}
+
+
+// Permissions cards
+
+.permissions-column {
+  height: 655px;
+  width: 200px;
+  text-align: center;
+  padding: 15px;
+  background: #dee0e2;
+}
+
+.permissions-column-xl {
+  height: 890px;
+  width: 200px;
+  text-align: center;
+  padding: 15px;
+  background: #dee0e2;
+}
+
+.permissions-column-short {
+  height: 330px;
+  width: 200px;
+  text-align: center;
+  padding: 15px;
+  background: #dee0e2;
+}
+
+.permissions-column-medium {
+  height: 450px;
+  width: 200px;
+  text-align: center;
+  padding: 15px;
+  background: #dee0e2;
+}
+
+
+.permissions-column-selected {
+  height: 655px;
+  width: 200px;
+  text-align: center;
+  padding: 15px;
+  background: #ffffff;
+  border: solid 0.5px;
+  border-color: #000;
+  outline: 2px solid gold;
+}
+
+.permissions-column-selected-short {
+  height: 330px;
+  width: 200px;
+  text-align: center;
+  padding: 15px;
+  background: #ffffff;
+  border: solid 0.5px;
+  border-color: #000;
+  outline: 2px solid gold;
+}
+
+.permissions-column-selected-medium {
+  height: 450px;
+  width: 200px;
+  text-align: center;
+  padding: 15px;
+  background: #ffffff;
+  border: solid 0.5px;
+  border-color: #000;
+  outline: 2px solid gold;
+}
+
+
+.permissions-column-selected-xl {
+  height: 890px;
+  width: 200px;
+  text-align: center;
+  padding: 15px;
+  background: #ffffff;
+  border: solid 0.5px;
+  border-color: #000;
+  outline: 2px solid gold;
+}
+
+.permission-select {
+  margin: 10px;
+  background: #f8f8f8;
+  padding: 9px 0 9px;
+}
+
+.permission-select-selected {
+  margin: 10px;
+  background: #90c090;
+  padding: 9px 0 9px;
+}
+
+.permission-line {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.permission-button-style {
+  border: none;
+  padding: 0;
+}
+
+@media (min-width: 40.0625em) {
+.permission-button-style {
+    margin-top: 15px;
+}
+}
+
+.permission-button-style:hover {
+  border: solid 0.5px;
+  border-color: #0b0c0c;
+  cursor: pointer;
+}
+
+.permission-label-style {
+  font-size: 19px; 
+  font-family: 'GDS Transport', arial, sans-serif;
+}
+
+.bps-width {
+  width: 66.6666666667%;
+  color: #505A5F;
+}
+
+// Message filter styles
+
+
+.filter-unread-messages {
+  border-left-color: #006435;
+  background-color: #f1f1f1;
+  border-width: 0 0 0 7px;
+  border-style: solid;
+  padding: 2px 2px 2px 10px;
+  width: 170px;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+
+.capd-form label {
+  color: #0b0c0c;
+  display: block;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.31579;
+  text-transform: none;
+}
+
+.filter-read-messages {
+  border-left-color: #ccc;
+  border-width: 0 0 0 7px;
+  border-style: solid;
+  padding: 2px 2px 2px 10px;
+  width: 170px;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+input[type='checkbox'] {
+  accent-color: #007bff;
+}
+
+input[type="radio" i] {
+  accent-color: #007bff;
+}
+
+.filter-style {
+  font-family: "GDS Transport", arial, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 40.0625em) {
+.filter-style {
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
+}
+}
+
+.filter-label {
+  font-family: "GDS Transport", arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 40.0625em) {
+  .filter-label {
+      font-size: 1.1875rem;
+      line-height: 1.3157894737;
+  }
+  }
 
 

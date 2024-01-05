@@ -4,6 +4,11 @@
 
 {% set htmlClasses = 'app-width-wide' %}
 
+
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to people and permission</a>
+{% endblock beforeContent%}
+
 {% block content %}
 
 
@@ -33,56 +38,651 @@
       </select>
     </div>
 
-    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h2 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-              Writing well for the web
-            </span>
-          </h2>
+
+
+
+
+        <details class="govuk-details govuk-details-permissions">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Business details
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+         <script>
+          function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
+          </script>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Full permissions</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message">
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+       <div class="permissions-column">
+        <p class="govuk-body">View</p>
+        <div role="button" tabindex="0" class="permission-select">
+          <input type="radio" name="business-details" class="" value="View - business">
+          <label class="permission-label-style">Select</label>
+              </div>
+          <hr class="permission-line">
+          <p class="govuk-body">View business details</p>
+          <p class="govuk-body">View people associated with the business</p>
         </div>
-        <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-          <p class="govuk-body">This is the content for Writing well for the web.</p>
-        </div>
+     </button>
+
+     <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column">
+       <p class="govuk-body">Amend</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View Business Details</p>
+         <p class="govuk-body">Amend business and correspondence contact details</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column">
+       <p class="govuk-body">Make legal changes</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View Business Details</p>
+         <p class="govuk-body">Amend controlled information, such as business name</p>
+         <p class="govuk-body">Confirm business details</p>
+         <p class="govuk-body">Amend bank account details</p>
+         <p class="govuk-body">Make young/new farmer declaration</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style">
+      <div class="permissions-column-selected">
+       <p class="govuk-body">Full permissions</p>
+       <div role="button" tabindex="0" class="permission-select-selected">
+        <input type="radio" name="" class="" value="" checked>
+        <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in Make Legal Changes Business Details</p>
+         <p class="govuk-body">Add someone to the business</p>
+         <p class="govuk-body">Give permissions on business</p>
+       </div>
+    </button>
+              
       </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h2 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
-              Writing well for specialists
-            </span>
-          </h2>
-        </div>
-        <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
-          <p class="govuk-body">This is the content for Writing well for specialists.</p>
-        </div>
+    </details>
+
+
+    <details class="govuk-details govuk-details-permissions">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Land details
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+         <script>
+          function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
+          </script>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Amend</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message">
+
+     <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-short">
+       <p class="govuk-body">No access</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-short">
+        <p class="govuk-body">View</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View land, features and covers</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style">
+      <div class="permissions-column-selected-short">
+       <p class="govuk-body">Amend</p>
+       <div role="button" tabindex="0" class="permission-select-selected">
+        <input type="radio" name="" class="" value="" checked>
+        <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View land, features and covers</p>
+         <p class="govuk-body">Amend land, features and covers</p>
+         <p class="govuk-body">Transfer land</p>
+       </div>
+    </button>
+              
       </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h2 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
-              Know your audience
-            </span>
-          </h2>
-        </div>
-        <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
-          <p class="govuk-body">This is the content for Know your audience.</p>
-        </div>
+    </details>
+
+
+
+    <details class="govuk-details govuk-details-permissions">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Entitlements
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+         <script>
+          function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
+          </script>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Amend</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message">
+
+     <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-short">
+       <p class="govuk-body">No access</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-short">
+        <p class="govuk-body">View</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View entitlements</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style">
+      <div class="permissions-column-selected-short">
+       <p class="govuk-body">Amend</p>
+       <div role="button" tabindex="0" class="permission-select-selected">
+        <input type="radio" name="" class="" value="" checked>
+        <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View entitlements</p>
+         <p class="govuk-body">Transfer entitlements</p>
+         <p class="govuk-body">Apply for new entitlements</p>
+       </div>
+    </button>
+              
       </div>
-      <div class="govuk-accordion__section">
-        <div class="govuk-accordion__section-header">
-          <h2 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
-              How people read
-            </span>
-          </h2>
-        </div>
-        <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
-          <p class="govuk-body">This is the content for How people read.</p>
-        </div>
+    </details>
+
+
+
+
+    <details class="govuk-details govuk-details-permissions">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Basic payment scheme (BPS)
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+         <script>
+          function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
+          </script>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Submit</strong>
+      </p>
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message">
+        <p class="govuk-body govuk-!-margin-bottom-1 govuk-!-margin-left-1 bps-width">
+          I confirm that I am aware of the conditions of the direct payment schemes (Basic Payment Scheme, greening and where relevant, young farmer payment).
+        </p>
+        <p class="govuk-body govuk-!-margin-bottom-1 govuk-!-margin-left-1 bps-width">
+          I understand that I am responsible for all information provided to the RPA in the application, either by me or someone acting for me, including its accuracy.
+        </p>
+
+        <button type="button" class="permission-button-style govuk-!-margin-right-3">
+          <div class="permissions-column-medium">
+           <p class="govuk-body">No access</p>
+           <div role="button" tabindex="0" class="permission-select">
+             <input type="radio" name="business-details" class="" value="View - business">
+             <label class="permission-label-style">Select</label>
+                 </div>
+             <hr class="permission-line">
+           </div>
+        </button>
+    
+        <button type="button" class="permission-button-style govuk-!-margin-right-3">
+          <div class="permissions-column-medium">
+            <p class="govuk-body">View</p>
+           <div role="button" tabindex="0" class="permission-select">
+             <input type="radio" name="business-details" class="" value="View - business">
+             <label class="permission-label-style">Select</label>
+                 </div>
+             <hr class="permission-line">
+             <p class="govuk-body">View business summary</p>
+             <p class="govuk-body">View claims</p>
+             <p class="govuk-body">View land, features and covers</p>
+           </div>
+        </button>
+
+        <button type="button" class="permission-button-style govuk-!-margin-right-3">
+          <div class="permissions-column-medium">
+            <p class="govuk-body">Amend</p>
+           <div role="button" tabindex="0" class="permission-select">
+             <input type="radio" name="business-details" class="" value="View - business">
+             <label class="permission-label-style">Select</label>
+                 </div>
+             <hr class="permission-line">
+             <p class="govuk-body">All permissions in View BPS</p>
+             <p class="govuk-body">Create and edit a claim</p>
+             <p class="govuk-body">Amend a previously submitted claim</p>
+             <p class="govuk-body">Amend land, features and covers</p>
+           </div>
+        </button>
+    
+        <button type="button" class="permission-button-style">
+          <div class="permissions-column-selected-medium">
+           <p class="govuk-body">Submit</p>
+           <div role="button" tabindex="0" class="permission-select-selected">
+             <input type="radio" name="" class="" value="" checked>
+             <label class="permission-label-style">Select</label>
+                 </div>
+             <hr class="permission-line">
+             <p class="govuk-body">All permissions in Amend BPS</p>
+             <p class="govuk-body">Submit a claim</p>
+             <p class="govuk-body">Withdraw a claim</p>
+             <p class="govuk-body">Receive warnings and notifications</p>
+           </div>
+        </button>
+              
       </div>
-    </div>
+    </details>
+
+    
+    <details class="govuk-details govuk-details-permissions">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Countryside Stewardship (Applications)
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+         <script>
+          function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
+          </script>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Submit</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message">
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+       <div class="permissions-column">
+        <p class="govuk-body">No access</p>
+        <div role="button" tabindex="0" class="permission-select">
+          <input type="radio" name="business-details" class="" value="View - business">
+          <label class="permission-label-style">Select</label>
+              </div>
+          <hr class="permission-line">
+          <p class="govuk-body">No Access</p>
+        </div>
+     </button>
+
+     <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column">
+       <p class="govuk-body">View</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View CS Scheme eligibility</p>
+         <p class="govuk-body">View Applications</p>
+         <p class="govuk-body">View land, features and covers</p>
+         <p class="govuk-body">View CS agreeement offer</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column">
+       <p class="govuk-body">Amend</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View CS Applications</p>
+         <p class="govuk-body">View draft CS Agreements</p>
+         <p class="govuk-body">Create and edit a CS application</p>
+         <p class="govuk-body">Amend a previously submitted CS application</p>
+         <p class="govuk-body">Amend Land, Features and Covers</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style">
+      <div class="permissions-column-selected">
+       <p class="govuk-body">Submit</p>
+       <div role="button" tabindex="0" class="permission-select-selected">
+         <input type="radio" name="" class="" value="" checked>
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in Amend CS permissions</p>
+         <p class="govuk-body">Submit CS permissions</p>
+         <p class="govuk-body">Withdraw CS application</p>
+         <p class="govuk-body">Receive warnings and notifications</p>
+       </div>
+    </button>
+              
+      </div>
+    </details>
+
+
+    <details class="govuk-details govuk-details-permissions">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Countryside Stewardship (Agreements)
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+         <script>
+          function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
+          </script>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Submit</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message">
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+       <div class="permissions-column-xl">
+        <p class="govuk-body">No access</p>
+          <div role="button" tabindex="0" class="permission-select">
+            <input type="radio" name="business-details" class="" value="View - business">
+          <label class="permission-label-style">Select</label>
+              </div>
+          <hr class="permission-line">
+          <p class="govuk-body">No Access</p>
+        </div>
+     </button>
+
+     <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-xl">
+        <p class="govuk-body">View</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View CS Agreements</p>
+         <p class="govuk-body">View Land, Features and Cover</p>
+         <p class="govuk-body">View CS Agreement amendments</p>
+         <p class="govuk-body">View CS agreement Transfers</p>
+         <p class="govuk-body">View CS claims</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-xl">
+        <p class="govuk-body">Amend</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View CS Agreements</p>
+         <p class="govuk-body">Amend land, Features and Covers</p>
+         <p class="govuk-body">Create and edit a CS claim</p>
+         <p class="govuk-body">Amend a previously submitted claim</p>
+         <p class="govuk-body">Create and edit a CS agreement Amendment</p>
+         <p class="govuk-body">Revise a previously submitted agreement amendment</p>
+         <p class="govuk-body">Create and Edit a CS agreement transfer</p>
+         <p class="govuk-body">Revise a previously submitted agreement transfer</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-selected-xl">
+        <p class="govuk-body">Submit</p>
+       <div role="button" tabindex="0" class="permission-select-selected">
+        <input type="radio" name="" class="" value="" checked>
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in Amend CS agreements</p>
+         <p class="govuk-body">Submit Acceptance of CS Agreement offer</p>
+         <p class="govuk-body">Submit rejection of CS agreement offer</p>
+         <p class="govuk-body">Submit (and resubmit) a CS claim</p>
+         <p class="govuk-body">Withdraw a CS claim</p>
+         <p class="govuk-body">Submit (and resubmit) a CS agreement amendment</p>
+         <p class="govuk-body">Withdraw a CS agreement amendment</p>
+         <p class="govuk-body">Submit (and resubmit) a CS agreement transfer</p>
+         <p class="govuk-body">Withdraw a CS agreement transfer</p>
+         <p class="govuk-body">Receive warnings and notifications</p>
+       </div>
+    </button>
+      </div>
+    </details>
+
+
+    <details class="govuk-details govuk-details-permissions">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Environmental Land Management (Applications)
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+         <script>
+          function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
+          </script>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>No Access</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message">
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+       <div class="permissions-column-selected-xl">
+        <p class="govuk-body">No access</p>
+        <div role="button" tabindex="0" class="permission-select-selected">
+          <input type="radio" name="" class="" value="" checked>
+          <label class="permission-label-style">Select</label>
+              </div>
+          <hr class="permission-line">
+          <p class="govuk-body">No Access</p>
+        </div>
+     </button>
+
+     <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-xl">
+        <p class="govuk-body">View</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View Environmental Land Management scheme eligibility</p>
+         <p class="govuk-body">View Environmental Land Management applications</p>
+         <p class="govuk-body">View land, features and covers</p>
+         <p class="govuk-body">View Environmental Land Management agreement offer</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-xl">
+        <p class="govuk-body">Amend</p>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View Environmental Land Management</p>
+         <p class="govuk-body">View Environmental Land Management agreements</p>
+         <p class="govuk-body">Create and edit a Environmental Land Management application</p>
+         <p class="govuk-body">Amend (but not resubmit) a previously submitted Environmental Land Management application</p>
+         <p class="govuk-body">Amend land, features and covers</p>
+       </div>
+    </button>
+
+    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+      <div class="permissions-column-xl">
+        <p class="govuk-body">Submit</p>
+        <div role="button" tabindex="0" class="permission-select">
+          <input type="radio" name="business-details" class="" value="View - business">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in Amend Environmental Land Management</p>
+         <p class="govuk-body">Submit Environmental Land Management application</p>
+         <p class="govuk-body">Withdraw Environmental Land Management application</p>
+         <p class="govuk-body">Submit acceptance of Environmental Land Management agreement offer</p>
+         <p class="govuk-body">Submit rejection of Environmental Land Management agreement offer</p>
+         <p class="govuk-body">Receive all application correspondence including all warnings and notifications</p>
+       </div>
+      </button>
+      </div>
+    </details>
 
 
     <button type="submit" class="govuk-button govuk-!-margin-left-2 govuk-!-margin-bottom-0 govuk-!-margin-right-2" data-module="govuk-button">
