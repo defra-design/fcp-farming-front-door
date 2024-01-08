@@ -83,7 +83,7 @@
 
         <div class="govuk-!-margin-bottom-9">
         <div class="govuk-grid-column-one-half govuk-!-padding-left-0">
-        <p class="govuk-body"><a href=""><strong>View deleted messages</strong></a></p>
+        <p class="govuk-body"><a href="deleted-messages"><strong>View deleted messages</strong></a></p>
       </div>
 
       <div class="govuk-grid-column-one-half">
@@ -146,10 +146,15 @@
 
             <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
             <script>
-              function myFunction() {
-                var element = document.getElementById("messageRead");
-                element.classList.toggle("govuk-details-message");
-              }
+              var element = document.getElementById("messageRead");
+                element.addEventListener('click', (event) => {
+                  var list = element.classList
+                  if(!list.contains("govuk-details-message")) {
+                     element.classList.toggle('govuk-details-message')
+                     element.classList.toggle('govuk-details-message-unread')
+                  }
+                }             
+                )
             </script>
           </div>
         </details>
@@ -426,11 +431,77 @@
 
 
       </div>
-      </div>
+    </details>
 
+
+    <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+      <summary class="govuk-details__summary govuk-details__summary-message">
+        <span class="govuk-details__summary-text govuk-details__summary-text-message">
+          BPS Application submitted for AJ Broomfield & Sons
+        </span>
+        <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+          13 May 2021
+        </span>
+      </summary>
+      
+      <div class="govuk-details__text govuk-details__text-message">
+
+        <p class="govuk-body">Thank you for submitting your application to the Basic Payment Scheme.</p>
+
+        <p class="govuk-body">This message is confirmation that your claim has been submitted successfully to the RPA. This is not confirmation that your claim has been processed by the RPA. Please keep a copy of this acknowledgement for your records.
+        </p>
+
+        <p class="govuk-body">Submission date and time: <strong>09:33, 13 May 2021</strong></p>
+
+        <p class="govuk-body">SBI: <strong>108364021</strong></p>
+
+        <p class="govuk-body">Application ID: <strong>1215852</strong></p>
+
+        <p class="govuk-body">Please do not submit a paper copy of your application as well.</p>
+
+        <p class="govuk-body">Please remember, if you need to provide any supporting documentation with your claim, these should be sent to:</p>
+
+        <p class="govuk-body">Rural Payments Agency</p>
+
+        <p class="govuk-body">PO Box 352</p>
+
+        <p class="govuk-body">Worksop</p>
+
+        <p class="govuk-body">S80 9FG</p>
+
+        <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+      </div>
+    </details>
+
+
+    <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+      <summary class="govuk-details__summary govuk-details__summary-message">
+        <span class="govuk-details__summary-text govuk-details__summary-text-message">
+          Bespoke messages
+        </span>
+        <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+          11 July 2020
+        </span>
+      </summary>
+      <div class="govuk-details__text govuk-details__text-message">
+
+      <p class="govuk-body">We have recently updated the Rural Payments service and can now send messages to groups of customers, for example, to remind them to submit an application.</p>
+
+      <p class="govuk-body">Make sure you regularly check your messages for important updates and information.</p>
+
+      <p class="govuk-body">You can find more information about recent updates on the new 'Rural Payments: updates to the service' page on GOV.UK</p>
+
+      <p class="govuk-body">Don't forget to regularly check our page 'Coronavirus (COVID-19): information for farmers, landowners and rural businesses' on GOV.UK that includes all our latest updates during the coronavirus (Covid-19) outbreak.</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+      </div>
+    </details>
+
+      </div>
     </div>
 
-  </div>
 
 </div>
 </div>
