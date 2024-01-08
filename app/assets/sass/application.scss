@@ -72,9 +72,13 @@
 }
 
 .govuk-list>li {
-  display: inline;
+  display: list-item;
   margin: 0 15px 0 0;
   
+}
+
+.list-item-inline {
+  display: inline!important;
 }
 
 

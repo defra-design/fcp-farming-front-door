@@ -112,8 +112,7 @@
       </div>
 
       <div class="govuk-grid-column-full govuk-!-padding-left-0">
-
-        <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2">
+        <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
           <summary class="govuk-details__summary govuk-details__summary-message">
             <span class="govuk-details__summary-text govuk-details__summary-text-message">
               BPS Application submitted for AJ Broomfield & Sons
@@ -146,7 +145,12 @@
             <p class="govuk-body">S80 9FG</p>
 
             <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
-
+            <script>
+              function myFunction() {
+                var element = document.getElementById("messageRead");
+                element.classList.toggle("govuk-details-message");
+              }
+            </script>
           </div>
         </details>
 
