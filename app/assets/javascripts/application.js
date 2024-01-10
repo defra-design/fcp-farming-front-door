@@ -4,7 +4,6 @@
 //
 
 window.GOVUKPrototypeKit.documentReady(() => {
-  // Add JavaScript here
   const element = document.getElementById('messageRead')
   element.addEventListener('click', (event) => {
     const list = element.classList
@@ -12,6 +11,30 @@ window.GOVUKPrototypeKit.documentReady(() => {
       element.classList.toggle('govuk-details-message')
       element.classList.toggle('govuk-details-message-unread')
     }
-    updateMessageTotals()
   })
+
+  document.addEventListener("DOMContentLoaded", function() {
+    function updateUnreadMessagesCount() {
+      const allMessagesTab = document.querySelector('.govuk-tabs__list-item-ffd a[href="#all-messages"]');
+      const allUnreadMessages = document.querySelectorAll('.govuk-details-message-unread');
+      const allReadMessages = document.querySelectorAll('.govuk-details-message');
+
+      const totalMessages = allUnreadMessages.length;
+
+      if (allUnreadMessages.length === 0) {
+        allMessagesTab.innerHTML = `All messages <span class="read-message">${allReadMessages.length} read</span>`
+      } else {
+        allMessagesTab.innerHTML = `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
+      }
+    }
+
+    updateUnreadMessagesCount();
+
+    const messageDetails = document.querySelectorAll('.govuk-details');
+    messageDetails.forEach(function(details) {
+      details.addEventListener('click', function() {
+        updateUnreadMessagesCount();
+      });
+    });
+  });
 })
