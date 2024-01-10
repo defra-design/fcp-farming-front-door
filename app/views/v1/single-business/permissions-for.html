@@ -75,38 +75,34 @@
       </summary>
 
       <div class="govuk-details__text govuk-details__text-message">
-
-    <button type="button" class="permission-button-style govuk-!-margin-right-3">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend"></legend>
        <div class="permissions-column">
         <p class="govuk-body">View</p>
-        <div role="button" tabindex="0" class="permission-select">
-          <input type="radio" name="business-details" class="" value="View - business">
+        <div class="permission-select">
+          <input type="radio" name="businessDetails" class="" value="view">
           <label class="permission-label-style">Select</label>
               </div>
           <hr class="permission-line">
           <p class="govuk-body">View business details</p>
           <p class="govuk-body">View people associated with the business</p>
         </div>
-     </button>
 
-     <button type="button" class="permission-button-style govuk-!-margin-right-3">
       <div class="permissions-column">
        <p class="govuk-body">Amend</p>
-       <div role="button" tabindex="0" class="permission-select">
-         <input type="radio" name="business-details" class="" value="View - business">
+       <div class="permission-select">
+         <input type="radio" name="businessDetails" class="" value="amend">
          <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
          <p class="govuk-body">All permissions in View Business Details</p>
          <p class="govuk-body">Amend business and correspondence contact details</p>
        </div>
-    </button>
 
-    <button type="button" class="permission-button-style govuk-!-margin-right-3">
       <div class="permissions-column">
        <p class="govuk-body">Make legal changes</p>
-       <div role="button" tabindex="0" class="permission-select">
-         <input type="radio" name="business-details" class="" value="View - business">
+       <div class="permission-select">
+         <input type="radio" name="businessDetails" class="" value="legal">
          <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
@@ -116,13 +112,11 @@
          <p class="govuk-body">Amend bank account details</p>
          <p class="govuk-body">Make young/new farmer declaration</p>
        </div>
-    </button>
 
-    <button type="button" class="permission-button-style">
       <div class="permissions-column-selected">
        <p class="govuk-body">Full permissions</p>
-       <div role="button" tabindex="0" class="permission-select-selected">
-        <input type="radio" name="" class="" value="" checked>
+       <div class="permission-select-selected">
+        <input type="radio" name="businessDetails" class="" value="full" checked>
         <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
@@ -130,8 +124,7 @@
          <p class="govuk-body">Add someone to the business</p>
          <p class="govuk-body">Give permissions on business</p>
        </div>
-    </button>
-              
+      </fieldset>  
       </div>
     </details>
 

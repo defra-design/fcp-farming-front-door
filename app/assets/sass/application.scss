@@ -308,80 +308,105 @@
 
 .permissions-column {
   height: 655px;
-  width: 200px;
   text-align: center;
   padding: 15px;
   background: #dee0e2;
+  max-width: 200px;
+  min-width: 200px;
+  display: inline-table;
+  margin-right: 10px;
 }
+
 
 .permissions-column-xl {
   height: 890px;
-  width: 200px;
+  max-width: 200px;
+  min-width: 200px;
   text-align: center;
   padding: 15px;
   background: #dee0e2;
+  display: inline-table;
+  margin-right: 10px;
 }
 
 .permissions-column-short {
   height: 330px;
-  width: 200px;
+  max-width: 200px;
+  min-width: 200px;
   text-align: center;
   padding: 15px;
   background: #dee0e2;
+  display: inline-table;
+  margin-right: 10px;
 }
 
 .permissions-column-medium {
   height: 450px;
-  width: 200px;
+  max-width: 200px;
+  min-width: 200px;
   text-align: center;
   padding: 15px;
   background: #dee0e2;
+  display: inline-table;
+  margin-right: 10px;
 }
 
 
 .permissions-column-selected {
   height: 655px;
-  width: 200px;
+  max-width: 200px;
+  min-width: 200px;
   text-align: center;
   padding: 15px;
   background: #ffffff;
   border: solid 0.5px;
   border-color: #000;
   outline: 2px solid gold;
+  display: inline-table;
+  margin-right: 10px;
 }
 
 .permissions-column-selected-short {
   height: 330px;
-  width: 200px;
+  max-width: 200px;
+  min-width: 200px;
   text-align: center;
   padding: 15px;
   background: #ffffff;
   border: solid 0.5px;
   border-color: #000;
   outline: 2px solid gold;
+  display: inline-table;
+  margin-right: 10px;
 }
 
 .permissions-column-selected-medium {
   height: 450px;
-  width: 200px;
+  max-width: 200px;
+  min-width: 200px;
   text-align: center;
   padding: 15px;
   background: #ffffff;
   border: solid 0.5px;
   border-color: #000;
   outline: 2px solid gold;
+  display: inline-table;
+  margin-right: 10px;
 }
 
 
 .permissions-column-selected-xl {
   height: 890px;
-  width: 200px;
+  max-width: 200px;
+  min-width: 200px;
   text-align: center;
   padding: 15px;
   background: #ffffff;
   border: solid 0.5px;
   border-color: #000;
   outline: 2px solid gold;
+  display: inline-table;
+  margin-right: 10px;
 }
 
 .permission-select {
