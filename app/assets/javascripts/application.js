@@ -4,28 +4,25 @@
 //
 
 window.GOVUKPrototypeKit.documentReady(() => {
-  const element = document.getElementById('messageRead')
-  element.addEventListener('click', (event) => {
-    const list = element.classList
-    if (!list.contains('govuk-details-message')) {
-      element.classList.toggle('govuk-details-message')
-      element.classList.toggle('govuk-details-message-unread')
-    }
-  })
 
-  document.addEventListener("DOMContentLoaded", function() {
+  // Switching between read and unread
+    const unreadMessages = document.querySelectorAll('#messageRead');
+    unreadMessages.forEach(function(message) {
+      message.addEventListener('click', function() {
+        const list = message.classList
+        if (!list.contains('govuk-details-message')) {
+          message.classList.toggle('govuk-details-message')
+          message.classList.toggle('govuk-details-message-unread')
+        }
+      });
+    });
+    
+    // Dynamic styling of read/unread tag
     function updateUnreadMessagesCount() {
       const allMessagesTab = document.querySelector('.govuk-tabs__list-item-ffd a[href="#all-messages"]');
       const allUnreadMessages = document.querySelectorAll('.govuk-details-message-unread');
       const allReadMessages = document.querySelectorAll('.govuk-details-message');
-
-      const totalMessages = allUnreadMessages.length;
-
-      if (allUnreadMessages.length === 0) {
-        allMessagesTab.innerHTML = `All messages <span class="read-message">${allReadMessages.length} read</span>`
-      } else {
-        allMessagesTab.innerHTML = `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
-      }
+      allMessagesTab.innerHTML = allUnreadMessages.length === 0 ? `All messages <span class="read-message">${allReadMessages.length} read</span>` : `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
     }
 
     updateUnreadMessagesCount();
@@ -36,5 +33,4 @@ window.GOVUKPrototypeKit.documentReady(() => {
         updateUnreadMessagesCount();
       });
     });
-  });
-})
+  })
