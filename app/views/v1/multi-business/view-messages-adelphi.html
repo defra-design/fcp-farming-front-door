@@ -1,0 +1,562 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to your businesses and messages</a>
+{% endblock beforeContent%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Your messages
+      <span class="govuk-caption-l govuk-!-margin-bottom-6">Phyllis Dowden</span>
+    </h1>
+    </div>
+
+      <div class="govuk-grid-column-one-half govuk-!-margin-bottom-5">
+      <p class="govuk-body"><a href="deleted-messages"><strong>View deleted messages</strong></a></p>
+    </div>
+
+    <div class="govuk-grid-column-one-half govuk-!-margin-bottom-5">
+     <fieldset class="govuk-fieldset">
+      <b class="filter-style">
+      Filter by:
+    </b>
+      <div class="filter-unread-messages">
+          <input data-ng-model="filter.unread" type="checkbox" id="unreadmessages" name="notifications" value="unread" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" checked>
+          <label for="unreadmessages" class="filter-label">Unread messages</label>
+      </div>
+      <div class="filter-read-messages">
+          <input data-ng-model="filter.read" type="checkbox" id="readmessages" name="notifications" value="read" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" checked>
+          <label for="readmessages" class="filter-label">Read messages</label>
+      </div>
+    </fieldset>
+    </div>
+
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m govuk-!-padding-left-2">Messages for Adelphi Foods Limited</h2>
+      </div>
+
+        <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">Date</h2>
+    </div>
+
+    <div class="govuk-grid-column-full">
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Countryside stewardship CS Mid-Tier offer for IRISH BROS
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            09 January 2024
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+
+          <p class="govuk-body govuk-!-margin-bottom-0"><strong>Agreement name: Fordscroft Farm Mid-Tier 1st Jan 24 to 31st Dec 2028</strong></p>            
+
+          <p class="govuk-body"><strong>Agreement type: Countryside stewardship CS Mid-Tier</strong></p>            
+          
+          <p class="govuk-body govuk-!-margin-bottom-0"><strong>SBI: 106811153</strong></p>            
+    
+          <p class="govuk-body"><strong>Agreement reference: 1639165</strong></p>     
+          
+          <p class="govuk-body">We've received your <strong>Countryside stewardship CS Mid-Tier</strong> application and have offered you an agreement with us which will start from <strong>01 January 2024.</strong></p>            
+
+          <p class="govuk-body">You now need to read the agreement offer and accept or reject it, in the Rural Payments service.</p>     
+
+          <p class="govuk-body">For more information read the scheme manual on GOV.UK, search for Countryside Stewardship.</p>     
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Sustainable Farming Incentive - Agreement confirmation for IRISH BROS
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            02 January 2024
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+
+          <p class="govuk-body govuk-!-margin-bottom-0"><strong>Business name: IRISH BROS</strong></p>            
+
+          <p class="govuk-body"><strong>Agreement type: Sustainable Farming Incentive</strong></p>            
+          
+          <p class="govuk-body govuk-!-margin-bottom-0"><strong>SBI: 106811153</strong></p>            
+    
+          <p class="govuk-body"><strong>Agreement reference: 1664429</strong></p>     
+
+          <p class="govuk-body">Thank you for accepting your agreement offer.</p>
+
+          <p class="govuk-body">Your SFI agreement will start from <strong>01 November 2024</strong>. It comprises:</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            <li>your agreement document, which you can view in the Rural Payments service</li>
+            <li>your agreement's terms and conditions</li>
+            <li>the SFI actions you have chosen</li>
+          </ul>
+           
+          <p class="govuk-body">You can find more information about your SFI agreement, including your agreement's terms and conditions and the details of the SFI actions, in the SFI handbook (search GOV.UK for 'SFI handbook').</p>
+
+          <p class="govuk-heading-s">Upgrading your SFI agreement</p>
+
+          <p class="govuk-body">You can upgrade your SFI agreement to add more SFI actions and land. To do this, you must submit an 'upgrade request' towards the end of the first and second years of your 3-year SFI agreement. This must be done by the relevant deadline. We'll tell you what date that is.
+          </p>
+
+          <p class="govuk-body">Read the information about requesting changes to your SFI agreement in the SFI handbook to find out more about upgrading your agreement (search GOV.UK for 'SFI handbook').
+          </p>
+          
+          <p class="govuk-heading-s">What happens if you find you cannot comply with your agreement
+          </p>
+
+          <p class="govuk-body">Something may happen for reasons within or outside your control ('a change of circumstances') which means you cannot comply with your SFI agreement. If this is the case, you must tell us about this, in writing, as soon as reasonably practicable.</p>
+
+          <p class="govuk-body">When you write to us, you should include:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>your Single Business Identifier (SBI), which is shown above</li>
+            <li>your SFI agreement reference number, which you can find on your agreement document</li>
+            <li>as many details as possible about the change of circumstances, including specific details about the SFI actions you're having issues with</li>
+          </ul>
+         
+          <p class="govuk-body">Read the SFI handbook to find out more about what happens if you find you cannot comply with your agreement (search GOV.UK for 'SFI handbook').</p>
+
+          <p class="govuk-heading-s">Contact us about SFI
+          </p>
+
+       
+          <p class="govuk-body">To contact us about your SFI agreement, you can:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>use the Rural Payments service to raise a query - select 'Create or view a query' to raise a new query</li>
+            <li>complete an SFI query form and email it to us (search GOV.UK for 'Contact the RPA about SFI' to find the query form)</li>
+            <li>email us at ruralpayments@defra.gov.uk - use 'SFI' as the subject heading and include your SBI</li>
+            <li>call us on 03000 200 301 (Monday to Friday, 8.30am to 5pm, except bank holidays)</li>
+            <li>write to us by post at Rural Payments Agency, PO Box 352, Worksop, S80 9FG</li>
+          </ul>
+          
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+      <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Changes to land and maps for IRISH BROS
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+            02 January 2024
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          
+          <p class="govuk-body">SBI: 106811153</p>
+
+          <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+    
+          <p class="govuk-body">Each land parcel listed below has been updated.</p>
+          
+          <p class="govuk-body">Parcel ID:</p>
+    
+          <p class="govuk-body"><a class="govuk-link" href="">ST6654 3912</a></p>
+    
+          <hr>
+
+          <p class="govuk-body"><a class="govuk-link" href="">ST42113 4444</a></p>
+    
+          <hr>
+    
+    
+          
+          <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+    
+          <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+    
+          <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+    
+          <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+    
+          <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+    
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+    
+        </div>
+      </details>
+
+ 
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Entitlements sale/gift confirmation
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            22 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          
+          <p class="govuk-body">Transfer of entitlements confirmation</p>
+
+          <p class="govuk-body">Date:<strong> 00:00, 08 March 2023</strong></p>            
+
+          <p class="govuk-body">We are confirming that the entitlements shown below have now been transferred by:</p>
+
+          <p class="govuk-body">SBI:<strong> 108300320</strong></p>            
+
+          <p class="govuk-body">Business name:<strong> Susan Gray, WESTLEY MANOR BARNS</strong></p>            
+
+          <p class="govuk-body">to:</p>
+
+          <p class="govuk-body">SBI:<strong> 106811153</strong></p>            
+
+          <p class="govuk-body">Business name:<strong> IRISH BROS, Fordscroft Farm Fordscroft</strong></p>            
+
+          <p class="govuk-body">Regions:<strong> Non SDA</strong></p>            
+
+          <p class="govuk-body">Number of entitlements:<strong> 3.89</strong></p>            
+
+          <p class="govuk-body">Type of transfer:<strong> Sale/gift</strong></p>            
+       
+          <p class="govuk-body">Valid from date:<strong> 00:00, 08 March 2023</strong></p>            
+
+          <p class="govuk-body">Important information</p>
+
+          <p class="govuk-body">If we find that a business which holds these entitlements, or has held them previously, hasn’t correctly followed the rules about how to use them, they’ll expire and we'll remove them. This means that the business holding the entitlements will not be able to use or transfer them.</p>
+
+          <p class="govuk-body">Automatic notification from Rural Payments</p>
+
+          <p class="govuk-body">In case of any queries please call 03000 200 301 and quote the transaction number when you call.</p>
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Your Multi Annual Countryside Stewardship claim deadline date is 17 May 2024
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            18 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          <p class="govuk-body">Fordscroft Farm</p>
+          
+          <p class="govuk-body govuk-!-margin-bottom-0">SBI:<strong> 106811153</strong></p>            
+          <p class="govuk-body">Agreement ID:<strong> 633412</strong></p>            
+
+          <p class="govuk-body">Our records show that you have not yet submitted your Multi Annual Countryside Stewardship claim for the above agreement.</p>
+
+          <p class="govuk-body">The deadline for the Rural Payments Agency (RPA) to receive your Multi Annual claim and supporting evidence is midnight on 17 May 2024.</p>
+          
+          <p class="govuk-body">Please sign in to the Rural Payments service and submit your claim as soon as possible.</p>
+
+          <p class="govuk-body"><strong>If we do not receive a valid claim and any required supporting evidence by the deadline the following penalties will be applied, unless there are force majeure or other exceptional circumstances:</strong></p>            
+          <ul class="govuk-list govuk-list--bullet">
+            <li><strong>If we receive your valid claim form and any required evidence after midnight on 17 May 2024 but before midnight on 21 June 2024, we will apply a penalty of 1% of your total payment for this claim year for each working day that your claim is late;</strong></li>
+            <li><strong>If we receive your valid claim and any required supporting evidence after midnight on 21 June 2024, we will not progress your claim and you will not be paid for this claim year.</strong></li>
+          </ul>
+
+          <p class="govuk-body"><strong>If you have more than one Countryside Stewardship agreement for your SBI, RPA must receive your Parent Claim declaration by midnight on 17 May 2024.</strong></p>            
+
+          <p class="govuk-body">If you wish to discuss the content of this notification, please call RPA on 03000 200 301.</p>
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Mapping updates for IRISH BROS
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            04 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+
+
+          <p class="govuk-body">SBI: 106811153</p>
+
+          <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+    
+          <p class="govuk-body">Each land parcel listed below has been updated.</p>
+          
+          <p class="govuk-body">Parcel ID:</p>
+    
+          <p class="govuk-body"><a class="govuk-link" href="">ST4210 3912</a></p>
+    
+          <hr>
+
+          <p class="govuk-body"><a class="govuk-link" href="">ST42113 2946</a></p>
+    
+          <hr>
+    
+    
+          <p class="govuk-body"><a class="govuk-link" href="">ST0000 8432</a></p>
+    
+          <hr>
+          
+          <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+    
+          <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+    
+          <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+    
+          <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+    
+          <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+    
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+    
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            You must complete your capital works claim by the 30 March 2024
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            03 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          <p class="govuk-body">COMBE FARM</p>
+        
+ 
+          <p class="govuk-body"><strong>SBI: 107111045</strong></p>            
+
+          <p class="govuk-body"><strong>Agreement ID: 541888/HB</strong></p>       
+
+          <p class="govuk-body">Our records show that you have one or more unclaimed capital items in your agreement. These items must be completed by the date specified in your agreement.</p> 
+          
+          <p class="govuk-body">The deadline for the capital works to be completed is 24 February 2024.</p> 
+
+          <p class="govuk-body">Please sign in to the Rural Payments service and submit your claim(s) for these capital items as soon as possible, and no later than 3 months after the completion deadline.</p> 
+
+          <p class="govuk-body">The deadline for the Rural Payments Agency (RPA) to receive your Capital claim(s) and supporting evidence is <strong>midnight on 24 February 2024. If you do not submit a claim by this date you will not be able to receive payment for these capital items.</strong></p> 
+
+                    
+          <p class="govuk-body">If you wish to discuss the content of this notification then please call RPA on 03000 200 301.</p> 
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Your claim for completed capital works deadline is the 30 March 2024
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            28 November 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          <p class="govuk-body">COMBE FARM</p>
+          
+          <p class="govuk-body govuk-!-margin-bottom-0"><strong>SBI:107111045</strong></p>            
+
+          <p class="govuk-body"><strong>Agreement ID:541888</strong></p>            
+          
+          <p class="govuk-body">Our records show that you have not yet submitted a Countryside Stewardship Capital claim for one or more capital work items in your agreement.</p>
+
+          <p class="govuk-body">The deadline for the Rural Payments Agency (RPA) to receive your Capital claim and supporting evidence is midnight on <strong>24 February 2024</strong> after which you will not be able to claim for these items.
+          </p>
+
+          <p class="govuk-body">Please sign in to the Rural Payments service and submit your claim(s) for any completed but unclaimed capital items as soon as possible.</p>
+
+          <p class="govuk-body"><strong>If RPA does not receive your claim by the deadline you will not receive payment for these capital items.</strong></p>            
+
+          <p class="govuk-body">If you wish to discuss the content of this email then please call RPA on 03000 200 301.</p>
+
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+  <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+    <summary class="govuk-details__summary govuk-details__summary-message">
+      <span class="govuk-details__summary-text govuk-details__summary-text-message">
+        Bespoke messages
+      </span>
+      <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+        19 November 2023
+      </span>
+    </summary>
+    <div class="govuk-details__text govuk-details__text-message">
+
+      <p class="govuk-body">We have recently updated the Rural Payments service and can now send messages to groups of customers, for example, to remind them to submit an application.</p>
+
+      <p class="govuk-body">Make sure you regularly check your messages for important updates and information.</p>
+
+      <p class="govuk-body">You can find more information about recent updates on the new '<a class="govuk-link" href="">Rural Payments: updates to the service</a>' page on GOV.UK</p>
+
+      <p class="govuk-body">Don't forget to regularly check our page '<a class="govuk-link" href="">Coronavirus (COVID-19): information for farmers, landowners and rural businesses</a>' on GOV.UK that includes all our latest updates during the coronavirus (Covid-19) outbreak.
+      </p>
+      <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+    </div>
+  </details>
+     
+
+ 
+  <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+    <summary class="govuk-details__summary govuk-details__summary-message">
+      <span class="govuk-details__summary-text govuk-details__summary-text-message">
+        Entitlements sale/gift confirmation
+      </span>
+      <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+        22 December 2023
+      </span>
+    </summary>
+    <div class="govuk-details__text govuk-details__text-message">
+      
+      <p class="govuk-body">Transfer of entitlements confirmation</p>
+
+      <p class="govuk-body">Date:<strong> 00:00, 07 March 2023</strong></p>            
+
+      <p class="govuk-body">We are confirming that the entitlements shown below have now been transferred by:</p>
+
+      <p class="govuk-body">SBI:<strong> 108300320</strong></p>            
+
+      <p class="govuk-body">Business name:<strong> Susan Gray, WESTLEY MANOR BARNS</strong></p>            
+
+      <p class="govuk-body">to:</p>
+
+      <p class="govuk-body">SBI:<strong> 106811153</strong></p>            
+
+      <p class="govuk-body">Business name:<strong> IRISH BROS, Fordscroft Farm Fordscroft</strong></p>            
+
+      <p class="govuk-body">Regions:<strong> Non SDA</strong></p>            
+
+      <p class="govuk-body">Number of entitlements:<strong> 3.89</strong></p>            
+
+      <p class="govuk-body">Type of transfer:<strong> Sale/gift</strong></p>            
+   
+      <p class="govuk-body">Valid from date:<strong> 00:00, 07 March 2023</strong></p>            
+
+      <p class="govuk-body">Important information</p>
+
+      <p class="govuk-body">If we find that a business which holds these entitlements, or has held them previously, hasn’t correctly followed the rules about how to use them, they’ll expire and we'll remove them. This means that the business holding the entitlements will not be able to use or transfer them.</p>
+
+      <p class="govuk-body">Automatic notification from Rural Payments</p>
+
+      <p class="govuk-body">In case of any queries please call 03000 200 301 and quote the transaction number when you call.</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+      <script>
+        var element = document.getElementById("messageRead");
+          element.addEventListener('click', (event) => {
+            var list = element.classList
+            if(!list.contains("govuk-details-message")) {
+               element.classList.toggle('govuk-details-message')
+               element.classList.toggle('govuk-details-message-unread')
+            }
+          }             
+          )
+      </script>
+    </div>
+  </details>
+
+
+      
+
+    </div>
+  </div>
+
+
+
+{% endblock %}

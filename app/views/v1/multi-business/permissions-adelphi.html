@@ -1,0 +1,73 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to people and permission</a>
+{% endblock beforeContent%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">People and permission
+      <span class="govuk-caption-l">Adelphi Foods Limited</span>
+    </h1>
+
+    <p class="govuk-body">These people can already act for this business.</p>
+
+ 
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Full Name</th>
+          <th scope="col" class="govuk-table__header">Relationship</th>
+          <th scope="col" class="govuk-table__header">Action</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a href="">Valerie Fry</a></th>
+          <td class="govuk-table__cell govuk-table__cell_bold">Business Partner</td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a href="">William Grundy</a></th>
+          <td class="govuk-table__cell govuk-table__cell_bold">Business Partner</td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a href="permissions-adelphi-phyllis">Phyllis Dowden</a></th>
+          <td class="govuk-table__cell govuk-table__cell_bold">Agent</td>
+          <td class="govuk-table__cell"><a href="">Remove</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a href="">Rose Allen</a></th>
+          <td class="govuk-table__cell govuk-table__cell_bold">Agent</td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a href="">Gordon Lincoln</a></th>
+          <td class="govuk-table__cell govuk-table__cell_bold">Agent</td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span>
+        You are responsible for all information provided to us either by you or someone acting for you, including its accuracy.
+      </strong>
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock %}

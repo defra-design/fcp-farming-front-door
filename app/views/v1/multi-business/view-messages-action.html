@@ -1,0 +1,464 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to your businesses and messages</a>
+{% endblock beforeContent%}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Your messages
+      <span class="govuk-caption-l govuk-!-margin-bottom-6">Phyllis Dowden</span>
+    </h1>
+    </div>
+
+      <div class="govuk-grid-column-one-half govuk-!-margin-bottom-5">
+      <p class="govuk-body"><a href="deleted-messages"><strong>View deleted messages</strong></a></p>
+    </div>
+
+    <div class="govuk-grid-column-one-half govuk-!-margin-bottom-5">
+     <fieldset class="govuk-fieldset">
+      <b class="filter-style">
+      Filter by:
+    </b>
+      <div class="filter-unread-messages">
+          <input data-ng-model="filter.unread" type="checkbox" id="unreadmessages" name="notifications" value="unread" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" checked>
+          <label for="unreadmessages" class="filter-label">Unread messages</label>
+      </div>
+      <div class="filter-read-messages">
+          <input data-ng-model="filter.read" type="checkbox" id="readmessages" name="notifications" value="read" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" checked>
+          <label for="readmessages" class="filter-label">Read messages</label>
+      </div>
+    </fieldset>
+    </div>
+
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m govuk-!-padding-left-2">Messages for Action Poultry Ltd</h2>
+      </div>
+
+        <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">Date</h2>
+    </div>
+
+    <div class="govuk-grid-column-full">
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Mapping updates for HARRIS, M J
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            10 January 2024
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          
+          <p class="govuk-body">SBI: 107111045</p>
+
+          <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+
+          <p class="govuk-body">Each land parcel listed below has been updated.</p>
+          
+          <p class="govuk-body">Parcel ID:</p>
+
+          <p class="govuk-body"><a class="govuk-link" href="">SY2696 3497</a></p>
+
+          <hr>
+
+          <p class="govuk-body"><a class="govuk-link" href="">SY2696 3993</a></p>
+
+          <hr>  
+          
+          <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+
+          <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+
+          <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+
+          <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+
+          <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Mapping updates for HARRIS, M J
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            10 January 2024
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          <p class="govuk-body">SBI: 107111045</p>
+
+          <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+
+          <p class="govuk-body">Each land parcel listed below has been updated.</p>
+          
+          <p class="govuk-body">Parcel ID:</p>
+
+          <p class="govuk-body"><a class="govuk-link" href="">SY1498 2806</a></p>
+
+          <hr>
+          
+          <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+
+          <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+
+          <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+
+          <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+
+          <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+      <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Your Multi Annual Countryside Stewardship claim deadline date is 17 May 2024.
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+            02 January 2024
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          
+          <p class="govuk-body">Harris M J CS MT 20</p>
+
+          <p class="govuk-body"><strong>SBI: 107111045</strong></p>            
+
+          <p class="govuk-body"><strong>Agreement ID: 824696</strong></p>            
+          
+          <p class="govuk-body">Our records show that you have not yet submitted your Multi Annual Countryside Stewardship claim for the above agreement.</p>
+
+          <p class="govuk-body">The deadline for the Rural Payments Agency (RPA) to receive your Multi Annual claim and supporting evidence is midnight on 17 May 2024.</p>
+
+          <p class="govuk-body">Please sign in to the Rural Payments service and submit your claim as soon as possible.</p>
+
+          <p class="govuk-body"><strong>If we do not receive a valid claim and any required supporting evidence by the deadline the following penalties will be applied, unless there are force majeure or other exceptional circumstances:</strong></p>            
+          <ul class="govuk-list govuk-list--bullet">
+            <li><strong>If we receive your valid claim form and any required evidence after midnight on 17 May 2024 but before midnight on 21 June 2024, we will apply a penalty of 1% of your total payment for this claim year for each working day that your claim is late;</strong></li>
+            <li><strong>If we receive your valid claim and any required supporting evidence after midnight on 21 June 2024, we will not progress your claim and you will not be paid for this claim year.</strong></li>
+          </ul>
+
+          <p class="govuk-body"><strong>If you have more than one Countryside Stewardship agreement for your SBI, RPA must receive your Parent Claim declaration by midnight on 17 May 2024.</strong></p>            
+
+          <p class="govuk-body">If you wish to discuss the content of this notification, please call RPA on 03000 200 301.</p>
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+
+        </div>
+      </details>
+
+ 
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Your claim for completed capital works deadline is the 24 February 2024
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            01 January 2024
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          <p class="govuk-body">COMBE FARM</p>
+          
+          <p class="govuk-body govuk-!-margin-bottom-0"><strong>SBI:107111045</strong></p>            
+
+          <p class="govuk-body"><strong>Agreement ID:541888</strong></p>            
+          
+          <p class="govuk-body">Our records show that you have not yet submitted a Countryside Stewardship Capital claim for one or more capital work items in your agreement.</p>
+
+          <p class="govuk-body">The deadline for the Rural Payments Agency (RPA) to receive your Capital claim and supporting evidence is midnight on <strong>24 February 2024</strong> after which you will not be able to claim for these items.
+          </p>
+
+          <p class="govuk-body">Please sign in to the Rural Payments service and submit your claim(s) for any completed but unclaimed capital items as soon as possible.</p>
+
+          <p class="govuk-body"><strong>If RPA does not receive your claim by the deadline you will not receive payment for these capital items.</strong></p>            
+
+          <p class="govuk-body">If you wish to discuss the content of this email then please call RPA on 03000 200 301.</p>
+
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            Bespoke messages
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            27 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          <p class="govuk-body">We have recently updated the Rural Payments service and can now send messages to groups of customers, for example, to remind them to submit an application.</p>
+
+          <p class="govuk-body">Make sure you regularly check your messages for important updates and information.</p>
+
+          <p class="govuk-body">You can find more information about recent updates on the new '<a class="govuk-link" href="">Rural Payments: updates to the service</a>' page on GOV.UK</p>
+
+          <p class="govuk-body">Don't forget to regularly check our page '<a class="govuk-link" href="">Coronavirus (COVID-19): information for farmers, landowners and rural businesses</a>' on GOV.UK that includes all our latest updates during the coronavirus (Covid-19) outbreak.
+          </p>
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+
+
+      <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+        <summary class="govuk-details__summary govuk-details__summary-message">
+          <span class="govuk-details__summary-text govuk-details__summary-text-message">
+            You must complete your capital works claim by the 24 February 2024
+          </span>
+          <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+            03 December 2023
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-details__text-message">
+          <p class="govuk-body">COMBE FARM</p>
+        
+ 
+          <p class="govuk-body"><strong>SBI: 107111045</strong></p>            
+
+          <p class="govuk-body"><strong>Agreement ID: 541888/HB</strong></p>       
+
+          <p class="govuk-body">Our records show that you have one or more unclaimed capital items in your agreement. These items must be completed by the date specified in your agreement.</p> 
+          
+          <p class="govuk-body">The deadline for the capital works to be completed is 24 February 2024.</p> 
+
+          <p class="govuk-body">Please sign in to the Rural Payments service and submit your claim(s) for these capital items as soon as possible, and no later than 3 months after the completion deadline.</p> 
+
+          <p class="govuk-body">The deadline for the Rural Payments Agency (RPA) to receive your Capital claim(s) and supporting evidence is <strong>midnight on 24 February 2024. If you do not submit a claim by this date you will not be able to receive payment for these capital items.</strong></p> 
+
+                    
+          <p class="govuk-body">If you wish to discuss the content of this notification then please call RPA on 03000 200 301.</p> 
+
+          <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+          <script>
+            var element = document.getElementById("messageRead");
+              element.addEventListener('click', (event) => {
+                var list = element.classList
+                if(!list.contains("govuk-details-message")) {
+                   element.classList.toggle('govuk-details-message')
+                   element.classList.toggle('govuk-details-message-unread')
+                }
+              }             
+              )
+          </script>
+        </div>
+      </details>
+
+
+  <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+    <summary class="govuk-details__summary govuk-details__summary-message">
+      <span class="govuk-details__summary-text govuk-details__summary-text-message">
+        CS Agreement confirmation for HARRIS, M J 
+      </span>
+      <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+        23 November 2023
+      </span>
+    </summary>
+    
+    <div class="govuk-details__text govuk-details__text-message">
+
+      <p class="govuk-body govuk-!-margin-bottom-0"><strong>Agreement name: Harris M J CS MT 20</strong></p>            
+
+      <p class="govuk-body"><strong>Agreement type: CS Mid-Tier (including Water Capital Grant)</strong></p>            
+      
+      <p class="govuk-body govuk-!-margin-bottom-0"><strong>SBI: 107111045</strong></p>            
+
+      <p class="govuk-body"><strong>Agreement reference: 824696/MT</strong></p>            
+      
+      <p class="govuk-body">We've checked your Countryside Stewardship (CS) application, and you now have a binding CS agreement with us which starts from <strong>03 March 2024</strong>. For more information read the scheme manual on GOV.UK, search for Countryside Stewardship. Thank you for joining the many other farmers and land managers around the country who are helping to conserve and enhance the countryside through this scheme.</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+    </div>
+  </details>
+
+
+  <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+    <summary class="govuk-details__summary govuk-details__summary-message">
+      <span class="govuk-details__summary-text govuk-details__summary-text-message">
+        Land change confirmation
+      </span>
+      <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+        19 November 2023
+      </span>
+    </summary>
+    <div class="govuk-details__text govuk-details__text-message">
+
+      <p class="govuk-body">SBI: 107111045</p>
+
+      <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+
+      <p class="govuk-body">Each land parcel listed below has been updated.</p>
+      
+      <p class="govuk-body">Parcel ID:</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="">SY2696 3497</a></p>
+
+      <hr>
+
+      <p class="govuk-body"><a class="govuk-link" href="">SY2696 3993</a></p>
+
+      <hr>  
+
+      <p class="govuk-body"><a class="govuk-link" href="">SY2696 5555</a></p>
+
+      <hr>  
+
+      <p class="govuk-body"><a class="govuk-link" href="">SY5544 2222</a></p>
+
+      <hr>  
+      
+      <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+
+      <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+
+      <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+
+      <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+
+      <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+    </div>
+  </details>
+
+
+  <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+    <summary class="govuk-details__summary govuk-details__summary-message">
+      <span class="govuk-details__summary-text govuk-details__summary-text-message">
+        Land change confirmation
+      </span>
+      <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+        19 November 2023
+      </span>
+    </summary>
+    <div class="govuk-details__text govuk-details__text-message">
+
+
+      <p class="govuk-body">SBI: 107111045</p>
+
+      <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+
+      <p class="govuk-body">Each land parcel listed below has been updated.</p>
+      
+      <p class="govuk-body">Parcel ID:</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="">SY5522 22222</a></p>
+
+      <hr>
+
+      
+      <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+
+      <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+
+      <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+
+      <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+
+      <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+    </div>
+  </details>
+     
+
+  <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+    <summary class="govuk-details__summary govuk-details__summary-message">
+      <span class="govuk-details__summary-text govuk-details__summary-text-message">
+        Land change confirmation
+      </span>
+      <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+        18 November 2023
+      </span>
+    </summary>
+    <div class="govuk-details__text govuk-details__text-message">
+
+    <p class="govuk-body">We have recently updated the Rural Payments service and can now send messages to groups of customers, for example, to remind them to submit an application.</p>
+
+    <p class="govuk-body">Make sure you regularly check your messages for important updates and information.</p>
+
+    <p class="govuk-body">You can find more information about recent updates on the new 'Rural Payments: updates to the service' page on GOV.UK</p>
+
+    <p class="govuk-body">Don't forget to regularly check our page 'Coronavirus (COVID-19): information for farmers, landowners and rural businesses' on GOV.UK that includes all our latest updates during the coronavirus (Covid-19) outbreak.</p>
+
+    <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+    </div>
+  </details>
+
+
+      
+
+    </div>
+  </div>
+
+
+
+{% endblock %}
