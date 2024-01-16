@@ -17,23 +17,16 @@ window.GOVUKPrototypeKit.documentReady(() => {
       });
     });
     
-    // // Dynamic styling of read/unread tag
-    // function updateUnreadMessagesCount() {
-    //   const allMessagesTab = document.querySelector('.govuk-tabs__list-item-ffd a[href="#all-messages"]');
-    //   const allUnreadMessages = document.querySelectorAll('.govuk-details-message-unread');
-    //   const allReadMessages = document.querySelectorAll('.govuk-details-message');
-    //   allMessagesTab.innerHTML = allUnreadMessages.length === 0 ? `All messages <span class="read-message">${allReadMessages.length} read</span>` : `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
-    // }
-
-       // Dynamic styling of read/unread tag
-       function updateUnreadMessagesCount() {
-        // line 23 restores the tab to say `All messages [702 unread]`, but it does not apply the styling when allUnreadMessages.length === 0
-        const allMessagesTab = document.querySelector('.govuk-tabs__list-item-ffd a[href="#all-messages"], .govuk-tabs__list-item-ffd a[href=#overview]');
-        // const allMessagesTab = document.querySelector('.govuk-tabs__list-item-ffd a[href="#all-messages"]');
-        const allUnreadMessages = document.querySelectorAll('.govuk-details-message-unread');
-        const allReadMessages = document.querySelectorAll('.govuk-details-message');
-        allMessagesTab.innerHTML = allUnreadMessages.length === 0 ? `All messages <span class="read-message">${allReadMessages.length} read</span>` : `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
-      }
+    // Dynamic styling of read/unread tag
+    function updateUnreadMessagesCount() {
+      // line 23 updates the message count and applied the correct styling when allUnreadMessages.length === 0, but the wrong message count is shown on the multiple businesses page
+      const allMessagesTab = document.querySelector('.govuk-tabs__list-item-ffd a[href="#all-messages"]');
+      // line 24 restores the All messages tab to a message count of 702, but the message count no longer updates & the correct styling isn't applied when allUnreadMessages.length === 0
+      // const allMessagesTab = document.querySelector('.govuk-tabs__list-item-ffd a[href="#all-messages"], .govuk-tabs__list-item-ffd a[href=#overview]');
+      const allUnreadMessages = document.querySelectorAll('.govuk-details-message-unread');
+      const allReadMessages = document.querySelectorAll('.govuk-details-message');
+      allMessagesTab.innerHTML = allUnreadMessages.length === 0 ? `All messages <span class="read-message">${allReadMessages.length} read</span>` : `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
+    }
 
     updateUnreadMessagesCount();
 
