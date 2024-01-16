@@ -26,7 +26,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
 
       if (allMessagesSb) {
         allMessagesSb.innerHTML = allUnreadMessages.length === 0 ? `All messages <span class="read-message">${allReadMessages.length} read</span>` : `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
-      } else {
+      } else if (allMessagesMb) {
         allMessagesMb.innerHTML = `All messages <span class="unread-message">${699 + allUnreadMessages.length} unread</span>`
       }
     }
