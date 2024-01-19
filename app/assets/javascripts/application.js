@@ -23,7 +23,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
       const allMessagesMb = document.querySelector('.multi-business');
       const allUnreadMessages = document.querySelectorAll('.govuk-details-message-unread');
       const allReadMessages = document.querySelectorAll('.govuk-details-message');
-
+  
       if (allMessagesSb) {
         allMessagesSb.innerHTML = allUnreadMessages.length === 0 ? `All messages <span class="read-message">${allReadMessages.length} read</span>` : `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
       } else if (allMessagesMb) {
@@ -31,12 +31,30 @@ window.GOVUKPrototypeKit.documentReady(() => {
       }
     }
 
-    updateUnreadMessagesCount();
-
     const messageDetails = document.querySelectorAll('.govuk-details');
     messageDetails.forEach(function(details) {
       details.addEventListener('click', function() {
         updateUnreadMessagesCount();
       });
     });
+
+    // Permission toggle
+    const radioContainer = document.querySelectorAll('.radio-container')
+    const detailsComponents = document.querySelectorAll('.permissions-column')
+    
+    radioContainer[0].addEventListener('change', () => {
+      console.log('change on radio-container')
+      detailsComponents.forEach(column => {
+        const button = column.children[1].children[0]
+        if (button.checked) { 
+        column.classList.add('permissions-column-selected')
+        button.parentElement.classList.add('permission-select-selected')
+        //add the styling for green button
+        
+        } else {
+        column.classList.remove('permissions-column-selected')
+        button.parentElement.classList.remove('permission-select-selected')
+        }
+      })
+    })
   })
