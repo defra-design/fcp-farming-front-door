@@ -57,8 +57,8 @@
 
       </summary>
 
-      <div class="govuk-details__text govuk-details__text-message">
-        <fieldset class="govuk-fieldset radio-container">
+      <div class="govuk-details__text govuk-details__text-message radio-container">
+        <fieldset class="govuk-fieldset ">
           <legend class="govuk-fieldset__legend"></legend>
        <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
         <p class="govuk-body">View</p>
@@ -112,7 +112,7 @@
     </details>
 
 
-    <details class="govuk-details govuk-details-permissions">
+    <details class="govuk-details govuk-details-permissions radio-container">
       <summary class="govuk-details__summary govuk-details__summary-permissions">
         <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
           Land details
@@ -132,7 +132,7 @@
       <div class="permissions-column-short govuk-!-margin-right-2 govuk-!-margin-top-2">
        <p class="govuk-body">No access</p>
        <div role="button" tabindex="0" class="permission-select">
-         <input type="radio" name="business-details" class="radio-select" value="View - business">
+         <input type="radio" name="business-details" class="" value="no-access">
          <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
@@ -141,7 +141,7 @@
       <div class="permissions-column-short govuk-!-margin-right-2 govuk-!-margin-top-2">
         <p class="govuk-body">View</p>
        <div role="button" tabindex="0" class="permission-select">
-         <input type="radio" name="business-details" class="radio-select" value="View - business">
+         <input type="radio" name="business-details" class="" value="view">
          <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
@@ -151,7 +151,7 @@
       <div class="permissions-column-short govuk-!-margin-top-2">
        <p class="govuk-body">Amend</p>
        <div role="button" tabindex="0" class="permission-select">
-        <input type="radio" name="business-details" class="radio-select" value="View - business">
+        <input type="radio" name="business-details" class="" value="amend">
         <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
@@ -165,7 +165,7 @@
 
 
 
-    <details class="govuk-details govuk-details-permissions">
+    <details class="govuk-details govuk-details-permissions radio-container">
       <summary class="govuk-details__summary govuk-details__summary-permissions">
         <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
           Entitlements
@@ -202,10 +202,10 @@
        </div>
 
 
-      <div class="permissions-column-selected-short govuk-!-margin-top-2">
+      <div class="permissions-column-short govuk-!-margin-top-2">
        <p class="govuk-body">Amend</p>
-       <div role="button" tabindex="0" class="permission-select-selected">
-        <input type="radio" name="" class="" value="" checked>
+       <div role="button" tabindex="0" class="permission-select">
+        <input type="radio" name="business-details" class="" value="View-business" checked>
         <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
@@ -220,7 +220,7 @@
 
 
 
-    <details class="govuk-details govuk-details-permissions">
+    <details class="govuk-details govuk-details-permissions radio-container">
       <summary class="govuk-details__summary govuk-details__summary-permissions">
         <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
           Basic payment scheme (BPS)
@@ -242,7 +242,7 @@
           I understand that I am responsible for all information provided to the RPA in the application, either by me or someone acting for me, including its accuracy.
         </p>
 
-          <div class="permissions-column-medium govuk-!-margin-right-2 govuk-!-margin-top-2">
+          <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
            <p class="govuk-body">No access</p>
            <div role="button" tabindex="0" class="permission-select">
              <input type="radio" name="business-details" class="" value="View - business">
@@ -251,7 +251,7 @@
              <hr class="permission-line">
            </div>
     
-          <div class="permissions-column-medium govuk-!-margin-right-2 govuk-!-margin-top-2">
+          <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
             <p class="govuk-body">View</p>
            <div role="button" tabindex="0" class="permission-select">
              <input type="radio" name="business-details" class="" value="View - business">
@@ -263,7 +263,7 @@
              <p class="govuk-body">View land, features and covers</p>
            </div>
 
-          <div class="permissions-column-medium govuk-!-margin-right-2 govuk-!-margin-top-2">
+          <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
             <p class="govuk-body">Amend</p>
            <div role="button" tabindex="0" class="permission-select">
              <input type="radio" name="business-details" class="" value="View - business">
@@ -276,10 +276,10 @@
              <p class="govuk-body">Amend land, features and covers</p>
            </div>
     
-          <div class="permissions-column-selected-medium govuk-!-margin-top-2">
+          <div class="permissions-column govuk-!-margin-top-2">
            <p class="govuk-body">Submit</p>
-           <div role="button" tabindex="0" class="permission-select-selected">
-             <input type="radio" name="" class="" value="" checked>
+           <div role="button" tabindex="0" class="permission-select">
+             <input type="radio" name="business-details" class="" value="View - business" checked>
              <label class="permission-label-style">Select</label>
                  </div>
              <hr class="permission-line">
@@ -293,7 +293,7 @@
     </details>
 
     
-    <details class="govuk-details govuk-details-permissions">
+    <details class="govuk-details govuk-details-permissions radio-container">
       <summary class="govuk-details__summary govuk-details__summary-permissions">
         <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
           Countryside Stewardship (Applications)
@@ -350,10 +350,10 @@
        </div>
 
 
-      <div class="permissions-column-selected govuk-!-margin-top-2">
+      <div class="permissions-column govuk-!-margin-top-2">
        <p class="govuk-body">Submit</p>
-       <div role="button" tabindex="0" class="permission-select-selected">
-         <input type="radio" name="" class="" value="" checked>
+       <div role="button" tabindex="0" class="permission-select">
+         <input type="radio" name="business-details" class="" value="View - business">
          <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
@@ -367,7 +367,7 @@
     </details>
 
 
-    <details class="govuk-details govuk-details-permissions">
+    <details class="govuk-details govuk-details-permissions radio-container">
       <summary class="govuk-details__summary govuk-details__summary-permissions">
         <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
           Countryside Stewardship (Agreements)
@@ -384,7 +384,7 @@
 
       <div class="govuk-details__text govuk-details__text-message">
 
-       <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+       <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
         <p class="govuk-body">No access</p>
           <div role="button" tabindex="0" class="permission-select">
             <input type="radio" name="business-details" class="" value="View - business">
@@ -394,7 +394,7 @@
           <p class="govuk-body">No Access</p>
         </div>
 
-      <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+      <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
         <p class="govuk-body">View</p>
        <div role="button" tabindex="0" class="permission-select">
          <input type="radio" name="business-details" class="" value="View - business">
@@ -408,7 +408,7 @@
          <p class="govuk-body">View CS claims</p>
        </div>
 
-      <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+      <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
         <p class="govuk-body">Amend</p>
        <div role="button" tabindex="0" class="permission-select">
          <input type="radio" name="business-details" class="" value="View - business">
@@ -425,10 +425,10 @@
          <p class="govuk-body">Revise a previously submitted agreement transfer</p>
        </div>
 
-      <div class="permissions-column-selected-xl govuk-!-margin-top-2">
+      <div class="permissions-column govuk-!-margin-top-2">
         <p class="govuk-body">Submit</p>
-       <div role="button" tabindex="0" class="permission-select-selected">
-        <input type="radio" name="" class="" value="" checked>
+       <div role="button" tabindex="0" class="permission-select">
+        <input type="radio" name="business-details" class="" value="View - business">
          <label class="permission-label-style">Select</label>
              </div>
          <hr class="permission-line">
@@ -447,7 +447,7 @@
     </details>
 
 
-    <details class="govuk-details govuk-details-permissions">
+    <details class="govuk-details govuk-details-permissions radio-container">
       <summary class="govuk-details__summary govuk-details__summary-permissions">
         <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
           Environmental Land Management (Applications)
@@ -464,17 +464,17 @@
 
       <div class="govuk-details__text govuk-details__text-message">
 
-       <div class="permissions-column-selected-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+       <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
         <p class="govuk-body">No access</p>
-        <div role="button" tabindex="0" class="permission-select-selected">
-          <input type="radio" name="" class="" value="" checked>
+        <div role="button" tabindex="0" class="permission-select">
+          <input type="radio" name="business-details" class="" value="View - business" checked>
           <label class="permission-label-style">Select</label>
               </div>
           <hr class="permission-line">
           <p class="govuk-body">No Access</p>
         </div>
 
-      <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+      <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
         <p class="govuk-body">View</p>
        <div role="button" tabindex="0" class="permission-select">
          <input type="radio" name="business-details" class="" value="View - business">
@@ -487,7 +487,7 @@
          <p class="govuk-body">View Environmental Land Management agreement offer</p>
        </div>
 
-      <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+      <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
         <p class="govuk-body">Amend</p>
        <div role="button" tabindex="0" class="permission-select">
          <input type="radio" name="business-details" class="" value="View - business">
@@ -501,7 +501,7 @@
          <p class="govuk-body">Amend land, features and covers</p>
        </div>
 
-      <div class="permissions-column-xl govuk-!-margin-top-2">
+      <div class="permissions-column govuk-!-margin-top-2">
         <p class="govuk-body">Submit</p>
         <div role="button" tabindex="0" class="permission-select">
           <input type="radio" name="business-details" class="" value="View - business">

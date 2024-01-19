@@ -40,21 +40,26 @@ window.GOVUKPrototypeKit.documentReady(() => {
 
     // Permission toggle
     const radioContainer = document.querySelectorAll('.radio-container')
-    const detailsComponents = document.querySelectorAll('.permissions-column')
+    const detailsComponents = document.querySelectorAll('.permissions-column, .permissions-column-short')
     
-    radioContainer[0].addEventListener('change', () => {
-      console.log('change on radio-container')
-      detailsComponents.forEach(column => {
-        const button = column.children[1].children[0]
-        if (button.checked) { 
-        column.classList.add('permissions-column-selected')
-        button.parentElement.classList.add('permission-select-selected')
-        //add the styling for green button
-        
-        } else {
-        column.classList.remove('permissions-column-selected')
-        button.parentElement.classList.remove('permission-select-selected')
-        }
+    radioContainer.forEach((container)=> {
+     container.addEventListener('change', () => {
+        console.log('change on radio-container')
+        console.log(detailsComponents)
+        detailsComponents.forEach(column => {
+          const button = column.children[1].children[0]
+          console.log(button)
+          const columnTypeRegular = column.classList.contains('permissions-column')
+          if (button.checked) { 
+            columnTypeRegular  ?  column.classList.add('permissions-column-selected') : column.classList.add('permissions-column-selected-short')
+            //add the styling for green button
+            button.parentElement.classList.add('permission-select-selected')
+          } else {
+            column.classList.remove('permissions-column-selected')
+            column.classList.remove('permissions-column-selected-short')
+            button.parentElement.classList.remove('permission-select-selected')
+          }
+        })
       })
     })
-  })
+    })
