@@ -43,26 +43,43 @@ window.GOVUKPrototypeKit.documentReady(() => {
 
     // Permission toggle
     const radioContainer = document.querySelectorAll('.radio-container')
-    const detailsComponents = document.querySelectorAll('.permissions-column, .permissions-column-short')
+    const detailsComponents = document.querySelectorAll('.permissions-column, .permissions-column-short, .permissions-column-xl')
     
     radioContainer.forEach((container)=> {
      container.addEventListener('change', () => {
-        console.log('change on radio-container')
-        console.log(detailsComponents)
         detailsComponents.forEach(column => {
           const button = column.children[1].children[0]
-          console.log(button)
           const columnTypeRegular = column.classList.contains('permissions-column')
           if (button.checked) { 
-            columnTypeRegular  ?  column.classList.add('permissions-column-selected') : column.classList.add('permissions-column-selected-short')
+            columnTypeRegular  ?  column.classList.add('permissions-column-selected') : column.classList.add('permissions-column-selected-short') 
+            // also needs column.classList.add('permissions-column-selected-xl') 
             //add the styling for green button
             button.parentElement.classList.add('permission-select-selected')
           } else {
             column.classList.remove('permissions-column-selected')
             column.classList.remove('permissions-column-selected-short')
+            column.classList.remove('permissions-column-selected-xl')
             button.parentElement.classList.remove('permission-select-selected')
           }
         })
       })
     })
     })
+
+
+    // Permission text change on dropdown
+    function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
