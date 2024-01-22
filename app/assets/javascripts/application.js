@@ -40,7 +40,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
 
     // Permission toggle
     const radioContainer = document.querySelectorAll('.radio-container')
-    const detailsComponents = document.querySelectorAll('.permissions-column, .permissions-column-short')
+    const detailsComponents = document.querySelectorAll('.permissions-column, .permissions-column-short, .permissions-column-xl')
     
     radioContainer.forEach((container)=> {
      container.addEventListener('change', () => {
@@ -48,12 +48,14 @@ window.GOVUKPrototypeKit.documentReady(() => {
           const button = column.children[1].children[0]
           const columnTypeRegular = column.classList.contains('permissions-column')
           if (button.checked) { 
-            columnTypeRegular  ?  column.classList.add('permissions-column-selected') : column.classList.add('permissions-column-selected-short')
+            columnTypeRegular  ?  column.classList.add('permissions-column-selected') : column.classList.add('permissions-column-selected-short') 
+            // also needs column.classList.add('permissions-column-selected-xl') 
             //add the styling for green button
             button.parentElement.classList.add('permission-select-selected')
           } else {
             column.classList.remove('permissions-column-selected')
             column.classList.remove('permissions-column-selected-short')
+            column.classList.remove('permissions-column-selected-xl')
             button.parentElement.classList.remove('permission-select-selected')
           }
         })
