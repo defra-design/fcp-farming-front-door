@@ -62,3 +62,21 @@ window.GOVUKPrototypeKit.documentReady(() => {
       })
     })
     })
+
+
+    // Permission text change on dropdown
+    function updateSummaryText(details) {
+            const summary = details.querySelector('.govuk-details__summary-text-permissions2');
+            if (details.open) {
+              summary.textContent = "Hide permission level"
+            } else {
+              summary.textContent = "View or change permission level"
+            }
+          }
+          document.querySelectorAll('.govuk-details').forEach(details => {
+            updateSummaryText(details)
+          
+            details.addEventListener('toggle', (event) => {
+              updateSummaryText(details)
+            })
+          })
