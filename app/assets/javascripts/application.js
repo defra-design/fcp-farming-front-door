@@ -23,9 +23,12 @@ window.GOVUKPrototypeKit.documentReady(() => {
       const allMessagesMb = document.querySelector('.multi-business');
       const allUnreadMessages = document.querySelectorAll('.govuk-details-message-unread');
       const allReadMessages = document.querySelectorAll('.govuk-details-message');
+      const sbOverview = document.querySelector('#sb-unread')
   
       if (allMessagesSb) {
         allMessagesSb.innerHTML = allUnreadMessages.length === 0 ? `All messages <span class="read-message">${allReadMessages.length} read</span>` : `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
+        sbOverview.innerHTML = allUnreadMessages.length === 0 ? `<span class="read-message">${allReadMessages.length} read</span>` : `<span class="unread-message">${allUnreadMessages.length} unread</span>`
+        // sbOverview.parentNode.classList.remove()
       } else if (allMessagesMb) {
         allMessagesMb.innerHTML = `All messages <span class="unread-message">${699 + allUnreadMessages.length} unread</span>`
       }
