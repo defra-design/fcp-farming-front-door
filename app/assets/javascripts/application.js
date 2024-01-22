@@ -44,11 +44,8 @@ window.GOVUKPrototypeKit.documentReady(() => {
     
     radioContainer.forEach((container)=> {
      container.addEventListener('change', () => {
-        console.log('change on radio-container')
-        console.log(detailsComponents)
         detailsComponents.forEach(column => {
           const button = column.children[1].children[0]
-          console.log(button)
           const columnTypeRegular = column.classList.contains('permissions-column')
           if (button.checked) { 
             columnTypeRegular  ?  column.classList.add('permissions-column-selected') : column.classList.add('permissions-column-selected-short')
