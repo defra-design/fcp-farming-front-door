@@ -28,7 +28,6 @@ window.GOVUKPrototypeKit.documentReady(() => {
       if (allMessagesSb) {
         allMessagesSb.innerHTML = allUnreadMessages.length === 0 ? `All messages <span class="read-message">${allReadMessages.length} read</span>` : `All messages <span class="unread-message">${allUnreadMessages.length} unread</span>`
         sbOverview.innerHTML = allUnreadMessages.length === 0 ? `<span class="read-message">${allReadMessages.length} read</span>` : `<span class="unread-message">${allUnreadMessages.length} unread</span>`
-        // sbOverview.parentNode.classList.remove()
       } else if (allMessagesMb) {
         allMessagesMb.innerHTML = `All messages <span class="unread-message">${699 + allUnreadMessages.length} unread</span>`
       }
@@ -50,11 +49,18 @@ window.GOVUKPrototypeKit.documentReady(() => {
         detailsComponents.forEach(column => {
           const button = column.children[1].children[0]
           const columnTypeRegular = column.classList.contains('permissions-column')
-          if (button.checked) { 
-            columnTypeRegular  ?  column.classList.add('permissions-column-selected') : column.classList.add('permissions-column-selected-short') 
-            // also needs column.classList.add('permissions-column-selected-xl') 
-            //add the styling for green button
-            button.parentElement.classList.add('permission-select-selected')
+          const parentClass = 'permission-select-selected'
+          let columnClass
+          if (button.checked) {
+              if (column.classList.contains('permissions-column')) {
+                 columnClass = 'permissions-column-selected'
+              } else if (column.classList.contains('permissions-column-short')) {
+                 columnClass = 'permissions-column-selected-short'
+              } else if (column.classList.contains('permissions-column-xl')) {
+               columnClass = 'permissions-column-selected-xl'
+            }
+              column.classList.add(columnClass)
+              button.parentElement.classList.add(parentClass)
           } else {
             column.classList.remove('permissions-column-selected')
             column.classList.remove('permissions-column-selected-short')
