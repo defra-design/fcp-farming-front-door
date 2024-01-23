@@ -28,7 +28,7 @@
           </a>
         </li>
         <li class="govuk-tabs__list-item govuk-tabs__list-item-ffd">
-          <a class="govuk-tabs__tab" href="#all-messages">
+          <a class="govuk-tabs__tab single-business" href="#all-messages">
             All messages<div class="unread-message">1 unread</div></a>
         </li>
       </ul>
@@ -50,7 +50,9 @@
                   <th scope="row" class="govuk-table__header">MCBRIDE PARTNERSHIP LTD,<p class="govuk-!-margin-bottom-0">SBI: 108364021</p></th>
                   <td class="govuk-table__cell"><a href="business-overview">View business</a></td>
                   <td class="govuk-table__cell"><a href="view-messages">View messages</a></td>
-                  <td class="govuk-table__cell"><div class="unread-message">1 unread</div></td>
+                  <td class="govuk-table__cell"><div id="sb-unread"><span class="unread-message">1 unread</span></div>
+                    
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -145,7 +147,7 @@
             <p class="govuk-body">S80 9FG</p>
 
             <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
-            <script>
+            <!-- <script>
               var element = document.getElementById("messageRead");
                 element.addEventListener('click', (event) => {
                   var list = element.classList
@@ -155,7 +157,7 @@
                   }
                 }             
                 )
-            </script>
+            </script> -->
           </div>
         </details>
 
