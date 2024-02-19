@@ -1,4 +1,4 @@
-import { getFragmentFromUrl } from '../../common/index.mjs';
+import { getFragmentFromUrl, setFocus } from '../../common/index.mjs';
 import { ElementError } from '../../errors/index.mjs';
 import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
 
@@ -18,8 +18,6 @@ class SkipLink extends GOVUKFrontendComponent {
     var _this$$module$getAttr;
     super();
     this.$module = void 0;
-    this.$linkedElement = void 0;
-    this.linkedElementListener = false;
     if (!($module instanceof HTMLAnchorElement)) {
       throw new ElementError({
         componentName: 'Skip link',
@@ -52,29 +50,14 @@ class SkipLink extends GOVUKFrontendComponent {
         identifier: `Target content (\`id="${linkedElementId}"\`)`
       });
     }
-    this.$linkedElement = $linkedElement;
-    this.$module.addEventListener('click', () => this.focusLinkedElement());
-  }
-  focusLinkedElement() {
-    if (!this.$linkedElement) {
-      return;
-    }
-    if (!this.$linkedElement.getAttribute('tabindex')) {
-      this.$linkedElement.setAttribute('tabindex', '-1');
-      this.$linkedElement.classList.add('govuk-skip-link-focused-element');
-      if (!this.linkedElementListener) {
-        this.$linkedElement.addEventListener('blur', () => this.removeFocusProperties());
-        this.linkedElementListener = true;
+    this.$module.addEventListener('click', () => setFocus($linkedElement, {
+      onBeforeFocus() {
+        $linkedElement.classList.add('govuk-skip-link-focused-element');
+      },
+      onBlur() {
+        $linkedElement.classList.remove('govuk-skip-link-focused-element');
       }
-    }
-    this.$linkedElement.focus();
-  }
-  removeFocusProperties() {
-    if (!this.$linkedElement) {
-      return;
-    }
-    this.$linkedElement.removeAttribute('tabindex');
-    this.$linkedElement.classList.remove('govuk-skip-link-focused-element');
+    }));
   }
 }
 SkipLink.moduleName = 'govuk-skip-link';
