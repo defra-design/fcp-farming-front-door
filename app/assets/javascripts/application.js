@@ -86,29 +86,27 @@ window.GOVUKPrototypeKit.documentReady(() => {
   // Message history: checkbox filtering
   const forAction = document.getElementById('messageFilter')
   const forInformation = document.getElementById('messageFilter-2')
-  const actionMessages = document.querySelectorAll('.govuk-table__row.action')
-  const informationMessages = document.querySelectorAll('.govuk-table__row.information')
+  const actionMessages = document.querySelectorAll('.action')
+  const informationMessages = document.querySelectorAll('.information')
 
   function filterMessages() {
-    if (forAction.checked && !forInformation.checked) {
-      actionMessages.forEach(function (message) {
+    const displayAction = forAction.checked ? 'table-row' : 'none'
+    const displayInformation = forInformation.checked ? 'table-row' : 'none'
+
+    actionMessages.forEach((message) => {
+      message.style.display = displayAction
+    })
+
+    informationMessages.forEach((message) => {
+      message.style.display = displayInformation
+    })
+
+    if(!forAction.checked && !forInformation.checked) {
+      actionMessages.forEach((message) => {
         message.style.display = 'table-row'
       })
-      informationMessages.forEach(function (message) {
-        message.style.display = 'none'
-      })
-    } else if (!forAction.checked && forInformation.checked) {
-      informationMessages.forEach(function (message) {
-        message.style.display = 'table-row'
-      })  
-      actionMessages.forEach(function (message) {
-        message.style.display = 'none'
-      })
-    } else {
-      actionMessages.forEach(function (message) {
-        message.style.display = 'table-row' 
-      })
-      informationMessages.forEach(function (message) {
+
+      informationMessages.forEach((message) => {
         message.style.display = 'table-row'
       })
     }
