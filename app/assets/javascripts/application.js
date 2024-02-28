@@ -87,45 +87,35 @@ window.GOVUKPrototypeKit.documentReady(() => {
   const forAction = document.getElementById('messageFilter')
   const forInformation = document.getElementById('messageFilter-2')
   const actionMessages = document.querySelectorAll('.govuk-table__row.action')
-  const informationMessages = document.querySelectorAll(
-    '.govuk-table__row.information'
-  )
+  const informationMessages = document.querySelectorAll('.govuk-table__row.information')
 
-  forAction.addEventListener('change', function () {
-    if (forAction.checked) {
+  function filterMessages() {
+    if (forAction.checked && !forInformation.checked) {
       actionMessages.forEach(function (message) {
         message.style.display = 'table-row'
       })
       informationMessages.forEach(function (message) {
         message.style.display = 'none'
       })
-    } else {
-      actionMessages.forEach(function (message) {
-        message.style.display = 'table-row'
-      })
+    } else if (!forAction.checked && forInformation.checked) {
       informationMessages.forEach(function (message) {
         message.style.display = 'table-row'
-      })
-    }
-  })
-
-  forInformation.addEventListener('change', function () {
-    if (forInformation.checked) {
-      informationMessages.forEach(function (message) {
-        message.style.display = 'table-row'
-      })
+      })  
       actionMessages.forEach(function (message) {
         message.style.display = 'none'
       })
     } else {
+      actionMessages.forEach(function (message) {
+        message.style.display = 'table-row' 
+      })
       informationMessages.forEach(function (message) {
         message.style.display = 'table-row'
       })
-      actionMessages.forEach(function (message) {
-        message.style.display = 'table-row'
-      })
     }
-  })
+  }
+
+  forAction.addEventListener('change', filterMessages)
+  forInformation.addEventListener('change', filterMessages)
 })
 
 // Permission text change on dropdown
