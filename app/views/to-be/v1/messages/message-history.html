@@ -5,12 +5,110 @@
 {% block content %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
 
 
     <h1 class="govuk-heading-xl">
       Your message history
     </h1>
+
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-quarter">
+         
+              <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    <h2 class="govuk-fieldset__heading">
+                      Filter
+                    </h2>
+                  </legend>
+                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="messageFilter" name="messageFilter" type="checkbox" value="action">
+                      <label class="govuk-label govuk-checkboxes__label" for="messageFilter">
+                        For action
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="messageFilter-2" name="messageFilter" type="checkbox" value="info">
+                      <label class="govuk-label govuk-checkboxes__label" for="messageFilter-2">
+                        For information
+                      </label>
+                    </div>
+                  </div>
+              </fieldset>
+            </div>              
+          </div>
+    
+          
+
+          <div class="govuk-grid-column-three-quarters">
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Message</th>
+                  <th scope="col" class="govuk-table__header">Date received</th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Claim submitted for annual health and welfare review of livestock</a></td>
+                  <td class="govuk-table__cell">21 February 2024</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Mapping updates for Agile Farms Ltd</a></td>
+                  <td class="govuk-table__cell">20 February 2024</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">BPS application submitted</a></td>
+                  <td class="govuk-table__cell">11 February 2024</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Help us to help you: useful information</a></td>
+                  <td class="govuk-table__cell">21 January 2024</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Changes to land and maps for Agile Farms Ltd</a></td>
+                  <td class="govuk-table__cell">14 January 2024</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Countryside Stewardship CS Mid-Tier offer for Agile Farms Ltd</a></td>
+                  <td class="govuk-table__cell">2 January 2024</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Permission removed from N.G. Reynolds</a></td>
+                  <td class="govuk-table__cell">19 December 2023</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Permission changes for P.Smith</a></td>
+                  <td class="govuk-table__cell">13 December 2023</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Sustainable Farming incentive - agreement confirmation</a></td>
+                  <td class="govuk-table__cell">5 November 2023</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell"><a href="">Changes to land and maps for Agile Farms Ltd</a></td>
+                  <td class="govuk-table__cell">30 September 2023</td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="govuk-pagination govuk-pagination--block" role="navigation" aria-label="Pagination" data-module="ga4-link-tracker" data-ga4-link-tracker-module-started="true">
+
+              <div class="govuk-pagination__next">
+                <a class="govuk-link govuk-pagination__link" href="/business-finance-support?page=2" rel="next" data-track-category="contentsClicked" data-track-action="next" data-track-label="/business-finance-support?page=2" data-track-dimension="next" data-track-dimension-index="29" data-ga4-link="{&quot;event_name&quot;:&quot;navigation&quot;,&quot;type&quot;:&quot;previous and next&quot;,&quot;text&quot;:&quot;2 of 3&quot;,&quot;section&quot;:&quot;Next&quot;}">
+                  <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                    <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+                  </svg>
+                  <span class="govuk-pagination__link-title">Next page</span>
+                    <span class="govuk-visually-hidden">:</span>
+                    <span class="govuk-pagination__link-label">1 of 2</span>
+                </a>
+              </div>
+          </nav>
+          </div>
+        </div>
 
 
 
