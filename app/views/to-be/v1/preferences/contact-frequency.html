@@ -13,6 +13,7 @@
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
+        <form action="contact-preferences-initial?saveMethod=&saveItems=&saveFrequency=True" method="post">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -32,19 +33,19 @@
 
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="frequency" name="frequency" type="radio" value="immediate">
+                <input class="govuk-radios__input" id="frequency" name="frequency" type="radio" value="immediate" {{ checked('frequency','immediate') }}>
                 <label class="govuk-label govuk-radios__label" for="frequency">
                   Immediately
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="frequency-2" name="frequency" type="radio" value="weekly" checked>
+                <input class="govuk-radios__input" id="frequency-2" name="frequency" type="radio" value="weekly" {{ checked('frequency','weekly') }}>
                 <label class="govuk-label govuk-radios__label" for="frequency-2">
                   Weekly
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="frequency-3" name="frequency" type="radio" value="monthly">
+                <input class="govuk-radios__input" id="frequency-3" name="frequency" type="radio" value="monthly" {{ checked('frequency','monthly') }}>
                 <label class="govuk-label govuk-radios__label" for="frequency-3">
                   Monthly
                 </label>
@@ -52,10 +53,10 @@
             </div> <!-- radio group -->
           </fieldset>
 
-          <a href="contact-preferences-frequency" role="button" draggable="false" class="govuk-button govuk-!-margin-top-5" data-module="govuk-button">
-            Save
-          </a>
-        </div> <!-- form group -->
+          <input type="submit" class="govuk-button govuk-!-margin-top-5" value="Save">
+        </input>
+        </div> 
+        </form><!-- form group -->
       </div>
     </div>
   </div>

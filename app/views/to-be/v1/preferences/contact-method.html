@@ -9,11 +9,13 @@
   }) }}
 {% endblock %}
 
+
 {% block content %}
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
 
+        <form action="contact-preferences-initial?saveMethod=True&saveItems=" method="post">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -30,7 +32,7 @@
 
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="contact" name="contact" type="checkbox" value="email" data-aria-controls="conditional-contact" checked>
+                <input class="govuk-checkboxes__input" id="contact" name="contact" type="checkbox" value="email" data-aria-controls="conditional-contact" {{ checked('contact','email') }}>
                 <label class="govuk-label govuk-checkboxes__label" for="contact">
                   Email
                 </label>
@@ -46,7 +48,7 @@
               </div>
 
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="contact-3" name="contact" type="checkbox" value="text message" data-aria-controls="conditional-contact-3">
+                <input class="govuk-checkboxes__input" id="contact-3" name="contact" type="checkbox" value="text message" data-aria-controls="conditional-contact-3" {{ checked('contact','text message') }}>
                 <label class="govuk-label govuk-checkboxes__label" for="contact-3">
                   Text message
                 </label>
@@ -62,11 +64,11 @@
 
             </div> <!-- checkbox group -->
           </fieldset>
-
-          <a href="contact-preferences-method" role="button" draggable="false" class="govuk-button govuk-!-margin-top-5" data-module="govuk-button">
-            Save
-          </a>
-        </div> <!-- form group -->
+          <input type="submit" class="govuk-button govuk-!-margin-top-5" value="Save">
+        </input>
+        </div>
+      </form>
+      <!-- form group -->
       </div>
     </div>
   </div>

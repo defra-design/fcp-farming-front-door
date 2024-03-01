@@ -14,6 +14,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
 
+        <form action="contact-preferences-initial?saveItems=True&saveMethod=" method="post">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -27,23 +28,22 @@
             <p class="govuk-body">
               This service automatically keeps a record of all account updates.
             </p>
-
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="whatItems" name="whatItems" type="radio" value="allUpdates" checked>
+                <input class="govuk-radios__input" id="whatItems" name="whatItems" type="radio" value="allUpdates" {{ checked('whatItems','allUpdates') }}>
                 <label class="govuk-label govuk-radios__label" for="whatItems">
                   All updates
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="whatItems-2" name="whatItems" type="radio" value="actionUpdates">
+                <input class="govuk-radios__input" id="whatItems-2" name="whatItems" type="radio" value="actionUpdates" {{ checked('whatItems','actionUpdates') }}>
                 <label class="govuk-label govuk-radios__label" for="whatItems-2">
                   Only updates that need action
                 </label>
               </div>
 
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="whatItems-3" name="whatItems" type="radio" value="email" data-aria-controls="conditional-contact">
+                <input class="govuk-radios__input" id="whatItems-3" name="whatItems" type="radio" value="noUpdate" data-aria-controls="conditional-contact" {{ checked('whatItems','noUpdate') }}>
                 <label class="govuk-label govuk-radios__label" for="whatItems-3">
                   I do not want to be contacted about updates
                 </label>
@@ -63,6 +63,7 @@
             </div> <!-- radio group -->
           </fieldset>
 
+
     <!--      <div class="govuk-warning-text govuk-!-margin-top-5">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
             <strong class="govuk-warning-text__text">
@@ -71,10 +72,10 @@
             </strong>
           </div> -->
 
-          <a href="contact-preferences-items" role="button" draggable="false" class="govuk-button govuk-!-margin-top-5" data-module="govuk-button">
-            Save
-          </a>
-        </div> <!-- form group -->
+          <input type="submit" class="govuk-button govuk-!-margin-top-5" value="Save">
+        </input>
+        </div>
+        </form> <!-- form group -->
 
       </div>
     </div>
