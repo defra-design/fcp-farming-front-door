@@ -5,7 +5,9 @@
 
 // Add extra styles here
 
-
+a:link, .govuk-link:link {
+  color: #1d70b8;
+}
 .govuk-button-teeny {
   font-size: 1rem;
 }

@@ -9,15 +9,121 @@
 
 
     <h1 class="govuk-heading-xl">
-      Initial exploration (v1)
+      Version 1
     </h1>
 
-    <a href="start/start" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+
+    <a href="start/sign-in" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
       Start prototype
       <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
         <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
       </svg></a>
+
+
+      <h2 class="govuk-heading-m">
+        Page links
+      </h2>
+
+      <p class="govuk-body">Service start:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><a class="govuk-link--no-visited-state" href="start/start">Service start page</a></li>
+        <li><a class="govuk-link--no-visited-state" href="start/sign-in">Sign in</a></li>
+        <li><a class="govuk-link--no-visited-state" href="start/landing">Landing page</a></li>
+      </ul>
+
+      <p class="govuk-body">Messages:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><a class="govuk-link--no-visited-state" href="messages/message-history">Message history</a></li>
+        <li><a class="govuk-link--no-visited-state" href="messages/msg-1">Message example 1<br>Claim submitted for annual health and welfare review of livestock</a></li>
+        <li><a class="govuk-link--no-visited-state" href="messages/msg-2">Message example 2<br>Bespoke messages</a></li>
+      </ul>
+
+      <p class="govuk-body">Contact preferences:</p>
+
+
     
+      <p class="govuk-body">Email templates:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+       <li><a class="govuk-link--no-visited-state" href="messages/email-action">For action email<br> Annual health and welfare review: claim your funding by 29 February 2024</a></li>
+       <li><a class="govuk-link--no-visited-state" href="messages/email-info">For information email<br> Claim submitted for annual health and welfare review of livestock</a></li>
+      </ul>
+
+      <h2 class="govuk-heading-m">
+        Ideas and hypotheses to test
+      </h2>
+  
+  
+  <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--s">How might we make our communication with users more consistent/streamlined?
+    </caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Idea</th>
+        <th scope="col" class="govuk-table__header">Hypotheses</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">We could have a record of events/comms in the service, but users receive the messages by email</th>
+        <td class="govuk-table__cell">If we send users message content by email instead of forcing them to log in to the service to read their messages<br>
+          Then users will be less frustrated as there are less steps to read the message<br>
+          We'll know this works people tell us they prefer to receive message content within an email without having to log in to the service<br><br>
+  
+          If we display all email content sent to users in a history/repository within the service,<br>
+          Then users will feel reassured that they can find past messages from Defra, in case they need to refer back to anything<br>
+          We'll know this works users show they can confidently refer to their message history
+  
+          </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--s">How might we stop users feeling overwhelmed by contact from Defra
+    </caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Idea</th>
+        <th scope="col" class="govuk-table__header">Hypotheses</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">We could allow users to filter messages by for info and for action</th>
+        <td class="govuk-table__cell">If we allow users to sort messages by 'for action', and 'for information'<br>
+          Then they can organise their messages by priority<br>
+          We'll know this works they're able to more quickly find the things they need to do
+          </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">We could let users choose how they receive notifications from Defra</th>
+        <td class="govuk-table__cell">If we allow users to choose which channel they receive notifications on<br>
+          Then they can use the channel that they use regularly and feels natural<br>
+          We'll know this works when they are not frustrated by having to search for notifications or miss them
+          </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">We could let users choose what updates from Defra they want to be notified about</th>
+        <td class="govuk-table__cell">If we allow users to choose which updates from Defra they want to be notified about
+          <br>
+          Then they will not be overwhelmed with irrelevant updates that they're not interested in and cause stress or they could choose to not receive any<br>
+          We'll know this works when users feel they are only receiving updates they want to receive.
+          </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">We could let users choose how often Defra notifies them about things that don't require them to take action</th>
+        <td class="govuk-table__cell">If we allow users to choose how often Defra contacts them about updates that don't require them to do anything<br>
+          Then they can plan and manage how they deal with these communications<br>
+          We'll know this works when users don't feel overwhelmed by irrelevant information and can manage this information
+          </td>
+      </tr>
+    </tbody>
+  </table>
+  
   
   </div>
 </div>

@@ -1,0 +1,56 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/start/landing">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/messages/message-history">Your message history</a>
+    </li>
+  </ol>
+</div>
+{% endblock beforeContent%} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <span class="govuk-caption-l">Email from:</span>
+    <h1 class="govuk-heading-l">Defra</h1>
+
+    <p class="govuk-body-s govuk-!-margin-bottom-1">Sent 19 December 2023 at 3.32pm</p>
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          Bespoke messages
+        </h2>
+      </div>
+      <div class="govuk-summary-card__content">
+
+          <p class="govuk-body">We have recently updated the Rural Payments service and can now send messages to groups of customers, for example, to remind them to submit an application.</p>
+
+          <p class="govuk-body">Make sure you regularly check your messages for important updates and information.</p>
+
+          <p class="govuk-body">You can find more information about recent updates on the new 'Rural Payments: updates to the service' page on GOV.UK</p>
+
+          <p class="govuk-body">Don't forget to regularly check our page 'Coronavirus (COVID-19): information for farmers, landowners and rural businesses' on GOV.UK that includes all our latest updates during the coronavirus (Covid-19) outbreak.</p>
+
+          
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

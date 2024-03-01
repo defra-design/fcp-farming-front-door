@@ -1,0 +1,66 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/start/landing">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/messages/message-history">Your message history</a>
+    </li>
+  </ol>
+</div>
+{% endblock beforeContent%} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <span class="govuk-caption-l">Email from:</span>
+    <h1 class="govuk-heading-l">Annual health and welfare review</h1>
+
+    <p class="govuk-body-s govuk-!-margin-bottom-1">Sent 6 March 2024 at 9.56am</p>
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          Claim submitted for annual health and welfare review of livestock
+        </h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <p class="govuk-body">Claim number: AHWR 1234 5678</p>
+        <p class="govuk-body">Your claim has been successfully submitted.</p>
+
+        <h2 class="govuk-heading-s">What happens next</h2>
+        <p class="govuk-body">The Rural Payments Agency (RPA) may contact you to request the review summary the vet has given you.</p>
+  
+        <h2 class="govuk-heading-s">Get help with your claim</h2>
+          <p class="govuk-body">Contact the RPA if you need to change the details of your claim.</p>
+            
+          <p class="govuk-body">Have your agreement number with you when you call or include it in your email.</p>
+          <ul class="govuk-list">
+            <li>Email: <a class="govuk-link" href="mailto:ruralpayments@defra.gov.uk">ruralpayments@defra.gov.uk</a></li>
+            <br>
+            <li>Telephone: 03000 200 301</li>
+            <li>Monday to Friday, 8:30am to 5pm, except bank holidays</li>
+          </ul>
+          <p class="govuk-body">Find out about call charges at <a href="https://www.gov.uk/call-charges"> https://www.gov.uk/call-charges</a></p>                      
+          <p class="govuk-body">Find a record of emails from Defra in <a class="govuk-link--no-visited-state" href="/to-be/v1/start/sign-in">your account</a>. 
+          </p>
+          
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
