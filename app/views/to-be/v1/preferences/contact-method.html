@@ -1,0 +1,73 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: 'javascript:history.go(-1)'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">
+                How Defra will contact you
+              </h1>
+            </legend>
+            <p class="govuk-body">
+              Choose how you want to receive notifications.
+            </p>
+            <div id="contact-hint" class="govuk-hint">
+              Select all that apply.
+            </div>
+
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="contact" name="contact" type="checkbox" value="email" data-aria-controls="conditional-contact" checked>
+                <label class="govuk-label govuk-checkboxes__label" for="contact">
+                  Email
+                </label>
+              </div>
+              <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="contact-by-email">
+                    Email address
+                  </label>
+
+                  <input class="govuk-input" id="contact-by-email" name="contactByEmail" type="email" spellcheck="false" autocomplete="email" value="john.smith@home.co.uk">
+                </div>
+              </div>
+
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="contact-3" name="contact" type="checkbox" value="text message" data-aria-controls="conditional-contact-3">
+                <label class="govuk-label govuk-checkboxes__label" for="contact-3">
+                  Text message
+                </label>
+              </div>
+              <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-contact-3">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="contact-by-text">
+                    Enter the telephone number you want notifications to be sent to
+                  </label>
+                  <input class="govuk-input govuk-input--width-20" id="contact-by-text" name="contactByText" type="tel" autocomplete="tel" value="01234 567890">
+                </div>
+              </div>
+
+            </div> <!-- checkbox group -->
+          </fieldset>
+
+          <a href="contact-preferences-method" role="button" draggable="false" class="govuk-button govuk-!-margin-top-5" data-module="govuk-button">
+            Save
+          </a>
+        </div> <!-- form group -->
+      </div>
+    </div>
+  </div>
+{% endblock %}

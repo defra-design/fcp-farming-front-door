@@ -20,8 +20,10 @@
       } %}
 
       {% set incompleteStatus = {
-        text: "Incomplete",
-        classes: "govuk-tag--blue"
+        tag: {
+          text: "Incomplete",
+          classes: "govuk-tag--blue"
+        }
       } %}
 
       {# To switch between the completed and incomplete statues, use some inline logic within the component below, like this: "status: (completedStatus if ... else incompleteStatus)" #}

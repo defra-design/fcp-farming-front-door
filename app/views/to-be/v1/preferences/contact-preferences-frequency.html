@@ -1,0 +1,102 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/to-be/v1/start/landing"
+      },
+      {
+        text: "Manage your contact preferences"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+      {% set html %}
+        <h3 class="govuk-notification-banner__heading">
+          You have updated your contact preferences
+        </h3>
+        <p class="govuk-body">
+          Defra will send updates that do not need action monthly.
+        </p>
+      {% endset %}
+
+      {{ govukNotificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        Manage your contact preferences
+      </h1>
+      <p class="govuk-body">
+        Tell us how you’d like to be contacted about updates to your account.
+      </p>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            How Defra will contact you
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Text
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="contact-method">Change</a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            What Defra will contact you about
+          </dt>
+          <dd class="govuk-summary-list__value">
+            All updates
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="contact-items">Change</a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            How often Defra will contact you with updates that need action
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Immediately
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            How often Defra will contact you with updates that do not need action
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Monthly
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="contact-frequency">Change</a>
+          </dd>
+        </div>
+      </dl>
+
+      <a href="/to-be/v1/start/landing" class="govuk-link">
+        Return home
+      </a>
+    </div
+  </div>
+</div>
+{% endblock %}
