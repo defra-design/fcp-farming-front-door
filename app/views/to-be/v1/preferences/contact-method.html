@@ -15,7 +15,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
 
-        <form action="contact-preferences-initial?saveMethod=True&saveItems=" method="post">
+        <form action="contact-preferences-initial?saveMethod=True&saveItems=&saveFrequency=" method="post">
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -32,7 +32,7 @@
 
             <div class="govuk-checkboxes" data-module="govuk-checkboxes">
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="contact" name="contact" type="checkbox" value="email" data-aria-controls="conditional-contact" {{ checked('contact','email') }}>
+                <input class="govuk-checkboxes__input" id="contact" name="contact" type="checkbox" value="Email" data-aria-controls="conditional-contact" {{ checked('contact','Email') }}>
                 <label class="govuk-label govuk-checkboxes__label" for="contact">
                   Email
                 </label>
@@ -48,7 +48,7 @@
               </div>
 
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="contact-3" name="contact" type="checkbox" value="text message" data-aria-controls="conditional-contact-3" {{ checked('contact','text message') }}>
+                <input class="govuk-checkboxes__input" id="contact-3" name="contact" type="checkbox" value="Text message" data-aria-controls="conditional-contact-3" {{ checked('contact','Text message') }}>
                 <label class="govuk-label govuk-checkboxes__label" for="contact-3">
                   Text message
                 </label>
