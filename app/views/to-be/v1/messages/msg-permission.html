@@ -1,0 +1,49 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/start/landing">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/messages/message-history">Your message history</a>
+    </li>
+  </ol>
+</div>
+{% endblock beforeContent%} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <span class="govuk-caption-l">Email from:</span>
+    <h1 class="govuk-heading-l">Defra</h1>
+
+    <p class="govuk-body-s govuk-!-margin-bottom-1">Sent 13 December 2023 at 10.22am</p>
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          Permission removed from P.Smith
+        </h2>
+      </div>
+      <div class="govuk-summary-card__content">
+
+        <p class="govuk-body">Your permission for P.Smith was removed on 13 December 2023.</p>
+      
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

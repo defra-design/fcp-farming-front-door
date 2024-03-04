@@ -1,0 +1,68 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/start/landing">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/messages/message-history">Your message history</a>
+    </li>
+  </ol>
+</div>
+{% endblock beforeContent%} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <span class="govuk-caption-l">Email from:</span>
+    <h1 class="govuk-heading-l">Defra</h1>
+
+    <p class="govuk-body-s govuk-!-margin-bottom-1">Sent 20 February 2024 at 2.55pm</p>
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          Mapping updates for Agile Farms Ltd
+        </h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <p class="govuk-body">SBI: 123456789</p>
+
+        <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+      
+        <p class="govuk-body">Each land parcel listed below has been updated.</p>
+
+        <p class="govuk-body">Parcel ID:</p>
+
+        <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">SY2696 3497</a> 
+
+        <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">SY2696 3993</a> 
+
+        <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+
+        <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+
+        <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+
+        <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+
+        <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+          
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
