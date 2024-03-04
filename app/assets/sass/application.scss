@@ -661,3 +661,9 @@ input[type="radio" i] {
         display: none
     }
 }
+
+
+.no-bullet {
+  list-style-type: none;
+  padding-inline-start: 0px;
+}

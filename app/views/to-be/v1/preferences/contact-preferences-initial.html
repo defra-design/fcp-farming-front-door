@@ -8,24 +8,126 @@
       {
         text: "Home",
         href: "/to-be/v1/start/landing"
-      },
-      {
-        text: "Manage your contact preferences"
       }
     ]
   }) }}
 {% endblock %}
 
+{% set howDefra %}
+{% if (data['contact']) == 'Email' %}
+Email
+{% elif data['contact'] == 'Text message' %}
+Text message
+{% else %}
+Email <br> Text message
+{% endif %}
+{% endset %} 
+
+
+{% set whatDefra %}
+{% if (data['whatItems']) == 'actionUpdates' %}
+Only updates that need action
+{% elif (data['whatItems']) == 'noUpdate' %}
+I do not want to be contacted about updates
+{% else %}
+All updates
+{% endif %}
+{% endset %}
+
+{% set frequencyDefra %}
+{% if (data['frequency']) == 'immediate' %}
+Immediately
+{% elif (data['frequency']) == 'monthly' %}
+Monthly
+{% else %}
+Weekly
+{% endif %}
+{% endset %}
+
+
 {% block content %}
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
+       
+        {% if data['saveMethod'] == 'True' %}
+          <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner__header">
+              <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Success
+              </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+              <h3 class="govuk-notification-banner__heading">
+                You have updated your contact preferences
+              </h3>
+              <p class="govuk-body">
+              {% if (data['contact']) == 'Email' %}
+              Defra will notify you by email.
+              {% elif data['contact'] == 'Text message' %}
+              Defra will notifiy you by text.
+              {% else %}
+              Defra will notify you by email and text.
+              {% endif %}
+              </p>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if data['saveItems'] == 'True' %}
+          <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner__header">
+              <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Success
+              </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+              <h3 class="govuk-notification-banner__heading">
+                You have updated your contact preferences
+              </h3>
+              <p class="govuk-body">
+              {% if (data['whatItems']) == 'actionUpdates' %}
+              Defra will only contact you about updates that need action.
+              {% elif data['whatItems'] == 'noUpdate' %}
+              Defra will not contact you about updates.
+              {% else %}
+              Defra will contact you about all updates.
+              {% endif %}
+              </p>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if data['saveFrequency'] == 'True' %}
+          <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner__header">
+              <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Success
+              </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+              <h3 class="govuk-notification-banner__heading">
+                You have updated your contact preferences
+              </h3>
+              <p class="govuk-body">
+              {% if (data['frequency']) == 'monthly' %}
+              Defra will contact you monthly about updates that do not need action.
+              {% elif data['frequency'] == 'immediate' %}
+              Defra will contact you immediately about updates that do not need action.
+              {% else %}
+              Defra will contact you weekly about updates that do not need action.
+              {% endif %}
+              </p>
+            </div>
+          </div>
+          {% endif %}
+
+
+
+
         <h1 class="govuk-heading-xl">
           Manage your contact preferences
         </h1>
-        <p class="govuk-body">
-          Tell us how you’d like to be contacted about updates to your account.
-        </p>
       </div>
     </div>
 
@@ -37,10 +139,12 @@
               How Defra will contact you
             </dt>
             <dd class="govuk-summary-list__value">
-              Email
+              <ul class="no-bullet">
+              {{ howDefra | safe }}
+            </ul>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="contact-method">Change</a>
+              <a class="govuk-link--no-visited-state" href="contact-method">Change</a>
             </dd>
           </div>
           <div class="govuk-summary-list__row">
@@ -48,12 +152,15 @@
               What Defra will contact you about
             </dt>
             <dd class="govuk-summary-list__value">
-              All updates
+              {{ whatDefra | safe }}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="contact-items">Change</a>
+              <a class="govuk-link--no-visited-state" href="contact-items">Change</a>
             </dd>
           </div>
+          {% if (data['whatItems']) == 'actionUpdates' %}
+          {% elif (data['whatItems']) == 'noUpdate' %}
+          {% else %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               How often Defra will contact you with updates that need action
@@ -67,15 +174,16 @@
               How often Defra will contact you with updates that do not need action
             </dt>
             <dd class="govuk-summary-list__value">
-              Weekly
+              {{ frequencyDefra | safe }}
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="contact-frequency">Change</a>
+              <a class="govuk-link--no-visited-state" href="contact-frequency">Change</a>
             </dd>
           </div>
+          {% endif %}
         </dl>
 
-        <a href="/to-be/v1/start/landing" class="govuk-link">
+        <a href="/to-be/v1/start/landing" class="govuk-link--no-visited-state">
           Return home
         </a>
       </div>
