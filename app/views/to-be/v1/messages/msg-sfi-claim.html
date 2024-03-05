@@ -1,0 +1,71 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/start/landing">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/messages/message-history">Your message history</a>
+    </li>
+  </ol>
+</div>
+{% endblock beforeContent%} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <span class="govuk-caption-l">Email from:</span>
+    <h1 class="govuk-heading-l">Sustainable Farming Incentive
+    </h1>
+
+    <p class="govuk-body-s govuk-!-margin-bottom-1">Sent 5 November 2023 at 3.56pm</p>
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          Your Sustainable Farming Incentive claim deadline date is 3 February 2024
+        </h2>
+      </div>
+      <div class="govuk-summary-card__content">
+
+        <p class="govuk-body">Agile Farms Ltd</p>
+
+        <p class="govuk-body govuk-!-margin-bottom-0"><strong>SBI:123456789</strong></p>
+        <p class="govuk-body"><strong>Agreement ID:1657308</strong></p>
+      
+        <p class="govuk-body">Our records show that you have not yet submitted a Sustainable Farming Incentive claim.</p>
+
+        <p class="govuk-body">The deadline for the Rural Payments Agency (RPA) to receive your claim and supporting evidence is midnight on <strong>3 February 2024</strong> after which you will not be able to claim.
+        </p>
+        
+        <p class="govuk-body">Please sign in to the Rural Payments service and submit your claim as soon as possible.</p>
+
+        <p class="govuk-body"><strong>If we do not receive a valid claim and any required supporting evidence by the deadline the following penalties will be applied, unless there are force majeure or other exceptional circumstances:</strong></p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong> If we receive your valid claim form and any required evidence after midnight on 3 February 2024 but before midnight on 5 March 2024, we will apply a penalty of 1% of your total payment for this claim year for each working day that your claim is late;</strong></li>
+          <li><strong>If we receive your valid claim and any required supporting evidence after midnight on 5 March 2024, we will not progress your claim and you will not be paid for this claim year.</strong></li>
+        </ul>
+
+        <p class="govuk-body"><strong>If you have more than one Sustainable Farming Incentive agreement for your SBI, RPA must receive your Parent Claim declaration by midnight on 15 March 2024.</strong></p>
+
+        <p class="govuk-body">If you wish to discuss the content of this notification, please call RPA on 03000 200 301.</p>
+  
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
