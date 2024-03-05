@@ -158,9 +158,7 @@ Weekly
               <a class="govuk-link--no-visited-state" href="contact-items">Change</a>
             </dd>
           </div>
-          {% if (data['whatItems']) == 'actionUpdates' %}
-          {% elif (data['whatItems']) == 'noUpdate' %}
-          {% else %}
+          {% if data['whatItems'] == 'actionUpdates' %}  
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               How often Defra will contact you with updates that need action
@@ -169,6 +167,23 @@ Weekly
               Immediately
             </dd>
           </div>
+          {% elif data['whatItems'] == 'allUpdates' %}  
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              How often Defra will contact you with updates that need action
+            </dt>
+            <dd class="govuk-summary-list__value">
+              Immediately
+            </dd>
+          </div>
+          {% else %}
+
+          {% endif %}
+          {% if data['whatItems'] == 'actionUpdates' %}
+
+          {% elif data['whatItems'] == 'noUpdate' %}  
+          
+          {% else %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               How often Defra will contact you with updates that do not need action
@@ -182,7 +197,6 @@ Weekly
           </div>
           {% endif %}
         </dl>
-
         <a href="/to-be/v1/start/landing" class="govuk-link--no-visited-state">
           Return home
         </a>
