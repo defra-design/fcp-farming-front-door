@@ -1,0 +1,82 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">SBI: 123456789</p>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+{% endblock beforeContent%} 
+
+
+{% block content %}
+
+    <div class="govuk-width-container">
+      <div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+
+          <h1 class="govuk-heading-xl">
+            Land
+          </h1>
+      
+          <p class="govuk-body govuk-!-margin-bottom-6">View maps of your land, transfer land to another business or make changes to your land use.</p>
+
+          </div>
+
+        <div class="govuk-grid-column-full">
+
+
+
+    <div class="gem-c-cards">
+      <ul class="gem-c-cards__list">
+        <li class="gem-c-cards__list-item">
+          <div class="gem-c-cards__list-item-wrapper">
+            <h3 class="gem-c-cards__sub-heading govuk-heading-s">
+              <a class="govuk-link gem-c-cards__link govuk-link--no-visited-state" href="#">View land</a></h3>              
+              <p class="govuk-body gem-c-cards__description"></p>
+          </div>
+        </li>
+        <li class="gem-c-cards__list-item">
+          <div class="gem-c-cards__list-item-wrapper">
+            <h3 class="gem-c-cards__sub-heading govuk-heading-s">
+              <a class="govuk-link gem-c-cards__link govuk-link--no-visited-state" href="#">Transfer land</a></h3>              
+              <p class="govuk-body gem-c-cards__description"></p>
+          </div>
+        </li>
+        <li class="gem-c-cards__list-item">
+          <div class="gem-c-cards__list-item-wrapper">
+            <h3 class="gem-c-cards__sub-heading govuk-heading-s">
+              <a class="govuk-link gem-c-cards__link govuk-link--no-visited-state" href="#">Update land use</a></h3>              
+              <p class="govuk-body gem-c-cards__description"></p>
+          </div>
+        </li>
+        <li class="gem-c-cards__list-item">
+          <div class="gem-c-cards__list-item-wrapper">
+            <h3 class="gem-c-cards__sub-heading govuk-heading-s">
+              <a class="govuk-link gem-c-cards__link govuk-link--no-visited-state" href="#">Request rural land changes</a></h3>              
+              <p class="govuk-body gem-c-cards__description"></p>
+          </div>
+        </li>
+  </ul>
+  </div>
+    
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}
