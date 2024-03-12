@@ -1,0 +1,99 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">SBI: 123456789</p>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+{% endblock beforeContent%} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Manage your business
+    </h1>
+  </div>
+</div>
+
+
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+          <ul class="homepage-services-and-info__list">
+          
+            <li class="chevron-card">
+              <div class="chevron-card__wrapper">
+                <h3 class="gem-c-heading govuk-heading-s govuk-heading-s_no-margin">
+              <a class="govuk-link chevron-card__link govuk-link--no-visited-state" href="#">Annual Health and Welfare Review</a>
+            </h3>
+              </div>
+            </li>
+                      
+            <li class="chevron-card">
+              <div class="chevron-card__wrapper">
+                <h3 class="gem-c-heading govuk-heading-s govuk-heading-s_no-margin">
+                  <a class="govuk-link chevron-card__link govuk-link--no-visited-state" href="#">Countryside Stewardship</a>
+                </h3>
+              </div>
+            </li>
+
+            <li class="chevron-card">
+              <div class="chevron-card__wrapper">
+                <h3 class="gem-c-heading govuk-heading-s govuk-heading-s_no-margin">
+                  <a class="govuk-link chevron-card__link govuk-link--no-visited-state" href="#">Sustainable Farming Incentive</a>
+                </h3>
+              </div>
+            </li>
+
+            <li class="chevron-card">
+              <div class="chevron-card__wrapper">
+                <h3 class="gem-c-heading govuk-heading-s govuk-heading-s_no-margin">
+                  <a class="govuk-link chevron-card__link govuk-link--no-visited-state" href="#">Land</a>
+                </h3>
+              </div>
+            </li>
+                      
+
+                  </ul>
+                </div>
+
+                  <div class="govuk-grid-column-one-third">
+
+                    <h2 class="govuk-heading-m">
+                      Your account
+                    </h2>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">View your message history</a></p>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Manage your details and contact preferences</a></p>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Manage your permissions</a></p>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Manage your business details</a></p>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Register a business</a></p>
+
+                  </div>
+
+  </div>
+
+
+
+{% endblock %}
