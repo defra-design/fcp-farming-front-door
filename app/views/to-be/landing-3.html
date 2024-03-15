@@ -1,0 +1,100 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">SBI: 123456789</p>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+{% endblock beforeContent%} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Manage your business
+    </h1>
+  </div>
+</div>
+
+
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+
+          <div class="gem-c-cards">
+            <ul class="gem-c-cards__list" style="grid-template-columns:1fr 1fr;">
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s govuk-!-margin-bottom-3">
+                  Annual Health and Welfare Review</h3>    
+                  <p class="govuk-body-s gem-c-cards__description govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="#">Manage your scheme</a></p>          
+                </div>
+              </li>
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s govuk-!-margin-bottom-3">
+                  Countryside Stewardship</h3>    
+                  <p class="govuk-body-s gem-c-cards__description govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="#">Manage your scheme</a></p>          
+                </div>
+              </li>
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s govuk-!-margin-bottom-3">
+                  Sustainable Farming Incentive</h3>    
+                  <p class="govuk-body-s gem-c-cards__description govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="#">Manage your scheme</a></p>          
+                </div>
+              </li>
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s govuk-!-margin-bottom-3">
+                  Your land</h3>    
+                  <p class="govuk-body-s gem-c-cards__description govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="#">Manage your land</a></p>          
+                </div>
+              </li>
+              
+            </div>
+
+
+
+                </div>
+
+                  <div class="govuk-grid-column-one-third">
+                    
+
+                    <h2 class="govuk-heading-m">
+                      Your account
+                    </h2>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">View your message history</a></p>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Manage your details and contact preferences</a></p>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Manage your permissions</a></p>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Manage your business details</a></p>
+
+                    <p class="govuk-body"><a href="#" class="govuk-link--no-visited-state">Register a business</a></p>
+
+                  </div>
+
+  </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "layouts/logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/to-be/v1/start/landing">Home</a>
+    </li>
+  </ol>
+</div>{% endblock beforeContent%} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <h1 class="govuk-heading-xl">
+      Your message history
+    </h1>
+
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Message</th>
+                  <th scope="col" class="govuk-table__header">Date received</th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                <!-- added class to distinguish between action and info messages -->
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-1">Claim submitted for Annual Health and Welfare Review of livestock</a></td>
+                  <td class="govuk-table__cell">6 March 2024</td>
+                </tr>
+                <tr class="govuk-table__row action"> 
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-vv-action">Annual Health and Welfare Review: claim your funding by 30 March 2024</a></td>
+                  <td class="govuk-table__cell">22 February 2024</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-map-updates">Mapping updates for Agile Farms Ltd</a></td>
+                  <td class="govuk-table__cell">20 February 2024</td>
+                </tr>
+                <tr class="govuk-table__row action">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-cap-works">Your claim for completed capital works deadline is the 31 March 2024</a></td>
+                  <td class="govuk-table__cell">11 February 2024</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-help">Help us to help you: useful information</a></td>
+                  <td class="govuk-table__cell">21 January 2024</td>
+                </tr>
+                <tr class="govuk-table__row action">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-multi-ann">Your Multi Annual Countryside Stewardship claim deadline date is 15 March 2024</a></td>
+                  <td class="govuk-table__cell">14 January 2024</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-2">Bespoke messages</a></td>
+                  <td class="govuk-table__cell">19 December 2023</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-permission">Permission removed from P.Smith</a></td>
+                  <td class="govuk-table__cell">13 December 2023</td>
+                </tr>
+                <tr class="govuk-table__row action">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-sfi-claim">Your Sustainable Farming Incentive claim deadline date is 3 February 2024</a></td>
+                  <td class="govuk-table__cell">5 November 2023</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-sfi-agree">Sustainable Farming Incentive - Agreement confirmation for Agile Farms Ltd</a></td>
+                  <td class="govuk-table__cell">30 September 2023</td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="govuk-pagination govuk-pagination--block" role="navigation" aria-label="Pagination" data-module="ga4-link-tracker" data-ga4-link-tracker-module-started="true">
+
+              <div class="govuk-pagination__next">
+                <a class="govuk-link--no-visited-state govuk-pagination__link" href="#" rel="next" data-track-category="contentsClicked" data-track-action="next" data-track-label="#" data-track-dimension="next" data-track-dimension-index="29" data-ga4-link="{&quot;event_name&quot;:&quot;navigation&quot;,&quot;type&quot;:&quot;previous and next&quot;,&quot;text&quot;:&quot;2 of 3&quot;,&quot;section&quot;:&quot;Next&quot;}">
+                  <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                    <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+                  </svg>
+                  <span class="govuk-pagination__link-title">Next page</span>
+                    <span class="govuk-visually-hidden">:</span>
+                    <span class="govuk-pagination__link-label">1 of 2</span>
+                </a>
+              </div>
+          </nav>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
