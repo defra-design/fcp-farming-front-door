@@ -1,0 +1,37 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl">
+      Version 2
+    </h1>
+
+      <h2 class="govuk-heading-m">
+        Page links
+      </h2>
+
+      <p class="govuk-body">Service start:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><a class="govuk-link--no-visited-state" href="start/start">Service start page</a></li>
+        <li><a class="govuk-link--no-visited-state" href="start/sign-in">Sign in</a></li>
+      </ul>
+
+      <p class="govuk-body">Latest vet visits email content</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-existing">Apply confirmation - existing users</a></li>
+        <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-new">Apply confirmation - new users</a></li>
+        <li><a class="govuk-link--no-visited-state" href="vv-emails/claim-confirm">Claim confirmation</a></li>
+      </ul>
+
+  </div>
+</div>
+
+{% endblock %}
