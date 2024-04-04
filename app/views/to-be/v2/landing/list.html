@@ -1,0 +1,69 @@
+{% extends "layouts/logged-in-nav.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl">
+      Manage your business
+    </h1>
+
+
+    <h2 class="govuk-heading-s"><a href="" class="govuk-link--no-visited-state">Get funding to improve animal health and welfare</a></h2>
+
+    <p>Apply or check the status of claims</p>
+
+    <hr>
+
+    <h2 class="govuk-heading-s govuk-!-margin-top-4"><a href="" class="govuk-link--no-visited-state"> Sustainable Farming Incentive (SFI)</a></h2>
+
+    <p>Apply, return to an in progress application or check the status of your agreement</p>
+
+    <hr>
+
+    <h2 class="govuk-heading-s govuk-!-margin-top-4"><a href="" class="govuk-link--no-visited-state">Countryside Stewardship (CS)</a></h2>
+
+    <p>Choose your options. Apply and submit your claim</p>
+
+    <hr>
+
+
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+
+      <button type="submit" class="govuk-button" style="float: right;" data-module="govuk-button">
+       Choose another business
+      </button>
+
+    </div>
+    </div>
+
+          
+
+
+
+{% endblock %}
