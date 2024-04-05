@@ -1,0 +1,53 @@
+{% extends "layouts/vet-visits.html" %}
+
+{% set pageName="Home" %}
+
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+
+    <h1 class="govuk-heading-xl">
+      Message history
+    </h1>
+
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters">
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Message</th>
+                  <th scope="col" class="govuk-table__header">Date received</th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                <!-- added class to distinguish between action and info messages -->
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-1">Claim submitted for Annual Health and Welfare Review of livestock</a></td>
+                  <td class="govuk-table__cell">6 March 2024</td>
+                </tr>
+                <tr class="govuk-table__row action"> 
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-vv-action">Annual Health and Welfare Review: claim your funding by 30 March 2024</a></td>
+                  <td class="govuk-table__cell">22 February 2024</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+
+
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
