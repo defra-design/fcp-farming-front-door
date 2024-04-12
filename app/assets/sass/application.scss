@@ -781,3 +781,22 @@ input[type="radio" i] {
     line-height: 1.3157894737;
 }
 }
+
+
+// Card styling
+
+a, .link-style {
+  color: #1d70b8;
+  text-decoration: underline;
+}
+
+a, .p-link-style {
+  text-decoration: none!important;
+}
+
+
+.govuk-link:hover {
+  color: #003078;
+  text-decoration-thickness: max(3px, .1875rem, .12em);
+}
+
