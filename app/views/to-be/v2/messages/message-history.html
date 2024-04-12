@@ -1,0 +1,96 @@
+{% extends "layouts/logged-in-nav.html" %}
+
+{% set pageName="Home" %}
+
+{% set yourMessages = "Active" %}
+
+
+{%- block beforeContent -%}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+
+<a href="/to-be/v2/landing/landing" class="govuk-back-link govuk-!-margin-bottom-0">Back to Manage your business</a>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+
+    <h1 class="govuk-heading-xl">
+      Messages
+    </h1>
+
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters">
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Message</th>
+                  <th scope="col" class="govuk-table__header">Type</th>
+
+                  <th scope="col" class="govuk-table__header">Date received</th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-1">Claim submitted for Annual Health and Welfare Review of livestock</a></td>
+                  <td class="govuk-table__cell">Email</td>
+                  <td class="govuk-table__cell">6 March 2024</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-1">Claim submitted for Annual Health and Welfare Review of livestock</a></td>
+                  <td class="govuk-table__cell">Email</td>
+                  <td class="govuk-table__cell">6 March 2024</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="msg-1">Claim submitted for Annual Health and Welfare Review of livestock</a></td>
+                  <td class="govuk-table__cell">Email</td>
+                  <td class="govuk-table__cell">6 March 2024</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <nav class="govuk-pagination govuk-pagination--block" role="navigation" aria-label="Pagination" data-module="ga4-link-tracker" data-ga4-link-tracker-module-started="true">
+
+              <div class="govuk-pagination__next">
+                <a class="govuk-link--no-visited-state govuk-pagination__link" href="#" rel="next" data-track-category="contentsClicked" data-track-action="next" data-track-label="#" data-track-dimension="next" data-track-dimension-index="29" data-ga4-link="{&quot;event_name&quot;:&quot;navigation&quot;,&quot;type&quot;:&quot;previous and next&quot;,&quot;text&quot;:&quot;2 of 3&quot;,&quot;section&quot;:&quot;Next&quot;}">
+                  <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                    <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+                  </svg>
+                  <span class="govuk-pagination__link-title">Next page</span>
+                    <span class="govuk-visually-hidden">:</span>
+                    <span class="govuk-pagination__link-label">1 of 2</span>
+                </a>
+              </div>
+          </nav> -->
+          </div>
+        </div>
+
+
+
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
