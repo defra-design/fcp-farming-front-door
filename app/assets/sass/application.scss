@@ -794,9 +794,26 @@ a, .p-link-style {
   text-decoration: none!important;
 }
 
-
 .govuk-link:hover {
   color: #003078;
   text-decoration-thickness: max(3px, .1875rem, .12em);
 }
 
+.gem-c-cards__list-item-variant {
+  border: 1px solid #b1b4b6;
+  margin: 0 15px 0px;
+  padding: 5px 0 20px 0;
+  border-bottom: 4px solid #b1b4b6;
+  cursor: pointer;
+}
+
+.gem-c-cards__list-item-variant a {
+  color: #1d70b8;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.gem-c-cards__list-item-variant a:hover {
+  color: #003078;
+  text-decoration-thickness: max(3px, .1875rem, .12em);
+}
