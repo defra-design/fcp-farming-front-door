@@ -83,37 +83,58 @@ window.GOVUKPrototypeKit.documentReady(() => {
     })
   })
 
-  // Message history: checkbox filtering
-  const forAction = document.getElementById('messageFilter')
-  const forInformation = document.getElementById('messageFilter-2')
-  const actionMessages = document.querySelectorAll('.action')
-  const informationMessages = document.querySelectorAll('.information')
+  // -----------------> messages section is no longer in use, if it's needed again, uncomment the code below <-----------------START
 
-  function filterMessages() {
-    const displayAction = forAction.checked ? 'table-row' : 'none'
-    const displayInformation = forInformation.checked ? 'table-row' : 'none'
+  // // Message history: checkbox filtering
+  // const forAction = document.getElementById('messageFilter')
+  // const forInformation = document.getElementById('messageFilter-2')
+  // const actionMessages = document.querySelectorAll('.action')
+  // const informationMessages = document.querySelectorAll('.information')
 
-    actionMessages.forEach((message) => {
-      message.style.display = displayAction
-    })
+  // function filterMessages() {
+  //   const displayAction = forAction.checked ? 'table-row' : 'none'
+  //   const displayInformation = forInformation.checked ? 'table-row' : 'none'
 
-    informationMessages.forEach((message) => {
-      message.style.display = displayInformation
-    })
+  //   actionMessages.forEach((message) => {
+  //     message.style.display = displayAction
+  //   })
 
-    if(!forAction.checked && !forInformation.checked) {
-      actionMessages.forEach((message) => {
-        message.style.display = 'table-row'
+  //   informationMessages.forEach((message) => {
+  //     message.style.display = displayInformation
+  //   })
+
+  //   if (!forAction.checked && !forInformation.checked) {
+  //     actionMessages.forEach((message) => {
+  //       message.style.display = 'table-row'
+  //     })
+
+  //     informationMessages.forEach((message) => {
+  //       message.style.display = 'table-row'
+  //     })
+  //   }
+  // }
+
+  // forAction.addEventListener('change', filterMessages)
+  // forInformation.addEventListener('change', filterMessages)
+
+  // -----------------> messages section is no longer in use, if it's needed again, uncomment the code above <-----------------END
+
+  // Card styling: apply styling to <h3> when hovering over <p>
+  const pLinks = document.querySelectorAll('.p-link-style')
+
+  pLinks.forEach(function (pLink) {
+    const subHeading = pLink.previousElementSibling
+
+    if (pLink && subHeading.tagName === 'H3') {
+      pLink.addEventListener('mouseover', function () {
+        subHeading.classList.toggle('govuk-link-hover')
       })
 
-      informationMessages.forEach((message) => {
-        message.style.display = 'table-row'
+      pLink.addEventListener('mouseout', function () {
+        subHeading.classList.remove('govuk-link-hover')
       })
     }
-  }
-
-  forAction.addEventListener('change', filterMessages)
-  forInformation.addEventListener('change', filterMessages)
+  })
 })
 
 // Permission text change on dropdown

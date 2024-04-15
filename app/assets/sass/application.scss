@@ -767,36 +767,37 @@ input[type="radio" i] {
 
 
 @media (min-width: 40.0625em) {
-.govuk-heading-s_no-margin {
-    margin-bottom: 0px;
+  .govuk-heading-s_no-margin {
+      margin-bottom: 0px;
+  }
 }
-}
-
 
 // Tag custom
 
 @media (min-width: 40.0625em) {
-.govuk-tag_custom {
-    font-size: 1rem;
-    line-height: 1.3157894737;
+  .govuk-tag_custom {
+      font-size: 1rem;
+      line-height: 1.3157894737;
+  }
 }
-}
-
 
 // Card styling
 
-a, .link-style {
+.link-style {
   color: #1d70b8;
   text-decoration: underline;
 }
 
-a, .p-link-style {
+.card-page a, .p-link-style {
   text-decoration: none!important;
 }
-
 
 .govuk-link:hover {
   color: #003078;
   text-decoration-thickness: max(3px, .1875rem, .12em);
 }
 
+.govuk-link-hover {
+  color: #003078;
+  text-decoration-thickness: max(3px, .1875rem, .12em);
+}
