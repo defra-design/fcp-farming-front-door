@@ -2,6 +2,11 @@
 
 {% set pageName="Home" %}
 
+{%- block beforeContent -%}
+<a href="/to-be/index" class="govuk-back-link">Back</a>
+{% endblock %}
+
+
 {% block content %}
 
 <div class="govuk-grid-row">
@@ -12,24 +17,28 @@
       Version 2
     </h1>
 
+    <h2 class="govuk-heading-m">
+      Flow for usability testing
+    </h2>
+
+    <a href="start/start" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+      Start prototype
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+    </a>
+
+    <h3 class="govuk-heading-s">Page links</h3>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="start/start">Start</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start/sign-in">Sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start/your-businesses-list">Your businesses</a></li>
+    </ul>
+
       <h2 class="govuk-heading-m">
-        Page links
+        Exploration
       </h2>
-
-      <h3 class="govuk-heading-s">Service start</h3>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link--no-visited-state" href="start/start">Service start page</a></li>
-        <li><a class="govuk-link--no-visited-state" href="start/sign-in">Sign in</a></li>
-      </ul>
-
-      <h3 class="govuk-heading-s">Latest vet visits email content</h3>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-existing">Apply confirmation - existing users</a></li>
-        <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-new">Apply confirmation - new users</a></li>
-        <li><a class="govuk-link--no-visited-state" href="vv-emails/claim-confirm">Claim confirmation</a></li>
-      </ul>
 
       <h3 class="govuk-heading-s">Choose a business</h3>
 
@@ -45,6 +54,19 @@
         <li><a class="govuk-link--no-visited-state" href="landing/card">Card</a></li>
         <li><a class="govuk-link--no-visited-state" href="landing/list">List</a></li>
       </ul>
+
+
+      <h2 class="govuk-heading-m">
+        Vet visits latest email content
+      </h2>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-existing">Apply confirmation - existing users</a></li>
+        <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-new">Apply confirmation - new users</a></li>
+        <li><a class="govuk-link--no-visited-state" href="vv-emails/claim-confirm">Claim confirmation</a></li>
+      </ul>
+
+
 
       <h2 class="govuk-heading-m">
         Technical options

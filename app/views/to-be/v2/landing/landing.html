@@ -1,0 +1,112 @@
+{% extends "layouts/logged-in-nav.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl">
+      Manage your business
+    </h1>
+
+
+
+    
+  </div>
+
+</div>
+
+
+
+    <div class="govuk-width-container">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+
+          <div class="gem-c-cards">
+            <ul class="gem-c-cards__list" style="grid-template-columns:1fr 1fr;">
+              <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/vet-visits/manage-your-claims">
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">
+                    Get funding to improve animal health and welfare</h3> 
+                  <p class="govuk-body-s gem-c-cards__description p-link-style">Apply or check the status of claims</p>          
+                </div>
+              </li>
+            </a> 
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s"><a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/sfi/sfi-hub">
+                    Sustainable Farming Incentive (SFI)</h3></a>  
+                  <p class="govuk-body-s gem-c-cards__description">Apply, return to an in progress application or check the status of your agreement</p>          
+                </div>
+              </li>
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s"><a class="govuk-link govuk-link--no-visited-state" href="#">
+                   Calf Housing for Health and Welfare grant</h3></a>  
+                  <p class="govuk-body-s gem-c-cards__description">Apply or check the status of claims</p>          
+                </div>
+              </li>
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s"><a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/rps/sign-in" target="_blank">
+                   Rural Payments Service (opens in new tab)</h3></a>  
+                  <p class="govuk-body-s gem-c-cards__description">Do some stuff here</p>          
+                </div>
+              </li>
+        </ul>
+        </div>
+      
+          
+    
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+
+
+          <h2 class="govuk-heading-m">
+            Messages
+          </h2>
+      
+          <p><a class="govuk-link--no-visited-state" href="/to-be/v2/messages/message-history">View your messages</a></p>
+
+          <h2 class="govuk-heading-m">
+            Business details
+          </h2>
+
+          <p><a class="govuk-link--no-visited-state" href="">View and update your business details</a></p>
+
+          <p><a class="govuk-link--no-visited-state" href="">Register a business</a></p>
+
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "layouts/logged-in-nav.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+
+<a href="/to-be/v2/landing/landing" class="govuk-back-link govuk-!-margin-bottom-0">Back to Manage your business</a>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl">
+      Sustainable Farming Incentive
+    </h1>
+
+    <p>Apply, return to an in progress application or check the status of your agreement.</p>
+
+    
+  </div>
+</div>
+
+
+
+    <div class="govuk-width-container">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+
+          <div class="gem-c-cards">
+            <ul class="gem-c-cards__list">
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s"><a class="govuk-link govuk-link--no-visited-state" href="#">
+                  Sustainable Farming Incentive</h3></a>  
+                </div>
+              </li>
+              <li class="gem-c-cards__list-item-variant">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s"><a class="govuk-link govuk-link--no-visited-state" href="#">
+                   Pilot Sustainable Farming Incentive</h3></a>  
+                </div>
+              </li>
+        </ul>
+        </div>
+      
+          
+    
+        </div>
+
+
+      </div>
+    </div>
+
+
+{% endblock %}
