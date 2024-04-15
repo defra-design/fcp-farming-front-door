@@ -783,12 +783,12 @@ input[type="radio" i] {
 
 // Card styling
 
-a, .link-style {
+.link-style {
   color: #1d70b8;
   text-decoration: underline;
 }
 
-a, .p-link-style {
+.card-page a, .p-link-style {
   text-decoration: none!important;
 }
 
