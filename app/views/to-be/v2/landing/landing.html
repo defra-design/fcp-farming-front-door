@@ -3,22 +3,9 @@
 {% set pageName="Home" %}
 
 {%- block beforeContent -%}
-<div class="govuk-width-container">
-  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
-    <div class="govuk-grid-row" style="padding-top:16px;">
-      <div class="govuk-grid-column-two-thirds">
-          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
-          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
-      </div>
 
-      <div class="govuk-grid-column-one-third">
-          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
-      </div>
+{% include "to-be/v2/components/sub-header/include.html" %}
 
-      </div>
-  </main>
-</div>
-<hr>
 {% endblock %} 
 
 {% block content %}
@@ -68,7 +55,7 @@
             </li>
 
             <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/sfi/sfi-hub">
+              <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/sfi/sfi-page">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Sustainable Farming Incentive (SFI)</h3>
                   <p class="govuk-body-s gem-c-cards__description p-link-style">Funding to help produce food sustainably and protect the environment</p>          
@@ -77,10 +64,10 @@
             </li>
 
             <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/rps/sign-in" target="_blank">
+              <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/rps/sign-in" target="_blank" rel="noreferrer noopener">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Rural Payments Service (opens in new tab)</h3>
-                  <p class="govuk-body-s gem-c-cards__description p-link-style">Update land and maps, business permissions and other schemes</p>          
+                  <p class="govuk-body-s gem-c-cards__description p-link-style">Manage land and maps, business permissions and Countryside Stewardship</p>          
                 </div>
               </a>  
             </li>
@@ -106,7 +93,7 @@
             Messages
           </h2>
       
-          <p><a class="govuk-link--no-visited-state" href="/to-be/v2/messages/message-history">View your messages</a></p>
+          <p><a class="govuk-link--no-visited-state" href="/to-be/v2/messages/message-history">View messages about animal health and welfare, calf housing and SFI</a></p>
 
           <h2 class="govuk-heading-m">
             Business details

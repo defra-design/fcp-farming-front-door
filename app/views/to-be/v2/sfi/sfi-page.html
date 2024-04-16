@@ -1,12 +1,15 @@
-{% extends "layouts/rps-logged-in.html" %}
+{% extends "layouts/logged-in-nav.html" %}
 
 {% set pageName="Home" %}
 
-
-{% set htmlClasses = 'app-width-wide' %}
 {%- block beforeContent -%}
-<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to Business overview</a>
-{% endblock beforeContent%}
+
+{% include "to-be/v2/components/sub-header/include.html" %}
+
+<a href="/to-be/v2/landing/landing" class="govuk-back-link govuk-!-margin-bottom-0">Back to Manage your business</a>
+
+{% endblock %} 
+
 
 {% block content %}
 
@@ -16,7 +19,6 @@
 
     <h1 class="govuk-heading-xl">
       SFI applications and agreements
-      <span class="govuk-caption-l">Agile Farms Ltd</span>
     </h1>
 
     <table class="govuk-table">
@@ -28,22 +30,30 @@
           <th scope="col" class="govuk-table__header">Active</th>
           <th scope="col" class="govuk-table__header">Submit Date</th>
           <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header"></th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"></td>
-          <td class="govuk-table__cell"></td>
-          <td class="govuk-table__cell">No items</td>
-          <td class="govuk-table__cell"></td>
-          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell">1657308</td>
+          <td class="govuk-table__cell">SFI Actions</td>
+          <td class="govuk-table__cell">Yes</td>
+          <td class="govuk-table__cell">06/03/2024</td>
+          <td class="govuk-table__cell">Agreement Live</td>
+          <td class="govuk-table__cell">
+            <form action="agreement-live" method="get">
+            <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-button-custom" data-module="govuk-button">
+              Open Agreement
+            </button>
+            </form>
+          </td>
 
         </tr>
 
       </tbody>
     </table>
 
-    <h2 class="govuk-heading-m">If interested in starting a common land application, please email RPA at ruralpayments@defra.gov.uk, with 'SFI Commons/Shared Grazing Agreements' in your subject line.</h2>
+    <h2 class="govuk-heading-m">If interested in starting a common land application, please email RPA at <a href="#" class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a>, with 'SFI Commons/Shared Grazing Agreements' in your subject line.</h2>
 
     <button type="submit" class="govuk-button" style="float: right;" data-module="govuk-button">
       Apply for SFI Actions
