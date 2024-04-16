@@ -1,0 +1,560 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to Your businesses</a>
+{% endblock beforeContent%}
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Permissions for Alfred Waldron
+    </h1>
+
+    <div class="govuk-inset-text">
+      Alfred Waldron is <strong>Owner or Sole Trader</strong> of 
+      {% if data['agile'] == 'True' %}  
+      <strong>Agile Farms Ltd,</strong>
+      {% elif data['valley'] == 'True' %}
+      <strong>Valley Farm</strong>
+      {% else %}  
+      <strong>Agile Farms Ltd,</strong>
+      {% endif %}  
+    </div>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="sort">
+        Select relationship
+      </label>
+      <select class="govuk-select" id="sort" name="sort">
+        <option value="agent">Agent</option>
+        <option value="business-partner">Business Partner</option>
+        <option value="company-sec">Company Secretary</option>
+        <option value="director">Director</option>
+        <option value="employee">Employee</option>
+        <option value="executor">Executor</option>
+        <option value="helper">Helper</option>
+        <option value="updated" selected>Owner or Sole Trader</option>
+        <option value="trustee">Trustee</option>
+      </select>
+    </div>
+
+
+
+
+
+        <details class="govuk-details govuk-details-permissions">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Business details
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Full permissions</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message radio-container">
+        <fieldset class="govuk-fieldset ">
+          <legend class="govuk-fieldset__legend"></legend>
+       <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">View</p>
+        <div class="permission-select">
+          <input type="radio" name="business-details" class="" value="view">
+          <label class="permission-label-style">Select</label>
+              </div>
+          <hr class="permission-line">
+          <p class="govuk-body">View business details</p>
+          <p class="govuk-body">View people associated with the business</p>
+        </div>
+
+      <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+       <p class="govuk-body">Amend</p>
+       <div class="permission-select">
+         <input type="radio" name="business-details" class="" value="amend">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View Business Details</p>
+         <p class="govuk-body">Amend business and correspondence contact details</p>
+       </div>
+
+      <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+       <p class="govuk-body">Make legal changes</p>
+       <div class="permission-select">
+         <input type="radio" name="business-details" class="" value="legal">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View Business Details</p>
+         <p class="govuk-body">Amend controlled information, such as business name</p>
+         <p class="govuk-body">Confirm business details</p>
+         <p class="govuk-body">Amend bank account details</p>
+         <p class="govuk-body">Make young/new farmer declaration</p>
+       </div>
+
+      <div class="permissions-column permissions-column-selected govuk-!-margin-top-2">
+       <p class="govuk-body">Full permissions</p>
+       <div class="permission-select permission-select-selected">
+        <input type="radio" name="business-details" class="" value="full" checked>
+        <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in Make Legal Changes Business Details</p>
+         <p class="govuk-body">Add someone to the business</p>
+         <p class="govuk-body">Give permissions on business</p>
+       </div>
+      </fieldset>  
+      </div>
+    </details>
+
+
+    <details class="govuk-details govuk-details-permissions radio-container">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Land details
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Amend</strong>
+      </p>
+
+      </summary>
+
+                  <div class="govuk-details__text govuk-details__text-message radio-container">
+                    <fieldset class="govuk-fieldset ">
+                      <legend class="govuk-fieldset__legend"></legend>
+                    <div class="permissions-column-short govuk-!-margin-right-2 govuk-!-margin-top-2">
+                      <p class="govuk-body">No access</p>
+                      <div class="permission-select">
+                        <input type="radio" name="land-details" class="" value="no-access">
+                        <label class="permission-label-style">Select</label>
+                            </div>
+                        <hr class="permission-line">
+                      </div>
+              
+
+                  <div class="permissions-column-short govuk-!-margin-right-2 govuk-!-margin-top-2">
+                    <p class="govuk-body">View</p>
+                    <div class="permission-select">
+                      <input type="radio" name="land-details" class="" value="view">
+                     <label class="permission-label-style">Select</label>
+                         </div>
+                     <hr class="permission-line">
+                     <p class="govuk-body">View land, features and covers</p>
+                   </div>
+
+                  <div class="permissions-column-short permissions-column-selected-short govuk-!-margin-top-2">
+                    <p class="govuk-body">Amend</p>
+                    <div class="permission-select permission-select-selected">
+                      <input type="radio" name="land-details" class="" value="amend" checked>
+                     <label class="permission-label-style">Select</label>
+                          </div>
+                      <hr class="permission-line">
+                      <p class="govuk-body">View land, features and covers</p>
+                      <p class="govuk-body">Amend land, features and covers</p>
+                      <p class="govuk-body">Transfer land</p>
+                    </div>
+
+                  </fieldset>  
+      </div>
+    </details>
+
+
+
+    <details class="govuk-details govuk-details-permissions radio-container">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Entitlements
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Amend</strong>
+      </p>
+
+      </summary>
+
+              <div class="govuk-details__text govuk-details__text-message radio-container">
+                <fieldset class="govuk-fieldset ">
+                  <legend class="govuk-fieldset__legend"></legend>
+                  <div class="permissions-column-short govuk-!-margin-right-2 govuk-!-margin-top-2">
+                    <p class="govuk-body">No access</p>
+                    <div class="permission-select">
+                     <input type="radio" name="entitlements" class="" value="no-access">
+                      <label class="permission-label-style">Select</label>
+                          </div>
+                      <hr class="permission-line">
+                    </div>
+
+      <div class="permissions-column-short govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">View</p>
+        <div class="permission-select">
+          <input type="radio" name="entitlements" class="" value="view">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View entitlements</p>
+       </div>
+
+
+      <div class="permissions-column-short permissions-column-selected-short govuk-!-margin-top-2">
+       <p class="govuk-body">Amend</p>
+       <div class="permission-select permission-select-selected">
+        <input type="radio" name="entitlements" class="" value="amend" checked>
+        <label class="permission-label-style">Select</label>
+      </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View entitlements</p>
+         <p class="govuk-body">Transfer entitlements</p>
+         <p class="govuk-body">Apply for new entitlements</p>
+       </div>
+              
+
+      </fieldset>  
+    </div>
+  </details>
+
+
+
+
+    <details class="govuk-details govuk-details-permissions radio-container">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Basic payment scheme (BPS)
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Submit</strong>
+      </p>
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message radio-container">
+        <fieldset class="govuk-fieldset ">
+          <legend class="govuk-fieldset__legend"></legend>
+
+        <p class="govuk-body govuk-!-margin-bottom-1 govuk-!-margin-left-1 bps-width">
+          I confirm that I am aware of the conditions of the direct payment schemes (Basic Payment Scheme, greening and where relevant, young farmer payment).
+        </p>
+        <p class="govuk-body govuk-!-margin-bottom-1 govuk-!-margin-left-1 bps-width">
+          I understand that I am responsible for all information provided to the RPA in the application, either by me or someone acting for me, including its accuracy.
+        </p>
+
+          <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+           <p class="govuk-body">No access</p>
+           <div class="permission-select">
+            <input type="radio" name="basic-payment-scheme" class="" value="no-access">
+             <label class="permission-label-style">Select</label>
+                 </div>
+             <hr class="permission-line">
+           </div>
+    
+          <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+            <p class="govuk-body">View</p>
+            <div class="permission-select">
+              <input type="radio" name="basic-payment-scheme" class="" value="view">
+             <label class="permission-label-style">Select</label>
+                 </div>
+             <hr class="permission-line">
+             <p class="govuk-body">View business summary</p>
+             <p class="govuk-body">View claims</p>
+             <p class="govuk-body">View land, features and covers</p>
+           </div>
+
+          <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+            <p class="govuk-body">Amend</p>
+            <div class="permission-select">
+              <input type="radio" name="basic-payment-scheme" class="" value="amend">
+             <label class="permission-label-style">Select</label>
+                 </div>
+             <hr class="permission-line">
+             <p class="govuk-body">All permissions in View BPS</p>
+             <p class="govuk-body">Create and edit a claim</p>
+             <p class="govuk-body">Amend a previously submitted claim</p>
+             <p class="govuk-body">Amend land, features and covers</p>
+           </div>
+    
+          <div class="permissions-column permissions-column-selected govuk-!-margin-top-2">
+           <p class="govuk-body">Submit</p>
+           <div class="permission-select permission-select-selected">
+            <input type="radio" name="basic-payment-scheme" class="" value="submit" checked>
+             <label class="permission-label-style">Select</label>
+                 </div>
+             <hr class="permission-line">
+             <p class="govuk-body">All permissions in Amend BPS</p>
+             <p class="govuk-body">Submit a claim</p>
+             <p class="govuk-body">Withdraw a claim</p>
+             <p class="govuk-body">Receive warnings and notifications</p>
+           </div>
+
+
+          </fieldset>  
+        </div>
+      </details>
+
+    
+    <details class="govuk-details govuk-details-permissions radio-container">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Countryside Stewardship (Applications)
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Submit</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message radio-container">
+        <fieldset class="govuk-fieldset ">
+          <legend class="govuk-fieldset__legend"></legend>
+
+       <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">No access</p>
+            <div class="permission-select">
+          <input type="radio" name="countryside-stewardship-app" class="" value="no-access">
+          <label class="permission-label-style">Select</label>
+              </div>
+          <hr class="permission-line">
+          <p class="govuk-body">No Access</p>
+        </div>
+
+
+      <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+       <p class="govuk-body">View</p>
+       <div class="permission-select">
+        <input type="radio" name="countryside-stewardship-app" class="" value="view">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View CS Scheme eligibility</p>
+         <p class="govuk-body">View Applications</p>
+         <p class="govuk-body">View land, features and covers</p>
+         <p class="govuk-body">View CS agreeement offer</p>
+       </div>
+
+
+       <div class="permissions-column govuk-!-margin-right-2 govuk-!-margin-top-2">
+       <p class="govuk-body">Amend</p>
+       <div class="permission-select">
+        <input type="radio" name="countryside-stewardship-app" class="" value="amend">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View CS Applications</p>
+         <p class="govuk-body">View draft CS Agreements</p>
+         <p class="govuk-body">Create and edit a CS application</p>
+         <p class="govuk-body">Amend a previously submitted CS application</p>
+         <p class="govuk-body">Amend Land, Features and Covers</p>
+       </div>
+
+
+      <div class="permissions-column permissions-column-selected govuk-!-margin-top-2">
+       <p class="govuk-body">Submit</p>
+       <div class="permission-select permission-select-selected">
+        <input type="radio" name="countryside-stewardship-app" class="" value="submit" checked>
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in Amend CS permissions</p>
+         <p class="govuk-body">Submit CS permissions</p>
+         <p class="govuk-body">Withdraw CS application</p>
+         <p class="govuk-body">Receive warnings and notifications</p>
+       </div>
+              
+
+      </fieldset>  
+    </div>
+  </details>
+
+
+    <details class="govuk-details govuk-details-permissions radio-container">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Countryside Stewardship (Agreements)
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>Submit</strong>
+      </p>
+
+      </summary>
+
+      <div class="govuk-details__text govuk-details__text-message radio-container">
+        <fieldset class="govuk-fieldset ">
+          <legend class="govuk-fieldset__legend"></legend>
+
+       <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">No access</p>
+       <div class="permission-select">
+            <input type="radio" name="countryside-stewardship-agr" class="" value="no-access">
+          <label class="permission-label-style">Select</label>
+              </div>
+          <hr class="permission-line">
+          <p class="govuk-body">No Access</p>
+        </div>
+
+      <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">View</p>
+        <div class="permission-select">
+          <input type="radio" name="countryside-stewardship-agr" class="" value="view">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View CS Agreements</p>
+         <p class="govuk-body">View Land, Features and Cover</p>
+         <p class="govuk-body">View CS Agreement amendments</p>
+         <p class="govuk-body">View CS agreement Transfers</p>
+         <p class="govuk-body">View CS claims</p>
+       </div>
+
+      <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">Amend</p>
+        <div class="permission-select">
+          <input type="radio" name="countryside-stewardship-agr" class="" value="amend">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View CS Agreements</p>
+         <p class="govuk-body">Amend land, Features and Covers</p>
+         <p class="govuk-body">Create and edit a CS claim</p>
+         <p class="govuk-body">Amend a previously submitted claim</p>
+         <p class="govuk-body">Create and edit a CS agreement Amendment</p>
+         <p class="govuk-body">Revise a previously submitted agreement amendment</p>
+         <p class="govuk-body">Create and Edit a CS agreement transfer</p>
+         <p class="govuk-body">Revise a previously submitted agreement transfer</p>
+       </div>
+
+      <div class="permissions-column-xl permissions-column-selected-xl !-margin-top-2">
+        <p class="govuk-body">Submit</p>
+        <div class="permission-select permission-select-selected">
+          <input type="radio" name="countryside-stewardship-agr" class="" value="submit" checked>
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in Amend CS agreements</p>
+         <p class="govuk-body">Submit Acceptance of CS Agreement offer</p>
+         <p class="govuk-body">Submit rejection of CS agreement offer</p>
+         <p class="govuk-body">Submit (and resubmit) a CS claim</p>
+         <p class="govuk-body">Withdraw a CS claim</p>
+         <p class="govuk-body">Submit (and resubmit) a CS agreement amendment</p>
+         <p class="govuk-body">Withdraw a CS agreement amendment</p>
+         <p class="govuk-body">Submit (and resubmit) a CS agreement transfer</p>
+         <p class="govuk-body">Withdraw a CS agreement transfer</p>
+         <p class="govuk-body">Receive warnings and notifications</p>
+       </div>
+
+      </fieldset>  
+    </div>
+  </details>
+
+
+    <details class="govuk-details govuk-details-permissions radio-container">
+      <summary class="govuk-details__summary govuk-details__summary-permissions">
+        <span class="govuk-details__summary-text govuk-details__summary-text-permissions bold">
+          Environmental Land Management (Applications)
+        </span>
+         <span class="govuk-details__summary-text govuk-details__summary-text-permissions govuk-details__summary-text-permissions2">
+             View or change permission level
+         </span>
+      </br>
+          <p class="govuk-body govuk-!-margin-bottom-1">
+        Permission level is <strong>No Access</strong>
+      </p>
+
+      </summary>
+
+
+      <div class="govuk-details__text govuk-details__text-message radio-container">
+        <fieldset class="govuk-fieldset ">
+          <legend class="govuk-fieldset__legend"></legend>
+
+       <div class="permissions-column-xl permissions-column-selected-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">No access</p>
+        <div class="permission-select permission-select-selected">
+          <input type="radio" name="environmental-land-mgmt" class="" value="no-access" checked>
+          <label class="permission-label-style">Select</label>
+              </div>
+          <hr class="permission-line">
+          <p class="govuk-body">No Access</p>
+        </div>
+
+      <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">View</p>
+        <div class="permission-select">
+          <input type="radio" name="environmental-land-mgmt" class="" value="view">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">View Environmental Land Management scheme eligibility</p>
+         <p class="govuk-body">View Environmental Land Management applications</p>
+         <p class="govuk-body">View land, features and covers</p>
+         <p class="govuk-body">View Environmental Land Management agreement offer</p>
+       </div>
+
+      <div class="permissions-column-xl govuk-!-margin-right-2 govuk-!-margin-top-2">
+        <p class="govuk-body">Amend</p>
+        <div class="permission-select">
+          <input type="radio" name="environmental-land-mgmt" class="" value="amend">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in View Environmental Land Management</p>
+         <p class="govuk-body">View Environmental Land Management agreements</p>
+         <p class="govuk-body">Create and edit a Environmental Land Management application</p>
+         <p class="govuk-body">Amend (but not resubmit) a previously submitted Environmental Land Management application</p>
+         <p class="govuk-body">Amend land, features and covers</p>
+       </div>
+
+      <div class="permissions-column-xl govuk-!-margin-top-2">
+        <p class="govuk-body">Submit</p>
+        <div class="permission-select">
+          <input type="radio" name="environmental-land-mgmt" class="" value="submit">
+         <label class="permission-label-style">Select</label>
+             </div>
+         <hr class="permission-line">
+         <p class="govuk-body">All permissions in Amend Environmental Land Management</p>
+         <p class="govuk-body">Submit Environmental Land Management application</p>
+         <p class="govuk-body">Withdraw Environmental Land Management application</p>
+         <p class="govuk-body">Submit acceptance of Environmental Land Management agreement offer</p>
+         <p class="govuk-body">Submit rejection of Environmental Land Management agreement offer</p>
+         <p class="govuk-body">Receive all application correspondence including all warnings and notifications</p>
+       </div>
+      </fieldset>  
+    </div>
+  </details>
+
+
+
+    <button type="submit" class="govuk-button govuk-!-margin-left-2 govuk-!-margin-bottom-0 govuk-!-margin-right-2" data-module="govuk-button">
+     Save and return 
+    </button>
+    <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+      Cancel
+    </button>
+
+  </div>
+</div>
+
+
+{% endblock %}
