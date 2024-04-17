@@ -17,88 +17,264 @@
       Version 2
     </h1>
 
-    <h2 class="govuk-heading-m">
-      Flow for usability testing
+    <h2 class="govuk-heading-l">
+      Flows for usability testing
     </h2>
 
-    <a href="start/start" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
-      Start prototype
+    <a href="start/start?agent=" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+      Start prototype - farmer flow
       <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
         <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
       </svg>
     </a>
 
+    <a href="start/start?agent=True" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+      Start prototype - agent flow 
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+    </a>
 
-    <h3 class="govuk-heading-s">Page links</h3>
+    <h2 class="govuk-heading-l">
+      Page links
+    </h2>
 
+    <h3 class="govuk-heading-m">
+      Start
+    </h3>
     <ul class="govuk-list govuk-list--bullet">
       <li><a class="govuk-link--no-visited-state" href="start/start">Start</a></li>
       <li><a class="govuk-link--no-visited-state" href="start/sign-in">Sign in</a></li>
       <li><a class="govuk-link--no-visited-state" href="start/your-businesses-list">Your businesses</a></li>
+      <li><a class="govuk-link--no-visited-state" href="landing/landing">Landing page</a></li>
     </ul>
 
-      <h2 class="govuk-heading-m">
-        Exploration
-      </h2>
+    <h3 class="govuk-heading-m">
+      Animal Health and Welfare screens
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="vet-visits/manage-your-claims">Manage your claims</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vet-visits/agreement-summary">Agreement summary</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vet-visits/ts-cs">Terms and conditions</a></li>
+    </ul>
 
-      <h3 class="govuk-heading-s">Choose a business</h3>
+    <h3 class="govuk-heading-m">
+      Messages
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="messages/message-history">Messages</a></li>
+      <li><a class="govuk-link--no-visited-state" href="messages/msg-1">Message example</a></li>
+    </ul>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link--no-visited-state" href="start/your-businesses-list">Your businesses - list</a></li>
-        <li><a class="govuk-link--no-visited-state" href="start/your-businesses-radio">Your businesses - radio</a></li>
-      </ul>
-
-
-      <h3 class="govuk-heading-s">Landing page versions</h3>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link--no-visited-state" href="landing/card">Card</a></li>
-        <li><a class="govuk-link--no-visited-state" href="landing/list">List</a></li>
-      </ul>
-
-
-      <h2 class="govuk-heading-m">
-        Vet visits latest email content
-      </h2>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-existing">Apply confirmation - existing users</a></li>
-        <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-new">Apply confirmation - new users</a></li>
-        <li><a class="govuk-link--no-visited-state" href="vv-emails/claim-confirm">Claim confirmation</a></li>
-      </ul>
+    <h3 class="govuk-heading-m">
+      Sustainable Farming Incentive screens
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="sfi/sfi-page">SFI applications and agreements</a></li>
+      <li><a class="govuk-link--no-visited-state" href="sfi/agreement-live">Agreement page</a></li>
+    </ul>
 
 
+    <h3 class="govuk-heading-m">
+      RPS screens
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="rps/sign-in">Sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="rps/your-businesses">Your businesses</a></li>
+      <li><a class="govuk-link--no-visited-state" href="rps/business-overview">Business overview</a></li>
+      <li><a class="govuk-link--no-visited-state" href="rps/permissions-for">Permissions</a></li>
+    </ul>
 
-      <h2 class="govuk-heading-m">
-        Technical options
-      </h2>
 
-      <h3 class="govuk-heading-s" id="rps">Options for how the new SFD service could link to existing RPS services</h3>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-1/landing">Option 1 - give users a single link to go to RPS</a></li>
-        <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-2/landing">Option 2 - anchor to RPS schemes/land services</a></li>
-        <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-3/landing">Option 3 - we build hub pages for each scheme</a></li>
-        <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-4/landing">Option 4 - we consume the RPS screens and they use our header and footer</a></li>
-        <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-5/start">Option 5 - we route people on the start screen</a></li>
-      </ul>
+    <h2 class="govuk-heading-l">
+      Ideas and hypotheses to test
+    </h2>
 
-      <h3 class="govuk-heading-s" id="rps-messages">Options for how the new SFD service could integrate RPS messages</h3>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">How might we integrate RPS and the animal health and welfare service with the new service?
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Idea</th>
+          <th scope="col" class="govuk-table__header">Hypothesis</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could route people at the point of the start screen to either the new service (includes AHWR) or the old service (RPS)</th>
+          <td class="govuk-table__cell">If we have a start screen that routes people to either the new service or RPS<br>
+            Then users will know which service they need to use to carry out a specific task and may not need to sign in twice in a single journey<br>
+            We'll know this works when users understand the two options presented to them on the start page and can successfully navigate to either RPS or the new service, depending on the task they're trying to do
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could make links from our service to RPS and RPS to our service open in a new tab</th>
+          <td class="govuk-table__cell">If we make the links from RPS to the new service and the link from the new service to RPS open in a new tab<br>
+            Then it will be less disorienting and users will understand that they're going to a different service<br>
+            We'll know this works when users understand the two options presented to them on the start page and can successfully navigate to either RPS or the new service, depending on the task they're trying to do
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could keep the AHWR service separate, but include a link in their service which takes users back to the new service</th>
+          <td class="govuk-table__cell">If we we include a back link on the VV service<br>
+            Then users will easily be able to get back to the new service<br>
+            We'll know this works when we observe users can successfully return to the new service from the VV service using the back link</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could tell users that to access a service or scheme that is no longer in the RPS portal, they will need to use the new platform</th>
+          <td class="govuk-table__cell">If we add content in the RPS portal where the service/scheme is referenced informing users they need to access the service or scheme in the new service<br>
+            Then users will be able to follow the link to go to the new service and complete their intended task<br>
+            We'll know this works when users understand that the task they want to complete is now available in the new service, and they can successfully follow the link to complete their task </td>
+        </tr>
+      </tbody>
+    </table>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link--no-visited-state" href="tech-options/rps-messages/option-1/landing">Option 1 - give users a single link to go to RPS</a></li>
-        <li><a class="govuk-link--no-visited-state" href="tech-options/rps-messages/option-2/landing">Option 2 - AHWR own their own message history and we link separately to RPS messages</a></li>
-        <li><a class="govuk-link--no-visited-state" href="tech-options/rps-messages/option-3/landing">Option 3 - display all messages (SFD and RPS) in single front door</a></li>
-      </ul>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">How might we make it easy for users with multiple businesses to choose the right one?
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Idea</th>
+          <th scope="col" class="govuk-table__header">Hypothesis</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could allow users to choose a business to select via a list
+          </th>
+          <td class="govuk-table__cell">If we allow users to select a business from a list <br>
+            Then users will be able to view all their businesses and choose which one they want to view or work on<br>
+            We'll know this works when users are able to easily find and select the business they want to work on</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could include a header link to allow users to choose another of their businesses </th>
+          <td class="govuk-table__cell">If we provide navigation in the header<br>
+            Then users can return to their businesses to select another <br>
+            We'll know this works when at least 80% of users notice and use the link in the research session</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could allow users to choose a business via radio buttons (Note: Not testing with users, but we've written this up to capture our reasoning for not going with radios)</th>
+          <td class="govuk-table__cell">If we allow users to select a business via radio buttons<br>
+            Then users will think the choice is definite and that they cannot switch between businesses<br>
+            We'll know this works when users believe they must 'start again' such as sign out to select a different business
+          </td>
+        </tr>
 
-      <h3 class="govuk-heading-s" id="vv">Options for how the new SFD service could integrate with AHWR</h3>
+      </tbody>
+    </table>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link--no-visited-state" href="tech-options/vv/option-1/landing">Option 1 - link to the AHWR service as it is now</a></li>
-        <li><a class="govuk-link--no-visited-state" href="tech-options/vv/option-2/landing">Option 2 - consume the AHWR service into our service, so it uses our header and footer instead</a></li>
-        <li><a class="govuk-link--no-visited-state" href="tech-options/vv/option-3/landing">Option 3 - Add AWHR statuses to our landing page</a></li>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">How might we help users navigate the new service?
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Idea</th>
+          <th scope="col" class="govuk-table__header">Hypothesis</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could have a landing page with the most important things (schemes, land) as cards, and secondary tasks on the right in a list
+          </th>
+          <td class="govuk-table__cell">If we have a landing page with a combination of cards and a list on the right of secondary tasks
+            <br>
+            Then users can more easily navigate to the most important tasks e.g. schemes
+            <br>
+            We'll know this works when users will be able to easily find the most important, most frequently used things, and secondary tasks won't distract from them
+          </td>
+        </tr>
 
-      </ul>
+      </tbody>
+    </table>
+
+
+    <h2 class="govuk-heading-l">
+      Other links/exploration
+    </h2>
+
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h3 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+              Business selection and landing page ideation
+            </span>
+          </h3>
+        </div>
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content">
+          <h4 class="govuk-heading-s">Choose a business versions</h4>
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link--no-visited-state" href="start/your-businesses-list">Your businesses - list</a></li>
+            <li><a class="govuk-link--no-visited-state" href="start/your-businesses-radio">Your businesses - radio</a></li>
+          </ul>
+    
+          <h4 class="govuk-heading-s">Landing page versions</h4>
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link--no-visited-state" href="landing/card">Card</a></li>
+            <li><a class="govuk-link--no-visited-state" href="landing/list">List</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h3 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+              Animal Health and Welfare Review scheme - latest email content
+            </span>
+          </h3>
+        </div>
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content">
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-existing">Apply confirmation - existing users</a></li>
+            <li><a class="govuk-link--no-visited-state" href="vv-emails/apply-new">Apply confirmation - new users</a></li>
+            <li><a class="govuk-link--no-visited-state" href="vv-emails/claim-confirm">Claim confirmation</a></li>
+          </ul>
+        </div>
+      </div>
+
+
+        <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h3 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+              Technical integration options
+            </span>
+          </h3>
+        </div>
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content">
+
+          <h4 class="govuk-heading-s" id="rps">Options for how the new SFD service could link to existing RPS services</h4>
+
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-1/landing">Option 1 - give users a single link to go to RPS</a></li>
+            <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-2/landing">Option 2 - anchor to RPS schemes/land services</a></li>
+            <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-3/landing">Option 3 - we build hub pages for each scheme</a></li>
+            <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-4/landing">Option 4 - we consume the RPS screens and they use our header and footer</a></li>
+            <li><a class="govuk-link--no-visited-state" href="tech-options/rps/option-5/start">Option 5 - we route people on the start screen</a></li>
+          </ul>
+    
+          <h4 class="govuk-heading-s" id="rps-messages">Options for how the new SFD service could integrate RPS messages</h4>
+    
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link--no-visited-state" href="tech-options/rps-messages/option-1/landing">Option 1 - give users a single link to go to RPS</a></li>
+            <li><a class="govuk-link--no-visited-state" href="tech-options/rps-messages/option-2/landing">Option 2 - AHWR own their own message history and we link separately to RPS messages</a></li>
+            <li><a class="govuk-link--no-visited-state" href="tech-options/rps-messages/option-3/landing">Option 3 - display all messages (SFD and RPS) in single front door</a></li>
+          </ul>
+    
+          <h4 class="govuk-heading-s" id="vv">Options for how the new SFD service could integrate with AHWR</h4>
+    
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link--no-visited-state" href="tech-options/vv/option-1/landing">Option 1 - link to the AHWR service as it is now</a></li>
+            <li><a class="govuk-link--no-visited-state" href="tech-options/vv/option-2/landing">Option 2 - consume the AHWR service into our service, so it uses our header and footer instead</a></li>
+            <li><a class="govuk-link--no-visited-state" href="tech-options/vv/option-3/landing">Option 3 - Add AWHR statuses to our landing page</a></li>
+    
+          </ul>
+        </div>
+      </div>
+
+    </div>
 
   </div>
 </div>

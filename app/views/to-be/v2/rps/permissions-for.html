@@ -14,7 +14,11 @@
     </h1>
 
     <div class="govuk-inset-text">
+      {% if data['agent'] == 'True' %}  
+      Alfred Waldron is <strong>Agent</strong> of 
+      {% else %}  
       Alfred Waldron is <strong>Owner or Sole Trader</strong> of 
+      {% endif %}  
       {% if data['agile'] == 'True' %}  
       <strong>Agile Farms Ltd,</strong>
       {% elif data['valley'] == 'True' %}
@@ -29,14 +33,22 @@
         Select relationship
       </label>
       <select class="govuk-select" id="sort" name="sort">
+        {% if data['agent'] == 'True' %}  
+        <option value="agent" selected>Agent</option>
+        {% else %}  
         <option value="agent">Agent</option>
+        {% endif %}  
         <option value="business-partner">Business Partner</option>
         <option value="company-sec">Company Secretary</option>
         <option value="director">Director</option>
         <option value="employee">Employee</option>
         <option value="executor">Executor</option>
         <option value="helper">Helper</option>
+        {% if data['agent'] == 'True' %}  
+        <option value="updated">Owner or Sole Trader</option>
+        {% else %}  
         <option value="updated" selected>Owner or Sole Trader</option>
+        {% endif %}  
         <option value="trustee">Trustee</option>
       </select>
     </div>
