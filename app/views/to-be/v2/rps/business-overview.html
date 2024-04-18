@@ -139,7 +139,11 @@
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="permissions-for">Alfred Waldron</a></th>
+            {% if data['agent'] == 'True' %}  
+            <td class="govuk-table__cell govuk-table__cell_bold">Agent</td>
+            {% else %}  
             <td class="govuk-table__cell govuk-table__cell_bold">Owner or Sole Trader</td>
+            {% endif %}  
           </tr>
         </tbody>
       </table>
