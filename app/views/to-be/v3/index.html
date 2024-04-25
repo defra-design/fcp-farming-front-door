@@ -1,0 +1,187 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<a href="/to-be/index" class="govuk-back-link">Back</a>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl">
+      Version 3
+    </h1>
+
+    <h2 class="govuk-heading-l">
+      Flows for usability testing
+    </h2>
+
+    <p>TBC</p>
+
+
+    <h2 class="govuk-heading-l">
+      Page links
+    </h2>
+
+    <h3 class="govuk-heading-m">
+      Start
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="start/farming-land">Gov.uk screen - Farming and land management</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start/start">Start</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start/sign-in">Sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start/your-businesses-list">Your businesses</a></li>
+      <li><a class="govuk-link--no-visited-state" href="landing/landing">Landing page</a></li>
+    </ul>
+
+    <!-- <h3 class="govuk-heading-m">
+      Animal Health and Welfare screens
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="vet-visits/manage-your-claims">Manage your claims</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vet-visits/agreement-summary">Agreement summary</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vet-visits/ts-cs">Terms and conditions</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-m">
+      Messages
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="messages/message-history">Messages</a></li>
+      <li><a class="govuk-link--no-visited-state" href="messages/msg-1">Message example</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-m">
+      Sustainable Farming Incentive screens
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="sfi/sfi-page">SFI applications and agreements</a></li>
+      <li><a class="govuk-link--no-visited-state" href="sfi/agreement-live">Agreement page</a></li>
+    </ul>
+
+
+    <h3 class="govuk-heading-m">
+      RPS screens
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="rps/sign-in">Sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="rps/your-businesses">Your businesses</a></li>
+      <li><a class="govuk-link--no-visited-state" href="rps/business-overview">Business overview</a></li>
+      <li><a class="govuk-link--no-visited-state" href="rps/permissions-for">Permissions</a></li>
+    </ul>
+ -->
+
+
+    <!-- <h2 class="govuk-heading-l">
+      Ideas and hypotheses to test
+    </h2>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">How might we integrate RPS and the animal health and welfare service with the new service?
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Idea</th>
+          <th scope="col" class="govuk-table__header">Hypothesis</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could route people at the point of the start screen to either the new service (includes AHWR) or the old service (RPS)</th>
+          <td class="govuk-table__cell">If we have a start screen that routes people to either the new service or RPS<br>
+            Then users will know which service they need to use to carry out a specific task and may not need to sign in twice in a single journey<br>
+            We'll know this works when users understand the two options presented to them on the start page and can successfully navigate to either RPS or the new service, depending on the task they're trying to do
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could make links from our service to RPS and RPS to our service open in a new tab</th>
+          <td class="govuk-table__cell">If we make the links from RPS to the new service and the link from the new service to RPS open in a new tab<br>
+            Then it will be less disorienting and users will understand that they're going to a different service<br>
+            We'll know this works when users understand the two options presented to them on the start page and can successfully navigate to either RPS or the new service, depending on the task they're trying to do
+            </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could keep the AHWR service separate, but include a link in their service which takes users back to the new service</th>
+          <td class="govuk-table__cell">If we we include a back link on the VV service<br>
+            Then users will easily be able to get back to the new service<br>
+            We'll know this works when we observe users can successfully return to the new service from the VV service using the back link</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could tell users that to access a service or scheme that is no longer in the RPS portal, they will need to use the new platform</th>
+          <td class="govuk-table__cell">If we add content in the RPS portal where the service/scheme is referenced informing users they need to access the service or scheme in the new service<br>
+            Then users will be able to follow the link to go to the new service and complete their intended task<br>
+            We'll know this works when users understand that the task they want to complete is now available in the new service, and they can successfully follow the link to complete their task </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">How might we make it easy for users with multiple businesses to choose the right one?
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Idea</th>
+          <th scope="col" class="govuk-table__header">Hypothesis</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could allow users to choose a business to select via a list
+          </th>
+          <td class="govuk-table__cell">If we allow users to select a business from a list <br>
+            Then users will be able to view all their businesses and choose which one they want to view or work on<br>
+            We'll know this works when users are able to easily find and select the business they want to work on</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could include a header link to allow users to choose another of their businesses </th>
+          <td class="govuk-table__cell">If we provide navigation in the header<br>
+            Then users can return to their businesses to select another <br>
+            We'll know this works when at least 80% of users notice and use the link in the research session</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could allow users to choose a business via radio buttons (Note: Not testing with users, but we've written this up to capture our reasoning for not going with radios)</th>
+          <td class="govuk-table__cell">If we allow users to select a business via radio buttons<br>
+            Then users will think the choice is definite and that they cannot switch between businesses<br>
+            We'll know this works when users believe they must 'start again' such as sign out to select a different business
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">How might we help users navigate the new service?
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Idea</th>
+          <th scope="col" class="govuk-table__header">Hypothesis</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">We could have a landing page with the most important things (schemes, land) as cards, and secondary tasks on the right in a list
+          </th>
+          <td class="govuk-table__cell">If we have a landing page with a combination of cards and a list on the right of secondary tasks
+            <br>
+            Then users can more easily navigate to the most important tasks e.g. schemes
+            <br>
+            We'll know this works when users will be able to easily find the most important, most frequently used things, and secondary tasks won't distract from them
+          </td>
+        </tr>
+
+      </tbody>
+    </table> -->
+
+
+
+
+  </div>
+</div>
+
+{% endblock %}
