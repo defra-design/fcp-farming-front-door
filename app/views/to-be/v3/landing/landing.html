@@ -4,7 +4,9 @@
 
 {%- block beforeContent -%}
 
-{% include "to-be/v2/components/sub-header/include.html" %}
+{% include "to-be/v3/components/sub-header/include.html" %}
+
+<a href="/to-be/v3/start/your-businesses-list" class="govuk-back-link">Back to Your businesses</a>
 
 {% endblock %} 
 
@@ -12,20 +14,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-
     <h1 class="govuk-heading-xl">
       Manage your business
     </h1>
-
-
-
-    
   </div>
-
 </div>
-
-
 
     <div class="govuk-width-container">
       <div class="govuk-grid-row">
@@ -37,7 +30,7 @@
           <ul class="gem-c-cards__list" style="grid-template-columns:1fr 1fr;">
 
             <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state link-style" href="/to-be/v2/vet-visits/manage-your-claims">
+              <a class="govuk-link govuk-link--no-visited-state link-style" href="/to-be/v3/vet-visits/manage-your-claims">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Animal Health and Welfare scheme</h3> 
                   <p class="govuk-body-s gem-c-cards__description p-link-style">Funding to improve the health and welfare of your livestock</p>          
@@ -55,7 +48,7 @@
             </li>
 
             <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/sfi/sfi-page">
+              <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/sfi/sfi-page">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Sustainable Farming Incentive (SFI)</h3>
                   <p class="govuk-body-s gem-c-cards__description p-link-style">Funding to help produce food sustainably and protect the environment</p>          
@@ -63,23 +56,26 @@
               </a>  
             </li>
 
-            <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v2/rps/sign-in" target="_blank" rel="noreferrer noopener">
-                <div class="gem-c-cards__list-item-wrapper-variant">
-                  <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Rural Payments Service (opens in new tab)</h3>
-                  <p class="govuk-body-s gem-c-cards__description p-link-style">Manage land and maps, business permissions and Countryside Stewardship</p>          
-                </div>
-              </a>  
-            </li>
           
           </ul>
         </div>
 
 
+        <hr class="grey-border">
+
+        <h2 class="govuk-heading-m">
+          Rural Payments service
+        </h2>
 
 
-
-
+        <p>Sign in to the <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/sign-in" target="_blank" rel="noreferrer noopener">
+        Rural Payments service</a> to manage:</p>
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-1">
+          <li>land and maps</li>
+          <li>Countryside Stewardship (CS)</li>
+          <li>who has permission to act on behalf of your business</li>
+          <li>messages about land and maps, CS and permissions</li>
+        </ul>
 
       
           
@@ -93,11 +89,13 @@
             Messages
           </h2>
       
-          <p><a class="govuk-link--no-visited-state" href="/to-be/v2/messages/message-history">View messages</a></p>
+          <p><a class="govuk-link--no-visited-state" href="/to-be/v3/messages/message-history">View messages</a></p>
 
           <h2 class="govuk-heading-m">
             Business details
           </h2>
+
+          <p><a class="govuk-link--no-visited-state" href="/to-be/v3/start/your-businesses-list">View your businesses</a></p>
 
           <p><a class="govuk-link--no-visited-state" href="">View and update your business details</a></p>
 
