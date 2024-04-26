@@ -1,10 +1,9 @@
-{% extends "layouts/logged-in-nav.html" %}
+{% extends "layouts/logged-in-nav-v3.html" %}
 
 {% set pageName="Home" %}
 
 {%- block beforeContent -%}
 
-{% include "to-be/v3/components/sub-header/include.html" %}
 
 <a href="/to-be/v3/start/your-businesses-list" class="govuk-back-link">Back to Your businesses</a>
 
@@ -14,9 +13,27 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      Manage your business
+
+    {% if data['valley'] == 'True' %}  
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <span class="govuk-caption-l">Alfred Waldron</span>
+      Valley Farm
     </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 192846125</p>
+    {% elif data['agile'] == 'True' %}  
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <span class="govuk-caption-l">Alfred Waldron</span>
+      Agile Farms Ltd
+    </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 123456789</p>
+    {% else %}
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <span class="govuk-caption-l">Alfred Waldron</span>
+      Agile Farms Ltd
+    </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 123456789</p>
+  {% endif %}
+
   </div>
 </div>
 
@@ -33,7 +50,7 @@
               <a class="govuk-link govuk-link--no-visited-state link-style" href="/to-be/v3/vet-visits/manage-your-claims">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Animal Health and Welfare scheme</h3> 
-                  <p class="govuk-body-s gem-c-cards__description p-link-style">Funding to improve the health and welfare of your livestock</p>          
+                  <p class="govuk-body-s gem-c-cards__description p-link-style">Manage your claims</p>          
                 </div>
               </a> 
             </li>
@@ -42,7 +59,7 @@
               <a class="govuk-link govuk-link--no-visited-state" href="#">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Calf Housing for Health and Welfare grant</h3>
-                  <p class="govuk-body-s gem-c-cards__description p-link-style">Funding to build new, or upgrade existing, buildings to house calves</p>          
+                  <p class="govuk-body-s gem-c-cards__description p-link-style">Manage your application and claims</p>          
                 </div>
               </a>  
             </li>
@@ -51,7 +68,7 @@
               <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/sfi/sfi-page">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Sustainable Farming Incentive (SFI)</h3>
-                  <p class="govuk-body-s gem-c-cards__description p-link-style">Funding to help produce food sustainably and protect the environment</p>          
+                  <p class="govuk-body-s gem-c-cards__description p-link-style">View your applications and agreements</p>          
                 </div>
               </a>  
             </li>
@@ -64,17 +81,16 @@
         <hr class="grey-border">
 
         <h2 class="govuk-heading-m">
-          Rural Payments service
+          Manage other business tasks
         </h2>
 
 
-        <p>Sign in to the <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/sign-in" target="_blank" rel="noreferrer noopener">
-        Rural Payments service</a> to manage:</p>
+        <p>You'll need to <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/sign-in">
+        sign in to the Rural Payments service</a> to view and manage:</p>
         <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-1">
           <li>land and maps</li>
-          <li>Countryside Stewardship (CS)</li>
+          <li>Countryside stewardship (CS)</li>
           <li>who has permission to act on behalf of your business</li>
-          <li>messages about land and maps, CS and permissions</li>
         </ul>
 
       
