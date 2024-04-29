@@ -7,13 +7,21 @@
   <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
     <div class="govuk-grid-row" style="padding-top:16px;">
       <div class="govuk-grid-column-two-thirds">
+        {% if data['valleySFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Valley Farm</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 192846125</p>
+          {% elif data['agileSFD'] == 'True' %}  
           <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
           <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+          {% else %}
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+        {% endif %}
       </div>
 
       <div class="govuk-grid-column-one-third">
           <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
-          <p class="govuk-body" style="float:right; margin-bottom: 8px;"><a href="" class="govuk-link--no-visited-state">Apply for a different business</a></p>
+          <p class="govuk-body" style="float:right; margin-bottom: 8px;"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Apply for a different business</a></p>
 
       </div>
 
