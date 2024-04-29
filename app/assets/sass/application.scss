@@ -830,3 +830,30 @@ input[type="radio" i] {
   border: 3px solid #b1b4b6;
   margin-bottom: 30px;
 }
+
+
+
+// GOV Guidance Styles
+
+.guidance-header-wrapper{
+  background-color: #263135;
+  margin: 0px;
+  padding: 0px;
+}
+
+.guidance-header-wrapper p, .guidance-header-wrapper h1, .guidance-header-wrapper li a{
+  color: #FFF !important;
+}
+
+.browse__section{
+  margin-bottom: 60px;
+}
+
+.browse__list li{
+  margin-bottom: 25px;
+}
+
+.browse__section--top-border{
+  border-top: 1px solid #b1b4b6;
+  padding-top: 15px;
+}
