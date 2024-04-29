@@ -112,7 +112,7 @@
     Mobile: 
   </p>
 
-  <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">View and amend your business details</a></p>
+  <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View and amend your business details</a></p>
   </div>
 </div>
 
@@ -148,11 +148,11 @@
         </tbody>
       </table>
 
-      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Add people</a></p>
+      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Add people</a></p>
 
-      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Add people from a firm of agents</a></p>
+      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Add people from a firm of agents</a></p>
 
-      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Remove people</a></p>
+      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Remove people</a></p>
 
     </div>
 
@@ -170,7 +170,7 @@
 
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body">Check and print the details we have for your business. These include business details, entitlements, land and land use details and any common land rights that you have.</p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Business summary</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Business summary</a></p>
   </div>
 
 </div>
@@ -187,10 +187,10 @@
 
     <p class="govuk-body">View maps of your land, transfer land to another business or make changes to your land use.</p>
   
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">View land</a></p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Transfer land</a></p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Update land use</a></p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Request Rural Land Changes</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View land</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Transfer land</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Update land use</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Request Rural Land Changes</a></p>
 
   </div>
 
@@ -204,8 +204,21 @@
     <h2 class="govuk-heading-m" id="sfincentive">Sustainable Farming Incentive</h2>
 </div>
 
+
   <div class="govuk-grid-column-two-thirds">
+
+
+
+    {% if data['rpsFirst'] == 'True' %}  
     <p class="govuk-body"><a href="/to-be/v3/start/sign-in" class="govuk-link--no-visited-state" >Sign in to manage your farm and land businesses</a> to manage your Sustainable Farming Incentive scheme.</p>
+
+    {% elif data['sfdFirst'] == 'True' %}  
+    <p class="govuk-body"><a href="/to-be/v3/landing/landing" class="govuk-link--no-visited-state" >Sign in to manage your farm and land businesses</a> to manage your Sustainable Farming Incentive scheme.</p>
+
+    {% else %}
+    <p class="govuk-body"><a href="/to-be/v3/start/sign-in" class="govuk-link--no-visited-state" >Sign in to manage your farm and land businesses</a> to manage your Sustainable Farming Incentive scheme.</p>
+
+    {% endif %}
 
   </div>
 
@@ -222,9 +235,9 @@
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body">Check what entitlements you have for the Basic Payment Scheme. Apply for BPS, check the status of your application, update your application or view past applications.</p>
 
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">View entitlements</a></p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Apply for BPS or view status of your application</a></p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">View a previous BPS application</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View entitlements</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Apply for BPS or view status of your application</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View a previous BPS application</a></p>
 
   </div>
 
@@ -241,10 +254,10 @@
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body">Find out which Countryside Stewardship options best suit your farm, apply to join the scheme and submit your claims.</p>
 
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Countryside Stewardship options finder tool</a></p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Countryside Stewardship Mid-Tier Applications</a></p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Countryside Stewardship applications</a></p>
-    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="#">Countryside Stewardship claims</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Countryside Stewardship options finder tool</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Countryside Stewardship Mid-Tier Applications</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Countryside Stewardship applications</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Countryside Stewardship claims</a></p>
 
     
   </div>

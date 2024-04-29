@@ -56,7 +56,7 @@
             </li>
 
             <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state" href="#">
+              <a class="govuk-link govuk-link--no-visited-state" href="../../../_common/not-testing.html">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Calf Housing for Health and Welfare grant</h3>
                   <p class="govuk-body-s gem-c-cards__description p-link-style">Manage your application and claims</p>          
@@ -84,9 +84,19 @@
           Manage other business tasks
         </h2>
 
-
-        <p>You'll need to <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/sign-in">
+        {% if data['rpsFirst'] == 'True' %}  
+        <p>You'll need to <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/business-overview">
         sign in to the Rural Payments service</a> to view and manage:</p>
+        {% elif data['sfdFirst'] == 'True' %}  
+        <p>You'll need to <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/sign-in">
+          sign in to the Rural Payments service</a> to view and manage:</p>
+        {% else %}
+        <p>You'll need to <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/sign-in">
+          sign in to the Rural Payments service</a> to view and manage:</p>
+        {% endif %}
+
+
+      
         <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-1">
           <li>land and maps</li>
           <li>Countryside stewardship (CS)</li>
@@ -113,9 +123,9 @@
 
           <p><a class="govuk-link--no-visited-state" href="/to-be/v3/start/your-businesses-list">View your businesses</a></p>
 
-          <p><a class="govuk-link--no-visited-state" href="">View and update your business details</a></p>
+          <p><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View and update your business details</a></p>
 
-          <p><a class="govuk-link--no-visited-state" href="">Register a business</a></p>
+          <p><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Register a business</a></p>
 
 
         </div>
