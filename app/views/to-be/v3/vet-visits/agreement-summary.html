@@ -3,24 +3,8 @@
 {% set pageName="Home" %}
 
 {%- block beforeContent -%}
-<div class="govuk-width-container">
-  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
-    <div class="govuk-grid-row" style="padding-top:16px;">
-      <div class="govuk-grid-column-two-thirds">
-          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
-          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
-      </div>
 
-      <div class="govuk-grid-column-one-third">
-          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
-          <p class="govuk-body" style="float:right; margin-bottom: 8px;"><a href="" class="govuk-link--no-visited-state">Apply for a different business</a></p>
-
-      </div>
-
-      </div>
-  </main>
-</div>
-<hr>
+{% include "to-be/v3/components/sub-header/include.html" %}
 
 <a href="manage-your-claims" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 

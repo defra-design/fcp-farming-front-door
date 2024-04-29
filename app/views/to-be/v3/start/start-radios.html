@@ -1,4 +1,4 @@
-{% extends "layouts/service-start.html" %}
+{% extends "layouts/service-start-v3.html" %}
 
 {% set pageName="Home" %}
 
@@ -12,46 +12,45 @@
 
 
     <h1 class="govuk-heading-xl">
-      Manage schemes and grants
+      Manage your land and farm businesses
     </h1>
 
-    <p>There are two ways to sign in to your rural business account because some features are now in our new service.</p>
+    <p>There are 2 places to sign in depending on what you need to do.</p>
     
-    <form action="#" method="post">
-    <div class="govuk-form-group">
+    <form action="/which-service-answer" method="post">
+    <div class="govuk-form-group govuk-!-margin-bottom-1">
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-          Choose which service to sign in to
+          Choose where to sign in
         </legend>
         <div class="govuk-radios" data-module="govuk-radios">
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="whereDoYouLive" name="whereDoYouLive" type="radio" value="england">
-            <label class="govuk-label govuk-radios__label" for="whereDoYouLive">
-              Sign in to the Manage schemes and grants service:
-              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-1">
-                <li>view and update your personal and business details</li>
-                <li>view messages</li>
-                <li class="">manage the:</li>
-                  <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-0">
-                    <li>Animal Health and Welfare scheme</li>
-                    <li>Sustainable Farming Incentive (SFI)</li>
-                    <li>Calf Housing for Health and Welfare grant</li>
-                  </ul>
-              </ul>
+            <input class="govuk-radios__input" id="whichService" name="whichService" type="radio" value="whichRPS">
+            <label class="govuk-label govuk-radios__label" for="whichService">
+              Rural Payments service for:
             </label>
-
-          </div>
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="whereDoYouLive-2" name="whereDoYouLive" type="radio" value="scotland">
-            <label class="govuk-label govuk-radios__label" for="whereDoYouLive-2">
-              Sign in to the Rural Payments service to manage:
+            <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
               <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-1">
                 <li>land and maps</li>
-                <li>Countryside Stewardship (CS)</li>
-                <li>who has permission to act on behalf of your business</li>
-                <li>messages about land and maps, CS and permissions</li>
-              </ul>
+                <li>Countryside stewardship (CS)</li>
+                <li>who has permission to act on behalf of the business</li>
+              </ul>            
+            </div>
+          </div>
+
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="whichService-2" name="whichService" type="radio" value="whichNew">
+            <label class="govuk-label govuk-radios__label" for="whichService-2">
+              Manage other business tasks including:
             </label>
+            <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
+              <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-1">
+                <li>personal and business details</li>
+                <li>Animal health and welfare scheme</li>
+                <li>Sustainable Farming Incentive (SFI)</li>
+                <li>Calf Housing for Health and Welfare grant</li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -64,20 +63,20 @@
 
     <h2 class="govuk-heading-m">Register for an account</h2>
 
-    <p>Register for an account by calling the Rural Payments helpline.</p>
+    <p>If you don't have an account, you can register for one by contacting the Rural Payments Agency.</p>
 
     <p>You'll be sent a Customer Reference Number (CRN) which you can use to sign in.</p>
 
     <div>
       <p>Rural payments helpline<br>
-      Email: <a href="#">ruralpayments@defra.gov.uk</a><br>
+      Email: <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a><br>
       Telephone: 03000 200 301<br>
       Monday to Friday, 8:30am to 5pm, except bank holidays<br>
-      <a href="#">Find out about call charges</a></p>
+      <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">Find out about call charges</a></p>
       </div>
 
       <div class="govuk-inset-text">
-        Find out <a href="#">more about how to register and how to give someone else permission to act your behalf</a>.
+        Find out <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">more about how to register and how to give someone else permission to act your behalf</a>.
       </div>
 
       <h2 class="govuk-heading-m">Before you start</h2>
@@ -85,14 +84,15 @@
       <p>There's a different way to apply for rural payments and grants if:</p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li><a href="https://www.ruralpayments.org/">your farm is in Scotland</a></li>
-        <li><a href="https://www.gov.wales/rural-payments-wales-rpw-online">your farm is in Wales</a></li>
-        <li><a href="https://www2.dardni.gov.uk/gatewayweb/internet/login_1.aspx">your farm is in Northern Ireland</a></li>
+        <li><a href="https://www.ruralpayments.org/" class="govuk-link--no-visited-state">your farm is in Scotland</a></li>
+        <li><a href="https://www.gov.wales/rural-payments-wales-rpw-online" class="govuk-link--no-visited-state">your farm is in Wales</a></li>
+        <li><a href="https://www2.dardni.gov.uk/gatewayweb/internet/login_1.aspx" class="govuk-link--no-visited-state">your farm is in Northern Ireland</a></li>
       </ul>
       
   </div>
 
 <div class="govuk-grid-column-one-third">
+  <hr>
   <h2 class="govuk-heading-m">Related content</h2>
   <p class="govuk-body"><a href="https://www.gov.uk/guidance/funding-for-farmers" class="govuk-link govuk-link--no-visited-state">Funding for farmers, growers and land managers</a></p>
 </div>
