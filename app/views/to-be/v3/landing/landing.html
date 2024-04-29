@@ -5,7 +5,7 @@
 {%- block beforeContent -%}
 
 
-<a href="/to-be/v3/start/your-businesses-list" class="govuk-back-link">Back to Your businesses</a>
+<a href="/to-be/v3/start/your-businesses-list" class="govuk-back-link">Back to your businesses</a> 
 
 {% endblock %} 
 
@@ -19,20 +19,22 @@
       <span class="govuk-caption-l">Alfred Waldron</span>
       Valley Farm
     </h1>
-    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 192846125</p>
+    <p class="govuk-caption-m govuk-!-margin-bottom-1">Single Business Identifier (SBI): 192846125</p>
     {% elif data['agileSFD'] == 'True' %}  
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-      <span class="govuk-caption-l">Alfred Waldron</span>
+      <span class="govuk-caption-l govuk-!-margin-bottom-2">Alfred Waldron</span>
       Agile Farms Ltd
     </h1>
-    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 123456789</p>
+    <p class="govuk-caption-m govuk-!-margin-bottom-1">Single Business Identifier (SBI): 123456789</p>
     {% else %}
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
       <span class="govuk-caption-l">Alfred Waldron</span>
       Agile Farms Ltd
     </h1>
-    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 123456789</p>
+    <p class="govuk-caption-m govuk-!-margin-bottom-1">Single Business Identifier (SBI): 123456789</p>
   {% endif %}
+
+  <p class="govuk-!-margin-bottom-7"><a href="/to-be/v3/start/your-businesses-list" class="govuk-link--no-visited-state">Choose another business</a></p>
 
   </div>
 </div>
@@ -59,7 +61,7 @@
               <a class="govuk-link govuk-link--no-visited-state" href="../../../_common/not-testing.html">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Calf Housing for Health and Welfare grant</h3>
-                  <p class="govuk-body-s gem-c-cards__description p-link-style">Manage your application and claims</p>          
+                  <p class="govuk-body-s gem-c-cards__description p-link-style">Manage your application and claim</p>          
                 </div>
               </a>  
             </li>
@@ -86,20 +88,20 @@
 
         {% if data['rpsFirst'] == 'True' %}  
         <p>You'll need to <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/business-overview">
-        sign in to the Rural Payments service</a> to view and manage:</p>
+        sign in to the Rural Payments service</a> to view and update:</p>
         {% elif data['sfdFirst'] == 'True' %}  
         <p>You'll need to <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/sign-in">
-          sign in to the Rural Payments service</a> to view and manage:</p>
+          sign in to the Rural Payments service</a> to view and update:</p>
         {% else %}
         <p>You'll need to <a class="govuk-link govuk-link--no-visited-state" href="/to-be/v3/rps/sign-in">
-          sign in to the Rural Payments service</a> to view and manage:</p>
+          sign in to the Rural Payments service</a> to view and update:</p>
         {% endif %}
 
 
       
         <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-1">
           <li>land and maps</li>
-          <li>Countryside stewardship (CS)</li>
+          <li>Countryside Stewardship (CS)</li>
           <li>who has permission to act on behalf of your business</li>
         </ul>
 
