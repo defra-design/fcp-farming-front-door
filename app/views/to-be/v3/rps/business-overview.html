@@ -12,9 +12,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Business overview
-      {% if data['agile'] == 'True' %}  
+      {% if data['agileRPS'] == 'True' %}  
       <span class="govuk-caption-l">Agile Farms Ltd,</span>
-      {% elif data['valley'] == 'True' %}  
+      {% elif data['valleyRPS'] == 'True' %}  
       <span class="govuk-caption-l">Valley Farm</span>
       {% else %}  
       <span class="govuk-caption-l">Agile Farms Ltd,</span>
@@ -54,7 +54,7 @@
   </div>
   <div class="govuk-grid-column-one-third">
     <h2 class="govuk-heading-m">Business details</h2>
-    {% if data['agile'] == 'True' %}  
+    {% if data['agileRPS'] == 'True' %}  
     <p class="govuk-body">Agile Farms Ltd,
     <br>
     1 Rattle Row 
@@ -67,7 +67,7 @@
     <br>
     TN29 0XW
   </p>
-  {% elif data['valley'] == 'True' %}  
+  {% elif data['valleyRPS'] == 'True' %}  
   <p class="govuk-body">Valley Farm
     <br>
     25 Victoria Road
@@ -95,11 +95,11 @@
 
   <p class="govuk-body" style="overflow-wrap: break-word">Email:
     <br>
-    {% if data['agile'] == 'True' %}  
+    {% if data['agileRPS'] == 'True' %}  
     agilefarmsrus25@gmail.com
     <br>
     Landline: 01234038687
-    {% elif data['valley'] == 'True' %}  
+    {% elif data['valleyRPS'] == 'True' %}  
     valleyfarmlancss@hotmail.co.uk
     <br>
     Landline: 01234038687
