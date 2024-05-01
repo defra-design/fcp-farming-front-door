@@ -13,8 +13,8 @@ router.post('/which-service-answer', function(request, response) {
 
     var country = request.session.data['whichService']
     if (country == "whichRPS"){
-        response.redirect("/to-be/v3/rps/sign-in?rpsFirst=True&sfdFirst=")
+        response.redirect("/to-be/v3/rps/sign-in")
     } else {
-        response.redirect("/to-be/v3/start/sign-in?sfdFirst=True&rpsFirst=")
+        response.redirect("/to-be/v3/start/sign-in")
     }
 })
