@@ -32,7 +32,20 @@
 
 
 {% block footer %}
-<footer class="govuk-footer" role="contentinfo">
+
+{{ govukFooter({
+  meta: {
+    items: [
+      {
+        href: "/manage-prototype/clear-data",
+        text: "Clear data"
+      }
+    ],
+    visuallyHiddenTitle: "Footer links"
+  }
+}) }}
+
+<!-- <footer class="govuk-footer" role="contentinfo">
   <div class="govuk-width-container">
     <div class="govuk-footer__meta">
       <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
@@ -63,7 +76,7 @@
       </div>
     </div>
   </div>
-</footer>
+</footer> -->
 
 
   {% endblock %}
