@@ -1,0 +1,348 @@
+{% extends "layouts/vet-visits.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+        {% if data['valleySFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Valley Farm</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 192846125</p>
+          {% elif data['agileSFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+          {% else %}
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+        {% endif %}
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+          <p class="govuk-body" style="float:right; margin-bottom: 8px;"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Apply for a different business</a></p>
+
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+
+<a href="manage-your-claims" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <div class="govuk-width-container">
+      <h1 class="govuk-heading-l">Annual health and welfare review of livestock terms and conditions</h1>
+
+      <p class="govuk-body">These terms and conditions cover agreements accepted from 14 June 2023 onwards.</p>
+
+      <p class="govuk-body">If you accepted your agreement before 14 June 2023, refer to the terms and conditions that apply to your agreement.</p>
+     
+      <p class="govuk-body">For example if you accepted your agreement on 1 November 2022, you’ll need to read the terms and conditions for agreements made up to and including 6 February 2023.</p>
+     
+      <p class="govuk-body"> <a href="../t&amp;cs/terms-conditions-1.html">Up to and including 6 February 2023: Get funding to improve animal health and welfare- terms and conditions</a></p>
+     
+      <p class="govuk-body"> <a href="../t&amp;cs/terms-conditions-2.html">7 February 2023 to 13 June 2023: Get funding to improve animal health and welfare-  terms and conditions</a></p>
+
+      <h1 class="govuk-heading-m">Introduction</h1>
+      <h1 class="govuk-heading-m">1.1 The Annual Health and Welfare Review </h1>
+
+      <p class="govuk-body">
+        The Annual Health and Welfare Review (“AHWR”) is a scheme run by the Rural Payments Agency (referred to below as “us, “we”, “our”) on behalf of the Department for Environment, Food and Rural Affairs (“Defra”). The AWHR is a financial assistance scheme under section 1 of the Agriculture Act 2020 and is in conjunction with the Agriculture (Financial Assistance) Regulations 2021 (“the Regulations”) amended by The Agriculture (Financial Assistance) (Amendment) Regulations 2022.
+      </p>
+      <h1 class="govuk-heading-m">1.2 About these Terms and Conditions</h1>
+      <ol class="govuk-list govuk-list">
+        <li>(a) The AHWR Beta 3 agreement (the “Agreement”) comprises these “Terms and Conditions”, which are applicable to the payment of the one-off sum (the “Payment”) to the agreement holder (“you”) </li>
+        <li>(b) The AHWR scheme consists of multiple phases (also known as betas) and these Terms and Conditions only apply to beta 3 of the AHWR Private Beta (“Beta 3”) for a review of the health and welfare (“Review”) of a single herd or flock (a epidemiologically distinct unit of a single species) of beef cattle or dairy cattle, or sheep, or pigs (the “Single Species”).</li>
+      </ol>
+
+      <p></p><h1 class="govuk-heading-m">1.3 References in the Terms and Conditions </h1><p></p>
+      <ol class="govuk-list govuk-list">
+        <li>(a) Definitions of capitalised terms are defined in this document when they are first referred to. </li>
+        <li>(b) A reference to the “Law” means any law, statute, subordinate legislation within the meaning of Section 21(1) of the Interpretation Act 1978, byelaw, right within the meaning of Section 4(1) EU Withdrawal Act 2018 as amended by EU (Withdrawal Agreement) Act 2020, regulation, order, regulatory policy, mandatory guidance or code of practice, judgement of a relevant court of law, or directives or requirements of any regulatory body with which you are required to comply.</li>
+        <li>(c) A reference to a statute or statutory provision is a reference to it as amended, extended or re-enacted from time to time and shall include all subordinate legislation made under that statute or statutory provision.</li>
+        <li>(d) A reference to a public organisation includes a reference to any successor to that public organisation.</li>
+        <li>(e)   Any words following the terms ‘including’, ‘include’, ‘in particular’ or ‘for example’ or any similar phrase shall be construed as illustrative and shall not limit the generality of the related general words.</li>
+        <li>(f) Unless the context otherwise requires, words in the singular shall include the plural and in the plural shall include the singular.</li>
+      </ol>
+
+      <p></p><h1 class="govuk-heading-m">1.4 Beta 3 guidance</h1><p></p>
+      <p class="govuk-body">
+        We have set out further information about a Review under Beta 3 in accompanying guidance. This guidance is there to help you and will not be used to introduce or explain mandatory requirements of your Agreement.
+      </p>
+
+      <p></p><h1 class="govuk-heading-m">2. About your Agreement</h1><p></p>
+      <p></p><h1 class="govuk-heading-m">2.1 Your Agreement</h1><p></p>
+      <p class="govuk-body">
+        The Agreement comprises these Terms and Conditions (which are further explained in the Beta 3 guidance as referred to in condition 1.4). 
+      </p>
+
+      <p></p><h1 class="govuk-heading-m">2.2 What you are declaring</h1><p></p>
+      <p class="govuk-body">
+        </p><p class="govuk-body">
+          By entering the Agreement you confirm that: 
+        </p>
+        <ol class="govuk-list govuk-list">
+          <li>(a) you are registered with us and have a valid and current Single Business Identifier (SBI); </li>
+          <li>(b) the SBI referred to in condition 2.2(a) is linked to at least one permanent or temporary County Parish Holding (CPH) number that is registered in England only and which is not an 8000 series CPH number or a 9000 series CPH number; </li>
+          <li>(c) you are the person responsible for a Single Species on a permanent or temporary basis on the date or dates the Vet carries out the Review;</li>
+          <li>(d) you will have the relevant minimum number of the Single Species as described in condition 3.3 on the date or dates the Vet carries out the Review; </li>
+          <li>(e) You will have the relevant minimum number of Single Species as described in condition 4.1 on the date or dates the Vet carries out the testing for the Review. </li>
+          <li>(f)You have not applied for and accepted an agreement offer for a Single Species Review from another AWHR beta/phase in the last 10 months, unless the 10 months has been waived in line with your previous agreements' terms and conditions; </li>
+          <li>(g) the Single Species is registered in England; </li>
+          <li>(h) the declarations you made in your Beta 3 application for the Payment remain true and accurate to the best of your knowledge and belief;</li>
+          <li>(i) you have full capacity and authority to enter into the Agreement;</li>
+          <li>(j) you are not aware of any circumstances which would render you ineligible for the Payment or otherwise prevent you from complying with your obligations under the Agreement;</li>
+          <li>(k) your obligations under the Agreement do not and will not conflict in whole or in part with any other legal or contractual obligations you are subject to; and</li>
+          <li>(l) you will at all times comply with all relevant Law in the performance of your obligations under the Agreement</li>
+        </ol>
+
+        <p></p><h1 class="govuk-heading-m">2.3 What you are agreeing to do</h1><p></p>
+        <p class="govuk-body">
+          </p><p class="govuk-body">
+            In applying for Beta 3 and receiving the Payment, you are agreeing to:
+          </p>
+          <ol class="govuk-list govuk-list">
+            <li>(a) comply with these Terms and Conditions; and</li>
+            <li>(b) use the Payment for the purpose of undertaking the requirements of Beta 3 as set out in these Terms and Conditions.</li>
+          </ol>
+
+          <p></p><h1 class="govuk-heading-m">2.4  Agreement Period</h1><p></p>
+          <p class="govuk-body">
+            </p><ol class="govuk-list govuk-list">
+              <li>(a) The Agreement is for a period of six (6) months from the date, you accept our offer (“Agreement Start Date”) until the expiry of those 6 months (“Agreement End Date”), </li>
+              <li>(b) The Agreement Start Date and Agreement End Date are shown on the agreement summary referred to in condition 6.2.</li>
+            </ol><p></p>
+
+            <p></p><h1 class="govuk-heading-m">3. A Review under Beta 3</h1><p></p>
+            <p class="govuk-body">3.1   You must ask a Royal College of Veterinary Surgeons (RCVS) registered vet (“Vet”) to complete a Review of the Single Species under Beta 3.
+            </p>
+            <p class="govuk-body">3.2   You must tell the Vet about the requirements for a Review under Beta 3, there is accompanying Beta 3 Vet guidance that will assist the Vet to carry out this AWHR. It is your responsibility to make sure that the Review completed by the Vet complies with these Terms and Conditions.
+            </p>
+            <p class="govuk-body">3.3 You must have the following minimum number of the relevant Single Species present on the date or dates the Vet carries out the Review: 
+            </p>
+              <ol class="govuk-list govuk-list">
+                <li>a.  At least 11 dairy cattle. </li>
+                <li>b.  At least 11 beef cattle.</li>
+                <li>c.  At least 21 sheep.</li>
+                <li>d.  At least 51 pigs.</li>
+              </ol><p></p>
+
+              <p class="govuk-body">3.4   To complete a Review under Beta 3, you must ask the Vet to do all of the following:
+              </p> 
+              <ol class="govuk-list govuk-list">
+              <li>(a) visit the relevant Single Species and carry out the tests to the relevant minimum number of Single Species required for testing as described in condition 4.1. The minimum number of Single Species required for testing under condition 4.1 is different to the minimum number set out in condition 3.3 above, you must comply with both.</li>
+              <li>(b) send the relevant test samples from the tests described in condition 4.1 to a laboratory for analysis;</li>
+              <li>(c) conduct a review of the general health and welfare of the relevant Single Species;</li>
+              <li>(d) provide you with the relevant test results from the tests described in condition 4.1, including the detailed laboratory analysis;</li>
+              <li>(e) provide you with a written report (the “Report”) and you must ask the Vet to follow the Beta 3 guidance setting out what should be in the Report; </li>
+              <li>(f) provide you with a separate review summary sheet (the “Review Summary Sheet”) as described in condition 5 to accompany the Report referred to in condition 3.4(e).</li>    
+     </ol>
+     <p></p><h1 class="govuk-heading-m">4.Testing a Single Species </h1><p></p>
+     <p class="govuk-body">
+      </p><p class="govuk-body">4.1   You must ask the Vet to carry out one (1) of the following tests of the relevant minimum number of the relevant Single Species on the date or dates the Vet carries out the Review:
+      </p>
+      <ol class="govuk-list govuk-list">
+        <li>(a) test at least six (6) beef cattle for Bovine Viral Diarrhoea (BVD) using a blood (serum) antibody test;</li>
+        <li>(b) test any number of dairy cattle for BVD using an antibody bulk milk test or a polymerase chain reaction (PCR) bulk milk test or a blood (serum) antibody test;</li>
+        <li>(c) test at least ten (10) sheep for the effectiveness of worming treatments containing one (1) of the following active chemicals:
+          <ol class="govuk-list govuk-list">
+            <li>i.  Benzimidazole (BZ)</li>
+            <li>ii. Levamisole (LV)</li>
+            <li>iii.  Macrocyclic lactones (ML)</li>
+            <li>iv. Amino-acetonitrile derivatives (AD)</li>
+            <li>v.  Spiroindoles (SI)</li>
+        <p></p><li>(d) test at least thirty (30) pigs for Porcine Reproductive and Respiratory Syndrome (PRRS) using an enzyme-linked immunosorbent assay (ELISA) or PRRS PCR test.</li>
+        <p></p>
+      </ol>
+      <p class="govuk-body">4.2 The tests set out in condition 4.1 are in addition to any other services which you may agree for the Vet to provide at the same time as the Review, but which are not covered by the Payment.
+      </p>
+      <p class="govuk-body">4.3 You must ask the Vet to send the samples from the tests set out in condition 4.1 to a suitably accredited laboratory for the relevant analysis, the Vet guidance has further information on what a suitably accredited laboratory for each Single Species will be.
+      </p>
+      <p class="govuk-body">4.4 You must ask the Vet to share the results analysis received from the laboratory explained in condition 4.3 for the relevant tests set out in condition 4.1.
+      </p>
+      <p class="govuk-body">4.5 You cannot use test results you have already obtained under another accreditation scheme or any other legal or contractual obligation you are subject to in order to meet the testing requirements set out in condition 4.1.
+      </p>
+
+      <p></p><h1 class="govuk-heading-m">5. Review Summary Sheet </h1><p></p>
+      <p class="govuk-body">5.1 The Review Summary Sheet referred to in condition 3.4(f) must include all of the following: 
+      </p>
+      <ol class="govuk-list govuk-list">
+        <li>(a) the unique reference number for your Agreement;</li>
+        <li>(b) your business name and SBI;</li>
+        <li>(c) the last date the Vet visited your CPH for the Review.</li>
+        <li>(d) the Single Species you selected for the Review under Beta 3;</li>
+        <li>(e) confirmation that you had the required minimum numbers of Single Species in accordance with condition 3.3</li>
+        <li>(f) confirmation that the Vet completed the testing in accordance with condition 4.1;</li>
+        <li>(g) the unique reference number for the laboratory test results under condition 4.4;</li>
+        <li>(h) confirmation that the Vet provided you with a Report as referred to in condition 3;</li>
+        <li>(i) the RCVS-registered reference number for the Vet; and</li>
+        <li>(j) the signature of the Vet and the date the Vet signed the Review Summary Sheet.</li></ol>
+
+        <p></p><h1 class="govuk-heading-m">6. Applying for a Review</h1><p></p>
+        <p class="govuk-body">6.1 To apply for a Review of a Single Species you must:
+        </p>
+        <ol class="govuk-list govuk-list">
+          <li>(a) confirm that you meet the eligibility criteria.</li>
+          <li>(b) confirm that you will carry out the required actions. </li>
+          <li>(c) confirm that you have read, understood and accept these Terms and Conditions.</li>
+          <li>(d) submit your Beta 3 application</li>
+          </ol>
+          <p class="govuk-body">If we approve your Beta 3 application under condition 6.1, we will offer you an Agreement which you must either accept or reject.
+          </p>
+          <p class="govuk-body">6.2 If you accept the Agreement, we will share an agreement summary with you which will confirm:
+            </p>
+            <ol class="govuk-list govuk-list">
+            <li>(a) the unique reference number (URN) for the Agreement, which you should use in any correspondence with us;</li>
+            <li>(b) the Agreement Start Date and Agreement End Date;</li>
+            <li>(c) your business name and SBI; and</li>
+            <li>(d) the selected Single Species for the Review.</li>
+          </ol>
+            <p class="govuk-body">6.3 You must not ask the Vet to complete the Review under condition 3 until you accept the Agreement. The Review must not start until the Agreement Start Date.</p>
+            <p class="govuk-body">6.4 You cannot apply for a further Review of a Single Species until ten (10) months after the Agreement Start Date, , this timeframe is subject to 2.2(f).</p>
+            <p class="govuk-body">6.5 For the duration of AHWR, as long as you have complied with the relevant  Terms and Conditions of the beta/phase you apply for, you can apply for up to a maximum of three (3) Reviews of a Single Species subject to 6.4.</p>
+  
+            <p></p><h1 class="govuk-heading-m">7. Payment</h1><p></p>
+            <p class="govuk-body">7.1 The Payment rates for completing a Review under Beta 3 of a Single Species as described in Condition 3, as relevant, are:</p>
+            <ol class="govuk-list govuk-list">
+              <li>(a) £522 for a Review of beef cattle</li>
+              <li>(b) £372 for a Review of dairy cattle</li>
+              <li>(c) £436 for a Review of sheep </li>
+              <li>(d) £684 for a Review of pigs</li>
+            </ol>
+            <p class="govuk-body">7.2 It is your responsibility to pay the Vet. If the amount the Vet charges you for the Review exceeds the amount of Payment that you are eligible to receive, you will be responsible for the excess amount.</p>
+            <p class="govuk-body">7.3 To be eligible for the Payment, no more than six (6) months after your Agreement Start date you must (subject to condition 7.14):</p>
+            <ol class="govuk-list govuk-list">
+              <li>(a) make sure the Vet completes the Review in accordance with condition 3; and</li>
+              <li>(b) complete and submit your Payment claim</li></ol>
+              <p class="govuk-body">7.4 When you have carried out the actions required under condition 7.3, we will use reasonable endeavours to make the associated Payment no later than twenty-eight (28) days after verifying your Payment claim is valid and meets these Terms and Conditions, subject to any limitation on Payments under condition 16.2 </p>
+              <p class="govuk-body">7.5 We will make the Payment directly to the bank or building society account that is registered with us for the SBI referred to under condition 2.2(b) via BACS transfer, subject to the necessary funds being available when the Payment falls due.</p>
+              <p class="govuk-body">7.6 We reserve the right to withhold, delay, reduce or recover, the Payment or require repayment of all or part of the Payment if you fail to comply with any of these Terms and Conditions. </p>
+              <p class="govuk-body">7.7 We reserve the right to withhold, delay, reduce, or recover the Payment or require repayment of all or part of the Payment if you;</p>
+              <ol class="govuk-list govuk-list">
+                <li>a)  defraud, mislead or provide false information to us, </li>
+                <li>b)  fail to comply with condition 8 </li>
+                <li>c)  if you fail to comply with the Law</li></ol>
+                <p class="govuk-body">7.8 If we inform you that you have received a Payment which does not meet the requirements of these Terms and Conditions, you must repay us any such amounts within sixty (60) days of the date of our demand for repayment. </p>
+                <p class="govuk-body">7.9 Any sum that becomes repayable under condition 7.8 will be treated as a debt by you to us and if it is not repaid we may issue a recovery order in respect of it.</p>
+                <p class="govuk-body">7.10 Before taking any action under condition 7.6, condition 7.7 or condition 7.8 we will assess all the circumstances of a breach in a fair and consistent manner and take action as appropriate</p>
+                <p class="govuk-body">7.11 You may withdraw your claim for Payment at any time by giving us written notice of your wish to withdraw subject to condition 7.12. This does not prevent you from resubmitting your claim subject  to condition 2.4(a).  In the event of withdrawal, any Payment already made to you, shall be fully repayable to us.</p>
+                <p class="govuk-body">7.12 You may not withdraw your claim:</p>
+                <ol class="govuk-list govuk-list">
+                  <li>a)  in the event that we have informed you of a breach of this Agreement; or</li>
+                  <li>b)  where we have given you notice of a suspected breach of this Agreement; or</li>
+                  <li>c)  where we have asked you to send us any evidence in relation to your compliance with this Agreement</li></ol>
+                <p class="govuk-body">7.13 If you fail to comply with condition 7.3 you will be in breach of your Agreement. We understand that there may be circumstances where you are in breach of condition 7.3(b) because of events outside of your control (a “Good Reason”). </p>
+                <p class="govuk-body">7.14.1 If you breach condition 7.3(b) for a Good Reason, you (or any person authorised to act for you) must notify us in writing to explain the Good Reason. If we determine that there is a Good Reason for the breach of your Agreement you may still be eligible for the Payment You must notify us:</p>
+                <p class="govuk-body">7.14.2 in writing within eight (8) weeks from:</p>
+                <ol class="govuk-list govuk-list">
+                  <li>(i) the date you are able to; or</li>
+                  <li>(ii) the date we notify you of the Determination on the breach of the Agreement</li></ol>
+                  <p class="govuk-body">7.15 A decision about whether you are still eligible for the Payment under 7.14 will be at our sole discretion and you may be asked to provide further evidence to support your Good Reason for the breach of your Agreement.</p>
+                    <p class="govuk-body">7.16 Condition 7.14 does not apply if you are in breach of condition 7.3(a).</p>
+
+                    <p></p><h1 class="govuk-heading-m">8. Record-keeping </h1><p></p>
+                    <p class="govuk-body">8.1   You must keep all invoices, receipts, the Review Summary Sheet, accounts and any other relevant documents relating directly to the expenditure of the Payment and evidence of your compliance with your obligations under these Terms and Conditions (“Records”).</p>
+                    <p class="govuk-body">8.2   You must keep your Records for a period of at least seven (7) years from the Agreement End Date.</p>
+                    <p class="govuk-body">8.3   You must prepare and keep your Records in compliance with Law and must provide assistance to us when we are auditing or examining these so as to help us carry out our legal obligations.</p>
+                    <p class="govuk-body">8.4   We have the right to:</p>
+                    <ol class="govuk-list govuk-list">
+                      <li>(a) request you to provide your Records to us</li>
+                      <li>(b) review your Records</li>
+                      <li>(c) take copies of such Records.</li></ol>
+                      <p class="govuk-body">8.5   You must provide your Records to us upon request. In addition, you shall provide the Records to any other duly authorised public authority (or their authorised representatives or auditors) upon request.</p>
+                      <p class="govuk-body">8.6   If you do not provide your Records on request this may result in your Payment being declined or withheld.</p>
+           
+                      <p></p><h1 class="govuk-heading-m">9. Data Protection</h1><p></p>
+                      <p class="govuk-body">9.1 We and you must always comply with any respective obligations under “Data Protection Legislation”. We may be required to provide personal information to Defra. Data Protection Legislation means (a) the UK GDPR, (b) the Data Protection Act 2018 to the extent that it relates to processing of personal data and privacy and (c) all applicable Law about the processing of personal data and privacy.</p>
+                      <p class="govuk-body">9.2 UK GDPR means Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data (General Data Protection Regulation) (United Kingdom General Data Protection Regulation), as it forms part of the law of England and Wales, Scotland and Northern Ireland by virtue of section 3 of the European Union (Withdrawal) Act 2018 (and see section 205(4)).</p>
+                      <p class="govuk-body">9.3 For information on how we handle personal data search for <a href="https://www.gov.uk/government/organisations/rural-payments-agency/about/personal-information-charter">'Rural Payments Agency Personal Information Charter'</a>and our <a href="https://www.gov.uk/guidance/rpa-privacy-notices">Privacy Policy</a> on GOV.UK.</p>
+
+                      <p></p><h1 class="govuk-heading-m">10. Freedom of Information</h1><p></p>
+                      <p class="govuk-body">10.1 You acknowledge that we are subject to the requirements of the Freedom of Information Act 2000 (“FOIA”) and the Environmental Information Regulations 2004 (“EIR”).</p>
+                      <p class="govuk-body">10.2 We may need to share information it holds about you or the conditions of payment so we or Defra can comply with any FOIA and EIR request. The extent, content and format of the information we disclose is our decision. In making any disclosure, we will have due regard to Data Protection Legislation.</p>
+                      <p class="govuk-body">10.3 You will provide all necessary assistance and cooperation which we or Defra reasonably request for the purposes of complying with our obligations under FOIA and EIR within a time period specified by us. You must tell us as soon as reasonably practicable if you receive a FOIA or EIR request intended for us or Defra.</p>
+                      
+                      <p></p><h1 class="govuk-heading-m">11. Termination</h1><p></p>
+                      <p class="govuk-body">11.1 We may terminate the Agreement before the Agreement End Date on written notice to you:</p>
+                      <ol class="govuk-list govuk-list"><li>(a) if you have breached the Terms and Conditions of the Agreement.</li>
+                      <li>(b) if you have not repaid to us a sum that has become recoverable under condition 7.</li>
+                      <li>(c) at any time on at least six (6) weeks written notice to you. You may be required to repay all or part of the Payment and you will remain bound by the relevant obligations under the Agreement until you make this repayment. This will only be utilised in limited circumstances.</li></ol>
+                      <p class="govuk-body">11 2.1 You may terminate the agreement on written notice to us:</p>
+                      <ol class="govuk-list govuk-list">
+                        <li>(a) for any reason; or</li>
+                        <li>(b) as set out in condition 13.3.</li></ol>
+                      <p class="govuk-body">11 2.2 In the event you exercise your right to termination set out in 11.2.1 (a) you must keep a record of your reasons for termination and comply with condition 8</p>
+                      <p class="govuk-body">11 2.3 You may not exercise your right to termination under 11.2.1 (a) :</p>
+                      <ol class="govuk-list govuk-list">
+                        <li>(a) in the event that we have informed you of a breach of this Agreement; or</li>
+                        <li>(b) where we have given you notice of a suspected breach of this Agreement; or</li>
+                        <li>(c) where we have asked you to send us any evidence in relation to your compliance with this Agreement</li></ol>
+                        <p class="govuk-body">11 2.4 Should you exercise your termination right under this condition 11.2, you will not receive the Payment and we accept no liability for any costs you may have incurred prior to termination.</p>
+                        <p class="govuk-body">11 2.5 If a Vet has carried out a Review of a Single Species under this Agreement prior to termination and you exercise your termination right under this condition 11.2 you will not be able to reapply for Payment and a further Review of the same Single Species.</p>
+                        <p class="govuk-body">11 2.6 Any Payment already made to you, shall be fully repayable to us if you terminate this Agreement under this condition 11.2. You shall make any payments due to us without any deduction whether by way of set-off, counterclaim, discount, abatement or otherwise</p>
+
+                      <p class="govuk-body">11.3 Termination or expiry of the Agreement will not affect our or your continuing rights and obligations under any condition in the Agreement which is intended to continue beyond the Agreement End Date (such as Record keeping).</p>
+                      <p class="govuk-body">11.4 In the event you terminate in line with condition 11.2, and condition 11.2.5 does not apply to you, condition 6.4 shall be waived. </p>
+                      
+                      <p></p><h1 class="govuk-heading-m">12. Third Party Rights</h1><p></p>
+                      <p class="govuk-body">The Agreement is between you and us. No other person shall have any rights to enforce any of its terms, however, the terms of the Agreement and our rights under it may be enforced by Defra.</p>
+                      
+                      <p></p><h1 class="govuk-heading-m">13. Variation</h1><p></p>
+                      <p class="govuk-body">13.1 We may need to vary your Agreement before the Agreement End Date, we will only do this where there are exceptional circumstances, such as:</p>
+                     <ol class="govuk-list govuk-list"><li> (a) changes in Law which must be reflected in the Agreement;</li>
+                          <li> (b) the need to respond to wider government emergency measures and/or measures imperative to the national interest, for example, disease outbreaks or food security emergencies.</li>
+                      </ol>
+                      <p class="govuk-body">13.2 If we need to vary your Agreement as set out in condition 13.1, we will notify you in writing setting out the required variation/s and will endeavour to give such notice as is reasonable and proportionate, having regard to the nature of the variation and its consequences for you.</p>
+                      <p class="govuk-body">13.3 You will be able to terminate the Agreement if you do not agree with the variation to the Agreement set out in 13.2 subject to 11.3.</p>
+
+                      <p></p><h1 class="govuk-heading-m">14. Reconsideration of Determinations</h1><p></p>
+                        <p class="govuk-body">14.1 If you would like us to reconsider any determination that we have made following a breach by you of the Agreement (“Determination”) you should use our <a href="https://www.gov.uk/government/organisations/rural-payments-agency/about/complaints-procedure">complaints procedure</a> to ask for it to be reconsidered.</p>
+                        <p class="govuk-body">14.2 You must ask us to reconsider any Determination within sixty (60) calendar days of the date you are notified about our Determination.</p>
+                        <p class="govuk-body">14.3 We will consider your request to reconsider our Determination carefully, including any information or evidence you have provided to us. We will confirm our outcome of our reconsideration, with reasons, in writing within a reasonable period.</p>
+                        <p class="govuk-body">14.4  You may appeal the outcome of our reconsideration of our Determination within 
+                          sixty (60) calendar days of the date you are notified of that outcome where you believe the outcome of our reconsideration:
+                          </p>
+                        <ol class="govuk-list govuk-list">
+                          <li>(a) was based on an error of fact;</li>
+                          <li>(b) was wrong in Law; or</li>
+                          <li>(c) there has been a material procedural error.</li>
+                        </ol>
+                        <p class="govuk-body">14.5 We will confirm the outcome of your appeal under condition 14.4 within a reasonable period in writing explaining the reasons for this outcome, and this will be our final determination.</p>
+                      
+                        <p></p><h1 class="govuk-heading-m">15. Monitoring and Evaluation</h1><p></p>
+                        <p class="govuk-body">15.1 You acknowledge that as a condition of receiving the Payment you may be required to participate in an evaluation, which may take place during the agreement period (the Agreement Start Date to the Agreement End Date) or after the Agreement End Date or termination of the Agreement.</p>
+                        <p class="govuk-body">15.2 You understand that your contact details may be disclosed to third parties for evaluation purposes, and you agree to assist and cooperate with any person authorised by us to carry out such an evaluation.</p>
+                        
+                        <p></p><h1 class="govuk-heading-m">16. Beta 3 timescale </h1><p></p>
+                        <p class="govuk-body">16.1  Beta 3 will run from June 2023 until it is closed by Defra. Defra reserves the right to amend or discontinue the Beta 3 at any time.  </p>
+                        <p class="govuk-body">16.2 We reserve the right to close or suspend Beta 3 giving you at least six (6) weeks' notice on the AHWR section of GOV.UK if:</p>
+                        <ol class="govuk-list govuk-list">
+                          <li>(a) the limited available funding for Payments under Beta 3 is exhausted;</li>
+                          <li>(b) we need to carry out Beta 3 application and claim service or system upgrades.</li>
+                        </ol>
+                        <p class="govuk-body">16.3  If we close or suspend Beta 3 under condition 16.2, this will not affect existing Beta 3 Agreement holders unless the Agreement is terminated as set out in condition 11.</p>
+
+        
+
+                      <br>
+                      <p class="govuk-body"> <a class="govuk-link" hef="#">Print this page</a></p>
+
+    </li></ol></div>
+
+
+      </div>
+    </div>
+
+
+
+{% endblock %}

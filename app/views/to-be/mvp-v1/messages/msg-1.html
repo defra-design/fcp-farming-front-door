@@ -1,0 +1,80 @@
+{% extends "layouts/logged-in-nav-v4.html" %}
+
+{% set pageName="Home" %}
+
+{% set yourMessages = "Active" %}
+
+
+{%- block beforeContent -%}
+
+{% include "to-be/v3/components/sub-header/include.html" %}
+
+<a href="message-history" class="govuk-back-link govuk-!-margin-bottom-0">Back to messages</a>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <span class="govuk-caption-l">Email from:</span>
+    <h1 class="govuk-heading-l">Animal Health and Welfare scheme</h1>
+
+    <p class="govuk-body-s govuk-!-margin-bottom-1">Sent 11 April 2024 at 9.56am</p>
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          Claim submitted to improve animal health and welfare
+        </h2>
+      </div>
+      <div class="govuk-summary-card__content">
+        <p class="govuk-body">Claim number: HDJ2123F</p>
+        <p class="govuk-body">You have successfully submitted your claim.</p>
+
+        <h2 class="govuk-heading-s">What happens next</h2>
+        <p class="govuk-body">The Rural Payments Agency (RPA) may contact you to request the summary the vet gave you.</p>
+
+        <p class="govuk-body">We will process your claim within 28 days. If your claim is successful, you will get £624.</p>
+
+        
+
+        <p class="govuk-body">Go to <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">manage your claims</a> to make another claim or view:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>details of your claims</li>
+            <li>scheme guidance</li>
+            <li>your Terms and Conditions</li>
+            <li>your agreement summary</li>
+        </ul>
+
+        <p class="govuk-body">If you want to arrange another review, read the <a href="" class="govuk-link--no-visited-state">guidance on timing of reviews</a>.</p>
+
+            <h2 class="govuk-heading-m">Get help with your application</h2>
+
+            <p class="govuk-body">Contact the RPA if you need to change the details of your claim. You will need to give your agreement number.</p>
+
+
+            <p class="govuk-body">Email: <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a></p>
+        
+            <p class="govuk-body govuk-!-margin-bottom-0">Telephone: 03000 200 301</p>
+            <p class="govuk-body">Monday to Friday, 8:30am to 5pm, except bank holidays</p>
+
+            <p class="govuk-body"><a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">Find out about call charges (opens in a new tab)</a></p>
+
+            <p class="govuk-body"><a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">What did you think of this service?</a> (giving feedback takes about 5 minutes)</p>
+
+          
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

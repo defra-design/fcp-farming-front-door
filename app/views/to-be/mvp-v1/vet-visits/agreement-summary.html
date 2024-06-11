@@ -1,0 +1,99 @@
+{% extends "layouts/vet-visits.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+        {% if data['valleySFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Valley Farm</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 192846125</p>
+          {% elif data['agileSFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+          {% else %}
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+        {% endif %}
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+          <p class="govuk-body" style="float:right; margin-bottom: 8px;"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Apply for a different business</a></p>
+
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+<a href="manage-your-claims" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Department_for_Environment%2C_Food_and_Rural_Affairs_logo.svg/500px-Department_for_Environment%2C_Food_and_Rural_Affairs_logo.svg.png" alt="DEFRA header image" style="width:182px;height:104px;">
+    <br>
+    <br>
+    <br>
+    
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="event-name">
+            Annual health and welfare review of livestock agreement summary
+          </label>
+        </h1>
+        <br>
+        
+        <p class="govuk-body-l">You have applied for funding for a review.</p>
+           <p class="govuk-body-l">By applying for this funding you have entered into an agreement with the Rural Payments Agency (RPA).
+            The agreement will be governed by the agreed <a href="#">terms and conditions.</a></p>
+    
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    
+    
+            <h1 class="govuk-heading-m">Agreement summary</h1>
+       
+            <ol> <ul class="govuk-list govuk-list--bullet">
+            <li>Agreement number: AHWR-1234-AB12</li>
+            <li>Agreement holder: Alfred Waldron - 123456789</li>
+            <li>Agreement start date: 4 April 2024</li>
+            <li>Agreement end date: 4 February 2023</li>
+            <li>Type of livestock review: beef cattle</li></ul></ol>
+
+    
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    
+    
+            <p class="govuk-body">You must have a minimum number of animals on the date the vet visits your farm to do the review. You must have 11 or more beef cattle.</p>
+            <br>
+    
+            <h2 class="govuk-heading-m">More information</h2>
+            
+            <p class="govuk-body">For information about what happens during a review and what you need to do, read the <a href="#">guidance on how to apply for an annual health and welfare review of livestock.</a></p>
+              
+            <p class="govuk-body">For information on how to claim, read the <a href="#">guidance on how to claim funding for an annual health and welfare of your livestock.</a></p>
+    
+    
+    
+            <p class="govuk-body-s"><a href="#" class="govuk-link">Print this page</a></p>
+    
+            <br>
+            <span class="govuk-footer__licence-description">
+                <p class="govuk-body govuk-!-font-size-14">Date Generated: 04/04/2024 Application Reference: AHWR-1234-AB12 Application Status: Agreement Offered</p>
+              </span>
+            
+      </div>
+
+    </div>
+
+
+
+{% endblock %}

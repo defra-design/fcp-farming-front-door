@@ -1,0 +1,88 @@
+{% extends "layouts/vet-visits.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+        {% if data['valleySFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Valley Farm</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 192846125</p>
+          {% elif data['agileSFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+          {% else %}
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+        {% endif %}
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+          <p class="govuk-body" style="float:right; margin-bottom: 8px;"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Apply for a different business</a></p>
+
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back to your business</a>
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl">
+      Manage your claims
+    </h1>
+
+    <span class="govuk-caption-l govuk-!-margin-bottom-4">Agreement number: AHWR-2847-2847 </span>
+    
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+      Start a new claim
+    </button>
+
+    <p>You have claimed for a review. You can now claim for a follow-up.</p>
+
+
+    <h2 class="govuk-heading-m">Your previous claims</h2>
+
+    <!-- <hr class="govuk-!-margin-bottom-6"> -->
+
+    <ul class="app-task-list__items app-task-list__items_custom govuk-!-margin-bottom-7">
+      <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+           VV-5053-A696 - beef cattle review
+              </span>
+              <strong class="govuk-tag govuk-tag--turquoise app-task-list__tag" id="contact-details-status">Claimed</strong>
+        
+      </li>
+  
+        
+      </ul>
+
+    <h2 class="govuk-heading-m">More information</h2>
+
+    <p><a href="ts-cs" class="govuk-link govuk-link--no-visited-state">Terms and conditions</a></p>
+
+    <p><a href="https://apply-for-an-annual-health-and-welfare-review.defra.gov.uk/apply" class="govuk-link govuk-link--no-visited-state">Guidance for funding to improve animal health and welfare</a></p>
+
+    <p><a href="agreement-summary" class="govuk-link govuk-link--no-visited-state">Agreement summary</a></p>
+
+
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
