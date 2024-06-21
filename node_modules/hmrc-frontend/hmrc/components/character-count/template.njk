@@ -1,0 +1,61 @@
+{% set language = params.language | default('en') %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{% if language === 'cy' %}
+  {{ govukCharacterCount({
+      name: params.name,
+      id: params.id,
+      rows: params.rows,
+      value: params.value,
+      maxlength: params.maxlength,
+      maxwords: params.maxwords,
+      threshold: params.threshold,
+      label: params.label,
+      hint: params.hint,
+      errorMessage: params.errorMessage,
+      formGroup: params.formGroup,
+      classes: params.classes,
+      attributes: params.attributes,
+      spellcheck: params.spellcheck,
+      countMessage: params.countMessage,
+      textareaDescriptionText: ('Gallwch nodi hyd at ' + params.maxwords + ' o eiriau' if params.maxwords else 'Gallwch nodi hyd at ' + params.maxlength + ' o gymeriadau'),
+      charactersUnderLimitText: {
+       other: 'Mae gennych %{count} o gymeriadau yn weddill',
+       one: 'Mae gennych 1 cymeriad yn weddill'
+      },
+      charactersAtLimitText: 'Mae gennych 0 o gymeriadau yn weddill',
+      charactersOverLimitText: {
+       other: 'Mae gennych %{count} o gymeriadau yn ormod',
+       one: 'Mae gennych 1 cymeriad yn ormod'
+      },
+      wordsUnderLimitText: {
+       other: 'Mae gennych %{count} o eiriau yn weddill',
+       one: 'Mae gennych 1 gair yn weddill'
+      },
+      wordsAtLimitText: 'Mae gennych 0 o eiriau yn weddill',
+      wordsOverLimitText: {
+       other: 'Mae gennych %{count} o eiriau yn ormod',
+       one: 'Mae gennych 1 gair yn ormod'
+      }
+    })
+  }}
+{% else %}
+  {{ govukCharacterCount({
+      name: params.name,
+      id: params.id,
+      rows: params.rows,
+      value: params.value,
+      maxlength: params.maxlength,
+      maxwords: params.maxwords,
+      threshold: params.threshold,
+      label: params.label,
+      hint: params.hint,
+      errorMessage: params.errorMessage,
+      formGroup: params.formGroup,
+      classes: params.classes,
+      attributes: params.attributes,
+      spellcheck: params.spellcheck,
+      countMessage: params.countMessage
+    })
+  }}
+{% endif %}

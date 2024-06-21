@@ -1,0 +1,107 @@
+.hmrc-internal-header {
+  @include govuk-font($size: 19);
+
+  -webkit-box-sizing: border-box;
+
+          box-sizing: border-box;
+  padding: govuk-spacing(4) 0;
+  border-bottom: 10px solid govuk-organisation-colour("hm-revenue-customs");
+
+  @include govuk-media-query(desktop) {
+    display: table;
+    width: 100%;
+    min-height: 35px;
+  }
+}
+
+@media (forced-colors: active) {
+  .hmrc-internal-header__logo-link {
+    svg {
+      forced-color-adjust: none;
+      color: linktext;
+    }
+  }
+}
+
+.hmrc-internal-header__logo,
+.hmrc-internal-header__service-name {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.hmrc-internal-header__logo {
+  margin-bottom: govuk-spacing(2);
+  border-left: 2px solid govuk-organisation-colour("hm-revenue-customs");
+
+  @include govuk-media-query(desktop) {
+    width: 33.33%;
+    float: left;
+    vertical-align: top;
+    margin-bottom: 0;
+  }
+}
+
+.hmrc-internal-header__logo-link {
+  @include govuk-link-common;
+  @include govuk-link-style-default;
+  @include govuk-link-print-friendly;
+
+  display: table;
+
+  svg {
+    float: left;
+    vertical-align: top;
+    fill: currentColor;
+  }
+
+  img {
+    float: left;
+    vertical-align: top;
+    width: 32px;
+    height: 32px;
+    padding: 0 10px 0 10px;
+  }
+
+  &:link,
+  &:visited {
+    color: govuk-colour("black");
+    font-size: 20px;
+    line-height: 32px;
+    text-decoration: none;
+  }
+}
+
+.hmrc-internal-header__logo-text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  vertical-align: top;
+  margin: 0 0 0 0;
+}
+
+.hmrc-internal-header__service-name {
+  @include govuk-media-query ($from: desktop) {
+    width: 66.66%;
+    padding-left: $govuk-gutter-half;
+    float: left;
+  }
+}
+
+.hmrc-internal-header__link {
+  @include govuk-link-common;
+  @include govuk-link-style-default;
+  @include govuk-link-print-friendly;
+
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+
+  &:link,
+  &:visited {
+    color: govuk-colour("black");
+  }
+
+  @include govuk-media-query(desktop) {
+    font-size: 24px;
+  }
+}
