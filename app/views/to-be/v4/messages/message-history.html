@@ -1,4 +1,4 @@
-{% extends "layouts/logged-in-nav-mvp.html" %}
+{% extends "layouts/logged-in-nav-v3.html" %}
 
 {% set pageName="Home" %}
 
@@ -7,27 +7,34 @@
 
 {%- block beforeContent -%}
 
-{% include "to-be/v4/components/sub-header/include.html" %}
-
-
 
 <div class="govuk-width-container">
 
   <!-- ACCOUNT MENU -->
   <nav id="secondary-nav" class="hmrc-account-menu" aria-label="Account" data-module="hmrc-account-menu">
 
-    <a href="/to-be/mvp-v1/landing/landing" class="govuk-back-link govuk-!-margin-bottom-0">Back to your business</a>
-    <ul class="hmrc-account-menu__main js-hidden">
+
+    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
+      Account menu </a>
+
+      <a href="/to-be/v4/landing/landing" class="govuk-back-link govuk-!-margin-bottom-0">Back to your business</a>
+      <ul class="hmrc-account-menu__main js-hidden">
       <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
         <a href="#" tabindex="-1" class="hmrc-account-menu__link">
           Back </a>
       </li>
 
       <li>
-        <a href="/to-be/mvp-v1/messages/message-history" class="hmrc-account-menu__link">
+        <a href="/to-be/v4/messages/message-history" class="hmrc-account-menu__link">
           Messages
         </a>
       </li>
+
+      <li>
+        <a href="#" class="hmrc-account-menu__link">
+          Your account </a>
+      </li>
+
       <li>
         <a href="#sign-out" class="hmrc-account-menu__link">
           Sign out </a>
@@ -39,8 +46,7 @@
 
 </div>
 
-
-{% endblock %} 
+{% endblock %}
 
 {% block content %}
 
@@ -51,6 +57,7 @@
     <h1 class="govuk-heading-xl">
       Messages
     </h1>
+
 
             <table class="govuk-table">
               <thead class="govuk-table__head">
@@ -72,9 +79,30 @@
                   <td class="govuk-table__cell">Email</td>
                   <td class="govuk-table__cell">4 April 2024</td>
                 </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Calf Housing for Health and Welfare grant: next steps</a></td>
+                  <td class="govuk-table__cell">Email</td>
+                  <td class="govuk-table__cell">24 March 2024</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Your Sustainable Farming Incentive claim deadline date is 7 September 2024</a></td>
+                  <td class="govuk-table__cell">Email</td>
+                  <td class="govuk-table__cell">16 March 2024</td>
+                </tr>
+                <tr class="govuk-table__row information">
+                  <td class="govuk-table__cell"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Sustainable Farming Incentive - Agreement confirmation for Agile Farms Ltd</a></td>
+                  <td class="govuk-table__cell">Email</td>
+                  <td class="govuk-table__cell">6 March 2024</td>
+                </tr>
               </tbody>
             </table>
 
+
+
+
+
+
+    
   </div>
 </div>
 

@@ -5,9 +5,45 @@
 {%- block beforeContent -%}
 
 
-<a href="/to-be/v4/start/your-businesses-list" class="govuk-back-link">Back to your businesses</a> 
+<div class="govuk-width-container">
 
-{% endblock %} 
+  <!-- ACCOUNT MENU -->
+  <nav id="secondary-nav" class="hmrc-account-menu" aria-label="Account" data-module="hmrc-account-menu">
+
+
+    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
+      Account menu </a>
+
+      <a href="/to-be/v4/start/your-businesses-list" class="govuk-back-link">Back to your businesses</a> 
+      <ul class="hmrc-account-menu__main js-hidden">
+      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
+        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
+          Back </a>
+      </li>
+
+      <li>
+        <a href="/to-be/v4/messages/message-history" class="hmrc-account-menu__link">
+          Messages
+        </a>
+      </li>
+
+      <li>
+        <a href="#" class="hmrc-account-menu__link">
+          Your account </a>
+      </li>
+
+      <li>
+        <a href="#sign-out" class="hmrc-account-menu__link">
+          Sign out </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- END ACCOUNT MENU -->
+
+
+</div>
+
+{% endblock %}
 
 {% block content %}
 
@@ -84,21 +120,11 @@
 
         <div class="govuk-grid-column-one-third">
 
-
-          <h2 class="govuk-heading-m">
-            Messages
-          </h2>
-      
-          <p><a class="govuk-link--no-visited-state" href="/to-be/v4/messages/message-history">View messages</a></p>
-
           <h2 class="govuk-heading-m">
             Business details
           </h2>
 
           <p><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View and update your business details</a></p>
-
-          <p><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Register a business</a></p>
-
 
         </div>
 

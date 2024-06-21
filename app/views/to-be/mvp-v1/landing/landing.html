@@ -1,11 +1,37 @@
-{% extends "layouts/logged-in-nav-v4.html" %}
+{% extends "layouts/logged-in-nav-mvp.html" %}
 
 {% set pageName="Home" %}
 
 {%- block beforeContent -%}
 
 
-<a href="/to-be/mvp-v1/start/your-businesses-list" class="govuk-back-link">Back to your businesses</a> 
+<div class="govuk-width-container">
+
+  <!-- ACCOUNT MENU -->
+  <nav id="secondary-nav" class="hmrc-account-menu" aria-label="Account" data-module="hmrc-account-menu">
+
+      <a href="/to-be/mvp-v1/start/your-businesses-list" class="govuk-back-link">Back to your businesses</a> 
+      <ul class="hmrc-account-menu__main js-hidden">
+      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
+        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
+          Back </a>
+      </li>
+
+      <li>
+        <a href="/to-be/mvp-v1/messages/message-history" class="hmrc-account-menu__link">
+          Messages
+        </a>
+      </li>
+      <li>
+        <a href="#sign-out" class="hmrc-account-menu__link">
+          Sign out </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- END ACCOUNT MENU -->
+
+
+</div>
 
 {% endblock %} 
 
@@ -80,19 +106,9 @@
         </ul>
           
     
-        </div>
+ 
 
-        <div class="govuk-grid-column-one-third">
-
-
-          <h2 class="govuk-heading-m">
-            Messages
-          </h2>
       
-          <p><a class="govuk-link--no-visited-state" href="/to-be/mvp-v1/messages/message-history">View messages</a></p>
-
-        </div>
-
 
       </div>
     </div>

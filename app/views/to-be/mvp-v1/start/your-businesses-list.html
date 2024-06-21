@@ -1,9 +1,34 @@
-{% extends "layouts/logged-in-nav-v4.html" %}
+{% extends "layouts/logged-in-nav-mvp.html" %}
 
 {% set pageName="Home" %}
 
 {% set yourBusiness = "Active" %}
 
+
+{%- block beforeContent -%}
+
+
+<div class="govuk-width-container">
+
+  <!-- ACCOUNT MENU -->
+  <nav id="secondary-nav" class="hmrc-account-menu" aria-label="Account" data-module="hmrc-account-menu">
+
+
+
+      <ul class="hmrc-account-menu__main js-hidden">
+
+      <li>
+        <a href="#sign-out" class="hmrc-account-menu__link">
+          Sign out </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- END ACCOUNT MENU -->
+
+
+</div>
+
+{% endblock %} 
 
 {% block content %}
 
