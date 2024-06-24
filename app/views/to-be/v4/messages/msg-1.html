@@ -1,4 +1,4 @@
-{% extends "layouts/logged-in-nav-v3.html" %}
+{% extends "layouts/logged-in-nav-v4.html" %}
 
 {% set pageName="Home" %}
 
@@ -7,11 +7,51 @@
 
 {%- block beforeContent -%}
 
-{% include "to-be/v3/components/sub-header/include.html" %}
 
-<a href="message-history" class="govuk-back-link govuk-!-margin-bottom-0">Back to messages</a>
+<div class="govuk-width-container">
 
-{% endblock %} 
+  {% include "to-be/v4/components/sub-header/include.html" %}
+
+
+  <!-- ACCOUNT MENU -->
+  <nav id="secondary-nav" class="hmrc-account-menu" aria-label="Account" data-module="hmrc-account-menu">
+
+
+    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
+      Account menu </a>
+
+      <a href="/to-be/v4/messages/message-history" class="govuk-back-link govuk-!-margin-bottom-0">Back to messages</a>
+      <ul class="hmrc-account-menu__main js-hidden">
+      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
+        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
+          Back </a>
+      </li>
+
+      <li>
+        <a href="/to-be/v4/messages/message-history" class="hmrc-account-menu__link">
+          Messages
+        </a>
+      </li>
+
+      <li>
+        <a href="/to-be/v4/your-account/your-account" class="hmrc-account-menu__link">
+          Your account </a>
+      </li>
+
+      <li>
+        <a href="#sign-out" class="hmrc-account-menu__link">
+          Sign out </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- END ACCOUNT MENU -->
+
+
+</div>
+
+{% endblock %}
+
+
 
 {% block content %}
 

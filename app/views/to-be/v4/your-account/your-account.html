@@ -1,0 +1,62 @@
+{% extends "layouts/logged-in-nav-v4.html" %}
+
+{% set pageName="Home" %}
+
+{% set yourMessages = "Active" %}
+
+{%- block beforeContent -%}
+
+
+<div class="govuk-width-container">
+
+  {% include "to-be/v4/components/sub-header/include.html" %}
+
+  {% include "to-be/v4/components/nav-bar/include.html" %}
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl">
+      Your account
+    </h1>
+
+
+    <div class="gem-c-cards card-page">
+      <ul class="gem-c-cards__list" style="grid-template-columns:1fr 1fr;">
+
+        <li class="gem-c-cards__list-item-variant">
+          <a class="govuk-link govuk-link--no-visited-state" href="../../../_common/not-testing.html">
+            <div class="gem-c-cards__list-item-wrapper-variant">
+              <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Manage your personal details</h3> 
+              <p class="govuk-body-s gem-c-cards__description p-link-style">Update your details</p>          
+            </div>
+          </a> 
+        </li>
+
+        <li class="gem-c-cards__list-item-variant">
+          <a class="govuk-link govuk-link--no-visited-state" href="../../../_common/not-testing.html">
+            <div class="gem-c-cards__list-item-wrapper-variant">
+              <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Register a business</h3>
+              <p class="govuk-body-s gem-c-cards__description p-link-style">Add a new business</p>          
+            </div>
+          </a>  
+        </li>
+      
+      </ul>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
