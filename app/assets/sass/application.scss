@@ -884,32 +884,8 @@ input[type="radio" i] {
 }
 
 
-// HMRC nav bar 
+// HMRC nav bar custom styling
 
-.hmrc-account-menu {
-  border-bottom: none;
-}
-
-.is-smaller.hmrc-account-menu {
-  border-bottom: none;
-  text-decoration: none;
-}
-
-.is-smaller .hmrc-account-menu__link {
-  text-decoration: none;
-}
-
-.hmrc-account-menu__link {
-  text-decoration: underline;
-  color: #0b0c0c !important;
-}
-
-.hmrc-account-menu__link:hover {
-  border-bottom: none;
-  color: rgba(11, 12, 12, 0.99);
-}
-
-.hmrc-account-menu__link:focus {
-  border-bottom: none;
-  color: #0b0c0c;
+.hmrc-account-menu_sfd {
+ border-bottom: none;
 }

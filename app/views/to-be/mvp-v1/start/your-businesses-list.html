@@ -7,28 +7,14 @@
 
 {%- block beforeContent -%}
 
-
 <div class="govuk-width-container">
 
-  <!-- ACCOUNT MENU -->
-  <nav id="secondary-nav" class="hmrc-account-menu" aria-label="Account" data-module="hmrc-account-menu">
-
-
-
-      <ul class="hmrc-account-menu__main js-hidden">
-
-      <li>
-        <a href="#sign-out" class="hmrc-account-menu__link">
-          Sign out </a>
-      </li>
-    </ul>
-  </nav>
-  <!-- END ACCOUNT MENU -->
-
+  {% include "to-be/mvp-v1/components/nav-bar/include.html" %}
 
 </div>
 
-{% endblock %} 
+{% endblock %}
+
 
 {% block content %}
 
