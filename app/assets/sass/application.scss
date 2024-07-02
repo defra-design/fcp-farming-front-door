@@ -893,6 +893,7 @@ input[type="radio" i] {
 
 .hmrc-account-menu__link_sfd {
   color: #0b0c0c !important;
+  text-decoration: underline;
 }
 
 .hmrc-account-menu__link_sfd:visited {
@@ -901,4 +902,9 @@ input[type="radio" i] {
 
 .hmrc-account-menu__link_sfd:hover {
   color: #003078 !important;
+  text-decoration: none;
+}
+
+.hmrc-account-menu__link--active_sfd {
+  text-decoration: none;
 }
