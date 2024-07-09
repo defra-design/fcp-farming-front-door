@@ -1,0 +1,265 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to Your businesses</a>
+{% endblock beforeContent%}
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Business overview
+      {% if data['agileRPS'] == 'True' %}  
+      <span class="govuk-caption-l">Agile Farms Ltd,</span>
+      {% elif data['valleyRPS'] == 'True' %}  
+      <span class="govuk-caption-l">Valley Farm</span>
+      {% else %}  
+      <span class="govuk-caption-l">Agile Farms Ltd,</span>
+      {% endif %}  
+    </h1>
+
+    <p class="govuk-body govuk-!-font-size-24 govuk-!-margin-bottom-6">Manage different areas of your business here.</p>
+
+    <aside class="govuk-!-margin-bottom-6">
+      <nav role="navigation">
+<h2 class="contents-list__title">
+  Contents
+</h2>
+<ol class="contents-list__list">
+    <li class="contents-list__list-item contents-list__list-item--dashed">
+      <a class="contents-list__link govuk-link govuk-link--no-visited-state" href="#give-permission">Give people permission to act for this business</a>
+    </li>
+    <li class="contents-list__list-item contents-list__list-item--dashed">
+      <a class="contents-list__link govuk-link govuk-link--no-visited-state" href="#business-summary">Business summary</a>
+    </li>
+    <li class="contents-list__list-item contents-list__list-item--dashed">
+      <a class="contents-list__link govuk-link govuk-link--no-visited-state" href="#land">Land</a>
+    </li>
+    <li class="contents-list__list-item contents-list__list-item--dashed">
+      <a class="contents-list__link govuk-link govuk-link--no-visited-state" href="#sfincentive">Sustainable Farming Incentive</a>
+    </li>
+    <li class="contents-list__list-item contents-list__list-item--dashed">
+      <a class="contents-list__link govuk-link govuk-link--no-visited-state" href="#bpscheme">Basic Payment Scheme</a>
+    </li>
+    <li class="contents-list__list-item contents-list__list-item--dashed">
+      <a class="contents-list__link govuk-link govuk-link--no-visited-state" href="#cstewardship">Countryside Stewardship</a>
+    </li>
+</ol>
+</nav>
+  </aside>
+
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">Business details</h2>
+    {% if data['agileRPS'] == 'True' %}  
+    <p class="govuk-body">Agile Farms Ltd,
+    <br>
+    1 Rattle Row 
+    <br>
+    51 Tong Lane 
+    <br>
+    Milland
+    <br>
+    Heywood
+    <br>
+    TN29 0XW
+  </p>
+  {% elif data['valleyRPS'] == 'True' %}  
+  <p class="govuk-body">Valley Farm
+    <br>
+    25 Victoria Road
+    <br>
+    Billington
+    <br>
+    Lancashire
+    <br>
+    LA14 2YY
+  </p>
+  {% else %}  
+  <p class="govuk-body">Agile Farms Ltd,
+    <br>
+    1 Rattle Row 
+    <br>
+    51 Tong Lane 
+    <br>
+    Milland
+    <br>
+    Heywood
+    <br>
+    TN29 0XW
+  </p>
+  {% endif %}  
+
+  <p class="govuk-body" style="overflow-wrap: break-word">Email:
+    <br>
+    {% if data['agileRPS'] == 'True' %}  
+    agilefarmsrus25@gmail.com
+    <br>
+    Landline: 01234038687
+    {% elif data['valleyRPS'] == 'True' %}  
+    valleyfarmlancss@hotmail.co.uk
+    <br>
+    Landline: 01234038687
+    {% else %}  
+    agilefarmsrus25@gmail.com
+    <br>
+    Landline: 01234038687
+    {% endif %}  
+    <br>
+    Mobile: 
+  </p>
+
+  <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View and amend your business details</a></p>
+  </div>
+</div>
+
+<hr class="overview-line">
+
+
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+
+        <h2 class="govuk-heading-m" id="give-permission">Give people permission to act for this business</h2>
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body">This permission allows someone (including agents) to act for this business in the Rural Payments service. Choose a name from the list below to see their permission levels.</p>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Full Name</th>
+            <th scope="col" class="govuk-table__header">Relationship</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="permissions-for">Alfred Waldron</a></th>
+            {% if data['agent'] == 'True' %}  
+            <td class="govuk-table__cell govuk-table__cell_bold">Agent</td>
+            {% else %}  
+            <td class="govuk-table__cell govuk-table__cell_bold">Owner or Sole Trader</td>
+            {% endif %}  
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Add people</a></p>
+
+      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Add people from a firm of agents</a></p>
+
+      <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Remove people</a></p>
+
+    </div>
+
+</div>
+
+
+<hr class="overview-line">
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+
+    <h2 class="govuk-heading-m" id="business-summary">Business summary</h2>
+</div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">Check and print the details we have for your business. These include business details, entitlements, land and land use details and any common land rights that you have.</p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Business summary</a></p>
+  </div>
+
+</div>
+
+<hr class="overview-line">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+
+    <h2 class="govuk-heading-m" id="land">Land</h2>
+</div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <p class="govuk-body">View maps of your land, transfer land to another business or make changes to your land use.</p>
+  
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View land</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Transfer land</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Update land use</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Request Rural Land Changes</a></p>
+
+  </div>
+
+</div>
+
+<hr class="overview-line">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+
+    <h2 class="govuk-heading-m" id="sfincentive">Sustainable Farming Incentive</h2>
+</div>
+
+
+  <div class="govuk-grid-column-two-thirds">
+
+
+
+
+    {% if data['sfdFirst'] == 'True' %}  
+    <p class="govuk-body">To make changes sign in to <a href="/to-be/v3/landing/landing" class="govuk-link--no-visited-state">Manage your farm and land businesses</a>.</p>
+
+    {% else %}
+    <p class="govuk-body">To make changes sign in to <a href="/to-be/v3/start/sign-in" class="govuk-link--no-visited-state">Manage your farm and land businesses</a>.</p>
+
+    {% endif %}
+
+  </div>
+
+</div>
+
+<hr class="overview-line">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+
+    <h2 class="govuk-heading-m" id="bpscheme">Basic Payment Scheme</h2>
+</div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">Check what entitlements you have for the Basic Payment Scheme. Apply for BPS, check the status of your application, update your application or view past applications.</p>
+
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View entitlements</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Apply for BPS or view status of your application</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View a previous BPS application</a></p>
+
+  </div>
+
+</div>
+
+<hr class="overview-line">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+
+    <h2 class="govuk-heading-m" id="cstewardship">Countryside Stewardship</h2>
+</div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">Find out which Countryside Stewardship options best suit your farm, apply to join the scheme and submit your claims.</p>
+
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Countryside Stewardship options finder tool</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Countryside Stewardship Mid-Tier Applications</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Countryside Stewardship applications</a></p>
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Countryside Stewardship claims</a></p>
+
+    
+  </div>
+
+</div>
+
+{% endblock %}

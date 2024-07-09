@@ -912,3 +912,87 @@ input[type="radio" i] {
 .is-smaller.hmrc-account-menu_sfd {
   border-bottom: none;
 }
+
+
+// Gov.uk guidance - contents list
+
+@media (min-width: 40.0625em) {
+  .gem-c-contents-list__title {
+      font-size: 1rem;
+      line-height: 1.5;
+  }
+}
+
+.gem-c-contents-list__title {
+  color: #0b0c0c;
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  margin: 0;
+}
+
+
+@media (min-width: 40.0625em) {
+  .gem-c-contents-list__list, .gem-c-contents-list__nested-list {
+      font-size: 1rem;
+      line-height: 1.25;
+  }
+}
+
+.gem-c-contents-list__list, .gem-c-contents-list__nested-list {
+  color: #0b0c0c;
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+@media (min-width: 40.0625em) {
+  .gem-c-contents-list__list-item {
+      padding-top: 7.5px;
+  }
+}
+
+.gem-c-contents-list__list-item {
+  line-height: 1.3;
+  list-style-type: none;
+}
+
+.gem-c-contents-list__list-item--dashed {
+  position: relative;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.gem-c-contents-list__list-item--dashed span::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  overflow: hidden;
+}
+
+
+// Applies to England banner - gov.uk
+
+@media (min-width: 48.0625em) {
+  .gem-c-devolved-nations {
+      margin-bottom: 50px;
+      padding: 20px 30px;
+  }
+}
+
+.gem-c-devolved-nations {
+  background: #f3f2f1;
+}
+
+// Pagination
+
+@media (min-width: 40.0625em) {
+  .govuk-pagination {
+      margin-bottom: 15px;
+  }
+}

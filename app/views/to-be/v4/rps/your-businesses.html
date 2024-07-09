@@ -1,0 +1,529 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+
+
+{% block content %}
+
+
+    
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <h1 class="govuk-heading-xl">Your businesses and messages
+      <span class="govuk-caption-l">Alfred Waldron</span>
+    </h1>
+
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">
+        Contents
+      </h2>
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item-ffd govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#overview">
+            Overview
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item govuk-tabs__list-item-ffd">
+          <a class="govuk-tabs__tab single-business" href="#all-messages">
+            All messages<div class="unread-message">3 unread</div></a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel govuk-tabs__panel-ffd" id="overview">
+        
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <table class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Business</th>
+                  <th scope="col" class="govuk-table__header">View or check</th>
+                  <th scope="col" class="govuk-table__header">Messages</th>
+                  <th scope="col" class="govuk-table__header"></th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Agile Farms Ltd<p class="govuk-!-margin-bottom-0">SBI: 123456789</p></th>
+                  <td class="govuk-table__cell"><a href="business-overview?agileRPS=True&valleyRPS=" class="govuk-link--no-visited-state" >View business</a></td>
+                  <td class="govuk-table__cell"><a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">View messages</a></td>
+                  <td class="govuk-table__cell"><div id="sb-unread"><span class="read-message">1 read</span></div>
+                    
+                  </td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">DM Jones & Partners<p class="govuk-!-margin-bottom-0">SBI: 202736410</p></th>
+                  <td class="govuk-table__cell"><a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">View business</a></td>
+                  <td class="govuk-table__cell"><a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">View messages</a></td>
+                  <td class="govuk-table__cell"><div id="sb-unread"><span class="unread-message">3 unread</span></div>
+                    
+                  </td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Valley Farm<p class="govuk-!-margin-bottom-0">SBI: 192846125</p></th>
+                  <td class="govuk-table__cell"><a href="business-overview?valleyRPS=True&agileRPS=" class="govuk-link--no-visited-state">View business</a></td>
+                  <td class="govuk-table__cell"><a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">View messages</a></td>
+                  <td class="govuk-table__cell"><div id="sb-unread"><span class="read-message">2 read</span></div>
+                    
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    
+            <p style="text-align: right;"><strong>Page 1 of 1</strong></p>
+    
+          </div>
+        
+          <div class="govuk-grid-column-one-third">
+            <hr class="options-border">
+    
+          <div class="account-options">
+    
+    
+            <h2 class="govuk-body">Account options</h2>
+    
+            <!-- <p class="govuk-body"><a href="personal-details.html">View and amend personal details</a></p>
+    
+            <p class="govuk-body govuk-!-margin-bottom-6"><a href="">Register a business</a></p> -->
+    
+            <p class="govuk-body"><a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">Create or view a query</a></p>
+            <hr>
+          </div>
+        </div>
+      </div>
+
+
+      </div>
+      <div class="govuk-tabs__panel govuk-tabs__panel-ffd govuk-tabs__panel--hidden" id="all-messages">
+
+        <div class="govuk-!-margin-bottom-9">
+        <div class="govuk-grid-column-one-half govuk-!-padding-left-0">
+        <p class="govuk-body"><a href="deleted-messages"><strong>View deleted messages</strong></a></p>
+      </div>
+
+      <div class="govuk-grid-column-one-half">
+        <fieldset class="govuk-fieldset">
+          <b>
+          Filter by:
+        </b>
+          <div class="filter-unread-messages">
+              <input data-ng-model="filter.unread" type="checkbox" id="unreadmessages" name="notifications" value="unread" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" checked>
+              <label for="unreadmessages">Unread messages</label>
+          </div>
+          <div class="filter-read-messages">
+              <input data-ng-model="filter.read" type="checkbox" id="readmessages" name="notifications" value="read" class="ng-pristine ng-untouched ng-valid ng-not-empty" aria-invalid="false" checked>
+              <label for="readmessages">Read messages</label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+        <div class="govuk-grid-column-two-thirds">
+          <h2 class="govuk-heading-m govuk-!-padding-left-2">Message</h2>
+        </div>
+
+          <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m">Date</h2>
+      </div>
+
+      <div class="govuk-grid-column-full govuk-!-padding-left-0">
+        <details class="govuk-details govuk-details-message-unread govuk-!-margin-bottom-2" id="messageRead">
+          <summary class="govuk-details__summary govuk-details__summary-message">
+            <span class="govuk-details__summary-text govuk-details__summary-text-message">
+              BPS Application submitted for AJ Broomfield & Sons
+            </span>
+            <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2 font-normal">
+              03 April 2023
+            </span>
+          </summary>
+          <div class="govuk-details__text govuk-details__text-message">
+            <p class="govuk-body">Thank you for submitting your application to the Basic Payment Scheme.</p>
+            
+            <p class="govuk-body">This message is confirmation that your claim has been submitted successfully to the RPA. This is not confirmation that your claim has been processed by the RPA. Please keep a copy of this acknowledgement for your records.</p>
+
+            <p class="govuk-body">Submission date and time: <strong>21:23, 03 April 2023</strong></p>
+            
+            <p class="govuk-body">SBI: <strong>108364021</strong></p>            
+             
+            <p class="govuk-body">Application ID: <strong>1526677</strong></p>            
+            
+            <p class="govuk-body">Please do not submit a paper copy of your application as well.</p>
+
+            <p class="govuk-body">Please remember, if you need to provide any supporting documentation with your claim, these should be sent to:</p>
+
+            <p class="govuk-body">Rural Payments Agency</p>
+
+            <p class="govuk-body">PO Box 352</p>
+
+            <p class="govuk-body">Worksop</p>
+
+            <p class="govuk-body">S80 9FG</p>
+
+            <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+            <!-- <script>
+              var element = document.getElementById("messageRead");
+                element.addEventListener('click', (event) => {
+                  var list = element.classList
+                  if(!list.contains("govuk-details-message")) {
+                     element.classList.toggle('govuk-details-message')
+                     element.classList.toggle('govuk-details-message-unread')
+                  }
+                }             
+                )
+            </script> -->
+          </div>
+        </details>
+
+        <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+          <summary class="govuk-details__summary govuk-details__summary-message">
+            <span class="govuk-details__summary-text govuk-details__summary-text-message">
+              Mapping updates for AJ Broomfield & Sons 28 February 2023
+            </span>
+            <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+              28 February 2023
+            </span>
+          </summary>
+          <div class="govuk-details__text govuk-details__text-message">
+
+            <p class="govuk-body">SBI: 108364021</p>
+
+            <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+
+            <p class="govuk-body">Each land parcel listed below has been updated.</p>
+
+            <p class="govuk-body">Parcel ID:</p>
+
+            <p class="govuk-body"><a class="govuk-link" href="">SP2697 3303</a></p>
+
+            <hr>
+
+            <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+
+            <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+
+            <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+
+            <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+
+            <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+
+            <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+          </div>
+        </details>
+
+        <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+          <summary class="govuk-details__summary govuk-details__summary-message">
+            <span class="govuk-details__summary-text govuk-details__summary-text-message">
+              Mapping updates for AJ Broomfield & Sons
+            </span>
+            <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+              27 February 2023
+            </span>
+          </summary>
+          <div class="govuk-details__text govuk-details__text-message">
+            
+            <p class="govuk-body">SBI: 108364021</p>
+
+            <p class="govuk-body">These changes have been made as a result of the most up to date information we have, and not something you have asked us to do.</p>
+
+            <p class="govuk-body">Each land parcel listed below has been updated.</p>
+            
+            <p class="govuk-body">Parcel ID:</p>
+
+            <p class="govuk-body"><a class="govuk-link" href="">SP2696 3497</a></p>
+
+            <hr>
+
+            <p class="govuk-body"><a class="govuk-link" href="">SP2696 3993</a></p>
+
+            <hr>  
+            
+            <p class="govuk-body"><a class="govuk-link" href="">SP2697 2401</a></p>
+
+            <hr>  
+         
+            <p class="govuk-body"><a class="govuk-link" href="">SP2697 5209</a></p>
+
+            <hr>  
+            
+            <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+
+            <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+
+            <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land'. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+
+            <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+
+            <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+
+            <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+          </div>
+        </details>
+
+        <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+          <summary class="govuk-details__summary govuk-details__summary-message">
+            <span class="govuk-details__summary-text govuk-details__summary-text-message">
+              Changes to land and maps for AJ Broomfield & Sons
+            </span>
+            <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+              26 February 2023
+            </span>
+          </summary>
+          <div class="govuk-details__text govuk-details__text-message">
+            
+            <p class="govuk-body">SBI: 108364021</p>
+
+            <p class="govuk-body">These are changes that either you have asked us to make, or we have made as a result of the most up to date information we have.
+            </p>
+
+            <p class="govuk-body">Each land parcel listed below has been updated.</p>
+            
+            <p class="govuk-body">Parcel ID:</p>
+
+            <p class="govuk-body"><a class="govuk-link" href="">SP2697 5209</a></p>
+
+            <hr>
+
+            <p class="govuk-body"><a class="govuk-link" href="">SP2696 3497</a></p>
+
+            <hr>  
+            
+            <p class="govuk-body"><a class="govuk-link" href="">SP2696 3993</a></p>
+
+            <hr>  
+         
+            <p class="govuk-body"><a class="govuk-link" href="">SP2697 3303</a></p>
+
+            <hr>  
+
+            <p class="govuk-body"><a class="govuk-link" href="">SP2697 2401</a></p>
+
+            <hr>  
+
+
+            
+            <p class="govuk-body">Click each Parcel ID link to see the change on the digital map in the 'View land' screens - these changes will show in the maps within 48 hours. However, not all changes are visible for example, sometimes we may have to change a land parcel's history or effective date so we can make a payment.</p>
+
+            <p class="govuk-body">If this notification does not contain all the changes you have asked for, this means that we're still working on some of the changes. And the relevant land parcel ID in the 'View land' screens will contain an exclamation mark (!) to show that we are carrying out work on that land parcel.</p>
+
+            <p class="govuk-body">Common-land [does not appear / is not marked] in the maps in the 'View land' screens. Therefore, if you have rights on a common and need a map call us on 03000 200 301.</p>
+
+            <p class="govuk-body">If you agree with the change(s) you do not need to do anything.</p>
+
+            <p class="govuk-body">If you do not agree with the change(s) call us on 03000 200 301.</p>
+
+            <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+          </div>
+        </details>
+       
+        
+
+
+        <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+          <summary class="govuk-details__summary govuk-details__summary-message">
+            <span class="govuk-details__summary-text govuk-details__summary-text-message">
+              BPS Application submitted for AJ Broomfield & Sons
+            </span>
+            <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+              16 May 2022
+            </span>
+          </summary>
+          <div class="govuk-details__text govuk-details__text-message">
+
+            <p class="govuk-body">Thank you for submitting your application to the Basic Payment Scheme.</p>
+
+            <p class="govuk-body">This message is confirmation that your claim has been submitted successfully to the RPA. This is not confirmation that your claim has been processed by the RPA. Please keep a copy of this acknowledgement for your records.
+            </p>
+
+            <p class="govuk-body">Submission date and time: <strong>10:32, 16 May 2022</strong></p>
+
+            <p class="govuk-body">SBI: <strong>108364021</strong></p>
+
+            <p class="govuk-body">Application ID:  <strong>1417559</strong></p>
+
+            <p class="govuk-body">Please do not submit a paper copy of your application as well.</p>
+
+            <p class="govuk-body">Please remember, if you need to provide any supporting documentation with your claim, these should be sent to:</p>
+
+            <p class="govuk-body">Rural Payments Agency</p>
+
+            <p class="govuk-body">PO Box 352</p>
+
+            <p class="govuk-body">Worksop</p>
+
+            <p class="govuk-body">S80 9FG</p>
+
+            <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+          </div>
+        </details>
+
+
+        <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+          <summary class="govuk-details__summary govuk-details__summary-message">
+            <span class="govuk-details__summary-text govuk-details__summary-text-message">
+              Help us to help you - useful information
+            </span>
+            <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+              26 October 2021
+            </span>
+          </summary>
+          <div class="govuk-details__text govuk-details__text-message">
+
+            <p class="govuk-heading-l">Check your details in the Rural Payments service</p>
+
+            <p class="govuk-body">We may contact you by email or telephone, so it's important that we have up to date personal and business contact details for you. Check your details are correct in the Rural Payments service. If they are wrong, please update or register them as soon as possible. That way you can be sure we can contact you if we need to, for example if we need to talk to you about a payment. And you can make sure that we're able to accept any documents you email to us.</p>
+
+            <p class="govuk-body">It's also important that you check to make sure your permission levels for Basic Payment Scheme (BPS) and Countryside Stewardship (CS) are set and are correct.</p>
+
+            <p class="govuk-body">The information below shows each permission level and explains what a person with a particular level can do. If you need to change your level of permission, ask the person who has full permissions for the business to change it.</p>
+
+            <p class="govuk-heading-m">View</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>View business details</li>
+              <li>View people associated with the business</li>
+            </ul>
+
+            <p class="govuk-heading-m">Amend</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>All permissions in View Business Details</li>
+              <li>Amend business and correspondence contact details</li>
+            </ul>
+
+            <p class="govuk-heading-m">Make legal changes</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>All permissions in Amend Business Details</li>
+              <li>Amend controlled information, such as business name</li>
+              <li>Confirm business details</li>
+              <li>Amend bank account details</li>
+              <li>Make young/new farmer declaration</li>
+            </ul>
+
+            <p class="govuk-heading-m">Full permissions</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>All permissions in Make Legal Changes Business Details</li>
+              <li>Add someone to the business</li>
+              <li>Give permissions on business</li>
+            </ul>
+
+            <p class="govuk-body">If you're an Environmental Stewardship (ES) customer you should have 'Make legal changes' or 'Full business' permissions. If you are registered as the agreement holder, or you are an agent with a valid authorisation form, we can accept or provide information on the agreement if you are listed against the business in the Rural Payments service.</p>
+
+            <p class="govuk-heading-m">Have you changed your bank account details?</p>
+
+            <p class="govuk-body">If you've changed your bank account since we last paid you (for example since BPS 2020, ES 2020 or CS 2020 payments) but have not told us, call us now on 03000 200 301 to update these. Make sure you do this by 5 November, so if you have a payment due in December, we can make it to the correct account.</p>
+
+            <p class="govuk-body"><strong>If you used a banking switch service when you changed your bank account they will have told us that your account has changed, so you do not need to contact us.</strong></p>
+
+            <p class="govuk-body">You can ask us to make changes to your bank account details between 8 November- 30 November but we may have already processed your payment using the old details. We will only make changes to bank account details in December in very limited circumstances, for example if we ask you for them.</p>
+
+            <p class="govuk-body">Remember, you must have 'Business details: Full or Make legal changes' permission level in the Rural Payments service before you can ask us to update your bank account details.</p>
+
+
+            <p class="govuk-heading-m">Be aware of fraud</p>
+                        
+            <p class="govuk-body">We are aware that fraudsters may target farmers who receive subsidy payments.</p>
+
+          
+            <p class="govuk-body">Please remember:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>never discuss or share your bank account details with anybody you do not know</li>
+              <li>we will not ask you to make a payment over the phone</li>
+              <li>delete any emails or texts you do not believe are genuine, and do not open any links - our main email addresses are: <a class="govuk-link" href="">ruralpayments@defra.gov.uk</a> and <a class="govuk-link" href="">rpa@notifications.service.gov.uk</a></li>
+              <li>be cautious about what information you share externally, particularly on social media.</li>
+            </ul>
+            
+             
+            <p class="govuk-body">If you suspect an attempted fraud or feel you have been the subject of fraud, you can contact:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>RPA's Fraud Referral Team on 0800 347 347 or <a class="govuk-link" href="">FraudInConfidence@rpa.gov.uk</a></li>
+              <li>Action Fraud, the UK's national reporting centre for fraud and cyber-crime on 0300 123 2040.</li>
+            </ul>
+
+            <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+
+      </div>
+    </details>
+
+
+    <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+      <summary class="govuk-details__summary govuk-details__summary-message">
+        <span class="govuk-details__summary-text govuk-details__summary-text-message">
+          BPS Application submitted for AJ Broomfield & Sons
+        </span>
+        <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+          13 May 2021
+        </span>
+      </summary>
+      
+      <div class="govuk-details__text govuk-details__text-message">
+
+        <p class="govuk-body">Thank you for submitting your application to the Basic Payment Scheme.</p>
+
+        <p class="govuk-body">This message is confirmation that your claim has been submitted successfully to the RPA. This is not confirmation that your claim has been processed by the RPA. Please keep a copy of this acknowledgement for your records.
+        </p>
+
+        <p class="govuk-body">Submission date and time: <strong>09:33, 13 May 2021</strong></p>
+
+        <p class="govuk-body">SBI: <strong>108364021</strong></p>
+
+        <p class="govuk-body">Application ID: <strong>1215852</strong></p>
+
+        <p class="govuk-body">Please do not submit a paper copy of your application as well.</p>
+
+        <p class="govuk-body">Please remember, if you need to provide any supporting documentation with your claim, these should be sent to:</p>
+
+        <p class="govuk-body">Rural Payments Agency</p>
+
+        <p class="govuk-body">PO Box 352</p>
+
+        <p class="govuk-body">Worksop</p>
+
+        <p class="govuk-body">S80 9FG</p>
+
+        <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+      </div>
+    </details>
+
+
+    <details class="govuk-details govuk-details-message govuk-!-margin-bottom-2">
+      <summary class="govuk-details__summary govuk-details__summary-message">
+        <span class="govuk-details__summary-text govuk-details__summary-text-message">
+          Bespoke messages
+        </span>
+        <span class="govuk-details__summary-text govuk-details__summary-text-message govuk-details__summary-text-message2">
+          11 July 2020
+        </span>
+      </summary>
+      <div class="govuk-details__text govuk-details__text-message">
+
+      <p class="govuk-body">We have recently updated the Rural Payments service and can now send messages to groups of customers, for example, to remind them to submit an application.</p>
+
+      <p class="govuk-body">Make sure you regularly check your messages for important updates and information.</p>
+
+      <p class="govuk-body">You can find more information about recent updates on the new 'Rural Payments: updates to the service' page on GOV.UK</p>
+
+      <p class="govuk-body">Don't forget to regularly check our page 'Coronavirus (COVID-19): information for farmers, landowners and rural businesses' on GOV.UK that includes all our latest updates during the coronavirus (Covid-19) outbreak.</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="">Delete this message</a></p>
+
+      </div>
+    </details>
+
+      </div>
+    </div>
+
+
+</div>
+</div>
+
+
+
+{% endblock %}
