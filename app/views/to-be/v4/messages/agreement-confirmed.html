@@ -1,0 +1,129 @@
+{% extends "layouts/logged-in-nav-v4.html" %}
+
+{% set pageName="Home" %}
+
+{% set yourMessages = "Active" %}
+
+
+{%- block beforeContent -%}
+
+
+<div class="govuk-width-container">
+
+  {% include "to-be/v4/components/sub-header/include.html" %}
+
+
+  <!-- ACCOUNT MENU -->
+  <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
+
+    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+
+    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
+      Account menu </a>
+
+      <ul class="hmrc-account-menu__main js-hidden">
+      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
+        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
+          Back </a>
+      </li>
+
+      <!-- <li>
+        <a href="/to-be/v4/messages/message-history" class="hmrc-account-menu__link hmrc-account-menu__link_sfd hmrc-account-menu__link--active hmrc-account-menu__link--active_sfd">
+          Messages
+        </a>
+      </li> -->
+
+      <!-- <li>
+        <a href="/to-be/v4/your-account/your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Your account </a>
+      </li> -->
+
+      <li>
+        <a href="/to-be/v4/start/sign-in" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Sign out </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- END ACCOUNT MENU -->
+
+
+</div>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">Agreement confirmed: Get funding to improve animal health and welfare - next steps</h1>
+
+    <p class="govuk-body-s govuk-!-margin-bottom-1">From: Get funding to improve animal health and welfare</p>
+    <p class="govuk-body-s govuk-!-margin-bottom-1">Sent: 4 June 2024 at 9:56am</p>
+
+    <div class="govuk-summary-card">
+      <!-- <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          Claim submitted to improve animal health and welfare
+        </h2>
+      </div> -->
+      <div class="govuk-summary-card__content">
+        <p class="govuk-body">Agreement number: AHWR-1234-AB12</p>
+        <p class="govuk-body">Your application has been successful.</p>
+
+        <p><a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">Download agreement summary</a></p>
+      
+      
+      
+        <h2 class="govuk-heading-s">What you need to do next</h2>
+
+        <ol class="govuk-list govuk-list--number">
+          <li>Contact the vet to arrange a review and give them the agreement number.</li>
+          <li>Read the guidance about <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">what happens on an animal health and welfare review</a>. The guidance explains what you must ask the vet to do and what's optional.</li>
+          <li>Ask the vet to read the guidance on <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">how to do an animal health and welfare review and endemic disease follow-up</a>. This is important because the vet needs to follow the guidance closely so that you are eligible to claim.</li>
+          <li>After the vet has completed the review, you can claim your funding. Read the guidance on  <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">how to claim funding to improve animal health and welfare</a>.</li>
+
+        </ol>
+
+        <h2 class="govuk-heading-s">Get help with your application</h2>
+
+        <p class="govuk-body">Contact the Rural Payments Agency and give your agreement number if you:</p>
+
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>need to change your application</li>
+            <li>decide you do not want a review after you have accepted</li>
+            <li>your agreement offer</li>
+            <li>have a question about your application</li>
+        </ul>
+
+
+
+
+
+            <p class="govuk-body">Email: <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a></p>
+        
+            <p class="govuk-body govuk-!-margin-bottom-0">Telephone: 03000 200 301</p>
+            <p class="govuk-body">Monday to Friday, 8:30am to 5pm, except bank holidays</p>
+
+            <p class="govuk-body">Find out about call charges at <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">https://www.gov.uk/call-charges</a></p>
+
+            <p class="govuk-body">What did you think of this service? <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">https://defragroup.eu.qualtrics.com/jfe/form/SV_0lxBrd2XeDnn2hU</a> (giving feedback takes about 5 minutes)</p>
+
+          
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
