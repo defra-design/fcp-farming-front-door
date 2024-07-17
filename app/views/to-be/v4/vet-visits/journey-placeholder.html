@@ -1,0 +1,36 @@
+{% extends "layouts/vet-visits-signin.html" %}
+
+{% set pageName="Journey placeholder" %}
+
+{%- block beforeContent -%}
+
+<a href="date-of-review" class="govuk-back-link">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <form action="claim-confirmation?claimSubmitted=True" method="post">
+
+
+            <h1 class="govuk-heading-xl">
+              Journey continues
+            </h1>
+
+            <p>Imagine you click through more questions.</p>
+          
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+  
+      </form>
+
+
+  </div>
+</div>
+
+{% endblock %}

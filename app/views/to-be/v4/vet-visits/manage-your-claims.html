@@ -1,6 +1,6 @@
 {% extends "layouts/vet-visits.html" %}
 
-{% set pageName="Home" %}
+{% set pageName="Manage your claims" %}
 
 {%- block beforeContent -%}
 
@@ -30,7 +30,7 @@
   </main>
 </div>
 <hr>
-<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back to your business</a>
+<!-- <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back to your business</a> -->
 {% endblock %} 
 
 {% block content %}
@@ -45,11 +45,16 @@
 
     <span class="govuk-caption-l govuk-!-margin-bottom-4">Agreement number: AHWR-2847-2847 </span>
     
+    <form action="claiming-for" method="post">
     <button type="submit" class="govuk-button" data-module="govuk-button">
       Start a new claim
     </button>
+    </form>
 
+    {% if data['claimSubmitted'] == 'True' %}  
+    {% else %}
     <p>You have claimed for a review. You can now claim for a follow-up.</p>
+    {% endif %}
 
 
     <h2 class="govuk-heading-m">Your previous claims</h2>
@@ -57,14 +62,24 @@
     <!-- <hr class="govuk-!-margin-bottom-6"> -->
 
     <ul class="app-task-list__items app-task-list__items_custom govuk-!-margin-bottom-7">
+
+      {% if data['claimSubmitted'] == 'True' %}  
+      <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+          VV-1943-B329 - beef cattle review
+              </span>
+              <strong class="govuk-tag govuk-tag--turquoise app-task-list__tag" id="contact-details-status">Claim submitted</strong>
+        
+      </li>
+      {% endif %}
+
       <li class="app-task-list__item">
         <span class="app-task-list__task-name">
            VV-5053-A696 - beef cattle review
               </span>
-              <strong class="govuk-tag govuk-tag--turquoise app-task-list__tag" id="contact-details-status">Claimed</strong>
+              <strong class="govuk-tag govuk-tag--blue app-task-list__tag" id="contact-details-status">Claim approved</strong>
         
       </li>
-  
         
       </ul>
 

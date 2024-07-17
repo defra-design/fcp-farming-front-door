@@ -824,6 +824,11 @@ input[type="radio" i] {
   margin-bottom: 30px;
 }
 
+.blue-border-thin {
+  border: 1px solid #1d70b8;
+  margin-bottom: 30px;
+}
+
 // Grey version
 
 .grey-border {
@@ -831,6 +836,10 @@ input[type="radio" i] {
   margin-bottom: 30px;
 }
 
+.grey-border-thin {
+  border: 1px solid #b1b4b6;
+  margin-bottom: 30px;
+}
 
 
 // GOV Guidance Styles
@@ -995,4 +1004,145 @@ input[type="radio" i] {
   .govuk-pagination {
       margin-bottom: 15px;
   }
+}
+
+
+// Vet visits get emails about this page component
+
+.gem-c-layout-for-public {
+  font-family: "GDS Transport", arial, sans-serif;
+}
+
+.gem-c-single-page-notification-button__submit {
+  padding: 10px;
+  margin: 0;
+  border: 1px solid #505a5f;
+  color: #1d70b8;
+  cursor: pointer;
+  background: none;
+}
+
+.gem-c-single-page-notification-button__icon {
+  color: #0b0c0c;
+  vertical-align: top;
+  margin-right: 5px;
+}
+
+// Vet visits print this page component
+
+
+.js-enabled .gem-c-print-link {
+  display: block;
+}
+
+.gem-c-print-link__button {
+  border: 1px solid #505a5f;
+  color: #1d70b8;
+  cursor: pointer;
+  margin: 0;
+}
+
+.gem-c-print-link__link, .gem-c-print-link__button {
+  background: url(/public/images/print-icon.png) no-repeat 10px 50%;
+  background-size: 16px 18px;
+  padding: 10px 10px 10px 36px;
+  text-decoration: none;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .gem-c-print-link__link, .gem-c-print-link__button {
+      background-image: url(/public/images/print-icon.png);
+  }
+}
+
+
+// Vet visits gov uk contact text styling
+
+.contact {
+  position: relative;
+  border-left: 1px solid #b1b4b6;
+  padding-left: 15px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+// Vet visits published date styling
+
+.app-c-published-dates {
+  direction: ltr;
+  line-height: 1.45em;
+  color: #0b0c0c;
+}
+
+@media (min-width: 40.0625em) {
+  .published-dates-button-group {
+      display: flex;
+      flex-direction: row;
+  }
+}
+
+
+// Vet visits contents back to top
+
+.app-c-back-to-top__icon {
+  float: left;
+  margin-right: .3em;
+  width: .8em;
+  height: .968em;
+}
+
+.app-c-contents-list-with-body__link-wrapper {
+  padding-bottom: 30px;
+}
+
+@media (min-width: 40.0625em) {
+  .app-c-contents-list-with-body__link-container {
+      max-width: 1024px;
+  }
+}
+
+
+// Vet visits explore the topic 
+
+.gem-c-related-navigation {
+  color: #0b0c0c;
+  border-top: 2px solid #1d70b8;
+  margin-bottom: 60px;
+}
+
+@media (min-width: 40.0625em) {
+  .gem-c-related-navigation__sub-heading--footer {
+      font-size: 1.1875rem;
+      line-height: 1.3157894737;
+      font-family: "GDS Transport", arial, sans-serif;
+  }
+}
+
+.gem-c-related-navigation__link-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  margin-bottom: 1.25em;
+}
+
+@media (min-width: 40.0625em) {
+  .gem-c-related-navigation__link {
+      line-height: 1.28;
+  }
+}
+@media (min-width: 40.0625em) {
+  .gem-c-related-navigation__link {
+      font-size: 1rem;
+  }
+}
+.gem-c-related-navigation__link {
+  list-style-type: none;
+  margin-top: 15px;
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+}
+
+.gem-c-related-navigation__section-link {
+  font-weight: bold;
 }

@@ -1,0 +1,64 @@
+{% extends "layouts/vet-visits-signin.html" %}
+
+{% set pageName="Choose a business" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <form action="check-your-details" method="post">
+
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+          Choose a business
+        </h1>
+      </legend>
+
+    <p>These are the businesses registered to your rural payments account including their single business identifier (SBI).</p>
+    <div class="govuk-radios govuk-!-margin-bottom-4" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="whereDoYouLive" name="whereDoYouLive" type="radio" value="england">
+        <label class="govuk-label govuk-radios__label" for="whereDoYouLive">
+         Agile Farms Ltd - SBI 123456789
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="whereDoYouLive-2" name="whereDoYouLive" type="radio" value="scotland">
+        <label class="govuk-label govuk-radios__label" for="whereDoYouLive-2">
+          D M Jones & Partners - SBI 202736410
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="whereDoYouLive-2" name="whereDoYouLive" type="radio" value="scotland">
+        <label class="govuk-label govuk-radios__label" for="whereDoYouLive-2">
+          Valley Farm - 192846125
+        </label>
+      </div>
+    </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+    </fieldset>
+
+    </form>
+
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Need more help?
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+
+          </div>
+
+    </details>
+  </div>
+</div>
+
+{% endblock %}
