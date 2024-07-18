@@ -1,0 +1,113 @@
+{% extends "layouts/logged-in-nav-v4.html" %}
+
+{% set pageName="Home" %}
+
+{% set yourMessages = "Active" %}
+
+
+{%- block beforeContent -%}
+
+
+<div class="govuk-width-container">
+
+  {% include "to-be/v4/components/sub-header/include.html" %}
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+
+  <!-- ACCOUNT MENU 
+  <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
+
+
+    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
+      Account menu </a>
+
+      <ul class="hmrc-account-menu__main js-hidden">
+      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
+        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
+          Back </a>
+      </li>
+
+       <li>
+        <a href="/to-be/v4/messages/message-history" class="hmrc-account-menu__link hmrc-account-menu__link_sfd hmrc-account-menu__link--active hmrc-account-menu__link--active_sfd">
+          Messages
+        </a>
+      </li> 
+
+       <li>
+        <a href="/to-be/v4/your-account/your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Your account </a>
+      </li> 
+
+      <li>
+        <a href="/to-be/v4/start/sign-in" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Sign out </a>
+      </li>
+    </ul>
+  </nav>
+   END ACCOUNT MENU -->
+
+
+</div>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">Get funding to improve animal health and welfare - we've completed our checks on your claim </h1>
+
+    <p class="govuk-body-s govuk-!-margin-bottom-1">From: Get funding to improve animal health and welfare</p>
+    <p class="govuk-body-s govuk-!-margin-bottom-1">Sent: 25 June 2024 at 4:45pm</p>
+
+    <div class="govuk-summary-card">
+      <!-- <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          Claim submitted to improve animal health and welfare
+        </h2>
+      </div> -->
+      <div class="govuk-summary-card__content">
+
+        <p class="govuk-body govuk-!-margin-bottom-0">SBI: 123456789</p>
+        <p class="govuk-body govuk-!-margin-bottom-0">Business name: Agile Farms Ltd</p>
+        <p class="govuk-body govuk-!-margin-bottom-0">Agreement number: AHWR-1234-AB12</p>
+        <p class="govuk-body govuk-!-margin-bottom-0">Claim number: VV-5053-A696</p>
+        <p class="govuk-body">Our ref: AHWR(Rev) more info (1.0) 369000</p>
+        
+        <p>Dear Alfred Waldron</p>
+        
+        <p>Thank you for submitting your animal health and welfare review claim on 6 June 2024.</p>
+
+        <p>Your claim has been approved for payment and you should receive this within the next 28 days.</p>
+
+        <h2 class="govuk-heading-s">If you have any questions about this email</h2>
+        
+        <p>You can email <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a>. Use 'AHWR - Animal Health and Welfare Review' as the subject heading and tell us your SBI and Agreement number and Claim number if applicable which are at the top of this email. Or, you can call us on 03000 200 301 (Monday to Friday, 8.30am to 5pm).</p>
+          
+
+
+        <p>Yours sincerely</p>
+        <p class="govuk-body govuk-!-margin-bottom-0">Peggy Jessop</p>
+        <p class="bold">Animal Health and Welfare EA Team</p>
+
+        <p>Rural Payments Agency | PO Box 325 | WORKSOP | S95 1DG <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a> | 03000 200 301 | <a href="../../../_common/not-testing.html" class="govuk-link--no-visited-state">gov.uk/defra/sfi</a> Follow us on Twitter @Ruralpay
+
+  
+
+
+      </div>
+    </div>
+   
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
