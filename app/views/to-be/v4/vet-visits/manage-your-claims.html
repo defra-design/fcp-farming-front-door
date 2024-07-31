@@ -71,7 +71,6 @@
               <strong class="govuk-tag govuk-tag--turquoise app-task-list__tag" id="contact-details-status">Claim submitted</strong>
         
       </li>
-      {% endif %}
 
       <li class="app-task-list__item">
         <span class="app-task-list__task-name">
@@ -80,7 +79,17 @@
               <strong class="govuk-tag govuk-tag--blue app-task-list__tag" id="contact-details-status">Claim approved</strong>
         
       </li>
+      {% else %}
+
+      <li class="app-task-list__item">
+        <span class="app-task-list__task-name">
+           VV-5053-A696 - beef cattle review
+              </span>
+              <strong class="govuk-tag govuk-tag--blue app-task-list__tag" id="contact-details-status">Claim approved</strong>
         
+      </li>
+      {% endif %}
+
       </ul>
 
 
