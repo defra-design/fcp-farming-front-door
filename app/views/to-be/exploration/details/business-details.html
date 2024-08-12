@@ -1,0 +1,214 @@
+{% extends "layouts/logged-in-nav-v4.html" %}
+
+{% set pageName="Home" %}
+
+{% set yourMessages = "Active" %}
+
+
+{%- block beforeContent -%}
+
+
+<div class="govuk-width-container">
+
+  {% include "to-be/v4/components/sub-header/include.html" %}
+
+
+  <!-- ACCOUNT MENU -->
+  <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
+
+    <a href="../../../_common/not-testing.html" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+
+    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
+      Account menu </a>
+
+      <ul class="hmrc-account-menu__main js-hidden">
+      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
+        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
+          Back </a>
+      </li>
+
+      <!-- <li>
+        <a href="/to-be/v4/messages/message-history" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Messages
+        </a>
+      </li> -->
+
+      <li>
+        <a href="../../../_common/not-testing.html" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Your account </a>
+      </li>
+
+      <li>
+        <a href="../../../_common/not-testing.html" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Sign out </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- END ACCOUNT MENU -->
+
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">
+     View and update your business details
+    </h1>
+
+    <h2 class="govuk-heading-m">
+      Business contact details
+     </h2>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Business name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Agile Farms Ltd
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> business name</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          10 Skirbeck Way<br>Maidstone<br>SK22 1DL
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> address</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Phone number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          01234484667
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> phone number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Mobile phone number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          No number added
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Add<span class="govuk-visually-hidden"> a mobile phone number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Email address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          alfredwaldronf@nordlawderflac.com.test
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> email address</span></a>
+        </dd>
+      </div>
+    </dl>
+
+    <h2 class="govuk-heading-m">
+      Reference numbers
+     </h2>
+
+
+
+     <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Single business identifier
+        </dt>
+        <dd class="govuk-summary-list__value">
+          123456789
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          VAT registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          No number added
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Add<span class="govuk-visually-hidden"> a VAT registration number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Vendor registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          581362
+        </dd>
+      </div>
+    </dl>
+
+
+    <h2 class="govuk-heading-m">
+      Additional details
+     </h2>
+
+
+     <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Legal status
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Sole proprietorship
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Business type
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Farmer
+        </dd>
+      </div>
+      <!-- <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Companies House registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          No number added
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Charity Commission registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          No number added
+        </dd>
+      </div> -->
+    </dl>
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
