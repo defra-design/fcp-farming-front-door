@@ -1,0 +1,139 @@
+{% extends "layouts/logged-in-nav-v4.html" %}
+
+{% set pageName="Home" %}
+
+
+
+      {%- block beforeContent -%}
+
+
+      <div class="govuk-width-container">
+          
+      
+        <!-- ACCOUNT MENU -->
+        <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
+            
+          <a href="/to-be/v5/start/your-businesses-list" class="govuk-back-link govuk-!-margin-bottom-0">Back to your businesses</a>
+
+          <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
+            Account menu </a>
+      
+            <ul class="hmrc-account-menu__main js-hidden">
+            <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
+              <a href="#" tabindex="-1" class="hmrc-account-menu__link">
+                Back </a>
+            </li>
+      
+
+      
+            <li>
+              <a href="/to-be/v5/landing/your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+                Your account </a>
+            </li>
+
+            <li>
+              <a href="../../../_common/not-testing.html" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+                Sign out </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- END ACCOUNT MENU -->
+      
+      
+      </div>
+      
+      {% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if data['valleySFD'] == 'True' %}  
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <span class="govuk-caption-l">Alfred Waldron</span>
+      Valley Farm
+    </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 192846125</p>
+    {% elif data['agileSFD'] == 'True' %}  
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <span class="govuk-caption-l govuk-!-margin-bottom-2">Alfred Waldron</span>
+      Agile Farms Ltd
+    </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 123456789</p>
+    {% else %}
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <span class="govuk-caption-l">Alfred Waldron</span>
+      Agile Farms Ltd
+    </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 123456789</p>
+  {% endif %}
+
+  </div>
+</div>
+
+    <div class="govuk-width-container">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+
+
+        <div class="gem-c-cards card-page">
+          <ul class="gem-c-cards__list" style="grid-template-columns:1fr 1fr;">
+
+            <li class="gem-c-cards__list-item-variant">
+              <a class="govuk-link govuk-link--no-visited-state link-style" href="../../../_common/not-testing.html">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Get funding to improve animal health and welfare</h3> 
+                  <strong class="govuk-tag govuk-tag_custom govuk-tag--green govuk-!-margin-bottom-2">
+                    Evidence received
+                  </strong>
+                  <p class="govuk-body-s gem-c-cards__description p-link-style govuk-!-margin-bottom-2">View and manage claims</p>                   
+                </div>
+              </a> 
+            </li>
+
+          <li class="gem-c-cards__list-item-variant">
+              <a class="govuk-link govuk-link--no-visited-state" href="../../../_common/not-testing.html">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Calf Housing for Health and Welfare grant</h3>
+                  <p class="govuk-body-s gem-c-cards__description p-link-style">Manage your application and claim</p>          
+                </div>
+              </a>  
+            </li> 
+
+             <li class="gem-c-cards__list-item-variant">
+              <a class="govuk-link govuk-link--no-visited-state" href="#">
+                <div class="gem-c-cards__list-item-wrapper-variant">
+                  <h3 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Sustainable Farming Incentive (SFI)</h3>
+                  <p class="govuk-body-s gem-c-cards__description p-link-style">View your applications and agreements</p>          
+                </div>
+              </a>  
+            </li> 
+
+          
+          </ul>
+        </div>
+
+    
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+
+
+          <h2 class="govuk-heading-m">
+            Business details
+          </h2>
+
+          <p><a class="govuk-link--no-visited-state" href="/to-be/v5/details/business-details">View and update your business details</a></p> 
+          <p><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View and update permissions</a></p> 
+
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+{% endblock %}

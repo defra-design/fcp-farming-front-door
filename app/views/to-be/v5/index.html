@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<a href="/to-be/index" class="govuk-back-link">Back</a>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      Version 5
+    </h1>
+
+    <p>We explored TBC</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>How might we TBC</li>
+    </ul>
+
+
+  <h2 class="govuk-heading-l">
+      Flows for usability testing
+    </h2>
+
+
+  <div>
+    <a href="start/vv-start" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+      Start flow
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+    </a>
+  </div>
+
+
+
+    <h2 class="govuk-heading-l">
+      Page links
+    </h2>
+
+
+    <h3 class="govuk-heading-m">
+      Start
+    </h3>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="start/rps-start">RPS start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start/rps-sign-in">RPS sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start/sfd-sign-in">SFD sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start/your-businesses-list">Your businesses list</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-m">
+      Landing, your account and details
+    </h3>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="landing/business-page">Business page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="landing/your-account">Your account</a></li>
+      <li><a class="govuk-link--no-visited-state" href="details/business-details">View and update your business details</a></li>
+      <li><a class="govuk-link--no-visited-state" href="details/personal-details">View and update your personal details</a></li>
+    </ul>
+
+
+
+  </div>
+</div>
+
+{% endblock %}
