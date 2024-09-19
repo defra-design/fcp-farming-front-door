@@ -1,6 +1,6 @@
 {% extends "layouts/logged-in-nav-v5.html" %}
 
-{% set pageName="Home" %}
+{% set pageName="View and update your business details" %}
 
 {% set yourMessages = "Active" %}
 
@@ -68,7 +68,11 @@
           Name
         </dt>
         <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          Valley Farm
+          {% else %}  
           Agile Farms Ltd
+          {% endif %}  
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> business name</span></a>
@@ -79,7 +83,11 @@
           Address
         </dt>
         <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          56 Seahaven Road<br>Crewe<br>CW76 1HH
+          {% else %}  
           10 Skirbeck Way<br>Maidstone<br>SK22 1DL
+          {% endif %}  
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> address</span></a>
@@ -90,7 +98,11 @@
           Telephone
         </dt>
         <dd class="govuk-summary-list__value">
-          01234484667
+          {% if data['valleySFD'] == 'True' %}  
+          01632960532
+          {% else %}  
+          01632 960000          
+          {% endif %}  
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> phone number</span></a>
@@ -101,10 +113,14 @@
           Mobile
         </dt>
         <dd class="govuk-summary-list__value">
-          No number added
+          {% if data['mobNumberBus'] %}  
+            {{ data['mobNumberBus'] }}
+          {% else %}  
+          07700900967
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Add<span class="govuk-visually-hidden"> a mobile phone number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="change-mob-business">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -112,7 +128,11 @@
           Email address
         </dt>
         <dd class="govuk-summary-list__value">
-          alfredwaldronf@nordlawderflac.com.test
+          {% if data['valleySFD'] == 'True' %}  
+          valleyfarm440@gmail.com
+          {% else %}  
+          agilefarmsrus25@gmail.com         
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> email address</span></a>
@@ -132,7 +152,11 @@
           Single business identifier
         </dt>
         <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          192846125
+          {% else %}  
           123456789
+          {% endif %}  
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -151,7 +175,11 @@
           Vendor registration number
         </dt>
         <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          009765
+          {% else %}  
           581362
+          {% endif %}  
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -159,7 +187,11 @@
           CPH number
         </dt>
         <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          12/563/0998
+          {% else %}  
           12/345/6789
+          {% endif %}  
         </dd>
       </div>
     </dl>
