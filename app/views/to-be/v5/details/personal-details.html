@@ -123,10 +123,14 @@
           Mobile
         </dt>
         <dd class="govuk-summary-list__value">
+          {% if data['mobNumberPers'] %}  
+          {{ data['mobNumberPers'] }}
+          {% else %}  
           07700900967
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="change-mob-personal">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

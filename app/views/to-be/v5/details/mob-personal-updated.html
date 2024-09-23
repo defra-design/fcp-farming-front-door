@@ -1,6 +1,6 @@
 {% extends "layouts/logged-in-nav-v5.html" %}
 
-{% set pageName="Check your mobile phone number is correct before submitting" %}
+{% set pageName="Home" %}
 
 {% set yourMessages = "Active" %}
 
@@ -54,41 +54,13 @@
   <div class="govuk-grid-column-two-thirds">
 
 
-    <form action="mob-business-updated" method="post">
 
-    <fieldset class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-        <h1 class="govuk-fieldset__heading">
-          Check your mobile phone number is correct before submitting     
-        </h1>
-      </legend>
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              text: "Mobile phone number"
-            },
-            value: {
-              text: data['mobNumberBus'] or "07700900967"
-            },
-            actions: {
-              items: [
-                {
-                  href: "change-mob-business",
-                  text: "Change",
-                  visuallyHiddenText: "mobile phone number"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
-      <button type="submit" class="govuk-button" data-module="govuk-button">
-        Submit
-      </button>
-    </fieldset>
+    <h1 class="govuk-heading-l">
+      We have updated your mobile phone number
+     </h1>
+      
+     <p><a class="govuk-link--no-visited-state" href="personal-details">Go back to your personal details</a></p>
 
-      </form>
 
 
 
