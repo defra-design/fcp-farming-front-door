@@ -1146,3 +1146,13 @@ input[type="radio" i] {
 .gem-c-related-navigation__section-link {
   font-weight: bold;
 }
+
+
+// Phase banner custom styling
+
+
+@media (min-width: 40.0625em) {
+  .phase-custom-styling {
+      line-height: 1.6!important;
+  }
+}
