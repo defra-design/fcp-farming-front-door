@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c4eb0fa2-e671-47dd-b880-259c6d24d728" name="Changes" comment="" />
+    <list default="true" id="c4eb0fa2-e671-47dd-b880-259c6d24d728" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/to-be/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/to-be/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/to-be/v1/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/to-be/v1/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/to-be/v2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/to-be/v2/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/to-be/v3/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/to-be/v3/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/to-be/v4/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/to-be/v4/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/to-be/v5/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/to-be/v5/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/v1/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/v1/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
