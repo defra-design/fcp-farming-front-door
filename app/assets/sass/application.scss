@@ -583,7 +583,7 @@ input[type="radio" i] {
 
     @supports(display: grid) {
         .gem-c-cards__list {
-            width:initial
+            width:initial;
         }
     }
 }
@@ -593,7 +593,6 @@ input[type="radio" i] {
         grid-template-columns:1fr 1fr
     }
 }
-
 
 
 .gem-c-cards__list-item {
@@ -607,6 +606,12 @@ input[type="radio" i] {
   margin: 0 15px 30px;
   padding: 5px 0 20px 0;
   border-bottom: 4px solid #b1b4b6;
+}
+
+@media(min-width: 48.0625em) {
+  .gem-c-cards__list-item-variant {
+      
+  }
 }
 
 
@@ -937,6 +942,7 @@ input[type="radio" i] {
   font-family: "GDS Transport", arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 1rem;
   font-weight: 400;
   margin: 0;
 }
