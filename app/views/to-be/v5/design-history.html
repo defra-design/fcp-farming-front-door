@@ -1,0 +1,159 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<a href="/to-be/v5/index" class="govuk-back-link">Back</a>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Version 5
+      <span class="govuk-caption-xl">Design history</span>
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">
+      Goals of this iteration
+    </h2>
+
+    <p>Having mapped known pain points for users and internal staff around ‘getting help’, we wanted to explore ways to give users information they currently struggle to find, so that they do not need to contact the Rural Payments Service (RPS) to get help.</p>
+      
+    <p>We also explored how users would find and access Single Front Door (SFD) during an early transition period when it will be running at the same time as the existing RPS portal.</p>
+
+    <p>We based this round of testing on what is in scope in the 'Capybara' phase of delivery.</p>
+
+    <p>We did not know the business requirements yet, so we imagined how we could meet known user needs without any constraints.</p>
+
+
+    <!-- line break to split up the page -->
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">
+      'How might we' statements
+    </h2>
+
+    <h3 class="govuk-heading-s">How might we launch a new version of RPS in parallel to the existing service?</h3>
+    <p class="govuk-body-s">We designed an SFD start page accessible via banners on the RPS start page and RPS sign in page, because we know users are already familiar with the RPS start page and may have it bookmarked.</p>
+    <p class="govuk-body-s">The SFD start page gives an overview of what ‘Manage your land and farm businesses’ is, and what you can use it for now and in the future.</p>
+    <p class="govuk-body-s">We gave users a way to navigate to the RPS via the beta banner at the top of any page in SFD.</p>
+
+
+    <h3 class="govuk-heading-s">How might we convey confirmations and updates so users don't need to chase for details?</h3>
+    <p class="govuk-body-s">We designed updates on scheme cards in the SFD portal to give users information on:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li class="govuk-body-s">the latest status of a claim for each scheme</li>
+      <li class="govuk-body-s">when they will be paid</li>
+      <li class="govuk-body-s">how much they will be paid </li>
+    </ul>
+    <p class="govuk-body-s">We also added this payment information to a notification email sent to users.</p>
+
+
+    <h3 class="govuk-heading-s">How might we show all details about an account so that information can be found and updated as necessary?</h3>
+    <p class="govuk-body-s">We designed a ‘Your account’ page where users can find and update all their personal and business details, and register a new business.</p>
+    <p class="govuk-body-s">We added the ability to view CPH and SBI numbers, and to edit legal status, business type and bank details, because we know users find it frustrating not knowing these numbers and not being able to edit some details in the portal.</p>
+
+
+    <!-- line break to split up the page -->
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">
+      Outcomes and decisions
+    </h2>
+
+    <span class="govuk-caption-m">Hypothesis 1:</span>
+    <h3 class="govuk-heading-m">We could use a page users are familiar with as an entry point, as then they're more likely to find and become aware of the new service.</h3>
+    <strong class="govuk-tag govuk-tag--red" style="margin-bottom: 20px;">
+      Disproven
+    </strong>
+    <p class="govuk-body">Some users understood the meaning of the banner once it was pointed out, but many users did not notice the banner and were not curious to click on it.</p>
+    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
+    <p class="govuk-body-s">There is no user need for user to click on the banner until they have to use SFD to do a task. Product have asked us to come back to the dual running exploration further down the line when users have a need to use SFD or are at least starting to become familiar with the idea of SFD.</p>
+    <p class="govuk-body-s">We could add more information to the RPS start page about the new service and what it offers – perhaps returning to an older design which directed users to each service according to what they needed to do. (If we do this, we would need to review the user feedback for those designs and iterate accordingly).</p>
+    <p class="govuk-body-s">Also iterate to make the banner wording more accessible.</p>
+
+    <br>
+
+    <span class="govuk-caption-m">Hypothesis 2:</span>
+    <h3 class="govuk-heading-m">We could use a heading for the SFD start page that explains what the page is for rather than the name of our service.</h3>
+    <strong class="govuk-tag govuk-tag--orange" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">Many users did not read this page and there was not much data from testing. Some users found the contents section confusing and were not sure what the purpose of this page was.</p>
+    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
+    <p class="govuk-body-s">Again, there is no user need for users to read about a new service until they have to start using it to do a necessary task. We would like to test the SFD start page again to get more insight on what might be confusing and what information users would expect to find here, as a starting point to decide what to iterate.</p>
+    <p class="govuk-body-s">We will also discuss with tech colleagues whether we could remove the contents automatically generated by headings in a Whitehall detailed guide.</p>
+
+    <br>
+
+    <span class="govuk-caption-m">Hypothesis 3:</span>
+    <h3 class="govuk-heading-m">We could add a link to RPS from the beta banner.</h3>
+    <strong class="govuk-tag govuk-tag--orange" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">Users weren't specifically asked to navigate to RPS, so although the majority saw the banner, it wasn't obvious if they knew they could open RPS from the notes taken.</p>
+    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
+    <p class="govuk-body-s">Iterate to make the banner easier to read and more accessible, and retest, asking users how they would get to RPS. Depending on the results of this, consider moving the link to RPS into the main body of the page if users do not notice it in the banner.</p>
+
+    <br>
+
+    <span class="govuk-caption-m">Hypothesis 4:</span>
+    <h3 class="govuk-heading-m">We could tell users the latest status of their schemes.</h3>
+    <strong class="govuk-tag govuk-tag--orange" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">Users seemed to feel more information was a good idea but having only a few words on status was not helpful as it lacked detail and context. It was not clear if the status on the card was the only status or the latest status, and there was no sense of where the status fitted into the user’s overall claim and payment timeline. Some users were confused by the name of the service on the card – ‘get funding’ implied they should click on the card to apply for funding.</p>
+    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
+    <p class="govuk-body-s">It is not meaningful or complete to show just one or two payment dates – users need much more detail, for example a timeline. There is not space in a card for a scheme to display this level of information, especially as there could be 20 schemes on a page.</p>
+    <p class="govuk-body-s">One option could be for SFD to suggest standards to schemes as they onboard with SFD – they would need to provide a standardized timeline including payment details.</p>
+    <p class="govuk-body-s">Another option would be for SFD to provide more detailed payment information on a new page. Product suggested exploring this approach and this will be the focus of our next round of iteration and testing. However if we have payment details or timelines in SFD, this risks duplication with such details and timelines in other schemes.</p>
+    <p class="govuk-body-s">Also to consider the titles of cards.</p>
+
+    <br>
+
+    <span class="govuk-caption-m">Hypothesis 5:</span>
+    <h3 class="govuk-heading-m">We could email users to tell them what and when they'll be paid.</h3>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">This tested well.</p>
+    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
+    <p class="govuk-body-s">Keep this. Feed this back to AHWP and suggest schemes provide payment information in emails as they onboard with SFD.</p>
+
+    <br>
+
+    <span class="govuk-caption-m">Hypothesis 6:</span>
+    <h3 class="govuk-heading-m">We could create a 'Your account' section.</h3>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">This tested well.</p>
+    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
+    <p class="govuk-body-s">Keep and iterate. Consider what other information might be needed – such as permissions.</p>
+
+    <br>
+
+    <span class="govuk-caption-m">Hypothesis 7:</span>
+    <h3 class="govuk-heading-m">We could add all details regarding a business in one place and allow them to be updated, as well as details regarding the personal account in one place and allow them to be updated.</h3>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">This tested well.</p>
+    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
+    <p class="govuk-body-s">Keep and iterate. Do more specific testing on the elements we have changed, like how useful it is to include the reference numbers and editing additional details.</p>
+
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
