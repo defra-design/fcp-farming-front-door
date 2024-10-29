@@ -1,0 +1,76 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<a href="/to-be/v6/index" class="govuk-back-link">Back</a>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Version 6
+      <span class="govuk-caption-xl">Design history</span>
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">
+      Goals of this iteration
+    </h2>
+
+    <p>Goals content goes here.</p>
+
+
+    <!-- line break to split up the page -->
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">
+      'How might we' statements
+    </h2>
+
+    <h3 class="govuk-heading-s">Example 'How might we' statement</h3>
+    <p class="govuk-body">Content goes here.</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li class="govuk-body-s">Bullet point 1</li>
+      <li class="govuk-body-s">Bullet point 2</li>
+      <li class="govuk-body-s">Bullet point 3</li>
+    </ul>
+
+
+    <!-- line break to split up the page -->
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">
+      Outcomes and decisions
+    </h2>
+
+    <span class="govuk-caption-m">Hypothesis 1:</span>
+    <h3 class="govuk-heading-m">Hypothesis statement.</h3>
+    <strong class="govuk-tag govuk-tag--red" style="margin-bottom: 20px;">
+      Disproven
+    </strong>
+    <strong class="govuk-tag govuk-tag--orange" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">High-level outcome.</p>
+    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
+    <p class="govuk-body-s">Design conclusion content.</p>
+
+    <br>
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}

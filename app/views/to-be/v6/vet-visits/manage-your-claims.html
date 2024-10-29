@@ -1,0 +1,161 @@
+{% extends "layouts/vet-visits.html" %}
+
+{% set pageName="Manage your claims" %}
+
+{%- block beforeContent -%}
+
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
+    <div class="govuk-grid-row" style="padding-top:16px;">
+      <div class="govuk-grid-column-two-thirds">
+        {% if data['valleySFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Valley Farm</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 192846125</p>
+          {% elif data['agileSFD'] == 'True' %}  
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+          {% else %}
+          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
+          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
+        {% endif %}
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
+          <p class="govuk-body" style="float:right; margin-bottom: 8px;"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Claim for a different business</a></p>
+
+      </div>
+
+      </div>
+  </main>
+</div>
+<hr>
+<!-- <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a> -->
+{% endblock %} 
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-xl">
+      Manage your claims
+    </h1>
+
+    <span class="govuk-caption-l govuk-!-margin-bottom-4">Agreement number: AHWR-2847-2847 </span>
+    
+    <form action="#" method="post">
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+      Start a new claim
+    </button>
+    </form>
+
+    {% if data['claimSubmitted'] == 'True' %}  
+    {% else %}
+    <p>You have claimed for a review. You can now claim for a follow-up.</p>
+    {% endif %}
+
+
+    <h2 class="govuk-heading-m">Your previous claims</h2>
+
+    <!-- <hr class="govuk-!-margin-bottom-6"> -->
+
+
+      {% if data['statusChanged'] == 'True' %}  
+
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row" style="border-top: 1px solid #b1b4b6;">
+          <dt class="govuk-summary-list__key govuk-!-width-one-half" style="font-weight: normal;">
+            VV-5053-A696 - beef cattle review
+          </dt>
+          <dd class="govuk-summary-list__value govuk-!-width-one-half">
+            <strong> Claim approved</strong><br>You'll be paid £554 by 10 October 2024.
+          </dd>
+        </div>
+      </dl> 
+
+      {% else %}  
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row" style="border-top: 1px solid #b1b4b6;">
+          <dt class="govuk-summary-list__key govuk-!-width-one-half" style="font-weight: normal;">
+            VV-5053-A696 - beef cattle review
+          </dt>
+          <strong><dd class="govuk-summary-list__value govuk-!-width-one-half">
+            Evidence submitted
+          </dd></strong>
+        </div>
+      </dl> 
+      {% endif %}  
+
+
+      </ul>
+
+
+
+    <h2 class="govuk-heading-m">More information</h2>
+
+    <p><a href="ts-cs" class="govuk-link govuk-link--no-visited-state">Terms and conditions</a></p>
+
+    <p><a href="https://apply-for-an-annual-health-and-welfare-review.defra.gov.uk/apply" class="govuk-link govuk-link--no-visited-state">Guidance for funding to improve animal health and welfare</a></p>
+
+    <p><a href="agreement-summary" class="govuk-link govuk-link--no-visited-state">Agreement summary</a></p>
+
+    
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+
+{% block footer %}
+
+
+<footer class="govuk-footer">
+  <div class="govuk-width-container">
+    <div class="govuk-footer__meta">
+      <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+        <h2 class="govuk-visually-hidden">Support links</h2>
+        <ul class="govuk-footer__inline-list">
+          <li class="govuk-footer__inline-list-item">
+            <a class="govuk-footer__link govuk-body-l" href="/to-be/v5/landing/business-page">
+              Go to service
+            </a>
+          </li>
+        </ul>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          class="govuk-footer__licence-logo"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 483.2 195.7"
+          height="17"
+          width="41">
+          <path
+            fill="currentColor"
+            d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145" />
+        </svg>
+        <span class="govuk-footer__licence-description">
+          All content is available under the
+          <a
+            class="govuk-footer__link"
+            href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+            rel="license">Open Government Licence v3.0</a>, except where otherwise stated
+        </span>
+      </div>
+      <div class="govuk-footer__meta-item">
+        <a
+          class="govuk-footer__link govuk-footer__copyright-logo"
+          href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">
+          © Crown copyright
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% endblock %}
