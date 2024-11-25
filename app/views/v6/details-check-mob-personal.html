@@ -1,4 +1,4 @@
-{% extends "layouts/logged-in-nav-v6.html" %}
+{% extends "layouts/main.html" %}
 
 {% set pageName="Check your mobile phone number is correct before submitting" %}
 {% set serviceName="Manage your land and farm businesses" %}
@@ -6,13 +6,9 @@
 {% set yourMessages = "Active" %}
 
 
-{%- block beforeContent -%}
+{% block beforeContent %}
 
-
-<div class="govuk-width-container">
-
-  {% include "../components/sub-header.html" %}
-
+  {% include "_common/phase-banner.html" %}
 
   <!-- ACCOUNT MENU -->
   <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
@@ -31,7 +27,7 @@
 
 
       <li>
-        <a href="../landing/your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+        <a href="account-home" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
           Your account </a>
       </li>
 
@@ -43,9 +39,6 @@
   </nav>
   <!-- END ACCOUNT MENU -->
 
-
-</div>
-
 {% endblock %}
 
 
@@ -55,7 +48,7 @@
   <div class="govuk-grid-column-two-thirds">
 
 
-    <form action="mob-business-updated" method="post">
+    <form action="details-mob-personal-updated" method="post">
 
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -70,12 +63,13 @@
               text: "Mobile phone number"
             },
             value: {
-              text: data['mobNumberBus'] or "07700900967"
+              text: data['mobNumberPers'] or "07700900967"
+
             },
             actions: {
               items: [
                 {
-                  href: "change-mob-business",
+                  href: "details-change-mob-personal",
                   text: "Change",
                   visuallyHiddenText: "mobile phone number"
                 }

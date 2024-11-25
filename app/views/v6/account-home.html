@@ -1,4 +1,4 @@
-{% extends "layouts/logged-in-nav-v6.html" %}
+{% extends "layouts/main.html" %}
 
 {% set pageName="Your account" %}
 {% set serviceName="Manage your land and farm businesses" %}
@@ -6,12 +6,9 @@
 {% set yourMessages = "Active" %}
 
 
-{%- block beforeContent -%}
+{% block beforeContent %}
 
-
-<div class="govuk-width-container">
-
-
+  {% include "_common/phase-banner.html" %}
 
   <!-- ACCOUNT MENU -->
   <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
@@ -19,7 +16,7 @@
     <nav class="govuk-breadcrumbs" style="display: inline-block;" aria-label="Breadcrumb">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="../landing/business-page">Home</a>
+          <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
         </li>
       </ol>
     </nav>
@@ -36,7 +33,7 @@
 
 
       <li>
-        <a href="../landing/your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd hmrc-account-menu__link--active hmrc-account-menu__link--active_sfd">
+        <a href="account-home" class="hmrc-account-menu__link hmrc-account-menu__link_sfd hmrc-account-menu__link--active hmrc-account-menu__link--active_sfd">
           Your account </a>
       </li>
 
@@ -47,9 +44,6 @@
     </ul>
   </nav>
   <!-- END ACCOUNT MENU -->
-
-
-</div>
 
 {% endblock %}
 
@@ -74,7 +68,7 @@
         
 
         <li class="gem-c-cards__list-item-variant">
-          <a class="govuk-link govuk-link--no-visited-state" href="../details/personal-details">
+          <a class="govuk-link govuk-link--no-visited-state" href="details-personal-details">
             <div class="gem-c-cards__list-item-wrapper-variant">
               <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Your personal details</h2> 
               <p class="govuk-body-s gem-c-cards__description p-link-style">View and update your personal details</p>          
@@ -84,7 +78,7 @@
 
 
         <li class="gem-c-cards__list-item-variant">
-          <a class="govuk-link govuk-link--no-visited-state" href="../start/your-businesses-list">
+          <a class="govuk-link govuk-link--no-visited-state" href="businesses-list">
             <div class="gem-c-cards__list-item-wrapper-variant">
               <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Your businesses</h2> 
               <p class="govuk-body-s gem-c-cards__description p-link-style">View a list of your businesses</p>          

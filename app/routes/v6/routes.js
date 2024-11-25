@@ -2,7 +2,7 @@ const e = require("express");
 
 module.exports = function (router) {
 
-    var version = "to-be/v6";
+    var version = "v6";
 
 
     // Every GET and POST

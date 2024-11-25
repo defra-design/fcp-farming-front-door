@@ -1,17 +1,15 @@
-{% extends "layouts/logged-in-nav-v6.html" %}
+{% extends "layouts/main.html" %}
 
 {% set pageName="Your businesses - page 2" %}
-{% set serviceName="Manage your land and farm businesses" %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
 
 {% set yourBusiness = "Active" %}
 
-{%- block beforeContent -%}
+{% block beforeContent %}
 
-<div class="govuk-width-container">
-
-  {% include "../components/nav-bar.html" %}
-
-</div>
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/nav-bar.html" %}
 
 {% endblock %}
 
@@ -96,7 +94,7 @@
                 <td class="govuk-table__cell">121150991</td>
               </tr>
               <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../landing/business-page?valleySFD=True&agileSFD=">Valley Farm</a></th>
+                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="business-home?valleySFD=True&agileSFD=">Valley Farm</a></th>
                 <td class="govuk-table__cell">192846125</td>
               </tr>
               <tr class="govuk-table__row">
@@ -113,7 +111,7 @@
 
               <nav class="govuk-pagination" aria-label="Pagination">
                 <div class="govuk-pagination__prev">
-                  <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="your-businesses-list" rel="prev">
+                  <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list" rel="prev">
                     <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
                       <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
                     </svg>
@@ -124,12 +122,12 @@
                 </div>
                 <ul class="govuk-pagination__list">
                   <li class="govuk-pagination__item">
-                    <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="your-businesses-list" aria-label="Page 1">
+                    <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list" aria-label="Page 1">
                       1
                     </a>
                   </li>
                   <li class="govuk-pagination__item govuk-pagination__item--current">
-                    <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="your-businesses-list-p2" aria-label="Page 2" aria-current="page">
+                    <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list-p2" aria-label="Page 2" aria-current="page">
                       2
                     </a>
                   </li>

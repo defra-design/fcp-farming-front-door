@@ -1,4 +1,4 @@
-{% extends "layouts/logged-in-nav-v6.html" %}
+{% extends "layouts/main.html" %}
 
 {% set pageName="We've updated your mobile phone number" %}
 {% set serviceName="Manage your land and farm businesses" %}
@@ -6,12 +6,9 @@
 {% set yourMessages = "Active" %}
 
 
-{%- block beforeContent -%}
+{% block beforeContent %}
 
-
-<div class="govuk-width-container">
-
-
+  {% include "_common/phase-banner.html" %}
 
   <!-- ACCOUNT MENU -->
   <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
@@ -30,7 +27,7 @@
 
 
       <li>
-        <a href="../landing/your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+        <a href="account-home" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
           Your account </a>
       </li>
 
@@ -41,9 +38,6 @@
     </ul>
   </nav>
   <!-- END ACCOUNT MENU -->
-
-
-</div>
 
 {% endblock %}
 
@@ -59,7 +53,7 @@
       We have updated your mobile phone number
      </h1>
       
-     <p><a class="govuk-link--no-visited-state" href="personal-details">Go back to your personal details</a></p>
+     <p><a class="govuk-link--no-visited-state" href="details-personal-details">Go back to your personal details</a></p>
 
 
 

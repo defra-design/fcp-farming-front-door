@@ -1,18 +1,14 @@
-{% extends "layouts/logged-in-nav-v6.html" %}
+{% extends "layouts/main.html" %}
 
 {% set pageName="View and update your business details" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% set yourMessages = "Active" %}
 
+{% block beforeContent %}
 
-{%- block beforeContent -%}
-
-
-<div class="govuk-width-container">
-
-  {% include "../components/sub-header.html" %}
-
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
 
   <!-- ACCOUNT MENU -->
   <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
@@ -20,7 +16,7 @@
     <nav class="govuk-breadcrumbs" style="display: inline-block;" aria-label="Breadcrumb">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="../landing/business-page">Home</a>
+          <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
         </li>
       </ol>
     </nav>
@@ -36,7 +32,7 @@
 
 
       <li>
-        <a href="../landing/your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+        <a href="account-home" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
           Your account </a>
       </li>
 
@@ -48,11 +44,7 @@
   </nav>
   <!-- END ACCOUNT MENU -->
 
-
-</div>
-
 {% endblock %}
-
 
 {% block content %}
 
@@ -126,7 +118,7 @@
           {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="change-mob-business">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="details-change-mob-business">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

@@ -1,47 +1,42 @@
-{% extends "layouts/logged-in-nav-v6.html" %}
+{% extends "layouts/main.html" %}
 
 {% set pageName="Your business" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
-      {%- block beforeContent -%}
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+    
+  <!-- ACCOUNT MENU -->
+  <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
+      
+    <a href="businesses-list" class="govuk-back-link govuk-!-margin-bottom-0">Back to your businesses</a>
+
+    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
+      Account menu </a>
+
+      <ul class="hmrc-account-menu__main js-hidden">
+      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
+        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
+          Back </a>
+      </li>
 
 
-      <div class="govuk-width-container">
-          
-      
-        <!-- ACCOUNT MENU -->
-        <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
-            
-          <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back to your businesses</a>
 
-          <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
-            Account menu </a>
-      
-            <ul class="hmrc-account-menu__main js-hidden">
-            <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
-              <a href="#" tabindex="-1" class="hmrc-account-menu__link">
-                Back </a>
-            </li>
-      
+      <li>
+        <a href="account-home" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Your account </a>
+      </li>
 
-      
-            <li>
-              <a href="your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
-                Your account </a>
-            </li>
+      <li>
+        <a href="../../../_common/not-testing.html" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+          Sign out </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- END ACCOUNT MENU -->
 
-            <li>
-              <a href="../../../_common/not-testing.html" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
-                Sign out </a>
-            </li>
-          </ul>
-        </nav>
-        <!-- END ACCOUNT MENU -->
-      
-      
-      </div>
-      
-      {% endblock %}
+{% endblock %}
 
 {% block content %}
 
@@ -81,7 +76,7 @@
           <ul class="gem-c-cards__list gem-c-cards__list-cards">
 
             <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state link-style" href="../vet-visits/manage-your-claims">
+              <a class="govuk-link govuk-link--no-visited-state link-style" href="vets-manage-your-claims">
                 <div class="gem-c-cards__list-item-wrapper-variant">
                   <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Get funding to improve animal health and welfare</h2> 
                   {% if data['statusChanged'] == 'True' %}  
@@ -120,7 +115,7 @@
             Business details
           </h3>
 
-          <p><a class="govuk-link--no-visited-state" href="../details/business-details">View and update your business details</a></p> 
+          <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
           <p><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View and update permissions</a></p> 
 
 

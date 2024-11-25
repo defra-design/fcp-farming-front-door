@@ -2,7 +2,8 @@
 
 {% set pageName="Home" %}
 
-{%- block beforeContent -%}
+{% block beforeContent %}
+{{super()}}
 <a href="/to-be/index" class="govuk-back-link">Back</a>
 {% endblock %}
 
@@ -36,7 +37,7 @@
     </ul>
 
   <div>
-    <a href="start/rps-start-og" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+    <a href="start-rps-start-og" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
       Link 1 - RPS start page
       <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
         <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
@@ -45,7 +46,7 @@
   </div>
 
   <div>
-    <a href="vet-visits/claim-approved-email?statusChanged=True&valleySFD=True" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+    <a href="vets-claim-approved-email?statusChanged=True&valleySFD=True" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
       Link 2 - Email 
       <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
         <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
@@ -64,21 +65,21 @@
       Start
     </h3>
     <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link--no-visited-state" href="start/rps-start-og">RPS start page</a></li>
-      <li><a class="govuk-link--no-visited-state" href="start/rps-sign-in">RPS sign in</a></li>
-      <li><a class="govuk-link--no-visited-state" href="start/sfd-start">SFD start page</a></li>
-      <li><a class="govuk-link--no-visited-state" href="start/sfd-sign-in">SFD sign in</a></li>
-      <li><a class="govuk-link--no-visited-state" href="start/your-businesses-list">Your businesses list</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-rps-start-og">RPS start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-rps-sign-in">RPS sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-sfd-start">SFD start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-sfd-sign-in">SFD sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="businesses-list">Your businesses list</a></li>
     </ul>
 
     <h3 class="govuk-heading-s">
       Landing, your account and details
     </h3>
     <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link--no-visited-state" href="landing/business-page">Business page</a></li>
-      <li><a class="govuk-link--no-visited-state" href="landing/your-account">Your account</a></li>
-      <li><a class="govuk-link--no-visited-state" href="details/business-details">View and update your business details</a></li>
-      <li><a class="govuk-link--no-visited-state" href="details/personal-details">View and update your personal details</a></li>
+      <li><a class="govuk-link--no-visited-state" href="business-home">Business page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="account-home">Your account</a></li>
+      <li><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></li>
+      <li><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></li>
     </ul>
 
 
@@ -86,8 +87,8 @@
       Vet visits Manage your claims screen and email
     </h3>
     <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link--no-visited-state" href="vet-visits/claim-approved-email">Claim approved email</a></li>
-      <li><a class="govuk-link--no-visited-state" href="vet-visits/manage-your-claims">Manage your claims</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vets-claim-approved-email">Claim approved email</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vets-manage-your-claims">Manage your claims</a></li>
     </ul>
   </div>
 
@@ -102,7 +103,7 @@
       <nav role="navigation" aria-labelledby="subsection-title">
         <ul class="govuk-list govuk-!-font-size-16">
           <li>
-            <a href="design-history">
+            <a href="_design-history">
               Design history
             </a>
           </li>

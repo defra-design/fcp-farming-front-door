@@ -1,7 +1,13 @@
-{% extends "layouts/service-start-v6.html" %}
+{% extends "layouts/main.html" %}
 
 {% set pageName="Sign in to manage your land and farm businesses" %}
 {% set serviceName="Manage your land and farm businesses" %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+
+{% endblock %}
 
 {% block content %}
 
@@ -9,7 +15,7 @@
   <div class="govuk-grid-column-two-thirds">
 
 
-    <form action="your-businesses-list?agent=True" method="post">
+    <form action="businesses-list?agent=True" method="post">
 
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">

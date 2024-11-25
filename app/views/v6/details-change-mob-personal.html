@@ -1,17 +1,14 @@
-{% extends "layouts/logged-in-nav-v6.html" %}
+{% extends "layouts/main.html" %}
 
-{% set pageName="Check your mobile phone number is correct before submitting" %}
+{% set pageName="Change your mobile phone number" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% set yourMessages = "Active" %}
 
 
-{%- block beforeContent -%}
+{% block beforeContent %}
 
-
-<div class="govuk-width-container">
-
-
+  {% include "_common/phase-banner.html" %}
 
   <!-- ACCOUNT MENU -->
   <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
@@ -30,7 +27,7 @@
 
 
       <li>
-        <a href="../landing/your-account" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
+        <a href="account-home" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
           Your account </a>
       </li>
 
@@ -42,9 +39,6 @@
   </nav>
   <!-- END ACCOUNT MENU -->
 
-
-</div>
-
 {% endblock %}
 
 
@@ -54,43 +48,26 @@
   <div class="govuk-grid-column-two-thirds">
 
 
-    <form action="mob-personal-updated" method="post">
+    <form action="details-check-mob-personal" method="post">
 
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          Check your mobile phone number is correct before submitting     
+          Change your mobile phone number        
         </h1>
       </legend>
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              text: "Mobile phone number"
-            },
-            value: {
-              text: data['mobNumberPers'] or "07700900967"
-
-            },
-            actions: {
-              items: [
-                {
-                  href: "change-mob-personal",
-                  text: "Change",
-                  visuallyHiddenText: "mobile phone number"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="mobNumberPers">
+          New mobile phone number
+        </label>
+        <input class="govuk-input govuk-input--width-20" id="mobNumberPers" name="mobNumberPers" type="tel" autocomplete="tel">
+      </div>
       <button type="submit" class="govuk-button" data-module="govuk-button">
-        Submit
+        Continue
       </button>
     </fieldset>
 
       </form>
-
 
 
 
