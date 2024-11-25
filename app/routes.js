@@ -8,7 +8,6 @@ const router = govukPrototypeKit.requests.setupRouter()
 
 // Add your routes here
 
-
 router.post('/which-service-answer', function(request, response) {
 
     var country = request.session.data['whichService']
@@ -18,3 +17,5 @@ router.post('/which-service-answer', function(request, response) {
         response.redirect("/to-be/v3/start/sign-in")
     }
 })
+
+require('./routes/v6/routes.js')(router);

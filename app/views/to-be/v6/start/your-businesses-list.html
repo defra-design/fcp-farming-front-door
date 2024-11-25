@@ -8,7 +8,7 @@
 
 <div class="govuk-width-container">
 
-  {% include "to-be/v5/components/nav-bar/include.html" %}
+  {% include "../components/nav-bar/include.html" %}
 
 </div>
 
@@ -55,7 +55,7 @@
             </thead>
             <tbody class="govuk-table__body">
               <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="/to-be/v5/landing/business-page?agileSFD=True&valleySFD=">Agile Farms Ltd</a></th>
+                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../landing/business-page?agileSFD=True&valleySFD=">Agile Farms Ltd</a></th>
                 <td class="govuk-table__cell">123456789</td>
               </tr>
               {% if data['agent'] == 'True' %}  
@@ -140,7 +140,7 @@
               {% endif %} 
               {% if data['agent'] != "True" %}  
               <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="/to-be/v5/landing/business-page?valleySFD=True&agileSFD=">Valley Farm</a></th>
+                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../landing/business-page?valleySFD=True&agileSFD=">Valley Farm</a></th>
                 <td class="govuk-table__cell">192846125</td>
               </tr>
               {% endif %} 
