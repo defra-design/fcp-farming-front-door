@@ -1,0 +1,113 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{%- block beforeContent -%}
+<a href="/index" class="govuk-back-link">Back</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-l">Exploration</h2>
+
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+              Landing page
+            </span>
+          </h2>
+        </div>
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content">
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="mvp/landing">MVP version of landing page (only Animal health and welfare scheme integrated)</a></p>
+
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="landing-2">Panel links with secondary actions less prominent</a></p>
+
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="landing-3">Cards with secondary actions less prominent</a></p>
+      
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="landing-find">Cards including signposting to Find tool</a></p>
+      
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="landing-rps">Cards with RPS scheme hubs (Countryside Stewardship and Land)</a></p>
+      
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="landing-4">Cards with status pulled through (exploring if there's any useful info we could pull from the schemes to display to the user)</a></p>
+      
+              </div>
+      </div>
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+              Your account concept and update details
+            </span>
+          </h2>
+        </div>
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content">
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="your-account">Your account concept</a></p>
+
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="details/personal-details">View and update your personal details</a></p>
+
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="details/business-details">View and update your business details</a></p>
+
+
+              </div>
+      </div>
+
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+              Single front door as a webpage concept
+            </span>
+          </h2>
+        </div>
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content">
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="webpage/webpage-concept">GOV.UK Manage your land and farm businesses page</a></p>
+
+              </div>
+      </div>
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+              Messages
+            </span>
+          </h2>
+        </div>
+        <div id="accordion-default-content-2" class="govuk-accordion__section-content">
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="messages-contextual">Messages per section</a></p>
+
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="message-filters">Message history filters - by scheme and by year</a></p>
+      
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="message-no-filters">Message history with no filters</a></p>
+
+        </div>
+      </div>
+
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+              Handling double log-in issue
+            </span>
+          </h2>
+        <div id="accordion-default-content-3" class="govuk-accordion__section-content">
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="upfront-task-select">User chooses a task and is then routed to the correct service</a></p>
+
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="interruption-card">Interrupt user when they navigate to RPS</a></p>
+
+          <p class="govuk-body"><a class="govuk-link--no-visited-state" href="banner-landing">Use a banner to tell users RPS is a separate service</a></p>
+
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
