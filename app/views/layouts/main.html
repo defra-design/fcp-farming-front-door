@@ -7,23 +7,22 @@
 
 {% block header %}
 
-
 {% if _includeServiceNavigation == "true" %}
-{{ govukHeader({
-  classes: "govuk-header--full-width-border"
-}) }}
-{{ govukServiceNavigation({
-  serviceName: serviceName,
-  serviceUrl: "#",
-  navigation: [
-    {
-      href: "#",
-      text: "Navigation item 1"
-    }
-  ]
-}) }}
+  {{ govukHeader({
+    classes: "govuk-header--full-width-border"
+  }) }}
+  {{ govukServiceNavigation({
+    serviceName: serviceName,
+    serviceUrl: "#",
+    navigation: [
+      {
+        href: "#",
+        text: "Navigation item 1"
+      }
+    ]
+  }) }}
 {% else %}
-{{super()}}
+  {{super()}}
 {% endif %}
 
 {% endblock %}
