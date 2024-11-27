@@ -15,7 +15,8 @@
   .govuk-notification-banner__header {
     padding: 2px govuk-spacing(3) govuk-spacing(1);
 
-    // Ensures the notification header appears separate to the notification body text in high contrast mode
+    // Ensures the notification header appears separate to the notification body
+    // text in high contrast mode
     border-bottom: 1px solid transparent;
 
     @include govuk-media-query($from: tablet) {
@@ -68,7 +69,7 @@
     @include govuk-font-size($size: 24);
     @include govuk-typography-weight-bold;
 
-    margin: 0 0 govuk-spacing(3) 0;
+    margin: 0 0 govuk-spacing(3);
 
     padding: 0;
   }

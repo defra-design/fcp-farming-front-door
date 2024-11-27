@@ -19,27 +19,18 @@ class Radios extends GOVUKFrontendComponent {
    * (for example if the user has navigated back), and set up event handlers to
    * keep the reveal in sync with the radio state.
    *
-   * @param {Element | null} $module - HTML element to use for radios
+   * @param {Element | null} $root - HTML element to use for radios
    */
-  constructor($module) {
-    super();
-    this.$module = void 0;
+  constructor($root) {
+    super($root);
     this.$inputs = void 0;
-    if (!($module instanceof HTMLElement)) {
-      throw new ElementError({
-        componentName: 'Radios',
-        element: $module,
-        identifier: 'Root element (`$module`)'
-      });
-    }
-    const $inputs = $module.querySelectorAll('input[type="radio"]');
+    const $inputs = this.$root.querySelectorAll('input[type="radio"]');
     if (!$inputs.length) {
       throw new ElementError({
-        componentName: 'Radios',
+        component: Radios,
         identifier: 'Form inputs (`<input type="radio">`)'
       });
     }
-    this.$module = $module;
     this.$inputs = $inputs;
     this.$inputs.forEach($input => {
       const targetId = $input.getAttribute('data-aria-controls');
@@ -48,7 +39,7 @@ class Radios extends GOVUKFrontendComponent {
       }
       if (!document.getElementById(targetId)) {
         throw new ElementError({
-          componentName: 'Radios',
+          component: Radios,
           identifier: `Conditional reveal (\`id="${targetId}"\`)`
         });
       }
@@ -57,7 +48,7 @@ class Radios extends GOVUKFrontendComponent {
     });
     window.addEventListener('pageshow', () => this.syncAllConditionalReveals());
     this.syncAllConditionalReveals();
-    this.$module.addEventListener('click', event => this.handleClick(event));
+    this.$root.addEventListener('click', event => this.handleClick(event));
   }
   syncAllConditionalReveals() {
     this.$inputs.forEach($input => this.syncConditionalRevealWithInputState($input));

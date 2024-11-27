@@ -1,5 +1,5 @@
 import { closestAttributeValue } from '../../common/closest-attribute-value.mjs';
-import { mergeConfigs, validateConfig, extractConfigByNamespace } from '../../common/index.mjs';
+import { mergeConfigs, validateConfig, formatErrorMessage } from '../../common/index.mjs';
 import { normaliseDataset } from '../../common/normalise-dataset.mjs';
 import { ElementError, ConfigError } from '../../errors/index.mjs';
 import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
@@ -19,13 +19,12 @@ import { I18n } from '../../i18n.mjs';
  */
 class CharacterCount extends GOVUKFrontendComponent {
   /**
-   * @param {Element | null} $module - HTML element to use for character count
+   * @param {Element | null} $root - HTML element to use for character count
    * @param {CharacterCountConfig} [config] - Character count config
    */
-  constructor($module, config = {}) {
+  constructor($root, config = {}) {
     var _ref, _this$config$maxwords;
-    super();
-    this.$module = void 0;
+    super($root);
     this.$textarea = void 0;
     this.$visibleCountMessage = void 0;
     this.$screenReaderCountMessage = void 0;
@@ -35,23 +34,16 @@ class CharacterCount extends GOVUKFrontendComponent {
     this.config = void 0;
     this.i18n = void 0;
     this.maxLength = void 0;
-    if (!($module instanceof HTMLElement)) {
-      throw new ElementError({
-        componentName: 'Character count',
-        element: $module,
-        identifier: 'Root element (`$module`)'
-      });
-    }
-    const $textarea = $module.querySelector('.govuk-js-character-count');
+    const $textarea = this.$root.querySelector('.govuk-js-character-count');
     if (!($textarea instanceof HTMLTextAreaElement || $textarea instanceof HTMLInputElement)) {
       throw new ElementError({
-        componentName: 'Character count',
+        component: CharacterCount,
         element: $textarea,
         expectedType: 'HTMLTextareaElement or HTMLInputElement',
         identifier: 'Form field (`.govuk-js-character-count`)'
       });
     }
-    const datasetConfig = normaliseDataset($module.dataset);
+    const datasetConfig = normaliseDataset(CharacterCount, this.$root.dataset);
     let configOverrides = {};
     if ('maxwords' in datasetConfig || 'maxlength' in datasetConfig) {
       configOverrides = {
@@ -62,19 +54,18 @@ class CharacterCount extends GOVUKFrontendComponent {
     this.config = mergeConfigs(CharacterCount.defaults, config, configOverrides, datasetConfig);
     const errors = validateConfig(CharacterCount.schema, this.config);
     if (errors[0]) {
-      throw new ConfigError(`Character count: ${errors[0]}`);
+      throw new ConfigError(formatErrorMessage(CharacterCount, errors[0]));
     }
-    this.i18n = new I18n(extractConfigByNamespace(this.config, 'i18n'), {
-      locale: closestAttributeValue($module, 'lang')
+    this.i18n = new I18n(this.config.i18n, {
+      locale: closestAttributeValue(this.$root, 'lang')
     });
     this.maxLength = (_ref = (_this$config$maxwords = this.config.maxwords) != null ? _this$config$maxwords : this.config.maxlength) != null ? _ref : Infinity;
-    this.$module = $module;
     this.$textarea = $textarea;
     const textareaDescriptionId = `${this.$textarea.id}-info`;
     const $textareaDescription = document.getElementById(textareaDescriptionId);
     if (!$textareaDescription) {
       throw new ElementError({
-        componentName: 'Character count',
+        component: CharacterCount,
         element: $textareaDescription,
         identifier: `Count message (\`id="${textareaDescriptionId}"\`)`
       });
@@ -277,6 +268,20 @@ CharacterCount.defaults = Object.freeze({
   }
 });
 CharacterCount.schema = Object.freeze({
+  properties: {
+    i18n: {
+      type: 'object'
+    },
+    maxwords: {
+      type: 'number'
+    },
+    maxlength: {
+      type: 'number'
+    },
+    threshold: {
+      type: 'number'
+    }
+  },
   anyOf: [{
     required: ['maxwords'],
     errorMessage: 'Either "maxlength" or "maxwords" must be provided'

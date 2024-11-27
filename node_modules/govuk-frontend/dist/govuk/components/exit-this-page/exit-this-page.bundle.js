@@ -4,57 +4,118 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.GOVUKFrontend = {}));
 })(this, (function (exports) { 'use strict';
 
-  function mergeConfigs(...configObjects) {
-    function flattenObject(configObject) {
-      const flattenedObject = {};
-      function flattenLoop(obj, prefix) {
-        for (const [key, value] of Object.entries(obj)) {
-          const prefixedKey = prefix ? `${prefix}.${key}` : key;
-          if (value && typeof value === 'object') {
-            flattenLoop(value, prefixedKey);
-          } else {
-            flattenedObject[prefixedKey] = value;
-          }
-        }
+  function normaliseString(value, property) {
+    const trimmedValue = value ? value.trim() : '';
+    let output;
+    let outputType = property == null ? void 0 : property.type;
+    if (!outputType) {
+      if (['true', 'false'].includes(trimmedValue)) {
+        outputType = 'boolean';
       }
-      flattenLoop(configObject);
-      return flattenedObject;
+      if (trimmedValue.length > 0 && isFinite(Number(trimmedValue))) {
+        outputType = 'number';
+      }
     }
+    switch (outputType) {
+      case 'boolean':
+        output = trimmedValue === 'true';
+        break;
+      case 'number':
+        output = Number(trimmedValue);
+        break;
+      default:
+        output = value;
+    }
+    return output;
+  }
+
+  /**
+   * @typedef {import('./index.mjs').SchemaProperty} SchemaProperty
+   */
+
+  function mergeConfigs(...configObjects) {
     const formattedConfigObject = {};
     for (const configObject of configObjects) {
-      const obj = flattenObject(configObject);
-      for (const [key, value] of Object.entries(obj)) {
-        formattedConfigObject[key] = value;
+      for (const key of Object.keys(configObject)) {
+        const option = formattedConfigObject[key];
+        const override = configObject[key];
+        if (isObject(option) && isObject(override)) {
+          formattedConfigObject[key] = mergeConfigs(option, override);
+        } else {
+          formattedConfigObject[key] = override;
+        }
       }
     }
     return formattedConfigObject;
   }
-  function extractConfigByNamespace(configObject, namespace) {
-    const newObject = {};
-    for (const [key, value] of Object.entries(configObject)) {
+  function extractConfigByNamespace(Component, dataset, namespace) {
+    const property = Component.schema.properties[namespace];
+    if ((property == null ? void 0 : property.type) !== 'object') {
+      return;
+    }
+    const newObject = {
+      [namespace]: ({})
+    };
+    for (const [key, value] of Object.entries(dataset)) {
+      let current = newObject;
       const keyParts = key.split('.');
-      if (keyParts[0] === namespace) {
-        if (keyParts.length > 1) {
-          keyParts.shift();
+      for (const [index, name] of keyParts.entries()) {
+        if (typeof current === 'object') {
+          if (index < keyParts.length - 1) {
+            if (!isObject(current[name])) {
+              current[name] = {};
+            }
+            current = current[name];
+          } else if (key !== namespace) {
+            current[name] = normaliseString(value);
+          }
         }
-        const newKey = keyParts.join('.');
-        newObject[newKey] = value;
       }
     }
-    return newObject;
+    return newObject[namespace];
   }
+  function isInitialised($root, moduleName) {
+    return $root instanceof HTMLElement && $root.hasAttribute(`data-${moduleName}-init`);
+  }
+
+  /**
+   * Checks if GOV.UK Frontend is supported on this page
+   *
+   * Some browsers will load and run our JavaScript but GOV.UK Frontend
+   * won't be supported.
+   *
+   * @param {HTMLElement | null} [$scope] - (internal) `<body>` HTML element checked for browser support
+   * @returns {boolean} Whether GOV.UK Frontend is supported on this page
+   */
   function isSupported($scope = document.body) {
     if (!$scope) {
       return false;
     }
     return $scope.classList.contains('govuk-frontend-supported');
   }
+  function isArray(option) {
+    return Array.isArray(option);
+  }
+  function isObject(option) {
+    return !!option && typeof option === 'object' && !isArray(option);
+  }
+  function formatErrorMessage(Component, message) {
+    return `${Component.moduleName}: ${message}`;
+  }
 
   /**
    * Schema for component config
    *
    * @typedef {object} Schema
+   * @property {{ [field: string]: SchemaProperty | undefined }} properties - Schema properties
    * @property {SchemaCondition[]} [anyOf] - List of schema conditions
+   */
+
+  /**
+   * Schema property for component config
+   *
+   * @typedef {object} SchemaProperty
+   * @property {'string' | 'boolean' | 'number' | 'object'} type - Property type
    */
 
   /**
@@ -64,27 +125,20 @@
    * @property {string[]} required - List of required config fields
    * @property {string} errorMessage - Error message when required config fields not provided
    */
+  /**
+   * @typedef ComponentWithModuleName
+   * @property {string} moduleName - Name of the component
+   */
 
-  function normaliseString(value) {
-    if (typeof value !== 'string') {
-      return value;
-    }
-    const trimmedValue = value.trim();
-    if (trimmedValue === 'true') {
-      return true;
-    }
-    if (trimmedValue === 'false') {
-      return false;
-    }
-    if (trimmedValue.length > 0 && isFinite(Number(trimmedValue))) {
-      return Number(trimmedValue);
-    }
-    return value;
-  }
-  function normaliseDataset(dataset) {
+  function normaliseDataset(Component, dataset) {
     const out = {};
-    for (const [key, value] of Object.entries(dataset)) {
-      out[key] = normaliseString(value);
+    for (const [field, property] of Object.entries(Component.schema.properties)) {
+      if (field in dataset) {
+        out[field] = normaliseString(dataset[field], property);
+      }
+      if ((property == null ? void 0 : property.type) === 'object') {
+        out[field] = extractConfigByNamespace(Component, dataset, field);
+      }
     }
     return out;
   }
@@ -112,29 +166,84 @@
       let message = typeof messageOrOptions === 'string' ? messageOrOptions : '';
       if (typeof messageOrOptions === 'object') {
         const {
-          componentName,
+          component,
           identifier,
           element,
           expectedType
         } = messageOrOptions;
-        message = `${componentName}: ${identifier}`;
+        message = identifier;
         message += element ? ` is not of type ${expectedType != null ? expectedType : 'HTMLElement'}` : ' not found';
+        message = formatErrorMessage(component, message);
       }
       super(message);
       this.name = 'ElementError';
     }
   }
+  class InitError extends GOVUKFrontendError {
+    constructor(componentOrMessage) {
+      const message = typeof componentOrMessage === 'string' ? componentOrMessage : formatErrorMessage(componentOrMessage, `Root element (\`$root\`) already initialised`);
+      super(message);
+      this.name = 'InitError';
+    }
+  }
+  /**
+   * @typedef {import('../common/index.mjs').ComponentWithModuleName} ComponentWithModuleName
+   */
 
   class GOVUKFrontendComponent {
-    constructor() {
-      this.checkSupport();
+    /**
+     * Returns the root element of the component
+     *
+     * @protected
+     * @returns {RootElementType} - the root element of component
+     */
+    get $root() {
+      return this._$root;
     }
-    checkSupport() {
+    constructor($root) {
+      this._$root = void 0;
+      const childConstructor = this.constructor;
+      if (typeof childConstructor.moduleName !== 'string') {
+        throw new InitError(`\`moduleName\` not defined in component`);
+      }
+      if (!($root instanceof childConstructor.elementType)) {
+        throw new ElementError({
+          element: $root,
+          component: childConstructor,
+          identifier: 'Root element (`$root`)',
+          expectedType: childConstructor.elementType.name
+        });
+      } else {
+        this._$root = $root;
+      }
+      childConstructor.checkSupport();
+      this.checkInitialised();
+      const moduleName = childConstructor.moduleName;
+      this.$root.setAttribute(`data-${moduleName}-init`, '');
+    }
+    checkInitialised() {
+      const constructor = this.constructor;
+      const moduleName = constructor.moduleName;
+      if (moduleName && isInitialised(this.$root, moduleName)) {
+        throw new InitError(constructor);
+      }
+    }
+    static checkSupport() {
       if (!isSupported()) {
         throw new SupportError();
       }
     }
   }
+
+  /**
+   * @typedef ChildClass
+   * @property {string} moduleName - The module name that'll be looked for in the DOM when initialising the component
+   */
+
+  /**
+   * @typedef {typeof GOVUKFrontendComponent & ChildClass} ChildClassConstructor
+   */
+  GOVUKFrontendComponent.elementType = HTMLElement;
 
   class I18n {
     constructor(translations = {}, config = {}) {
@@ -148,18 +257,21 @@
       if (!lookupKey) {
         throw new Error('i18n: lookup key missing');
       }
-      if (typeof (options == null ? void 0 : options.count) === 'number') {
-        lookupKey = `${lookupKey}.${this.getPluralSuffix(lookupKey, options.count)}`;
+      let translation = this.translations[lookupKey];
+      if (typeof (options == null ? void 0 : options.count) === 'number' && typeof translation === 'object') {
+        const translationPluralForm = translation[this.getPluralSuffix(lookupKey, options.count)];
+        if (translationPluralForm) {
+          translation = translationPluralForm;
+        }
       }
-      const translationString = this.translations[lookupKey];
-      if (typeof translationString === 'string') {
-        if (translationString.match(/%{(.\S+)}/)) {
+      if (typeof translation === 'string') {
+        if (translation.match(/%{(.\S+)}/)) {
           if (!options) {
             throw new Error('i18n: cannot replace placeholders in string if no option data provided');
           }
-          return this.replacePlaceholders(translationString, options);
+          return this.replacePlaceholders(translation, options);
         }
-        return translationString;
+        return translation;
       }
       return lookupKey;
     }
@@ -187,12 +299,15 @@
       if (!isFinite(count)) {
         return 'other';
       }
+      const translation = this.translations[lookupKey];
       const preferredForm = this.hasIntlPluralRulesSupport() ? new Intl.PluralRules(this.locale).select(count) : this.selectPluralFormUsingFallbackRules(count);
-      if (`${lookupKey}.${preferredForm}` in this.translations) {
-        return preferredForm;
-      } else if (`${lookupKey}.other` in this.translations) {
-        console.warn(`i18n: Missing plural form ".${preferredForm}" for "${this.locale}" locale. Falling back to ".other".`);
-        return 'other';
+      if (typeof translation === 'object') {
+        if (preferredForm in translation) {
+          return preferredForm;
+        } else if ('other' in translation) {
+          console.warn(`i18n: Missing plural form ".${preferredForm}" for "${this.locale}" locale. Falling back to ".other".`);
+          return 'other';
+        }
       }
       throw new Error(`i18n: Plural form ".other" is required for "${this.locale}" locale`);
     }
@@ -330,12 +445,11 @@
    */
   class ExitThisPage extends GOVUKFrontendComponent {
     /**
-     * @param {Element | null} $module - HTML element that wraps the Exit This Page button
+     * @param {Element | null} $root - HTML element that wraps the Exit This Page button
      * @param {ExitThisPageConfig} [config] - Exit This Page config
      */
-    constructor($module, config = {}) {
-      super();
-      this.$module = void 0;
+    constructor($root, config = {}) {
+      super($root);
       this.config = void 0;
       this.i18n = void 0;
       this.$button = void 0;
@@ -348,25 +462,17 @@
       this.timeoutTime = 5000;
       this.keypressTimeoutId = null;
       this.timeoutMessageId = null;
-      if (!($module instanceof HTMLElement)) {
-        throw new ElementError({
-          componentName: 'Exit this page',
-          element: $module,
-          identifier: 'Root element (`$module`)'
-        });
-      }
-      const $button = $module.querySelector('.govuk-exit-this-page__button');
+      const $button = this.$root.querySelector('.govuk-exit-this-page__button');
       if (!($button instanceof HTMLAnchorElement)) {
         throw new ElementError({
-          componentName: 'Exit this page',
+          component: ExitThisPage,
           element: $button,
           expectedType: 'HTMLAnchorElement',
           identifier: 'Button (`.govuk-exit-this-page__button`)'
         });
       }
-      this.config = mergeConfigs(ExitThisPage.defaults, config, normaliseDataset($module.dataset));
-      this.i18n = new I18n(extractConfigByNamespace(this.config, 'i18n'));
-      this.$module = $module;
+      this.config = mergeConfigs(ExitThisPage.defaults, config, normaliseDataset(ExitThisPage, this.$root.dataset));
+      this.i18n = new I18n(this.config.i18n);
       this.$button = $button;
       const $skiplinkButton = document.querySelector('.govuk-js-exit-this-page-skiplink');
       if ($skiplinkButton instanceof HTMLAnchorElement) {
@@ -385,7 +491,7 @@
       this.$updateSpan = document.createElement('span');
       this.$updateSpan.setAttribute('role', 'status');
       this.$updateSpan.className = 'govuk-visually-hidden';
-      this.$module.appendChild(this.$updateSpan);
+      this.$root.appendChild(this.$updateSpan);
     }
     initButtonClickHandler() {
       this.$button.addEventListener('click', this.handleClick.bind(this));
@@ -435,7 +541,7 @@
       if (!this.$updateSpan) {
         return;
       }
-      if ((event.key === 'Shift' || event.keyCode === 16 || event.which === 16) && !this.lastKeyWasModified) {
+      if (event.key === 'Shift' && !this.lastKeyWasModified) {
         this.keypressCounter += 1;
         this.updateIndicator();
         if (this.timeoutMessageId) {
@@ -529,6 +635,10 @@
    * @property {string} [pressOneMoreTime] - Screen reader announcement informing
    *   the user they must press the activation key one more time.
    */
+
+  /**
+   * @typedef {import('../../common/index.mjs').Schema} Schema
+   */
   ExitThisPage.moduleName = 'govuk-exit-this-page';
   ExitThisPage.defaults = Object.freeze({
     i18n: {
@@ -536,6 +646,13 @@
       timedOut: 'Exit this page expired.',
       pressTwoMoreTimes: 'Shift, press 2 more times to exit.',
       pressOneMoreTime: 'Shift, press 1 more time to exit.'
+    }
+  });
+  ExitThisPage.schema = Object.freeze({
+    properties: {
+      i18n: {
+        type: 'object'
+      }
     }
   });
 

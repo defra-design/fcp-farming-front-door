@@ -1,4 +1,4 @@
-import { mergeConfigs, extractConfigByNamespace } from '../../common/index.mjs';
+import { mergeConfigs } from '../../common/index.mjs';
 import { normaliseDataset } from '../../common/normalise-dataset.mjs';
 import { ElementError } from '../../errors/index.mjs';
 import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
@@ -11,12 +11,11 @@ import { I18n } from '../../i18n.mjs';
  */
 class ExitThisPage extends GOVUKFrontendComponent {
   /**
-   * @param {Element | null} $module - HTML element that wraps the Exit This Page button
+   * @param {Element | null} $root - HTML element that wraps the Exit This Page button
    * @param {ExitThisPageConfig} [config] - Exit This Page config
    */
-  constructor($module, config = {}) {
-    super();
-    this.$module = void 0;
+  constructor($root, config = {}) {
+    super($root);
     this.config = void 0;
     this.i18n = void 0;
     this.$button = void 0;
@@ -29,25 +28,17 @@ class ExitThisPage extends GOVUKFrontendComponent {
     this.timeoutTime = 5000;
     this.keypressTimeoutId = null;
     this.timeoutMessageId = null;
-    if (!($module instanceof HTMLElement)) {
-      throw new ElementError({
-        componentName: 'Exit this page',
-        element: $module,
-        identifier: 'Root element (`$module`)'
-      });
-    }
-    const $button = $module.querySelector('.govuk-exit-this-page__button');
+    const $button = this.$root.querySelector('.govuk-exit-this-page__button');
     if (!($button instanceof HTMLAnchorElement)) {
       throw new ElementError({
-        componentName: 'Exit this page',
+        component: ExitThisPage,
         element: $button,
         expectedType: 'HTMLAnchorElement',
         identifier: 'Button (`.govuk-exit-this-page__button`)'
       });
     }
-    this.config = mergeConfigs(ExitThisPage.defaults, config, normaliseDataset($module.dataset));
-    this.i18n = new I18n(extractConfigByNamespace(this.config, 'i18n'));
-    this.$module = $module;
+    this.config = mergeConfigs(ExitThisPage.defaults, config, normaliseDataset(ExitThisPage, this.$root.dataset));
+    this.i18n = new I18n(this.config.i18n);
     this.$button = $button;
     const $skiplinkButton = document.querySelector('.govuk-js-exit-this-page-skiplink');
     if ($skiplinkButton instanceof HTMLAnchorElement) {
@@ -66,7 +57,7 @@ class ExitThisPage extends GOVUKFrontendComponent {
     this.$updateSpan = document.createElement('span');
     this.$updateSpan.setAttribute('role', 'status');
     this.$updateSpan.className = 'govuk-visually-hidden';
-    this.$module.appendChild(this.$updateSpan);
+    this.$root.appendChild(this.$updateSpan);
   }
   initButtonClickHandler() {
     this.$button.addEventListener('click', this.handleClick.bind(this));
@@ -116,7 +107,7 @@ class ExitThisPage extends GOVUKFrontendComponent {
     if (!this.$updateSpan) {
       return;
     }
-    if ((event.key === 'Shift' || event.keyCode === 16 || event.which === 16) && !this.lastKeyWasModified) {
+    if (event.key === 'Shift' && !this.lastKeyWasModified) {
       this.keypressCounter += 1;
       this.updateIndicator();
       if (this.timeoutMessageId) {
@@ -210,6 +201,10 @@ class ExitThisPage extends GOVUKFrontendComponent {
  * @property {string} [pressOneMoreTime] - Screen reader announcement informing
  *   the user they must press the activation key one more time.
  */
+
+/**
+ * @typedef {import('../../common/index.mjs').Schema} Schema
+ */
 ExitThisPage.moduleName = 'govuk-exit-this-page';
 ExitThisPage.defaults = Object.freeze({
   i18n: {
@@ -217,6 +212,13 @@ ExitThisPage.defaults = Object.freeze({
     timedOut: 'Exit this page expired.',
     pressTwoMoreTimes: 'Shift, press 2 more times to exit.',
     pressOneMoreTime: 'Shift, press 1 more time to exit.'
+  }
+});
+ExitThisPage.schema = Object.freeze({
+  properties: {
+    i18n: {
+      type: 'object'
+    }
   }
 });
 

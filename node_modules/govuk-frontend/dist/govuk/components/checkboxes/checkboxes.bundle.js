@@ -4,6 +4,56 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.GOVUKFrontend = {}));
 })(this, (function (exports) { 'use strict';
 
+  function isInitialised($root, moduleName) {
+    return $root instanceof HTMLElement && $root.hasAttribute(`data-${moduleName}-init`);
+  }
+
+  /**
+   * Checks if GOV.UK Frontend is supported on this page
+   *
+   * Some browsers will load and run our JavaScript but GOV.UK Frontend
+   * won't be supported.
+   *
+   * @param {HTMLElement | null} [$scope] - (internal) `<body>` HTML element checked for browser support
+   * @returns {boolean} Whether GOV.UK Frontend is supported on this page
+   */
+  function isSupported($scope = document.body) {
+    if (!$scope) {
+      return false;
+    }
+    return $scope.classList.contains('govuk-frontend-supported');
+  }
+  function formatErrorMessage(Component, message) {
+    return `${Component.moduleName}: ${message}`;
+  }
+
+  /**
+   * Schema for component config
+   *
+   * @typedef {object} Schema
+   * @property {{ [field: string]: SchemaProperty | undefined }} properties - Schema properties
+   * @property {SchemaCondition[]} [anyOf] - List of schema conditions
+   */
+
+  /**
+   * Schema property for component config
+   *
+   * @typedef {object} SchemaProperty
+   * @property {'string' | 'boolean' | 'number' | 'object'} type - Property type
+   */
+
+  /**
+   * Schema condition for component config
+   *
+   * @typedef {object} SchemaCondition
+   * @property {string[]} required - List of required config fields
+   * @property {string} errorMessage - Error message when required config fields not provided
+   */
+  /**
+   * @typedef ComponentWithModuleName
+   * @property {string} moduleName - Name of the component
+   */
+
   class GOVUKFrontendError extends Error {
     constructor(...args) {
       super(...args);
@@ -27,51 +77,84 @@
       let message = typeof messageOrOptions === 'string' ? messageOrOptions : '';
       if (typeof messageOrOptions === 'object') {
         const {
-          componentName,
+          component,
           identifier,
           element,
           expectedType
         } = messageOrOptions;
-        message = `${componentName}: ${identifier}`;
+        message = identifier;
         message += element ? ` is not of type ${expectedType != null ? expectedType : 'HTMLElement'}` : ' not found';
+        message = formatErrorMessage(component, message);
       }
       super(message);
       this.name = 'ElementError';
     }
   }
-
-  function isSupported($scope = document.body) {
-    if (!$scope) {
-      return false;
+  class InitError extends GOVUKFrontendError {
+    constructor(componentOrMessage) {
+      const message = typeof componentOrMessage === 'string' ? componentOrMessage : formatErrorMessage(componentOrMessage, `Root element (\`$root\`) already initialised`);
+      super(message);
+      this.name = 'InitError';
     }
-    return $scope.classList.contains('govuk-frontend-supported');
   }
-
   /**
-   * Schema for component config
-   *
-   * @typedef {object} Schema
-   * @property {SchemaCondition[]} [anyOf] - List of schema conditions
-   */
-
-  /**
-   * Schema condition for component config
-   *
-   * @typedef {object} SchemaCondition
-   * @property {string[]} required - List of required config fields
-   * @property {string} errorMessage - Error message when required config fields not provided
+   * @typedef {import('../common/index.mjs').ComponentWithModuleName} ComponentWithModuleName
    */
 
   class GOVUKFrontendComponent {
-    constructor() {
-      this.checkSupport();
+    /**
+     * Returns the root element of the component
+     *
+     * @protected
+     * @returns {RootElementType} - the root element of component
+     */
+    get $root() {
+      return this._$root;
     }
-    checkSupport() {
+    constructor($root) {
+      this._$root = void 0;
+      const childConstructor = this.constructor;
+      if (typeof childConstructor.moduleName !== 'string') {
+        throw new InitError(`\`moduleName\` not defined in component`);
+      }
+      if (!($root instanceof childConstructor.elementType)) {
+        throw new ElementError({
+          element: $root,
+          component: childConstructor,
+          identifier: 'Root element (`$root`)',
+          expectedType: childConstructor.elementType.name
+        });
+      } else {
+        this._$root = $root;
+      }
+      childConstructor.checkSupport();
+      this.checkInitialised();
+      const moduleName = childConstructor.moduleName;
+      this.$root.setAttribute(`data-${moduleName}-init`, '');
+    }
+    checkInitialised() {
+      const constructor = this.constructor;
+      const moduleName = constructor.moduleName;
+      if (moduleName && isInitialised(this.$root, moduleName)) {
+        throw new InitError(constructor);
+      }
+    }
+    static checkSupport() {
       if (!isSupported()) {
         throw new SupportError();
       }
     }
   }
+
+  /**
+   * @typedef ChildClass
+   * @property {string} moduleName - The module name that'll be looked for in the DOM when initialising the component
+   */
+
+  /**
+   * @typedef {typeof GOVUKFrontendComponent & ChildClass} ChildClassConstructor
+   */
+  GOVUKFrontendComponent.elementType = HTMLElement;
 
   /**
    * Checkboxes component
@@ -91,27 +174,18 @@
      * (for example if the user has navigated back), and set up event handlers to
      * keep the reveal in sync with the checkbox state.
      *
-     * @param {Element | null} $module - HTML element to use for checkboxes
+     * @param {Element | null} $root - HTML element to use for checkboxes
      */
-    constructor($module) {
-      super();
-      this.$module = void 0;
+    constructor($root) {
+      super($root);
       this.$inputs = void 0;
-      if (!($module instanceof HTMLElement)) {
-        throw new ElementError({
-          componentName: 'Checkboxes',
-          element: $module,
-          identifier: 'Root element (`$module`)'
-        });
-      }
-      const $inputs = $module.querySelectorAll('input[type="checkbox"]');
+      const $inputs = this.$root.querySelectorAll('input[type="checkbox"]');
       if (!$inputs.length) {
         throw new ElementError({
-          componentName: 'Checkboxes',
+          component: Checkboxes,
           identifier: 'Form inputs (`<input type="checkbox">`)'
         });
       }
-      this.$module = $module;
       this.$inputs = $inputs;
       this.$inputs.forEach($input => {
         const targetId = $input.getAttribute('data-aria-controls');
@@ -120,7 +194,7 @@
         }
         if (!document.getElementById(targetId)) {
           throw new ElementError({
-            componentName: 'Checkboxes',
+            component: Checkboxes,
             identifier: `Conditional reveal (\`id="${targetId}"\`)`
           });
         }
@@ -129,7 +203,7 @@
       });
       window.addEventListener('pageshow', () => this.syncAllConditionalReveals());
       this.syncAllConditionalReveals();
-      this.$module.addEventListener('click', event => this.handleClick(event));
+      this.$root.addEventListener('click', event => this.handleClick(event));
     }
     syncAllConditionalReveals() {
       this.$inputs.forEach($input => this.syncConditionalRevealWithInputState($input));
@@ -140,7 +214,7 @@
         return;
       }
       const $target = document.getElementById(targetId);
-      if ($target && $target.classList.contains('govuk-checkboxes__conditional')) {
+      if ($target != null && $target.classList.contains('govuk-checkboxes__conditional')) {
         const inputIsChecked = $input.checked;
         $input.setAttribute('aria-expanded', inputIsChecked.toString());
         $target.classList.toggle('govuk-checkboxes__conditional--hidden', !inputIsChecked);
