@@ -15,10 +15,19 @@ module.exports = function (router) {
 
     
 
-    //best-teams
+    //index
     router.get('/' + version + '/index', function (req, res) {
         // req.session.data.dave = "test"
         res.render(version + '/index', {});
+    });
+    // router.post('/' + version + '/index', function (req, res) {
+      // res.redirect(301, '/' + version + '/index');
+    // });
+
+    //business-payments
+    router.get('/' + version + '/business-payments', function (req, res) {
+        req.session.data.dave = "test"
+        res.render(version + '/business-payments', {});
     });
     // router.post('/' + version + '/index', function (req, res) {
       // res.redirect(301, '/' + version + '/index');

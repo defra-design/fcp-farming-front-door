@@ -11,13 +11,21 @@
   {{ govukHeader({
     classes: "govuk-header--full-width-border"
   }) }}
+
+  
   {{ govukServiceNavigation({
     serviceName: serviceName,
     serviceUrl: "#",
     navigation: [
       {
-        href: "#",
-        text: "Navigation item 1"
+        href: "business-home",
+        text: "Home",
+        active: _homeServiceNavigationActive
+      },
+      {
+        href: "business-payments",
+        text: "Payments",
+        active: _paymentsServiceNavigationActive
       }
     ]
   }) }}

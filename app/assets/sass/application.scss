@@ -5,6 +5,10 @@
 
 // Add extra styles here
 
+@import "components/login-nav";
+@import "components/callout-box";
+@import "components/phase-banner-bottom";
+
 a:link, .govuk-link:link {
   color: #1d70b8;
 }

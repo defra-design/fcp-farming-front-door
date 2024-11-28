@@ -1,0 +1,49 @@
+.login-nav {
+  @include govuk-clearfix;
+  @include govuk-font($size: 16);
+  @include govuk-text-colour;
+  margin-top: 15px;
+  // margin-bottom: govuk-spacing(2);
+  // border-bottom: 1px solid #b1b4b6;
+}
+
+.login-nav__list {
+  @include govuk-clearfix;
+  margin: 0;
+  padding: 0;
+  margin-bottom: govuk-spacing(2);
+  list-style-type: none;
+  float: right;
+}
+
+.login-nav__list-item {
+  position: relative;
+  margin-bottom: govuk-spacing(1);
+  margin-right: govuk-spacing(4);
+  padding-left: 0;
+  float: left;
+}
+
+.login-nav__list li:last-child {
+  margin-right: govuk-spacing(0);
+}
+
+a.login-nav__link {
+  margin-right: govuk-spacing(1);
+  color: #0b0c0c;
+}
+a.login-nav__link:visited {
+  color: #0b0c0c;
+}
+a.login-nav__link:hover {
+  color: rgba(11, 12, 12, 0.99);
+}
+
+/*** Small viewports ***/
+@media all and (max-width: 40.0625em) {
+
+  .login-nav__list {
+    float: none;
+  }
+
+}

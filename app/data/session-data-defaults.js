@@ -1,6 +1,6 @@
-var applications = require('./payments.json');
+const payments = require("./payments");
 
 module.exports = {
-  "payments" : payments
+  payments
   // Insert values here
 }
