@@ -14,53 +14,81 @@
 
 {% block content %}
 
-{% set _companyName = "Agile Farms Ltd" %}
-{% set _sbiNumber = "123456789" %}
+  {% set _companyName = "Agile Farms Ltd" %}
+  {% set _sbiNumber = "123456789" %}
 
-{% if data['valleySFD'] == 'True' %}  
-  {% set _companyName = "Valley Farm" %}
-  {% set _sbiNumber = "192846125" %}
-{% endif %}
+  {% if data['valleySFD'] == 'True' %}  
+    {% set _companyName = "Valley Farm" %}
+    {% set _sbiNumber = "192846125" %}
+  {% endif %}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-xl">
-      Payments
-    </h1>
-    <p class="govuk-body govuk-!-margin-bottom-2"><strong>{{_companyName}}</strong><br>Single Business Identifier (SBI): {{_sbiNumber}}</p>
-    <p class="govuk-body"><a href="businesses-list" class="govuk-link govuk-link--no-visited-state">View your other businesses</a></p>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+        Payments
+      </h1>
+      <p class="govuk-body govuk-!-margin-bottom-2"><strong>{{_companyName}}</strong><br>Single Business Identifier (SBI): {{_sbiNumber}}</p>
+      <p class="govuk-body govuk-!-margin-bottom-8"><a href="businesses-list" class="govuk-link govuk-link--no-visited-state">View your other businesses</a></p>
 
+    </div>
   </div>
-</div>
 
-    <div class="govuk-width-container">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
 
-          <div class="callout-box" >
-            <p class="govuk-body callout-box-l-content">
-              Next payment will be made
-            </p>
-            <p class="govuk-body callout-box-l-content">
-              <strong>1 December 2024</strong>
-            </p>
-            <p class="govuk-body callout-box-xl-content">
-              <strong>£706</strong>
-            </p>
-          </div>
-
-          <h2 class="govuk-heading-l govuk-!-margin-top-6">Upcoming payments</h2>
-          <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-6">
-          {% for _payment in data.payments %}
-            <li><strong>{{_payment.date}}</strong>, £{{_payment.amount}},<br> {{_payment.action}},<br> {{_payment.scheme}}</li>
-          {% endfor %}
-          </ul>
-    
-        </div>
+      <div class="govuk-tabs" >
+        <h2 class="govuk-tabs__title">
+          Contents
+        </h2>
+        <ul class="govuk-tabs__list govuk-tabs-links-for-desktop" role="tablist">
+          <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <a class="govuk-tabs__tab govuk-link--no-visited-state" href="#" role="tab" aria-selected="true">Upcoming <span class="govuk-visually-hidden">payments</span></a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="govuk-tabs__tab govuk-link--no-visited-state" href="#" role="tab" aria-selected="false">Previous</a>
+          </li>
+        </ul>
       </div>
+
     </div>
 
-    {% include "_common/phase-banner-bottom.html" %}
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <!-- UPCOMING PAYMENTS CONTENT -->
+      <div class="callout-box" >
+        <p class="govuk-body callout-box-l-content">
+          Next payment will be made
+        </p>
+        <p class="govuk-body callout-box-l-content">
+          <strong>1 December 2024</strong>
+        </p>
+        <p class="govuk-body callout-box-l-content">
+          <strong>£706</strong>
+        </p>
+      </div>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-6">Upcoming payments</h2>
+
+      <h3 class="govuk-heading-s">
+        5 July 2024
+        <br>£706
+      </h3>
+
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-6">
+      {% for _payment in data.payments %}
+        <li><strong>{{_payment.date}}</strong>, £{{_payment.amount}},<br> {{_payment.action}},<br> {{_payment.scheme}}</li>
+      {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+
+  
+
+  {% include "_common/phase-banner-bottom.html" %}
 
 {% endblock %}
