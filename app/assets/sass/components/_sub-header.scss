@@ -1,0 +1,13 @@
+.fcp-user-name {
+    float:right; 
+    margin-bottom: 8px;
+}
+
+/*** Small viewports ***/
+@media all and (max-width: 40.0625em) {
+
+    .fcp-user-name {
+        float:inherit; 
+    }
+  
+  }

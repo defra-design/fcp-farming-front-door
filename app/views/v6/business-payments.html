@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 
-{% set _includeServiceNavigation = "true" %}
+{% set _includeServiceNavigation = "false" %}
 {% set _paymentsServiceNavigationActive = true %}
 
 {% set pageName="Your business" %}
@@ -8,8 +8,25 @@
 
 {% block beforeContent %}
 
-  {% include "_common/login-nav.html" %}
+  {% include "_common/phase-banner.html" %}
 
+  {% include "_common/sub-header.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% include "_common/login-nav.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
 {% endblock %}
 
 {% block content %}
@@ -25,11 +42,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      <h1 class="govuk-heading-xl">
         Payments
       </h1>
-      <p class="govuk-body govuk-!-margin-bottom-2"><strong>{{_companyName}}</strong><br>Single Business Identifier (SBI): {{_sbiNumber}}</p>
-      <p class="govuk-body govuk-!-margin-bottom-8"><a href="businesses-list" class="govuk-link govuk-link--no-visited-state">View your other businesses</a></p>
+      <!-- <p class="govuk-body govuk-!-margin-bottom-2"><strong>{{_companyName}}</strong><br>Single Business Identifier (SBI): {{_sbiNumber}}</p>
+      <p class="govuk-body govuk-!-margin-bottom-8"><a href="businesses-list" class="govuk-link govuk-link--no-visited-state">View your other businesses</a></p> -->
 
     </div>
   </div>
@@ -95,6 +112,6 @@
 
   
 
-  {% include "_common/phase-banner-bottom.html" %}
+
 
 {% endblock %}

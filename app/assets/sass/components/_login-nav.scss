@@ -6,9 +6,15 @@
   // margin-bottom: govuk-spacing(2);
   // border-bottom: 1px solid #b1b4b6;
 }
+.login-nav-border {
+  border-bottom: 1px solid #b1b4b6;
+}
+.login-nav-aligned {
+  float: right;
+}
 
 .login-nav__list {
-  @include govuk-clearfix;
+  // @include govuk-clearfix;
   margin: 0;
   padding: 0;
   margin-bottom: govuk-spacing(2);
@@ -31,6 +37,9 @@
 a.login-nav__link:link {
   margin-right: govuk-spacing(1);
   color: #0b0c0c;
+}
+.login-nav__list li:last-child a.login-nav__link:link {
+  margin-right: govuk-spacing(0);
 }
 a.login-nav__link:visited {
   color: #0b0c0c;

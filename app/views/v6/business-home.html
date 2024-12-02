@@ -1,41 +1,21 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Your business" %}
-{% set serviceName="Manage your land and farm businesses" %}
+{% set pageName = "Your business" %}
+{% set serviceName = "Manage your land and farm businesses" %}
 
 {% block beforeContent %}
 
   {% include "_common/phase-banner.html" %}
-    
-  <!-- ACCOUNT MENU -->
-  <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% include "_common/login-nav.html" %}
+
+      <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
       
-    <a href="businesses-list" class="govuk-back-link govuk-!-margin-bottom-0">Back to your businesses</a>
-
-    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
-      Account menu </a>
-
-      <ul class="hmrc-account-menu__main js-hidden">
-      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
-        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
-          Back </a>
-      </li>
-
-
-
-      <li>
-        <a href="account-home" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
-          Your account </a>
-      </li>
-
-      <li>
-        <a href="../../../_common/not-testing.html" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
-          Sign out </a>
-      </li>
-    </ul>
-  </nav>
-  <!-- END ACCOUNT MENU -->
-
+    </div>
+  </div>
 {% endblock %}
 
 {% block content %}
