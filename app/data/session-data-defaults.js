@@ -1,6 +1,10 @@
 const payments = require("./payments");
+const businesses = require("./businesses");
+
 
 module.exports = {
-  payments
+  businesses,
+  payments,
+  "selectedBusiness": businesses[0]
   // Insert values here
 }

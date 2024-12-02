@@ -13,7 +13,7 @@
       {% include "_common/login-nav.html" %}
 
       <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
-      
+
     </div>
   </div>
 {% endblock %}
@@ -23,25 +23,18 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% if data['valleySFD'] == 'True' %}  
+    {% set _selectedBusiness = data.selectedBusiness %} 
+    {% for _business in data.businesses %}
+      {% if data.business == _business.id %}
+        {% set _selectedBusiness = _business %} 
+      {% endif %}
+    {% endfor %}
+
+    <span class="govuk-caption-xl">Alfred Waldron</span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-      <span class="govuk-caption-l">Alfred Waldron</span>
-      Valley Farm
+      {{_selectedBusiness.name}}
     </h1>
-    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 192846125</p>
-    {% elif data['agileSFD'] == 'True' %}  
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-      <span class="govuk-caption-l govuk-!-margin-bottom-2">Alfred Waldron</span>
-      Agile Farms Ltd
-    </h1>
-    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 123456789</p>
-    {% else %}
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-      <span class="govuk-caption-l">Alfred Waldron</span>
-      Agile Farms Ltd
-    </h1>
-    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): 123456789</p>
-  {% endif %}
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single Business Identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
 
   </div>
 </div>

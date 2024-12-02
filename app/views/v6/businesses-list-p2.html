@@ -9,8 +9,14 @@
 {% block beforeContent %}
 
   {% include "_common/phase-banner.html" %}
-  {% include "_common/nav-bar.html" %}
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% include "_common/login-nav.html" %}
+      
+    </div>
+  </div>
 {% endblock %}
 
 
@@ -25,24 +31,8 @@
   </div>
 </div>
 
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-
-        <!-- <div class="govuk-form-group govuk-!-margin-bottom-0">
-            <h2 class="govuk-label-wrapper">
-              <label class="govuk-label govuk-label--s" for="event-name">
-               Search for a business
-              </label>
-            </h2>
-            <div class="govuk-hint">
-             Enter a business name or its single business identifier (SBI) for example, The Dairy Farm or 123456000.
-            </div>
-            <input class="govuk-input govuk-!-width-three-quarters" id="event-name" name="eventName" type="text">
-            <button type="submit" class="govuk-button" data-module="govuk-button">
-              Search
-            </button>
-          </div>  -->
-
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
           <table class="govuk-table">
             <caption class="govuk-table__caption govuk-table__caption--m"></caption>
@@ -53,54 +43,16 @@
               </tr>
             </thead>
             <tbody class="govuk-table__body">
+             
+              {% for _business in data.businesses %}
+              {% if loop.index > 20 %}
               <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Oakley Farm</a></th>
-                <td class="govuk-table__cell">433232111</td>
+                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="business-home?business={{_business.id}}">{{_business.name}}</a></th>
+                <td class="govuk-table__cell">{{_business.sbiNumber}}</td>
               </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Prime Cuts Farm</a></th>
-                <td class="govuk-table__cell">500093456</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Potter Holdings Ltd</a></th>
-                <td class="govuk-table__cell">500093456</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">RJ Whitfield</a></th>
-                <td class="govuk-table__cell">433876541</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Ronnie's Farm</a></th>
-                <td class="govuk-table__cell">761132198</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Russer & Mona</a></th>
-                <td class="govuk-table__cell">121166709</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Sharon's Farm</a></th>
-                <td class="govuk-table__cell">489910429</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Shaw & Carter Ltd</a></th>
-                <td class="govuk-table__cell">122887431</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Sunflower Charity</a></th>
-                <td class="govuk-table__cell">987677432</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Todmorden Shrimp Farm</a></th>
-                <td class="govuk-table__cell">121150991</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="business-home?valleySFD=True&agileSFD=">Valley Farm</a></th>
-                <td class="govuk-table__cell">192846125</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Wright Sisters</a></th>
-                <td class="govuk-table__cell">123335090</td>
-              </tr>
+              {% endif %}
+              {% endfor %}
+
             </tbody>
           </table>
           </div>
