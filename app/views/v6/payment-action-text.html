@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% set mainClasses = "mobile-mock" %}
+
+{% block header %}{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+
+{% block content %}
+
+<style>
+    main.mobile-mock {
+        padding-top:0;
+    }
+    .mobile-message {
+        position: absolute;
+        top: 190px;
+        left: 30px;
+        font-size: 14px;
+        background-color: #e9e9eb;
+        width: 220px;
+        border-radius: 10px;
+        padding: 8px 10px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .mobile-image {
+        margin-top: 15px;
+        width: 350px;
+    }
+    .mobile-container {
+        position: relative;
+    }
+    .mobile-link {
+        color: #100dfe;
+    }
+</style>
+
+<div class="mobile-container">
+    <p class="mobile-message">[payment action needed]: <span class="mobile-link">Test link</span></p>
+    <img src="/public/images/mob-blank.jpg" alt="Mock up of phone screen showing a for action text message from Defra" class="mobile-image" >
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <!-- <p class="govuk-body govuk-!-margin-top-8"><a href="page-list">Return to [page]</a></p> -->
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% set _customFooterContent %}
+    <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">Go to:</p>
+    <ul class="govuk-footer__inline-list">
+        <li class="govuk-footer__inline-list-item"><a href="payment-next-email" class="govuk-footer__link">Email 1</a></li>
+        <li class="govuk-footer__inline-list-item"><a href="payment-action-email" class="govuk-footer__link">Email 2</a></li>
+        <li class="govuk-footer__inline-list-item"><a href="payment-next-text" class="govuk-footer__link">Text 1</a></li>
+        <li class="govuk-footer__inline-list-item">Text 2 (this text)</li>
+        <li class="govuk-footer__inline-list-item"><a href="business-home" class="govuk-footer__link">Service</a></li>
+    </ul>
+{% endset %}
+
+    {{ govukFooter({
+        meta: {
+            items: [
+            {
+                
+            }
+            ],
+            html: [
+                _customFooterContent
+            ],
+            visuallyHiddenTitle: "Footer links"
+        }
+    }) }}
+
+{% endblock %}
