@@ -12,12 +12,14 @@
 .login-nav-aligned {
   float: right;
 }
+.no-bread {
+  float: inherit;
+}
 
 .login-nav__list {
   // @include govuk-clearfix;
   margin: 0;
   padding: 0;
-  margin-bottom: govuk-spacing(2);
   list-style-type: none;
   float: right;
 }

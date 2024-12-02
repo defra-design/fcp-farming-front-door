@@ -1,16 +1,15 @@
 
-{% set _companyName = "Agile Farms Ltd" %}
-{% set _sbiNumber = "123456789" %}
-
-{% if data['valleySFD'] == 'True' %}  
-  {% set _companyName = "Valley Farm" %}
-  {% set _sbiNumber = "192846125" %}
-{% endif %}
+{% set _selectedBusiness = data.selectedBusiness %} 
+{% for _business in data.businesses %}
+  {% if data.business == _business.id %}
+    {% set _selectedBusiness = _business %} 
+  {% endif %}
+{% endfor %}
 
 <div class="govuk-grid-row" style="padding-top:16px;">
   <div class="govuk-grid-column-two-thirds">
-      <h3 class="govuk-heading-s" style="margin-bottom: 4px;">{{_companyName}}</h3>
-      <p class="govuk-body-s sbi-number" style="margin-bottom: 8px;">Single business identifier (SBI): {{_sbiNumber}}</p>
+      <h3 class="govuk-heading-s" style="margin-bottom: 4px;">{{_selectedBusiness.name}}</h3>
+      <p class="govuk-body-s sbi-number" style="margin-bottom: 8px;">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
   </div>
 
   <div class="govuk-grid-column-one-third">

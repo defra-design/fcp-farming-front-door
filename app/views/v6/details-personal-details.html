@@ -9,40 +9,21 @@
 
   {% include "_common/phase-banner.html" %}
 
-  <!-- ACCOUNT MENU -->
-  <nav id="secondary-nav" class="hmrc-account-menu hmrc-account-menu_sfd" aria-label="Account" data-module="hmrc-account-menu">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
 
-    <nav class="govuk-breadcrumbs" style="display: inline-block;" aria-label="Breadcrumb">
-      <ol class="govuk-breadcrumbs__list">
-        <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
-        </li>
-      </ol>
-    </nav>
+      {% include "_common/login-nav.html" %}
 
-    <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--menu js-hidden js-visible" tabindex="-1" aria-hidden="true" aria-expanded="false">
-      Account menu </a>
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+        </ol>
+      </div>
 
-      <ul class="hmrc-account-menu__main js-hidden">
-      <li class="hmrc-account-menu__link--back hidden" aria-hidden="true">
-        <a href="#" tabindex="-1" class="hmrc-account-menu__link">
-          Back </a>
-      </li>
-
-
-      <li>
-        <a href="account-home" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
-          Your account </a>
-      </li>
-
-      <li>
-        <a href="../../../_common/not-testing.html" class="hmrc-account-menu__link hmrc-account-menu__link_sfd">
-          Sign out </a>
-      </li>
-    </ul>
-  </nav>
-  <!-- END ACCOUNT MENU -->
-
+    </div>
+  </div>
 {% endblock %}
 
 
