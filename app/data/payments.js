@@ -3,8 +3,8 @@ module.exports = [
         "id": 1,
         "reference": "DEF001",
         "amount": 706,
-        "date": "5 July 2024",
-        "period": "1 April to 30 June 2024",
+        "date": "5 January 2025",
+        "period": "1 October to 31 December 2024",
         "items": [
             {
                 "description": "Assess soil, test soil organic matter and produce a soil management plan",
@@ -42,8 +42,8 @@ module.exports = [
         "id": 2,
         "reference": "DEF002",
         "amount": 1500,
-        "date": "15 August 2024",
-        "period": "1 April to 30 November 2024",
+        "date": "15 February 2025",
+        "period": "1 October to 30 December 2024",
         "items": [
             {
                 "description": "Animal health and welfare claim (July 2024)",
@@ -57,8 +57,8 @@ module.exports = [
         "id": 3,
         "reference": "DEF003",
         "amount": 706,
-        "date": "5 October 2024",
-        "period": "July to 30 September 2024",
+        "date": "5 April 2025",
+        "period": "1 Jauary to 31 March 2025",
         "items": [
             {
                 "description": "Assess soil, test soil organic matter and produce a soil management plan",
