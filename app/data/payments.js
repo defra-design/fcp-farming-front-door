@@ -31,10 +31,17 @@ module.exports = [
                 "amount": 247.25,
             },
             {
-                "description": "Assess nutrient management and produce a review report",
-                "code": "NUM1",
-                "scheme": "SFI 23",
+                "description": "Grow a wild flower field",
+                "code": "CSP123",
+                "scheme": "Stewardship",
                 "amount": 147.25,
+            }
+            ,
+            {
+                "description": "Deduction for not managing nutrients",
+                "code": "DED123",
+                "scheme": "SFI 22",
+                "amount": -100,
             }
         ]
     },
@@ -83,12 +90,6 @@ module.exports = [
                 "code": "IPM1",
                 "scheme": "SFI 23",
                 "amount": 247.25,
-            },
-            {
-                "description": "Assess nutrient management and produce a review report",
-                "code": "NUM1",
-                "scheme": "SFI 23",
-                "amount": 147.25,
             }
         ]
     }
