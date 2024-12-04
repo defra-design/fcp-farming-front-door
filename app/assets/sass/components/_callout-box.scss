@@ -12,11 +12,12 @@
 
   .callout-box {
     padding: govuk-spacing(4); 
+    margin-bottom: govuk-spacing(3);
   }
 
 }
 .callout-box p {
-    margin-bottom: govuk-spacing(2);
+    // margin-bottom: govuk-spacing(2);
 }
 .callout-box p:last-child {
     margin-bottom: 0;

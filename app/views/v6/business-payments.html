@@ -74,10 +74,10 @@
         {% set _total = _total + _item.amount %}
       {% endfor %}
       <div class="callout-box " >
-        <p class="govuk-body callout-box-l-content">
+        <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
           Next payment will be made
         </p>
-        <p class="govuk-body callout-box-l-content">
+        <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
           <strong>{{data.payments[0].date}}</strong>
         </p>
         <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
@@ -88,10 +88,10 @@
           {{data.payments[0].period}}. Reference {{data.payments[0].reference}}.
         </p>
 
-        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
+        <!-- <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-2">
           <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              <p class="govuk-body govuk-!-margin-bottom-0">
+            <dt class="govuk-summary-list__key"> -->
+              <p class="govuk-body">
                 {% if data.payments[0].status == "action" %}
                   <strong class="govuk-tag govuk-tag--red">
                     Action needed
@@ -106,12 +106,12 @@
                   </strong>
                 {% endif %}
               </p>
-            </dt>
-            <dd class="govuk-summary-list__actions">
-              <p class="govuk-body govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="#">View details<span class="govuk-visually-hidden"> for payment on {{data.payments[0].date}}</span></a></p>
-            </dd>
+            <!-- </dt>
+            <dd class="govuk-summary-list__actions"> -->
+              <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="#">View details<span class="govuk-visually-hidden"> for payment on {{data.payments[0].date}}</span></a></p>
+            <!-- </dd>
           </div>
-        </dl>
+        </dl> -->
 
         
       </div>
@@ -171,7 +171,7 @@
 
       {% if loop.index != 1 %}
       <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}}, £{{_payment.amount}}</h3>
-      <p class="govuk-body govuk-!-margin-bottom-1">{{_payment.period}}. Reference {{_payment.reference}}.</p>
+      <p class="govuk-body govuk-!-margin-bottom-2">{{_payment.period}}. Reference {{_payment.reference}}.</p>
       <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
         <!-- <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
@@ -184,7 +184,7 @@
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             
-            <p class="govuk-body govuk-!-margin-bottom-0">{{_status|safe}}</p>
+            <p class="govuk-body govuk-!-margin-bottom-3">{{_status|safe}}</p>
             
           </dt>
           <dd class="govuk-summary-list__actions">
