@@ -42,7 +42,7 @@
   </div>
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
 
       <div class="govuk-tabs" >
         <h2 class="govuk-tabs__title">
@@ -58,12 +58,12 @@
         </ul>
       </div>
 
-    </div>
+    <!-- </div>
 
   </div>
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-two-thirds"> -->
 
       <!-- <h2 class="govuk-heading-l govuk-!-margin-top-6">Upcoming payments</h2> -->
 
@@ -80,12 +80,27 @@
         <p class="govuk-body callout-box-l-content">
           <strong>{{data.payments[0].date}}</strong>
         </p>
-        <p class="govuk-body callout-box-l-content">
+        <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
           <strong>£{{_total}}</strong>
         </p>
-        <p class="govuk-body">
-          Covering period {{data.payments[0].period}}.
+        <p class="govuk-body govuk-!-margin-bottom-3">
+          {% if data.payments[0].status == "action" %}
+            <strong class="govuk-tag govuk-tag--red">
+              Action needed
+            </strong>
+            {% elif data.payments[0].status == "expected" %}
+            <strong class="govuk-tag govuk-tag--blue">
+              Expected
+            </strong>
+            {% elif data.payments[0].status == "confirmed" %}
+            <strong class="govuk-tag govuk-tag--green">
+              Confirmed
+            </strong>
+          {% endif %}
         </p>
+        <!-- <p class="govuk-body">
+          Covering period {{data.payments[0].period}}.
+        </p> -->
         <p class="govuk-body">
           <a href="#" class="govuk-link govuk-link--no-visited-state">View details</a>
         </p>
@@ -93,23 +108,43 @@
 
       {% for _payment in data.payments %}
 
+      {% set _status %}
+        {% if _payment.status == "action" %}
+        <strong class="govuk-tag govuk-tag--red">
+          Action needed
+        </strong>
+        {% elif _payment.status == "expected" %}
+        <strong class="govuk-tag govuk-tag--blue">
+          Expected
+        </strong>
+        {% elif _payment.status == "confirmed" %}
+        <strong class="govuk-tag govuk-tag--green">
+          Confirmed
+        </strong>
+        {% endif %}
+      {% endset %}
+
       {% if loop.index != 1 %}
-      <h3 class="govuk-heading-l govuk-!-margin-bottom-2">{{_payment.date}}, £{{_payment.amount}}</h3>
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}}, £{{_payment.amount}}</h3>
+      <p class="govuk-body govuk-!-margin-bottom-1">Period {{_payment.period}}.</p>
       <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
         <!-- <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             <h3 class="govuk-heading-l govuk-!-margin-bottom-0">{{_payment.date}}, £{{_payment.amount}}</h3>
           </dt>
           <dd class="govuk-summary-list__actions">
-            &nbsp;
+            
           </dd>
         </div> -->
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <p class="govuk-body govuk-!-margin-bottom-2">Covering period {{_payment.period}}.</p>
+            
+            <p class="govuk-body govuk-!-margin-bottom-0">{{_status|safe}}</p>
+            
           </dt>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="#">View details<span class="govuk-visually-hidden"> for payment {{_payment.date}}, £{{_payment.amount}}</span></a>
+            <p class="govuk-body govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="#">View details<span class="govuk-visually-hidden"> for payment {{_payment.date}}, £{{_payment.amount}}</span></a></p>
+            
           </dd>
         </div>
       </dl>
@@ -119,10 +154,10 @@
       {% endif %}
 
       <table class="govuk-table govuk-!-margin-bottom-8">
-        <caption class="govuk-table__caption govuk-table__caption--s">Breakdown of payment</caption>
+        <!-- <caption class="govuk-table__caption govuk-table__caption--s">Breakdown of payment</caption> -->
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Description</th>
+            <th scope="col" class="govuk-table__header">Within payment</th>
             <th scope="col" class="govuk-table__header govuk-table__cell--numeric">Amount</th>
           </tr>
         </thead>

@@ -5,6 +5,7 @@ module.exports = [
         "amount": 706,
         "date": "5 January 2025",
         "period": "1 October to 31 December 2024",
+        "status": "confirmed",
         "items": [
             {
                 "description": "Assess soil, test soil organic matter and produce a soil management plan",
@@ -51,6 +52,7 @@ module.exports = [
         "amount": 1500,
         "date": "15 February 2025",
         "period": "1 October to 30 December 2024",
+        "status": "action",
         "items": [
             {
                 "description": "Animal health and welfare claim (July 2024)",
@@ -66,6 +68,7 @@ module.exports = [
         "amount": 706,
         "date": "5 April 2025",
         "period": "1 Jauary to 31 March 2025",
+        "status": "expected",
         "items": [
             {
                 "description": "Assess soil, test soil organic matter and produce a soil management plan",
