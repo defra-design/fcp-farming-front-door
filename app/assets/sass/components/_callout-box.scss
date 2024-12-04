@@ -3,6 +3,10 @@
     background-color:#f3f2f1; 
     margin: 0 0 govuk-spacing(5) 0;
 }
+.callout-box-border {
+    border:1px solid #b1b4b6; 
+}
+
 /*** Small viewports ***/
 @media all and (max-width: 40.0625em) {
 
