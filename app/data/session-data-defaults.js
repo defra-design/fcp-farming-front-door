@@ -1,10 +1,12 @@
-const payments = require("./payments");
+const paymentsUpcoming = require("./payments-upcoming");
+const paymentsPrevious = require("./payments-previous");
 const businesses = require("./businesses");
 
 
 module.exports = {
   businesses,
-  payments,
+  paymentsUpcoming,
+  paymentsPrevious,
   "selectedBusiness": businesses[0]
   // Insert values here
 }

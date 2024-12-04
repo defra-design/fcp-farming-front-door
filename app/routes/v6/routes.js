@@ -39,18 +39,12 @@ module.exports = function (router) {
         // req.session.data.dave = "test"
         res.render(version + '/index', {});
     });
-    // router.post('/' + version + '/index', function (req, res) {
-      // res.redirect(301, '/' + version + '/index');
-    // });
 
     //business-payments
     router.get('/' + version + '/business-payments', function (req, res) {
         req.session.data.dave = "test"
         res.render(version + '/business-payments', {});
     });
-    // router.post('/' + version + '/index', function (req, res) {
-      // res.redirect(301, '/' + version + '/index');
-    // });
 
     //business-home
     router.get('/' + version + '/business-home', function (req, res) {
