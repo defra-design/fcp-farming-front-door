@@ -9,6 +9,7 @@
 @import "components/login-nav";
 @import "components/callout-box";
 @import "components/phase-banner-bottom";
+@import "components/inline-link-filter";
 
 a:link, .govuk-link:link {
   color: #1d70b8;
@@ -53,8 +54,11 @@ a:link, .govuk-link:link {
 }
 
 @media (min-width: 40.0625em) {
-.govuk-frontend-supported .govuk-tabs__list-item--selected {
-    border-bottom: 1px solid #b1b4b6;
+  .govuk-frontend-supported .govuk-tabs__list-item--selected {
+      border-bottom: 1px solid #b1b4b6;
+  }
+  .govuk-frontend-supported .govuk-tabs__list-item--selected-ffd {
+    border-bottom: none;
 }
 }
 

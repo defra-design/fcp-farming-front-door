@@ -1,0 +1,9 @@
+.inline-filter-list {
+    list-style-type: none;
+    margin: 0 0 govuk-spacing(6) 0;
+    padding: 0;
+  }
+  .inline-filter-list > .inline-filter-list-item {
+    display: inline-block; 
+    position: relative;
+  }

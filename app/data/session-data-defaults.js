@@ -9,6 +9,7 @@ module.exports = {
   paymentsPrevious,
   "selectedBusiness": businesses[0],
   "selectedPayment": paymentsUpcoming[0],
-  "selectedPaymentPrevious": paymentsPrevious[0]
+  "selectedPaymentPrevious": paymentsPrevious[0],
+  "selectedPaymentYear": 2024,
   // Insert values here
 }
