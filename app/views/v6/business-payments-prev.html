@@ -53,14 +53,14 @@
             <a class="govuk-tabs__tab govuk-link--no-visited-state" href="business-payments" role="tab" aria-selected="false">Upcoming <span class="govuk-visually-hidden">payments</span></a>
           </li>
           <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-            <a class="govuk-tabs__tab govuk-link--no-visited-state" href="business-payments-prev" role="tab" aria-selected="true">Previous</a>
+            <a class="govuk-tabs__tab govuk-link--no-visited-state" href="business-payments-prev" role="tab" aria-selected="true">Past <span class="govuk-visually-hidden">payments</span></a>
           </li>
         </ul>
       </div>
 
-      <h3 class="govuk-heading-l">Previous payments</h3>
+      <h3 class="govuk-heading-l">Past payments</h3>
 
-      {% set _paymentYears = [2024,2023,2022,2021,2020,2019,2018]%}
+      {% set _paymentYears = [2024,2023,2022,2021,2020,2019,2018] %}
 
       {% for _paymentYearGroup in _paymentYears %}
         <h3 class="govuk-heading-m">{{_paymentYearGroup}}</h3>
