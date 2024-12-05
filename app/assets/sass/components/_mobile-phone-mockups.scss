@@ -1,0 +1,48 @@
+main.mobile-mock {
+    padding-top:0;
+}
+.mobile-message,
+.mobile-sender,
+.mobile-date {
+    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.mobile-message {
+    top: 190px;
+    left: 30px;
+    font-size: 14px;
+    background-color: #e9e9eb;
+    width: 220px;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+.mobile-sender {
+    font-size: 10px;
+    top: 117px;
+    width: 350px;
+    left: 0px;
+    text-align: center;
+    padding: 0;
+}
+.mobile-date {
+    font-size: 9px;
+    top: 166px;
+    width: 350px;
+    left: 2px;
+    text-align: center;
+    padding: 0;
+    color: #8a898e;
+}
+.mobile-image {
+    margin-top: 15px;
+    width: 350px;
+}
+.mobile-container {
+    position: relative;
+}
+.mobile-link,
+a.mobile-link,
+a.mobile-link:visited {
+    color: #100dfe;
+    text-decoration: none;
+}
