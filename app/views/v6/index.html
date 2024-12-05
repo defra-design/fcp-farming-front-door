@@ -18,10 +18,23 @@
     </h1>
   </div>
 
-  
-
   <div class="govuk-grid-column-two-thirds">
 
+    <a class="govuk-button" href="business-home">Start prototype</a>
+    <h3 class="govuk-heading-s">Alternative starting points:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="start-rps-start-og">RPS start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-rps-sign-in">RPS sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-sfd-start">SFD start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-sfd-sign-in">SFD sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-next-text">Payment - upcoming - text message</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-next-email">Payment - upcoming - email</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-action-text">Payment - action - text message</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-action-email">Payment - action - email</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vets-claim-approved-email">Vets visit - Claim approved email</a></li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
     <h2 class="govuk-heading-m">
       How might we?
     </h2>
@@ -34,6 +47,24 @@
       <li>How might we notify users of actions that need to be completed to progress their claims & payments?</li>
       <li>How might we allow users to access and use their payments information so that they can resolve queries and complete external tasks?</li>
     </ol>
+
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-m">
+      Design tickets
+    </h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-1" class="govuk-link govuk-link--no-visited-state">SFDE-1</a> - prototype fixes</li>
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-72" class="govuk-link govuk-link--no-visited-state">SFDE-72</a> - content iterations from v5</li>
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-16" class="govuk-link govuk-link--no-visited-state">SFDE-16</a> - payments</li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-m">
+      Hypotheses
+    </h2>
+    
+
 
   <!-- <div>
     <a href="start-rps-start-og" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
@@ -88,12 +119,20 @@
     </h3>
     <ul class="govuk-list govuk-list--bullet">
       <li><a class="govuk-link--no-visited-state" href="business-home">Home</a></li>
-      <li><a class="govuk-link--no-visited-state" href="business-payments">Payments - upcoming</a></li>
-      <li><a class="govuk-link--no-visited-state" href="business-payments-prev">Payments - previous</a></li>
-
-      <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=1">Upcoming payment - confirmed</a></li>
-      <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=3">Upcoming payment - planned</a></li>
-      <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=2">Upcoming payment - action needed</a></li>
+      <li>
+        <a class="govuk-link--no-visited-state" href="business-payments">Payments - upcoming</a>
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=1">Upcoming payment - confirmed</a></li>
+          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=3">Upcoming payment - planned</a></li>
+          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=2">Upcoming payment - action needed</a></li>
+        </ul>
+      </li>
+      <li>
+        <a class="govuk-link--no-visited-state" href="business-payments-prev">Payments - past</a>
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+          <li><a class="govuk-link--no-visited-state" href="business-payments-prev-detail?payment=84">Past payment - paid</a></li>
+        </ul>
+      </li>
       <li><a class="govuk-link--no-visited-state" href="account-home">Your account</a></li>
       <li><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></li>
       <li><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></li>
@@ -110,7 +149,7 @@
   </div>
 
   <!-- right third of page to link to relevant mural boards and UR findings -->
-  <div class="govuk-grid-column-one-third">
+  <!-- <div class="govuk-grid-column-one-third">
     <aside class="app-related-items" role="complementary">
       <h2 class="govuk-heading-m" id="subsection-title">
         Information
@@ -137,7 +176,7 @@
         </ul>
       </nav>
     </aside>
-  </div>
+  </div> -->
 </div>
 
 {% endblock %}

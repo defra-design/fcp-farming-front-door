@@ -16,32 +16,32 @@ module.exports = [
                 "description": "Assess and record hedgerow condition",
                 "code": "HRW1",
                 "scheme": "SFI 23",
-                "amount": 94.87,
+                "amount": 94.87
             },
             {
                 "description": "Manage hedgerows",
                 "code": "HRW2",
                 "scheme": "SFI 23",
-                "amount": 316.25,
+                "amount": 316.25
             },
             {
                 "description": "Assess integrated pest management and produce a plan",
                 "code": "IPM1",
                 "scheme": "SFI 23",
-                "amount": 247.25,
+                "amount": 247.25
             },
             {
                 "description": "Grow a wild flower field",
                 "code": "CSP123",
                 "scheme": "Countryside stewardship",
-                "amount": 147.25,
+                "amount": 147.25
             }
             ,
             {
                 "description": "Deduction for not managing nutrients",
                 "code": "DED123",
                 "scheme": "SFI 22",
-                "amount": -100,
+                "amount": -100
             }
         ]
     },
@@ -56,7 +56,7 @@ module.exports = [
                 "description": "Animal health and welfare claim",
                 "code": "DEF003",
                 "scheme": "AHWP",
-                "amount": 1500,
+                "amount": 1500
             },
             {
                 "description": "Assess soil, test soil organic matter and produce a soil management plan",
@@ -68,25 +68,25 @@ module.exports = [
                 "description": "Assess and record hedgerow condition",
                 "code": "HRW1",
                 "scheme": "SFI 23",
-                "amount": 94.87,
+                "amount": 94.87
             },
             {
                 "description": "Manage hedgerows",
                 "code": "HRW2",
                 "scheme": "SFI 23",
-                "amount": 316.25,
+                "amount": 316.25
             },
             {
                 "description": "Assess integrated pest management and produce a plan",
                 "code": "IPM1",
                 "scheme": "SFI 23",
-                "amount": 247.25,
+                "amount": 247.25
             },
             {
                 "description": "Grow a wild flower field",
                 "code": "CSP123",
                 "scheme": "Countryside stewardship",
-                "amount": 147.25,
+                "amount": 147.25
             }
         ]
     },
@@ -107,19 +107,19 @@ module.exports = [
                 "description": "Assess and record hedgerow condition",
                 "code": "HRW1",
                 "scheme": "SFI 23",
-                "amount": 94.87,
+                "amount": 94.87
             },
             {
                 "description": "Manage hedgerows",
                 "code": "HRW2",
                 "scheme": "SFI 23",
-                "amount": 316.25,
+                "amount": 316.25
             },
             {
                 "description": "Assess integrated pest management and produce a plan",
                 "code": "IPM1",
                 "scheme": "SFI 23",
-                "amount": 247.25,
+                "amount": 247.25
             }
         ]
     }
