@@ -36,20 +36,14 @@ module.exports = function (router) {
 
     //index
     router.get('/' + version + '/index', function (req, res) {
-        // req.session.data.dave = "test"
         res.render(version + '/index', {});
     });
 
-    //business-payments
-    router.get('/' + version + '/business-payments', function (req, res) {
-        req.session.data.dave = "test"
-        res.render(version + '/business-payments', {});
+    //sfd sign in
+    router.get('/' + version + '/start-sfd-sign-in', function (req, res) {
+        req.session.data.deeplink = req.query.deeplink || "businesses-list"
+        res.render(version + '/start-sfd-sign-in', {});
     });
-
-    //business-home
-    router.get('/' + version + '/business-home', function (req, res) {
-      res.render(version + '/business-home', {});
-  });
     
 
     
