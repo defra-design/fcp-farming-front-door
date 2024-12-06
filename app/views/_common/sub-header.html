@@ -6,14 +6,21 @@
   {% endif %}
 {% endfor %}
 
-<div class="govuk-grid-row" style="padding-top:16px;">
+<div class="govuk-grid-row sub-header-container" >
+
   <div class="govuk-grid-column-two-thirds">
-      <h3 class="govuk-heading-s" style="margin-bottom: 4px;">{{_selectedBusiness.name}}</h3>
-      <p class="govuk-body-s sbi-number" style="margin-bottom: 8px;">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1" >{{_selectedBusiness.name}}</h3>
+      <p class="govuk-body-s govuk-!-margin-bottom-2" >Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
   </div>
 
   <div class="govuk-grid-column-one-third">
-      <h3 class="govuk-heading-s fcp-user-name" >Alfred Waldron</h3>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1 sub-header-user-name" >{{data.user.name}}</h3>
+      {% if _subHeaderShowApplyLink %}
+        <p class="govuk-body-s govuk-!-margin-bottom-2 sub-header-dif-business"><a href="#" class="govuk-link govuk-link--no-visited-state">Apply for a different business</a></p>
+      {% endif %}
+      {% if _subHeaderShowClaimLink %}
+        <p class="govuk-body-s govuk-!-margin-bottom-2 sub-header-dif-business"><a href="#" class="govuk-link govuk-link--no-visited-state">Claim for a different business</a></p>
+      {% endif %}
   </div>
 
 </div>

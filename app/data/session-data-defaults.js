@@ -5,6 +5,11 @@ const businesses = require("./businesses");
 
 module.exports = {
   businesses,
+  user: {
+    "name": "Alfred Waldron",
+    "email": "alfred.waldron@gmail.com",
+    "crn": "1101996862"
+  },
   paymentsUpcoming,
   paymentsPrevious,
   "selectedBusiness": businesses[0],

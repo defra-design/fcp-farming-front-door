@@ -11,14 +11,14 @@
 
 <div class="mobile-container">
 
-    <p class="mobile-sender">Defra</p>
+    <p class="mobile-sender">Get farm and land support</p>
 
     <p class="mobile-text-message-title">Text message</p>
     <p class="mobile-date">Mon 16 December, 9.01</p>
 
     <p class="mobile-message">
         
-        Dear Alfred Waldron, action is needed for the animal health and welfare review claim for Agile Farms Ltd made on 10 October 2024 (claim reference VV-5053-A696).<br><br>
+        Dear {{data.user.name}}, action is needed for the animal health and welfare review claim for Agile Farms Ltd made on 10 October 2024 (claim reference VV-5053-A696).<br><br>
         
         Please provide evidence to support your claim by 29 December 2024 to avoid delay to Agile Farms’ Defra payment due on 5 February 2025.<br><br>
         
@@ -41,10 +41,8 @@
 {% set _customFooterContent %}
     <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">Go to:</p>
     <ul class="govuk-footer__inline-list">
-        <li class="govuk-footer__inline-list-item"><a href="payment-next-email" class="govuk-footer__link">Email 1</a></li>
-        <!-- <li class="govuk-footer__inline-list-item"><a href="payment-action-email" class="govuk-footer__link">Email 2</a></li> -->
-        <!-- <li class="govuk-footer__inline-list-item"><a href="payment-next-text" class="govuk-footer__link">Text 1</a></li> -->
-        <li class="govuk-footer__inline-list-item">Text 2 (this text)</li>
+        <li class="govuk-footer__inline-list-item"><a href="payment-next-email" class="govuk-footer__link">Email</a></li>
+        <li class="govuk-footer__inline-list-item">Text (this text)</li>
         <li class="govuk-footer__inline-list-item"><a href="business-home" class="govuk-footer__link">Service</a></li>
     </ul>
 {% endset %}

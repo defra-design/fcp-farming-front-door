@@ -1,13 +1,19 @@
-.fcp-user-name {
+
+.sub-header-container {
+    padding-top: 15px;
+}
+
+.sub-header-user-name,
+.sub-header-dif-business {
     float:right; 
-    margin-bottom: 8px;
+    text-align: right;
 }
 
 /*** Small viewports ***/
 @media all and (max-width: 40.0625em) {
-
-    .fcp-user-name {
+    .sub-header-user-name,
+    .sub-header-dif-business {
         float:inherit; 
+        text-align: left;
     }
-  
-  }
+}

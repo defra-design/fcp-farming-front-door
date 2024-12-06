@@ -1,112 +1,130 @@
 {% extends "layouts/main.html" %}
 
-{% block pageTitle %}[subject line - upcoming payment]]{% endblock %}
+{% set serviceName = "" %}
 
-{% block header %}{% endblock %}
+<!-- Selected business -->
+{% set _selectedBusiness = data.selectedBusiness %} 
+{% for _business in data.businesses %}
+    {% if data.business == _business.id %}
+        {% set _selectedBusiness = _business %} 
+    {% endif %}
+{% endfor %}
+
+<!-- Upcoming payment  -->
+{% set _selectedPayment = data.paymentsUpcoming[0] %} 
+
+<!-- Upcoming payment total -->
+{% set _total = 0 %}
+{% for _item in _selectedPayment.items %}
+    {% set _total = _total + _item.amount %}
+{% endfor %}
+
+{% block pageTitle %}
+Subject: You have an upcoming payment from Defra for {{_selectedBusiness.name}}, {{_selectedPayment.date}}
+{% endblock %}
 
 {% block content %}
 
-    <style type="text/css">
-        @media only screen and (min-device-width: 581px) {
-        .content {
-            width: 580px !important;
-        }
-        }
-        body { margin:0 !important; }
-        div[style*="margin: 16px 0"] { margin:0 !important; }
-    </style>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
+            Subject: You have an upcoming payment from Defra for {{_selectedBusiness.name}}, {{_selectedPayment.date}}
+        </p>
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
+            From: Defra (support@defra.gov.uk)
+        </p>
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-0">
+            To: {{data.user.email}}
+        </p>
 
-    <table role="presentation" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;max-width: 580px;width: 100% !important;" width="100%">
-        <tbody>
-            <tr>
-                <td height="30"><br></td>
-            </tr>
+        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible govuk-!-margin-top-2">
+    
+        <h1 class="govuk-heading-xl">Your next monthly Defra payment for {{_selectedBusiness.name}} is coming soon</h1>
+        
+        <p class="govuk-body">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
 
-            <tr>
-                <td>
-                    <span style="font-family: Helvetica, Arial, sans-serif; margin: 0 0 20px 0; font-size: 19px; line-height: 25px; color: #0B0C0C;">
-                      Subject:  [subject line - payment action needed]<br><br>
-                        From: [who from?]<br>
-                        {% if data['valleySFD'] == 'True' %}  
-                           To: Valley Farm<br>
-                        {% elif data['agileSFD'] == 'True' %}  
-                           To: Agile Farms Ltd<br>
-                        {% else %}
-                           To: Agile Farms Ltd<br>
-                        {% endif %}
-                    </span>
-                </td>
-            </tr>
+        <p class="govuk-body">Customer reference number (CRN): {{data.user.crn}}</p>
 
-            <tr>
-                <td height="30"><br></td>
-            </tr>
-        </tbody>
-    </table>
+        <p class="govuk-body">Dear {{data.user.name}},</p>
 
-    <table role="presentation" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;max-width: 580px;width: 100% !important;" width="100%">
-        <tbody>
-            <tr>
-                <td>
-                    <header class="govuk-header" role="banner" data-module="govuk-header">
-                        <div class="govuk-header__container ">
-                          <div class="govuk-header__logo" style="padding-left: 10px;">
-                            <a href="#" style="text-decoration: none;" class="govuk-header__link govuk-header__link--homepage">
-                              <svg
-                              focusable="false"
-                              role="img"
-                              class="govuk-header__logotype"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 148 30"
-                              height="30"
-                              width="148"
-                              aria-label="GOV.UK">
-                              <title>GOV.UK</title>
-                              <path d="M22.6 10.4c-1 .4-2-.1-2.4-1-.4-.9.1-2 1-2.4.9-.4 2 .1 2.4 1s-.1 2-1 2.4m-5.9 6.7c-.9.4-2-.1-2.4-1-.4-.9.1-2 1-2.4.9-.4 2 .1 2.4 1s-.1 2-1 2.4m10.8-3.7c-1 .4-2-.1-2.4-1-.4-.9.1-2 1-2.4.9-.4 2 .1 2.4 1s0 2-1 2.4m3.3 4.8c-1 .4-2-.1-2.4-1-.4-.9.1-2 1-2.4.9-.4 2 .1 2.4 1s-.1 2-1 2.4M17 4.7l2.3 1.2V2.5l-2.3.7-.2-.2.9-3h-3.4l.9 3-.2.2c-.1.1-2.3-.7-2.3-.7v3.4L15 4.7c.1.1.1.2.2.2l-1.3 4c-.1.2-.1.4-.1.6 0 1.1.8 2 1.9 2.2h.7c1-.2 1.9-1.1 1.9-2.1 0-.2 0-.4-.1-.6l-1.3-4c-.1-.2 0-.2.1-.3m-7.6 5.7c.9.4 2-.1 2.4-1 .4-.9-.1-2-1-2.4-.9-.4-2 .1-2.4 1s0 2 1 2.4m-5 3c.9.4 2-.1 2.4-1 .4-.9-.1-2-1-2.4-.9-.4-2 .1-2.4 1s.1 2 1 2.4m-3.2 4.8c.9.4 2-.1 2.4-1 .4-.9-.1-2-1-2.4-.9-.4-2 .1-2.4 1s0 2 1 2.4m14.8 11c4.4 0 8.6.3 12.3.8 1.1-4.5 2.4-7 3.7-8.8l-2.5-.9c.2 1.3.3 1.9 0 2.7-.4-.4-.8-1.1-1.1-2.3l-1.2 4c.7-.5 1.3-.8 2-.9-1.1 2.5-2.6 3.1-3.5 3-1.1-.2-1.7-1.2-1.5-2.1.3-1.2 1.5-1.5 2.1-.1 1.1-2.3-.8-3-2-2.3 1.9-1.9 2.1-3.5.6-5.6-2.1 1.6-2.1 3.2-1.2 5.5-1.2-1.4-3.2-.6-2.5 1.6.9-1.4 2.1-.5 1.9.8-.2 1.1-1.7 2.1-3.5 1.9-2.7-.2-2.9-2.1-2.9-3.6.7-.1 1.9.5 2.9 1.9l.4-4.3c-1.1 1.1-2.1 1.4-3.2 1.4.4-1.2 2.1-3 2.1-3h-5.4s1.7 1.9 2.1 3c-1.1 0-2.1-.2-3.2-1.4l.4 4.3c1-1.4 2.2-2 2.9-1.9-.1 1.5-.2 3.4-2.9 3.6-1.9.2-3.4-.8-3.5-1.9-.2-1.3 1-2.2 1.9-.8.7-2.3-1.2-3-2.5-1.6.9-2.2.9-3.9-1.2-5.5-1.5 2-1.3 3.7.6 5.6-1.2-.7-3.1 0-2 2.3.6-1.4 1.8-1.1 2.1.1.2.9-.3 1.9-1.5 2.1-.9.2-2.4-.5-3.5-3 .6 0 1.2.3 2 .9l-1.2-4c-.3 1.1-.7 1.9-1.1 2.3-.3-.8-.2-1.4 0-2.7l-2.9.9C1.3 23 2.6 25.5 3.7 30c3.7-.5 7.9-.8 12.3-.8m28.3-11.6c0 .9.1 1.7.3 2.5.2.8.6 1.5 1 2.2.5.6 1 1.1 1.7 1.5.7.4 1.5.6 2.5.6.9 0 1.7-.1 2.3-.4s1.1-.7 1.5-1.1c.4-.4.6-.9.8-1.5.1-.5.2-1 .2-1.5v-.2h-5.3v-3.2h9.4V28H55v-2.5c-.3.4-.6.8-1 1.1-.4.3-.8.6-1.3.9-.5.2-1 .4-1.6.6s-1.2.2-1.8.2c-1.5 0-2.9-.3-4-.8-1.2-.6-2.2-1.3-3-2.3-.8-1-1.4-2.1-1.8-3.4-.3-1.4-.5-2.8-.5-4.3s.2-2.9.7-4.2c.5-1.3 1.1-2.4 2-3.4.9-1 1.9-1.7 3.1-2.3 1.2-.6 2.6-.8 4.1-.8 1 0 1.9.1 2.8.3.9.2 1.7.6 2.4 1s1.4.9 1.9 1.5c.6.6 1 1.3 1.4 2l-3.7 2.1c-.2-.4-.5-.9-.8-1.2-.3-.4-.6-.7-1-1-.4-.3-.8-.5-1.3-.7-.5-.2-1.1-.2-1.7-.2-1 0-1.8.2-2.5.6-.7.4-1.3.9-1.7 1.5-.5.6-.8 1.4-1 2.2-.3.8-.4 1.9-.4 2.7zM71.5 6.8c1.5 0 2.9.3 4.2.8 1.2.6 2.3 1.3 3.1 2.3.9 1 1.5 2.1 2 3.4s.7 2.7.7 4.2-.2 2.9-.7 4.2c-.4 1.3-1.1 2.4-2 3.4-.9 1-1.9 1.7-3.1 2.3-1.2.6-2.6.8-4.2.8s-2.9-.3-4.2-.8c-1.2-.6-2.3-1.3-3.1-2.3-.9-1-1.5-2.1-2-3.4-.4-1.3-.7-2.7-.7-4.2s.2-2.9.7-4.2c.4-1.3 1.1-2.4 2-3.4.9-1 1.9-1.7 3.1-2.3 1.2-.5 2.6-.8 4.2-.8zm0 17.6c.9 0 1.7-.2 2.4-.5s1.3-.8 1.7-1.4c.5-.6.8-1.3 1.1-2.2.2-.8.4-1.7.4-2.7v-.1c0-1-.1-1.9-.4-2.7-.2-.8-.6-1.6-1.1-2.2-.5-.6-1.1-1.1-1.7-1.4-.7-.3-1.5-.5-2.4-.5s-1.7.2-2.4.5-1.3.8-1.7 1.4c-.5.6-.8 1.3-1.1 2.2-.2.8-.4 1.7-.4 2.7v.1c0 1 .1 1.9.4 2.7.2.8.6 1.6 1.1 2.2.5.6 1.1 1.1 1.7 1.4.6.3 1.4.5 2.4.5zM88.9 28 83 7h4.7l4 15.7h.1l4-15.7h4.7l-5.9 21h-5.7zm28.8-3.6c.6 0 1.2-.1 1.7-.3.5-.2 1-.4 1.4-.8.4-.4.7-.8.9-1.4.2-.6.3-1.2.3-2v-13h4.1v13.6c0 1.2-.2 2.2-.6 3.1s-1 1.7-1.8 2.4c-.7.7-1.6 1.2-2.7 1.5-1 .4-2.2.5-3.4.5-1.2 0-2.4-.2-3.4-.5-1-.4-1.9-.9-2.7-1.5-.8-.7-1.3-1.5-1.8-2.4-.4-.9-.6-2-.6-3.1V6.9h4.2v13c0 .8.1 1.4.3 2 .2.6.5 1 .9 1.4.4.4.8.6 1.4.8.6.2 1.1.3 1.8.3zm13-17.4h4.2v9.1l7.4-9.1h5.2l-7.2 8.4L148 28h-4.9l-5.5-9.4-2.7 3V28h-4.2V7zm-27.6 16.1c-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.7-1.2 2.7-2.7-1.2-2.7-2.7-2.7z"></path>
-                            </svg>
-                            </a>
-                          </div>
-                        </div>
-                    </header>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <p class="govuk-body">The next monthly Defra payment to your business {{_selectedBusiness.name}} is confirmed and will be with you soon.</p>
 
-    <table role="presentation" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;max-width: 580px;width: 100% !important;" width="100%">
-        <tbody>
-            <tr>
-                <td height="30"><br></td>
-            </tr>
+        <!-- <div class="govuk-inset-text">
+            We will pay you £{{_total}} on {{_selectedPayment.date}}.
+        </div> -->
+        <h2 class="govuk-heading-m">We will pay you £{{_total}} on {{_selectedPayment.date}}</h2>
 
-            <tr>
-                <td width="10" valign="middle"><br></td>
+        <p class="govuk-body">This is your total Defra funding for {{_selectedPayment.period}}.</p>
 
-                <td style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; max-width: 560px;">
+        <p class="govuk-body">The payment will be in your bank account ending 9276 within 2 working days of {{_selectedPayment.date}}.</p>
 
-                <h1 class="govuk-heading-m">[heading - upcoming payment]</h1>
+        <p class="govuk-body">The payment reference will be {{_selectedPayment.reference}}.</p>
 
-                <p class="govuk-body">[content]</p>
-              
-                
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>Telephone: 03000 200 301</li>
-                    <li>Monday to Friday, 8:30am to 5pm, except bank holidays</li>
-                </ul>
-                <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="#">Find out about call charges</a></p> 
-                
-                <p class="govuk-body">Email: <a class="govuk-link govuk-link--no-visited-state" href="mailto:ruralpayments@defra.gov.uk">ruralpayments@defra.gov.uk</a></p>                      
+        <h2 class="govuk-heading-m">What this payment includes</h2>
 
-                </p>
+        <table class="govuk-table govuk-!-margin-bottom-8">
+            <!-- <caption class="govuk-table__caption govuk-table__caption--s">Breakdown of payment</caption> -->
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Description</th>
+                <th scope="col" class="govuk-table__header">Scheme</th>
+                <th scope="col" class="govuk-table__header govuk-table__cell--numeric">Amount</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+    
+              {% for _item in _selectedPayment.items %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">{{_item.description}}</td>
+                  <td class="govuk-table__cell">{{_item.scheme}}</td>
+                  <td class="govuk-table__cell govuk-table__cell--numeric">
+                    {% if _item.amount < 0 %}
+                      -£{{_item.amount - _item.amount - _item.amount}}
+                    {% else %}
+                      £{{_item.amount}}
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+    
+              <tr class="govuk-table__row">
+                <td scope="row" class="govuk-table__header">Total</th>
+                <td class="govuk-table__cell">&nbsp;</td>
+                <td class="govuk-table__cell govuk-table__cell--numeric"><strong>£{{_total}}</strong></td>
+              </tr>
+    
+            </tbody>
+        </table>
+
+        <p class="govuk-body">You can <a href="start-sfd-sign-in?deeplink=business-home" class="govuk-link govuk-link--no-visited-state">sign in</a> to view and manage:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>all your upcoming and past Defra payments</li>
+            <li>all your Defra funding claims</li>
+            <li>your account, including updating your personal, business and bank details</li>
+        </ul>
+
+        <h2 class="govuk-heading-m">Get help with your payment</h2>
+
+        <p class="govuk-body">You can contact us by phone or reply to this email for help and support.</p>
+
+        <p class="govuk-body">Please have your SBI, CRN and claim reference numbers with you when you call or include it in your email. You can find these at the top of this email.</p>
+
+        <p class="govuk-body">Telephone: 03000 200 301</p>
+
+        <p class="govuk-body">Monday to Friday, 8:30am to 5pm, except bank holidays</p>
+
+        <p class="govuk-body">Calls are free.</p>
+
+        <p class="govuk-body">Email: <a href="#" class="govuk-link govuk-link--no-visited-state">support@defra.gov.uk</a></p>
+
+        <p class="govuk-body">You can expect a response to email queries within 5 working days.</p>
 
 
-                <br><br>
+    </div>
 
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
+</div>
+    
 {% endblock %}
 
 {% block footer %}
@@ -114,10 +132,8 @@
 {% set _customFooterContent %}
     <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">Go to:</p>
     <ul class="govuk-footer__inline-list">
-        <li class="govuk-footer__inline-list-item">Email 1 (this email)</li>
-        <!-- <li class="govuk-footer__inline-list-item"><a href="payment-action-email" class="govuk-footer__link">Email 2</a></li> -->
-        <!-- <li class="govuk-footer__inline-list-item"><a href="payment-next-text" class="govuk-footer__link">Text 1</a></li> -->
-        <li class="govuk-footer__inline-list-item"><a href="payment-action-text" class="govuk-footer__link">Text 2</a></li>
+        <li class="govuk-footer__inline-list-item">Email (this email)</li>
+        <li class="govuk-footer__inline-list-item"><a href="payment-action-text" class="govuk-footer__link">Text</a></li>
         <li class="govuk-footer__inline-list-item"><a href="business-home" class="govuk-footer__link">Service</a></li>
     </ul>
 {% endset %}

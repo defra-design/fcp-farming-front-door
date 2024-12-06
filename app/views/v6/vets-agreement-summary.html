@@ -4,32 +4,9 @@
 
 {%- block beforeContent -%}
 
-<div class="govuk-width-container">
-  <main class="govuk-main-wrapper" style="padding-top: 0px; padding-bottom: 0px;">
-    <div class="govuk-grid-row" style="padding-top:16px;">
-      <div class="govuk-grid-column-two-thirds">
-        {% if data['valleySFD'] == 'True' %}  
-          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Valley Farm</h3>
-          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 192846125</p>
-          {% elif data['agileSFD'] == 'True' %}  
-          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
-          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
-          {% else %}
-          <h3 class="govuk-heading-m" style="margin-bottom: 8px;">Agile Farms Ltd</h3>
-          <p class="govuk-body sbi-number" style="margin-bottom: 8px;">Single Business Identifier (SBI): 123456789</p>
-        {% endif %}
-      </div>
+{% set _subHeaderShowApplyLink = true %}
+{% include "_common/sub-header.html" %}
 
-      <div class="govuk-grid-column-one-third">
-          <h3 class="govuk-heading-m" style="float:right; margin-bottom: 8px;">Alfred Waldron</h3>
-          <p class="govuk-body" style="float:right; margin-bottom: 8px;"><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">Apply for a different business</a></p>
-
-      </div>
-
-      </div>
-  </main>
-</div>
-<hr>
 <a href="vets-manage-your-claims" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 
@@ -63,7 +40,7 @@
        
             <ol> <ul class="govuk-list govuk-list--bullet">
             <li>Agreement number: AHWR-1234-AB12</li>
-            <li>Agreement holder: Alfred Waldron - 123456789</li>
+            <li>Agreement holder: {{data.user.name}} - 123456789</li>
             <li>Agreement start date: 4 June 2024</li>
             <li>Agreement end date: 4 June 2027</li>
             <li>Type of livestock review: beef cattle</li></ul></ol>
