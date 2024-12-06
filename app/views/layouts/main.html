@@ -7,6 +7,24 @@
 
 {% block header %}
 
+{% if _showEmailMeta %}
+<div class="govuk-width-container" style="padding-top:20px">
+  <div class="govuk-grid-row" >
+    <div class="govuk-grid-column-full">
+      <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
+        Subject: {{_emailSubject}}
+      </p>
+      <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
+        From: Defra (support@defra.gov.uk)
+      </p>
+      <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-4">
+        To: {{data.user.email}}
+      </p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 {% if _includeServiceNavigation == "true" %}
   {{ govukHeader({
     classes: "govuk-header--full-width-border"

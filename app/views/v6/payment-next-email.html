@@ -1,7 +1,5 @@
 {% extends "layouts/main.html" %}
 
-{% set serviceName = "" %}
-
 <!-- Selected business -->
 {% set _selectedBusiness = data.selectedBusiness %} 
 {% for _business in data.businesses %}
@@ -19,25 +17,19 @@
     {% set _total = _total + _item.amount %}
 {% endfor %}
 
+{% set _showEmailMeta = true %}
+{% set _emailSubject = "You have an upcoming payment from Defra for " + _selectedBusiness.name + ", " + _selectedPayment.date %}
+
+{% set serviceName = "" %}
+
 {% block pageTitle %}
-Subject: You have an upcoming payment from Defra for {{_selectedBusiness.name}}, {{_selectedPayment.date}}
+Subject: {{_emailSubject}}
 {% endblock %}
 
 {% block content %}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
-            Subject: You have an upcoming payment from Defra for {{_selectedBusiness.name}}, {{_selectedPayment.date}}
-        </p>
-        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
-            From: Defra (support@defra.gov.uk)
-        </p>
-        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-0">
-            To: {{data.user.email}}
-        </p>
-
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible govuk-!-margin-top-2">
     
         <h1 class="govuk-heading-xl">Your next monthly Defra payment for {{_selectedBusiness.name}} is coming soon</h1>
         
