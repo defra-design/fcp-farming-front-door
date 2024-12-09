@@ -7,40 +7,40 @@ module.exports = [
         "status": "confirmed",
         "items": [
             {
-                "description": "Assess soil, test soil organic matter and produce a soil management plan",
-                "code": "SAM1",
-                "scheme": "SFI 23",
-                "amount": 139.75
-            },
-            {
                 "description": "Assess and record hedgerow condition",
                 "code": "HRW1",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 94.87
             },
             {
-                "description": "Manage hedgerows",
-                "code": "HRW2",
-                "scheme": "SFI 23",
-                "amount": 316.25
+                "description": "Assess soil, test soil organic matter and produce a soil management plan",
+                "code": "SAM1",
+                "scheme": "Sustainable farming incentive 2023",
+                "amount": 139.75
             },
             {
                 "description": "Assess integrated pest management and produce a plan",
                 "code": "IPM1",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 247.25
+            },
+            {
+                "description": "Manage hedgerows",
+                "code": "HRW2",
+                "scheme": "Sustainable farming incentive 2023",
+                "amount": 316.25
             },
             {
                 "description": "Grow a wild flower field",
                 "code": "CSP123",
                 "scheme": "Countryside stewardship",
                 "amount": 147.25
-            }
-            ,
+            },
             {
                 "description": "Deduction for not managing nutrients",
                 "code": "DED123",
-                "scheme": "SFI 22",
+                "scheme": "Sustainable farming incentive 2022",
+                "deduction": true,
                 "amount": -100
             }
         ]
@@ -55,31 +55,31 @@ module.exports = [
             {
                 "description": "Animal health and welfare claim",
                 "code": "DEF003",
-                "scheme": "AHWP",
+                "scheme": "Animal health and welfare",
                 "amount": 1500
             },
             {
                 "description": "Assess soil, test soil organic matter and produce a soil management plan",
                 "code": "SAM1",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 139.75
             },
             {
                 "description": "Assess and record hedgerow condition",
                 "code": "HRW1",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 94.87
             },
             {
                 "description": "Manage hedgerows",
                 "code": "HRW2",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 316.25
             },
             {
                 "description": "Assess integrated pest management and produce a plan",
                 "code": "IPM1",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 247.25
             },
             {
@@ -100,25 +100,25 @@ module.exports = [
             {
                 "description": "Assess soil, test soil organic matter and produce a soil management plan",
                 "code": "SAM1",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 139.75
             },
             {
                 "description": "Assess and record hedgerow condition",
                 "code": "HRW1",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 94.87
             },
             {
                 "description": "Manage hedgerows",
                 "code": "HRW2",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 316.25
             },
             {
                 "description": "Assess integrated pest management and produce a plan",
                 "code": "IPM1",
-                "scheme": "SFI 23",
+                "scheme": "Sustainable farming incentive 2023",
                 "amount": 247.25
             }
         ]

@@ -47,11 +47,11 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">
-        {{_selectedPaymentPrevious.date}}, {{_selectedPaymentPrevious.totalFormatted}}
+        {{_selectedPaymentPrevious.date}} <br>{{_selectedPaymentPrevious.totalFormatted}}
       </h1>
 
       <dl class="govuk-summary-list govuk-!-margin-bottom-8">
-        <div class="govuk-summary-list__row">
+        <!-- <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Date
           </dt>
@@ -66,15 +66,7 @@
           <dd class="govuk-summary-list__value">
             {{_selectedPaymentPrevious.totalFormatted}}
           </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Reference
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{_selectedPaymentPrevious.reference}}
-          </dd>
-        </div>
+        </div> -->
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Status
@@ -104,7 +96,16 @@
             Paid into
           </dt>
           <dd class="govuk-summary-list__value">
-            Bank account ****9276
+            <p class="govuk-!-margin-bottom-">Bank account ****9276</p> 
+            <p>The payment will be in your account within 2 working days of {{_selectedPaymentPrevious.date}}.</p>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Reference
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{_selectedPaymentPrevious.reference}}
           </dd>
         </div>
       </dl>
@@ -116,7 +117,7 @@
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">Description</th>
-            <th scope="col" class="govuk-table__header">Scheme</th>
+            <th scope="col" class="govuk-table__header">Agreement and calculations</th>
             <th scope="col" class="govuk-table__header govuk-table__cell--numeric">Amount</th>
           </tr>
         </thead>
@@ -125,7 +126,7 @@
             {% for _item in _selectedPaymentPrevious.items %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">{{_item.description}}</td>
-              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">{{_item.scheme}}</a></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">{{_item.scheme}} {{_selectedPaymentPrevious.year}}</a></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">
                 {{_item.amountFormatted}}
               </td>
