@@ -35,7 +35,7 @@ Subject: {{_emailSubject}}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds email-layout" >
     
-        <h1 class="govuk-heading-xl">Your next monthly Defra payment for {{_selectedBusiness.name}} is coming soon</h1>
+        <h1 class="govuk-heading-l govuk-!-font-size-27">Your next monthly Defra payment for {{_selectedBusiness.name}} is coming soon</h1>
         
         <p class="govuk-body">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
 
@@ -45,7 +45,7 @@ Subject: {{_emailSubject}}
 
         <p class="govuk-body">The next monthly Defra payment to your business {{_selectedBusiness.name}} is confirmed and will be with you soon.</p>
 
-        <h2 class="govuk-heading-m">We will pay you {{_selectedPayment.totalFormatted}} on {{_selectedPayment.date}}</h2>
+        <h2 class="govuk-heading-s">We will pay you {{_selectedPayment.totalFormatted}} on {{_selectedPayment.date}}</h2>
 
         <p class="govuk-body">This is your total Defra funding for {{_selectedPayment.period}}.</p>
 
@@ -53,7 +53,7 @@ Subject: {{_emailSubject}}
 
         <p class="govuk-body">The payment reference will be {{_selectedPayment.reference}}.</p>
 
-        <h2 class="govuk-heading-m">What this payment includes</h2>
+        <h2 class="govuk-heading-s">What this payment includes</h2>
 
         <table class="govuk-table govuk-!-margin-bottom-8">
             <!-- <caption class="govuk-table__caption govuk-table__caption--s">Breakdown of payment</caption> -->
@@ -93,7 +93,7 @@ Subject: {{_emailSubject}}
             <li>your account, including updating your personal, business and bank details</li>
         </ul>
 
-        <h2 class="govuk-heading-m">Get help with your payment</h2>
+        <h2 class="govuk-heading-s">Get help with your payment</h2>
 
         <p class="govuk-body">You can contact us by phone or reply to this email for help and support.</p>
 
