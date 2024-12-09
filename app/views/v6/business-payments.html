@@ -56,11 +56,6 @@
       </div>
 
       <!-- UPCOMING PAYMENTS CONTENT -->
-      <!-- first payment total -->
-      {% set _total = 0 %}
-      {% for _item in data.paymentsUpcoming[0].items %}
-        {% set _total = _total + _item.amount %}
-      {% endfor %}
       <div class="callout-box " >
         <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
           Next monthly payment
@@ -69,7 +64,7 @@
           <strong>{{data.paymentsUpcoming[0].date}}</strong>
         </p>
         <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
-          <strong>£{{_total}}</strong>
+          <strong>{{data.paymentsUpcoming[0].total}}</strong>
         </p>
 
         <p class="govuk-body govuk-!-margin-bottom-2">
@@ -112,24 +107,18 @@
         </thead>
         <tbody class="govuk-table__body">
 
-          {% set _total = 0 %}
           {% for _item in data.paymentsUpcoming[0].items %}
-            {% set _total = _total + _item.amount %}
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__cell">{{_item.description}} ({{_item.scheme}})</th>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {% if _item.amount < 0 %}
-                  -£{{_item.amount - _item.amount - _item.amount}}
-                {% else %}
-                  £{{_item.amount}}
-                {% endif %}
+                {{_item.amount}}
               </td>
             </tr>
           {% endfor %}
 
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>£{{_total}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].total}}</strong></td>
           </tr>
 
         </tbody>
@@ -138,11 +127,6 @@
       <h3 class="govuk-heading-l govuk-!-margin-bottom-">Other upcoming payments</h3>
 
       {% for _payment in data.paymentsUpcoming %}
-
-      {% set _total = 0 %}
-      {% for _item in _payment.items %}
-        {% set _total = _total + _item.amount %}
-      {% endfor %}
 
       {% set _status %}
         {% if _payment.status == "action" %}
@@ -161,13 +145,13 @@
       {% endset %}
 
       {% if loop.index != 1 %}
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}}, £{{_total}}</h3>
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}}, {{_payment.total}}</h3>
       <p class="govuk-body govuk-!-margin-bottom-2">
         For {{_payment.period}}. Payment reference: {{_payment.reference}}. 
       <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
         <!-- <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            <h3 class="govuk-heading-l govuk-!-margin-bottom-0">{{_payment.date}}, £{{_payment.amount}}</h3>
+            <h3 class="govuk-heading-l govuk-!-margin-bottom-0">{{_payment.date}}, {{_payment.total}}</h3>
           </dt>
           <dd class="govuk-summary-list__actions">
             
@@ -180,7 +164,7 @@
             
           </dt>
           <dd class="govuk-summary-list__actions">
-            <p class="govuk-body govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="business-payments-detail?payment={{_payment.id}}">View details<span class="govuk-visually-hidden"> for payment {{_payment.date}}, £{{_payment.amount}}</span></a></p>
+            <p class="govuk-body govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="business-payments-detail?payment={{_payment.id}}">View details<span class="govuk-visually-hidden"> for payment {{_payment.date}}, {{_payment.amount}}</span></a></p>
             
           </dd>
         </div>
@@ -198,24 +182,18 @@
         </thead>
         <tbody class="govuk-table__body">
 
-          {% set _total = 0 %}
           {% for _item in _payment.items %}
-            {% set _total = _total + _item.amount %}
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__cell">{{_item.description}} ({{_item.scheme}})</th>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {% if _item.amount < 0 %}
-                  -£{{_item.amount - _item.amount - _item.amount}}
-                {% else %}
-                  £{{_item.amount}}
-                {% endif %}
+                {{_item.amount}}
               </td>
             </tr>
           {% endfor %}
 
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>£{{_total}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.total}}</strong></td>
           </tr>
 
         </tbody>

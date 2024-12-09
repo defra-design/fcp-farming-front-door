@@ -11,14 +11,7 @@
   {% endif %}
 {% endfor %}
 
-<!-- Selected payment total -->
-{% set _total = 0 %}
-{% for _item in _selectedPayment.items %}
-  {% set _total = _total + _item.amount %}
-{% endfor %}
-
-
-{% set pageName = _selectedPayment.date + ", £" + _total %}
+{% set pageName = _selectedPayment.date + ", " + _selectedPayment.total %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% block beforeContent %}
@@ -54,7 +47,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">
-        {{_selectedPayment.date}}, £{{_total}}
+        {{_selectedPayment.date}}, {{_selectedPayment.total}}
       </h1>
 
       <dl class="govuk-summary-list govuk-!-margin-bottom-8">
@@ -71,7 +64,7 @@
             Amount
           </dt>
           <dd class="govuk-summary-list__value">
-            £{{_total}}
+            {{_selectedPayment.total}}
           </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -142,18 +135,12 @@
         </thead>
         <tbody class="govuk-table__body">
 
-          {% set _total = 0 %}
           {% for _item in _selectedPayment.items %}
-            {% set _total = _total + _item.amount %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">{{_item.description}}</td>
               <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">{{_item.scheme}}</a></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {% if _item.amount < 0 %}
-                  -£{{_item.amount - _item.amount - _item.amount}}
-                {% else %}
-                  £{{_item.amount}}
-                {% endif %}
+                {{_item.amount}}
               </td>
             </tr>
           {% endfor %}
@@ -161,7 +148,7 @@
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
             <td class="govuk-table__cell">&nbsp;</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>£{{_total}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_selectedPayment.total}}</strong></td>
           </tr>
 
         </tbody>
