@@ -50,7 +50,7 @@
             <a class="govuk-tabs__tab--payments govuk-link--no-visited-state" href="business-payments" role="tab" aria-selected="true">Upcoming <span class="govuk-visually-hidden">payments</span></a>
           </li>
           <li class="govuk-tabs__list-item--payments">
-            <a class="govuk-tabs__tab--payments govuk-link--no-visited-state" href="business-payments-prev" role="tab" aria-selected="false">Past <span class="govuk-visually-hidden">payments</span></a>
+            <a class="govuk-tabs__tab--payments govuk-link--no-visited-state" href="business-payments-prev?selectedPaymentYear={{data.defaultSelectedPaymentYear}}" role="tab" aria-selected="false">Past <span class="govuk-visually-hidden">payments</span></a>
           </li>
         </ul>
       </div>
@@ -64,7 +64,7 @@
           <strong>{{data.paymentsUpcoming[0].date}}</strong>
         </p>
         <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
-          <strong>{{data.paymentsUpcoming[0].total}}</strong>
+          <strong>{{data.paymentsUpcoming[0].totalFormatted}}</strong>
         </p>
 
         <p class="govuk-body govuk-!-margin-bottom-2">
@@ -111,14 +111,14 @@
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__cell">{{_item.description}} ({{_item.scheme}})</th>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {{_item.amount}}
+                {{_item.amountFormatted}}
               </td>
             </tr>
           {% endfor %}
 
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].total}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].totalFormatted}}</strong></td>
           </tr>
 
         </tbody>
@@ -145,18 +145,10 @@
       {% endset %}
 
       {% if loop.index != 1 %}
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}}, {{_payment.total}}</h3>
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}}, {{_payment.totalFormatted}}</h3>
       <p class="govuk-body govuk-!-margin-bottom-2">
         For {{_payment.period}}. Payment reference: {{_payment.reference}}. 
       <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
-        <!-- <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <h3 class="govuk-heading-l govuk-!-margin-bottom-0">{{_payment.date}}, {{_payment.total}}</h3>
-          </dt>
-          <dd class="govuk-summary-list__actions">
-            
-          </dd>
-        </div> -->
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             
@@ -186,14 +178,14 @@
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__cell">{{_item.description}} ({{_item.scheme}})</th>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {{_item.amount}}
+                {{_item.amountFormatted}}
               </td>
             </tr>
           {% endfor %}
 
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.total}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.totalFormatted}}</strong></td>
           </tr>
 
         </tbody>

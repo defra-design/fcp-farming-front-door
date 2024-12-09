@@ -50,7 +50,7 @@
             <a class="govuk-tabs__tab--payments govuk-link--no-visited-state" href="business-payments" role="tab" aria-selected="false">Upcoming <span class="govuk-visually-hidden">payments</span></a>
           </li>
           <li class="govuk-tabs__list-item--payments govuk-tabs__list-item--payments-selected">
-            <a class="govuk-tabs__tab--payments govuk-link--no-visited-state" href="business-payments-prev" role="tab" aria-selected="true">Past <span class="govuk-visually-hidden">payments</span></a>
+            <a class="govuk-tabs__tab--payments govuk-link--no-visited-state" href="business-payments-prev?selectedPaymentYear={{data.defaultSelectedPaymentYear}}" role="tab" aria-selected="true">Past <span class="govuk-visually-hidden">payments</span></a>
           </li>
         </ul>
       </div>
@@ -102,7 +102,7 @@
                     <td class="govuk-table__cell">
                       <strong>{{_payment.date}}</strong></span>
                     </th>
-                    <td class="govuk-table__cell govuk-table__cell--numeric">£{{_payment.amount}}</td>
+                    <td class="govuk-table__cell govuk-table__cell--numeric">{{_payment.totalFormatted}}</td>
                     <td class="govuk-table__cell">{{_status|safe}}</td>
                     <td class="govuk-table__cell">{{_payment.reference}}</td>
                     <td class="govuk-table__cell govuk-table__cell--numeric">

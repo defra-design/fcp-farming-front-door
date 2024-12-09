@@ -11,36 +11,7 @@
   {% endif %}
 {% endfor %}
 
-{% set _paymentItems = 
-  [
-    {
-        "description": "Assess soil, test soil organic matter and produce a soil management plan",
-        "code": "SAM1",
-        "scheme": "SFI 23",
-        "amount": 139.75
-    },
-    {
-        "description": "Assess and record hedgerow condition",
-        "code": "HRW1",
-        "scheme": "SFI 23",
-        "amount": 94.87
-    },
-    {
-        "description": "Manage hedgerows",
-        "code": "HRW2",
-        "scheme": "SFI 23",
-        "amount": 316.25
-    },
-    {
-        "description": "Assess integrated pest management and produce a plan",
-        "code": "IPM1",
-        "scheme": "SFI 23",
-        "amount": 247.25
-    }
-]
-%}
-
-{% set pageName = _selectedPaymentPrevious.date + ", £" + _selectedPaymentPrevious.amount %}
+{% set pageName = _selectedPaymentPrevious.date + ", " + _selectedPaymentPrevious.totalFormatted %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% block beforeContent %}
@@ -76,7 +47,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">
-        {{_selectedPaymentPrevious.date}}, £{{_selectedPaymentPrevious.amount}}
+        {{_selectedPaymentPrevious.date}}, {{_selectedPaymentPrevious.totalFormatted}}
       </h1>
 
       <dl class="govuk-summary-list govuk-!-margin-bottom-8">
@@ -93,7 +64,7 @@
             Amount
           </dt>
           <dd class="govuk-summary-list__value">
-            £{{_selectedPaymentPrevious.amount}}
+            {{_selectedPaymentPrevious.totalFormatted}}
           </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -151,12 +122,12 @@
         </thead>
         <tbody class="govuk-table__body">
 
-            {% for _item in _paymentItems %}
+            {% for _item in _selectedPaymentPrevious.items %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">{{_item.description}}</td>
               <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">{{_item.scheme}}</a></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                £{{_item.amount}}
+                {{_item.amountFormatted}}
               </td>
             </tr>
             {% endfor %}
@@ -165,7 +136,7 @@
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
             <td class="govuk-table__cell">&nbsp;</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>£{{_selectedPaymentPrevious.amount}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_selectedPaymentPrevious.totalFormatted}}</strong></td>
           </tr>
 
         </tbody>
