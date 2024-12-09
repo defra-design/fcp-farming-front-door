@@ -22,8 +22,18 @@ Subject: {{_emailSubject}}
 
 {% block content %}
 
+<style>
+  .email-layout p,
+  .email-layout h1,
+  .email-layout h2,
+  .email-layout table,
+  .email-layout ul {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+</style>
+
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-two-thirds email-layout" >
     
         <h1 class="govuk-heading-xl">Your next monthly Defra payment for {{_selectedBusiness.name}} is coming soon</h1>
         
