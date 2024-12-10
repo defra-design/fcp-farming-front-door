@@ -3,7 +3,16 @@
 {% set pageName="Design history" %}
 
 {%- block beforeContent -%}
-<a href="index" class="govuk-back-link">Back</a>
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="index">Version 6</a>
+    </li>
+  </ol>
+</nav>
 {% endblock %}
 
 
@@ -32,13 +41,14 @@
       'How might we' statements
     </h2>
 
-    <h3 class="govuk-heading-s">Example 'How might we' statement</h3>
-    <p class="govuk-body">Content goes here.</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li class="govuk-body-s">Bullet point 1</li>
-      <li class="govuk-body-s">Bullet point 2</li>
-      <li class="govuk-body-s">Bullet point 3</li>
-    </ul>
+    <ol class="govuk-list govuk-list--number">
+      <li>How might we make users aware of when and how much they will be paid?</li>
+      <li>How might we make it clear what each payment is for?</li>
+      <li>How might we keep users up to date with the progress of their claims & payments?</li>
+      <li>How might we help users to understand how their payments have been calculated and check they are correct?</li>
+      <li>How might we notify users of actions that need to be completed to progress their claims & payments?</li>
+      <li>How might we allow users to access and use their payments information so that they can resolve queries and complete external tasks?</li>
+    </ol>
 
 
     <!-- line break to split up the page -->

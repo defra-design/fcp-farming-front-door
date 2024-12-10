@@ -4,7 +4,13 @@
 
 {% block beforeContent %}
 {{super()}}
-<a href="/to-be/index" class="govuk-back-link">Back</a>
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+  </ol>
+</nav>
 {% endblock %}
 
 
@@ -33,36 +39,29 @@
       <li><a class="govuk-link--no-visited-state" href="vets-claim-approved-email">Vets visit - Claim approved email</a></li>
     </ul>
 
+
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
     <h2 class="govuk-heading-m">
-      How might we?
+      Design history
     </h2>
-
-    <ol class="govuk-list govuk-list--number">
-      <li>How might we make users aware of when and how much they will be paid?</li>
-      <li>How might we make it clear what each payment is for?</li>
-      <li>How might we keep users up to date with the progress of their claims & payments?</li>
-      <li>How might we help users to understand how their payments have been calculated and check they are correct?</li>
-      <li>How might we notify users of actions that need to be completed to progress their claims & payments?</li>
-      <li>How might we allow users to access and use their payments information so that they can resolve queries and complete external tasks?</li>
-    </ol>
-
+    <p><a href="_design-history" class="govuk-link govuk-link--no-visited-state">View design history</a> which incldues:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>goals</li>
+      <li>'How might we' statements</li>
+      <li>hypotheses</li>
+      <li>outcomes and decisions</li>
+    </ul>
+    
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
     <h2 class="govuk-heading-m">
-      Design tickets
+      Design tickets (on JIRA)
     </h2>
     <ul class="govuk-list govuk-list--bullet">
       <li><a href="https://eaflood.atlassian.net/browse/SFDE-1" class="govuk-link govuk-link--no-visited-state">SFDE-1</a> - prototype fixes</li>
       <li><a href="https://eaflood.atlassian.net/browse/SFDE-72" class="govuk-link govuk-link--no-visited-state">SFDE-72</a> - content iterations from v5</li>
       <li><a href="https://eaflood.atlassian.net/browse/SFDE-16" class="govuk-link govuk-link--no-visited-state">SFDE-16</a> - payments</li>
     </ul>
-
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-    <h2 class="govuk-heading-m">
-      Hypotheses
-    </h2>
-    
 
 
   <!-- <div>
