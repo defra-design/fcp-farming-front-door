@@ -39,66 +39,146 @@
   </div>
 </div>
 
-    <div class="govuk-width-container">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-m">Your payments</h2>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--red">
+        Action needed
+      </strong>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-">
+      <a href="business-payments-detail?payment=2" class="govuk-link govuk-link--no-visited-state">Provide evidence by 29 December 2024</a> for your February 2025 animal health and welfare review claim payment
+    </p>
 
 
+    <!-- UPCOMING PAYMENTS CONTENT -->
+    <div class="callout-box " >
+      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
+        Next monthly payment
+      </p>
+      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
+        <strong>{{data.paymentsUpcoming[0].date}}</strong>
+      </p>
+      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
+        <strong>{{data.paymentsUpcoming[0].totalFormatted}}</strong>
+      </p>
 
-        <div class="gem-c-cards card-page">
-          <ul class="gem-c-cards__list gem-c-cards__list-cards">
+      <!-- <p class="govuk-body govuk-!-margin-bottom-2">
+        This is your total Defra funding for {{data.paymentsUpcoming[0].period}}. 
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-2">
+        The payment will be in your bank account ending 9276 within 2 working days of {{data.paymentsUpcoming[0].date}}. 
+      </p>
+      <p class="govuk-body"> 
+        Payment reference: {{data.paymentsUpcoming[0].reference}}.
+      </p> -->
 
-            <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state link-style" href="vets-manage-your-claims">
-                <div class="gem-c-cards__list-item-wrapper-variant">
-                  <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Get funding to improve animal health and welfare</h2> 
-                  {% if data['statusChanged'] == 'True' %}  
-                  <div class="govuk-!-margin-bottom-2"><p class="update-style govuk-body-s gem-c-cards__description p-link-style govuk-!-padding-bottom-0">Claim approved for VV-5053-A696 - beef cattle review.</p>
-                    <p class="update-style govuk-body-s gem-c-cards__description p-link-style">You'll be paid £554 by 10 October 2024.</p></div>
-                  {% else %}  
-                  <div class="govuk-!-margin-bottom-2"><p class="update-style govuk-body-s gem-c-cards__description p-link-style">Evidence submitted for <br>VV-5053-A696 - beef cattle review.</p></div>
-                  {% endif %}  
-                  <p class="govuk-body-s gem-c-cards__description p-link-style govuk-!-margin-bottom-2">Manage your claims</p>                   
-                </div>
-              </a> 
-            </li>
+      <p class="govuk-body" style="display: none">
+        {% if data.paymentsUpcoming[0].status == "action" %}
+          <strong class="govuk-tag govuk-tag--red">
+            Action needed
+          </strong>
+          {% elif data.paymentsUpcoming[0].status == "expected" %}
+          <strong class="govuk-tag govuk-tag--blue">
+            Planned
+          </strong>
+          {% elif data.paymentsUpcoming[0].status == "confirmed" %}
+          <strong class="govuk-tag govuk-tag--green">
+            Confirmed
+          </strong>
+        {% endif %}
+      </p>
 
-          <li class="gem-c-cards__list-item-variant">
-              <a class="govuk-link govuk-link--no-visited-state" href="../../../_common/not-testing.html">
-                <div class="gem-c-cards__list-item-wrapper-variant">
-                  <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Calf Housing for Health and Welfare grant</h2>
-                  <div class="govuk-!-margin-bottom-2"><p class="update-style govuk-body-s gem-c-cards__description p-link-style ">You were paid on 15 September 2024.</p></div>
-                  <p class="govuk-body-s gem-c-cards__description p-link-style">Manage your claims</p>          
-                </div>
-              </a>  
-            </li> 
+      <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments">View all payments</a></p>
 
-
-          
-          </ul>
-        </div>
-
-        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments">[View payments]</a></p>
-
-    
-        </div>
-
-        <div class="govuk-grid-column-one-third">
-
-
-          <h3 class="govuk-heading-m">
-            Business details
-          </h3>
-
-          <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
-          <p><a class="govuk-link--no-visited-state" href="../../../_common/not-testing.html">View and update permissions</a></p> 
-
-
-        </div>
-
-
-      </div>
+      <!-- <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments-detail?payment={{data.paymentsUpcoming[0].id}}">View details<span class="govuk-visually-hidden"> for payment on {{data.paymentsUpcoming[0].date}}</span></a></p> -->
+      
     </div>
 
+    <div class="gem-c-cards card-page" style="display: none;">
+      <ul class="gem-c-cards__list gem-c-cards__list-cards">
+        <li class="gem-c-cards__list-item-variant">
+            <div class="gem-c-cards__list-item-wrapper-variant">
+              <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link govuk-!-margin-bottom-5" ><a class="govuk-link govuk-link--no-visited-state link-style" href="business-payments">View all payments</a></h2>
+
+              <p class="govuk-body">
+                <strong class="govuk-tag govuk-tag--red">
+                  Action needed
+                </strong>
+              </p>
+            </div>
+          </a> 
+        </li>
+        
+      </ul>
+      
+    </div>
+
+    
+    
+
+
+    <ul class="govuk-list govuk-list--bullet" style="display: none;">
+      {% for _payment in data.paymentsUpcoming %}
+        {% if loop.index != 1 %}
+        <li>{{_payment.date}}<br>{{_payment.totalFormatted}}</li>
+        {% endif %}
+      {% endfor %}
+      </ul>
+
+    <!-- <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments">View all payments</a></p> -->
+    
+
+    {% set _schemesCards = [
+      {
+        "name": "Get funding to improve animal health and welfare",
+        "link": "vets-manage-your-claims"
+      },
+      {
+        "name": "Calf Housing for Health and Welfare grant",
+        "link": "/_common/not-testing"
+      },
+      {
+        "name": "Sustainable farming incentive",
+        "link": "/_common/not-testing"
+      },
+      {
+        "name": "Countryside stewardship",
+        "link": "/_common/not-testing"
+      }
+    ] %}
+
+    <h2 class="govuk-heading-m">Your schemes and grants</h2>
+
+    <div class="gem-c-cards card-page">
+      <ul class="gem-c-cards__list gem-c-cards__list-cards">
+
+        {% for _schemeCard in _schemesCards %}
+        <li class="gem-c-cards__list-item-variant">
+            <div class="gem-c-cards__list-item-wrapper-variant">
+              <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link" style="font-weight: normal"><a class="govuk-link govuk-link--no-visited-state link-style" href="{{_schemeCard.link}}">{{_schemeCard.name}}</a></h2> 
+            </div>
+          </a> 
+        </li>
+        {% endfor %}
+
+      </ul>
+    </div>
+
+  </div>
+  <div class="govuk-grid-column-one-third">
+
+    <h3 class="govuk-heading-m">
+      Business details
+    </h3>
+
+    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
+    <p><a class="govuk-link--no-visited-state" href="/_common/not-testing">View and update permissions</a></p> 
+
+  </div>
+</div>
 
 {% endblock %}
