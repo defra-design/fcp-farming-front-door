@@ -45,7 +45,7 @@ Subject: {{_emailSubject}}
 
         <p class="govuk-body">The next monthly Defra payment to your business {{_selectedBusiness.name}} is confirmed and will be with you soon.</p>
 
-        <h2 class="govuk-heading-s">We will pay you {{_selectedPayment.totalFormatted}} on {{_selectedPayment.date}}</h2>
+        <h2 class="govuk-heading-s">We will pay you {{_selectedPayment.total | currency(trailingZeros=false) }} on {{_selectedPayment.date}}</h2>
 
         <p class="govuk-body">This is your total Defra funding for {{_selectedPayment.period}}.</p>
 
@@ -71,7 +71,7 @@ Subject: {{_emailSubject}}
                   <td class="govuk-table__cell">{{_item.description}}</td>
                   <td class="govuk-table__cell">{{_item.scheme}}</td>
                   <td class="govuk-table__cell govuk-table__cell--numeric">
-                    {{_item.amountFormatted}}
+                    {{_item.amount | currency(trailingZeros=false) }}
                   </td>
                 </tr>
               {% endfor %}
@@ -79,7 +79,7 @@ Subject: {{_emailSubject}}
               <tr class="govuk-table__row">
                 <td scope="row" class="govuk-table__header">Total</th>
                 <td class="govuk-table__cell">&nbsp;</td>
-                <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_selectedPayment.totalFormatted}}</strong></td>
+                <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_selectedPayment.total | currency(trailingZeros=false) }}</strong></td>
               </tr>
     
             </tbody>

@@ -11,7 +11,7 @@
   {% endif %}
 {% endfor %}
 
-{% set pageName = _selectedPaymentPrevious.date + ", " + _selectedPaymentPrevious.totalFormatted %}
+{% set pageName = _selectedPaymentPrevious.date + ", " + _selectedPaymentPrevious.total | currency(trailingZeros=false)  %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% block beforeContent %}
@@ -47,7 +47,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">
-        {{_selectedPaymentPrevious.date}} <br>{{_selectedPaymentPrevious.totalFormatted}}
+        {{_selectedPaymentPrevious.date}} <br>{{_selectedPaymentPrevious.total | currency(trailingZeros=false) }}
       </h1>
 
       <dl class="govuk-summary-list govuk-!-margin-bottom-8">
@@ -64,7 +64,7 @@
             Amount
           </dt>
           <dd class="govuk-summary-list__value">
-            {{_selectedPaymentPrevious.totalFormatted}}
+            {{_selectedPaymentPrevious.total | currency(trailingZeros=false) }}
           </dd>
         </div> -->
         <div class="govuk-summary-list__row">
@@ -128,7 +128,7 @@
               <td class="govuk-table__cell">{{_item.description}}</td>
               <td class="govuk-table__cell"><a href="/_common/not-testing" class="govuk-link govuk-link--no-visited-state">{{_item.scheme}} {{_selectedPaymentPrevious.year}}</a></td>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {{_item.amountFormatted}}
+                {{_item.amount | currency(trailingZeros=false) }}
               </td>
             </tr>
             {% endfor %}
@@ -137,7 +137,7 @@
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
             <td class="govuk-table__cell">&nbsp;</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_selectedPaymentPrevious.totalFormatted}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_selectedPaymentPrevious.total | currency(trailingZeros=false) }}</strong></td>
           </tr>
 
         </tbody>

@@ -3,27 +3,6 @@ const paymentsPrevious = require("./payments-previous");
 const paymentsPreviousItems = require("./payments-previous-items");
 const businesses = require("./businesses");
 
-//Adds comma seperators to thousands e.g. 1000 or "1000" becomes "1,000"
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-//Adds £ in correct places (after minus sign if it's a negative value) - will also convert numbers to strings in order to add these
-function numberAsCurrencyString(amount) {
-  if (amount < 0) {
-    //converts to string and adds comma thousand seperator
-    amount = numberWithCommas(amount)
-    //removes first character (as that is a minus sign if negative number)
-    amount = amount.substring(1);
-    //builds string back up with £ and minus in correct place
-    return "-£" + amount
-  } else {
-    //converts to string and adds comma thousand seperator
-    //builds string up with £ in correct place
-    return "£" + numberWithCommas(amount)
-  }
-}
-
 //
 // GO THROUGH ALL UPCOMING PAYMENTS DATA, to set various values to use on pages
 //
@@ -36,8 +15,6 @@ paymentsUpcoming.forEach(function(_payment, indexA) {
   _payment.items.forEach(function(_paymentItem, indexB) {
     //UPDATE THE PAYMENT TOTAL
     _payment.total = _payment.total + _paymentItem.amount
-    //FORMAT THE ITEM AMOUNT, so we have a £1,000 version of it for rendering
-    _paymentItem.amountFormatted = numberAsCurrencyString(_paymentItem.amount)
 
     //BUILD UP ITEM GROUPS LIST
     var _scheme = _paymentItem.scheme
@@ -60,16 +37,9 @@ paymentsUpcoming.forEach(function(_payment, indexA) {
     }
 
   });
-  //SET A FORMATTED TOTAL FOR EACH ITEM GROUP, e.g. £1,000 to use on pages
-  _payment.itemGroups.forEach(function(_paymentItemGroup, index) {
-    _paymentItemGroup.amountFormatted = numberAsCurrencyString(_paymentItemGroup.amount)
-  });
   //ROUND the total of the whole payment to 2 decimals if needed (had a weird bug where it was giving loads of decimal places)
   _payment.total = Math.round(_payment.total * 100) / 100
-  //SET A FORMATTED TOTAL FOR THE WHOLE PAYMENT, e.g. £1,000 to use on pages
-  _payment.totalFormatted = numberAsCurrencyString(_payment.total)
 });
-
 
 //
 // GO THROUGH ALL PAST PAYMENTS DATA, to set various values to use on pages
@@ -83,13 +53,9 @@ paymentsPrevious.forEach(function(_payment, indexA) {
   _payment.items.forEach(function(_paymentItem, indexB) {
     //UPDATE THE PAYMENT TOTAL
     _payment.total = _payment.total + _paymentItem.amount
-    //FORMAT THE ITEM AMOUNT, so we have a £1,000 version of it for rendering
-    _paymentItem.amountFormatted = numberAsCurrencyString(_paymentItem.amount)
   });
   //ROUND the total of the whole payment to 2 decimals if needed (had a weird bug where it was giving loads of decimal places)
   _payment.total = Math.round(_payment.total * 100) / 100
-  //SET A FORMATTED TOTAL FOR THE WHOLE PAYMENT, e.g. £1,000 to use on pages
-  _payment.totalFormatted = numberAsCurrencyString(_payment.total)
 });
 
 

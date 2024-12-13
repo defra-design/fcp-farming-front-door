@@ -54,7 +54,7 @@
         <strong>{{data.paymentsUpcoming[0].date}}</strong>
       </p>
       <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
-        <strong>{{data.paymentsUpcoming[0].totalFormatted}}</strong>
+        <strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong>
       </p>
 
       <!-- <p class="govuk-body govuk-!-margin-bottom-2">

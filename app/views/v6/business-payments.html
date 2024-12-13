@@ -64,7 +64,7 @@
           <strong>{{data.paymentsUpcoming[0].date}}</strong>
         </p>
         <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
-          <strong>{{data.paymentsUpcoming[0].totalFormatted}}</strong>
+          <strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong>
         </p>
 
         <p class="govuk-body govuk-!-margin-bottom-2">
@@ -111,14 +111,14 @@
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__cell">{{_itemGroup.name}}{% if _itemGroup.count > 1 %} ({{_itemGroup.count}} items){% endif %}</th>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {{_itemGroup.amountFormatted}}
+                {{_itemGroup.amount | currency(trailingZeros=false) }}
               </td>
             </tr>
           {% endfor %}
 
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].totalFormatted}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong></td>
           </tr>
 
         </tbody>
@@ -137,14 +137,14 @@
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__cell">{{_item.description}} ({{_item.scheme}})</th>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {{_item.amountFormatted}}
+                {{_item.amount | currency(trailingZeros=false) }}
               </td>
             </tr>
           {% endfor %}
 
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].totalFormatted}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong></td>
           </tr>
 
         </tbody>
@@ -171,7 +171,7 @@
       {% endset %}
 
       {% if loop.index != 1 %}
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}} <br>{{_payment.totalFormatted}}</h3>
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}} <br>{{_payment.total | currency(trailingZeros=false) }}</h3>
       <p class="govuk-body govuk-!-margin-bottom-2">
         For {{_payment.period}}. Payment reference: {{_payment.reference}}. 
       <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
@@ -206,14 +206,14 @@
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__cell">{{_itemGroup.name}}{% if _itemGroup.count > 1 %} ({{_itemGroup.count}} items){% endif %}</th>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {{_itemGroup.amountFormatted}}
+                {{_itemGroup.amount | currency(trailingZeros=false) }}
               </td>
             </tr>
           {% endfor %}
 
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.totalFormatted}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.total | currency(trailingZeros=false) }}</strong></td>
           </tr>
 
         </tbody>
@@ -232,14 +232,14 @@
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__cell">{{_item.description}} ({{_item.scheme}})</th>
               <td class="govuk-table__cell govuk-table__cell--numeric">
-                {{_item.amountFormatted}}
+                {{_item.amount | currency(trailingZeros=false) }}
               </td>
             </tr>
           {% endfor %}
 
           <tr class="govuk-table__row">
             <td scope="row" class="govuk-table__header">Total</th>
-            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.totalFormatted}}</strong></td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.total | currency(trailingZeros=false) }}</strong></td>
           </tr>
 
         </tbody>
