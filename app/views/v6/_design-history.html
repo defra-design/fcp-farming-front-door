@@ -27,19 +27,60 @@
   </div>
 
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-m">
-      Goals of this iteration
-    </h2>
 
-    <p>Goals content goes here.</p>
+    <h2 class="govuk-heading-l">Goals of this iteration</h2>
 
+    <h3 class="govuk-heading-m">Why we explored payments</h3>
 
-    <!-- line break to split up the page -->
+    <p class="govuk-body">In the <a href="/to-be/v5/design-history" class="govuk-link govuk-link--no-visited-state">last iteration, we focused on reducing users' need to get help from the Rural Payments Service</a> (RPS). We found that many RPS users struggle to get the information they need about their payments. We tested showing the latest payment status of a claim, but found that users need much more detailed information, so they can understand the latest payment in context of the claim and other payments. The focus of version 6 was to explore giving users more detailed payment information.</p>
+
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h2 class="govuk-heading-m">
-      'How might we' statements
-    </h2>
+    <h3 class="govuk-heading-m">Pain points and user needs</h3>
+
+    <p class="govuk-body">We did a lot of research into the known payment pain points for users. This included:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a full review of recent user research and payments prototypes done by other teams - for example, a huge amount of work had already been done by teams working on SFI, delinked payments, and the payments hub</li>
+      <li>a full review of our own team’s previous user insights on payments</li>
+    </ul>
+
+    <p class="govuk-body">From this review, we identified 6 overarching user needs farmers and land managers have for payments:</p>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>I need to know in advance when I will get a payment and how much I will receive</li>
+      <li>I need to know what my payments are for</li>
+      <li>I need to see the progress and state of my payment</li>
+      <li>I need to know how my payments has been calculated and over what period</li>
+      <li>I need to be told when I need to take action and how</li>
+      <li>I need to analyse and query historic and current payments data</li>
+    </ol>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    
+    <h3 class="govuk-heading-m">Constraints</h3>
+
+    <p class="govuk-body">We also explored known constraints. We spoke with the payments hub and others to discover the main blockers teams have faced when trying to improve payments processes. For example there are complex operational and technical issues around:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>post-payment adjustments</li>
+      <li>rounding up or down of payments</li>
+      <li>how much confirmation users can get on upcoming payments and when they can get this </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h3 class="govuk-heading-m">Design approach</h3>
+
+    <p class="govuk-body">The team decided we should ideate with zero constraints. This meant ideating as if there are no operational or technical blockers. The only focus of our design would be to meet user needs - we needed to imagine an ideal world. For example, designing with zero constraints means we could imagine simplifying and standardising complex payment information across multiple schemes, and farmers getting accurate, timely, up to date payment notifications and schedules.</p>
+
+    <p class="govuk-body">We focused only on payments for this iteration, but in future, would need to explore how to give farmers a wider level of detail and context beyond payments - for example a way to see the progress and status of the whole claim, not just the payment-related parts.</p>
+
+    <p class="govuk-body">The content we have prototyped for payment actions, amounts and statuses is placeholder text. In due course, when we know the real data and statuses we would need to use, we would need to test with that.</p>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">How might we statements</h2>
 
     <ol class="govuk-list govuk-list--number">
       <li>How might we make users aware of when and how much they will be paid?</li>
@@ -47,12 +88,54 @@
       <li>How might we keep users up to date with the progress of their claims & payments?</li>
       <li>How might we help users to understand how their payments have been calculated and check they are correct?</li>
       <li>How might we notify users of actions that need to be completed to progress their claims & payments?</li>
-      <li>How might we allow users to access and use their payments information so that they can resolve queries and complete external tasks?</li>
+      <!-- <li>How might we allow users to access and use their payments information so that they can resolve queries and complete external tasks?</li> -->
     </ol>
 
+    <!-- <p class="govuk-body"><strong>1. How might we make users aware of when and how much they will be paid?</strong></p>
+    <p class="govuk-body"><strong>2. How might we make it clear what each payment is for?</strong></p>
+    <p class="govuk-body"><strong>3. How might we keep users up to date with the progress of their claims & payments?</strong></p>
+    <p class="govuk-body"><strong>4. How might we help users to understand how their payments have been calculated and check they are correct?</strong></p>
+    <p class="govuk-body"><strong>5. How might we notify users of actions that need to be completed to progress their claims & payments?</strong></p> -->
 
-    <!-- line break to split up the page -->
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <p class="govuk-body">Across these 5 how might we statements, we prototyped the following design ideas:</p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li>list all upcoming payments, making dates and amounts prominent, and show information on the next payment on the homepage</li>
+      <li>have a regular payment date (for example 5th of every month)</li>
+      <li>have a consistent reference for all farming payments (for example Defra+month+year - so DEFRAJanuary25)</li>
+      <li>show all payments across all schemes and actions in one place, ordered by date, allowing users to see and move between upcoming and past payments</li>
+      <li>show statuses for payments and actions needed</li>
+      <li>notify users when action is needed to avoid an issue with payment, and make calls to action prominent, including a new ‘Your tasks’ section on homepage</li>
+      <li>give users a high level amount of payment information on the homepage, then an overview of payments page showing payments grouped by scheme, then a payment details page showing payments grouped by action, then the option to go into each scheme to see detailed calculations</li>
+      <li>include a 'get help' link at the top of every screen in the portal</li>
+      <li>give information on payments and actions not only in the portal but by email, text and letter, to avoid the need to log in</li>
+      <li>make clear:
+        <ul class="govuk-list govuk-list--bullet ">
+          <li>reference numbers for payment</li>
+          <li>any deductions</li>
+          <li>the bank account being paid into</li>
+          <li>when the payment will be in the bank account</li>
+          <li>what period the payment covers</li>
+          <li>which payment is for what action and scheme</li>
+          <li>links to schemes for agreements and detailed calculations</li>
+        </ul>
+      </li>
+    </ul>
+      
+    <p class="govuk-body">6. How might we allow users to access and use their payments information so that they can resolve queries and complete external tasks?</p>
+
+    <p class="govuk-body">For this how might we statement we prototyped the following ideas:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>show past payment information dating back 7 years</li>
+      <li>show past payment information grouped by calendar year</li>
+    </ul>
+
+      
+
+
+    <!-- <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
     <h2 class="govuk-heading-m">
       Outcomes and decisions
@@ -71,9 +154,9 @@
     </strong>
     <p class="govuk-body">High-level outcome.</p>
     <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
-    <p class="govuk-body-s">Design conclusion content.</p>
+    <p class="govuk-body-s">Design conclusion content.</p> -->
 
-    <br>
+
 
   </div>
 
