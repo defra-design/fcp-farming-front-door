@@ -60,18 +60,23 @@ paymentsPrevious.forEach(function(_payment, indexA) {
 
 
 module.exports = {
+
+  "release": "latest", //used to show different release versions e.g. buffalo. Set on prototype setup page from version 7 onwards. ca also be overriddenn on pages with a query string ?release=latest ?release=buffalo
+
   businesses, //businesses list
   user: {
     "name": "Alfred Waldron",
     "email": "alfred.waldron@gmail.com",
     "crn": "1101996862"
   },
+  "selectedBusiness": businesses[0], 
+
+  //PAYMENTS DATA
   paymentsUpcoming, //all upcoming payments
   paymentsPrevious, //all past payments
-  "selectedBusiness": businesses[0], 
-  "selectedPayment": paymentsUpcoming[0], 
-  "selectedPaymentPrevious": paymentsPrevious[0], 
+  "selectedPayment": paymentsUpcoming[0], //default selected payment (for payment detail page)
+  "selectedPaymentPrevious": paymentsPrevious[0], //default selected previous payment (for payment detail page)
   "defaultSelectedPaymentYear": 2024, //used on the tabs so when clicked they start from the recent year
   "selectedPaymentYear": 2024 //used for the year filter on past payments page
-  // Insert values here
+
 }
