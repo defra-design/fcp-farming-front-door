@@ -61,7 +61,10 @@ paymentsPrevious.forEach(function(_payment, indexA) {
 
 module.exports = {
 
-  "release": "latest", //used to show different release versions e.g. buffalo. Set on prototype setup page from version 7 onwards. ca also be overriddenn on pages with a query string ?release=latest ?release=buffalo
+  "release": "latest", //used to show different release versions e.g. buffalo mvp, buffalo v2, capybara, etc. Set on prototype setup page from version 7 onwards. can also be overriddenn on pages with a query string ?release=latest ?release=b1
+    //latest = latest designs / conceptual for testing
+    //b1 = buffalo first release 'Buffalo 1.0 MVP'
+    //b2 - buffalo second release 'Buffalo 1.X'
 
   businesses, //businesses list
   user: {
