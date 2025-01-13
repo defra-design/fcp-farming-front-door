@@ -20,23 +20,23 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">Version 6</span>
     <h1 class="govuk-heading-xl">
-      Version 6
-      <span class="govuk-caption-xl">Design history</span>
+      Design history
     </h1>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
 
-    <h2 class="govuk-heading-l">Goals of this iteration</h2>
+    <!-- <h2 class="govuk-heading-l">Goals of this iteration</h2> -->
 
-    <h3 class="govuk-heading-m">Why we explored payments</h3>
+    <h3 class="govuk-heading-l">Why we explored payments</h3>
 
     <p class="govuk-body">In the <a href="/to-be/v5/design-history" class="govuk-link govuk-link--no-visited-state">last iteration, we focused on reducing users' need to get help from the Rural Payments Service</a> (RPS). We found that many RPS users struggle to get the information they need about their payments. We tested showing the latest payment status of a claim, but found that users need much more detailed information, so they can understand the latest payment in context of the claim and other payments. The focus of version 6 was to explore giving users more detailed payment information.</p>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h3 class="govuk-heading-m">Pain points and user needs</h3>
+    <h3 class="govuk-heading-l">Pain points and user needs</h3>
 
     <p class="govuk-body">We did a lot of research into the known payment pain points for users. This included:</p>
 
@@ -58,7 +58,7 @@
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
     
-    <h3 class="govuk-heading-m">Constraints</h3>
+    <h3 class="govuk-heading-l">Constraints</h3>
 
     <p class="govuk-body">We also explored known constraints. We spoke with the payments hub and others to discover the main blockers teams have faced when trying to improve payments processes. For example there are complex operational and technical issues around:</p>
 
@@ -70,7 +70,7 @@
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h3 class="govuk-heading-m">Design approach</h3>
+    <h3 class="govuk-heading-l">Design approach</h3>
 
     <p class="govuk-body">The team decided we should ideate with zero constraints. This meant ideating as if there are no operational or technical blockers. The only focus of our design would be to meet user needs - we needed to imagine an ideal world. For example, designing with zero constraints means we could imagine simplifying and standardising complex payment information across multiple schemes, and farmers getting accurate, timely, up to date payment notifications and schedules.</p>
 
@@ -80,7 +80,7 @@
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h2 class="govuk-heading-m">How might we statements</h2>
+    <h2 class="govuk-heading-l">How might we statements</h2>
 
     <ol class="govuk-list govuk-list--number">
       <li>How might we make users aware of when and how much they will be paid?</li>
@@ -91,13 +91,16 @@
       <li>How might we allow users to access and use their payments information so that they can resolve queries and complete external tasks?</li>
     </ol>
 
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+
     <!-- <p class="govuk-body"><strong>1. How might we make users aware of when and how much they will be paid?</strong></p>
     <p class="govuk-body"><strong>2. How might we make it clear what each payment is for?</strong></p>
     <p class="govuk-body"><strong>3. How might we keep users up to date with the progress of their claims & payments?</strong></p>
     <p class="govuk-body"><strong>4. How might we help users to understand how their payments have been calculated and check they are correct?</strong></p>
     <p class="govuk-body"><strong>5. How might we notify users of actions that need to be completed to progress their claims & payments?</strong></p> -->
 
-    <p class="govuk-body">Across the first 5 how might we statements, we prototyped the following design ideas:</p>
+    <!-- <p class="govuk-body">Across the first 5 how might we statements, we prototyped the following design ideas:</p>
 
     <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
       <li>list all upcoming payments, making dates and amounts prominent, and show information on the next payment on the homepage</li>
@@ -120,17 +123,17 @@
           <li>links to schemes for agreements and detailed calculations</li>
         </ul>
       </li>
-    </ul>
+    </ul> -->
       
     <!-- <p class="govuk-body">6. How might we allow users to access and use their payments information so that they can resolve queries and complete external tasks?</p> -->
 
-    <p class="govuk-body">For the 6th how might we statement we prototyped the following ideas:
+    <!-- <p class="govuk-body">For the 6th how might we statement we prototyped the following ideas:
     </p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>show past payment information dating back 7 years</li>
       <li>show past payment information grouped by calendar year</li>
-    </ul>
+    </ul> -->
 
       
 
@@ -156,8 +159,144 @@
     <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
     <p class="govuk-body-s">Design conclusion content.</p> -->
 
+    <h2 class="govuk-heading-l">
+      Outcomes and decisions
+    </h2>
+
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Design ticket</h3>
+    <p class="govuk-body govuk-!-margin-bottom-8"><a href="https://eaflood.atlassian.net/browse/SFDE-119" class="govuk-link govuk-link--no-visited-state">SFDE-119 - Payments iterations [UR December 2024 on version 6]</a></p>
+
+    <span class="govuk-caption-m">Hypothesis 1:</span>
+    <h3 class="govuk-heading-m">We could list all upcoming payments, making date and amount prominent, and show information on the next payment on the homepage.</h3>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">All users found the upcoming payments page useful and comprehensible. All users understood what and when they would be paid.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">Continue to give users information about their upcoming payments, with prominent dates and amounts.</p>
 
 
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 2:</span>
+    <h3 class="govuk-heading-m"> We could have a regular payment date (for example 5th of every month).</h3>
+    <strong class="govuk-tag govuk-tag--yellow" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">All users understood what and when they would be paid, but all were confused by the idea of monthly payments, because this is different to the current quarterly, annual or ad hoc systems for SFI, AHWP and other schemes. Some users say quarterly payments would be less admin for them than monthly. We still do not know whether users would be in favour of regular payments in principle.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body"> A future iteration could change the schedule to quarterly, but we still need to know:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li> whether users would like payments from different schemes and actions combined into regular payments</li>
+      <li>how frequently users would want regular payments and why</li>
+      <li>URs are considering a survey and more quantitative questioning to find the answers to these questions.
+      </li>
+    </ul>
+
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 3:</span>
+    <h3 class="govuk-heading-m">We could have a consistent reference for all farming payments (for example, Defra+month+year - DEFRAJanuary25).
+    </h3>
+    <strong class="govuk-tag govuk-tag--yellow" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">It was proven that the right reference is helpful, but disproven that this specific reference worked. All users understood it was a payment from Defra but 4 out of 6 could not identify what the payment was for - one scheme or multiple schemes. </p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">We need to weigh these findings up with the fact users are not expecting a monthly reference number due to the current system, and they would have details in the service on what each payment is for. We can try to add more detail to a reference about what scheme or action it is for, but it would be hard to add more specifics to the reference without using too many characters and making it harder to read. We need to do more UR into users' preferences for payment references. Iteration will also depend on whether Defra decides to combine payments across schemes into a single payment, or not.</p>
+    
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 4:</span>
+    <h3 class="govuk-heading-m">We could notify users in the portal, by email, text and letter when action is needed to avoid an issue with payment, and make calls to action prominent,  including a new ‘Your tasks’ section on homepage.
+    </h3>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">‘Action needed’ in the text and portal got all users' attention and 5 out of 6 users knew what scheme the action related to. All users expressed a preference for email communication. However, all users needed more detail on what action is required (for example, do you need to provide hedgerow photos). 5 out of 6 need to be clearer on how they can provide evidence. 4 users wanted the link to take them directly to upload evidence (which would be within the scheme) rather than clicking through via SFD. One user wanted to text back with a photo as evidence. </p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">Continue with calls to action. Iterate ‘action needed’ wording to add more specifics on what you need to do (for example, not just ‘provide evidence’ but ‘send us a photo of your hedgerow’). The link to provide action needs to go direct to the scheme place to submit evidence, rather than via SFD, to avoid wasting users' time. Iterate an email as default form of communication in future. If iterating an email or a text, allow users to reply directly to the email or text with a photo they can take on their phone. The team will also explore users being allowed to set notification preferences (eg for email, text, letter) as part of the SFD roadmap.</p>
+    
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 5:</span>
+    <h3 class="govuk-heading-m">We could make clear:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>reference number for payment</li>
+      <li>any deductions</li>
+      <li>bank account being paid into</li>
+      <li>when the payment will be in account</li>
+      <li>what period the payment covers</li>
+      <li>which payment is for what action and scheme</li>
+      <li>links to schemes for agreements and detailed calculations</li>
+    </ul>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">Users understood when and how much they will be paid and found the payment details generally useful. However half of users were overwhelmed by the number of links on the payment breakdown. Some users wanted more detail on the breakdown, for example on codes of actions they have signed up for or lengths of hedgerows.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">Consider adding references to actions and codes users are working on, and details like length of hedgerows. Consider reducing the amount of links by grouping items together.</p>
+
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 6:</span>
+    <h3 class="govuk-heading-m">We could show all payments across all schemes and actions in one place, ordered by date, allowing users to see and move between upcoming and past payments.
+    </h3>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">5 out of 6 users successfully navigated through the past payments flow and would use past payments to manage finances and query payments. All users also generally liked the upcoming payments concept (see hypothesis 1).</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">Continue showing chronological payment lists for upcoming and past payments.</p>
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 7:</span>
+    <h3 class="govuk-heading-m">We could show statuses for payments and actions needed. </h3>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">All users found the statuses clear and reassuring. 2 users thought the status wording was a clickable button and one did not know what the status ‘Planned’ meant.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">Continue showing statuses for payments and actions needed. Consider bringing the ‘View details’ link near to status so there is something to click on.</p>
+
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 8:</span>
+    <h3 class="govuk-heading-m">We could give users a high level amount of payment information on the homepage, then an overview of payments page showing payments grouped by scheme, then a payment details page showing payments grouped by action, then the option to go into each scheme to see detailed calculations.    </h3>
+    <strong class="govuk-tag govuk-tag--yellow" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">Generally the upcoming, past payments and breakdown pages tested well. Some users would like more details (this is covered by hypothesis 5).  2 out of 6 users said they would prefer to have details upfront, without having to click through similar screens to get to them.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">Consider continuing with the approach of high level to detailed and more detailed information. If, when we test again, more users would prefer all details upfront, we could design to show all payment information on  a single page, so fewer click throughs and sub pages would be needed. We may want to consider using a details component.</p>
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 9:</span>
+    <h3 class="govuk-heading-m">We could include a 'get help' link at the top of every screen in the portal.</h3>
+    <strong class="govuk-tag govuk-tag--yellow" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">2 out of 6 users noticed the ‘get help’ link and would access customer service support.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">We will do more UR on how users can get customer service support. We also plan to add a footer to the service with contact us information.</p>
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 10:</span>
+    <h3 class="govuk-heading-m">We could provide past payment info dating back 7 years.</h3>
+    <strong class="govuk-tag govuk-tag--yellow" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">Users' expectations ranged between 3 and 20 years.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">More user and business research is needed to find out what a reasonable number of years to show might be - for example HMRC say to keep receipts for audits for 7 years. There is an environmental impact of storing large amounts of historical data. We may consider showing 1 or 2 years of data and offering a way to request historical data if needed. </p>
+    
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Hypothesis 11:</span>
+    <h3 class="govuk-heading-m">We could show past payment information grouped by calendar year.</h3>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">5 of 6 users successfully navigated through the past payments flow to locate a payment in a specific year, and would use past payments to manage finances and query payments.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">Continue showing past payments by month and year.</p>
+    
   </div>
 
   <!-- right third of page to link to relevant mural boards and UR findings -->
