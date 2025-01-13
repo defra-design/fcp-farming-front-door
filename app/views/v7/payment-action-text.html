@@ -1,0 +1,83 @@
+{% extends "layouts/main.html" %}
+
+<!-- Selected business -->
+{% set _selectedBusiness = data.selectedBusiness %} 
+{% for _business in data.businesses %}
+    {% if data.business == _business.id %}
+        {% set _selectedBusiness = _business %} 
+    {% endif %}
+{% endfor %}
+
+{% block pageTitle %}
+Manage your land and farm businesses - text message
+{% endblock %}
+
+{% set mainClasses = "mobile-mock" %}
+
+{% block header %}{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+
+{% block content %}
+
+<style>
+    .mobile-container p {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+  </style>
+
+<div class="mobile-container">
+
+    <p class="mobile-sender">Manage your land and farm businesses</p>
+
+    <p class="mobile-text-message-title">Text message</p>
+    <p class="mobile-date">{{ now | shortDate }}, 9.01</p>
+
+    <p class="mobile-message">
+        
+        Dear {{data.user.name}}, action is needed for the animal health and welfare review claim for {{_selectedBusiness.name}} made on 10 October 2024 (claim reference VV-5053-A696).<br><br>
+        
+        Please provide evidence to support your claim by 29 December 2024 to avoid delay to {{_selectedBusiness.name}}'s' Defra payment due on 5 February 2025.<br><br>
+        
+        <a href="start-sfd-sign-in?deeplink=business-payments-detail&payment=2" class="govuk-link mobile-link">Provide evidence</a>.
+    
+    </p>
+    <img src="/public/images/mob-blank.jpg" alt="Mock up of phone screen showing a for action text message from Defra" class="mobile-image" >
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <!-- <p class="govuk-body govuk-!-margin-top-8"><a href="page-list">Return to [page]</a></p> -->
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% set _customFooterContent %}
+    <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">Go to:</p>
+    <ul class="govuk-footer__inline-list">
+        <li class="govuk-footer__inline-list-item"><a href="payment-next-email" class="govuk-footer__link">Email</a></li>
+        <li class="govuk-footer__inline-list-item">Text (this text)</li>
+        <li class="govuk-footer__inline-list-item"><a href="payment-action-letter" class="govuk-footer__link">Letter</a></li>
+        <li class="govuk-footer__inline-list-item"><a href="business-home" class="govuk-footer__link">Service</a></li>
+    </ul>
+{% endset %}
+
+    {{ govukFooter({
+        meta: {
+            items: [
+            {
+                
+            }
+            ],
+            html: [
+                _customFooterContent
+            ],
+            visuallyHiddenTitle: "Footer links"
+        }
+    }) }}
+
+{% endblock %}

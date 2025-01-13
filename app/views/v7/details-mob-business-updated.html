@@ -1,0 +1,33 @@
+{% extends "layouts/main.html" %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _loginNavClasses = "no-bread" %}
+  {% include "_common/login-nav.html" %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      We have updated your mobile phone number
+     </h1>
+      
+     <p><a class="govuk-link--no-visited-state" href="details-business-details">Go back to your business details</a></p>
+
+  </div>
+</div>
+
+{% endblock %}

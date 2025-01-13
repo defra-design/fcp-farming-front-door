@@ -1,0 +1,158 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block beforeContent %}
+{{super()}}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Version 7
+      <!-- <span class="govuk-caption-xl">Private Beta. Round 1: 16 to 20 December 2024</span> -->
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <a class="govuk-button" href="business-home?business=1">Start prototype</a>
+    <h3 class="govuk-heading-s">Alternative starting points:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="start-rps-start-og?business=1">RPS start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-rps-sign-in?business=1">RPS sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-sfd-start?business=1">SFD start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-sfd-sign-in?business=1">SFD sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-next-email?business=1">Payment - upcoming - email</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-action-text?business=1">Payment - action - text message</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-action-letter?business=1">Payment - action - letter</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vets-claim-approved-email?business=1">Vets visit - Claim approved email</a></li>
+    </ul>
+
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-m">
+      Design history
+    </h2>
+    <p><a href="_design-history" class="govuk-link govuk-link--no-visited-state">View design history</a> which incldues:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>goals</li>
+      <li>'How might we' statements</li>
+      <li>hypotheses</li>
+      <li>outcomes and decisions</li>
+    </ul>
+    
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-m">
+      Design tickets (on JIRA)
+    </h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-117" class="govuk-link govuk-link--no-visited-state">SFDE-117</a> - Set up prototype to handle variants (buffalo variant and latest design variant)</li>
+    </ul>
+    
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-m">
+      Page links
+    </h2>
+
+    <h3 class="govuk-heading-s">
+      Notifications
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="payment-next-email">Payment - upcoming - email</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-action-text">Payment - action - text message</a></li>
+      <li><a class="govuk-link--no-visited-state" href="payment-action-letter">Payment - action - letter</a></li>
+    </ul>
+
+    <hr>
+
+    <h3 class="govuk-heading-s">
+      Start
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="start-rps-start-og">RPS start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-rps-sign-in">RPS sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-sfd-start">SFD start page</a></li>
+      <li><a class="govuk-link--no-visited-state" href="start-sfd-sign-in">SFD sign in</a></li>
+      <li><a class="govuk-link--no-visited-state" href="businesses-list">Your businesses list</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-s">
+      Landing, your account and details
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="business-home">Home</a></li>
+      <li>
+        <a class="govuk-link--no-visited-state" href="business-payments">Payments - upcoming</a>
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=1">Upcoming payment - confirmed</a></li>
+          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=3">Upcoming payment - planned</a></li>
+          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=2">Upcoming payment - action needed</a></li>
+        </ul>
+      </li>
+      <li>
+        <a class="govuk-link--no-visited-state" href="business-payments-prev">Payments - past</a>
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+          <li><a class="govuk-link--no-visited-state" href="business-payments-prev-detail?payment=84">Past payment - paid</a></li>
+        </ul>
+      </li>
+      <li><a class="govuk-link--no-visited-state" href="account-home">Your account</a></li>
+      <li><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></li>
+      <li><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></li>
+    </ul>
+
+
+    <h3 class="govuk-heading-s">
+      Vet visits Manage your claims screen and email
+    </h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link--no-visited-state" href="vets-claim-approved-email">Claim approved email</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vets-manage-your-claims">Manage your claims</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vets-ts-cs">Terms and conditions</a></li>
+      <li><a class="govuk-link--no-visited-state" href="vets-agreement-summary">Agreement summary</a></li>
+    </ul>
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <!-- <div class="govuk-grid-column-one-third">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-m" id="subsection-title">
+        Information
+        <span class="govuk-caption-s">(all links open in a new tab)</span>
+      </h2>
+
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <a href="_design-history">
+              Design history
+            </a>
+          </li>
+          <li>
+            <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1708095369498/312f9f5bbd6500ac2e567b6390d0453ecb6bf290?wid=0-1726655395429" target="_blank">
+              Hypothesis
+            </a>
+          </li>
+          <li>
+            <a href="https://app.mural.co/t/coredefra2548/m/defraallcompany8330/1700644751131/8f9698d767ce508393323a6dacb8abb8d923b960?wid=0-1726065444141" target="_blank">
+              Planning scenario and flow for research
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div> -->
+</div>
+
+{% endblock %}

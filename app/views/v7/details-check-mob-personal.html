@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Check your mobile phone number is correct before submitting" %}
+{% set serviceName="Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <form action="details-mob-personal-updated" method="post">
+
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          Check your mobile phone number is correct before submitting     
+        </h1>
+      </legend>
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Mobile phone number"
+            },
+            value: {
+              text: data['mobNumberPers'] or "07700900967"
+
+            },
+            actions: {
+              items: [
+                {
+                  href: "details-change-mob-personal",
+                  text: "Change",
+                  visuallyHiddenText: "mobile phone number"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+    </fieldset>
+
+      </form>
+
+
+
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

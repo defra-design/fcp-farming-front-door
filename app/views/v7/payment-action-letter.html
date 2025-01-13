@@ -1,0 +1,123 @@
+{% extends "layouts/main.html" %}
+
+<!-- Selected business -->
+{% set _selectedBusiness = data.selectedBusiness %} 
+{% for _business in data.businesses %}
+    {% if data.business == _business.id %}
+        {% set _selectedBusiness = _business %} 
+    {% endif %}
+{% endfor %}
+
+{% block pageTitle %}
+Action needed: provide evidence to avoid delay to the next Defra payment for {{_selectedBusiness.name}}
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+
+{% block content %}
+
+<style>
+    .letter-layout {
+        padding-top: 75px;
+        padding-bottom: 150px;
+    }
+    .letter-sender,
+    .letter-date {
+        text-align: right;
+    }
+    .letter-title {
+        text-align: center;
+    }
+    .letter-url {
+        color: #1d70b8;
+    }
+</style>
+
+<div class="govuk-grid-row letter-layout">
+    <div class="govuk-grid-column-three-quarters">
+
+        <p class="govuk-body letter-sender">
+            Manage your land and farm businesses<br>
+            101 Blossom Street<br>
+            London<br>
+            W1 6NN
+        </p>
+
+        <p class="govuk-body">
+            {{data.user.name}}<br>
+            {{_selectedBusiness.name}}<br>
+            Waterfall Way<br>
+            Yorkshire<br>
+            YO5 1PX
+        </p>
+
+        <p class="govuk-body letter-date">
+            5 December 2024
+        </p>
+
+        <p class="govuk-body govuk-!-margin-top-8 letter-title">
+            <strong>Action needed: provide evidence to avoid delay to the next Defra payment for {{_selectedBusiness.name}}</strong>
+        </p>
+
+
+        <p class="govuk-body govuk-!-margin-top-8">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
+        <p class="govuk-body">Customer reference number (CRN): {{data.user.crn}}</p>
+        <p class="govuk-body">Get funding to improve animal health and welfare claim: VV-5053-A696 - beef cattle review</p>
+
+        <p class="govuk-body govuk-!-margin-top-8">Dear {{data.user.name}},</p>
+        <p class="govuk-body">Get funding to improve animal health and welfare has not received evidence for the animal health and welfare review claim made on 10 October 2024 for {{_selectedBusiness.name}}.</p>
+        <p class="govuk-body">Please provide evidence by 29 December 2024 to avoid delay to your next Defra payment of £2,445.37 due on 5 February 2025. To do this, go to <span class="letter-url">https://www.gov.uk/manageyourlandandfarmbusinesses</span> and sign in. You’ll need your customer reference number (CRN), which you can find at the top of this letter.</p>
+
+        <p class="govuk-body govuk-!-margin-top-8"><strong>Get help</strong></p>
+
+        <p class="govuk-body">You can contact us by phone or reply to this email for help and support.</p>
+        <p class="govuk-body">Please have your SBI, CRN and claim reference number with you when you call or include these in your email. You can find these at the top of this letter.</p>
+        <p class="govuk-body">Telephone: 03000 200 301</p>
+        <p class="govuk-body">Monday to Friday, 8:30am to 5pm, except bank holidays</p>
+        <p class="govuk-body">Calls are free.</p>
+        <p class="govuk-body">Email: <span class="letter-url">support@defra.gov.uk</span></p>
+        <p class="govuk-body">You can expect a response to email queries within 5 working days.</p>
+
+
+    </div>
+</div>
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <!-- <p class="govuk-body govuk-!-margin-top-8"><a href="page-list">Return to [page]</a></p> -->
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% set _customFooterContent %}
+    <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">Go to:</p>
+    <ul class="govuk-footer__inline-list">
+        <li class="govuk-footer__inline-list-item"><a href="payment-next-email" class="govuk-footer__link">Email</a></li>
+        <li class="govuk-footer__inline-list-item"><a href="payment-action-text" class="govuk-footer__link">Text</a></li>
+        <li class="govuk-footer__inline-list-item">Letter (this letter)</li>
+        <li class="govuk-footer__inline-list-item"><a href="business-home" class="govuk-footer__link">Service</a></li>
+    </ul>
+{% endset %}
+
+    {{ govukFooter({
+        meta: {
+            items: [
+            {
+                
+            }
+            ],
+            html: [
+                _customFooterContent
+            ],
+            visuallyHiddenTitle: "Footer links"
+        }
+    }) }}
+
+{% endblock %}

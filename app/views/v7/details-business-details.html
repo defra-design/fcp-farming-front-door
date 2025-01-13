@@ -1,0 +1,225 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="View and update your business details" %}
+{% set serviceName="Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% include "_common/login-nav.html" %}
+
+  <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+      </li>
+    </ol>
+  </nav>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">
+     View and update your business details
+    </h1>
+
+    <h2 class="govuk-heading-m">
+      Business contact details
+     </h2>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          Valley Farm
+          {% else %}  
+          Agile Farms Ltd
+          {% endif %}  
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> business name</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          56 Seahaven Road<br>Crewe<br>CW76 1HH
+          {% else %}  
+          10 Skirbeck Way<br>Maidstone<br>SK22 1DL
+          {% endif %}  
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> address</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Telephone
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          01632960532
+          {% else %}  
+          01632 960000          
+          {% endif %}  
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> phone number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Mobile
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['mobNumberBus'] %}  
+            {{ data['mobNumberBus'] }}
+          {% else %}  
+          07700900967
+          {% endif %}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="details-change-mob-business">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Email address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          valleyfarm440@gmail.com
+          {% else %}  
+          agilefarmsrus25@gmail.com         
+          {% endif %}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> email address</span></a>
+        </dd>
+      </div>
+    </dl>
+
+    <h2 class="govuk-heading-m">
+      Reference numbers
+     </h2>
+
+
+
+     <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Single business identifier
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          192846125
+          {% else %}  
+          123456789
+          {% endif %}  
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          VAT registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          No number added
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Add<span class="govuk-visually-hidden"> a VAT registration number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Vendor registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          009765
+          {% else %}  
+          581362
+          {% endif %}  
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CPH number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['valleySFD'] == 'True' %}  
+          12/563/0998
+          {% else %}  
+          12/345/6789
+          {% endif %}  
+        </dd>
+      </div>
+    </dl>
+
+
+    <h2 class="govuk-heading-m">
+      Additional details
+     </h2>
+
+     <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Legal status
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Sole proprietorship
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> legal status</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Business type
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Farmer
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> business type</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Bank account details
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data.user.name}}
+         </br>****43
+         </br>****1200
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> bank account details</span></a>
+        </dd>
+      </div>
+    </dl>
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
