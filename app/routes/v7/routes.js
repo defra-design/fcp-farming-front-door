@@ -24,6 +24,9 @@ module.exports = function (router) {
     // Every GET and POST
     router.all('/' + version + '/*', function (req, res, next) {
 
+        //version
+        req.session.data.version = version
+
         // can do data setting and checking here - that will happen on every get and post
 
         //Set selected business

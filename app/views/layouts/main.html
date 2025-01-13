@@ -52,3 +52,9 @@
 {% endif %}
 
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="/public/javascripts/jquery-3.7.1.js"></script>
+  {% block pageScriptsAfter %}{% endblock %}
+{% endblock %}

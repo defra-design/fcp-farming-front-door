@@ -17,17 +17,79 @@
 {% block content %}
 
 <div class="govuk-grid-row">
+
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      Version 7
+      Prototype version 7
       <!-- <span class="govuk-caption-xl">Private Beta. Round 1: 16 to 20 December 2024</span> -->
     </h1>
+
+
+    <!-- Release -->
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Release version (feature toggles)</legend>
+          <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                  <input {% if data.release == 'concept' %}checked{% endif %} class="govuk-radios__input" data-option="concept" id="concept" name="release" type="radio" value="concept">
+                  <label class="govuk-label govuk-radios__label" for="concept"><strong>Concept / latest designs</strong></label>
+              </div>
+              <div class="govuk-radios__item">
+                  <input {% if data.release == 'b1' %}checked{% endif %} class="govuk-radios__input" data-option="b1" id="b1" name="release" type="radio" value="b1">
+                  <label class="govuk-label govuk-radios__label" for="b1"><strong>Buffalo 1.0 MVP</strong></label>
+              </div>
+          </div>
+      </fieldset>
+    </div>
+
+    <!-- Start from -->
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Start journey from</legend>
+          <div class="govuk-radios" data-module="govuk-radios">
+
+            <div class="govuk-radios__item">
+              <input {% if data.startFrom == 'si' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-2" id="startFrom-2" name="startFrom" type="radio" value="si" >
+              <label class="govuk-label govuk-radios__label" for="startFrom-2">Sign in (SFD)</label>
+            </div>
+            <div class="govuk-radios__item">
+                <input {% if data.startFrom == 'st' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-1" id="startFrom-1" name="startFrom" type="radio" value="st" >
+                <label class="govuk-label govuk-radios__label" for="startFrom-1">Start page (SFD)</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input {% if data.startFrom == 'bl' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-3" id="startFrom-3" name="startFrom" type="radio" value="bl" >
+              <label class="govuk-label govuk-radios__label" for="startFrom-3">Businesses list</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input {% if data.startFrom == 'home' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-4" id="startFrom-4" name="startFrom" type="radio" value="home" >
+              <label class="govuk-label govuk-radios__label" for="startFrom-4">Home - business page</label>
+            </div>
+
+          </div>
+      </fieldset>
+    </div>
+
   </div>
 
-  <div class="govuk-grid-column-two-thirds">
+</div>
 
-    <a class="govuk-button" href="business-home?business=1">Start prototype</a>
-    <h3 class="govuk-heading-s">Alternative starting points:</h3>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <p class="govuk-body" id="start-url" style="display:none">
+            <a href="#" role="button" draggable="false" class="govuk-button">Start prototype</a>
+        </p>
+
+        <p class="govuk-body" >
+            <span class="govuk-!-font-weight-bold">Shareable link (uses settings made above):</span><br>
+            <span class="govuk-body" id="start-url-label" style="display:none"></span>
+        </p>
+
+        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    </div>
+</div>
+
+    <!-- <a class="govuk-button" href="business-home?business=1">Start prototype</a> -->
+    <!-- <h3 class="govuk-heading-s">Alternative starting points:</h3>
     <ul class="govuk-list govuk-list--bullet">
       <li><a class="govuk-link--no-visited-state" href="start-rps-start-og?business=1">RPS start page</a></li>
       <li><a class="govuk-link--no-visited-state" href="start-rps-sign-in?business=1">RPS sign in</a></li>
@@ -37,10 +99,12 @@
       <li><a class="govuk-link--no-visited-state" href="payment-action-text?business=1">Payment - action - text message</a></li>
       <li><a class="govuk-link--no-visited-state" href="payment-action-letter?business=1">Payment - action - letter</a></li>
       <li><a class="govuk-link--no-visited-state" href="vets-claim-approved-email?business=1">Vets visit - Claim approved email</a></li>
-    </ul>
+    </ul> -->
+  
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <!-- <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"> -->
     <h2 class="govuk-heading-m">
       Design history
     </h2>
@@ -62,66 +126,325 @@
     </ul>
     
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-    <h2 class="govuk-heading-m">
-      Page links
-    </h2>
 
-    <h3 class="govuk-heading-s">
-      Notifications
-    </h3>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link--no-visited-state" href="payment-next-email">Payment - upcoming - email</a></li>
-      <li><a class="govuk-link--no-visited-state" href="payment-action-text">Payment - action - text message</a></li>
-      <li><a class="govuk-link--no-visited-state" href="payment-action-letter">Payment - action - letter</a></li>
-    </ul>
+  </div>
+</div>
+  
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
 
-    <hr>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--xl">Full page list</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Name</th>
+          <th scope="col" class="govuk-table__header">Prototype link</th>
+          <th scope="col" class="govuk-table__header">Release</th>
+        </tr>
+      </thead>
+      {% set _pages = [
 
-    <h3 class="govuk-heading-s">
-      Start
-    </h3>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link--no-visited-state" href="start-rps-start-og">RPS start page</a></li>
-      <li><a class="govuk-link--no-visited-state" href="start-rps-sign-in">RPS sign in</a></li>
-      <li><a class="govuk-link--no-visited-state" href="start-sfd-start">SFD start page</a></li>
-      <li><a class="govuk-link--no-visited-state" href="start-sfd-sign-in">SFD sign in</a></li>
-      <li><a class="govuk-link--no-visited-state" href="businesses-list">Your businesses list</a></li>
-    </ul>
+        {
+          "type": "HEADING",
+          "name": "Notifications"
+        },
+        {
+          "name": "Upcoming payment (email)",
+          "url": "payment-next-email",
+          "release": "Concept"
+        },
+        {
+          "name": "Action needed (text message)",
+          "url": "payment-action-text",
+          "release": "Concept"
+        },
+        {
+          "name": "Action needed (letter)",
+          "url": "payment-action-letter",
+          "release": "Concept"
+        },
 
-    <h3 class="govuk-heading-s">
-      Landing, your account and details
-    </h3>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link--no-visited-state" href="business-home">Home</a></li>
-      <li>
-        <a class="govuk-link--no-visited-state" href="business-payments">Payments - upcoming</a>
-        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-0 govuk-!-margin-bottom-0">
-          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=1">Upcoming payment - confirmed</a></li>
-          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=3">Upcoming payment - planned</a></li>
-          <li><a class="govuk-link--no-visited-state" href="business-payments-detail?payment=2">Upcoming payment - action needed</a></li>
-        </ul>
-      </li>
-      <li>
-        <a class="govuk-link--no-visited-state" href="business-payments-prev">Payments - past</a>
-        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-0 govuk-!-margin-bottom-0">
-          <li><a class="govuk-link--no-visited-state" href="business-payments-prev-detail?payment=84">Past payment - paid</a></li>
-        </ul>
-      </li>
-      <li><a class="govuk-link--no-visited-state" href="account-home">Your account</a></li>
-      <li><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></li>
-      <li><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></li>
-    </ul>
+        {
+          "type": "HEADING",
+          "name": "Start pages and sign in"
+        },
+        {
+          "name": "RPS start page",
+          "url": "start-rps-start-og",
+          "release": "-"
+        },
+        {
+          "name": "SFD start page",
+          "url": "start-sfd-start",
+          "release": "Buffalo 1.X"
+        },
+        {
+          "name": "RPS sign in",
+          "url": "start-rps-sign-in",
+          "release": "-"
+        },
+        {
+          "name": "SFD sign in",
+          "url": "start-sfd-sign-in",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Your businesses list",
+          "url": "businesses-list",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Home / business page"
+        },
+        {
+          "name": "Home / business page",
+          "url": "business-home",
+          "release": "Concept"
+        },
+        {
+          "name": "Home / business page (Buffalo)",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Your account"
+        },
+        {
+          "name": "Your account",
+          "url": "account-home",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Personal details"
+        },
+        {
+          "name": "Personal details - view all",
+          "url": "details-personal-details",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "Personal details - change - mobile",
+          "url": "details-change-mob-personal",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Personal details - check - mobile",
+          "url": "details-check-mob-personal",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Personal details - updated - mobile",
+          "url": "details-mob-personal-updated",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Personal details - all other change flows",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+       
+        {
+          "type": "HEADING",
+          "name": "Business details"
+        },
+        {
+          "name": "Business details - view all",
+          "url": "details-business-details",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Business details - change - mobile",
+          "url": "details-change-mob-business",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Business details - check - mobile",
+          "url": "details-check-mob-business",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Business details - updated - mobile",
+          "url": "details-mob-business-updated",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Business details - all other change flows",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
 
 
-    <h3 class="govuk-heading-s">
-      Vet visits Manage your claims screen and email
-    </h3>
-    <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link--no-visited-state" href="vets-claim-approved-email">Claim approved email</a></li>
-      <li><a class="govuk-link--no-visited-state" href="vets-manage-your-claims">Manage your claims</a></li>
-      <li><a class="govuk-link--no-visited-state" href="vets-ts-cs">Terms and conditions</a></li>
-      <li><a class="govuk-link--no-visited-state" href="vets-agreement-summary">Agreement summary</a></li>
-    </ul>
+        {
+          "type": "HEADING",
+          "name": "Payments"
+        },
+        {
+          "name": "Payments - upcoming payments",
+          "url": "business-payments",
+          "release": "Concept"
+        },
+        {
+          "name": "Upcoming payment detail - confirmed",
+          "url": "business-payments-detail?payment=1",
+          "release": "Concept"
+        },
+        {
+          "name": "Upcoming payment detail - planned",
+          "url": "business-payments-detail?payment=3",
+          "release": "Concept"
+        },
+        {
+          "name": "Upcoming payment detail - action needed",
+          "url": "business-payments-detail?payment=2",
+          "release": "Concept"
+        },
+        {
+          "name": "Payments - past payments",
+          "url": "business-payments-prev",
+          "release": "Concept"
+        },
+        {
+          "name": "Past payment detail - paid",
+          "url": "business-payments-prev-detail?payment=84",
+          "release": "Concept"
+        },
+
+
+        {
+          "type": "HEADING",
+          "name": "Miscellaneous pages"
+        },
+        {
+          "name": "Cookies page",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Change cookies settings (if we have non-essential cookies, else not needed)",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Cookie banner (if we have non-essential cookies, else not needed)",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Accessibility statement",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Contact us/help page",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Privacy policy",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Personal information charter",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Signed out page",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Service unavailable (503/shutter page)",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Problem with service (500/server error page)",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Page not found (404)",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+
+        {
+          "type": "HEADING",
+          "name": "Vet visits Manage your claims screen and email"
+        },
+        {
+          "name": "Claim approved email",
+          "url": "vets-claim-approved-email",
+          "release": "-"
+        },
+        {
+          "name": "Manage your claims",
+          "url": "vets-manage-your-claims",
+          "release": "-"
+        },
+        {
+          "name": "Terms and conditions",
+          "url": "vets-ts-cs",
+          "release": "-"
+        },
+        {
+          "name": "Agreement summary",
+          "url": "vets-agreement-summary",
+          "release": "-"
+        }
+
+      ] %}
+      <tbody class="govuk-table__body">
+        {% for _page in _pages %}
+          {% if _page.type == "HEADING" %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header" colspan="3"><h2 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-2">{{_page.name}}</h2></th>
+          </tr>
+          {% else %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header" {% if _page.todo %}style="color:red"{% endif %}>
+              {{_page.name}}
+            </th>
+            <td class="govuk-table__cell">
+              {% if _page.todo %}
+                <span style="color:red">TO DO</span>
+              {% else %}
+                <a class="govuk-link govuk-link--no-visited-state" href="{{_page.url}}">/{{_page.url}}</a>
+              {% endif %}
+            </td>
+            <td class="govuk-table__cell" style="min-width: 200px;">
+              {% if _page.release == "Concept" %}💡 {% elif _page.release == "Buffalo 1.X" or _page.release == "Buffalo 1.0 MVP"  %}🐃 {% endif %}{{_page.release}}
+            </td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+
   </div>
 
   <!-- right third of page to link to relevant mural boards and UR findings -->
@@ -155,4 +478,77 @@
   </div> -->
 </div>
 
+{% endblock %}
+
+{% block pageScriptsAfter %}
+<script>
+    $(document).ready(function(){
+
+        var _startURL = $("#start-url a"),
+            _startURLLabel = $("#start-url-label"),
+            _options = $("[data-option]")
+
+        _options.change(function(){
+            setValues()
+        }).trigger("change");
+
+        _options.on('input', function() {
+            setValues()
+        }).trigger("input");
+
+
+        //SET VALUES
+        function setValues(){
+
+            //Base URL
+            var _urlBase = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + {{data.version|dump|safe}} + "/";
+
+
+            //Queries
+            var _urlStartFrom = $('input[name=startFrom]:checked').val(),
+                _urlPage = "start-sfd-sign-in",
+                _urlNewApplication = "";
+            
+            switch(_urlStartFrom) {
+                case "st":
+                  _urlPage = "start-sfd-start"
+                  break;
+                case "si":
+                  _urlPage = "start-sfd-sign-in"
+                  break;
+                case "bl":
+                  _urlPage = "businesses-list"
+                  break;
+                case "home":
+                  _urlPage = "business-home"
+                  break;
+                default:
+                _urlPage = "start-sfd-sign-in"
+            }
+            var _urlRelease = "release=" + $('input[name=release]:checked').val();
+                // _urlPageQuery = "&start=" + _urlStartFrom;
+                // _urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val(),
+                // _urlshutter = "&shutter=" + _options.filter("#shutter").val(),
+                // _urlcookies = "&c=" + _options.filter("#cookies").val(),
+                // _urlinviteScenario = "&adb2cLink=" + _options.filter("#inviteScenario").val();
+
+
+            //Queries combined
+            var _urlPageQueries = _urlPage + "?" + _urlRelease;
+
+            //URL text
+            var _startURLText = _urlBase + _urlPageQueries,
+                _startURLHREF =  _urlPageQueries;
+            // update label
+            _startURLLabel
+                .text(_startURLText)
+                .show()
+            //update link
+            _startURL
+                .attr("href", _startURLHREF)
+                .parent().show()
+        }
+
+    });
+</script>
 {% endblock %}
