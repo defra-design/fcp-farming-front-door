@@ -12,7 +12,7 @@
 
   {% include "_common/login-nav.html" %}
 
-  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+  <a href="details-change-mob-personal" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -22,8 +22,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-
-    <form action="details-mob-personal-updated" method="post">
+    <form method="POST" novalidate>
 
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -38,7 +37,7 @@
               text: "Mobile phone number"
             },
             value: {
-              text: data['mobNumberPers'] or "07700900967"
+              text: myData.newMobNumberPers or myData.mobNumberPers
 
             },
             actions: {
@@ -56,6 +55,7 @@
       <button type="submit" class="govuk-button" data-module="govuk-button">
         Submit
       </button>
+
     </fieldset>
 
       </form>

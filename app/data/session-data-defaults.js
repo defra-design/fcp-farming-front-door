@@ -70,6 +70,7 @@ module.exports = {
     //si = sign in (sfd)
     //bl - business list
     //home - home / business page
+  "includeValidation": "false", //used to determine whether any forms will throw validation errors or not. good to turn on for user testing.
 
   businesses, //businesses list
   user: {

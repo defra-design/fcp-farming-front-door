@@ -17,13 +17,18 @@
 {% block content %}
 
 <div class="govuk-grid-row">
-
   <div class="govuk-grid-column-two-thirds">
+
     <h1 class="govuk-heading-xl">
       Prototype version 7
       <!-- <span class="govuk-caption-xl">Private Beta. Round 1: 16 to 20 December 2024</span> -->
     </h1>
 
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
 
     <!-- Release -->
     <div class="govuk-form-group">
@@ -69,8 +74,18 @@
       </fieldset>
     </div>
 
-  </div>
+    <!-- Include validation checking -->
+    <div class="govuk-form-group">
+      <label class="govuk-label" >
+        Include validation
+      </label>
+      <select class="govuk-select" style="min-width: 100%" id="includeValidation" name="includeValidation" data-option="includeValidation">
+          <option {% if data.includeValidation == 'true' %}selected{% endif %} value="true">Yes (throw errors)</option>
+          <option {% if data.includeValidation == 'false' %}selected{% endif %} value="false">No (allow empty fields)</option>
+      </select>
+    </div>
 
+  </div>
 </div>
 
 <div class="govuk-grid-row">
@@ -139,6 +154,7 @@
       <caption class="govuk-table__caption govuk-table__caption--xl">Full page list</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">ID</th>
           <th scope="col" class="govuk-table__header">Name</th>
           <th scope="col" class="govuk-table__header">Prototype link</th>
           <th scope="col" class="govuk-table__header">Release</th>
@@ -148,27 +164,7 @@
 
         {
           "type": "HEADING",
-          "name": "Notifications"
-        },
-        {
-          "name": "Upcoming payment (email)",
-          "url": "payment-next-email",
-          "release": "Concept"
-        },
-        {
-          "name": "Action needed (text message)",
-          "url": "payment-action-text",
-          "release": "Concept"
-        },
-        {
-          "name": "Action needed (letter)",
-          "url": "payment-action-letter",
-          "release": "Concept"
-        },
-
-        {
-          "type": "HEADING",
-          "name": "Start pages and sign in"
+          "name": "Start pages"
         },
         {
           "name": "RPS start page",
@@ -180,6 +176,12 @@
           "url": "start-sfd-start",
           "release": "Buffalo 1.X"
         },
+        
+
+        {
+          "type": "HEADING",
+          "name": "Sign in"
+        },
         {
           "name": "RPS sign in",
           "url": "start-rps-sign-in",
@@ -187,26 +189,13 @@
         },
         {
           "name": "SFD sign in",
+          "id": "si01",
           "url": "start-sfd-sign-in",
           "release": "Buffalo 1.0 MVP"
         },
         {
-          "name": "Your businesses list",
-          "url": "businesses-list",
-          "release": "Buffalo 1.0 MVP"
-        },
-
-        {
-          "type": "HEADING",
-          "name": "Home / business page"
-        },
-        {
-          "name": "Home / business page",
-          "url": "business-home",
-          "release": "Concept"
-        },
-        {
-          "name": "Home / business page (Buffalo)",
+          "name": "SFD reset password",
+          "id": "si02",
           "url": "",
           "release": "Buffalo 1.0 MVP",
           "todo": true
@@ -214,76 +203,382 @@
 
         {
           "type": "HEADING",
-          "name": "Your account"
+          "name": "Business pages"
         },
         {
-          "name": "Your account",
+          "name": "Your businesses list",
+          "id": "bp01",
+          "url": "businesses-list",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "SFD Home/Business Page (Buffalo 1.0 MVP)",
+          "id": "bp02",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "SFD Home/Business Page (concept)",
+          "id": "bp02",
+          "url": "business-home",
+          "release": "Concept"
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Manage account"
+        },
+        {
+          "name": "Account Home",
+          "id": "ma01",
           "url": "account-home",
           "release": "Buffalo 1.0 MVP"
         },
+
+
+
 
         {
           "type": "HEADING",
           "name": "Personal details"
         },
         {
-          "name": "Personal details - view all",
+          "name": "Manage personal details",
+          "id": "pd01",
           "url": "details-personal-details",
           "release": "Buffalo 1.0 MVP"
         },
 
         {
-          "name": "Personal details - change - mobile",
-          "url": "details-change-mob-personal",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Personal details - check - mobile",
-          "url": "details-check-mob-personal",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Personal details - updated - mobile",
-          "url": "details-mob-personal-updated",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Personal details - all other change flows",
+          "name": "Full name (change) - personal details",
+          "id": "pd02",
           "url": "",
           "release": "Buffalo 1.0 MVP",
           "todo": true
         },
+        {
+          "name": "Full name (check) - personal details",
+          "id": "pd03",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "Date of birth (change) - personal details",
+          "id": "pd04",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Date of birth (check) - personal details",
+          "id": "pd05",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "Address (change) - personal details",
+          "id": "pd06",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Address (check) - personal details",
+          "id": "pd07",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "Telephone (change) - personal details",
+          "id": "pd08",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Telephone (check) - personal details",
+          "id": "pd09",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "Mobile (change) - personal details",
+          "id": "pd10",
+          "url": "details-change-mob-personal",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Mobile (check) - personal details",
+          "id": "pd11",
+          "url": "details-check-mob-personal",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "Email address (change) - personal details",
+          "id": "pd12",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Email address (check) - personal details",
+          "id": "pd13",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
        
         {
           "type": "HEADING",
           "name": "Business details"
         },
         {
-          "name": "Business details - view all",
+          "name": "Manage business details",
+          "id": "bd01",
           "url": "details-business-details",
           "release": "Buffalo 1.0 MVP"
         },
+
         {
-          "name": "Business details - change - mobile",
-          "url": "details-change-mob-business",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Business details - check - mobile",
-          "url": "details-check-mob-business",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Business details - updated - mobile",
-          "url": "details-mob-business-updated",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Business details - all other change flows",
+          "name": "Business name (change) - business details",
+          "id": "bd02",
           "url": "",
           "release": "Buffalo 1.0 MVP",
           "todo": true
         },
+
+        {
+          "name": "Business name (check) - business details",
+          "id": "bd03",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "Address (change) - business details",
+          "id": "bd04",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "Address (check) - business details",
+          "id": "bd05",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "Telephone (change) - business details",
+          "id": "bd06",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "Telephone (check) - business details",
+          "id": "bd07",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+
+        {
+          "name": "Mobile (change) - business details",
+          "id": "bd08",
+          "url": "details-change-mob-business",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Mobile (check) - business details",
+          "id": "bd09",
+          "url": "details-check-mob-business",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+
+        {
+          "name": "Email address (change) - business details",
+          "id": "bd10",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Email address (check) - business details",
+          "id": "bd11",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "name": "VAT registration number (change) - business details",
+          "id": "bd12",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "VAT registration number (add) - business details",
+          "id": "bd13",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "VAT registration number (check) - business details",
+          "id": "bd14",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        
+        {
+          "name": "Legal status (change) - business details",
+          "id": "bd15",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Legal status (check) - business details",
+          "id": "bd16",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        
+        {
+          "name": "Business type (change) - business details",
+          "id": "bd17",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Business type (check) - business details",
+          "id": "bd18",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+
+
+
+        
+        
+
+
+        
+
+
+        {
+          "type": "HEADING",
+          "name": "Miscellaneous pages"
+        },
+        {
+          "name": "Cookies page",
+          "id": "mp01",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Accessibility statement",
+          "id": "mp02",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Contact us/help",
+          "id": "mp03",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Privacy policy",
+          "id": "mp04",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Personal information charter",
+          "id": "mp05",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Signed out page",
+          "id": "mp06",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Auto signed out (TBC if MVP/NEEDED)",
+          "id": "mp07",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Terms and conditions (TBC if MVP/NEEDED)",
+          "id": "mp08",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Service errors"
+        },
+        {
+          "name": "Service unavailable (503/shutter page)",
+          "id": "se01",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Problem with service (500/server error page)",
+          "id": "se02",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+        {
+          "name": "Page not found (404)",
+          "id": "se03",
+          "url": "",
+          "release": "Buffalo 1.0 MVP",
+          "todo": true
+        },
+
 
 
         {
@@ -321,76 +616,24 @@
           "release": "Concept"
         },
 
-
         {
           "type": "HEADING",
-          "name": "Miscellaneous pages"
+          "name": "Payments notifications"
         },
         {
-          "name": "Cookies page",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "name": "Upcoming payment (email)",
+          "url": "payment-next-email",
+          "release": "Concept"
         },
         {
-          "name": "Change cookies settings (if we have non-essential cookies, else not needed)",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "name": "Action needed (text message)",
+          "url": "payment-action-text",
+          "release": "Concept"
         },
         {
-          "name": "Cookie banner (if we have non-essential cookies, else not needed)",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
-        },
-        {
-          "name": "Accessibility statement",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
-        },
-        {
-          "name": "Contact us/help page",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
-        },
-        {
-          "name": "Privacy policy",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
-        },
-        {
-          "name": "Personal information charter",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
-        },
-        {
-          "name": "Signed out page",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
-        },
-        {
-          "name": "Service unavailable (503/shutter page)",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
-        },
-        {
-          "name": "Problem with service (500/server error page)",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
-        },
-        {
-          "name": "Page not found (404)",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "name": "Action needed (letter)",
+          "url": "payment-action-letter",
+          "release": "Concept"
         },
 
 
@@ -424,10 +667,13 @@
         {% for _page in _pages %}
           {% if _page.type == "HEADING" %}
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header" colspan="3"><h2 class="govuk-heading-m govuk-!-margin-top-4 govuk-!-margin-bottom-2">{{_page.name}}</h2></th>
+            <th scope="row" class="govuk-table__header" colspan="4"><h2 class="govuk-heading-m govuk-!-margin-top-6 govuk-!-margin-bottom-2">{{_page.name}}</h2></th>
           </tr>
           {% else %}
           <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header" {% if _page.todo %}style="color:red"{% endif %}>
+              {{_page.id}}.
+            </th>
             <th scope="row" class="govuk-table__header" {% if _page.todo %}style="color:red"{% endif %}>
               {{_page.name}}
             </th>
@@ -527,16 +773,16 @@
                 default:
                 _urlPage = "start-sfd-sign-in"
             }
-            var _urlRelease = "release=" + $('input[name=release]:checked').val();
+            var _urlRelease = "&release=" + $('input[name=release]:checked').val(),
                 // _urlPageQuery = "&start=" + _urlStartFrom;
-                // _urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val(),
+                _urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val();
                 // _urlshutter = "&shutter=" + _options.filter("#shutter").val(),
                 // _urlcookies = "&c=" + _options.filter("#cookies").val(),
                 // _urlinviteScenario = "&adb2cLink=" + _options.filter("#inviteScenario").val();
 
 
             //Queries combined
-            var _urlPageQueries = _urlPage + "?" + _urlRelease;
+            var _urlPageQueries = _urlPage + "?r=t" + _urlRelease + _urlincludeValidation;
 
             //URL text
             var _startURLText = _urlBase + _urlPageQueries,

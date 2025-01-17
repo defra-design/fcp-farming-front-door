@@ -32,6 +32,20 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+    {% if myData.showNotification == "true" %}
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          {{myData.notifications.message}}
+        </h3>
+      </div>
+    </div>
+    {% endif %}
 
     <h1 class="govuk-heading-l">
      View and update your personal details
@@ -103,14 +117,10 @@
           Mobile
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['mobNumberPers'] %}  
-          {{ data['mobNumberPers'] }}
-          {% else %}  
-          07700900967
-          {% endif %}
+          {{myData.mobNumberPers}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="details-change-mob-personal">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="details-change-mob-personal?newChange=true">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
