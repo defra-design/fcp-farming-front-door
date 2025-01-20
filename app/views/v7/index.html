@@ -248,34 +248,38 @@
           "name": "Manage personal details",
           "id": "pd01",
           "url": "details-personal-details",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Manage personal details - telephone changed banner",
-          "id": "pd01",
-          "url": "details-personal-details?telchanged=true&changed=true",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Manage personal details - mobile changed banner",
-          "id": "pd01",
-          "url": "details-personal-details?mobchanged=true&changed=true",
-          "release": "Buffalo 1.0 MVP"
+          "release": "Buffalo 1.0 MVP",
+          variants: [
+            {
+              "name": "name changed banner",
+              "url": "details-personal-details?namechanged=true&changed=true"
+            },
+            {
+              "name": "telephone changed banner",
+              "url": "details-personal-details?telchanged=true&changed=true"
+            },
+            {
+              "name": "mobile changed banner",
+              "url": "details-personal-details?mobchanged=true&changed=true"
+            },
+            {
+              "name": "email changed banner",
+              "url": "details-personal-details?emailchanged=true&changed=true"
+            }
+          ]
         },
 
         {
           "name": "Full name (change) - personal details",
           "id": "pd02",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "personal-details-name-change",
+          "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Full name (check) - personal details",
           "id": "pd03",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "personal-details-name-check",
+          "release": "Buffalo 1.0 MVP"
         },
 
         {
@@ -337,16 +341,14 @@
         {
           "name": "Email address (change) - personal details",
           "id": "pd12",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "personal-details-email-change",
+          "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Email address (check) - personal details",
           "id": "pd13",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "personal-details-email-check",
+          "release": "Buffalo 1.0 MVP"
         },
 
        
@@ -705,7 +707,15 @@
               {% if _page.todo %}
                 <span style="color:red">TO DO</span>
               {% else %}
-                <a class="govuk-link govuk-link--no-visited-state" href="{{_page.url}}">/{{_page.url}}</a>
+                <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="{{_page.url}}">/{{_page.url}}</a></p>
+                {% if _page.variants %}
+                  <p class="govuk-body govuk-!-margin-bottom-0">Variants:</p>
+                  <ul class="govuk-list govuk-list--bullet">
+                  {% for _variant in _page.variants %}
+                    <li><a class="govuk-link govuk-link--no-visited-state" href="{{_variant.url}}">{{_variant.name}}</a></li>
+                  {% endfor %}
+                  </ul>
+                {% endif %}
               {% endif %}
             </td>
             <td class="govuk-table__cell" style="min-width: 200px;">

@@ -75,16 +75,150 @@ module.exports = function (router,_myData) {
         }
 
         // Notification banner messages
+        if(req.query.namechanged == "true"){
+            // Adds space after title if a title was entered
+            var _titleValue = req.session.myData.nameTitlePers || ""
+            if (_titleValue != ""){
+                var _titleValue = _titleValue + " "
+            }
+
+            // Adds space after middle names if a title was entered
+            var _middleValue = req.session.myData.nameMiddlePers || ""
+            if (_middleValue != ""){
+                var _middleValue = _middleValue + " "
+            }
+            req.session.myData.notifications.message = "[notification banner - name changed to " + _titleValue + req.session.myData.nameFirstPers + " " + _middleValue + req.session.myData.nameLastPers + "]"
+        }
         if(req.query.telchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberPers + "]"
         }
         if(req.query.mobchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - mob changed to " + req.session.myData.mobNumberPers + "]"
         }
+        if(req.query.emailchanged == "true"){
+            req.session.myData.notifications.message = "[notification banner - email changed to " + req.session.myData.emailPers + "]"
+        }
         
         res.render(version + '/details-personal-details', {
             myData: req.session.myData
         });
+    });
+
+    //personal details - change name
+    router.get('/' + version + '/personal-details-name-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newNameTitlePers = ""
+            req.session.myData.newNameFirstPers = ""
+            req.session.myData.newNameMiddlePers = ""
+            req.session.myData.newNameLastPers = ""
+        }
+        res.render(version + '/personal-details-name-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-name-change', function (req, res) {
+
+        req.session.myData.newNameTitlePers = req.body.nameTitlePers.trim()
+        req.session.myData.newNameFirstPers = req.body.nameFirstPers.trim()
+        req.session.myData.newNameMiddlePers = req.body.nameMiddlePers.trim()
+        req.session.myData.newNameLastPers = req.body.nameLastPers.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newNameFirstPers = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
+            req.session.myData.newNameLastPers = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
+        }
+
+        if(!req.session.myData.newNameFirstPers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.nameFirstPers = {
+                "anchor": "nameFirstPers",
+                "message": "[error message - blank - change first name]"
+            }
+        }
+        if(!req.session.myData.newNameLastPers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.nameLastPers = {
+                "anchor": "nameLastPers",
+                "message": "[error message - blank - change last name]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/personal-details-name-change', {
+                myData: req.session.myData
+            });
+        } else {
+            res.redirect(301, '/' + version + '/personal-details-name-check');
+        }
+        
+    });
+
+    //personal details - check name
+    router.get('/' + version + '/personal-details-name-check', function (req, res) {
+        res.render(version + '/personal-details-name-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-name-check', function (req, res) {
+        req.session.myData.nameTitlePers = req.session.myData.newNameTitlePers
+        req.session.myData.nameFirstPers = req.session.myData.newNameFirstPers
+        req.session.myData.nameMiddlePers = req.session.myData.newNameMiddlePers
+        req.session.myData.nameLastPers = req.session.myData.newNameLastPers
+
+        req.session.myData.newNameTitlePers = ""
+        req.session.myData.newNameFirstPers = ""
+        req.session.myData.newNameMiddlePers = ""
+        req.session.myData.newNameLastPers = ""
+
+        res.redirect(301, '/' + version + '/details-personal-details?changed=true&namechanged=true');
+    });
+
+    //personal details - change telephone
+    router.get('/' + version + '/personal-details-tel-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newTelNumberPers = ""
+        }
+        res.render(version + '/personal-details-tel-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-tel-change', function (req, res) {
+
+        req.session.myData.newTelNumberPers = req.body.telNumberPers.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newTelNumberPers = req.session.myData.newTelNumberPers || req.session.myData.telNumberPers
+        }
+
+        if(!req.session.myData.newTelNumberPers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.telNumberPers = {
+                "anchor": "telNumberPers",
+                "message": "[error message - blank - change telephone personal]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/personal-details-tel-change', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.telNumberPers = req.session.myData.newTelNumberPers
+            res.redirect(301, '/' + version + '/personal-details-tel-check');
+        }
+        
+    });
+
+    //personal details - check telephone
+    router.get('/' + version + '/personal-details-tel-check', function (req, res) {
+        res.render(version + '/personal-details-tel-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-tel-check', function (req, res) {
+        req.session.myData.telNumberPers = req.session.myData.newTelNumberPers
+        req.session.myData.newTelNumberPers = ""
+        res.redirect(301, '/' + version + '/details-personal-details?changed=true&telchanged=true');
     });
 
     //personal details - change mobile
@@ -143,53 +277,55 @@ module.exports = function (router,_myData) {
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&mobchanged=true');
     });
 
-    //personal details - change telephone
-    router.get('/' + version + '/personal-details-tel-change', function (req, res) {
+    //personal details - change email
+    router.get('/' + version + '/personal-details-email-change', function (req, res) {
         if(req.query.newChange){
-            req.session.myData.newTelNumberPers = ""
+            req.session.myData.newEmailPers = ""
         }
-        res.render(version + '/personal-details-tel-change', {
+        res.render(version + '/personal-details-email-change', {
             myData: req.session.myData
         });
     });
-    router.post('/' + version + '/personal-details-tel-change', function (req, res) {
+    router.post('/' + version + '/personal-details-email-change', function (req, res) {
 
-        req.session.myData.newTelNumberPers = req.body.telNumberPers.trim()
+        req.session.myData.newEmailPers = req.body.emailPers.trim()
 
         if(req.session.myData.includeValidation == "false"){
-            req.session.myData.newTelNumberPers = req.session.myData.newTelNumberPers || req.session.myData.telNumberPers
+            req.session.myData.newEmailPers = req.session.myData.newEmailPers || req.session.myData.emailPers
         }
 
-        if(!req.session.myData.newTelNumberPers){
+        if(!req.session.myData.newEmailPers){
             req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.telNumberPers = {
-                "anchor": "telNumberPers",
-                "message": "[error message - blank - change telephone personal]"
+            req.session.myData.validationErrors.emailPers = {
+                "anchor": "emailPers",
+                "message": "[error message - blank - change email personal]"
             }
         }
 
         if(req.session.myData.validationError == "true") {
-            res.render(version + '/personal-details-tel-change', {
+            res.render(version + '/personal-details-email-change', {
                 myData: req.session.myData
             });
         } else {
-            // req.session.myData.telNumberPers = req.session.myData.newTelNumberPers
-            res.redirect(301, '/' + version + '/personal-details-tel-check');
+            // req.session.myData.emailPers = req.session.myData.newEmailPers
+            res.redirect(301, '/' + version + '/personal-details-email-check');
         }
         
     });
 
-    //personal details - check telephone
-    router.get('/' + version + '/personal-details-tel-check', function (req, res) {
-        res.render(version + '/personal-details-tel-check', {
+    //personal details - check email
+    router.get('/' + version + '/personal-details-email-check', function (req, res) {
+        res.render(version + '/personal-details-email-check', {
             myData: req.session.myData
         });
     });
-    router.post('/' + version + '/personal-details-tel-check', function (req, res) {
-        req.session.myData.telNumberPers = req.session.myData.newTelNumberPers
-        req.session.myData.newTelNumberPers = ""
-        res.redirect(301, '/' + version + '/details-personal-details?changed=true&telchanged=true');
+    router.post('/' + version + '/personal-details-email-check', function (req, res) {
+        req.session.myData.emailPers = req.session.myData.newEmailPers
+        req.session.myData.newEmailPers = ""
+        res.redirect(301, '/' + version + '/details-personal-details?changed=true&emailchanged=true');
     });
+
+    
 
 
 

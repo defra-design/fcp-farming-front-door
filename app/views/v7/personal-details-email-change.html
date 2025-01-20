@@ -1,0 +1,87 @@
+{% extends "layouts/main.html" %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Change your personal email address" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">Change your personal email address</h1>
+
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <label class="govuk-label" for="emailPers">
+          New email address
+        </label>
+
+        {% if _inError %}
+        <p id="emailPers-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.emailPers.message}}
+        </p>
+        {% endif %}
+
+        {% set _valueNewEmailPers = myData.newEmailPers or myData.emailPers %}
+        {% if myData.validationErrors.emailPers %}
+            {% set _valueNewEmailPers = myData.newEmailPers %}
+        {% endif %}
+
+        <input class="govuk-input govuk-input--width-20 {% if _inError %}govuk-input--error{% endif %}" id="emailPers" name="emailPers" type="email" autocomplete="email" spellcheck="false" value="{{_valueNewEmailPers}}" {% if _inError %}aria-describedby="emailPers-error"{% endif %}>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
