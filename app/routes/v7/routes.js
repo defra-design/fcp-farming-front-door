@@ -4,21 +4,22 @@ module.exports = function (router,_myData) {
 
     var version = "v7";
 
-    // function setSelectedBusiness(req){
-    //   if(req.query.business){
-    //     console.log(req.query.business)
-    //     req.session.data.businesses.forEach(function(_business, index) {
-    //       if(req.query.business == _business.id.toString()){
-    //         console.log("matched")
-    //         console.log(req.query.business)
-    //         console.log(_business.name)
+    //coverts a number to a month
+    function toMonth(_monthNumber){
 
-    //           req.session.data.selectedBusiness = _business
-    //           console.log(req.session.data.selectedBusiness)
-    //       }
-    //     });
-    //   }
-    // }
+        _monthNumber = _monthNumber - 1
+
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        var month = months[_monthNumber];
+
+        //if not valid month number - November returned as default value
+        if(!month){
+            month = "November"
+        }
+
+        return month
+    }
 
 
     // Every GET and POST
@@ -88,6 +89,9 @@ module.exports = function (router,_myData) {
                 var _middleValue = _middleValue + " "
             }
             req.session.myData.notifications.message = "[notification banner - name changed to " + _titleValue + req.session.myData.nameFirstPers + " " + _middleValue + req.session.myData.nameLastPers + "]"
+        }
+        if(req.query.dobchanged == "true"){
+            req.session.myData.notifications.message = "[notification banner - dob changed to " + req.session.myData.dobDayPers + " " + toMonth(req.session.myData.dobMonthPers) + " " + req.session.myData.dobYearPers + "]"
         }
         if(req.query.addresschanged == "true"){
             // Adds space after address line 2 if a address line 2 was entered
@@ -185,6 +189,83 @@ module.exports = function (router,_myData) {
         req.session.myData.newNameLastPers = ""
 
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&namechanged=true');
+    });
+
+    //personal details - change date of birth
+    router.get('/' + version + '/personal-details-dob-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newDobDayPers = ""
+            req.session.myData.newDobMonthPers = ""
+            req.session.myData.newDobYearPers = ""
+        }
+        res.render(version + '/personal-details-dob-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-dob-change', function (req, res) {
+
+        req.session.myData.newDobDayPers = req.body.dobDayPers.trim()
+        req.session.myData.newDobMonthPers = req.body.dobMonthPers.trim()
+        req.session.myData.newDobYearPers = req.body.dobYearPers.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newDobDayPers = req.session.myData.newDobDayPers || req.session.myData.dobDayPers
+            req.session.myData.newDobMonthPers = req.session.myData.newDobMonthPers || req.session.myData.dobMonthPers
+            req.session.myData.newDobYearPers = req.session.myData.newDobYearPers || req.session.myData.dobYearPers
+        }
+
+        var _anchor = "",
+            _errors = []
+        if(!req.session.myData.newDobYearPers){
+            _anchor = "dobYearPers"
+            req.session.myData.validationErrors.dobYearPers = true
+            _errors.unshift("year")
+        }
+        if(!req.session.myData.newDobMonthPers){
+            _anchor = "dobMonthPers"
+            req.session.myData.validationErrors.dobMonthPers = true
+            _errors.unshift("month")
+        }
+        if(!req.session.myData.newDobDayPers){
+            _anchor = "dobDayPers"
+            req.session.myData.validationErrors.dobDayPers = true
+            _errors.unshift("day")
+        }
+
+        if(!req.session.myData.newDobDayPers || !req.session.myData.newDobMonthPers || !req.session.myData.newDobYearPers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.dobPers = {
+                "anchor": _anchor,
+                "message": "[error message - blank - " + _errors + "]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/personal-details-dob-change', {
+                myData: req.session.myData
+            });
+        } else {
+            res.redirect(301, '/' + version + '/personal-details-dob-check');
+        }
+        
+    });
+
+    //personal details - check date of birth
+    router.get('/' + version + '/personal-details-dob-check', function (req, res) {
+        res.render(version + '/personal-details-dob-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-dob-check', function (req, res) {
+        req.session.myData.dobDayPers = req.session.myData.newDobDayPers
+        req.session.myData.dobMonthPers = req.session.myData.newDobMonthPers
+        req.session.myData.dobYearPers = req.session.myData.newDobYearPers
+
+        req.session.myData.newDobDayPers = ""
+        req.session.myData.newDobMonthPers = ""
+        req.session.myData.newDobYearPers = ""
+
+        res.redirect(301, '/' + version + '/details-personal-details?changed=true&dobchanged=true');
     });
 
      //personal details - change address

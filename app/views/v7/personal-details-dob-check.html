@@ -1,0 +1,59 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your date of birth is correct before submitting" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+
+  {% include "_common/login-nav.html" %}
+
+  <a href="personal-details-dob-change" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your date of birth is correct before submitting     
+      </h1>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Date of birth
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% set _monthValue = myData.newDobMonthPers or myData.dobMonthPers %}
+            {{myData.newDobDayPers or myData.dobDayPers}} {{_monthValue | toMonth }} {{myData.newDobYearPers or myData.dobYearPers}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="personal-details-dob-change">Change<span class="govuk-visually-hidden"> your date of birth</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

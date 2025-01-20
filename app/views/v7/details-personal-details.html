@@ -19,6 +19,9 @@
           <li class="govuk-breadcrumbs__list-item">
             <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
           </li>
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
+          </li>
         </ol>
       </div>
 
@@ -68,10 +71,10 @@
           Date of birth
         </dt>
         <dd class="govuk-summary-list__value">
-          2 November 1970
+          {{myData.dobDayPers}} {{myData.dobMonthPers | toMonth}} {{myData.dobYearPers}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-dob-change?newChange=true">Change<span class="govuk-visually-hidden"> date of birth</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

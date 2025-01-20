@@ -23,3 +23,20 @@ addFilter('shortDate', function shortDate (x) {
  
  });
 
+ addFilter('toMonth', function toMonth (x) {
+
+  x = x - 1
+
+ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+ var month = months[x];
+
+ //if not valid month number - November returned as default value
+ if(!month){
+  month = "November"
+ }
+
+ return `${month}`;
+
+});
+
