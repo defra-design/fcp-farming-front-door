@@ -71,14 +71,14 @@
           Address
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['valleySFD'] == 'True' %}  
-          56 Seahaven Road<br>Crewe<br>CW76 1HH
-          {% else %}  
-          10 Skirbeck Way<br>Maidstone<br>SK22 1DL
-          {% endif %}  
+          {{myData.address1Bus}}<br>
+          {% if myData.address2Bus != "" %}{{myData.address2Bus}}<br>{% endif %}
+          {{myData.addressCityBus}}<br>
+          {% if myData.addressCountyBus != "" %}{{myData.addressCountyBus}}<br>{% endif %}
+          {{myData.addressPostcodeBus}} 
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-change?newChange=true">Change<span class="govuk-visually-hidden"> address</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -108,11 +108,7 @@
           Email address
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['valleySFD'] == 'True' %}  
-          valleyfarm440@gmail.com
-          {% else %}  
-          agilefarmsrus25@gmail.com         
-          {% endif %}
+          {{myData.emailBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> email address</span></a>

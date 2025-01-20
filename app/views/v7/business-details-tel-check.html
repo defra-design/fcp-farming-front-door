@@ -9,10 +9,10 @@
 {% block beforeContent %}
 
   {% include "_common/phase-banner.html" %}
-
+  {% include "_common/sub-header.html" %}
   {% include "_common/login-nav.html" %}
 
-  <a href="business-details-tel-change" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -24,12 +24,10 @@
 
     <form method="POST" novalidate>
 
-    <fieldset class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-        <h1 class="govuk-fieldset__heading">
-          Check your business telephone number is correct before submitting     
-        </h1>
-      </legend>
+      <h1 class="govuk-heading-l">
+        Check your business telephone number is correct before submitting     
+      </h1>
+
       {{ govukSummaryList({
         rows: [
           {
@@ -56,19 +54,11 @@
         Submit
       </button>
 
-    </fieldset>
-
       </form>
-
-
-
-
 
 
   </div>
 </div>
-
-
 
 
 

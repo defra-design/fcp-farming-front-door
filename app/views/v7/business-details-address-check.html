@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName = "Check your personal address is correct before submitting" %}
+{% set pageName = "Check your business address is correct before submitting" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% set yourMessages = "Active" %}
@@ -9,7 +9,7 @@
 {% block beforeContent %}
 
   {% include "_common/phase-banner.html" %}
-
+  {% include "_common/sub-header.html" %}
   {% include "_common/login-nav.html" %}
 
   <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
@@ -25,7 +25,7 @@
     <form method="POST" novalidate>
 
       <h1 class="govuk-heading-l">
-        Check your personal address is correct before submitting     
+        Check your business address is correct before submitting     
       </h1>
 
       <dl class="govuk-summary-list">
@@ -34,16 +34,16 @@
             Address
           </dt>
           <dd class="govuk-summary-list__value">
-            {% set _address2Value = myData.newAddress2Pers or myData.address2Pers %}
-            {% set _addressCountyValue = myData.newAddressCountyPers or myData.addressCountyPers %}
-            {{myData.newAddress1Pers or myData.address1Pers}}<br>
+            {% set _address2Value = myData.newAddress2Bus or myData.address2Bus %}
+            {% set _addressCountyValue = myData.newAddressCountyBus or myData.addressCountyBus %}
+            {{myData.newAddress1Bus or myData.address1Bus}}<br>
             {% if _address2Value != "" %}{{_address2Value}}<br>{% endif %}
-            {{myData.newAddressCityPers or myData.addressCityPers}}<br>
+            {{myData.newAddressCityBus or myData.addressCityBus}}<br>
             {% if _addressCountyValue != "" %}{{_addressCountyValue}}<br>{% endif %}
-            {{myData.newAddressPostcodePers or myData.addressPostcodePers}} 
+            {{myData.newAddressPostcodeBus or myData.addressPostcodeBus}} 
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="personal-details-address-change">Change<span class="govuk-visually-hidden"> address</span></a>
+            <a class="govuk-link" href="business-details-address-change">Change<span class="govuk-visually-hidden"> address</span></a>
           </dd>
         </div>
       </dl>

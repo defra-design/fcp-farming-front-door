@@ -97,15 +97,15 @@ module.exports = function (router,_myData) {
             // Adds space after address line 2 if a address line 2 was entered
             var _address2Value = req.session.myData.address2Pers || ""
             if (_address2Value != ""){
-                var _address2Value = _address2Value + " "
+                var _address2Value = _address2Value + ", "
             }
             // Adds space after address county if a address county was entered
             var _addressCountyValue = req.session.myData.addressCountyPers || ""
             if (_addressCountyValue != ""){
-                var _addressCountyValue = _addressCountyValue + " "
+                var _addressCountyValue = _addressCountyValue + ", "
             }
 
-            req.session.myData.notifications.message = "[notification banner - address changed to " + req.session.myData.address1Pers + " " + _address2Value + req.session.myData.addressCityPers + " " + _addressCountyValue + req.session.myData.addressPostcodePers + "]"
+            req.session.myData.notifications.message = "[notification banner - address changed to " + req.session.myData.address1Pers + ", " + _address2Value + req.session.myData.addressCityPers + ", " + _addressCountyValue + req.session.myData.addressPostcodePers + "]"
         }
         if(req.query.telchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberPers + "]"
@@ -268,8 +268,8 @@ module.exports = function (router,_myData) {
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&dobchanged=true');
     });
 
-     //personal details - change address
-     router.get('/' + version + '/personal-details-address-change', function (req, res) {
+    //personal details - change address
+    router.get('/' + version + '/personal-details-address-change', function (req, res) {
         if(req.query.newChange){
             req.session.myData.newAddress1Pers = ""
             req.session.myData.newAddress2Pers = ""
@@ -328,7 +328,7 @@ module.exports = function (router,_myData) {
         
     });
 
-    //personal details - check name
+    //personal details - check address
     router.get('/' + version + '/personal-details-address-check', function (req, res) {
         res.render(version + '/personal-details-address-check', {
             myData: req.session.myData
@@ -517,16 +517,116 @@ module.exports = function (router,_myData) {
         }
 
         // Notification banner messages
+        if(req.query.addresschanged == "true"){
+            // Adds space after address line 2 if a address line 2 was entered
+            var _address2Value = req.session.myData.address2Bus || ""
+            if (_address2Value != ""){
+                var _address2Value = _address2Value + ", "
+            }
+            // Adds space after address county if a address county was entered
+            var _addressCountyValue = req.session.myData.addressCountyBus || ""
+            if (_addressCountyValue != ""){
+                var _addressCountyValue = _addressCountyValue + ", "
+            }
+
+            req.session.myData.notifications.message = "[notification banner - address changed to " + req.session.myData.address1Bus + ", " + _address2Value + req.session.myData.addressCityBus + ", " + _addressCountyValue + req.session.myData.addressPostcodeBus + "]"
+        }
         if(req.query.telchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberBus + "]"
         }
         if(req.query.mobchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - mob changed to " + req.session.myData.mobNumberBus + "]"
         }
+
+        if(req.query.emailchanged == "true"){
+            req.session.myData.notifications.message = "[notification banner - email changed to " + req.session.myData.emailBus + "]"
+        }
         
         res.render(version + '/details-business-details', {
             myData: req.session.myData
         });
+    });
+
+    //business details - change address
+    router.get('/' + version + '/business-details-address-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newAddress1Bus = ""
+            req.session.myData.newAddress2Bus = ""
+            req.session.myData.newAddressCityBus = ""
+            req.session.myData.newAddressCountyBus = ""
+            req.session.myData.newAddressPostcodeBus = ""
+        }
+        res.render(version + '/business-details-address-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-address-change', function (req, res) {
+
+        req.session.myData.newAddress1Bus = req.body.address1Bus.trim()
+        req.session.myData.newAddress2Bus = req.body.address2Bus.trim()
+        req.session.myData.newAddressCityBus = req.body.addressCityBus.trim()
+        req.session.myData.newAddressCountyBus = req.body.addressCountyBus.trim()
+        req.session.myData.newAddressPostcodeBus = req.body.addressPostcodeBus.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newAddress1Bus = req.session.myData.newAddress1Bus || req.session.myData.address1Bus
+            req.session.myData.newAddressCityBus = req.session.myData.newAddressCityBus || req.session.myData.addressCityBus
+            req.session.myData.newAddressPostcodeBus = req.session.myData.newAddressPostcodeBus || req.session.myData.addressPostcodeBus
+        }
+
+        if(!req.session.myData.newAddress1Bus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.address1Bus = {
+                "anchor": "address1Bus",
+                "message": "[error message - blank - change address line 1]"
+            }
+        }
+        if(!req.session.myData.newAddressCityBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.addressCityBus = {
+                "anchor": "addressCityBus",
+                "message": "[error message - blank - change city]"
+            }
+        }
+        if(!req.session.myData.newAddressPostcodeBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.addressPostcodeBus = {
+                "anchor": "addressPostcodeBus",
+                "message": "[error message - blank - change postcode]"
+            }
+        }
+        
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-address-change', {
+                myData: req.session.myData
+            });
+        } else {
+            res.redirect(301, '/' + version + '/business-details-address-check');
+        }
+        
+    });
+
+    //business details - check address
+    router.get('/' + version + '/business-details-address-check', function (req, res) {
+        res.render(version + '/business-details-address-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-address-check', function (req, res) {
+        req.session.myData.address1Bus = req.session.myData.newAddress1Bus
+        req.session.myData.address2Bus = req.session.myData.newAddress2Bus
+        req.session.myData.addressCityBus = req.session.myData.newAddressCityBus
+        req.session.myData.addressCountyBus = req.session.myData.newAddressCountyBus
+        req.session.myData.addressPostcodeBus = req.session.myData.newAddressPostcodeBus
+        
+        req.session.myData.newAddress1Bus = ""
+        req.session.myData.newAddress2Bus = ""
+        req.session.myData.newAddressCityBus = ""
+        req.session.myData.newAddressCountyBus = ""
+        req.session.myData.newAddressPostcodeBus = ""
+
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&addresschanged=true');
     });
 
     //business details - change mobile
@@ -623,6 +723,54 @@ module.exports = function (router,_myData) {
         req.session.myData.telNumberBus = req.session.myData.newTelNumberBus
         req.session.myData.newTelNumberBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&telchanged=true');
+    });
+
+    //business details - change email
+    router.get('/' + version + '/business-details-email-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newEmailBus = ""
+        }
+        res.render(version + '/business-details-email-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-email-change', function (req, res) {
+
+        req.session.myData.newEmailBus = req.body.emailBus.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newEmailBus = req.session.myData.newEmailBus || req.session.myData.emailBus
+        }
+
+        if(!req.session.myData.newEmailBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.emailBus = {
+                "anchor": "emailBus",
+                "message": "[error message - blank - change email business]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-email-change', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.emailBus = req.session.myData.newEmailBus
+            res.redirect(301, '/' + version + '/business-details-email-check');
+        }
+        
+    });
+
+    //business details - check email
+    router.get('/' + version + '/business-details-email-check', function (req, res) {
+        res.render(version + '/business-details-email-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-email-check', function (req, res) {
+        req.session.myData.emailBus = req.session.myData.newEmailBus
+        req.session.myData.newEmailBus = ""
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&emailchanged=true');
     });
     
 

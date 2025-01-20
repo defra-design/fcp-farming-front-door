@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Check your mobile phone number is correct before submitting" %}
-{% set serviceName="Manage your land and farm businesses" %}
+{% set pageName = "Check your business email address is correct before submitting" %}
+{% set serviceName = "Manage your land and farm businesses" %}
 
 {% set yourMessages = "Active" %}
 
@@ -25,25 +25,25 @@
     <form method="POST" novalidate>
 
       <h1 class="govuk-heading-l">
-        Check your mobile phone number is correct before submitting     
+        Check your business email address is correct before submitting     
       </h1>
 
       {{ govukSummaryList({
         rows: [
           {
             key: {
-              text: "Mobile phone number"
+              text: "Email address"
             },
             value: {
-              text: myData.newMobNumberBus or myData.mobNumberBus
+              text: myData.newEmailBus or myData.emailBus
 
             },
             actions: {
               items: [
                 {
-                  href: "business-details-mob-change",
+                  href: "business-details-email-change",
                   text: "Change",
-                  visuallyHiddenText: "mobile phone number"
+                  visuallyHiddenText: "business email address"
                 }
               ]
             }
@@ -54,13 +54,12 @@
         Submit
       </button>
 
+
       </form>
+
 
   </div>
 </div>
-
-
-
 
 
 {% endblock %}

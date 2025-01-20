@@ -29,11 +29,17 @@ var _myData = {
     "addressPostcodePers": "SK22 1DL",
     "telNumberPers": "01632 960000",
     "mobNumberPers": "07700 900 967",
-    "emailPers": "alfredwaldronf@nordlawderflac.com.test",
+    "emailPers": "alfredwaldron@email.com",
 
+    "address1Bus": "10 Skirbeck Way",
+    "address2Bus": "",
+    "addressCityBus": "Maidstone",
+    "addressCountyBus": "",
+    "addressPostcodeBus": "SK22 1DL",
     "telNumberBus": "01632 960000",
-    "mobNumberBus": "07700 900 967"
-
+    "mobNumberBus": "07700 900 967",
+    "emailBus": "agilefarmsrus25@gmail.com"
+    
 }
 
 router.post('/which-service-answer', function(request, response) {

@@ -1,0 +1,87 @@
+{% extends "layouts/main.html" %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Change your business email address" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">Change your business email address</h1>
+
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <label class="govuk-label" for="emailBus">
+          New email address
+        </label>
+
+        {% if _inError %}
+        <p id="emailBus-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.emailBus.message}}
+        </p>
+        {% endif %}
+
+        {% set _valueNewEmailBus = myData.newEmailBus or myData.emailBus %}
+        {% if myData.validationErrors.emailBus %}
+            {% set _valueNewEmailBus = myData.newEmailBus %}
+        {% endif %}
+
+        <input class="govuk-input govuk-input--width-20 {% if _inError %}govuk-input--error{% endif %}" id="emailBus" name="emailBus" type="email" autocomplete="email" spellcheck="false" value="{{_valueNewEmailBus}}" {% if _inError %}aria-describedby="emailBus-error"{% endif %}>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

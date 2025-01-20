@@ -12,7 +12,7 @@
 
   {% include "_common/login-nav.html" %}
 
-  <a href="personal-details-name-change" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -24,12 +24,9 @@
 
     <form method="POST" novalidate>
 
-    <fieldset class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-        <h1 class="govuk-fieldset__heading">
-          Check your name is correct before submitting     
-        </h1>
-      </legend>
+      <h1 class="govuk-heading-l">
+        Check your name is correct before submitting     
+      </h1>
 
       <!-- Adds space after title if a title was entered -->
       {% set _titleValue = myData.newNameTitlePers or myData.nameTitlePers %}
@@ -69,20 +66,12 @@
         Submit
       </button>
 
-    </fieldset>
 
       </form>
 
 
-
-
-
-
   </div>
 </div>
-
-
-
 
 
 {% endblock %}
