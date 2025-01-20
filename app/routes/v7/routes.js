@@ -69,12 +69,15 @@ module.exports = function (router,_myData) {
     //
     router.get('/' + version + '/details-personal-details', function (req, res) {
 
-        if(req.query.mobchanged == "true"){
+        if(req.query.changed == "true"){
             req.session.myData.notifications.type = "success"
             req.session.myData.showNotification = "true"
         }
 
         // Notification banner messages
+        if(req.query.telchanged == "true"){
+            req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberPers + "]"
+        }
         if(req.query.mobchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - mob changed to " + req.session.myData.mobNumberPers + "]"
         }
@@ -85,15 +88,15 @@ module.exports = function (router,_myData) {
     });
 
     //personal details - change mobile
-    router.get('/' + version + '/details-change-mob-personal', function (req, res) {
+    router.get('/' + version + '/personal-details-mob-change', function (req, res) {
         if(req.query.newChange){
             req.session.myData.newMobNumberPers = ""
         }
-        res.render(version + '/details-change-mob-personal', {
+        res.render(version + '/personal-details-mob-change', {
             myData: req.session.myData
         });
     });
-    router.post('/' + version + '/details-change-mob-personal', function (req, res) {
+    router.post('/' + version + '/personal-details-mob-change', function (req, res) {
 
         req.session.myData.newMobNumberPers = req.body.mobNumberPers.trim()
 
@@ -118,26 +121,74 @@ module.exports = function (router,_myData) {
         // }
 
         if(req.session.myData.validationError == "true") {
-            res.render(version + '/details-change-mob-personal', {
+            res.render(version + '/personal-details-mob-change', {
                 myData: req.session.myData
             });
         } else {
             // req.session.myData.mobNumberPers = req.session.myData.newMobNumberPers
-            res.redirect(301, '/' + version + '/details-check-mob-personal');
+            res.redirect(301, '/' + version + '/personal-details-mob-check');
         }
         
     });
 
     //personal details - check mobile
-    router.get('/' + version + '/details-check-mob-personal', function (req, res) {
-        res.render(version + '/details-check-mob-personal', {
+    router.get('/' + version + '/personal-details-mob-check', function (req, res) {
+        res.render(version + '/personal-details-mob-check', {
             myData: req.session.myData
         });
     });
-    router.post('/' + version + '/details-check-mob-personal', function (req, res) {
+    router.post('/' + version + '/personal-details-mob-check', function (req, res) {
         req.session.myData.mobNumberPers = req.session.myData.newMobNumberPers
         req.session.myData.newMobNumberPers = ""
-        res.redirect(301, '/' + version + '/details-personal-details?mobchanged=true');
+        res.redirect(301, '/' + version + '/details-personal-details?changed=true&mobchanged=true');
+    });
+
+    //personal details - change telephone
+    router.get('/' + version + '/personal-details-tel-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newTelNumberPers = ""
+        }
+        res.render(version + '/personal-details-tel-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-tel-change', function (req, res) {
+
+        req.session.myData.newTelNumberPers = req.body.telNumberPers.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newTelNumberPers = req.session.myData.newTelNumberPers || req.session.myData.telNumberPers
+        }
+
+        if(!req.session.myData.newTelNumberPers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.telNumberPers = {
+                "anchor": "telNumberPers",
+                "message": "[error message - blank - change telephone personal]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/personal-details-tel-change', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.telNumberPers = req.session.myData.newTelNumberPers
+            res.redirect(301, '/' + version + '/personal-details-tel-check');
+        }
+        
+    });
+
+    //personal details - check telephone
+    router.get('/' + version + '/personal-details-tel-check', function (req, res) {
+        res.render(version + '/personal-details-tel-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-tel-check', function (req, res) {
+        req.session.myData.telNumberPers = req.session.myData.newTelNumberPers
+        req.session.myData.newTelNumberPers = ""
+        res.redirect(301, '/' + version + '/details-personal-details?changed=true&telchanged=true');
     });
 
 
@@ -147,12 +198,15 @@ module.exports = function (router,_myData) {
     //
     router.get('/' + version + '/details-business-details', function (req, res) {
 
-        if(req.query.mobchanged == "true"){
+        if(req.query.changed == "true"){
             req.session.myData.notifications.type = "success"
             req.session.myData.showNotification = "true"
         }
 
         // Notification banner messages
+        if(req.query.telchanged == "true"){
+            req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberBus + "]"
+        }
         if(req.query.mobchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - mob changed to " + req.session.myData.mobNumberBus + "]"
         }
@@ -163,15 +217,15 @@ module.exports = function (router,_myData) {
     });
 
     //business details - change mobile
-    router.get('/' + version + '/details-change-mob-business', function (req, res) {
+    router.get('/' + version + '/business-details-mob-change', function (req, res) {
         if(req.query.newChange){
             req.session.myData.newMobNumberBus = ""
         }
-        res.render(version + '/details-change-mob-business', {
+        res.render(version + '/business-details-mob-change', {
             myData: req.session.myData
         });
     });
-    router.post('/' + version + '/details-change-mob-business', function (req, res) {
+    router.post('/' + version + '/business-details-mob-change', function (req, res) {
 
         req.session.myData.newMobNumberBus = req.body.mobNumberBus.trim()
 
@@ -188,26 +242,74 @@ module.exports = function (router,_myData) {
         }
 
         if(req.session.myData.validationError == "true") {
-            res.render(version + '/details-change-mob-business', {
+            res.render(version + '/business-details-mob-change', {
                 myData: req.session.myData
             });
         } else {
             // req.session.myData.mobNumberBus = req.session.myData.newMobNumberBus
-            res.redirect(301, '/' + version + '/details-check-mob-business');
+            res.redirect(301, '/' + version + '/business-details-mob-check');
         }
         
     });
 
     //business details - check mobile
-    router.get('/' + version + '/details-check-mob-business', function (req, res) {
-        res.render(version + '/details-check-mob-business', {
+    router.get('/' + version + '/business-details-mob-check', function (req, res) {
+        res.render(version + '/business-details-mob-check', {
             myData: req.session.myData
         });
     });
-    router.post('/' + version + '/details-check-mob-business', function (req, res) {
+    router.post('/' + version + '/business-details-mob-check', function (req, res) {
         req.session.myData.mobNumberBus = req.session.myData.newMobNumberBus
         req.session.myData.newMobNumberBus = ""
-        res.redirect(301, '/' + version + '/details-business-details?mobchanged=true');
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&mobchanged=true');
+    });
+
+    //business details - change telephone
+    router.get('/' + version + '/business-details-tel-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newTelNumberBus = ""
+        }
+        res.render(version + '/business-details-tel-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-tel-change', function (req, res) {
+
+        req.session.myData.newTelNumberBus = req.body.telNumberBus.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newTelNumberBus = req.session.myData.newTelNumberBus || req.session.myData.telNumberBus
+        }
+
+        if(!req.session.myData.newTelNumberBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.telNumberBus = {
+                "anchor": "telNumberBus",
+                "message": "[error message - blank - change telephone business]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-tel-change', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.telNumberBus = req.session.myData.newTelNumberBus
+            res.redirect(301, '/' + version + '/business-details-tel-check');
+        }
+        
+    });
+
+    //business details - check telephone
+    router.get('/' + version + '/business-details-tel-check', function (req, res) {
+        res.render(version + '/business-details-tel-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-tel-check', function (req, res) {
+        req.session.myData.telNumberBus = req.session.myData.newTelNumberBus
+        req.session.myData.newTelNumberBus = ""
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&telchanged=true');
     });
     
 

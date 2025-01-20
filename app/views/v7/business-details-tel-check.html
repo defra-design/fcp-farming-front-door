@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Check your mobile phone number is correct before submitting" %}
-{% set serviceName="Manage your land and farm businesses" %}
+{% set pageName = "Check your business telephone number is correct before submitting" %}
+{% set serviceName = "Manage your land and farm businesses" %}
 
 {% set yourMessages = "Active" %}
 
@@ -12,7 +12,7 @@
 
   {% include "_common/login-nav.html" %}
 
-  <a href="details-change-mob-business" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+  <a href="business-details-tel-change" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -27,25 +27,25 @@
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          Check your mobile phone number is correct before submitting     
+          Check your business telephone number is correct before submitting     
         </h1>
       </legend>
       {{ govukSummaryList({
         rows: [
           {
             key: {
-              text: "Mobile phone number"
+              text: "Telephone number"
             },
             value: {
-              text: myData.newMobNumberBus or myData.mobNumberBus
+              text: myData.newTelNumberBus or myData.telNumberBus
 
             },
             actions: {
               items: [
                 {
-                  href: "details-change-mob-business",
+                  href: "business-details-tel-change",
                   text: "Change",
-                  visuallyHiddenText: "mobile phone number"
+                  visuallyHiddenText: "telephone number"
                 }
               ]
             }

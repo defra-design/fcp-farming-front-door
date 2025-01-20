@@ -9,10 +9,19 @@ const router = govukPrototypeKit.requests.setupRouter()
 // Add your routes here
 
 
-//Using 'myData' as the overarching object to contain all user entered data. Using this instead of the built in 'data' object because of a bug with that. When posting a page, set values in the post in routes are not available immediately on the page if you render that same page from the post. If you refresh the page, the set 'data' is then available. This means we can't prototype things like error validation on pages properly. Until that bug is fixed we will use this method.
+//
+//Using 'myData' as the overarching object to contain all user entered data. e.g. on a page 'myData.mobNumberPers'
+//
+//Using this instead of the built in 'data' object because of a bug with that. Bug = When posting a page, values set in the post in routes are not available immediately on the page if you render that same page from the post. If you refresh the page, the values that were set on 'data' are then available. This means we can't prototype things like error validation on pages properly. Until that bug is fixed we will use this method.
 var _myData = {
+
     "mobNumberPers": "07700 900 967",
-    "mobNumberBus": "07700 900 967"
+    "telNumberPers": "01632 960000",
+
+    "mobNumberBus": "07700 900 967",
+    "telNumberBus": "01632 960000"
+    
+
 }
 
 router.post('/which-service-answer', function(request, response) {

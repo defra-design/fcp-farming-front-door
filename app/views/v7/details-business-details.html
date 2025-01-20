@@ -86,14 +86,10 @@
           Telephone
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['valleySFD'] == 'True' %}  
-          01632960532
-          {% else %}  
-          01632 960000          
-          {% endif %}  
+          {{myData.telNumberBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> phone number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-tel-change?newChange=true">Change<span class="govuk-visually-hidden"> telephone number</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -104,7 +100,7 @@
           {{myData.mobNumberBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="details-change-mob-business?newChange=true">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-mob-change?newChange=true">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

@@ -149,7 +149,7 @@
 </div>
   
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
+  <div class="govuk-grid-column-full">
 
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-table__caption--xl">Full page list</caption>
@@ -250,6 +250,18 @@
           "url": "details-personal-details",
           "release": "Buffalo 1.0 MVP"
         },
+        {
+          "name": "Manage personal details - telephone changed banner",
+          "id": "pd01",
+          "url": "details-personal-details?telchanged=true&changed=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Manage personal details - mobile changed banner",
+          "id": "pd01",
+          "url": "details-personal-details?mobchanged=true&changed=true",
+          "release": "Buffalo 1.0 MVP"
+        },
 
         {
           "name": "Full name (change) - personal details",
@@ -299,28 +311,26 @@
         {
           "name": "Telephone (change) - personal details",
           "id": "pd08",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "personal-details-tel-change",
+          "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Telephone (check) - personal details",
           "id": "pd09",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "personal-details-tel-check",
+          "release": "Buffalo 1.0 MVP"
         },
 
         {
           "name": "Mobile (change) - personal details",
           "id": "pd10",
-          "url": "details-change-mob-personal",
+          "url": "personal-details-mob-change",
           "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Mobile (check) - personal details",
           "id": "pd11",
-          "url": "details-check-mob-personal",
+          "url": "personal-details-mob-check",
           "release": "Buffalo 1.0 MVP"
         },
 
@@ -350,6 +360,21 @@
           "url": "details-business-details",
           "release": "Buffalo 1.0 MVP"
         },
+        {
+          "name": "Manage business details - telephone changed banner",
+          "id": "bd01",
+          "url": "details-business-details?telchanged=true&changed=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Manage business details - mobile changed banner",
+          "id": "bd01",
+          "url": "details-business-details?mobchanged=true&changed=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        
+        
 
         {
           "name": "Business name (change) - business details",
@@ -386,30 +411,28 @@
         {
           "name": "Telephone (change) - business details",
           "id": "bd06",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "business-details-tel-change",
+          "release": "Buffalo 1.0 MVP"
         },
 
         {
           "name": "Telephone (check) - business details",
           "id": "bd07",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "business-details-tel-check",
+          "release": "Buffalo 1.0 MVP"
         },
 
 
         {
           "name": "Mobile (change) - business details",
           "id": "bd08",
-          "url": "details-change-mob-business",
+          "url": "business-details-mob-change",
           "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Mobile (check) - business details",
           "id": "bd09",
-          "url": "details-check-mob-business",
+          "url": "business-details-mob-check",
           "release": "Buffalo 1.0 MVP"
         },
 
@@ -678,7 +701,7 @@
             <th scope="row" class="govuk-table__header" {% if _page.todo %}style="color:red"{% endif %}>
               {{_page.name}}
             </th>
-            <td class="govuk-table__cell">
+            <td class="govuk-table__cell" >
               {% if _page.todo %}
                 <span style="color:red">TO DO</span>
               {% else %}
