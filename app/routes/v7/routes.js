@@ -89,6 +89,20 @@ module.exports = function (router,_myData) {
             }
             req.session.myData.notifications.message = "[notification banner - name changed to " + _titleValue + req.session.myData.nameFirstPers + " " + _middleValue + req.session.myData.nameLastPers + "]"
         }
+        if(req.query.addresschanged == "true"){
+            // Adds space after address line 2 if a address line 2 was entered
+            var _address2Value = req.session.myData.address2Pers || ""
+            if (_address2Value != ""){
+                var _address2Value = _address2Value + " "
+            }
+            // Adds space after address county if a address county was entered
+            var _addressCountyValue = req.session.myData.addressCountyPers || ""
+            if (_addressCountyValue != ""){
+                var _addressCountyValue = _addressCountyValue + " "
+            }
+
+            req.session.myData.notifications.message = "[notification banner - address changed to " + req.session.myData.address1Pers + " " + _address2Value + req.session.myData.addressCityPers + " " + _addressCountyValue + req.session.myData.addressPostcodePers + "]"
+        }
         if(req.query.telchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberPers + "]"
         }
@@ -171,6 +185,88 @@ module.exports = function (router,_myData) {
         req.session.myData.newNameLastPers = ""
 
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&namechanged=true');
+    });
+
+     //personal details - change address
+     router.get('/' + version + '/personal-details-address-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newAddress1Pers = ""
+            req.session.myData.newAddress2Pers = ""
+            req.session.myData.newAddressCityPers = ""
+            req.session.myData.newAddressCountyPers = ""
+            req.session.myData.newAddressPostcodePers = ""
+        }
+        res.render(version + '/personal-details-address-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-address-change', function (req, res) {
+
+        req.session.myData.newAddress1Pers = req.body.address1Pers.trim()
+        req.session.myData.newAddress2Pers = req.body.address2Pers.trim()
+        req.session.myData.newAddressCityPers = req.body.addressCityPers.trim()
+        req.session.myData.newAddressCountyPers = req.body.addressCountyPers.trim()
+        req.session.myData.newAddressPostcodePers = req.body.addressPostcodePers.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newAddress1Pers = req.session.myData.newAddress1Pers || req.session.myData.address1Pers
+            req.session.myData.newAddressCityPers = req.session.myData.newAddressCityPers || req.session.myData.addressCityPers
+            req.session.myData.newAddressPostcodePers = req.session.myData.newAddressPostcodePers || req.session.myData.addressPostcodePers
+        }
+
+        if(!req.session.myData.newAddress1Pers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.address1Pers = {
+                "anchor": "address1Pers",
+                "message": "[error message - blank - change address line 1]"
+            }
+        }
+        if(!req.session.myData.newAddressCityPers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.addressCityPers = {
+                "anchor": "addressCityPers",
+                "message": "[error message - blank - change city]"
+            }
+        }
+        if(!req.session.myData.newAddressPostcodePers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.addressPostcodePers = {
+                "anchor": "addressPostcodePers",
+                "message": "[error message - blank - change postcode]"
+            }
+        }
+        
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/personal-details-address-change', {
+                myData: req.session.myData
+            });
+        } else {
+            res.redirect(301, '/' + version + '/personal-details-address-check');
+        }
+        
+    });
+
+    //personal details - check name
+    router.get('/' + version + '/personal-details-address-check', function (req, res) {
+        res.render(version + '/personal-details-address-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-address-check', function (req, res) {
+        req.session.myData.address1Pers = req.session.myData.newAddress1Pers
+        req.session.myData.address2Pers = req.session.myData.newAddress2Pers
+        req.session.myData.addressCityPers = req.session.myData.newAddressCityPers
+        req.session.myData.addressCountyPers = req.session.myData.newAddressCountyPers
+        req.session.myData.addressPostcodePers = req.session.myData.newAddressPostcodePers
+        
+        req.session.myData.newAddress1Pers = ""
+        req.session.myData.newAddress2Pers = ""
+        req.session.myData.newAddressCityPers = ""
+        req.session.myData.newAddressCountyPers = ""
+        req.session.myData.newAddressPostcodePers = ""
+
+        res.redirect(301, '/' + version + '/details-personal-details?changed=true&addresschanged=true');
     });
 
     //personal details - change telephone

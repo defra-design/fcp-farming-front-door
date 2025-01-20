@@ -1,0 +1,162 @@
+{% extends "layouts/main.html" %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Change your personal address" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Change your personal address
+          </h1>
+        </legend>
+
+        <!-- ADDRESS LINE 1 -->
+        <div class="govuk-form-group {% if myData.validationErrors.address1Pers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="address1Pers">
+            Address line 1
+          </label>
+          {% if myData.validationErrors.address1Pers %}
+          <p id="address1Pers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.address1Pers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewAddress1Pers = myData.newAddress1Pers or myData.address1Pers %}
+          {% if myData.validationErrors.address1Pers %}
+              {% set _valueNewAddress1Pers = myData.newAddress1Pers %}
+          {% endif %}
+          <input class="govuk-input {% if myData.validationErrors.address1Pers %}govuk-input--error{% endif %}" id="address1Pers" name="address1Pers" type="text" value="{{_valueNewAddress1Pers}}" {% if myData.validationErrors.address1Pers %}aria-describedby="address1Pers-error"{% endif %}  autocomplete="address-line1">
+        </div>
+
+        <!-- ADDRESS LINE 2 -->
+        <div class="govuk-form-group {% if myData.validationErrors.address2Pers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="address2Pers">
+            Address line 2 (optional)
+          </label>
+          {% if myData.validationErrors.address2Pers %}
+          <p id="address2Pers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.address2Pers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewAddress2Pers = myData.newAddress2Pers or myData.address2Pers %}
+          {% if myData.validationErrors.address2Pers %}
+              {% set _valueNewAddress2Pers = myData.newAddress2Pers %}
+          {% endif %}
+          <input class="govuk-input {% if myData.validationErrors.address2Pers %}govuk-input--error{% endif %}" id="address2Pers" name="address2Pers" type="text" value="{{_valueNewAddress2Pers}}" {% if myData.validationErrors.address2Pers %}aria-describedby="address2Pers-error"{% endif %} autocomplete="address-line2">
+        </div>
+
+        <!-- ADDRESS CITY -->
+        <div class="govuk-form-group {% if myData.validationErrors.addressCityPers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="addressCityPers">
+            Town or city
+          </label>
+          {% if myData.validationErrors.addressCityPers %}
+          <p id="addressCityPers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressCityPers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewAddressCityPers = myData.newAddressCityPers or myData.addressCityPers %}
+          {% if myData.validationErrors.addressCityPers %}
+              {% set _valueNewAddressCityPers = myData.newAddressCityPers %}
+          {% endif %}
+          <input class="govuk-input govuk-!-width-two-thirds {% if myData.validationErrors.addressCityPers %}govuk-input--error{% endif %}" id="addressCityPers" name="addressCityPers" type="text" value="{{_valueNewAddressCityPers}}" {% if myData.validationErrors.addressCityPers %}aria-describedby="addressCityPers-error"{% endif %} autocomplete="address-level2">
+        </div>
+
+        <!-- ADDRESS COUNTY -->
+        <div class="govuk-form-group {% if myData.validationErrors.addressCountyPers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="addressCountyPers">
+            County (optional)
+          </label>
+          {% if myData.validationErrors.addressCountyPers %}
+          <p id="addressCountyPers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressCountyPers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewAddressCountyPers = myData.newAddressCountyPers or myData.addressCountyPers %}
+          {% if myData.validationErrors.addressCountyPers %}
+              {% set _valueNewAddressCountyPers = myData.newAddressCountyPers %}
+          {% endif %}
+          <input class="govuk-input govuk-!-width-two-thirds {% if myData.validationErrors.addressCountyPers %}govuk-input--error{% endif %}" id="addressCountyPers" name="addressCountyPers" type="text" value="{{_valueNewAddressCountyPers}}" {% if myData.validationErrors.addressCountyPers %}aria-describedby="addressCountyPers-error"{% endif %} >
+        </div>
+
+        <!-- ADDRESS POSTCODE -->
+        <div class="govuk-form-group {% if myData.validationErrors.addressPostcodePers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="addressPostcodePers">
+            Postcode
+          </label>
+          {% if myData.validationErrors.addressPostcodePers %}
+          <p id="addressPostcodePers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressPostcodePers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewAddressPostcodePers = myData.newAddressPostcodePers or myData.addressPostcodePers %}
+          {% if myData.validationErrors.addressPostcodePers %}
+              {% set _valueNewAddressPostcodePers = myData.newAddressPostcodePers %}
+          {% endif %}
+          <input class="govuk-input govuk-input--width-10 {% if myData.validationErrors.addressPostcodePers %}govuk-input--error{% endif %}" id="addressPostcodePers" name="addressPostcodePers" type="text" value="{{_valueNewAddressPostcodePers}}" {% if myData.validationErrors.addressPostcodePers %}aria-describedby="addressPostcodePers-error"{% endif %} autocomplete="address-level2">
+        </div>
+
+
+      </fieldset>
+
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

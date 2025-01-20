@@ -95,10 +95,14 @@
           Address
         </dt>
         <dd class="govuk-summary-list__value">
-          10 Skirbeck Way<br>Maidstone<br>SK22 1DL
+          {{myData.address1Pers}}<br>
+          {% if myData.address2Pers != "" %}{{myData.address2Pers}}<br>{% endif %}
+          {{myData.addressCityPers}}<br>
+          {% if myData.addressCountyPers != "" %}{{myData.addressCountyPers}}<br>{% endif %}
+          {{myData.addressPostcodePers}} 
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-address-change?newChange=true">Change<span class="govuk-visually-hidden"> address</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

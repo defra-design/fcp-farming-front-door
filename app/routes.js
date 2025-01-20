@@ -10,7 +10,7 @@ const router = govukPrototypeKit.requests.setupRouter()
 
 
 //
-//Using 'myData' as the overarching object to contain all user entered data. e.g. on a page 'myData.mobNumberPers'
+//Using 'myData' as a custom overarching object to contain all user entered data. e.g. on a page 'myData.mobNumberPers'
 //
 //Using this instead of the built in 'data' object because of a bug with that. Bug = When posting a page, values set in the post in routes are not available immediately on the page if you render that same page from the post. If you refresh the page, the values that were set on 'data' are then available. This means we can't prototype things like error validation on pages properly. Until that bug is fixed we will use this method.
 var _myData = {
@@ -19,14 +19,17 @@ var _myData = {
     "nameFirstPers": "Alfred",
     "nameMiddlePers": "",
     "nameLastPers": "Waldron",
-    
-    "mobNumberPers": "07700 900 967",
+    "address1Pers": "10 Skirbeck Way",
+    "address2Pers": "",
+    "addressCityPers": "Maidstone",
+    "addressCountyPers": "",
+    "addressPostcodePers": "SK22 1DL",
     "telNumberPers": "01632 960000",
+    "mobNumberPers": "07700 900 967",
     "emailPers": "alfredwaldronf@nordlawderflac.com.test",
 
-    "mobNumberBus": "07700 900 967",
-    "telNumberBus": "01632 960000"
-    
+    "telNumberBus": "01632 960000",
+    "mobNumberBus": "07700 900 967"
 
 }
 
