@@ -27,6 +27,9 @@ module.exports = function (router,_myData) {
 
         if(!req.session.myData || req.query.r) {
             req.session.myData = JSON.parse(JSON.stringify(_myData))
+            //selected business defaults - to match session defaults
+            req.session.myData.selectedBusiness = req.session.data.selectedBusiness
+            req.session.myData.nameBus = req.session.data.selectedBusiness.name
         }
 
         //version
@@ -36,12 +39,11 @@ module.exports = function (router,_myData) {
         if(req.query.business){
             var _selectedBusiness = req.session.data.businesses.find(obj => {return obj.id.toString() === req.query.business.toString()})
             if(_selectedBusiness){
-                req.session.myData.selectedBusiness = _selectedBusiness
                 req.session.data.selectedBusiness = _selectedBusiness
+                req.session.myData.selectedBusiness = _selectedBusiness
                 req.session.myData.nameBus = req.session.myData.selectedBusiness.name
             }
         }
-        req.session.myData.nameBus = req.session.data.selectedBusiness.name
 
         // Reset page validation to false by default. Will only be set to true, if applicable, on a POST of a page
         // req.session.data.validationErrors = {}
