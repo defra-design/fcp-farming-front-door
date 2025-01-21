@@ -216,10 +216,10 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/personal-details-name-check', function (req, res) {
-        req.session.myData.nameTitlePers = req.session.myData.newNameTitlePers
-        req.session.myData.nameFirstPers = req.session.myData.newNameFirstPers
-        req.session.myData.nameMiddlePers = req.session.myData.newNameMiddlePers
-        req.session.myData.nameLastPers = req.session.myData.newNameLastPers
+        req.session.myData.nameTitlePers = req.session.myData.newNameTitlePers || req.session.myData.nameTitlePers
+        req.session.myData.nameFirstPers = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
+        req.session.myData.nameMiddlePers = req.session.myData.newNameMiddlePers || req.session.myData.nameMiddlePers
+        req.session.myData.nameLastPers = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
 
         req.session.myData.newNameTitlePers = ""
         req.session.myData.newNameFirstPers = ""
@@ -295,9 +295,9 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/personal-details-dob-check', function (req, res) {
-        req.session.myData.dobDayPers = req.session.myData.newDobDayPers
-        req.session.myData.dobMonthPers = req.session.myData.newDobMonthPers
-        req.session.myData.dobYearPers = req.session.myData.newDobYearPers
+        req.session.myData.dobDayPers = req.session.myData.newDobDayPers || req.session.myData.dobDayPers
+        req.session.myData.dobMonthPers = req.session.myData.newDobMonthPers || req.session.myData.dobMonthPers
+        req.session.myData.dobYearPers = req.session.myData.newDobYearPers || req.session.myData.dobYearPers
 
         req.session.myData.newDobDayPers = ""
         req.session.myData.newDobMonthPers = ""
@@ -373,11 +373,11 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/personal-details-address-check', function (req, res) {
-        req.session.myData.address1Pers = req.session.myData.newAddress1Pers
-        req.session.myData.address2Pers = req.session.myData.newAddress2Pers
-        req.session.myData.addressCityPers = req.session.myData.newAddressCityPers
-        req.session.myData.addressCountyPers = req.session.myData.newAddressCountyPers
-        req.session.myData.addressPostcodePers = req.session.myData.newAddressPostcodePers
+        req.session.myData.address1Pers = req.session.myData.newAddress1Pers || req.session.myData.address1Pers
+        req.session.myData.address2Pers = req.session.myData.newAddress2Pers || req.session.myData.address2Pers
+        req.session.myData.addressCityPers = req.session.myData.newAddressCityPers || req.session.myData.addressCityPers
+        req.session.myData.addressCountyPers = req.session.myData.newAddressCountyPers || req.session.myData.addressCountyPers
+        req.session.myData.addressPostcodePers = req.session.myData.newAddressPostcodePers || req.session.myData.addressPostcodePers
         
         req.session.myData.newAddress1Pers = ""
         req.session.myData.newAddress2Pers = ""
@@ -431,7 +431,7 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/personal-details-tel-check', function (req, res) {
-        req.session.myData.telNumberPers = req.session.myData.newTelNumberPers
+        req.session.myData.telNumberPers = req.session.myData.newTelNumberPers || req.session.myData.telNumberPers
         req.session.myData.newTelNumberPers = ""
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&telchanged=true');
     });
@@ -487,7 +487,7 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/personal-details-mob-check', function (req, res) {
-        req.session.myData.mobNumberPers = req.session.myData.newMobNumberPers
+        req.session.myData.mobNumberPers = req.session.myData.newMobNumberPers || req.session.myData.mobNumberPers
         req.session.myData.newMobNumberPers = ""
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&mobchanged=true');
     });
@@ -535,7 +535,7 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/personal-details-email-check', function (req, res) {
-        req.session.myData.emailPers = req.session.myData.newEmailPers
+        req.session.myData.emailPers = req.session.myData.newEmailPers || req.session.myData.emailPers
         req.session.myData.newEmailPers = ""
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&emailchanged=true');
     });
@@ -588,8 +588,8 @@ module.exports = function (router,_myData) {
         });
     });
 
-     //business details - change business name
-     router.get('/' + version + '/business-details-name-change', function (req, res) {
+    //business details - change business name
+    router.get('/' + version + '/business-details-name-change', function (req, res) {
         if(req.query.newChange){
             req.session.myData.newNameBus = ""
         }
@@ -630,10 +630,10 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/business-details-name-check', function (req, res) {
-        req.session.myData.nameBus = req.session.myData.newNameBus
-        req.session.myData.selectedBusiness.name = req.session.myData.newNameBus
-        req.session.data.selectedBusiness.name = req.session.myData.newNameBus
-        req.session.myData.newMobNumberBus = ""
+        req.session.myData.nameBus = req.session.myData.newNameBus || req.session.myData.nameBus
+        req.session.myData.selectedBusiness.name = req.session.myData.newNameBus || req.session.myData.nameBus
+        req.session.data.selectedBusiness.name = req.session.myData.newNameBus || req.session.myData.nameBus
+        req.session.myData.newNameBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&namechanged=true');
     });
 
@@ -703,11 +703,11 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/business-details-address-check', function (req, res) {
-        req.session.myData.address1Bus = req.session.myData.newAddress1Bus
-        req.session.myData.address2Bus = req.session.myData.newAddress2Bus
-        req.session.myData.addressCityBus = req.session.myData.newAddressCityBus
-        req.session.myData.addressCountyBus = req.session.myData.newAddressCountyBus
-        req.session.myData.addressPostcodeBus = req.session.myData.newAddressPostcodeBus
+        req.session.myData.address1Bus = req.session.myData.newAddress1Bus || req.session.myData.address1Bus
+        req.session.myData.address2Bus = req.session.myData.newAddress2Bus || req.session.myData.address2Bus
+        req.session.myData.addressCityBus = req.session.myData.newAddressCityBus || req.session.myData.addressCityBus
+        req.session.myData.addressCountyBus = req.session.myData.newAddressCountyBus || req.session.myData.addressCountyBus
+        req.session.myData.addressPostcodeBus = req.session.myData.newAddressPostcodeBus || req.session.myData.addressPostcodeBus
         
         req.session.myData.newAddress1Bus = ""
         req.session.myData.newAddress2Bus = ""
@@ -760,7 +760,7 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/business-details-mob-check', function (req, res) {
-        req.session.myData.mobNumberBus = req.session.myData.newMobNumberBus
+        req.session.myData.mobNumberBus = req.session.myData.newMobNumberBus || req.session.myData.mobNumberBus
         req.session.myData.newMobNumberBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&mobchanged=true');
     });
@@ -807,7 +807,7 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/business-details-tel-check', function (req, res) {
-        req.session.myData.telNumberBus = req.session.myData.newTelNumberBus
+        req.session.myData.telNumberBus = req.session.myData.newTelNumberBus || req.session.myData.telNumberBus
         req.session.myData.newTelNumberBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&telchanged=true');
     });
@@ -854,7 +854,7 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/business-details-email-check', function (req, res) {
-        req.session.myData.emailBus = req.session.myData.newEmailBus
+        req.session.myData.emailBus = req.session.myData.newEmailBus || req.session.myData.emailBus
         req.session.myData.newEmailBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&emailchanged=true');
     });
