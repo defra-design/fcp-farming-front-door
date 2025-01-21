@@ -77,7 +77,7 @@
     <!-- Include validation checking -->
     <div class="govuk-form-group">
       <label class="govuk-label" >
-        Include validation
+        Include validation (iv=false/iv=true)
       </label>
       <select class="govuk-select" style="min-width: 100%" id="includeValidation" name="includeValidation" data-option="includeValidation">
           <option {% if data.includeValidation == 'true' %}selected{% endif %} value="true">Yes (throw errors)</option>
@@ -367,6 +367,10 @@
           "release": "Buffalo 1.0 MVP",
           "variants": [
             {
+              "name": "name changed banner",
+              "url": "details-business-details?namechanged=true&changed=true"
+            },
+            {
               "name": "address changed banner",
               "url": "details-business-details?addresschanged=true&changed=true"
             },
@@ -388,17 +392,15 @@
         {
           "name": "Business name (change) - business details",
           "id": "bd02",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "business-details-name-change",
+          "release": "Buffalo 1.0 MVP"
         },
 
         {
           "name": "Business name (check) - business details",
           "id": "bd03",
-          "url": "",
-          "release": "Buffalo 1.0 MVP",
-          "todo": true
+          "url": "business-details-name-check",
+          "release": "Buffalo 1.0 MVP"
         },
 
         {

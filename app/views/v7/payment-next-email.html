@@ -1,12 +1,7 @@
 {% extends "layouts/main.html" %}
 
 <!-- Selected business -->
-{% set _selectedBusiness = data.selectedBusiness %} 
-{% for _business in data.businesses %}
-    {% if data.business == _business.id %}
-        {% set _selectedBusiness = _business %} 
-    {% endif %}
-{% endfor %}
+{% set _selectedBusiness = myData.selectedBusiness %} 
 
 <!-- Upcoming payment  -->
 {% set _selectedPayment = data.paymentsUpcoming[0] %} 

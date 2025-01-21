@@ -1,10 +1,5 @@
 
-{% set _selectedBusiness = data.selectedBusiness %} 
-{% for _business in data.businesses %}
-  {% if data.business == _business.id %}
-    {% set _selectedBusiness = _business %} 
-  {% endif %}
-{% endfor %}
+{% set _selectedBusiness = data.selectedBusiness %}
 
 <div class="govuk-grid-row sub-header-container" >
 

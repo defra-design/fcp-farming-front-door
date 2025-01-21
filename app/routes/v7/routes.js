@@ -32,6 +32,17 @@ module.exports = function (router,_myData) {
         //version
         req.session.data.version = version
 
+        //set selected business
+        if(req.query.business){
+            var _selectedBusiness = req.session.data.businesses.find(obj => {return obj.id.toString() === req.query.business.toString()})
+            if(_selectedBusiness){
+                req.session.myData.selectedBusiness = _selectedBusiness
+                req.session.data.selectedBusiness = _selectedBusiness
+                req.session.myData.nameBus = req.session.myData.selectedBusiness.name
+            }
+        }
+        req.session.myData.nameBus = req.session.data.selectedBusiness.name
+
         // Reset page validation to false by default. Will only be set to true, if applicable, on a POST of a page
         // req.session.data.validationErrors = {}
         // req.session.data.validationError = "false"
@@ -48,8 +59,7 @@ module.exports = function (router,_myData) {
 
         // can do data setting and checking here - that will happen on every get and post
 
-        //Set selected business
-        // setSelectedBusiness(req)
+        
 
         next()
     });
@@ -63,6 +73,32 @@ module.exports = function (router,_myData) {
     router.get('/' + version + '/start-sfd-sign-in', function (req, res) {
         req.session.data.deeplink = req.query.deeplink || "businesses-list"
         res.render(version + '/start-sfd-sign-in', {});
+    });
+
+    //business home
+    router.get('/' + version + '/business-home', function (req, res) {
+        res.render(version + '/business-home', {
+            myData: req.session.myData
+        });
+    });
+
+    //payment action letter
+    router.get('/' + version + '/payment-action-letter', function (req, res) {
+        res.render(version + '/payment-action-letter', {
+            myData: req.session.myData
+        });
+    });
+    //payment action text
+    router.get('/' + version + '/payment-action-text', function (req, res) {
+        res.render(version + '/payment-action-text', {
+            myData: req.session.myData
+        });
+    });
+    //payment next email
+    router.get('/' + version + '/payment-next-email', function (req, res) {
+        res.render(version + '/payment-next-email', {
+            myData: req.session.myData
+        });
     });
 
     //
@@ -517,6 +553,9 @@ module.exports = function (router,_myData) {
         }
 
         // Notification banner messages
+        if(req.query.namechanged == "true"){
+            req.session.myData.notifications.message = "[notification banner - name changed to " + req.session.myData.nameBus + "]"
+        }
         if(req.query.addresschanged == "true"){
             // Adds space after address line 2 if a address line 2 was entered
             var _address2Value = req.session.myData.address2Bus || ""
@@ -545,6 +584,55 @@ module.exports = function (router,_myData) {
         res.render(version + '/details-business-details', {
             myData: req.session.myData
         });
+    });
+
+     //business details - change business name
+     router.get('/' + version + '/business-details-name-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newNameBus = ""
+        }
+        res.render(version + '/business-details-name-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-name-change', function (req, res) {
+
+        req.session.myData.newNameBus = req.body.nameBus.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newNameBus = req.session.myData.newNameBus || req.session.myData.nameBus
+        }
+
+        if(!req.session.myData.newNameBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.nameBus = {
+                "anchor": "nameBus",
+                "message": "[error message - blank - change name]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-name-change', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.nameBus = req.session.myData.newNameBus
+            res.redirect(301, '/' + version + '/business-details-name-check');
+        }
+        
+    });
+    //business details - check business name
+    router.get('/' + version + '/business-details-name-check', function (req, res) {
+        res.render(version + '/business-details-name-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-name-check', function (req, res) {
+        req.session.myData.nameBus = req.session.myData.newNameBus
+        req.session.myData.selectedBusiness.name = req.session.myData.newNameBus
+        req.session.data.selectedBusiness.name = req.session.myData.newNameBus
+        req.session.myData.newMobNumberBus = ""
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&namechanged=true');
     });
 
     //business details - change address
@@ -606,7 +694,6 @@ module.exports = function (router,_myData) {
         }
         
     });
-
     //business details - check address
     router.get('/' + version + '/business-details-address-check', function (req, res) {
         res.render(version + '/business-details-address-check', {
@@ -664,7 +751,6 @@ module.exports = function (router,_myData) {
         }
         
     });
-
     //business details - check mobile
     router.get('/' + version + '/business-details-mob-check', function (req, res) {
         res.render(version + '/business-details-mob-check', {
@@ -712,7 +798,6 @@ module.exports = function (router,_myData) {
         }
         
     });
-
     //business details - check telephone
     router.get('/' + version + '/business-details-tel-check', function (req, res) {
         res.render(version + '/business-details-tel-check', {
@@ -760,7 +845,6 @@ module.exports = function (router,_myData) {
         }
         
     });
-
     //business details - check email
     router.get('/' + version + '/business-details-email-check', function (req, res) {
         res.render(version + '/business-details-email-check', {

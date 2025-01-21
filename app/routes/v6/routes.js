@@ -27,7 +27,12 @@ module.exports = function (router) {
         // can do data setting and checking here - that will happen on every get and post
 
         //Set selected business
-        // setSelectedBusiness(req)
+        if(req.query.business){
+            var _selectedBusiness = req.session.data.businesses.find(obj => {return obj.id.toString() === req.query.business.toString()})
+            if(_selectedBusiness){
+                req.session.data.selectedBusiness = _selectedBusiness
+            }
+        }
 
         next()
     });

@@ -56,14 +56,10 @@
           Name
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['valleySFD'] == 'True' %}  
-          Valley Farm
-          {% else %}  
-          Agile Farms Ltd
-          {% endif %}  
+          {{myData.nameBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> business name</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> business name</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
