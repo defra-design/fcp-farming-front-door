@@ -1,0 +1,33 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Sorry, the service is unavailable" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        Sorry, the service is unavailable
+      </h1>
+
+      <p class="govuk-body">You will be able to use the service from 9am on Monday 19 December 2024</p>
+
+      <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Contact the [service] Helpline</a> if you need to speak to someone about your [service].</p>
+
+  </div>
+</div>
+
+
+{% endblock %}
