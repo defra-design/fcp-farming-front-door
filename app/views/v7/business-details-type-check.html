@@ -1,0 +1,66 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your business type" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your business type
+      </h1>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Business type"
+            },
+            value: {
+              text: myData.newTypeBus or myData.typeBus
+
+            },
+            actions: {
+              items: [
+                {
+                  href: "business-details-type-change",
+                  text: "Change",
+                  visuallyHiddenText: "business type"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+
+      </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

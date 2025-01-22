@@ -578,9 +578,11 @@ module.exports = function (router,_myData) {
         if(req.query.mobchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - mob changed to " + req.session.myData.mobNumberBus + "]"
         }
-
         if(req.query.emailchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - email changed to " + req.session.myData.emailBus + "]"
+        }
+        if(req.query.typechanged == "true"){
+            req.session.myData.notifications.message = "[notification banner - type changed to " + req.session.myData.typeBus + "]"
         }
         
         res.render(version + '/details-business-details', {
@@ -857,6 +859,53 @@ module.exports = function (router,_myData) {
         req.session.myData.emailBus = req.session.myData.newEmailBus || req.session.myData.emailBus
         req.session.myData.newEmailBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&emailchanged=true');
+    });
+
+    //business details - change type
+    router.get('/' + version + '/business-details-type-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newTypeBus = ""
+        }
+        res.render(version + '/business-details-type-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-type-change', function (req, res) {
+
+        req.session.myData.newTypeBus = req.body.typeBus
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newTypeBus = req.session.myData.newTypeBus || req.session.myData.typeBus
+        }
+
+        if(!req.session.myData.newTypeBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.typeBus = {
+                "anchor": "typeBus-1",
+                "message": "[error message - blank - change type]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-type-change', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.typeBus = req.session.myData.newTypeBus
+            res.redirect(301, '/' + version + '/business-details-type-check');
+        }
+        
+    });
+    //business details - check type
+    router.get('/' + version + '/business-details-type-check', function (req, res) {
+        res.render(version + '/business-details-type-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-type-check', function (req, res) {
+        req.session.myData.typeBus = req.session.myData.newTypeBus || req.session.myData.typeBus
+        req.session.myData.newTypeBus = ""
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&typechanged=true');
     });
     
 

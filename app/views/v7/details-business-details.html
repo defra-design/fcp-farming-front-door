@@ -154,6 +154,7 @@
           {% endif %}  
         </dd>
       </div>
+      {% if data.release != "b1" %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           CPH number
@@ -166,6 +167,7 @@
           {% endif %}  
         </dd>
       </div>
+      {% endif %}
     </dl>
 
 
@@ -190,12 +192,13 @@
           Business type
         </dt>
         <dd class="govuk-summary-list__value">
-          Farmer
+          {{myData.typeBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> business type</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-type-change?newChange=true">Change<span class="govuk-visually-hidden"> business type</span></a>
         </dd>
       </div>
+      {% if data.release != "b1" %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Bank account details
@@ -209,6 +212,7 @@
           <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> bank account details</span></a>
         </dd>
       </div>
+      {% endif %}
     </dl>
 
 
