@@ -104,6 +104,47 @@ module.exports = function (router,_myData) {
     });
 
     //
+    //ERROR PAGES
+    //
+    router.get('/' + version + '/error-not-found', function (req, res) {
+        res.render(version + '/error-not-found', {});
+    });
+    router.get('/' + version + '/error-server', function (req, res) {
+        res.render(version + '/error-server', {});
+    });
+    router.get('/' + version + '/error-shutter', function (req, res) {
+        res.render(version + '/error-shutter', {});
+    });
+
+    //
+    //MISCELLANEOUS PAGES
+    //
+    router.get('/' + version + '/misc-accessibility', function (req, res) {
+        res.render(version + '/misc-accessibility', {});
+    });
+    router.get('/' + version + '/misc-contact', function (req, res) {
+        res.render(version + '/misc-contact', {});
+    });
+    router.get('/' + version + '/misc-cookies', function (req, res) {
+        res.render(version + '/misc-cookies', {});
+    });
+    router.get('/' + version + '/misc-information', function (req, res) {
+        res.render(version + '/misc-information', {});
+    });
+    router.get('/' + version + '/misc-privacy', function (req, res) {
+        res.render(version + '/misc-privacy', {});
+    });
+    router.get('/' + version + '/misc-signed-out-auto', function (req, res) {
+        res.render(version + '/misc-signed-out-auto', {});
+    });
+    router.get('/' + version + '/misc-signed-out', function (req, res) {
+        res.render(version + '/misc-signed-out', {});
+    });
+    router.get('/' + version + '/misc-terms', function (req, res) {
+        res.render(version + '/misc-terms', {});
+    });
+
+    //
     //PERSONAL details
     //
     router.get('/' + version + '/details-personal-details', function (req, res) {
