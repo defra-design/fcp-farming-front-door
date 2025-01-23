@@ -34,11 +34,13 @@
   </div>
 </div>
 
+{% if data.release != "b1" %}
+<!-- PAYMENTS ROW -->
 <div class="govuk-grid-row">
+  
   <div class="govuk-grid-column-two-thirds">
 
     <!-- <h2 class="govuk-heading-m">Your payments</h2> -->
-
 
     <!-- UPCOMING PAYMENTS CONTENT -->
     <div class="callout-box " >
@@ -85,6 +87,7 @@
     </div>
 
   </div>
+  
   <div class="govuk-grid-column-one-third">
 
     <h2 class="govuk-heading-m">Your tasks</h2>
@@ -102,6 +105,7 @@
 
   </div>
 </div>
+{% endif %}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -109,19 +113,23 @@
     {% set _schemesCards = [
       {
         "name": "Get funding to improve animal health and welfare",
-        "link": "vets-manage-your-claims"
+        "link": "vets-manage-your-claims",
+        "release": "b1"
       },
       {
         "name": "Calf housing for health and welfare grant",
-        "link": "/_common/not-testing"
+        "link": "/_common/not-testing",
+        "release": "concept"
       },
       {
         "name": "Sustainable farming incentive",
-        "link": "/_common/not-testing"
+        "link": "/_common/not-testing",
+        "release": "concept"
       },
       {
         "name": "Countryside stewardship",
-        "link": "/_common/not-testing"
+        "link": "/_common/not-testing",
+        "release": "concept"
       }
     ] %}
 
@@ -131,12 +139,14 @@
       <ul class="gem-c-cards__list gem-c-cards__list-cards">
 
         {% for _schemeCard in _schemesCards %}
+        {% if (data.release == "b1" and _schemeCard.release == "b1") or data.release != "b1" %}
         <li class="gem-c-cards__list-item-variant">
             <div class="gem-c-cards__list-item-wrapper-variant">
               <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link" style="font-weight: normal"><a class="govuk-link govuk-link--no-visited-state link-style" href="{{_schemeCard.link}}">{{_schemeCard.name}}</a></h2> 
             </div>
           </a> 
         </li>
+        {% endif %}
         {% endfor %}
 
       </ul>
@@ -147,7 +157,9 @@
     </h3>
 
     <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
+    {% if data.release != "b1" %}
     <p><a class="govuk-link--no-visited-state" href="/_common/not-testing">View and update permissions</a></p> 
+    {% endif %}
 
   </div>
   

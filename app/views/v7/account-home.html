@@ -66,6 +66,7 @@
           </a> 
         </li>
 
+        {% if data.release != "b1" %}
         <li class="gem-c-cards__list-item-variant">
           <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">
             <div class="gem-c-cards__list-item-wrapper-variant">
@@ -74,6 +75,7 @@
             </div>
           </a>  
         </li>
+        {% endif %}
       
       </ul>
     </div>
