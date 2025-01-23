@@ -76,6 +76,10 @@ module.exports = function (router,_myData) {
         req.session.data.deeplink = req.query.deeplink || "businesses-list"
         res.render(version + '/start-sfd-sign-in', {});
     });
+    //sfd reset password
+    router.get('/' + version + '/start-sfd-reset-password', function (req, res) {
+        res.render(version + '/start-sfd-reset-password', {});
+    });
 
     //business home
     router.get('/' + version + '/business-home', function (req, res) {
