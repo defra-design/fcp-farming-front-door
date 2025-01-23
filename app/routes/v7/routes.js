@@ -642,6 +642,15 @@ module.exports = function (router,_myData) {
             }
             req.session.myData.notifications.message = "[notification banner - legal status changed to " + req.session.myData.legalBus + _numberChangedText + "]"
         }
+        if(req.query.bankchanged == "true"){
+            // Adds comma before roll number if a roll number was entered
+            var _bankRollValue = req.session.myData.bankRollBus || ""
+            if (_bankRollValue != ""){
+                var _bankRollValue = ", " + _bankRollValue
+            }
+
+            req.session.myData.notifications.message = "[notification banner - bank details changed to " + req.session.myData.bankNameBus + ", " + req.session.myData.bankSortBus + ", "  + req.session.myData.bankAccountBus + _bankRollValue + "]"
+        }
         
         res.render(version + '/details-business-details', {
             myData: req.session.myData
@@ -1120,6 +1129,83 @@ module.exports = function (router,_myData) {
         req.session.myData.vatBus = req.session.myData.newVatBus || req.session.myData.vatBus
         req.session.myData.newVatBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&vatchanged=true');
+    });
+    //business details - change bank details
+    router.get('/' + version + '/business-details-bank-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newAddress1Bus = ""
+            req.session.myData.newAddress2Bus = ""
+            req.session.myData.newAddressCityBus = ""
+            req.session.myData.newAddressCountyBus = ""
+            req.session.myData.newAddressPostcodeBus = ""
+        }
+        res.render(version + '/business-details-bank-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-bank-change', function (req, res) {
+
+        req.session.myData.newBankNameBus = req.body.bankNameBus.trim()
+        req.session.myData.newBankSortBus = req.body.bankSortBus.trim()
+        req.session.myData.newBankAccountBus = req.body.bankAccountBus.trim()
+        req.session.myData.newBankRollBus = req.body.bankRollBus.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newBankNameBus = req.session.myData.newBankNameBus || req.session.myData.bankNameBus
+            req.session.myData.newBankSortBus = req.session.myData.newBankSortBus || req.session.myData.bankSortBus
+            req.session.myData.newBankAccountBus = req.session.myData.newBankAccountBus || req.session.myData.bankAccountBus
+        }
+
+        if(!req.session.myData.newBankNameBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.bankNameBus = {
+                "anchor": "bankNameBus",
+                "message": "[error message - blank - change bank account name]"
+            }
+        }
+        if(!req.session.myData.newBankSortBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.bankSortBus = {
+                "anchor": "bankSortBus",
+                "message": "[error message - blank - change sort code]"
+            }
+        }
+        if(!req.session.myData.newBankAccountBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.bankAccountBus = {
+                "anchor": "bankAccountBus",
+                "message": "[error message - blank - change account number]"
+            }
+        }
+        
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-bank-change', {
+                myData: req.session.myData
+            });
+        } else {
+            res.redirect(301, '/' + version + '/business-details-bank-check');
+        }
+        
+    });
+    //business details - check bank details
+    router.get('/' + version + '/business-details-bank-check', function (req, res) {
+        res.render(version + '/business-details-bank-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-bank-check', function (req, res) {
+        req.session.myData.bankNameBus = req.session.myData.newBankNameBus || req.session.myData.bankNameBus
+        req.session.myData.bankSortBus = req.session.myData.newBankSortBus || req.session.myData.bankSortBus
+        req.session.myData.bankAccountBus = req.session.myData.newBankAccountBus || req.session.myData.bankAccountBus
+        req.session.myData.bankRollBus = req.session.myData.newBankRollBus || req.session.myData.bankRollBus
+        
+        req.session.myData.newBankNameBus = ""
+        req.session.myData.newBankSortBus = ""
+        req.session.myData.newBankAccountBus = ""
+        req.session.myData.newBankRollBus = ""
+
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
     });
     
 

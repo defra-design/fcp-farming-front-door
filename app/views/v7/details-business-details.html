@@ -156,7 +156,6 @@
           {{_selectedBusiness.vrnNumber or "123456"}} 
         </dd>
       </div>
-      {% if data.release != "b1" %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           CPH number
@@ -165,7 +164,6 @@
           {{_selectedBusiness.cphNumber or "12/563/0998"}} 
         </dd>
       </div>
-      {% endif %}
     </dl>
 
 
@@ -222,21 +220,19 @@
           <a class="govuk-link govuk-link--no-visited-state" href="business-details-type-change?newChange=true">Change<span class="govuk-visually-hidden"> business type</span></a>
         </dd>
       </div>
-      {% if data.release != "b1" %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Bank account details
         </dt>
         <dd class="govuk-summary-list__value">
-          {{data.user.name}}
-         </br>****43
-         </br>****1200
+          {{myData.bankNameBus}}
+         </br>{{myData.bankSortBus}}
+         </br>{{myData.bankAccountBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> bank account details</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-change?newChange=true">Change<span class="govuk-visually-hidden"> bank account details</span></a>
         </dd>
       </div>
-      {% endif %}
     </dl>
 
 

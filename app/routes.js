@@ -43,7 +43,11 @@ var _myData = {
     "legalBus": "Sole Proprietorship",
     "legalCHRNBus": "",
     "legalCCRNBus": "",
-    "vatBus": ""
+    "vatBus": "",
+    "bankNameBus": "Alfred Waldron",
+    "bankSortBus": "123456",
+    "bankAccountBus": "12345678",
+    "bankRollBus": ""
 }
 
 router.post('/which-service-answer', function(request, response) {

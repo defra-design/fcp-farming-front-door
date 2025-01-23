@@ -1,0 +1,62 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your bank or building society account details" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your bank or building society account details
+      </h1>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Bank or building society account details
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% set _bankRollValue = myData.newBankRollValue or myData.bankRollValue %}
+            {{myData.newBankNameBus or myData.bankNameBus}}<br>
+            {{myData.newBankSortBus or myData.bankSortBus}}<br>
+            {{myData.newBankAccountBus or myData.bankAccountBus}}
+            {% if _bankRollValue != "" %}<br>{{_bankRollValue}}{% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> bank or building society account details</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
