@@ -1,0 +1,173 @@
+{% extends "layouts/main.html" %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Select your legal status" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      {% set _legals = [
+        "Charitable Incorporated Organisation (CIO)",
+        "Community Interest Company (CIC)",
+        "Government (Central)",
+        "Government (Local)",
+        "Limited Liability Partnership (LLP)",
+        "Limited Partnership",
+        "Non-UK Company",
+        "Partnership",
+        "Private Limited Company (Ltd)",
+        "Public Limited Company (PLC)",
+        "Sole Proprietorship",
+        "The Crown",
+        "Charitable Trust",
+        "Unlimited Company (Ultd)"
+        ] 
+      %}
+
+      <div class="govuk-form-group {% if myData.validationErrors.legalBus %}govuk-form-group--error{% endif %}">
+        <fieldset class="govuk-fieldset" {% if myData.validationErrors.legalBus %}aria-describedby="legalBus-error"{% endif %}>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              Select your legal status
+            </h1>
+          </legend>
+          {% if myData.validationErrors.legalBus %}
+          <p id="legalBus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.legalBus.message}}
+          </p>
+          {% endif %}
+          <div class="govuk-radios" data-module="govuk-radios">
+
+            {% set _valueNewLegalBus = myData.newLegalBus or myData.legalBus %}
+            {% if myData.validationErrors.legalBus %}
+                {% set _valueNewLegalBus = myData.newLegalBus %}
+            {% endif %}
+
+            {% for _legal in _legals %}
+
+              <!-- Radio button -->
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="legalBus-{{loop.index}}" name="legalBus" type="radio" value="{{_legal}}" {% if _valueNewLegalBus == _legal %}checked{% endif %} {% if _legal == "Public Limited Company (PLC)" %}data-aria-controls="conditional-legalCHRNBus"{% endif %} {% if _legal == "Charitable Incorporated Organisation (CIO)" %}data-aria-controls="conditional-legalCCRNBus"{% endif %} >
+                <label class="govuk-label govuk-radios__label" for="legalBus-{{loop.index}}">
+                  {{_legal}}
+                </label>
+              </div>
+
+              <!-- Conditionally revealed 'Companies house registration number' input -->
+              {% if _legal == "Public Limited Company (PLC)" %}
+
+                {% set _valueNewLegalCHRNBus = myData.newLegalCHRNBus or myData.legalCHRNBus %}
+                {% if data.newChange != "true" %}
+                  {% set _valueNewLegalCHRNBus = _valueNewLegalCHRNBus or "12345678" %}
+                {% endif %}
+                {% if myData.validationErrors.legalCHRNBus %}
+                    {% set _valueNewLegalCHRNBus = myData.newLegalCHRNBus %}
+                {% endif %}
+
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-legalCHRNBus">
+                  <div class="govuk-form-group {% if myData.validationErrors.legalCHRNBus %}govuk-form-group--error{% endif %}">
+                    <label class="govuk-label" for="legalCHRNBus">
+                      Companies house registration number
+                    </label>
+                    {% if myData.validationErrors.legalCHRNBus %}
+                    <p id="legalCHRNBus-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.legalCHRNBus.message}}
+                    </p>
+                    {% endif %}
+                    <input class="govuk-input govuk-input--width-10 {% if myData.validationErrors.legalCHRNBus %}govuk-input--error{% endif %}" id="legalCHRNBus" name="legalCHRNBus" type="text" value="{{_valueNewLegalCHRNBus}}" {% if myData.validationErrors.legalCHRNBus %}aria-describedby="legalCHRNBus-error"{% endif %} >
+                  </div>
+                </div>
+              {% endif %}
+
+              <!-- Conditionally revealed 'Charity commission registration number' input -->
+              {% if _legal == "Charitable Incorporated Organisation (CIO)" %}
+
+                {% set _valueNewLegalCCRNBus = myData.newLegalCCRNBus or myData.legalCCRNBus %}
+                {% if data.newChange != "true" %}
+                  {% set _valueNewLegalCCRNBus = _valueNewLegalCCRNBus or "0123456" %}
+                {% endif %}
+                {% if myData.validationErrors.legalCCRNBus %}
+                    {% set _valueNewLegalCCRNBus = myData.newLegalCCRNBus %}
+                {% endif %}
+
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-legalCCRNBus">
+                  <div class="govuk-form-group {% if myData.validationErrors.legalCCRNBus %}govuk-form-group--error{% endif %}">
+                    <label class="govuk-label" for="legalCCRNBus">
+                      Charity commission registration number
+                    </label>
+                    {% if myData.validationErrors.legalCCRNBus %}
+                    <p id="legalCCRNBus-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.legalCCRNBus.message}}
+                    </p>
+                    {% endif %}
+                    <input class="govuk-input govuk-input--width-10 {% if myData.validationErrors.legalCCRNBus %}govuk-input--error{% endif %}" id="legalCCRNBus" name="legalCCRNBus" type="text" value="{{_valueNewLegalCCRNBus}}" {% if myData.validationErrors.legalCCRNBus %}aria-describedby="legalCCRNBus-error"{% endif %} >
+                  </div>
+                </div>
+              {% endif %}
+
+
+
+            {% endfor %}
+
+          </div>
+        </fieldset>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

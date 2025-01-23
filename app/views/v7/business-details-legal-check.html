@@ -1,0 +1,90 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your legal status" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your legal status
+      </h1>
+
+      {% set _legalValue = myData.newLegalBus or myData.legalBus %}
+
+      <dl class="govuk-summary-list">
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Legal status
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{_legalValue}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-change">Change<span class="govuk-visually-hidden"> legal status</span></a>
+          </dd>
+        </div>
+
+        {% if _legalValue == "Public Limited Company (PLC)" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Companies house registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{myData.newLegalCHRNBus or "12345678"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-change">Change<span class="govuk-visually-hidden"> companies house registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+
+        {% if _legalValue == "Charitable Incorporated Organisation (CIO)" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Charity commission registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{myData.newLegalCCRNBus or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-change">Change<span class="govuk-visually-hidden"> charity commission registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+
+      </dl>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+
+      </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -181,12 +181,38 @@
           Legal status
         </dt>
         <dd class="govuk-summary-list__value">
-          Sole proprietorship
+          {{myData.legalBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> legal status</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-legal-change?newChange=true">Change<span class="govuk-visually-hidden"> legal status</span></a>
         </dd>
       </div>
+      {% if myData.legalBus == "Public Limited Company (PLC)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Companies house registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.legalCHRNBus}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-legal-change?newChange=true">Change<span class="govuk-visually-hidden"> companies house registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
+      {% if myData.legalBus == "Charitable Incorporated Organisation (CIO)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Charity commission registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.legalCCRNBus}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-legal-change?newChange=true">Change<span class="govuk-visually-hidden"> charity commission registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Business type

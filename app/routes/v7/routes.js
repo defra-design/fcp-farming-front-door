@@ -629,6 +629,16 @@ module.exports = function (router,_myData) {
         if(req.query.typechanged == "true"){
             req.session.myData.notifications.message = "[notification banner - type changed to " + req.session.myData.typeBus + "]"
         }
+        if(req.query.legalchanged == "true"){
+            var _numberChangedText = ""
+            if(req.session.myData.legalBus == "Public Limited Company (PLC)"){
+                _numberChangedText = " and Companies house registration number changed to " + req.session.myData.legalCHRNBus
+            }
+            if(req.session.myData.legalBus == "Charitable Incorporated Organisation (CIO)"){
+                _numberChangedText = " and Charity commission registration number changed to " + req.session.myData.legalCCRNBus
+            }
+            req.session.myData.notifications.message = "[notification banner - legal status changed to " + req.session.myData.legalBus + _numberChangedText + "]"
+        }
         
         res.render(version + '/details-business-details', {
             myData: req.session.myData
@@ -683,7 +693,6 @@ module.exports = function (router,_myData) {
         req.session.myData.newNameBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&namechanged=true');
     });
-
     //business details - change address
     router.get('/' + version + '/business-details-address-change', function (req, res) {
         if(req.query.newChange){
@@ -764,7 +773,6 @@ module.exports = function (router,_myData) {
 
         res.redirect(301, '/' + version + '/details-business-details?changed=true&addresschanged=true');
     });
-
     //business details - change mobile
     router.get('/' + version + '/business-details-mob-change', function (req, res) {
         if(req.query.newChange){
@@ -811,7 +819,6 @@ module.exports = function (router,_myData) {
         req.session.myData.newMobNumberBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&mobchanged=true');
     });
-
     //business details - change telephone
     router.get('/' + version + '/business-details-tel-change', function (req, res) {
         if(req.query.newChange){
@@ -858,7 +865,6 @@ module.exports = function (router,_myData) {
         req.session.myData.newTelNumberBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&telchanged=true');
     });
-
     //business details - change email
     router.get('/' + version + '/business-details-email-change', function (req, res) {
         if(req.query.newChange){
@@ -905,7 +911,6 @@ module.exports = function (router,_myData) {
         req.session.myData.newEmailBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&emailchanged=true');
     });
-
     //business details - change type
     router.get('/' + version + '/business-details-type-change', function (req, res) {
         if(req.query.newChange){
@@ -951,6 +956,86 @@ module.exports = function (router,_myData) {
         req.session.myData.typeBus = req.session.myData.newTypeBus || req.session.myData.typeBus
         req.session.myData.newTypeBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&typechanged=true');
+    });
+    //business details - change legal status
+    router.get('/' + version + '/business-details-legal-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newLegalBus = ""
+        }
+        res.render(version + '/business-details-legal-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-legal-change', function (req, res) {
+
+        req.session.myData.newLegalBus = req.body.legalBus
+        req.session.myData.newLegalCHRNBus = req.body.legalCHRNBus
+        req.session.myData.newLegalCCRNBus = req.body.legalCCRNBus
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newLegalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
+            if(req.session.myData.newLegalBus == "Public Limited Company (PLC)"){
+                req.session.myData.newLegalCHRNBus = req.session.myData.newLegalCHRNBus || "12345678"
+            }
+            if(req.session.myData.newLegalBus == "Charitable Incorporated Organisation (CIO)"){
+                req.session.myData.newLegalCCRNBus = req.session.myData.newLegalCCRNBus || "0123456"
+            }
+        }
+
+        if(!req.session.myData.newLegalBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.legalBus = {
+                "anchor": "legalBus-1",
+                "message": "[error message - blank - change legal status]"
+            }
+        } else {
+            if(req.session.myData.newLegalBus == "Public Limited Company (PLC)" & !req.session.myData.newLegalCHRNBus){
+                req.session.myData.validationError = "true"
+                req.session.myData.validationErrors.legalCHRNBus = {
+                    "anchor": "legalCHRNBus",
+                    "message": "[error message - blank - companies house reg number]"
+                }
+            }
+            if(req.session.myData.newLegalBus == "Charitable Incorporated Organisation (CIO)" & !req.session.myData.newLegalCCRNBus){
+                req.session.myData.validationError = "true"
+                req.session.myData.validationErrors.legalCCRNBus = {
+                    "anchor": "legalCCRNBus",
+                    "message": "[error message - blank - Charity commission registration number]"
+                }
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-legal-change', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.legalBus = req.session.myData.newLegalBus
+            res.redirect(301, '/' + version + '/business-details-legal-check');
+        }
+        
+    });
+    //business details - check legal status
+    router.get('/' + version + '/business-details-legal-check', function (req, res) {
+        res.render(version + '/business-details-legal-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-legal-check', function (req, res) {
+
+        req.session.myData.legalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
+        req.session.myData.newLegalBus = ""
+
+        if(req.session.myData.legalBus == "Public Limited Company (PLC)"){
+            req.session.myData.legalCHRNBus = req.session.myData.newLegalCHRNBus || req.session.myData.legalCHRNBus
+            req.session.myData.newLegalCHRNBus = ""
+        }
+        if(req.session.myData.legalBus == "Charitable Incorporated Organisation (CIO)"){
+            req.session.myData.legalCCRNBus = req.session.myData.newLegalCCRNBus || req.session.myData.legalCCRNBus
+            req.session.myData.newLegalCCRNBus = ""
+        }
+        
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&legalchanged=true');
     });
     
 
