@@ -40,7 +40,10 @@ var _myData = {
     "mobNumberBus": "07700 900 967",
     "emailBus": "agilefarmsrus25@gmail.com",
     "typeBus": "Farmer",
-    "legalBus": "Sole Proprietorship"
+    "legalBus": "Sole Proprietorship",
+    "legalCHRNBus": "",
+    "legalCCRNBus": "",
+    "vatBus": ""
 }
 
 router.post('/which-service-answer', function(request, response) {

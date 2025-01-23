@@ -1,0 +1,69 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your VAT registration number is correct before submitting" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set yourMessages = "Active" %}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner.html" %}
+  {% include "_common/sub-header.html" %}
+  {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your VAT registration number is correct before submitting 
+      </h1>
+
+      {% set _changeURL = "business-details-vat-change" %}
+      {% if myData.vatBus == "" %}
+        {% set _changeURL = "business-details-vat-add" %}
+      {% endif %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "VAT registration number"
+            },
+            value: {
+              text: myData.newVatBus or "GB123456789"
+            },
+            actions: {
+              items: [
+                {
+                  href: _changeURL,
+                  text: "Change",
+                  visuallyHiddenText: "VAT registration number"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+
+      </form>
+
+
+  </div>
+</div>
+
+
+
+{% endblock %}

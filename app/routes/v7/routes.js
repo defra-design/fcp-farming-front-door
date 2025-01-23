@@ -626,6 +626,9 @@ module.exports = function (router,_myData) {
         if(req.query.emailchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - email changed to " + req.session.myData.emailBus + "]"
         }
+        if(req.query.vatchanged == "true"){
+            req.session.myData.notifications.message = "[notification banner - VAT num changed to " + req.session.myData.vatBus + "]"
+        }
         if(req.query.typechanged == "true"){
             req.session.myData.notifications.message = "[notification banner - type changed to " + req.session.myData.typeBus + "]"
         }
@@ -1036,6 +1039,87 @@ module.exports = function (router,_myData) {
         }
         
         res.redirect(301, '/' + version + '/details-business-details?changed=true&legalchanged=true');
+    });
+    //business details - add VAT
+    router.get('/' + version + '/business-details-vat-add', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newVatBus = ""
+        }
+        res.render(version + '/business-details-vat-add', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-vat-add', function (req, res) {
+
+        req.session.myData.newVatBus = req.body.vatBus.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newVatBus = req.session.myData.newVatBus || "GB123456789"
+        }
+
+        if(!req.session.myData.newVatBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.vatBus = {
+                "anchor": "vatBus",
+                "message": "[error message - blank - add VAT]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-vat-add', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.vatBus = req.session.myData.newVatBus
+            res.redirect(301, '/' + version + '/business-details-vat-check');
+        }
+        
+    });
+    //business details - change VAT
+    router.get('/' + version + '/business-details-vat-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newVatBus = ""
+        }
+        res.render(version + '/business-details-vat-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-vat-change', function (req, res) {
+
+        req.session.myData.newVatBus = req.body.vatBus.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newVatBus = req.session.myData.newVatBus || "GB123456789"
+        }
+
+        if(!req.session.myData.newVatBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.vatBus = {
+                "anchor": "vatBus",
+                "message": "[error message - blank - change VAT]"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-vat-change', {
+                myData: req.session.myData
+            });
+        } else {
+            // req.session.myData.vatBus = req.session.myData.newVatBus
+            res.redirect(301, '/' + version + '/business-details-vat-check');
+        }
+        
+    });
+    //business details - check VAT
+    router.get('/' + version + '/business-details-vat-check', function (req, res) {
+        res.render(version + '/business-details-vat-check', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-vat-check', function (req, res) {
+        req.session.myData.vatBus = req.session.myData.newVatBus || req.session.myData.vatBus
+        req.session.myData.newVatBus = ""
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&vatchanged=true');
     });
     
 

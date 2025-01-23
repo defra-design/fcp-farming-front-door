@@ -5,6 +5,8 @@
 
 {% set yourMessages = "Active" %}
 
+{% set _selectedBusiness = myData.selectedBusiness %}
+
 {% block beforeContent %}
 
   {% include "_common/phase-banner.html" %}
@@ -107,7 +109,7 @@
           {{myData.emailBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Change<span class="govuk-visually-hidden"> email address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-email-change?newChange=true">Change<span class="govuk-visually-hidden"> email address</span></a>
         </dd>
       </div>
     </dl>
@@ -124,11 +126,7 @@
           Single business identifier
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['valleySFD'] == 'True' %}  
-          192846125
-          {% else %}  
-          123456789
-          {% endif %}  
+          {{_selectedBusiness.sbiNumber}} 
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -136,10 +134,18 @@
           VAT registration number
         </dt>
         <dd class="govuk-summary-list__value">
-          No number added
+          {% if myData.vatBus == "" %}
+            <span style="color:#505a5f">No number added</span>
+          {% else %}
+            {{myData.vatBus}}
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">Add<span class="govuk-visually-hidden"> a VAT registration number</span></a>
+          {% if myData.vatBus == "" %}
+            <a class="govuk-link govuk-link--no-visited-state" href="business-details-vat-add?newChange=true">Add<span class="govuk-visually-hidden"> VAT registration number</span></a>
+          {% else %}
+            <a class="govuk-link govuk-link--no-visited-state" href="business-details-vat-change?newChange=true">Change<span class="govuk-visually-hidden"> VAT registration number</span></a>
+          {% endif %}
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -147,11 +153,7 @@
           Vendor registration number
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['valleySFD'] == 'True' %}  
-          009765
-          {% else %}  
-          581362
-          {% endif %}  
+          {{_selectedBusiness.vrnNumber or "123456"}} 
         </dd>
       </div>
       {% if data.release != "b1" %}
@@ -160,11 +162,7 @@
           CPH number
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['valleySFD'] == 'True' %}  
-          12/563/0998
-          {% else %}  
-          12/345/6789
-          {% endif %}  
+          {{_selectedBusiness.cphNumber or "12/563/0998"}} 
         </dd>
       </div>
       {% endif %}
