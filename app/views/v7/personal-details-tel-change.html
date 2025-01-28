@@ -71,9 +71,11 @@
         <input class="govuk-input govuk-input--width-20 {% if _inError %}govuk-input--error{% endif %}" id="telNumberPers" name="telNumberPers" type="tel" autocomplete="tel" value="{{_valueNewTelNumberPers}}" {% if _inError %}aria-describedby="telNumberPers-error"{% endif %}>
       </div>
 
-      <button type="submit" class="govuk-button" data-module="govuk-button">
-        Continue
-      </button>
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="details-personal-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
     </form>
 

@@ -973,6 +973,8 @@ module.exports = function (router,_myData) {
     router.get('/' + version + '/business-details-legal-change', function (req, res) {
         if(req.query.newChange){
             req.session.myData.newLegalBus = ""
+            req.session.myData.newLegalCHRNBus = ""
+            req.session.myData.newLegalCCRNBus = ""
         }
         res.render(version + '/business-details-legal-change', {
             myData: req.session.myData
@@ -1036,16 +1038,20 @@ module.exports = function (router,_myData) {
     router.post('/' + version + '/business-details-legal-check', function (req, res) {
 
         req.session.myData.legalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
-        req.session.myData.newLegalBus = ""
-
         if(req.session.myData.legalBus == "Public Limited Company (PLC)"){
             req.session.myData.legalCHRNBus = req.session.myData.newLegalCHRNBus || req.session.myData.legalCHRNBus
-            req.session.myData.newLegalCHRNBus = ""
+        } else {
+            req.session.myData.legalCHRNBus = ""
         }
         if(req.session.myData.legalBus == "Charitable Incorporated Organisation (CIO)"){
             req.session.myData.legalCCRNBus = req.session.myData.newLegalCCRNBus || req.session.myData.legalCCRNBus
-            req.session.myData.newLegalCCRNBus = ""
+        } else {
+            req.session.myData.legalCCRNBus = ""
         }
+
+        req.session.myData.newLegalBus = ""
+        req.session.myData.newLegalCCRNBus = ""
+        req.session.myData.newLegalCHRNBus = ""
         
         res.redirect(301, '/' + version + '/details-business-details?changed=true&legalchanged=true');
     });

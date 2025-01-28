@@ -146,9 +146,11 @@
       </fieldset>
 
 
-      <button type="submit" class="govuk-button" data-module="govuk-button">
-        Continue
-      </button>
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="details-personal-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
     </form>
 

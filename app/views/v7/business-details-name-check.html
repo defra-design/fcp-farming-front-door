@@ -50,11 +50,14 @@
           }
         ]
       }) }}
-      <button type="submit" class="govuk-button" data-module="govuk-button">
-        Submit
-      </button>
 
-      </form>
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
 
   </div>
 </div>

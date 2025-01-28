@@ -74,9 +74,11 @@
         <input class="govuk-input govuk-input--width-10 {% if _inError %}govuk-input--error{% endif %}" id="vatBus" name="vatBus" type="text"  value="{{_valueNewVatBus}}" {% if _inError %}aria-describedby="vatBus-error"{% endif %}>
       </div>
 
-      <button type="submit" class="govuk-button" data-module="govuk-button">
-        Continue
-      </button>
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
     </form>
 
