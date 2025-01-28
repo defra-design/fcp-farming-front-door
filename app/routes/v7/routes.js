@@ -607,52 +607,59 @@ module.exports = function (router,_myData) {
             req.session.myData.notifications.message = "[notification banner - name changed to " + req.session.myData.nameBus + "]"
         }
         if(req.query.addresschanged == "true"){
-            // Adds space after address line 2 if a address line 2 was entered
-            var _address2Value = req.session.myData.address2Bus || ""
-            if (_address2Value != ""){
-                var _address2Value = _address2Value + ", "
-            }
-            // Adds space after address county if a address county was entered
-            var _addressCountyValue = req.session.myData.addressCountyBus || ""
-            if (_addressCountyValue != ""){
-                var _addressCountyValue = _addressCountyValue + ", "
-            }
+            // // Adds space after address line 2 if a address line 2 was entered
+            // var _address2Value = req.session.myData.address2Bus || ""
+            // if (_address2Value != ""){
+            //     var _address2Value = _address2Value + ", "
+            // }
+            // // Adds space after address county if a address county was entered
+            // var _addressCountyValue = req.session.myData.addressCountyBus || ""
+            // if (_addressCountyValue != ""){
+            //     var _addressCountyValue = _addressCountyValue + ", "
+            // }
 
-            req.session.myData.notifications.message = "[notification banner - address changed to " + req.session.myData.address1Bus + ", " + _address2Value + req.session.myData.addressCityBus + ", " + _addressCountyValue + req.session.myData.addressPostcodeBus + "]"
+            // req.session.myData.notifications.message = "[notification banner - address changed to " + req.session.myData.address1Bus + ", " + _address2Value + req.session.myData.addressCityBus + ", " + _addressCountyValue + req.session.myData.addressPostcodeBus + "]"
+            req.session.myData.notifications.message = "You have updated your business address"
+            
         }
         if(req.query.telchanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberBus + "]"
+            // req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberBus + "]"
+            req.session.myData.notifications.message = "You have updated your business telephone number"
         }
         if(req.query.mobchanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - mob changed to " + req.session.myData.mobNumberBus + "]"
+            // req.session.myData.notifications.message = "[notification banner - mob changed to " + req.session.myData.mobNumberBus + "]"
+            req.session.myData.notifications.message = "You have updated your business mobile number"
         }
         if(req.query.emailchanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - email changed to " + req.session.myData.emailBus + "]"
+            // req.session.myData.notifications.message = "[notification banner - email changed to " + req.session.myData.emailBus + "]"
+            req.session.myData.notifications.message = "You have updated your business email address"
         }
         if(req.query.vatchanged == "true"){
             req.session.myData.notifications.message = "[notification banner - VAT num changed to " + req.session.myData.vatBus + "]"
         }
         if(req.query.typechanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - type changed to " + req.session.myData.typeBus + "]"
+            // req.session.myData.notifications.message = "[notification banner - type changed to " + req.session.myData.typeBus + "]"
+            req.session.myData.notifications.message = "You have updated your business type"
         }
         if(req.query.legalchanged == "true"){
-            var _numberChangedText = ""
-            if(req.session.myData.legalBus == "Public Limited Company (PLC)"){
-                _numberChangedText = " and Companies house registration number changed to " + req.session.myData.legalCHRNBus
-            }
-            if(req.session.myData.legalBus == "Charitable Incorporated Organisation (CIO)"){
-                _numberChangedText = " and Charity commission registration number changed to " + req.session.myData.legalCCRNBus
-            }
-            req.session.myData.notifications.message = "[notification banner - legal status changed to " + req.session.myData.legalBus + _numberChangedText + "]"
+            // var _numberChangedText = ""
+            // if(req.session.myData.legalBus == "Public Limited Company (PLC)"){
+            //     _numberChangedText = " and Companies house registration number changed to " + req.session.myData.legalCHRNBus
+            // }
+            // if(req.session.myData.legalBus == "Charitable Incorporated Organisation (CIO)"){
+            //     _numberChangedText = " and Charity commission registration number changed to " + req.session.myData.legalCCRNBus
+            // }
+            // req.session.myData.notifications.message = "[notification banner - legal status changed to " + req.session.myData.legalBus + _numberChangedText + "]"
+            req.session.myData.notifications.message = "You have updated your legal status"
         }
         if(req.query.bankchanged == "true"){
-            // Adds comma before roll number if a roll number was entered
-            var _bankRollValue = req.session.myData.bankRollBus || ""
-            if (_bankRollValue != ""){
-                var _bankRollValue = ", " + _bankRollValue
-            }
-
-            req.session.myData.notifications.message = "[notification banner - bank details changed to " + req.session.myData.bankNameBus + ", " + req.session.myData.bankSortBus + ", "  + req.session.myData.bankAccountBus + _bankRollValue + "]"
+            // // Adds comma before roll number if a roll number was entered
+            // var _bankRollValue = req.session.myData.bankRollBus || ""
+            // if (_bankRollValue != ""){
+            //     var _bankRollValue = ", " + _bankRollValue
+            // }
+            // req.session.myData.notifications.message = "[notification banner - bank details changed to " + req.session.myData.bankNameBus + ", " + req.session.myData.bankSortBus + ", "  + req.session.myData.bankAccountBus + _bankRollValue + "]"
+            req.session.myData.notifications.message = "You have updated your bank details"
         }
         
         res.render(version + '/details-business-details', {
