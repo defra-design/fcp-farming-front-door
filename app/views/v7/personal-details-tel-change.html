@@ -55,12 +55,12 @@
 
     <form method="POST" novalidate>
 
-      <h1 class="govuk-heading-l">What is your personal telephone number?</h1>
-
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
-        <label class="govuk-label" for="telNumberPers">
-          New telephone number
-        </label>
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="telNumberPers">
+            What is your personal telephone number?
+          </label>
+        </h1>
 
         {% if _inError %}
         <p id="telNumberPers-error" class="govuk-error-message">
