@@ -4,7 +4,7 @@
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
-{% set pageName = "Check your legal status" %}
+{% set pageName = "Check your legal status is correct before submitting" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% set yourMessages = "Active" %}
@@ -31,7 +31,7 @@
     <form method="POST" novalidate>
 
       <h1 class="govuk-heading-l">
-        Check your legal status
+        Check your legal status is correct before submitting
       </h1>
 
       {% set _legalValue = myData.newLegalBus or myData.legalBus %}
@@ -50,7 +50,7 @@
           </dd>
         </div>
 
-        {% if _legalValue == "Public Limited Company (PLC)" %}
+        {% if _legalValue == "Public limited company (PLC)" %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Companies house registration number
@@ -64,7 +64,7 @@
         </div>
         {% endif %}
 
-        {% if _legalValue == "Charitable Incorporated Organisation (CIO)" %}
+        {% if _legalValue == "Charitable incorporated organisation (CIO)" %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Charity commission registration number

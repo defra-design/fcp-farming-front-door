@@ -6,7 +6,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Select your business type" %}
+{% set pageTitle = "What is your business type?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -57,22 +57,22 @@
     <form method="POST" novalidate>
 
       {% set _types = [
-        "Agency/Agent",
+        "Agency or agent",
+        "Central or local government",
+        "Commons or graziers association",
+        "Education or training provider",
         "Farmer",
-        "Commons or Graziers Association",
-        "Education Provider/Training",
-        "Forestry/Woodland Owner",
-        "Central/Local Government",
+        "Forestry or woodland owner",
+        "Hobby livestock keeper",
         "Horticultural business",
-        "Intervention/Private storage",
+        "Intervention or private storage",
         "Land manager",
         "Leader group",
-        "Official Receiver/Administrator",
-        "Rural Community/Voluntary/Third sector organisation",
-        "Tourism",
         "Meat industry",
-        "Hobby livestock keeper",
-        "Professional livestock keeper"
+        "Official receiver or administrator",
+        "Professional livestock keeper",
+        "Rural community, voluntary or third sector organisation",
+        "Tourism"
         ] 
       %}
 
@@ -80,7 +80,7 @@
         <fieldset class="govuk-fieldset" {% if _inError %}aria-describedby="typeBus-error"{% endif %}>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
             <h1 class="govuk-fieldset__heading">
-              Select your business type
+              What is your business type?
             </h1>
           </legend>
           {% if _inError %}

@@ -643,10 +643,10 @@ module.exports = function (router,_myData) {
         }
         if(req.query.legalchanged == "true"){
             // var _numberChangedText = ""
-            // if(req.session.myData.legalBus == "Public Limited Company (PLC)"){
+            // if(req.session.myData.legalBus == "Public limited company (PLC)"){
             //     _numberChangedText = " and Companies house registration number changed to " + req.session.myData.legalCHRNBus
             // }
-            // if(req.session.myData.legalBus == "Charitable Incorporated Organisation (CIO)"){
+            // if(req.session.myData.legalBus == "Charitable incorporated organisation (CIO)"){
             //     _numberChangedText = " and Charity commission registration number changed to " + req.session.myData.legalCCRNBus
             // }
             // req.session.myData.notifications.message = "[notification banner - legal status changed to " + req.session.myData.legalBus + _numberChangedText + "]"
@@ -998,10 +998,10 @@ module.exports = function (router,_myData) {
 
         if(req.session.myData.includeValidation == "false"){
             req.session.myData.newLegalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
-            if(req.session.myData.newLegalBus == "Public Limited Company (PLC)"){
+            if(req.session.myData.newLegalBus == "Public limited company (PLC)"){
                 req.session.myData.newLegalCHRNBus = req.session.myData.newLegalCHRNBus || "12345678"
             }
-            if(req.session.myData.newLegalBus == "Charitable Incorporated Organisation (CIO)"){
+            if(req.session.myData.newLegalBus == "Charitable incorporated organisation (CIO)"){
                 req.session.myData.newLegalCCRNBus = req.session.myData.newLegalCCRNBus || "0123456"
             }
         }
@@ -1013,14 +1013,14 @@ module.exports = function (router,_myData) {
                 "message": "[error message - blank - change legal status]"
             }
         } else {
-            if(req.session.myData.newLegalBus == "Public Limited Company (PLC)" & !req.session.myData.newLegalCHRNBus){
+            if(req.session.myData.newLegalBus == "Public limited company (PLC)" & !req.session.myData.newLegalCHRNBus){
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCHRNBus = {
                     "anchor": "legalCHRNBus",
                     "message": "[error message - blank - companies house reg number]"
                 }
             }
-            if(req.session.myData.newLegalBus == "Charitable Incorporated Organisation (CIO)" & !req.session.myData.newLegalCCRNBus){
+            if(req.session.myData.newLegalBus == "Charitable incorporated organisation (CIO)" & !req.session.myData.newLegalCCRNBus){
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCCRNBus = {
                     "anchor": "legalCCRNBus",
@@ -1048,12 +1048,12 @@ module.exports = function (router,_myData) {
     router.post('/' + version + '/business-details-legal-check', function (req, res) {
 
         req.session.myData.legalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
-        if(req.session.myData.legalBus == "Public Limited Company (PLC)"){
+        if(req.session.myData.legalBus == "Public limited company (PLC)"){
             req.session.myData.legalCHRNBus = req.session.myData.newLegalCHRNBus || req.session.myData.legalCHRNBus
         } else {
             req.session.myData.legalCHRNBus = ""
         }
-        if(req.session.myData.legalBus == "Charitable Incorporated Organisation (CIO)"){
+        if(req.session.myData.legalBus == "Charitable incorporated organisation (CIO)"){
             req.session.myData.legalCCRNBus = req.session.myData.newLegalCCRNBus || req.session.myData.legalCCRNBus
         } else {
             req.session.myData.legalCCRNBus = ""

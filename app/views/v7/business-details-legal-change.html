@@ -6,7 +6,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Select your legal status" %}
+{% set pageTitle = "What is your legal status?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -57,28 +57,29 @@
     <form method="POST" novalidate>
 
       {% set _legals = [
-        "Charitable Incorporated Organisation (CIO)",
-        "Community Interest Company (CIC)",
-        "Government (Central)",
-        "Government (Local)",
-        "Limited Liability Partnership (LLP)",
-        "Limited Partnership",
-        "Non-UK Company",
+        "Charitable incorporated organisation (CIO)",
+        "Charitable trust",
+        "Community interest company (CIC)",
+        "Government (central)",
+        "Government (local)",
+        "Limited liability partnership (LLP)",
+        "Limited partnership",
+        "Non-UK company",
         "Partnership",
-        "Private Limited Company (Ltd)",
-        "Public Limited Company (PLC)",
-        "Sole Proprietorship",
+        "Private limited company (Ltd)",
+        "Public limited company (PLC)",
+        "Sole proprietorship",
         "The Crown",
-        "Charitable Trust",
-        "Unlimited Company (Ultd)"
+        "Unlimited company (Ultd)"
         ] 
       %}
+
 
       <div class="govuk-form-group {% if myData.validationErrors.legalBus %}govuk-form-group--error{% endif %}">
         <fieldset class="govuk-fieldset" {% if myData.validationErrors.legalBus %}aria-describedby="legalBus-error"{% endif %}>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
             <h1 class="govuk-fieldset__heading">
-              Select your legal status
+              What is your legal status?
             </h1>
           </legend>
           {% if myData.validationErrors.legalBus %}
@@ -97,14 +98,14 @@
 
               <!-- Radio button -->
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="legalBus-{{loop.index}}" name="legalBus" type="radio" value="{{_legal}}" {% if _valueNewLegalBus == _legal %}checked{% endif %} {% if _legal == "Public Limited Company (PLC)" %}data-aria-controls="conditional-legalCHRNBus"{% endif %} {% if _legal == "Charitable Incorporated Organisation (CIO)" %}data-aria-controls="conditional-legalCCRNBus"{% endif %} >
+                <input class="govuk-radios__input" id="legalBus-{{loop.index}}" name="legalBus" type="radio" value="{{_legal}}" {% if _valueNewLegalBus == _legal %}checked{% endif %} {% if _legal == "Public limited company (PLC)" %}data-aria-controls="conditional-legalCHRNBus"{% endif %} {% if _legal == "Charitable incorporated organisation (CIO)" %}data-aria-controls="conditional-legalCCRNBus"{% endif %} >
                 <label class="govuk-label govuk-radios__label" for="legalBus-{{loop.index}}">
                   {{_legal}}
                 </label>
               </div>
 
               <!-- Conditionally revealed 'Companies house registration number' input -->
-              {% if _legal == "Public Limited Company (PLC)" %}
+              {% if _legal == "Public limited company (PLC)" %}
 
                 {% set _valueNewLegalCHRNBus = myData.newLegalCHRNBus or myData.legalCHRNBus %}
                 {% if data.newChange != "true" %}
@@ -130,7 +131,7 @@
               {% endif %}
 
               <!-- Conditionally revealed 'Charity commission registration number' input -->
-              {% if _legal == "Charitable Incorporated Organisation (CIO)" %}
+              {% if _legal == "Charitable incorporated organisation (CIO)" %}
 
                 {% set _valueNewLegalCCRNBus = myData.newLegalCCRNBus or myData.legalCCRNBus %}
                 {% if data.newChange != "true" %}

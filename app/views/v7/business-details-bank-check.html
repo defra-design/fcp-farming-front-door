@@ -4,7 +4,7 @@
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
-{% set pageName = "Check your bank or building society account details" %}
+{% set pageName = "Check your bank or building society details" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% set yourMessages = "Active" %}
@@ -31,23 +31,57 @@
     <form method="POST" novalidate>
 
       <h1 class="govuk-heading-l">
-        Check your bank or building society account details
+        Check your bank or building society details
       </h1>
 
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Bank or building society account details
+            Name on the account
           </dt>
           <dd class="govuk-summary-list__value">
-            {% set _bankRollValue = myData.newBankRollValue or myData.bankRollValue %}
-            {{myData.newBankNameBus or myData.bankNameBus}}<br>
-            {{myData.newBankSortBus or myData.bankSortBus}}<br>
-            {{myData.newBankAccountBus or myData.bankAccountBus}}
-            {% if _bankRollValue != "" %}<br>{{_bankRollValue}}{% endif %}
+            {{myData.newBankNameBus or myData.bankNameBus}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> bank or building society account details</span></a>
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> name on the account</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Sort code
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{myData.newBankSortBus or myData.bankSortBus}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> sort code</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Account number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{myData.newBankAccountBus or myData.bankAccountBus}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> account number</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Building society roll number (if you have one)
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% set _bankRollValue = myData.newBankRollBus or myData.bankRollBus %}
+            {% if _bankRollValue and _bankRollValue != "" %}
+              {{_bankRollValue}}
+            {% else %}
+            <span style="color:#505a5f">No number added</span>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> building society roll number</span></a>
           </dd>
         </div>
       </dl>
