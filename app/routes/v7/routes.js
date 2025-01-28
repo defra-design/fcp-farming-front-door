@@ -160,44 +160,47 @@ module.exports = function (router,_myData) {
 
         // Notification banner messages
         if(req.query.namechanged == "true"){
-            // Adds space after title if a title was entered
-            var _titleValue = req.session.myData.nameTitlePers || ""
-            if (_titleValue != ""){
-                var _titleValue = _titleValue + " "
-            }
+            // // Adds space after title if a title was entered
+            // var _titleValue = req.session.myData.nameTitlePers || ""
+            // if (_titleValue != ""){
+            //     var _titleValue = _titleValue + " "
+            // }
 
-            // Adds space after middle names if a title was entered
-            var _middleValue = req.session.myData.nameMiddlePers || ""
-            if (_middleValue != ""){
-                var _middleValue = _middleValue + " "
-            }
-            req.session.myData.notifications.message = "[notification banner - name changed to " + _titleValue + req.session.myData.nameFirstPers + " " + _middleValue + req.session.myData.nameLastPers + "]"
+            // // Adds space after middle names if a title was entered
+            // var _middleValue = req.session.myData.nameMiddlePers || ""
+            // if (_middleValue != ""){
+            //     var _middleValue = _middleValue + " "
+            // }
+            // req.session.myData.notifications.message = "[notification banner - name changed to " + _titleValue + req.session.myData.nameFirstPers + " " + _middleValue + req.session.myData.nameLastPers + "]"
+            req.session.myData.notifications.message = "You have updated your full name"
         }
         if(req.query.dobchanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - dob changed to " + req.session.myData.dobDayPers + " " + toMonth(req.session.myData.dobMonthPers) + " " + req.session.myData.dobYearPers + "]"
+            // req.session.myData.notifications.message = "[notification banner - dob changed to " + req.session.myData.dobDayPers + " " + toMonth(req.session.myData.dobMonthPers) + " " + req.session.myData.dobYearPers + "]"
+            req.session.myData.notifications.message = "You have updated your date of birth"
         }
         if(req.query.addresschanged == "true"){
-            // Adds space after address line 2 if a address line 2 was entered
-            var _address2Value = req.session.myData.address2Pers || ""
-            if (_address2Value != ""){
-                var _address2Value = _address2Value + ", "
-            }
-            // Adds space after address county if a address county was entered
-            var _addressCountyValue = req.session.myData.addressCountyPers || ""
-            if (_addressCountyValue != ""){
-                var _addressCountyValue = _addressCountyValue + ", "
-            }
+            // // Adds space after address line 2 if a address line 2 was entered
+            // var _address2Value = req.session.myData.address2Pers || ""
+            // if (_address2Value != ""){
+            //     var _address2Value = _address2Value + ", "
+            // }
+            // // Adds space after address county if a address county was entered
+            // var _addressCountyValue = req.session.myData.addressCountyPers || ""
+            // if (_addressCountyValue != ""){
+            //     var _addressCountyValue = _addressCountyValue + ", "
+            // }
 
-            req.session.myData.notifications.message = "[notification banner - address changed to " + req.session.myData.address1Pers + ", " + _address2Value + req.session.myData.addressCityPers + ", " + _addressCountyValue + req.session.myData.addressPostcodePers + "]"
+            // req.session.myData.notifications.message = "[notification banner - address changed to " + req.session.myData.address1Pers + ", " + _address2Value + req.session.myData.addressCityPers + ", " + _addressCountyValue + req.session.myData.addressPostcodePers + "]"
+            req.session.myData.notifications.message = "You have updated your address"
         }
         if(req.query.telchanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - tel changed to " + req.session.myData.telNumberPers + "]"
+            req.session.myData.notifications.message = "You have updated your telephone number"
         }
         if(req.query.mobchanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - mob changed to " + req.session.myData.mobNumberPers + "]"
+            req.session.myData.notifications.message = "You have updated your mobile number"
         }
         if(req.query.emailchanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - email changed to " + req.session.myData.emailPers + "]"
+            req.session.myData.notifications.message = "You have updated your email address"
         }
         
         res.render(version + '/details-personal-details', {
