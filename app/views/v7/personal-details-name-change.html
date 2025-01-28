@@ -6,7 +6,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Change your name" %}
+{% set pageTitle = "What is your full name?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -58,7 +58,7 @@
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">
-            Change your name
+            What is your full name?
           </h1>
         </legend>
 

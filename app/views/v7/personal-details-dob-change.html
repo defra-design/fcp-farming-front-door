@@ -6,7 +6,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Change your date of birth" %}
+{% set pageTitle = "What is your date of birth?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -59,7 +59,7 @@
         <fieldset class="govuk-fieldset" role="group" aria-describedby="dobPers-hint {% if _inError %}dobPers-error{% endif %}">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
             <h1 class="govuk-fieldset__heading">
-              Change your date of birth
+              What is your date of birth?
             </h1>
           </legend>
           <div id="dobPers-hint" class="govuk-hint">

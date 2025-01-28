@@ -6,7 +6,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Change your personal email address" %}
+{% set pageTitle = "What is your personal email address?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -55,7 +55,7 @@
 
     <form method="POST" novalidate>
 
-      <h1 class="govuk-heading-l">Change your personal email address</h1>
+      <h1 class="govuk-heading-l">What is your personal email address?</h1>
 
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
         <label class="govuk-label" for="emailPers">
