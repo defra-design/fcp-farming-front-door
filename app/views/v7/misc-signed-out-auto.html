@@ -4,7 +4,7 @@
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
-{% set pageName = "Auto signed out" %}
+{% set pageName = "For your security, we have signed you out" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% set yourMessages = "Active" %}
@@ -23,11 +23,13 @@
   <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-l">
-        Auto signed out
+        For your security, we have signed you out
       </h1>
 
-      <p class="govuk-body" style="color:red">[TO DO]</p>
-
+      {{govukButton({
+        text: "Sign back in",
+        href: "start-sfd-sign-in"
+      })}}
 
   </div>
 </div>
