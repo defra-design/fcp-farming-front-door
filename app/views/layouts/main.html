@@ -53,6 +53,100 @@
 
 {% endblock %}
 
+
+<!-- FOOTER -->
+{% block footer %}
+
+  {% set _customFooterContent %}
+
+    {% if _showFooterLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-bottom-8">
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-contact">Contact us</a>
+      </li>
+
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-privacy">Privacy</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-cookies">Cookies</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-accessibility">Accessibility statement</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-terms">Terms and conditions</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-information">Personal information charter</a>
+      </li>
+    </ul>
+    {% endif %}
+
+    {% if _viewToggleLinks %}
+      {{_viewToggleLinks|safe}}
+    {% endif %}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    Page ID: {{_pageID}}
+
+    {% if _showReleaseLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
+      <li class="govuk-footer__inline-list-item">Release:</li>
+      <li class="govuk-footer__inline-list-item">
+          {% if data.release == "concept" %}
+          Concept
+          {% else %}
+          <a class="govuk-footer__link" href="?release=concept">Concept</a>
+          {% endif %}
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        {% if data.release == "b1" %}
+        Buffalo 1.0 MVP
+        {% else %}
+        <a class="govuk-footer__link" href="?release=b1">Buffalo 1.0 MVP</a>
+        {% endif %}
+      </li>
+    </ul>
+    {% endif %}
+
+    <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
+      <li class="govuk-footer__inline-list-item">
+          <a class="govuk-footer__link" href="/manage-prototype">Manage your prototype</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="/manage-prototype/clear-data">Clear data</a>
+      </li>
+    </ul>
+    
+    <!-- items: [
+      {
+        href: "/manage-prototype",
+        text: "Manage your prototype"
+      },
+      {
+        href: "/manage-prototype/clear-data",
+        text: "Clear data"
+      }
+    ], -->
+      
+  {% endset %}
+
+  {{ govukFooter({
+    meta: {
+      items: [
+      ],
+      html: [
+        _customFooterContent
+      ],
+      visuallyHiddenTitle: "Footer links"
+    }
+  }) }}
+  
+{% endblock %}
+<!-- FOOTER END -->
+
 {% block scripts %}
   {{ super() }}
   <script src="/public/javascripts/jquery-3.7.1.js"></script>

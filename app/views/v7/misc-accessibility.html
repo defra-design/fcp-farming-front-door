@@ -1,5 +1,9 @@
 {% extends "layouts/main.html" %}
 
+{% set _pageID = "" %}
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
 {% set pageName = "Accessibility statement" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
@@ -10,6 +14,8 @@
 
   {% include "_common/phase-banner.html" %}
   {% include "_common/login-nav.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
