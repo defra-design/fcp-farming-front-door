@@ -6,7 +6,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Change your mobile phone number" %}
+{% set pageTitle = "What is your business mobile phone number?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -56,12 +56,12 @@
 
     <form method="POST" novalidate>
 
-      <h1 class="govuk-heading-l">Change your mobile phone number</h1>
-
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
-        <label class="govuk-label" for="mobNumberBus">
-          New mobile phone number
-        </label>
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="mobNumberBus">
+            What is your business mobile phone number?
+          </label>
+        </h1>
 
         {% if _inError %}
         <p id="mobNumberBus-error" class="govuk-error-message">

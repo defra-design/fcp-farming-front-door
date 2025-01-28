@@ -6,7 +6,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Add your VAT registration number" %}
+{% set pageTitle = "What is your VAT registration number?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -59,7 +59,7 @@
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="vatBus">
-            Add your VAT registration number
+            What is your VAT registration number?
           </label>
         </h1>
 
