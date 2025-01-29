@@ -246,7 +246,7 @@
           Sort code
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.bankSortBus}}
+          ****{{myData.bankSortBus.slice(myData.bankSortBus|length - 2)}}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-change?newChange=true">Change<span class="govuk-visually-hidden"> sort code</span></a>
@@ -257,7 +257,7 @@
           Account number
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.bankAccountBus}}
+          ******{{myData.bankAccountBus.slice(myData.bankAccountBus|length - 2)}}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-change?newChange=true">Change<span class="govuk-visually-hidden"> account number</span></a>
