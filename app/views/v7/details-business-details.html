@@ -270,7 +270,7 @@
         <dd class="govuk-summary-list__value">
           {% set _bankRollValue = myData.bankRollBus %}
           {% if _bankRollValue and _bankRollValue != "" %}
-            {{_bankRollValue}}
+            ****{{_bankRollValue.slice(_bankRollValue|length - 2)}}
           {% else %}
             <span style="color:#505a5f">No number added</span>
           {% endif %}
