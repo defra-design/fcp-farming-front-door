@@ -65,7 +65,11 @@
           Full name
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.nameTitlePers}} {{myData.nameFirstPers}} {{myData.nameMiddlePers}} {{myData.nameLastPers}}
+          {% if data.release == "b1" %}
+            {{myData.nameTitlePers}} {{myData.nameFirstPers}} {{myData.nameMiddlePers}} {{myData.nameLastPers}}
+          {% else %}
+            {{myData.namePers}}
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="personal-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> name</span></a>

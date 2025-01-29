@@ -160,6 +160,7 @@ module.exports = function (router,_myData) {
 
         // Notification banner messages
         if(req.query.namechanged == "true"){
+            // if(req.session.data.release == "b1"){
             // // Adds space after title if a title was entered
             // var _titleValue = req.session.myData.nameTitlePers || ""
             // if (_titleValue != ""){
@@ -172,6 +173,9 @@ module.exports = function (router,_myData) {
             //     var _middleValue = _middleValue + " "
             // }
             // req.session.myData.notifications.message = "[notification banner - name changed to " + _titleValue + req.session.myData.nameFirstPers + " " + _middleValue + req.session.myData.nameLastPers + "]"
+            // } else {
+                // req.session.myData.notifications.message = "[notification banner - name changed to " + req.session.myData.namePers + "]"
+            // }
             req.session.myData.notifications.message = "You have updated your full name"
         }
         if(req.query.dobchanged == "true"){
@@ -215,6 +219,8 @@ module.exports = function (router,_myData) {
             req.session.myData.newNameFirstPers = ""
             req.session.myData.newNameMiddlePers = ""
             req.session.myData.newNameLastPers = ""
+            // for concept variant
+            req.session.myData.newNamePers = ""
         }
         res.render(version + '/personal-details-name-change', {
             myData: req.session.myData
@@ -222,28 +228,45 @@ module.exports = function (router,_myData) {
     });
     router.post('/' + version + '/personal-details-name-change', function (req, res) {
 
-        req.session.myData.newNameTitlePers = req.body.nameTitlePers.trim()
-        req.session.myData.newNameFirstPers = req.body.nameFirstPers.trim()
-        req.session.myData.newNameMiddlePers = req.body.nameMiddlePers.trim()
-        req.session.myData.newNameLastPers = req.body.nameLastPers.trim()
+        if(req.session.data.release == "b1"){
+            req.session.myData.newNameTitlePers = req.body.nameTitlePers.trim()
+            req.session.myData.newNameFirstPers = req.body.nameFirstPers.trim()
+            req.session.myData.newNameMiddlePers = req.body.nameMiddlePers.trim()
+            req.session.myData.newNameLastPers = req.body.nameLastPers.trim()
+        } else {
+            req.session.myData.newNamePers = req.body.namePers.trim()
+        }
 
         if(req.session.myData.includeValidation == "false"){
             req.session.myData.newNameFirstPers = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
             req.session.myData.newNameLastPers = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
+            req.session.myData.newNamePers = req.session.myData.newNamePers || req.session.myData.namePers
         }
 
-        if(!req.session.myData.newNameFirstPers){
-            req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.nameFirstPers = {
-                "anchor": "nameFirstPers",
-                "message": "[error message - blank - change first name]"
+        // MVP
+        if(req.session.data.release == "b1"){
+            if(!req.session.myData.newNameFirstPers){
+                req.session.myData.validationError = "true"
+                req.session.myData.validationErrors.nameFirstPers = {
+                    "anchor": "nameFirstPers",
+                    "message": "[error message - blank - change first name]"
+                }
             }
-        }
-        if(!req.session.myData.newNameLastPers){
-            req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.nameLastPers = {
-                "anchor": "nameLastPers",
-                "message": "[error message - blank - change last name]"
+            if(!req.session.myData.newNameLastPers){
+                req.session.myData.validationError = "true"
+                req.session.myData.validationErrors.nameLastPers = {
+                    "anchor": "nameLastPers",
+                    "message": "[error message - blank - change last name]"
+                }
+            }
+        // CONCEPT
+        } else {
+            if(!req.session.myData.newNamePers){
+                req.session.myData.validationError = "true"
+                req.session.myData.validationErrors.namePers = {
+                    "anchor": "namePers",
+                    "message": "[error message - blank - change full name]"
+                }
             }
         }
 
@@ -268,11 +291,13 @@ module.exports = function (router,_myData) {
         req.session.myData.nameFirstPers = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
         req.session.myData.nameMiddlePers = req.session.myData.newNameMiddlePers || req.session.myData.nameMiddlePers
         req.session.myData.nameLastPers = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
+        req.session.myData.namePers = req.session.myData.newNamePers || req.session.myData.namePers
 
         req.session.myData.newNameTitlePers = ""
         req.session.myData.newNameFirstPers = ""
         req.session.myData.newNameMiddlePers = ""
         req.session.myData.newNameLastPers = ""
+        req.session.myData.newNamePers = ""
 
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&namechanged=true');
     });

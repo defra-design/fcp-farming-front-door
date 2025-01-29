@@ -2,7 +2,7 @@
 
 {% set _pageID = "" %}
 {% set _showFooterLinks = true %}
-{% set _showReleaseLinks = false %}
+{% set _showReleaseLinks = true %}
 
 {% set _inError = myData.validationError == "true"  %}
 
@@ -55,13 +55,14 @@
 
     <form method="POST" novalidate>
 
+      {% if data.release == "b1" %}
+      <!-- 4 FIELDS FOR NAME - MVP -->
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">
             What is your full name?
           </h1>
         </legend>
-
 
         <!-- TITLE -->
         <div class="govuk-form-group {% if myData.validationErrors.nameTitlePers %}govuk-form-group--error{% endif %}">
@@ -131,8 +132,31 @@
           <input class="govuk-input {% if myData.validationErrors.nameLastPers %}govuk-input--error{% endif %}" id="nameLastPers" name="nameLastPers" type="text" value="{{_valueNewNameLastPers}}" {% if myData.validationErrors.nameLastPers %}aria-describedby="nameLastPers-error"{% endif %}>
         </div>
 
-
       </fieldset>
+      {% else %}
+      <!-- 1 FIELD FOR NAME -->
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="namePers">
+            What is your full name?
+          </label>
+        </h1>
+
+        {% if _inError %}
+        <p id="namePers-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.namePers.message}}
+        </p>
+        {% endif %}
+
+        {% set _valueNewNamePers = myData.newNamePers or myData.namePers %}
+        {% if myData.validationErrors.namePers %}
+            {% set _valueNewNamePers = myData.newNamePers %}
+        {% endif %}
+
+        <input class="govuk-input {% if _inError %}govuk-input--error{% endif %}" id="namePers" name="namePers" type="text"  value="{{_valueNewNamePers}}" {% if _inError %}aria-describedby="namePers-error"{% endif %} spellcheck="false" autocomplete="name">
+      </div>
+
+      {% endif %}
 
       {{govukButton({
         text: "Continue"

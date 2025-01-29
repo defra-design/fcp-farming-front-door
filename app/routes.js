@@ -18,6 +18,7 @@ var _myData = {
     "nameFirstPers": "Alfred",
     "nameMiddlePers": "",
     "nameLastPers": "Waldron",
+    "namePers": "Alfred Waldron",
     "dobDayPers": "2",
     "dobMonthPers": "11",
     "dobYearPers": "1970",
