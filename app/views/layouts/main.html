@@ -7,49 +7,53 @@
 
 {% block header %}
 
-{% if _showEmailMeta %}
-<div class="govuk-width-container" style="padding-top:20px">
-  <div class="govuk-grid-row" >
-    <div class="govuk-grid-column-full">
-      <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
-        Subject: {{_emailSubject}}
-      </p>
-      <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
-        From: Manage your land and farm businesses (support@defra.gov.uk)
-      </p>
-      <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-4">
-        To: You ({{data.user.email}})
-      </p>
+  {% if _showDesignSpec %}
+    {% include "_common/design-spec.html" %}
+  {% endif %}
+
+  {% if _showEmailMeta %}
+  <div class="govuk-width-container" style="padding-top:20px">
+    <div class="govuk-grid-row" >
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
+          Subject: {{_emailSubject}}
+        </p>
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
+          From: Manage your land and farm businesses (support@defra.gov.uk)
+        </p>
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-4">
+          To: You ({{data.user.email}})
+        </p>
+      </div>
     </div>
   </div>
-</div>
-{% endif %}
+  {% endif %}
 
-{% if _includeServiceNavigation == "true" %}
-  {{ govukHeader({
-    classes: "govuk-header--full-width-border"
-  }) }}
+  {% if _includeServiceNavigation == "true" %}
+    {{ govukHeader({
+      classes: "govuk-header--full-width-border"
+    }) }}
 
-  
-  {{ govukServiceNavigation({
-    serviceName: serviceName,
-    serviceUrl: "#",
-    navigation: [
-      {
-        href: "business-home",
-        text: "Home",
-        active: _homeServiceNavigationActive
-      },
-      {
-        href: "business-payments",
-        text: "Payments",
-        active: _paymentsServiceNavigationActive
-      }
-    ]
-  }) }}
-{% else %}
-  {{super()}}
-{% endif %}
+    
+    {{ govukServiceNavigation({
+      serviceName: serviceName,
+      serviceUrl: "#",
+      navigation: [
+        {
+          href: "business-home",
+          text: "Home",
+          active: _homeServiceNavigationActive
+        },
+        {
+          href: "business-payments",
+          text: "Payments",
+          active: _paymentsServiceNavigationActive
+        }
+      ]
+    }) }}
+  {% else %}
+    {{super()}}
+  {% endif %}
 
 {% endblock %}
 
@@ -89,8 +93,6 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-    Page ID: {{_pageID}}
-
     {% if _showReleaseLinks %}
     <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
       <li class="govuk-footer__inline-list-item">Release:</li>
@@ -112,6 +114,16 @@
     {% endif %}
 
     <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
+      {% if _designSpecData.id %}
+      <li class="govuk-footer__inline-list-item">
+        {{_designSpecData.id}}
+      </li>
+      {% endif %}
+      {% if _showDesignSpec %}
+      <li class="govuk-footer__inline-list-item">
+          <a class="govuk-footer__link" href="javascript:toggleDrawer()" id="speclink">Design spec</a>
+      </li>
+      {% endif %}
       <li class="govuk-footer__inline-list-item">
           <a class="govuk-footer__link" href="/manage-prototype">Manage your prototype</a>
       </li>

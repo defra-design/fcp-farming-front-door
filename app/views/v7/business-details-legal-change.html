@@ -1,6 +1,5 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
@@ -14,8 +13,27 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set yourMessages = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
 
+  "name": "Legal status (change) - business details",
+  "id": "bd15",
+  "url": "business-details-legal-change?r=t&release=b1&newChange=true",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+      "scenario": "[scenario]",
+      "content": "[error message]"
+    }
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 

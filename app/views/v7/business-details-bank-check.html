@@ -1,13 +1,28 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName = "Check your bank or building society details" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set yourMessages = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Bank details (check) - business details",
+  "id": "bd20",
+  "url": "business-details-bank-check?r=t&release=b2&newChange=true",
+  "release": "Buffalo 1.X",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  ]
+  
+}
+%}
 
 
 {% block beforeContent %}

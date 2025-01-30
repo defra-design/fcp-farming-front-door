@@ -36,12 +36,12 @@
           <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Release version (feature toggles)</legend>
           <div class="govuk-radios">
               <div class="govuk-radios__item">
-                  <input {% if data.release == 'concept' %}checked{% endif %} class="govuk-radios__input" data-option="concept" id="concept" name="release" type="radio" value="concept">
-                  <label class="govuk-label govuk-radios__label" for="concept"><strong>Concept / latest designs</strong></label>
-              </div>
-              <div class="govuk-radios__item">
                   <input {% if data.release == 'b1' %}checked{% endif %} class="govuk-radios__input" data-option="b1" id="b1" name="release" type="radio" value="b1">
                   <label class="govuk-label govuk-radios__label" for="b1"><strong>Buffalo 1.0 MVP</strong></label>
+              </div>
+              <div class="govuk-radios__item">
+                <input {% if data.release == 'concept' %}checked{% endif %} class="govuk-radios__input" data-option="concept" id="concept" name="release" type="radio" value="concept">
+                <label class="govuk-label govuk-radios__label" for="concept"><strong>Concept / latest designs</strong></label>
               </div>
           </div>
       </fieldset>
