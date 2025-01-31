@@ -629,7 +629,8 @@ module.exports = function (router,_myData) {
 
         // Notification banner messages
         if(req.query.namechanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - name changed to " + req.session.myData.nameBus + "]"
+            // req.session.myData.notifications.message = "[notification banner - name changed to " + req.session.myData.nameBus + "]"
+            req.session.myData.notifications.message = "You have updated your business name"
         }
         if(req.query.addresschanged == "true"){
             // // Adds space after address line 2 if a address line 2 was entered
@@ -660,7 +661,8 @@ module.exports = function (router,_myData) {
             req.session.myData.notifications.message = "You have updated your business email address"
         }
         if(req.query.vatchanged == "true"){
-            req.session.myData.notifications.message = "[notification banner - VAT num changed to " + req.session.myData.vatBus + "]"
+            // req.session.myData.notifications.message = "[notification banner - VAT num changed to " + req.session.myData.vatBus + "]"
+            req.session.myData.notifications.message = "You have updated your VAT registration number"
         }
         if(req.query.typechanged == "true"){
             // req.session.myData.notifications.message = "[notification banner - type changed to " + req.session.myData.typeBus + "]"
