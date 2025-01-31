@@ -1,14 +1,31 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName = "Check your personal telephone number is correct before submitting" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set yourMessages = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
 
+  "name": "Telephone (check) - personal details",
+  "id": "pd09",
+  "url": "personal-details-tel-check?r=t&release=b1&newChange=true",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 

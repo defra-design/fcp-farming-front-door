@@ -1,14 +1,31 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName = "Check your personal email address is correct before submitting" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set yourMessages = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
 
+  "name": "Email address (check) - personal details",
+  "id": "pd13",
+  "url": "personal-details-email-check?r=t&release=b1&newChange=true",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 

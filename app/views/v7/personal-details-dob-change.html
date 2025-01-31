@@ -14,8 +14,29 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set yourMessages = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
 
+  "name": "Date of birth (change) - personal details",
+  "id": "pd04",
+  "url": "personal-details-dob-change?r=t&release=b1&newChange=true",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+      "scenario": "[scenario]",
+      "content": "[error message]"
+    }
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 

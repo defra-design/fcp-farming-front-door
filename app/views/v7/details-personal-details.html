@@ -1,13 +1,54 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName="View and update your personal details" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
-{% set yourMessages = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Manage personal details",
+  "id": "pd01",
+  "url": "details-personal-details?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    {
+      "name": "name changed banner",
+      "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true"
+    },
+    {
+      "name": "date of birth changed banner",
+      "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true"
+    },
+    {
+      "name": "address changed banner",
+      "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true"
+    },
+    {
+      "name": "telephone changed banner",
+      "url": "details-personal-details?r=t&release=b1&telchanged=true&changed=true"
+    },
+    {
+      "name": "mobile changed banner",
+      "url": "details-personal-details?r=t&release=b1&mobchanged=true&changed=true"
+    },
+    {
+      "name": "email changed banner",
+      "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 
