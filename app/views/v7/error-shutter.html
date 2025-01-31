@@ -1,14 +1,29 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName = "Sorry, the service is unavailable" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set yourMessages = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
 
+  "name": "Service unavailable (503/shutter page)",
+  "id": "se01",
+  "url": "error-shutter?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 
