@@ -1,11 +1,34 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = true %}
 
 {% set pageName = "Your business" %}
 {% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "SFD Home/Business Page (Buffalo 1.0 MVP)",
+  "id": "bp02",
+  "url": "business-home?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    {
+      "name": "SFD Home/Business Page (concept)",
+      "url": "business-home?r=t&release=concept"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+   
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 

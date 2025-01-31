@@ -1,7 +1,31 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Sign in to manage your land and farm businesses" %}
-{% set serviceName="Manage your land and farm businesses" %}
+{% set pageName = "Sign in to manage your land and farm businesses" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "SFD sign in",
+  "id": "si01",
+  "url": "start-sfd-sign-in?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+      "scenario": "[scenario]",
+      "content": "[error message]"
+    }
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 

@@ -1,14 +1,35 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Your businesses - page 2" %}
+{% set pageName = "Your businesses - page 2" %}
 
-{% set _pageID = "" %}
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set yourBusiness = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Your businesses list",
+  "id": "bp01",
+  "url": "businesses-list?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    {
+      "name": "page 2 of list",
+      "url": "businesses-list-p2?r=t&release=b1"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 

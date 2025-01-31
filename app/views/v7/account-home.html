@@ -1,14 +1,35 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
+
 {% set _showFooterLinks = true %}
 {% set _showReleaseLinks = true %}
 
 {% set pageName="Your account" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
-{% set yourMessages = "Active" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
 
+  "name": "Account Home (Buffalo 1.0 MVP)",
+  "id": "ma01",
+  "url": "account-home?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    {
+      "name": "Account Home (concept)",
+      "url": "account-home?r=t&release=concept"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ]
+  
+}
+%}
 
 {% block beforeContent %}
 
