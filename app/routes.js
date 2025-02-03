@@ -31,7 +31,7 @@ var _myData = {
     "mobNumberPers": "07700 900 967",
     "emailPers": "alfredwaldron@email.com",
 
-    "nameBus": "Agile Farms Ltd",
+    "nameBus": "Agile Farm Ltd",
     "address1Bus": "10 Skirbeck Way",
     "address2Bus": "",
     "addressCityBus": "Maidstone",

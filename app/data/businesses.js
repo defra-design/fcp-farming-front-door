@@ -1,7 +1,7 @@
 module.exports = [
   {
     "id": 1,
-    "name": "Agile Farms Ltd",
+    "name": "Agile Farm Ltd",
     "sbiNumber": "123456789",
     "vrnNumber": "699368",
     "cphNumber": "12/563/0998"
