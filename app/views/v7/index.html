@@ -125,11 +125,34 @@
     <h2 class="govuk-heading-m">
       Design tickets (on JIRA)
     </h2>
+    {% set _tickets = [
+      {
+        "number": "140",
+        "title": "Setup ALAN in the prototype"
+      },
+      {
+        "number": "139",
+        "title": "Add page id's and names as references to each prototype page"
+      },
+      {
+        "number": "125",
+        "title": "List notes and questions for content for Buffalo MVP"
+      },
+      {
+        "number": "117",
+        "title": "Set up prototype to handle variants (buffalo variant and latest design variant)"
+      },
+      {
+        "number": "113",
+        "title": "Outline the MVP prototype"
+      }
+    ]
+    %}
     <ul class="govuk-list govuk-list--bullet">
-      <li><a href="https://eaflood.atlassian.net/browse/SFDE-117" class="govuk-link govuk-link--no-visited-state">SFDE-117</a> - Set up prototype to handle variants (buffalo variant and latest design variant)</li>
-      <li><a href="https://eaflood.atlassian.net/browse/SFDE-113" class="govuk-link govuk-link--no-visited-state">SFDE-113</a> - Outline the MVP prototype</li>
+      {% for _ticket in _tickets %}
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-{{_ticket.number}}" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">SFDE-{{_ticket.number}} (opens in new tab)</a> - {{_ticket.title}}</li>
+      {% endfor %}
     </ul>
-    
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
   </div>
