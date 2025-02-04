@@ -14,6 +14,26 @@
   "release": "Buffalo 1.0 MVP",
   "variants": [
     {
+      "name": "Vendor registration number	- hidden",
+      "url": "details-business-details?r=t&release=b1&vendorCount=0"
+    },
+    {
+      "name": "Vendor registration number	- one number",
+      "url": "details-business-details?r=t&release=b1&vendorCount=1"
+    },
+    {
+      "name": "County Parish Holding (CPH) number	- hidden",
+      "url": "details-business-details?r=t&release=b1&cphCount=0"
+    },
+    {
+      "name": "County Parish Holding (CPH) number	- one number",
+      "url": "details-business-details?r=t&release=b1&cphCount=1"
+    },
+    {
+      "name": "County Parish Holding (CPH) number	- multiple numbers",
+      "url": "details-business-details?r=t&release=b1&cphCount=2"
+    },
+    {
       "name": "name changed banner",
       "url": "details-business-details?r=t&release=b1&namechanged=true&changed=true"
     },
@@ -56,6 +76,11 @@
   "pageurl": "",
   "errormessages": [
     
+  ],
+  "notes": [
+    "<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding (CPH) number' row. View example with the query string &cphCount=0",
+    "<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH) numbers' label plural and separate each CPH number with a break line tag. View example with the query string &cphCount=2",
+    "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0"
   ]
 }
 %}
@@ -204,6 +229,10 @@
           {% endif %}
         </dd>
       </div>
+
+      {% if myData.vendorCount == "0" %}
+        <!-- Do not render row -->
+      {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Vendor registration number
@@ -212,14 +241,30 @@
           {{_selectedBusiness.vrnNumber or "123456"}} 
         </dd>
       </div>
+      {% endif %}
+
+      {% if myData.cphCount == "0" %}
+        <!-- Do not render row -->
+      {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          County Parish Holding (CPH) number
+          {% if myData.cphCount == "2" %}
+            County Parish Holding (CPH) numbers
+          {% else %}
+            County Parish Holding (CPH) number
+          {% endif %}
         </dt>
         <dd class="govuk-summary-list__value">
-          {{_selectedBusiness.cphNumber or "12/563/0998"}} 
+          {% if myData.cphCount == "2" %}
+            {{_selectedBusiness.cphNumber or "12/563/0998"}}
+            <br>12/563/8301
+          {% else %}
+            {{_selectedBusiness.cphNumber or "12/563/0998"}}
+          {% endif %}
         </dd>
       </div>
+      {% endif %}
+
     </dl>
 
 

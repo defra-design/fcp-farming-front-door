@@ -622,6 +622,9 @@ module.exports = function (router,_myData) {
     //
     router.get('/' + version + '/details-business-details', function (req, res) {
 
+        req.session.myData.cphCount = req.query.cphCount
+        req.session.myData.vendorCount = req.query.vendorCount
+
         if(req.query.changed == "true"){
             req.session.myData.notifications.type = "success"
             req.session.myData.showNotification = "true"

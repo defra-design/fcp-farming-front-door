@@ -121,7 +121,7 @@
                     Links
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    <p class="govuk-body-s"><a href="{{ heroku }}{{ _designSpecData.url }}" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">{{ heroku }}{{ _designSpecData.url }}</a></p>
+                    <p class="govuk-body-s"><a href="{{ heroku }}{{ _designSpecData.url }}" class="govuk-link govuk-link--no-visited-state" >{{ heroku }}{{ _designSpecData.url }}</a></p>
 
                     {% if _designSpecData.variants and _designSpecData.variants|length > 0 %}
                     <details class="govuk-details govuk-!-margin-top-4">
@@ -133,7 +133,7 @@
                         <div class="govuk-details__text">
                             <ul class="govuk-list govuk-list--bullet govuk-body-s" >
                                 {% for item in _designSpecData.variants %}
-                                <li>{{ item.name }}: <br><a href="{{ heroku }}{{ item.url }}" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">{{ heroku }}{{ item.url }}</a></li>
+                                <li>{{ item.name }}: <br><a href="{{ heroku }}{{ item.url }}" class="govuk-link govuk-link--no-visited-state" >{{ heroku }}{{ item.url }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -142,6 +142,21 @@
 
                 </dd>
             </div>
+
+            {% if _designSpecData.notes and _designSpecData.notes|length > 0 %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Notes
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet govuk-body-s" >
+                        {% for item in _designSpecData.notes %}
+                        <li>{{ item | safe }}</li>
+                        {% endfor %}
+                    </ul>
+                </dd>
+            </div>
+            {% endif %}
 
 		</dl>
 
