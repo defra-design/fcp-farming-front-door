@@ -25,7 +25,7 @@
     
   ],
 
-  "pagetitle": pageName,
+  "pagetitle": pageTitle,
   "pagedesc": "",
   "pageurl": "",
   "errormessages": [
@@ -102,7 +102,7 @@
                 {% if myData.validationErrors.dobDayPers %}
                     {% set _valueNewDobDayPers = myData.newDobDayPers %}
                 {% endif %}
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobDayPers %}govuk-input--error{% endif %}" id="dobDayPers" name="dobDayPers" type="text" inputmode="numeric" value="{{_valueNewDobDayPers}}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobDayPers %}govuk-input--error{% endif %}" id="dobDayPers" name="dobDayPers" type="text" autocomplete="bday-day" inputmode="numeric" value="{{_valueNewDobDayPers}}">
               </div>
             </div>
 
@@ -115,7 +115,7 @@
                 {% if myData.validationErrors.dobMonthPers %}
                     {% set _valueNewDobMonthPers = myData.newDobMonthPers %}
                 {% endif %}
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobMonthPers %}govuk-input--error{% endif %}" id="dobMonthPers" name="dobMonthPers" type="text" inputmode="numeric" value="{{_valueNewDobMonthPers}}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobMonthPers %}govuk-input--error{% endif %}" id="dobMonthPers" name="dobMonthPers" type="text" autocomplete="bday-month" inputmode="numeric" value="{{_valueNewDobMonthPers}}">
               </div>
             </div>
 
@@ -128,7 +128,7 @@
                 {% if myData.validationErrors.dobYearPers %}
                     {% set _valueNewDobYearPers = myData.newDobYearPers %}
                 {% endif %}
-                <input class="govuk-input govuk-date-input__input govuk-input--width-4 {% if myData.validationErrors.dobYearPers %}govuk-input--error{% endif %}" id="dobYearPers" name="dobYearPers" type="text" inputmode="numeric" value="{{_valueNewDobYearPers}}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4 {% if myData.validationErrors.dobYearPers %}govuk-input--error{% endif %}" id="dobYearPers" name="dobYearPers" type="text" autocomplete="bday-year" inputmode="numeric" value="{{_valueNewDobYearPers}}">
               </div>
             </div>
 

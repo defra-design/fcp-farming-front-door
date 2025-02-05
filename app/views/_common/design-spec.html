@@ -95,23 +95,23 @@
             {% if _designSpecData.errormessages and _designSpecData.errormessages|length > 0 %}
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key govuk-body-s">
-                    Errors
+                    Error messages
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    <details class="govuk-details ">
+                    <!-- <details class="govuk-details ">
                         <summary class="govuk-details__summary govuk-body-s">
                             <span class="govuk-details__summary-text">
                             Error messages
                             </span>
                         </summary>
-                        <div class="govuk-details__text">
+                        <div class="govuk-details__text"> -->
                             <ul class="govuk-list govuk-list--bullet govuk-body-s">
                                 {% for item in _designSpecData.errormessages %}
-                                <li>{{ item.scenario }}: <br><span style="color: #d4351c">{{item.content}}</span></li>
+                                <li>{% if item.field %}<strong>{{ item.field }} - </strong><br>{% endif %}{{ item.scenario }}: <br><span style="color: #d4351c">{{item.content}}</span></li>
                                 {% endfor %}
                             </ul>
-                        </div>
-                    </details>
+                        <!-- </div>
+                    </details> -->
                 </dd>
             </div>
             {% endif %}

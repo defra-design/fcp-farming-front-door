@@ -22,13 +22,17 @@
   "release": "Buffalo 1.0 MVP",
   "variants": [],
 
-  "pagetitle": pageName,
+  "pagetitle": pageTitle,
   "pagedesc": "",
   "pageurl": "",
   "errormessages": [
     {
-      "scenario": "[scenario]",
-      "content": "[error message]"
+      "scenario": "Empty field / nothing entered",
+      "content": "Enter a VAT registration number"
+    },
+    {
+      "scenario": "Wrong format",
+      "content": "Enter a VAT registration number in the format GB123456789 or 123456789"
     }
   ]
   
@@ -82,6 +86,10 @@
           </label>
         </h1>
 
+        <div id="vatBus-hint" class="govuk-hint">
+          This is 9 numbers, sometimes with ‘GB’ at the start, for example GB123456789 or 123456789. You can find it on your company's VAT registration certificate.
+        </div>
+
         {% if _inError %}
         <p id="vatBus-error" class="govuk-error-message">
           <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.vatBus.message}}
@@ -96,7 +104,7 @@
             {% set _valueNewVatBus = myData.newVatBus %}
         {% endif %}
 
-        <input class="govuk-input govuk-input--width-10 {% if _inError %}govuk-input--error{% endif %}" id="vatBus" name="vatBus" type="text"  value="{{_valueNewVatBus}}" {% if _inError %}aria-describedby="vatBus-error"{% endif %}>
+        <input class="govuk-input govuk-input--width-10 {% if _inError %}govuk-input--error{% endif %}" id="vatBus" name="vatBus" type="text"  value="{{_valueNewVatBus}}" aria-describedby="vatBus-hint {% if _inError %}vatBus-error{% endif %}">
       </div>
 
       {{govukButton({

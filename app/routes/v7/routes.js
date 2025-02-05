@@ -718,7 +718,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.nameBus = {
                 "anchor": "nameBus",
-                "message": "[error message - blank - change name]"
+                "message": "Enter business name"
             }
         }
 
@@ -776,21 +776,21 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.address1Bus = {
                 "anchor": "address1Bus",
-                "message": "[error message - blank - change address line 1]"
+                "message": "Enter address line 1, typically the building and street"
             }
         }
         if(!req.session.myData.newAddressCityBus){
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressCityBus = {
                 "anchor": "addressCityBus",
-                "message": "[error message - blank - change city]"
+                "message": "Enter town or city"
             }
         }
         if(!req.session.myData.newAddressPostcodeBus){
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressPostcodeBus = {
                 "anchor": "addressPostcodeBus",
-                "message": "[error message - blank - change postcode]"
+                "message": "Enter postcode"
             }
         }
         
@@ -1116,7 +1116,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.vatBus = {
                 "anchor": "vatBus",
-                "message": "[error message - blank - add VAT]"
+                "message": "Enter a VAT registration number"
             }
         }
 
@@ -1151,7 +1151,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.vatBus = {
                 "anchor": "vatBus",
-                "message": "[error message - blank - change VAT]"
+                "message": "Enter a VAT registration number"
             }
         }
 

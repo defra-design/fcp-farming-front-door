@@ -22,14 +22,55 @@
   "release": "Buffalo 1.0 MVP",
   "variants": [],
 
-  "pagetitle": pageName,
+  "pagetitle": pageTitle,
   "pagedesc": "",
   "pageurl": "",
   "errormessages": [
     {
-      "scenario": "[scenario]",
-      "content": "[error message]"
+      "field": "Address line 1",
+      "scenario": "Empty field / nothing entered",
+      "content": "Enter address line 1, typically the building and street"
+    },
+    {
+      "field": "Address line 1",
+      "scenario": "Entry is too long",
+      "content": "Address line 1 must be [max number] characters or less"
+    },
+
+    {
+      "field": "Address line 2",
+      "scenario": "Entry is too long",
+      "content": "Address line 2 must be [max number] characters or less"
+    },
+
+    {
+      "field": "Town or city",
+      "scenario": "Empty field / nothing entered",
+      "content": "Enter town or city"
+    },
+    {
+      "field": "Town or city",
+      "scenario": "Entry is too long",
+      "content": "Town or city must be [max number] characters or less"
+    },
+
+    {
+      "field": "County",
+      "scenario": "Entry is too long",
+      "content": "County must be [max number] characters or less"
+    },
+
+    {
+      "field": "Postcode",
+      "scenario": "Empty field / nothing entered",
+      "content": "Enter postcode"
+    },
+    {
+      "field": "Postcode",
+      "scenario": "Postcode entered is not a real postcode",
+      "content": "Enter a full UK postcode, like AA3 1AB"
     }
+
   ]
   
 }
