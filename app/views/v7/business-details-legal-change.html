@@ -27,9 +27,37 @@
   "pageurl": "",
   "errormessages": [
     {
-      "scenario": "[scenario]",
-      "content": "[error message]"
+      "field": "Legal status radios",
+      "scenario": "Nothing selected",
+      "content": "Select the legal status"
+    },
+
+    {
+      "field": "Charity commission registration number",
+      "scenario": "Radio option ‘Charitable incorporated organisation (CIO)’ is selected AND Empty field / nothing entered",
+      "content": "Enter a charity commission registration number"
+    },
+    
+    {
+      "field": "Charity commission registration number",
+      "scenario": "Radio option ‘Charitable incorporated organisation (CIO)’ is selected AND Wrong format",
+      "content": "Enter a charity commission registration number, like 12345678"
+    },
+
+
+    {
+      "field": "Companies house registration number",
+      "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Empty field / nothing entered",
+      "content": "Enter a companies house registration number"
+    },
+    
+    {
+      "field": "Companies house registration number",
+      "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Wrong format",
+      "content": "Enter a companies house registration number, like 01234567 or SC123456"
     }
+
+
   ]
   
 }

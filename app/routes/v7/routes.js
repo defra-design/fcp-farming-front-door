@@ -249,14 +249,14 @@ module.exports = function (router,_myData) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.nameFirstPers = {
                     "anchor": "nameFirstPers",
-                    "message": "[error message - blank - change first name]"
+                    "message": "Enter first name"
                 }
             }
             if(!req.session.myData.newNameLastPers){
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.nameLastPers = {
                     "anchor": "nameLastPers",
-                    "message": "[error message - blank - change last name]"
+                    "message": "Enter last name"
                 }
             }
         // CONCEPT
@@ -265,7 +265,7 @@ module.exports = function (router,_myData) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.namePers = {
                     "anchor": "namePers",
-                    "message": "[error message - blank - change full name]"
+                    "message": "Enter full name"
                 }
             }
         }
@@ -326,29 +326,58 @@ module.exports = function (router,_myData) {
         }
 
         var _anchor = "",
-            _errors = []
+            _errors = {
+                "day": false,
+                "month": false,
+                "year": false
+            }
         if(!req.session.myData.newDobYearPers){
             _anchor = "dobYearPers"
             req.session.myData.validationErrors.dobYearPers = true
-            _errors.unshift("year")
+            _errors.year = true
         }
         if(!req.session.myData.newDobMonthPers){
             _anchor = "dobMonthPers"
             req.session.myData.validationErrors.dobMonthPers = true
-            _errors.unshift("month")
+            _errors.month = true
         }
         if(!req.session.myData.newDobDayPers){
             _anchor = "dobDayPers"
             req.session.myData.validationErrors.dobDayPers = true
-            _errors.unshift("day")
+            _errors.day = true
         }
 
-        if(!req.session.myData.newDobDayPers || !req.session.myData.newDobMonthPers || !req.session.myData.newDobYearPers){
+        if(_errors.day || _errors.month || _errors.year){
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.dobPers = {
                 "anchor": _anchor,
-                "message": "[error message - blank - " + _errors + "]"
+                "message": "Enter your date of birth"
             }
+
+            // Day is good
+            if(!_errors.day){
+                req.session.myData.validationErrors.dobPers.message = "Date of birth must include a month and year"
+                // Month is good
+                if(!_errors.month){
+                    req.session.myData.validationErrors.dobPers.message = "Date of birth must include a year"
+                // Year is good
+                } else if(!_errors.year) {
+                    req.session.myData.validationErrors.dobPers.message = "Date of birth must include a month"
+                }
+            // Day is bad
+            } else {
+                // Month bad and year good
+                if(_errors.month && !_errors.year){
+                    req.session.myData.validationErrors.dobPers.message = "Date of birth must include a day and month"
+                // Month good and year bad
+                } else if(!_errors.month && _errors.year){
+                    req.session.myData.validationErrors.dobPers.message = "Date of birth must include a day and year"
+                // Month good and year good
+                } else if(!_errors.month && !_errors.year){
+                    req.session.myData.validationErrors.dobPers.message = "Date of birth must include a day"
+                }
+            }
+
         }
 
         if(req.session.myData.validationError == "true") {
@@ -410,21 +439,21 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.address1Pers = {
                 "anchor": "address1Pers",
-                "message": "[error message - blank - change address line 1]"
+                "message": "Enter address line 1, typically the building and street"
             }
         }
         if(!req.session.myData.newAddressCityPers){
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressCityPers = {
                 "anchor": "addressCityPers",
-                "message": "[error message - blank - change city]"
+                "message": "Enter town or city"
             }
         }
         if(!req.session.myData.newAddressPostcodePers){
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressPostcodePers = {
                 "anchor": "addressPostcodePers",
-                "message": "[error message - blank - change postcode]"
+                "message": "Enter postcode"
             }
         }
         
@@ -482,7 +511,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.telNumberPers = {
                 "anchor": "telNumberPers",
-                "message": "[error message - blank - change telephone personal]"
+                "message": "Enter personal telephone number"
             }
         }
 
@@ -530,7 +559,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.mobNumberPers = {
                 "anchor": "mobNumberPers",
-                "message": "[error message - blank - change mobile personal]"
+                "message": "Enter personal mobile phone number"
             }
         }
 
@@ -586,7 +615,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.emailPers = {
                 "anchor": "emailPers",
-                "message": "[error message - blank - change email personal]"
+                "message": "Enter personal email address"
             }
         }
 
@@ -846,7 +875,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.mobNumberBus = {
                 "anchor": "mobNumberBus",
-                "message": "[error message - blank - change mobile business]"
+                "message": "Enter business mobile phone number"
             }
         }
 
@@ -892,7 +921,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.telNumberBus = {
                 "anchor": "telNumberBus",
-                "message": "[error message - blank - change telephone business]"
+                "message": "Enter business telephone number"
             }
         }
 
@@ -938,7 +967,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.emailBus = {
                 "anchor": "emailBus",
-                "message": "[error message - blank - change email business]"
+                "message": "Enter business email address"
             }
         }
 
@@ -984,7 +1013,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.typeBus = {
                 "anchor": "typeBus-1",
-                "message": "[error message - blank - change type]"
+                "message": "Select the business type"
             }
         }
 
@@ -1040,21 +1069,21 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.legalBus = {
                 "anchor": "legalBus-1",
-                "message": "[error message - blank - change legal status]"
+                "message": "Select the legal status"
             }
         } else {
             if(req.session.myData.newLegalBus == "Public limited company (PLC)" & !req.session.myData.newLegalCHRNBus){
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCHRNBus = {
                     "anchor": "legalCHRNBus",
-                    "message": "[error message - blank - companies house reg number]"
+                    "message": "Enter a companies house registration number"
                 }
             }
             if(req.session.myData.newLegalBus == "Charitable incorporated organisation (CIO)" & !req.session.myData.newLegalCCRNBus){
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCCRNBus = {
                     "anchor": "legalCCRNBus",
-                    "message": "[error message - blank - Charity commission registration number]"
+                    "message": "Enter a charity commission registration number"
                 }
             }
         }
