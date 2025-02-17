@@ -40,7 +40,7 @@ var _myData = {
     "telNumberBus": "01632 960000",
     "mobNumberBus": "07700 900 967",
     "emailBus": "agilefarmsrus25@gmail.com",
-    "typeBus": "Farmer",
+    "typeBus": "Central or local government",
     "legalBus": "Sole proprietorship",
     "legalCHRNBus": "",
     "legalCCRNBus": "",

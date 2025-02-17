@@ -1282,45 +1282,5 @@ module.exports = function (router,_myData) {
 
         res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
     });
-    
-//
-//Duplicate of myData from the master routes file, added to support v7 user testing scenario, with change to default business type.
-var _myData = {
-    "nameTitlePers": "",
-    "nameFirstPers": "Alfred",
-    "nameMiddlePers": "",
-    "nameLastPers": "Waldron",
-    "namePers": "Alfred Waldron",
-    "dobDayPers": "2",
-    "dobMonthPers": "11",
-    "dobYearPers": "1970",
-    "address1Pers": "10 Skirbeck Way",
-    "address2Pers": "",
-    "addressCityPers": "Maidstone",
-    "addressCountyPers": "",
-    "addressPostcodePers": "SK22 1DL",
-    "telNumberPers": "01632 960000",
-    "mobNumberPers": "07700 900 967",
-    "emailPers": "alfredwaldron@email.com",
-
-    "nameBus": "Agile Farm Ltd",
-    "address1Bus": "10 Skirbeck Way",
-    "address2Bus": "",
-    "addressCityBus": "Maidstone",
-    "addressCountyBus": "",
-    "addressPostcodeBus": "SK22 1DL",
-    "telNumberBus": "01632 960000",
-    "mobNumberBus": "07700 900 967",
-    "emailBus": "agilefarmsrus25@gmail.com",
-    "typeBus": "Central or local government",
-    "legalBus": "Sole proprietorship",
-    "legalCHRNBus": "",
-    "legalCCRNBus": "",
-    "vatBus": "",
-    "bankNameBus": "Alfred Waldron",
-    "bankSortBus": "123456",
-    "bankAccountBus": "12345678",
-    "bankRollBus": ""
-}
 
 }
