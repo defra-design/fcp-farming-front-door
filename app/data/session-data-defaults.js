@@ -2,6 +2,7 @@ const paymentsUpcoming = require("./payments-upcoming");
 const paymentsPrevious = require("./payments-previous");
 const paymentsPreviousItems = require("./payments-previous-items");
 const businesses = require("./businesses");
+const pageList = require("./page-list");
 
 //
 // GO THROUGH ALL UPCOMING PAYMENTS DATA, to set various values to use on pages
@@ -88,6 +89,8 @@ module.exports = {
   "selectedPayment": paymentsUpcoming[0], //default selected payment (for payment detail page)
   "selectedPaymentPrevious": paymentsPrevious[0], //default selected previous payment (for payment detail page)
   "defaultSelectedPaymentYear": 2024, //used on the tabs so when clicked they start from the recent year
-  "selectedPaymentYear": 2024 //used for the year filter on past payments page
+  "selectedPaymentYear": 2024, //used for the year filter on past payments page
+
+  pageList //contains urls, page names and meta descriptions - used for the designspec popout panel
 
 }

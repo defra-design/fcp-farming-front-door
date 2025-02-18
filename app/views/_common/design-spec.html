@@ -62,11 +62,25 @@
                     "description" tag
                 </dt>
                 <dd class="govuk-summary-list__value govuk-body-s">
-                    {% if _designSpecData.pagedesc == "" %}
-                    <p class="govuk-body-s" style="color: #d4351c"><span>TO DO</span></p>
+
+                    {% if not _designSpecData.pagedesc %}
+
+                        {% set foundDesc = false %}
+                        {% for item in data.pageList %}
+                            {% if item.pageid == _designSpecData.id %}
+                                {% set foundDesc = true %}
+                                <p class="govuk-body-s">{{ item.pagedesc }}</p>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if not foundDesc %}
+                        <p class="govuk-body-s" style="color: #d4351c"><span>TO DO</span></p>
+                        {% endif %}
+
                     {% else %}
-                    <p class="govuk-body-s">{{ _designSpecData.pagedesc }}</p>
+                        <p class="govuk-body-s">{{ _designSpecData.pagedesc }}</p>
                     {% endif %}
+
                 </dd>
             </div>
 
@@ -75,10 +89,22 @@
                     URL
                 </dt>
                 <dd class="govuk-summary-list__value govuk-body-s">
-                    {% if _designSpecData.pageurl == "" %}
-                    <p class="govuk-body-s" style="color: #d4351c"><span>TO DO</span></p>
+                    {% if not _designSpecData.pageurl %}
+
+                        {% set foundDesc = false %}
+                        {% for item in data.pageList %}
+                            {% if item.pageid == _designSpecData.id %}
+                                {% set foundDesc = true %}
+                                <p class="govuk-body-s">{{ item.pageurl }}</p>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if not foundDesc %}
+                        <p class="govuk-body-s" style="color: #d4351c"><span>TO DO</span></p>
+                        {% endif %}
+
                     {% else %}
-                    <p class="govuk-body-s">{{ _designSpecData.pageurl }}</p>
+                        <p class="govuk-body-s">{{ _designSpecData.pageurl }}</p>
                     {% endif %}
                 </dd>
             </div>
