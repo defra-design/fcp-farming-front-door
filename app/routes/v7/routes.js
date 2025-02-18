@@ -130,7 +130,25 @@ module.exports = function (router,_myData) {
         res.render(version + '/misc-contact', {});
     });
     router.get('/' + version + '/misc-cookies', function (req, res) {
-        res.render(version + '/misc-cookies', {});
+        req.session.myData.cookiesVariant1 = req.query.cookiesVariant1
+        req.session.myData.cookiesNeedJS = req.query.cookiesNeedJS
+        req.session.myData.showCookieBanner1 = req.query.showCookieBanner1
+        req.session.myData.showCookieBanner2 = req.query.showCookieBanner2
+        req.session.myData.showCookieBanner3 = req.query.showCookieBanner3
+
+        if(req.query.changed == "true"){
+            req.session.myData.notifications.type = "success"
+            req.session.myData.showNotification = "true"
+            // req.session.myData.notifications.message = "You have updated your full name"
+        }
+        res.render(version + '/misc-cookies', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/misc-cookies', function (req, res) {
+        req.session.myData.cookiesFunctional = req.body.cookiesFunctional
+        req.session.myData.cookiesAnalytics = req.body.cookiesAnalytics
+        res.redirect(301, '/' + version + '/misc-cookies?changed=true&cookiesVariant1=true');
     });
     router.get('/' + version + '/misc-information', function (req, res) {
         res.render(version + '/misc-information', {});

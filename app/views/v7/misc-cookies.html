@@ -7,6 +7,10 @@
 {% set pageName = "Cookies" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
+{% set _showCookieBanner1 = myData.showCookieBanner1 %}
+{% set _showCookieBanner2 = myData.showCookieBanner2 %}
+{% set _showCookieBanner3 = myData.showCookieBanner3 %}
+
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 
@@ -14,12 +18,44 @@
   "id": "mp01",
   "url": "misc-cookies?r=t&release=b1",
   "release": "Buffalo 1.0 MVP",
-  "variants": [],
+  "variants": [
+    {
+      "name": "Including analytics cookies",
+      "url": "misc-cookies?cookiesVariant1=true"
+    },
+    {
+      "name": "Cookie settings changed banner",
+      "url": "misc-cookies?cookiesVariant1=true&changed=true"
+    },
+    {
+      "name": "Cookies need JavaScript",
+      "url": "misc-cookies?cookiesVariant1=true&cookiesNeedJS=true"
+    },
+    {
+      "name": "Cookies banner - pre accept/reject",
+      "url": "misc-cookies?cookiesVariant1=true&showCookieBanner1=true"
+    },
+    {
+      "name": "Cookies banner - rejected",
+      "url": "misc-cookies?cookiesVariant1=true&showCookieBanner2=true"
+    },
+    {
+      "name": "Cookies banner - accepted",
+      "url": "misc-cookies?cookiesVariant1=true&showCookieBanner3=true"
+    }
+  ],
 
   "pagetitle": pageName,
   "pagedesc": "",
   "pageurl": "",
   "errormessages": [
+  ],
+  "notes": [
+    '<strong>Design pattern</strong> - refer to this page for complete explanation of how to build this page - <a href="https://design-system.service.gov.uk/patterns/cookies-page" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">GOV.UK Design System: Cookies page</a>',
+    "<strong>Analytics cookies</strong> - if we use analytics cookies on the service then we need additional content on the page. We also need a way for users to change their preferences. View example with the query string &cookiesVariant1=true",
+    "<strong>JavaScript</strong> - If you depend on JavaScript to ask about cookie preferences and the user’s device is not running JavaScript, show them a different version of the cookies page. View example with the query string &cookiesVariant1=true combined with &cookiesNeedJS=true",
+    '<strong>Cookie banner pattern</strong> - refer to this page for complete explanation of how to build the cookie banner - <a href="https://design-system.service.gov.uk/components/cookie-banner/" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">GOV.UK Design System: Cookies banner</a>',
+    '<strong>Cookie banner variants</strong> - note these appear on any page in the service. On the prototype they only work/appear on the cookies page. There are different variants of the banner that may be required. To see an example of the banner which mentions cookies to the user who has neither actively accepted or rejected them yet - use the query string &cookiesVariant1=true combined with &cookiesBanner1=true. To see an example of the banner when the user rejects cookies using the banner - use the query string &cookiesVariant1=true combined with &cookiesBanner2=true. To see an example of the banner when the user accepts cookies using the banner - use the query string &cookiesVariant1=true combined with &cookiesBanner3=true.'
   ]
   
 }
@@ -41,7 +77,22 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-l">
+      {% if myData.showNotification == "true" %}
+        <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+          <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+              Success
+            </h2>
+          </div>
+          <div class="govuk-notification-banner__content">
+            <p class="govuk-notification-banner__heading">
+              You’ve set your cookie preferences. <a class="govuk-notification-banner__link" href="#">Go back to the page you were looking at</a>.
+            </p>
+          </div>
+        </div>
+      {% endif %}
+
+      <h1 class="govuk-heading-xl">
         Cookies
       </h1>
 
@@ -69,6 +120,94 @@
               </tr>
           </tbody>
       </table>
+
+      {% if myData.cookiesVariant1 == "true" %}
+        <h2 class="govuk-heading-m" >Analytics cookies (optional)</h2>
+        <p class="govuk-body">With your permission, we use Google Analytics to collect data about how you use this service. This information helps us improve our service.</p>
+        <p>Google is not allowed to use or share our analytics data with anyone.</p>
+        <p class="govuk-body">Google Analytics stores anonymized information about:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>how you got to these sites</li>
+          <li>the pages you visit and how long you spend on each page</li>
+          <li>what you click on while you're visiting these sites</li>
+        </ul>
+        <table class="govuk-table responsive">
+          <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Name</th>
+              <th scope="col" class="govuk-table__header">Purpose</th>
+              <th scope="col" class="govuk-table__header">Expires</th>
+              </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header" style="color: red">??</th>
+              <td class="govuk-table__cell" style="color: red">??</td>
+              <td class="govuk-table__cell" style="color: red">??</td>
+              </tr>
+          </tbody>
+        </table>
+
+
+        <h2 class="govuk-heading-l">Change your cookie settings</h2>
+
+        {% if myData.cookiesNeedJS == "true" %}
+        <p class="govuk-body">We cannot change your cookie settings at the moment because JavaScript is not running in your browser. To fix this, try:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>turning on JavaScript in your browser settings</li>
+          <li>reloading this page</li>
+        </ul>
+        {% else %}
+        <form method="POST" novalidate>
+          <!-- <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                Do you want to accept functional cookies?
+              </legend>
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="cookiesFunctional" name="cookiesFunctional" type="radio" value="Yes" {% if myData.cookiesFunctional == "Yes" %}checked{% endif %}>
+                  <label class="govuk-label govuk-radios__label" for="cookiesFunctional">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="cookiesFunctional-2" name="cookiesFunctional" type="radio" value="No" {% if myData.cookiesFunctional == "No" %}checked{% endif %}>
+                  <label class="govuk-label govuk-radios__label" for="cookiesFunctional-2">
+                    No
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div> -->
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                Do you want to accept analytics cookies?
+              </legend>
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="cookiesAnalytics" name="cookiesAnalytics" type="radio" value="Yes" {% if myData.cookiesAnalytics == "Yes" %}checked{% endif %}>
+                  <label class="govuk-label govuk-radios__label" for="cookiesAnalytics">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="cookiesAnalytics-2" name="cookiesAnalytics" type="radio" value="No" {% if myData.cookiesAnalytics == "No" %}checked{% endif %}>
+                  <label class="govuk-label govuk-radios__label" for="cookiesAnalytics-2">
+                    No
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <button type="submit" class="govuk-button" data-module="govuk-button">
+            Save cookie settings
+          </button>
+        </form>
+        {% endif %}
+
+      {% endif %}
 
   </div>
 </div>

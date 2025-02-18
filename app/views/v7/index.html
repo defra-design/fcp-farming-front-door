@@ -131,6 +131,18 @@
         "title": "Buffalo MVP. Vendor and CPH number variants"
       },
       {
+        "number": "145",
+        "title": "Buffalo MVP. Cookies (analytics) page and cookies banners"
+      },
+      {
+        "number": "144",
+        "title": "Buffalo MVP. Page metadata and URLs"
+      },
+      {
+        "number": "143",
+        "title": "Buffalo MVP. Validation scenarios and messages"
+      },
+      {
         "number": "140",
         "title": "Setup ALAN in the prototype"
       },
@@ -598,8 +610,40 @@
           "name": "Cookies page",
           "id": "mp01",
           "url": "misc-cookies?r=t&release=b1",
-          "release": "Buffalo 1.0 MVP"
+          "release": "Buffalo 1.0 MVP",
+          "variants": [
+            {
+              "name": "Including analytics cookies",
+              "url": "misc-cookies?cookiesVariant1=true"
+            },
+            {
+              "name": "Cookie settings changed banner",
+              "url": "misc-cookies?cookiesVariant1=true&changed=true"
+            },
+            {
+              "name": "Cookies need JavaScript",
+              "url": "misc-cookies?cookiesVariant1=true&cookiesNeedJS=true"
+            },
+
+            {
+              "name": "Cookies banner - pre accept/reject",
+              "url": "misc-cookies?cookiesVariant1=true&showCookieBanner1=true"
+            },
+            {
+              "name": "Cookies banner - rejected",
+              "url": "misc-cookies?cookiesVariant1=true&showCookieBanner2=true"
+            },
+            {
+              "name": "Cookies banner - accepted",
+              "url": "misc-cookies?cookiesVariant1=true&showCookieBanner3=true"
+            }
+
+            
+            
+          ]
         },
+
+
         {
           "name": "Accessibility statement",
           "id": "mp02",

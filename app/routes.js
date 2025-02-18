@@ -48,7 +48,10 @@ var _myData = {
     "bankNameBus": "Alfred Waldron",
     "bankSortBus": "123456",
     "bankAccountBus": "12345678",
-    "bankRollBus": ""
+    "bankRollBus": "",
+
+    "cookiesFunctional": "No",
+    "cookiesAnalytics": "No"
 }
 
 router.post('/which-service-answer', function(request, response) {
