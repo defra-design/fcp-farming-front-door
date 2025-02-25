@@ -721,7 +721,7 @@ module.exports = function (router,_myData) {
         if(req.query.legalchanged == "true"){
             // var _numberChangedText = ""
             // if(req.session.myData.legalBus == "Public limited company (PLC)"){
-            //     _numberChangedText = " and Companies house registration number changed to " + req.session.myData.legalCHRNBus
+            //     _numberChangedText = " and Companies House registration number changed to " + req.session.myData.legalCHRNBus
             // }
             // if(req.session.myData.legalBus == "Charitable incorporated organisation (CIO)"){
             //     _numberChangedText = " and Charity commission registration number changed to " + req.session.myData.legalCCRNBus
@@ -1094,7 +1094,7 @@ module.exports = function (router,_myData) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCHRNBus = {
                     "anchor": "legalCHRNBus",
-                    "message": "Enter a companies house registration number"
+                    "message": "Enter a Companies House registration number"
                 }
             }
             if(req.session.myData.newLegalBus == "Charitable incorporated organisation (CIO)" & !req.session.myData.newLegalCCRNBus){

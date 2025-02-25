@@ -46,15 +46,15 @@
 
 
     {
-      "field": "Companies house registration number",
+      "field": "Companies House registration number",
       "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Empty field / nothing entered",
-      "content": "Enter a companies house registration number"
+      "content": "Enter a Companies House registration number"
     },
     
     {
-      "field": "Companies house registration number",
+      "field": "Companies House registration number",
       "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Wrong format",
-      "content": "Enter a companies house registration number, like 01234567 or SC123456"
+      "content": "Enter a Companies House registration number, like 01234567 or SC123456"
     }
 
 
@@ -150,7 +150,7 @@
                 </label>
               </div>
 
-              <!-- Conditionally revealed 'Companies house registration number' input -->
+              <!-- Conditionally revealed 'Companies House registration number' input -->
               {% if _legal == "Public limited company (PLC)" %}
 
                 {% set _valueNewLegalCHRNBus = myData.newLegalCHRNBus or myData.legalCHRNBus %}
@@ -164,7 +164,7 @@
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-legalCHRNBus">
                   <div class="govuk-form-group {% if myData.validationErrors.legalCHRNBus %}govuk-form-group--error{% endif %}">
                     <label class="govuk-label" for="legalCHRNBus">
-                      Companies house registration number
+                      Companies House registration number
                     </label>
                     {% if myData.validationErrors.legalCHRNBus %}
                     <p id="legalCHRNBus-error" class="govuk-error-message">
