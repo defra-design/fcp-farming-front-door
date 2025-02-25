@@ -59,7 +59,7 @@
 
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key govuk-body-s">
-                    "description" tag
+                    Meta "description"
                 </dt>
                 <dd class="govuk-summary-list__value govuk-body-s">
 
@@ -86,7 +86,7 @@
 
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key govuk-body-s">
-                    URL
+                    URL slug
                 </dt>
                 <dd class="govuk-summary-list__value govuk-body-s">
                     {% if not _designSpecData.pageurl %}
@@ -95,7 +95,7 @@
                         {% for item in data.pageList %}
                             {% if item.pageid == _designSpecData.id %}
                                 {% set foundDesc = true %}
-                                <p class="govuk-body-s">{{ item.pageurl }}</p>
+                                <p class="govuk-body-s">/{{ item.pageurl }}</p>
                             {% endif %}
                         {% endfor %}
 
@@ -104,7 +104,7 @@
                         {% endif %}
 
                     {% else %}
-                        <p class="govuk-body-s">{{ _designSpecData.pageurl }}</p>
+                        <p class="govuk-body-s">/{{ _designSpecData.pageurl }}</p>
                     {% endif %}
                 </dd>
             </div>

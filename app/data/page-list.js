@@ -207,7 +207,7 @@ module.exports = [
       "pageid": "mp01",
       "pagename": "Cookies",
       "pageurl": "cookies",
-      "pagedesc": "Cookies are small files saved on your phone, tablet or computer when you visit a website. We use cookies to store information about how you use this service."
+      "pagedesc": "How we use cookies to store information about how you use this service."
     },
     {
       "pageid": "mp02",
@@ -231,7 +231,7 @@ module.exports = [
       "pageid": "mp06",
       "pagename": "Signed out",
       "pageurl": "signed-out",
-      "pagedesc": "You have signed out of this service."
+      "pagedesc": "Confirmation that you are signed out of [service name] and a way to sign back in."
     },
     {
       "pageid": "mp07",
@@ -255,6 +255,6 @@ module.exports = [
       "pageid": "se03",
       "pagename": "Page not found (404)",
       "pageurl": "page-not-found",
-      "pagedesc": "We could not find this page, but you can contact us."
+      "pagedesc": "We could not find this page. Check the web address is correct and try again."
     }
    ]
