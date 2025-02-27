@@ -1,0 +1,118 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "What is your business name?" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Business name (change) - business details",
+  "id": "bd02",
+  "url": "business-details-name-change?r=t&release=b1&newChange=true",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageTitle,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+      "scenario": "Empty field / nothing entered",
+      "content": "Enter business name"
+    },
+    {
+      "scenario": "Entry is too long",
+      "content": "Business name must be [max number] characters or less"
+    }
+  ]
+  
+}
+%}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-2.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="nameBus">
+            What is your business name?
+          </label>
+        </h1>
+
+        {% if _inError %}
+        <p id="nameBus-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.nameBus.message}}
+        </p>
+        {% endif %}
+
+        {% set _valueNewNameBus = myData.newNameBus or myData.nameBus %}
+        {% if myData.validationErrors.nameBus %}
+            {% set _valueNewNameBus = myData.newNameBus %}
+        {% endif %}
+
+        <input class="govuk-input {% if _inError %}govuk-input--error{% endif %}" id="nameBus" name="nameBus" type="text"  value="{{_valueNewNameBus}}" {% if _inError %}aria-describedby="nameBus-error"{% endif %}>
+      </div>
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

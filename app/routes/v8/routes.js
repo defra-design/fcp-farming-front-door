@@ -2,7 +2,7 @@ const e = require("express");
 
 module.exports = function (router,_myData) {
 
-    var version = "v7";
+    var version = "v8";
 
     //coverts a number to a month
     function toMonth(_monthNumber){

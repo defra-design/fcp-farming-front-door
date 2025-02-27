@@ -1,0 +1,180 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Change your bank or building society account details" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Bank details (change) - business details",
+  "id": "bd19",
+  "url": "business-details-bank-change?r=t&release=b2&newChange=true",
+  "release": "Buffalo 1.X",
+  "variants": [],
+
+  "pagetitle": pageTitle,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+      "scenario": "[scenario]",
+      "content": "[error message]"
+    }
+  ]
+  
+}
+%}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-2.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Change your bank or building society account details
+          </h1>
+        </legend>
+
+        <!-- Name on the account -->
+        <div class="govuk-form-group {% if myData.validationErrors.bankNameBus %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankNameBus">
+            Name on the account
+          </label>
+          {% if myData.validationErrors.bankNameBus %}
+          <p id="bankNameBus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankNameBus.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewBankNameBus = myData.newBankNameBus or myData.bankNameBus %}
+          {% if myData.validationErrors.bankNameBus %}
+              {% set _valueNewBankNameBus = myData.newBankNameBus %}
+          {% endif %}
+          <input class="govuk-input {% if myData.validationErrors.bankNameBus %}govuk-input--error{% endif %}" id="bankNameBus" name="bankNameBus" type="text" value="{{_valueNewBankNameBus}}" {% if myData.validationErrors.bankNameBus %}aria-describedby="bankNameBus-error"{% endif %} spellcheck="false" autocomplete="name">
+        </div>
+
+        <!-- Sort code -->
+        <div class="govuk-form-group {% if myData.validationErrors.bankSortBus %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankSortBus">
+            Sort code
+          </label>
+          <div id="bankSortBus-hint" class="govuk-hint">
+            Must be 6 digits long
+          </div>
+          {% if myData.validationErrors.bankSortBus %}
+          <p id="bankSortBus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankSortBus.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewBankSortBus = myData.newBankSortBus or myData.bankSortBus %}
+          {% if myData.validationErrors.bankSortBus %}
+              {% set _valueNewBankSortBus = myData.newBankSortBus %}
+          {% endif %}
+          <input class="govuk-input govuk-input--width-5 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankSortBus %}govuk-input--error{% endif %}" id="bankSortBus" name="bankSortBus" type="text" value="{{_valueNewBankSortBus}}" aria-describedby="bankSortBus-hint {% if myData.validationErrors.bankSortBus %}bankSortBus-error{% endif %}" spellcheck="false" inputmode="numeric">
+        </div>
+
+        <!-- Account number -->
+        <div class="govuk-form-group {% if myData.validationErrors.bankAccountBus %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankAccountBus">
+            Account number
+          </label>
+          <div id="bankAccountBus-hint" class="govuk-hint">
+            Must be between 6 and 8 digits long
+          </div>
+          {% if myData.validationErrors.bankAccountBus %}
+          <p id="bankAccountBus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankAccountBus.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewBankAccountBus = myData.newBankAccountBus or myData.bankAccountBus %}
+          {% if myData.validationErrors.bankAccountBus %}
+              {% set _valueNewBankAccountBus = myData.newBankAccountBus %}
+          {% endif %}
+          <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankAccountBus %}govuk-input--error{% endif %}" id="bankAccountBus" name="bankAccountBus" type="text" value="{{_valueNewBankAccountBus}}" aria-describedby="bankAccountBus-hint {% if myData.validationErrors.bankAccountBus %}bankAccountBus-error{% endif %}" spellcheck="false" inputmode="numeric">
+        </div>
+
+        <!-- Building society roll number (if you have one) -->
+        <div class="govuk-form-group {% if myData.validationErrors.bankRollBus %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankRollBus">
+            Building society roll number (if you have one)
+          </label>
+          <div id="bankRollBus-hint" class="govuk-hint">
+            You can find it on your card, statement or passbook
+          </div>
+          {% if myData.validationErrors.bankRollBus %}
+          <p id="bankRollBus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankRollBus.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewBankRollBus = myData.newBankRollBus or myData.bankRollBus %}
+          {% if myData.validationErrors.bankRollBus %}
+              {% set _valueNewBankRollBus = myData.newBankRollBus %}
+          {% endif %}
+          <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankRollBus %}govuk-input--error{% endif %}" id="bankRollBus" name="bankRollBus" type="text" value="{{_valueNewBankRollBus}}" aria-describedby="bankRollBus-hint {% if myData.validationErrors.bankRollBus %}bankRollBus-error{% endif %}" spellcheck="false" >
+        </div>
+
+
+      </fieldset>
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,205 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName="View and update your personal details" %}
+{% set serviceName="Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Manage personal details",
+  "id": "pd01",
+  "url": "details-personal-details?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    {
+      "name": "name changed banner",
+      "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true"
+    },
+    {
+      "name": "date of birth changed banner",
+      "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true"
+    },
+    {
+      "name": "address changed banner",
+      "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true"
+    },
+    {
+      "name": "telephone changed banner",
+      "url": "details-personal-details?r=t&release=b1&telchanged=true&changed=true"
+    },
+    {
+      "name": "mobile changed banner",
+      "url": "details-personal-details?r=t&release=b1&mobchanged=true&changed=true"
+    },
+    {
+      "name": "email changed banner",
+      "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-2.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if myData.showNotification == "true" %}
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          {{myData.notifications.message}}
+        </h3>
+      </div>
+    </div>
+    {% endif %}
+
+    <h1 class="govuk-heading-l">
+     View and update your personal details
+    </h1>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Full name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data.release == "b1" %}
+            {{myData.nameTitlePers}} {{myData.nameFirstPers}} {{myData.nameMiddlePers}} {{myData.nameLastPers}}
+          {% else %}
+            {{myData.namePers}}
+          {% endif %}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> name</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Date of birth
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.dobDayPers}} {{myData.dobMonthPers | toMonth}} {{myData.dobYearPers}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-dob-change?newChange=true">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Customer reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data.user.crn}}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Personal identifier
+        </dt>
+        <dd class="govuk-summary-list__value">
+          110764804
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.address1Pers}}<br>
+          {% if myData.address2Pers != "" %}{{myData.address2Pers}}<br>{% endif %}
+          {{myData.addressCityPers}}<br>
+          {% if myData.addressCountyPers != "" %}{{myData.addressCountyPers}}<br>{% endif %}
+          {{myData.addressPostcodePers}} 
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-address-change?newChange=true">Change<span class="govuk-visually-hidden"> address</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Telephone
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.telNumberPers}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-tel-change?newChange=true">Change<span class="govuk-visually-hidden"> phone number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Mobile
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.mobNumberPers}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-mob-change?newChange=true">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Email address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.emailPers}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-email-change?newChange=true">Change<span class="govuk-visually-hidden"> email address</span></a>
+        </dd>
+      </div>
+    </dl>
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

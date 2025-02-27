@@ -1,0 +1,113 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "Check your name is correct before submitting" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Full name (check) - personal details",
+  "id": "pd03",
+  "url": "personal-details-name-check?r=t&release=b1&newChange=true",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+   
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-2.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your name is correct before submitting     
+      </h1>
+
+      {% set _fullName = "" %}
+
+      {% if data.release == "b1" %}
+
+        <!-- Adds space after title if a title was entered -->
+        {% set _titleValue = myData.newNameTitlePers or myData.nameTitlePers %}
+        {% if _titleValue %}
+          {% set _titleValue = _titleValue + " " %}
+        {% endif %}
+
+        <!-- Adds space after middle name if a title was entered -->
+        {% set _middleValue = myData.newNameMiddlePers or myData.nameMiddlePers %}
+        {% if _middleValue %}
+          {% set _middleValue = _middleValue + " " %}
+        {% endif %}
+
+        <!-- Full name  -->
+        {% set _fullName = _titleValue + (myData.newNameFirstPers or myData.nameFirstPers) + " " + _middleValue + (myData.newNameLastPers or myData.nameLastPers) %}
+
+      {% else %}
+
+        {% set _fullName = myData.newNamePers or myData.namePers %}
+
+      {% endif %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Full name"
+            },
+            value: {
+              text: _fullName
+
+            },
+            actions: {
+              items: [
+                {
+                  href: "personal-details-name-change",
+                  text: "Change",
+                  visuallyHiddenText: "your name"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+      
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <p class="govuk-body"><a href="details-personal-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "layouts/main.html" %}
+
+{% set _pageID = "" %}
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "You have signed out" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Signed out page",
+  "id": "mp06",
+  "url": "misc-signed-out?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        You have signed out 
+      </h1>
+
+      <p class="govuk-body" >If this is not what you wanted, you can <a href="start-sfd-sign-in" class="govuk-link govuk-link--no-visited-state">sign back into Manage your land and farm businesses</a>.</p>
+
+  </div>
+</div>
+
+
+{% endblock %}
