@@ -22,6 +22,14 @@
       "url": "details-business-details?r=t&release=b1&vendorCount=1"
     },
     {
+      "name": "Trader number	- hidden",
+      "url": "details-business-details?r=t&release=b1&traderCount=0"
+    },
+    {
+      "name": "Trader number	- one number",
+      "url": "details-business-details?r=t&release=b1&traderCount=1"
+    },
+    {
       "name": "County Parish Holding (CPH) number	- hidden",
       "url": "details-business-details?r=t&release=b1&cphCount=0"
     },
@@ -42,12 +50,8 @@
       "url": "details-business-details?r=t&release=b1&addresschanged=true&changed=true"
     },
     {
-      "name": "telephone changed banner",
-      "url": "details-business-details?r=t&release=b1&telchanged=true&changed=true"
-    },
-    {
-      "name": "mobile changed banner",
-      "url": "details-business-details?r=t&release=b1&mobchanged=true&changed=true"
+      "name": "phone numbers changed banner",
+      "url": "details-business-details?r=t&release=b1&phonechanged=true&changed=true"
     },
     {
       "name": "email changed banner",
@@ -79,8 +83,12 @@
   ],
   "notes": [
     "<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding (CPH) number' row. View example with the query string &cphCount=0",
+
     "<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH) numbers' label plural and separate each CPH number with a break line tag. View example with the query string &cphCount=2",
-    "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0"
+
+    "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
+
+    "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0"
   ]
 }
 %}
@@ -162,24 +170,25 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Telephone
+          Phone numbers
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.telNumberBus}}
+          Telephone: 
+          {% if myData.telNumberBus == "" %}
+            <span style="color:#505a5f">Not added</span>
+          {% else %}
+            {{myData.telNumberBus}}
+          {% endif %}
+          <br>
+          Mobile: 
+          {% if myData.mobNumberBus == "" %}
+            <span style="color:#505a5f">Not added</span>
+          {% else %}
+            {{myData.mobNumberBus}}
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-tel-change?newChange=true">Change<span class="govuk-visually-hidden"> telephone number</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Mobile
-        </dt>
-        <dd class="govuk-summary-list__value">
-          {{myData.mobNumberBus}}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-mob-change?newChange=true">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> business phone numbers</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -229,6 +238,19 @@
           {% endif %}
         </dd>
       </div>
+
+      {% if myData.traderCount == "0" %}
+        <!-- Do not render row -->
+      {% else %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Trader number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{_selectedBusiness.traderNumber or "987654321"}} 
+        </dd>
+      </div>
+      {% endif %}
 
       {% if myData.vendorCount == "0" %}
         <!-- Do not render row -->

@@ -27,12 +27,8 @@
       "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true"
     },
     {
-      "name": "telephone changed banner",
-      "url": "details-personal-details?r=t&release=b1&telchanged=true&changed=true"
-    },
-    {
-      "name": "mobile changed banner",
-      "url": "details-personal-details?r=t&release=b1&mobchanged=true&changed=true"
+      "name": "phone numbers changed banner",
+      "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true"
     },
     {
       "name": "email changed banner",
@@ -137,14 +133,6 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Personal identifier
-        </dt>
-        <dd class="govuk-summary-list__value">
-          110764804
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
           Address
         </dt>
         <dd class="govuk-summary-list__value">
@@ -160,24 +148,25 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Telephone
+          Phone numbers
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.telNumberPers}}
+          Telephone: 
+          {% if myData.telNumberPers == "" %}
+            <span style="color:#505a5f">Not added</span>
+          {% else %}
+            {{myData.telNumberPers}}
+          {% endif %}
+          <br>
+          Mobile: 
+          {% if myData.mobNumberPers == "" %}
+            <span style="color:#505a5f">Not added</span>
+          {% else %}
+            {{myData.mobNumberPers}}
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-tel-change?newChange=true">Change<span class="govuk-visually-hidden"> phone number</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Mobile
-        </dt>
-        <dd class="govuk-summary-list__value">
-          {{myData.mobNumberPers}}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-mob-change?newChange=true">Change<span class="govuk-visually-hidden"> mobile phone number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> personal phone numbers</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

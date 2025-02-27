@@ -20,7 +20,7 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-xl">
-      Prototype version 8
+      Prototype version {{myData.version.slice(myData.version|length - 1)}}
       <!-- <span class="govuk-caption-xl">Private Beta. Round 1: 16 to 20 December 2024</span> -->
     </h1>
 
@@ -260,12 +260,8 @@
               "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true"
             },
             {
-              "name": "telephone changed banner",
-              "url": "details-personal-details?r=t&release=b1&telchanged=true&changed=true"
-            },
-            {
-              "name": "mobile changed banner",
-              "url": "details-personal-details?r=t&release=b1&mobchanged=true&changed=true"
+              "name": "phone numbers changed banner",
+              "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true"
             },
             {
               "name": "email changed banner",
@@ -320,28 +316,15 @@
         },
 
         {
-          "name": "Telephone (change) - personal details",
-          "id": "pd08",
-          "url": "personal-details-tel-change?r=t&release=b1&newChange=true",
+          "name": "Phone numbers (change) - personal details",
+          "id": "pd14",
+          "url": "personal-details-phone-change?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
         },
         {
-          "name": "Telephone (check) - personal details",
-          "id": "pd09",
-          "url": "personal-details-tel-check?r=t&release=b1&newChange=true",
-          "release": "Buffalo 1.0 MVP"
-        },
-
-        {
-          "name": "Mobile (change) - personal details",
-          "id": "pd10",
-          "url": "personal-details-mob-change?r=t&release=b1&newChange=true",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Mobile (check) - personal details",
-          "id": "pd11",
-          "url": "personal-details-mob-check?r=t&release=b1&newChange=true",
+          "name": "Phone numbers (check) - personal details",
+          "id": "pd15",
+          "url": "personal-details-phone-check?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
         },
 
@@ -378,6 +361,14 @@
               "url": "details-business-details?r=t&release=b1&vendorCount=1"
             },
             {
+              "name": "Trader number	- hidden",
+              "url": "details-business-details?r=t&release=b1&traderCount=0"
+            },
+            {
+              "name": "Trader number	- one number",
+              "url": "details-business-details?r=t&release=b1&traderCount=1"
+            },
+            {
               "name": "County Parish Holding (CPH) number	- hidden",
               "url": "details-business-details?r=t&release=b1&cphCount=0"
             },
@@ -398,12 +389,8 @@
               "url": "details-business-details?r=t&release=b1&addresschanged=true&changed=true"
             },
             {
-              "name": "telephone changed banner",
-              "url": "details-business-details?r=t&release=b1&telchanged=true&changed=true"
-            },
-            {
-              "name": "mobile changed banner",
-              "url": "details-business-details?r=t&release=b1&mobchanged=true&changed=true"
+              "name": "phone numbers changed banner",
+              "url": "details-business-details?r=t&release=b1&phonechanged=true&changed=true"
             },
             {
               "name": "email changed banner",
@@ -456,31 +443,17 @@
           "release": "Buffalo 1.0 MVP"
         },
 
-        {
-          "name": "Telephone (change) - business details",
-          "id": "bd06",
-          "url": "business-details-tel-change?r=t&release=b1&newChange=true",
-          "release": "Buffalo 1.0 MVP"
-        },
 
         {
-          "name": "Telephone (check) - business details",
-          "id": "bd07",
-          "url": "business-details-tel-check?r=t&release=b1&newChange=true",
-          "release": "Buffalo 1.0 MVP"
-        },
-
-
-        {
-          "name": "Mobile (change) - business details",
-          "id": "bd08",
-          "url": "business-details-mob-change?r=t&release=b1&newChange=true",
+          "name": "Phone numbers (change) - business details",
+          "id": "bd21",
+          "url": "business-details-phone-change?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
         },
         {
-          "name": "Mobile (check) - business details",
-          "id": "bd09",
-          "url": "business-details-mob-check?r=t&release=b1&newChange=true",
+          "name": "Phone numbers (check) - business details",
+          "id": "bd22",
+          "url": "business-details-phone-check?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
         },
 
@@ -858,7 +831,7 @@
         function setValues(){
 
             //Base URL
-            var _urlBase = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + {{data.version|dump|safe}} + "/";
+            var _urlBase = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + {{myData.version|dump|safe}} + "/";
 
 
             //Queries

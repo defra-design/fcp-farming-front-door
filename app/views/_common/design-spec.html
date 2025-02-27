@@ -1,7 +1,7 @@
 
 
 
-{% set heroku = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + data.version + "/" %}
+{% set heroku = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + myData.version + "/" %}
 
 {% if status != "" %}
 
@@ -114,7 +114,7 @@
                     Prototype version
                 </dt>
                 <dd class="govuk-summary-list__value govuk-body-s">
-                    {{data.version}}
+                    {{myData.version}}
                 </dd>
             </div>
 

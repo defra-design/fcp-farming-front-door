@@ -33,7 +33,7 @@ module.exports = function (router,_myData) {
         }
 
         //version
-        req.session.data.version = version
+        req.session.myData.version = version
 
         //set selected business
         if(req.query.business){
@@ -68,12 +68,16 @@ module.exports = function (router,_myData) {
 
     //index - setup page
     router.get('/' + version + '/index', function (req, res) {
-        res.render(version + '/index', {});
+        res.render(version + '/index', {
+            myData: req.session.myData
+        });
     });
 
     //design history
     router.get('/' + version + '/_design-history', function (req, res) {
-        res.render(version + '/_design-history', {});
+        res.render(version + '/_design-history', {
+            myData: req.session.myData
+        });
     });
 
     //sfd sign in
