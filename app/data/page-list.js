@@ -96,6 +96,18 @@ module.exports = [
       "pagedesc": "Check the email address for your personal account is correct."
     },
     {
+      "pageid": "pd14",
+      "pagename": "Phone numbers (change) - personal details",
+      "pageurl": "account-phone-change",
+      "pagedesc": "Update the phone numbers for your personal account."
+    },
+    {
+      "pageid": "pd15",
+      "pagename": "Phone numbers (check) - personal details",
+      "pageurl": "account-phone-check",
+      "pagedesc": "Check the phone numbers for your personal account are correct."
+    },
+    {
       "pageid": "bd01",
       "pagename": "Manage business details",
       "pageurl": "business-details-view-change",
@@ -202,6 +214,18 @@ module.exports = [
       "pagename": "Business type (check) - business details",
       "pageurl": "business-type-check",
       "pagedesc": "Check the type of your business is correct."
+    },
+    {
+      "pageid": "bd21",
+      "pagename": "Phone numbers (change) - business details",
+      "pageurl": "business-phone-change",
+      "pagedesc": "Update the phone numbers for your business."
+    },
+    {
+      "pageid": "bd22",
+      "pagename": "Phone numbers (check) - business details",
+      "pageurl": "business-phone-check",
+      "pagedesc": "Check the phone numbers for your business are correct."
     },
     {
       "pageid": "mp01",

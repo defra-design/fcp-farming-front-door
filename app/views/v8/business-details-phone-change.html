@@ -5,7 +5,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "[title]" %}
+{% set pageTitle = "What are your business phone numbers?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -37,10 +37,21 @@
       "content": "Business mobile phone number must be [max number] characters or less"
     },
     {
+      "field": "Mobile",
+      "scenario": "Entry is too short",
+      "content": "Business mobile phone number must be 10 characters or more"
+    },
+    {
       "field": "Telephone",
       "scenario": "Entry is too long",
       "content": "Business telephone number must be [max number] characters or less"
+    },
+    {
+      "field": "Telephone",
+      "scenario": "Entry is too short",
+      "content": "Business telephone number must be 10 characters or more"
     }
+    
   ]
   
 }
