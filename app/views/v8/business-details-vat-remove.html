@@ -1,0 +1,125 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Are you sure you want to remove your VAT registration number?" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "VAT registration number (remove) - business details",
+  "id": "bd25",
+  "url": "business-details-vat-remove?r=t&release=b1&newChange=true",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageTitle,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+      "scenario": "Nothing selected",
+      "content": "Select yes if you want to remove your VAT registration number"
+    }
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-2.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <fieldset class="govuk-fieldset" {% if _inError %}aria-describedby="vatRemoveBus-error{% endif %}">
+
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              Are you sure you want to remove your VAT registration number?
+            </h1>
+          </legend>
+
+          {% if myData.validationErrors.vatRemoveBus %}
+          <p id="vatRemoveBus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.vatRemoveBus.message}}
+          </p>
+          {% endif %}
+
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="vatRemoveBus-1" name="vatRemoveBus" type="radio" value="Yes"  >
+              <label class="govuk-label govuk-radios__label" for="vatRemoveBus-1">
+                Yes
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="vatRemoveBus-2" name="vatRemoveBus" type="radio" value="No"  >
+              <label class="govuk-label govuk-radios__label" for="vatRemoveBus-2">
+                No
+              </label>
+            </div>
+          </div>
+
+        </fieldset>
+      </div>
+
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

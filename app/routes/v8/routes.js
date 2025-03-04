@@ -714,6 +714,9 @@ module.exports = function (router,_myData) {
         if(req.query.vatchanged == "true"){
             req.session.myData.notifications.message = "You have updated your VAT registration number"
         }
+        if(req.query.vatremoved == "true"){
+            req.session.myData.notifications.message = "You have removed your VAT registration number"
+        }
         if(req.query.typechanged == "true"){
             req.session.myData.notifications.message = "You have updated your business type"
         }
@@ -1269,6 +1272,47 @@ module.exports = function (router,_myData) {
         req.session.myData.vatBus = req.session.myData.newVatBus || req.session.myData.vatBus
         req.session.myData.newVatBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&vatchanged=true');
+    });
+    //business details - remove VAT
+    router.get('/' + version + '/business-details-vat-remove', function (req, res) {
+        res.render(version + '/business-details-vat-remove', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-vat-remove', function (req, res) {
+
+        req.session.myData.newVATRemoveBus = req.body.vatRemoveBus
+        
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newVATRemoveBus = req.session.myData.vatRemoveBus || "Yes"
+        }
+
+        if(!req.session.myData.newVATRemoveBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.vatBus = {
+                "anchor": "vatRemoveBus-1",
+                "message": "Select yes if you want to remove your VAT registration number"
+            }
+        }
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-vat-remove', {
+                myData: req.session.myData
+            });
+        } else {
+
+            if(req.session.myData.newVATRemoveBus == "Yes"){
+                req.session.myData.vatRemoveBus = ""
+                req.session.myData.newVATRemoveBus = ""
+                req.session.myData.vatBus = ""
+                req.session.myData.newVatBus = ""
+                res.redirect(301, '/' + version + '/details-business-details?changed=true&vatremoved=true');
+            } else {
+                res.redirect(301, '/' + version + '/details-business-details');
+            }
+        }
+        
     });
     //business details - change bank details
     router.get('/' + version + '/business-details-bank-change', function (req, res) {
