@@ -48,6 +48,18 @@ module.exports = [
       "pagedesc": "Check the date of birth for your personal account is correct."
     },
     {
+      "pageid": "pd16",
+      "pagename": "Address - postcode (change) - personal details",
+      "pageurl": "",
+      "pagedesc": ""
+    },
+    {
+      "pageid": "pd17",
+      "pagename": "Address - select (change) - personal details",
+      "pageurl": "",
+      "pagedesc": ""
+    },
+    {
       "pageid": "pd06",
       "pagename": "Address (change) - personal details",
       "pageurl": "account-address-change",
@@ -98,13 +110,13 @@ module.exports = [
     {
       "pageid": "pd14",
       "pagename": "Phone numbers (change) - personal details",
-      "pageurl": "account-phone-change",
+      "pageurl": "account-phone-numbers-change",
       "pagedesc": "Update the phone numbers for your personal account."
     },
     {
       "pageid": "pd15",
       "pagename": "Phone numbers (check) - personal details",
-      "pageurl": "account-phone-check",
+      "pageurl": "account-phone-numbers-check",
       "pagedesc": "Check the phone numbers for your personal account are correct."
     },
     {
@@ -124,6 +136,18 @@ module.exports = [
       "pagename": "Business name (check) - business details",
       "pageurl": "business-name-check",
       "pagedesc": "Check the name for your business is correct."
+    },
+    {
+      "pageid": "bd23",
+      "pagename": "Address - postcode (change) - business details",
+      "pageurl": "",
+      "pagedesc": ""
+    },,
+    {
+      "pageid": "bd24",
+      "pagename": "Address - select (change) - business details",
+      "pageurl": "",
+      "pagedesc": ""
     },
     {
       "pageid": "bd04",
@@ -218,13 +242,13 @@ module.exports = [
     {
       "pageid": "bd21",
       "pagename": "Phone numbers (change) - business details",
-      "pageurl": "business-phone-change",
+      "pageurl": "business-phone-numbers-change",
       "pagedesc": "Update the phone numbers for your business."
     },
     {
       "pageid": "bd22",
       "pagename": "Phone numbers (check) - business details",
-      "pageurl": "business-phone-check",
+      "pageurl": "business-phone-numbers-check",
       "pagedesc": "Check the phone numbers for your business are correct."
     },
     {

@@ -29,7 +29,7 @@
     {
       "field": "Mobile and telephone",
       "scenario": "Both are empty fields / nothing entered",
-      "content": "[error message]"
+      "content": "Enter at least one phone number"
     },
     {
       "field": "Mobile",
@@ -126,9 +126,9 @@
           </p>
           {% endif %}
   
-          {% set _valueNewTelNumberPers = myData.newTelNumberPers or myData.telNumberPers %}
-          {% if myData.validationErrors.telNumberPers or myData.validationErrors.phoneNumbersPers %}
-              {% set _valueNewTelNumberPers = myData.newTelNumberPers %}
+          {% set _valueNewTelNumberPers = myData.newTelNumberPers %}
+          {% if _valueNewTelNumberPers == null %}
+            {% set _valueNewTelNumberPers = myData.telNumberPers %}
           {% endif %}
   
           <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.telNumberPers or myData.validationErrors.phoneNumbersPers %}govuk-input--error{% endif %}" id="telNumberPers" name="telNumberPers" type="tel" autocomplete="tel" value="{{_valueNewTelNumberPers}}" {% if myData.validationErrors.telNumberPers %}aria-describedby="telNumberPers-error"{% endif %} {% if myData.validationErrors.phoneNumbersPers %}aria-describedby="phoneNumbersPers-error"{% endif %}>
@@ -146,9 +146,9 @@
           </p>
           {% endif %}
 
-          {% set _valueNewMobNumberPers = myData.newMobNumberPers or myData.mobNumberPers %}
-          {% if myData.validationErrors.mobNumberPers or myData.validationErrors.phoneNumbersPers %}
-              {% set _valueNewMobNumberPers = myData.newMobNumberPers %}
+          {% set _valueNewMobNumberPers = myData.newMobNumberPers %}
+          {% if _valueNewMobNumberPers == null %}
+            {% set _valueNewMobNumberPers = myData.mobNumberPers %}
           {% endif %}
 
           <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.mobNumberPers or myData.validationErrors.phoneNumbersPers %}govuk-input--error{% endif %}" id="mobNumberPers" name="mobNumberPers" type="tel" autocomplete="tel" value="{{_valueNewMobNumberPers}}" {% if myData.validationErrors.mobNumberPers %}aria-describedby="mobNumberPers-error"{% endif %} {% if myData.validationErrors.phoneNumbersPers %}aria-describedby="phoneNumbersPers-error"{% endif %}>

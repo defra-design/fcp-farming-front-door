@@ -403,6 +403,87 @@ module.exports = function (router,_myData) {
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&dobchanged=true');
     });
 
+    //personal details - search postcode
+    router.get('/' + version + '/personal-details-address-postcode-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newAddressPostcodePers = null
+        }
+        res.render(version + '/personal-details-address-postcode-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-address-postcode-change', function (req, res) {
+
+        req.session.myData.newAddressPostcodePers = req.body.addressPostcodePers.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newAddressPostcodePers = req.session.myData.newAddressPostcodePers || req.session.myData.addressPostcodePers
+        }
+
+        if(!req.session.myData.newAddressPostcodePers){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.addressPostcodePers = {
+                "anchor": "addressPostcodePers",
+                "message": "Enter a postcode"
+            }
+        }
+        
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/personal-details-address-postcode-change', {
+                myData: req.session.myData
+            });
+        } else {
+            res.redirect(301, '/' + version + '/personal-details-address-select-change');
+        }
+        
+    });
+    //personal details - select address
+    router.get('/' + version + '/personal-details-address-select-change', function (req, res) {
+        if(req.query.newChange){
+            // req.session.myData.newAddress1Pers = ""
+        }
+        res.render(version + '/personal-details-address-select-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/personal-details-address-select-change', function (req, res) {
+
+        req.session.myData.newAddressPers = req.body.addressPers
+
+        if(req.session.myData.includeValidation == "false"){
+            if(req.session.myData.newAddressPers == "select"){
+                req.session.myData.newAddressPers = "10 Skirbeck Way"
+            } else {
+                req.session.myData.newAddressPers = req.session.myData.newAddressPers || "10 Skirbeck Way"
+            }
+        }
+
+        if(req.session.myData.newAddressPers == "select"){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.addressPers = {
+                "anchor": "addressPers",
+                "message": "Choose an address"
+            }
+        }
+        
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/personal-details-address-select-change', {
+                myData: req.session.myData
+            });
+        } else {
+
+            req.session.myData.newAddress1Pers = req.session.myData.newAddressPers
+            req.session.myData.newAddress2Pers = ""
+            req.session.myData.newAddressCityPers = "Maidstone"
+            req.session.myData.newAddressCountyPers = ""
+            req.session.myData.newAddressPostcodePers = req.session.myData.newAddressPostcodePers || req.session.myData.addressPostcodePers
+            req.session.myData.newAddressCountryPers = "United Kingdom"
+
+            res.redirect(301, '/' + version + '/personal-details-address-check');
+        }
+        
+    });
     //personal details - change address
     router.get('/' + version + '/personal-details-address-change', function (req, res) {
         if(req.query.newChange){
@@ -411,6 +492,7 @@ module.exports = function (router,_myData) {
             req.session.myData.newAddressCityPers = ""
             req.session.myData.newAddressCountyPers = ""
             req.session.myData.newAddressPostcodePers = ""
+            req.session.myData.newAddressCountryPers = ""
         }
         res.render(version + '/personal-details-address-change', {
             myData: req.session.myData
@@ -423,11 +505,12 @@ module.exports = function (router,_myData) {
         req.session.myData.newAddressCityPers = req.body.addressCityPers.trim()
         req.session.myData.newAddressCountyPers = req.body.addressCountyPers.trim()
         req.session.myData.newAddressPostcodePers = req.body.addressPostcodePers.trim()
+        req.session.myData.newAddressCountryPers = req.body.addressCountryPers.trim()
 
         if(req.session.myData.includeValidation == "false"){
             req.session.myData.newAddress1Pers = req.session.myData.newAddress1Pers || req.session.myData.address1Pers
             req.session.myData.newAddressCityPers = req.session.myData.newAddressCityPers || req.session.myData.addressCityPers
-            req.session.myData.newAddressPostcodePers = req.session.myData.newAddressPostcodePers || req.session.myData.addressPostcodePers
+            req.session.myData.newAddressCountryPers = req.session.myData.newAddressCountryPers || req.session.myData.addressCountryPers
         }
 
         if(!req.session.myData.newAddress1Pers){
@@ -444,11 +527,11 @@ module.exports = function (router,_myData) {
                 "message": "Enter town or city"
             }
         }
-        if(!req.session.myData.newAddressPostcodePers){
+        if(!req.session.myData.newAddressCountryPers){
             req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.addressPostcodePers = {
-                "anchor": "addressPostcodePers",
-                "message": "Enter postcode"
+            req.session.myData.validationErrors.addressCountryPers = {
+                "anchor": "addressCountryPers",
+                "message": "Enter a country"
             }
         }
         
@@ -462,7 +545,6 @@ module.exports = function (router,_myData) {
         }
         
     });
-
     //personal details - check address
     router.get('/' + version + '/personal-details-address-check', function (req, res) {
         res.render(version + '/personal-details-address-check', {
@@ -474,13 +556,19 @@ module.exports = function (router,_myData) {
         req.session.myData.address2Pers = req.session.myData.newAddress2Pers || req.session.myData.address2Pers
         req.session.myData.addressCityPers = req.session.myData.newAddressCityPers || req.session.myData.addressCityPers
         req.session.myData.addressCountyPers = req.session.myData.newAddressCountyPers || req.session.myData.addressCountyPers
-        req.session.myData.addressPostcodePers = req.session.myData.newAddressPostcodePers || req.session.myData.addressPostcodePers
+        if(req.session.myData.newAddressPostcodePers == null){
+            req.session.myData.addressPostcodePers = req.session.myData.addressPostcodePers
+        } else {
+            req.session.myData.addressPostcodePers = req.session.myData.newAddressPostcodePers
+        }
+        req.session.myData.addressCountryPers = req.session.myData.newAddressCountryPers || req.session.myData.addressCountryPers
         
         req.session.myData.newAddress1Pers = ""
         req.session.myData.newAddress2Pers = ""
         req.session.myData.newAddressCityPers = ""
         req.session.myData.newAddressCountyPers = ""
         req.session.myData.newAddressPostcodePers = ""
+        req.session.myData.newAddressCountryPers = ""
 
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&addresschanged=true');
     });
@@ -488,8 +576,8 @@ module.exports = function (router,_myData) {
     //personal details - change phone numbers
     router.get('/' + version + '/personal-details-phone-change', function (req, res) {
         if(req.query.newChange){
-            req.session.myData.newMobNumberPers = ""
-            req.session.myData.newTelNumberPers = ""
+            req.session.myData.newMobNumberPers = null
+            req.session.myData.newTelNumberPers = null
         }
         res.render(version + '/personal-details-phone-change', {
             myData: req.session.myData
@@ -509,7 +597,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.phoneNumbersPers = {
                 "anchor": "telNumberPers",
-                "message": "[error message]"
+                "message": "Enter at least one phone number"
             }
         }
 
@@ -689,6 +777,89 @@ module.exports = function (router,_myData) {
         req.session.myData.newNameBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&namechanged=true');
     });
+
+    //business details - search postcode
+    router.get('/' + version + '/business-details-address-postcode-change', function (req, res) {
+        if(req.query.newChange){
+            req.session.myData.newAddressPostcodeBus = null
+        }
+        res.render(version + '/business-details-address-postcode-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-address-postcode-change', function (req, res) {
+
+        req.session.myData.newAddressPostcodeBus = req.body.addressPostcodeBus.trim()
+
+        if(req.session.myData.includeValidation == "false"){
+            req.session.myData.newAddressPostcodeBus = req.session.myData.newAddressPostcodeBus || req.session.myData.addressPostcodeBus
+        }
+
+        if(!req.session.myData.newAddressPostcodeBus){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.addressPostcodeBus = {
+                "anchor": "addressPostcodeBus",
+                "message": "Enter a postcode"
+            }
+        }
+        
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-address-postcode-change', {
+                myData: req.session.myData
+            });
+        } else {
+            res.redirect(301, '/' + version + '/business-details-address-select-change');
+        }
+        
+    });
+    //business details - select address
+    router.get('/' + version + '/business-details-address-select-change', function (req, res) {
+        if(req.query.newChange){
+            // req.session.myData.newAddress1Bus = ""
+        }
+        res.render(version + '/business-details-address-select-change', {
+            myData: req.session.myData
+        });
+    });
+    router.post('/' + version + '/business-details-address-select-change', function (req, res) {
+
+        req.session.myData.newAddressBus = req.body.addressBus
+
+        if(req.session.myData.includeValidation == "false"){
+            if(req.session.myData.newAddressBus == "select"){
+                req.session.myData.newAddressBus = "10 Skirbeck Way"
+            } else {
+                req.session.myData.newAddressBus = req.session.myData.newAddressBus || "10 Skirbeck Way"
+            }
+        }
+
+        if(req.session.myData.newAddressBus == "select"){
+            req.session.myData.validationError = "true"
+            req.session.myData.validationErrors.addressBus = {
+                "anchor": "addressBus",
+                "message": "Choose an address"
+            }
+        }
+        
+
+        if(req.session.myData.validationError == "true") {
+            res.render(version + '/business-details-address-select-change', {
+                myData: req.session.myData
+            });
+        } else {
+
+            req.session.myData.newAddress1Bus = req.session.myData.newAddressBus
+            req.session.myData.newAddress2Bus = ""
+            req.session.myData.newAddressCityBus = "Maidstone"
+            req.session.myData.newAddressCountyBus = ""
+            req.session.myData.newAddressPostcodeBus = req.session.myData.newAddressPostcodeBus || req.session.myData.addressPostcodeBus
+            req.session.myData.newAddressCountryBus = "United Kingdom"
+
+
+            res.redirect(301, '/' + version + '/business-details-address-check');
+        }
+        
+    });
     //business details - change address
     router.get('/' + version + '/business-details-address-change', function (req, res) {
         if(req.query.newChange){
@@ -697,6 +868,7 @@ module.exports = function (router,_myData) {
             req.session.myData.newAddressCityBus = ""
             req.session.myData.newAddressCountyBus = ""
             req.session.myData.newAddressPostcodeBus = ""
+            req.session.myData.newAddressCountryBus = ""
         }
         res.render(version + '/business-details-address-change', {
             myData: req.session.myData
@@ -709,11 +881,12 @@ module.exports = function (router,_myData) {
         req.session.myData.newAddressCityBus = req.body.addressCityBus.trim()
         req.session.myData.newAddressCountyBus = req.body.addressCountyBus.trim()
         req.session.myData.newAddressPostcodeBus = req.body.addressPostcodeBus.trim()
+        req.session.myData.newAddressCountryBus = req.body.addressCountryBus.trim()
 
         if(req.session.myData.includeValidation == "false"){
             req.session.myData.newAddress1Bus = req.session.myData.newAddress1Bus || req.session.myData.address1Bus
             req.session.myData.newAddressCityBus = req.session.myData.newAddressCityBus || req.session.myData.addressCityBus
-            req.session.myData.newAddressPostcodeBus = req.session.myData.newAddressPostcodeBus || req.session.myData.addressPostcodeBus
+            req.session.myData.newAddressCountryBus = req.session.myData.newAddressCountryBus || req.session.myData.addressCountryBus
         }
 
         if(!req.session.myData.newAddress1Bus){
@@ -730,11 +903,11 @@ module.exports = function (router,_myData) {
                 "message": "Enter town or city"
             }
         }
-        if(!req.session.myData.newAddressPostcodeBus){
+        if(!req.session.myData.newAddressCountryBus){
             req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.addressPostcodeBus = {
-                "anchor": "addressPostcodeBus",
-                "message": "Enter postcode"
+            req.session.myData.validationErrors.addressCountryBus = {
+                "anchor": "addressCountryBus",
+                "message": "Enter a country"
             }
         }
         
@@ -759,13 +932,19 @@ module.exports = function (router,_myData) {
         req.session.myData.address2Bus = req.session.myData.newAddress2Bus || req.session.myData.address2Bus
         req.session.myData.addressCityBus = req.session.myData.newAddressCityBus || req.session.myData.addressCityBus
         req.session.myData.addressCountyBus = req.session.myData.newAddressCountyBus || req.session.myData.addressCountyBus
-        req.session.myData.addressPostcodeBus = req.session.myData.newAddressPostcodeBus || req.session.myData.addressPostcodeBus
+        if(req.session.myData.newAddressPostcodeBus == null){
+            req.session.myData.addressPostcodeBus = req.session.myData.addressPostcodeBus
+        } else {
+            req.session.myData.addressPostcodeBus = req.session.myData.newAddressPostcodeBus
+        }
+        req.session.myData.addressCountryBus = req.session.myData.newAddressCountryBus || req.session.myData.addressCountryBus
         
         req.session.myData.newAddress1Bus = ""
         req.session.myData.newAddress2Bus = ""
         req.session.myData.newAddressCityBus = ""
         req.session.myData.newAddressCountyBus = ""
         req.session.myData.newAddressPostcodeBus = ""
+        req.session.myData.newAddressCountryBus = ""
 
         res.redirect(301, '/' + version + '/details-business-details?changed=true&addresschanged=true');
     });
@@ -775,8 +954,8 @@ module.exports = function (router,_myData) {
     //business details - change phone numbers
     router.get('/' + version + '/business-details-phone-change', function (req, res) {
         if(req.query.newChange){
-            req.session.myData.newMobNumberBus = ""
-            req.session.myData.newTelNumberBus = ""
+            req.session.myData.newMobNumberBus = null
+            req.session.myData.newTelNumberBus = null
         }
         res.render(version + '/business-details-phone-change', {
             myData: req.session.myData
@@ -796,7 +975,7 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.phoneNumbersBus = {
                 "anchor": "telNumberBus",
-                "message": "[error message]"
+                "message": "Enter at least one phone number"
             }
         }
 
@@ -1121,21 +1300,21 @@ module.exports = function (router,_myData) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.bankNameBus = {
                 "anchor": "bankNameBus",
-                "message": "[error message - blank - change bank account name]"
+                "message": "[error message - blank - bank account name]"
             }
         }
         if(!req.session.myData.newBankSortBus){
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.bankSortBus = {
                 "anchor": "bankSortBus",
-                "message": "[error message - blank - change sort code]"
+                "message": "[error message - blank - sort code]"
             }
         }
         if(!req.session.myData.newBankAccountBus){
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.bankAccountBus = {
                 "anchor": "bankAccountBus",
-                "message": "[error message - blank - change account number]"
+                "message": "[error message - blank - account number]"
             }
         }
         

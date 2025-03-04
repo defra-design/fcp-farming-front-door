@@ -55,16 +55,32 @@
             Address
           </dt>
           <dd class="govuk-summary-list__value">
+
+            {% set _addressPostcodeValue = myData.newAddressPostcodeBus %}
+            {% if _addressPostcodeValue == null %}
+              {% set _addressPostcodeValue = myData.addressPostcodeBus %}
+            {% endif %}
+
             {% set _address2Value = myData.newAddress2Bus or myData.address2Bus %}
             {% set _addressCountyValue = myData.newAddressCountyBus or myData.addressCountyBus %}
+
+
+            <!-- Address line 1 -->
             {{myData.newAddress1Bus or myData.address1Bus}}<br>
+            <!-- Address line 1 -->
             {% if _address2Value != "" %}{{_address2Value}}<br>{% endif %}
+            <!-- Town or city -->
             {{myData.newAddressCityBus or myData.addressCityBus}}<br>
+            <!-- County -->
             {% if _addressCountyValue != "" %}{{_addressCountyValue}}<br>{% endif %}
-            {{myData.newAddressPostcodeBus or myData.addressPostcodeBus}} 
+            <!-- Postcode -->
+            {% if not _addressPostcodeValue %}{% else %}{{_addressPostcodeValue}}<br>{% endif %}
+            <!-- Country -->
+            {{myData.newAddressCountryBus or myData.addressCountryBus}}
+
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-address-change">Change<span class="govuk-visually-hidden"> address</span></a>
+            <a class="govuk-link" href="business-details-address-postcode-change">Change<span class="govuk-visually-hidden"> address</span></a>
           </dd>
         </div>
       </dl>

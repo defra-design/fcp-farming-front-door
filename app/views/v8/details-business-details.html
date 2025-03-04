@@ -162,10 +162,11 @@
           {% if myData.address2Bus != "" %}{{myData.address2Bus}}<br>{% endif %}
           {{myData.addressCityBus}}<br>
           {% if myData.addressCountyBus != "" %}{{myData.addressCountyBus}}<br>{% endif %}
-          {{myData.addressPostcodeBus}} 
+          {% if myData.addressPostcodeBus != "" %}{{myData.addressPostcodeBus}}<br>{% endif %}
+          {{myData.addressCountryBus}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-change?newChange=true">Change<span class="govuk-visually-hidden"> address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> address</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">

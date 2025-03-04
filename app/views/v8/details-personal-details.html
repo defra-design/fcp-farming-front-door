@@ -140,10 +140,11 @@
           {% if myData.address2Pers != "" %}{{myData.address2Pers}}<br>{% endif %}
           {{myData.addressCityPers}}<br>
           {% if myData.addressCountyPers != "" %}{{myData.addressCountyPers}}<br>{% endif %}
-          {{myData.addressPostcodePers}} 
+          {% if myData.addressPostcodePers != "" %}{{myData.addressPostcodePers}}<br>{% endif %}
+          {{myData.addressCountryPers}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-address-change?newChange=true">Change<span class="govuk-visually-hidden"> address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> address</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
