@@ -1144,7 +1144,7 @@ module.exports = function (router,_myData) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCHRNBus = {
                     "anchor": "legalCHRNBus",
-                    "message": "Enter a Companies House registration number"
+                    "message": "Enter a company registration number"
                 }
             }
             if(req.session.myData.newLegalBus == "Charitable incorporated organisation (CIO)" & !req.session.myData.newLegalCCRNBus){

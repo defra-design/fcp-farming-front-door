@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% set _showFooterLinks = true %}
-{% set _showReleaseLinks = false %}
+{% set _showReleaseLinks = true %}
 
 {% set _inError = myData.validationError == "true"  %}
 
@@ -16,45 +16,50 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 
-  "name": "Legal status (change) - business details",
+  "name": "Legal status (change) - business details (Buffalo 1.0 MVP)",
   "id": "bd15",
   "url": "business-details-legal-change?r=t&release=b1&newChange=true",
   "release": "Buffalo 1.0 MVP",
-  "variants": [],
+  "variants": [
+    {
+      "name": "Concept (edit legal status online)",
+      "url": "personal-details-legal-change?r=t&release=concept&newChange=true"
+    }
+  ],
 
   "pagetitle": pageTitle,
   "pagedesc": "",
   "pageurl": "",
   "errormessages": [
     {
-      "field": "Legal status radios",
+      "field": "Legal status radios (concept)",
       "scenario": "Nothing selected",
       "content": "Select the legal status"
     },
 
     {
-      "field": "Charity commission registration number",
+      "field": "Charity commission registration number (concept)",
       "scenario": "Radio option ‘Charitable incorporated organisation (CIO)’ is selected AND Empty field / nothing entered",
       "content": "Enter a charity commission registration number"
     },
     
     {
-      "field": "Charity commission registration number",
+      "field": "Charity commission registration number (concept)",
       "scenario": "Radio option ‘Charitable incorporated organisation (CIO)’ is selected AND Wrong format",
       "content": "Enter a charity commission registration number, like 12345678"
     },
 
 
     {
-      "field": "Companies House registration number",
+      "field": "Company registration number (concept)",
       "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Empty field / nothing entered",
-      "content": "Enter a Companies House registration number"
+      "content": "Enter a company registration number"
     },
     
     {
-      "field": "Companies House registration number",
+      "field": "Company registration number (concept)",
       "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Wrong format",
-      "content": "Enter a Companies House registration number, like 01234567 or SC123456"
+      "content": "Enter a company registration number, like 01234567 or SC123456"
     }
 
 
@@ -100,6 +105,13 @@
     </div>
     {% endif %}
 
+    {% if data.release == "b1" %}
+    <h1 class="govuk-heading-l">[title - change legal status]</h1>
+    <p class="govuk-body">[explanation of how they can update their legal status]</p>
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="details-business-details">[return to business details]</a></p>
+    <!-- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> -->
+
+    {% else %}
     <form method="POST" novalidate>
 
       {% set _legals = [
@@ -150,7 +162,7 @@
                 </label>
               </div>
 
-              <!-- Conditionally revealed 'Companies House registration number' input -->
+              <!-- Conditionally revealed 'Company registration number' input -->
               {% if _legal == "Public limited company (PLC)" %}
 
                 {% set _valueNewLegalCHRNBus = myData.newLegalCHRNBus or myData.legalCHRNBus %}
@@ -164,7 +176,7 @@
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-legalCHRNBus">
                   <div class="govuk-form-group {% if myData.validationErrors.legalCHRNBus %}govuk-form-group--error{% endif %}">
                     <label class="govuk-label" for="legalCHRNBus">
-                      Companies House registration number
+                      Company registration number
                     </label>
                     {% if myData.validationErrors.legalCHRNBus %}
                     <p id="legalCHRNBus-error" class="govuk-error-message">
@@ -217,6 +229,7 @@
       <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
     </form>
+    {% endif %}
 
   </div>
 </div>

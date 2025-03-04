@@ -1,11 +1,11 @@
 {% extends "layouts/main.html" %}
 
 {% set _showFooterLinks = true %}
-{% set _showReleaseLinks = false %}
+{% set _showReleaseLinks = true %}
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "What is your business type?" %}
+{% set pageTitle = "[title]" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -16,18 +16,23 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 
-  "name": "Business type (change) - business details",
+  "name": "Business type (change) - business details (Buffalo 1.0 MVP)",
   "id": "bd17",
   "url": "business-details-type-change?r=t&release=b1&newChange=true",
   "release": "Buffalo 1.0 MVP",
-  "variants": [],
+  "variants": [
+    {
+      "name": "Concept (edit type online)",
+      "url": "personal-details-type-change?r=t&release=concept&newChange=true"
+    }
+  ],
 
   "pagetitle": pageTitle,
   "pagedesc": "",
   "pageurl": "",
   "errormessages": [
     {
-      "scenario": "Nothing selected",
+      "scenario": "Nothing selected (concept)",
       "content": "Select the business type"
     }
 
@@ -73,6 +78,14 @@
     </div>
     {% endif %}
 
+    {% if data.release == "b1" %}
+    <h1 class="govuk-heading-l">[title - change business type]</h1>
+    <p class="govuk-body">[explanation of how they can update their business type]</p>
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="details-business-details">[return to business details]</a></p>
+    <!-- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> -->
+
+    {% else %}
+    
     <form method="POST" novalidate>
 
       {% set _types = [
@@ -134,6 +147,8 @@
       <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
     </form>
+
+    {% endif %}
 
   </div>
 </div>
