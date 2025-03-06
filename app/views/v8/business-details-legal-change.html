@@ -106,10 +106,29 @@
     {% endif %}
 
     {% if data.release == "b1" %}
-    <h1 class="govuk-heading-l">[title - change legal status]</h1>
-    <p class="govuk-body">[explanation of how they can update their legal status]</p>
-    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="details-business-details">[return to business details]</a></p>
-    <!-- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> -->
+    <h1 class="govuk-heading-l">Change your legal status</h1>
+
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">Legal status</span><br>
+        {{myData.legalBus}}
+    </p>
+
+    <p class="govuk-body">If your legal status is incorrect, contact the Rural Payments Agency to update it.</p>
+
+    <h2 class="govuk-heading-m">Contact the Rural Payments Agency</h2>
+
+    <p class="govuk-body">Phone: 03000 200 301</p>
+
+    <p class="govuk-body">Monday to Friday, 8.30am to 5pm (except bank holidays)</p>
+
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="http://www.gov.uk/call-charges" rel="noreferrer noopener" target="_blank">Find out about call charges (opens in new tab)</a>.</p>
+
+    <p class="govuk-body">Email: <a class="govuk-link govuk-link--no-visited-state" href="mailto:ruralpayments@defra.gov.uk">ruralpayments@defra.gov.uk</a></p>
+
+    <p class="govuk-body">We aim to respond to emails within 2 working days.</p>
+
+
+    <p class="govuk-body govuk-!-margin-top-6"><a class="govuk-button" href="details-business-details">Return to business details</a></p>
 
     {% else %}
     <form method="POST" novalidate>
