@@ -7,11 +7,12 @@
 
 <div class="login-nav login-nav-aligned {% if _loginNavClasses %} {{_loginNavClasses}} {% endif %} ">
     <ul class="login-nav__list">
-        {% if _hideAccountLink %}
+        {% if _hideAccountLink or data.release == "b1" %}
             <!-- dont show account link -->
         {% else %}
             <li class="login-nav__list-item"><a href="account-home" class="govuk-link login-nav__link" >Your account</a></li>
         {% endif %}
+        
         <li class="login-nav__list-item"><a href="misc-signed-out" class="govuk-link login-nav__link" >Sign out</a></li>
     </ul>
 </div>

@@ -52,11 +52,13 @@
 
     {% set _selectedBusiness = myData.selectedBusiness %} 
 
-    <span class="govuk-caption-xl">{{data.user.name}}</span>
+    <span class="govuk-caption-xl">{{data.user.name}}<br></span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
       {{_selectedBusiness.name}}
     </h1>
-    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}
+      <!-- <br>Customer reference number (CRN): {{data.user.crn}} -->
+    </p>
 
   </div>
 </div>
@@ -179,6 +181,15 @@
       </ul>
     </div>
 
+    
+
+    {% if data.release == "b1" %}
+    <h3 class="govuk-heading-m">
+      Business and personal details
+    </h3>
+    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
+    <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 
+    {% else %}
     <h3 class="govuk-heading-m">
       Business details
     </h3>
@@ -186,6 +197,7 @@
     <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
     {% if data.release != "b1" %}
     <p><a class="govuk-link--no-visited-state" href="/_common/not-testing">View and update permissions</a></p> 
+    {% endif %}
     {% endif %}
 
   </div>

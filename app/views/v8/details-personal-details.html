@@ -61,9 +61,11 @@
           <li class="govuk-breadcrumbs__list-item">
             <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
           </li>
+          {% if data.release != "b1" %}
           <li class="govuk-breadcrumbs__list-item">
             <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
           </li>
+          {% endif %}
         </ol>
       </div>
 
