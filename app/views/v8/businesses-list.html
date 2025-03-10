@@ -26,6 +26,9 @@
   "pageurl": "",
   "errormessages": [
     
+  ],
+  "notes": [
+    "if someone tries to navigate to a page in the service that requires a business to be selected (i.e. bp02 and all Business details (bpxx) pages) AND they have not selected a business AND they have more than 1 business linked to their account, THEN redirect to bp01.Businesses list. this scenario could occur naturally (not just through hacking the URL) by a user going to pd01 via the new link on bp01, and then using the Home breadcrumb."
   ]
   
 }
@@ -39,7 +42,7 @@
     <div class="govuk-grid-column-full">
 
       {% set _hideAccountLink = true %}
-      {% include "_common/login-nav-2.html" %}
+      {% include "_common/login-nav-3.html" %}
       
     </div>
   </div>
