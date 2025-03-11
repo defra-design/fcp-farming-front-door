@@ -94,6 +94,19 @@ module.exports = function (router,_myData) {
         });
     });
 
+    //businesses list
+    router.get('/' + version + '/businesses-list', function (req, res) {
+        res.render(version + '/businesses-list', {
+            myData: req.session.myData
+        });
+    });
+    //businesses list page 2
+    router.get('/' + version + '/businesses-list-p2', function (req, res) {
+        res.render(version + '/businesses-list-p2', {
+            myData: req.session.myData
+        });
+    });
+
     //business home
     router.get('/' + version + '/business-home', function (req, res) {
         res.render(version + '/business-home', {
