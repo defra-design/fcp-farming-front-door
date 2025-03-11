@@ -83,11 +83,15 @@ module.exports = function (router,_myData) {
     //sfd sign in
     router.get('/' + version + '/start-sfd-sign-in', function (req, res) {
         req.session.data.deeplink = req.query.deeplink || "businesses-list"
-        res.render(version + '/start-sfd-sign-in', {});
+        res.render(version + '/start-sfd-sign-in', {
+            myData: req.session.myData
+        });
     });
     //sfd reset password
     router.get('/' + version + '/start-sfd-reset-password', function (req, res) {
-        res.render(version + '/start-sfd-reset-password', {});
+        res.render(version + '/start-sfd-reset-password', {
+            myData: req.session.myData
+        });
     });
 
     //business home
@@ -120,23 +124,33 @@ module.exports = function (router,_myData) {
     //ERROR PAGES
     //
     router.get('/' + version + '/error-not-found', function (req, res) {
-        res.render(version + '/error-not-found', {});
+        res.render(version + '/error-not-found', {
+            myData: req.session.myData
+        });
     });
     router.get('/' + version + '/error-server', function (req, res) {
-        res.render(version + '/error-server', {});
+        res.render(version + '/error-server', {
+            myData: req.session.myData
+        });
     });
     router.get('/' + version + '/error-shutter', function (req, res) {
-        res.render(version + '/error-shutter', {});
+        res.render(version + '/error-shutter', {
+            myData: req.session.myData
+        });
     });
 
     //
     //MISCELLANEOUS PAGES
     //
     router.get('/' + version + '/misc-accessibility', function (req, res) {
-        res.render(version + '/misc-accessibility', {});
+        res.render(version + '/misc-accessibility', {
+            myData: req.session.myData
+        });
     });
     router.get('/' + version + '/misc-contact', function (req, res) {
-        res.render(version + '/misc-contact', {});
+        res.render(version + '/misc-contact', {
+            myData: req.session.myData
+        });
     });
     router.get('/' + version + '/misc-cookies', function (req, res) {
         req.session.myData.cookiesVariant1 = req.query.cookiesVariant1
@@ -160,19 +174,29 @@ module.exports = function (router,_myData) {
         res.redirect(301, '/' + version + '/misc-cookies?changed=true&cookiesVariant1=true');
     });
     router.get('/' + version + '/misc-information', function (req, res) {
-        res.render(version + '/misc-information', {});
+        res.render(version + '/misc-information', {
+            myData: req.session.myData
+        });
     });
     router.get('/' + version + '/misc-privacy', function (req, res) {
-        res.render(version + '/misc-privacy', {});
+        res.render(version + '/misc-privacy', {
+            myData: req.session.myData
+        });
     });
     router.get('/' + version + '/misc-signed-out-auto', function (req, res) {
-        res.render(version + '/misc-signed-out-auto', {});
+        res.render(version + '/misc-signed-out-auto', {
+            myData: req.session.myData
+        });
     });
     router.get('/' + version + '/misc-signed-out', function (req, res) {
-        res.render(version + '/misc-signed-out', {});
+        res.render(version + '/misc-signed-out', {
+            myData: req.session.myData
+        });
     });
     router.get('/' + version + '/misc-terms', function (req, res) {
-        res.render(version + '/misc-terms', {});
+        res.render(version + '/misc-terms', {
+            myData: req.session.myData
+        });
     });
 
     //
