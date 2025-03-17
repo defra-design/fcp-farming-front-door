@@ -37,7 +37,10 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      {% include "_common/login-nav-3.html" %}
+      {% if data.release == "b1" %}
+        {% set _hideAccountLink = true %}
+      {% endif %}
+      {% include "_common/login-nav-2.html" %}
 
       <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
 

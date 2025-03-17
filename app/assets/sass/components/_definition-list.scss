@@ -1,0 +1,153 @@
+.sfd-definition-list {
+    font-family: "GDS Transport", arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #0b0c0c;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  @media print {
+    .sfd-definition-list {
+      font-family: sans-serif;
+    }
+  }
+  @media (min-width: 40.0625em) {
+    .sfd-definition-list {
+      font-size: 1.1875rem;
+      line-height: 1.3157894737;
+    }
+  }
+  @media print {
+    .sfd-definition-list {
+      font-size: 14pt;
+      line-height: 1.15;
+    }
+  }
+  @media print {
+    .sfd-definition-list {
+      color: #000000;
+    }
+  }
+  @media (min-width: 40.0625em) {
+    .sfd-definition-list {
+      margin-bottom: 20px;
+    }
+  }
+  
+  .sfd-definition-list__title {
+    font-weight: 700;
+  }
+  
+  .sfd-definition-list__definition {
+    margin: 0;
+  }
+  
+  .sfd-definition-list--inline {
+    overflow: hidden;
+  }
+  .sfd-definition-list--inline .sfd-definition-list__title {
+    clear: both;
+    float: left;
+    margin-right: 10px;
+  }
+  .sfd-definition-list--inline .sfd-definition-list__title:after {
+    content: ":";
+  }
+  .sfd-definition-list--inline .sfd-definition-list__definition {
+    float: left;
+  }
+  
+  .sfd-definition-list--meta {
+    overflow: hidden;
+    font-family: "GDS Transport", arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.1428571429;
+  }
+  @media print {
+    .sfd-definition-list--meta {
+      font-family: sans-serif;
+    }
+  }
+  @media (min-width: 40.0625em) {
+    .sfd-definition-list--meta {
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+  }
+  @media print {
+    .sfd-definition-list--meta {
+      font-size: 14pt;
+      line-height: 1.2;
+    }
+  }
+  .sfd-definition-list--meta .sfd-definition-list__title {
+    clear: both;
+    float: left;
+    font-weight: normal;
+    color: #505a5f;
+    margin-right: 0.3em;
+  }
+  .sfd-definition-list--meta .sfd-definition-list__title:after {
+    content: ":";
+  }
+  .sfd-definition-list--meta .sfd-definition-list__definition {
+    float: left;
+  }
+  
+  @media (min-width: 40.0625em) {
+    .sfd-definition-list--table {
+      display: flex;
+      flex-flow: row wrap;
+    }
+  }
+  .sfd-definition-list--table .sfd-definition-list__title {
+    font-weight: 700;
+    flex-basis: 35%;
+    padding-right: 5%;
+  }
+  @media (min-width: 40.0625em) {
+    .sfd-definition-list--table .sfd-definition-list__title {
+      margin-bottom: 5px;
+    }
+    .sfd-definition-list--table .sfd-definition-list__title.sfd-definition-list__title--spacer {
+      margin-bottom: 10px;
+    }
+  }
+  .sfd-definition-list--table .sfd-definition-list__title:after {
+    content: ":";
+  }
+  .sfd-definition-list--table .sfd-definition-list__definition {
+    flex-basis: 60%;
+    flex-grow: 1;
+    margin-bottom: 5px;
+  }
+  .sfd-definition-list--table .sfd-definition-list__definition.sfd-definition-list__definition--spacer {
+    margin-bottom: 10px;
+  }
+  
+  .sfd-definition-list--muted {
+    color: #505a5f;
+  }
+  .sfd-definition-list--muted .sfd-definition-list__title {
+    font-weight: normal;
+  }
+  
+  @media (min-width: 40.0625em) {
+    .sfd-definition-list__title--spacer {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #b1b4b6;
+    }
+  }
+  
+  .sfd-definition-list__definition--spacer {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #b1b4b6;
+  }

@@ -59,6 +59,25 @@ module.exports = function (router,_myData) {
         req.session.myData.notifications = {}
         req.session.myData.showNotification = "false"
 
+        //default filters
+        req.session.myData.schemefilters = []
+
+        //
+        // Fixes for checkbox values in query string - turns them into arrays
+        //
+        var _checkboxQueries = [
+            "schemefilters"
+        ]
+        _checkboxQueries.forEach(function(_checkboxQuery, index) {
+            req.session.myData[_checkboxQuery] = req.query[_checkboxQuery] || []
+            if(req.session.myData[_checkboxQuery] == "_unchecked"){
+                req.session.myData[_checkboxQuery] = []
+            }
+            if(!Array.isArray(req.session.myData[_checkboxQuery])){
+                req.session.myData[_checkboxQuery] = [req.session.myData[_checkboxQuery]]
+            }
+        });
+
         // can do data setting and checking here - that will happen on every get and post
 
         
@@ -110,6 +129,137 @@ module.exports = function (router,_myData) {
     //business home
     router.get('/' + version + '/business-home', function (req, res) {
         res.render(version + '/business-home', {
+            myData: req.session.myData
+        });
+    });
+
+    // Check a message if it matches search term
+    function checkMessageSearchTerm(req, _item, _searchesToDo){
+        
+        _item.search = false
+        _item.searchrelevance = 0
+
+        var _matchedsearch = false
+        for (var i = 0; i < _searchesToDo.length; i++) {
+            var _thisItem = _searchesToDo[i]
+            if(Array.isArray(_thisItem.searchOn)){
+                _thisItem.searchOn.forEach(function(_arrayPart, index) {
+                    doSearches(_arrayPart)
+                });
+            } else {
+                doSearches(_thisItem.searchOn)
+            }
+            function doSearches(_itemToSearch){
+                //Exact check
+                if(_thisItem.exactrelevance && _itemToSearch.toUpperCase() == req.session.myData.searchTerm.toUpperCase()){
+                    _item.searchrelevance = _item.searchrelevance + _thisItem.exactrelevance
+                    _matchedsearch = true
+                    if(_thisItem.ifmatch == "exit"){
+                        return
+                    }
+                }
+                // Within check
+                if(_thisItem.withinrelevance && _itemToSearch.toUpperCase().indexOf(req.session.myData.searchTerm.toUpperCase()) != -1){
+                    _item.searchrelevance = _item.searchrelevance + _thisItem.withinrelevance
+                    _matchedsearch = true
+                    if(_thisItem.ifmatch == "exit"){
+                        return 
+                    }
+                }
+            }
+            if(_matchedsearch == true && _thisItem.ifmatch == "exit") {
+                break
+            }
+        }
+        if(_matchedsearch && _item.searchrelevance > 1){
+            req.session.myData.hasAMatchcount++
+        }
+    }
+
+    // Search filtering
+    function searchFilterSetup(req,_selectedLabel){
+        req.session.myData.searchapplied = false
+        req.session.myData.searchTerm = ""
+        if(req.query.q && req.query.q != ""){
+            req.session.myData.displaycount = 0
+            req.session.myData.needToMatchCount++
+            req.session.myData.searchapplied = true
+            req.session.myData.searchTerm = req.query.q.trim()
+            req.session.myData.searchfilters.push({"value": "‘" + req.session.myData.searchTerm + "’", "type": "search", "typeText": _selectedLabel})
+        }
+    }
+
+    // Scheme filters - setup
+    function schemeFilterSetup(req){
+        req.session.myData.schemefilterapplied = false
+        if(req.session.myData.schemefilters.length > 0){
+            req.session.myData.displaycount = 0
+            req.session.myData.needToMatchCount++
+            req.session.myData.schemefilterapplied = true
+            var schemefiltersValues = []
+            req.session.myData.schemefilters.forEach(function(_schemeFilter, index) {
+                var _scheme = req.session.data.schemes.find(obj => obj.value === _schemeFilter)
+                if(_scheme){
+                    schemefiltersValues.push({
+                        "label":_scheme.value,
+                        "id":_scheme.value
+                    })
+                }
+            });
+            req.session.myData.searchfilters.push({"value": schemefiltersValues, "type": "schemefilters", "typeText": "Schemes","typeof":"array"})
+        }
+    }
+
+     //businesses messages
+     router.get('/' + version + '/business-messages', function (req, res) {
+
+        req.session.myData.searchfilters = []
+        req.session.myData.displaycount = req.session.data.messages.length
+        req.session.myData.needToMatchCount = 0
+
+        // Keyword search reset/setup
+        searchFilterSetup(req,"Messages")
+
+        // Scheme filter reset/setup
+        schemeFilterSetup(req)
+
+
+        req.session.data.messages.forEach(function(_message, index) {
+
+            req.session.myData.hasAMatchcount = 0
+
+            // Reset each message
+            _message.search = true
+
+            //SEARCH TERM
+            if(req.session.myData.searchapplied) {
+                var _searchesToDo = [
+                    {"searchOn": _message.subject,"exactrelevance": 999999,"withinrelevance": 100000,"ifmatch": "exit"},
+                    {"searchOn": _message.scheme,"exactrelevance": 99999,"withinrelevance": 10000,"ifmatch": "exit"}
+                ]
+                checkMessageSearchTerm(req,_message,_searchesToDo)
+            }
+
+            //SCHEME
+            if(req.session.myData.schemefilterapplied) {
+                _message.search = false
+                var _scheme = req.session.myData.schemefilters.find(obj => obj === _message.scheme.toString())
+                if(_scheme){
+                    req.session.myData.hasAMatchcount++
+                }
+            }
+
+            //MATCHES ALL IT NEEDS TO?
+            if(req.session.myData.needToMatchCount > 0 && req.session.myData.needToMatchCount == req.session.myData.hasAMatchcount){
+                _message.search = true
+                req.session.myData.displaycount++
+            }
+
+        });
+
+
+
+        res.render(version + '/business-messages', {
             myData: req.session.myData
         });
     });

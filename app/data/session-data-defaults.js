@@ -2,6 +2,7 @@ const paymentsUpcoming = require("./payments-upcoming");
 const paymentsPrevious = require("./payments-previous");
 const paymentsPreviousItems = require("./payments-previous-items");
 const businesses = require("./businesses");
+const messages = require("./messages");
 const pageList = require("./page-list");
 
 //
@@ -91,6 +92,21 @@ module.exports = {
   "defaultSelectedPaymentYear": 2024, //used on the tabs so when clicked they start from the recent year
   "selectedPaymentYear": 2024, //used for the year filter on past payments page
 
-  pageList //contains urls, page names and meta descriptions - used for the designspec popout panel
+  pageList, //contains urls, page names and meta descriptions - used for the designspec popout panel
+
+  messages, //messages list
+  "selectedMessagesType": "All messages", //used for the read/unread filter on messages page
+
+  "schemes": [
+    {
+      "value": "Countryside stewardship"
+    },
+    {
+      "value": "Sustainable farming incentive 2024"
+    },
+    {
+      "value": "Sustainable farming incentive 2023"
+    }
+  ] //used for the filters on messages list
 
 }

@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% set _showFooterLinks = true %}
-{% set _showReleaseLinks = false %}
+{% set _showReleaseLinks = true %}
 
 {% set pageName="Your businesses" %}
 
@@ -63,7 +63,65 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
+      <!-- NON MVP -->
+      {% if data.release != "b1" %}
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m"></caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header" >Business</th>
+            <!-- <th scope="col" class="govuk-table__header"></th> -->
+            <th scope="col" class="govuk-table__header">Messages</th>
+            <!-- <th scope="col" class="govuk-table__header"></th> -->
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
 
+          {% for _business in data.businesses %}
+          {% if loop.index < 21 %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">
+              <a class="govuk-link--no-visited-state" href="business-home?business={{_business.id}}">
+                {{_business.name}}
+              </a>
+              <br>
+              <span style="font-weight: normal; margin-top:7px; display: inline-block;">SBI: {{_business.sbiNumber}}</span>
+            </th>
+            <!-- <td class="govuk-table__cell">{{_business.sbiNumber}}</td> -->
+            <!-- <td class="govuk-table__cell">
+              {% if _business.unreadMessages != "0" %}
+              <strong class="govuk-tag govuk-tag--yellow">
+                {{_business.unreadMessages}} unread
+              </strong>
+              {% else %}
+              0 unread
+              {% endif %}
+            </td> -->
+            <!-- <td class="govuk-table__cell"> -->
+              <!-- <a class="govuk-link--no-visited-state" href="business-home?business={{_business.id}}">View business</a> -->
+            <!-- </td> -->
+            <td class="govuk-table__cell">
+              
+              <!-- <a class="govuk-link--no-visited-state" href="business-messages?business={{_business.id}}">{% if _business.unreadMessages != "0" %}{{_business.unreadMessages}} unread{% endif %}</a> -->
+              <a class="govuk-link--no-visited-state" href="business-messages?business={{_business.id}}">View messages</a>
+              <br>
+              {% if _business.unreadMessages != "0" %}
+              <strong class="govuk-tag govuk-tag--yellow" style="margin: 10px 0;">
+                {{_business.unreadMessages}} unread
+              </strong>
+              {% else %}
+              <!-- 0 unread -->
+              {% endif %}
+            
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <!-- MVP -->
       <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m"></caption>
         <thead class="govuk-table__head">
@@ -85,6 +143,7 @@
 
         </tbody>
       </table>
+      {% endif %}
 
       <nav class="govuk-pagination"  aria-label="Pagination">
         <ul class="govuk-pagination__list">
@@ -117,12 +176,10 @@
     </div>
 
     <div class="govuk-grid-column-one-third">
-      {% if data.release == "b1" %}
       <h3 class="govuk-heading-m govuk-!-margin-top-4">
         Personal details
       </h3>
       <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 
-      {% endif %}
     </div>
 
   </div>
