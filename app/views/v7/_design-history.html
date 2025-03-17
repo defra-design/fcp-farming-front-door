@@ -18,6 +18,12 @@
 
 {% block content %}
 
+<style>
+  .sfd-block-tag {
+    display: block;
+  }
+</style>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
@@ -28,48 +34,420 @@
 
   <div class="govuk-grid-column-two-thirds">
 
-    <h2 class="govuk-heading-l">Goals of this iteration</h2>
-
-    <h3 class="govuk-heading-m">Why we [did x]</h3>
-
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-
-    <h3 class="govuk-heading-m">Pain points and user needs</h3>
-
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
     
-    <h3 class="govuk-heading-m">Constraints</h3>
+    <h1 class="govuk-heading-xl">Changes made to the prototype</h1> 
+
+    <h2 class="govuk-heading-l">Functionality changes</h2> 
+
+    <p class="govuk-body">We added a prototype setup page (ticket SFDE-117), so that your desired settings can be used before viewing the prototype. This includes:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>release version (feature toggles)</li>
+      <li>the page to start the journey from (sign in, start page, businesses list or home page)</li>
+      <li>whether to trigger validation or not</li>
+    </ul>
+
+    <p class="govuk-body">With the ‘release version’ option, you can view the prototype as either Buffalo release 1 (MVP) or as ‘concept’. This means we can retain all our conceptual work in the prototype but still have the ability to view pages as we would like them built for the first release. This is achieved with a query string ?release=b1, ?release=concept. The Buffalo Release 1 (MVP) version was the version we put through user research.</p>
+
+    <p class="govuk-body">We added a ‘Design spec’ link to each page (ticket SFDE-140). This contains metadata information for each page including page IDs, page names, validation errors, page titles, meta descriptions, URL slugs and links for dev tickets. Contents of these done as part of tickets SFDE-139, SFDE-143, SFDE-144.</p>
+
+    <h2 class="govuk-heading-l">Design changes</h2>
+
+    <p class="govuk-body">We prototyped the entirety of what is expected to be built for the first release (ticket SFDE-113).</p>
+
+    <p class="govuk-body">MVP variants of the home and ‘your account’ pages were prototyped.</p>
+
+    <p class="govuk-body">MVP home page includes:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a link to ‘Get funding to improve animal health and welfare’</li>
+      <li>a link to ‘View and update your business details’</li>
+    </ul>
+
+    <p class="govuk-body">MVP ‘Your account’ page includes:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a link to ‘View and update your personal details’</li>
+      <li>a link to ‘View a list of your businesses’</li>
+    </ul>
+
+    <p class="govuk-body">Other miscellaneous MVP pages/links include:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>contact us</li>
+      <li>privacy</li>
+      <li>cookies (further work done on ticket SFDE-145)</li>
+      <li>accessibility statement</li>
+      <li>personal information charter (link to external page)</li>
+      <li>standard error pages (service is unavailable, there is a problem with the service or the page cannot be found)</li>
+      <li>signed out</li>
+      <li>auto signed out (after a 24 hour session)</li>
+    </ul>
+
+    <h3 class="govuk-heading-m">Business and personal details</h3>
+
+    <p class="govuk-body">The ability to change personal and business details was based on both the existing Rural Payments service (RPS) and previous design work the single front door team had produced in the prototype kit and on Figma. We did not yet know the full business requirements for each of the data items, but we knew enough to prototype the bulk of the functionality. We replicated the existing RPS functionality, bringing it in line with GDS guidelines and design patterns.</p>
+
+    <p class="govuk-body">Business details – we added a ‘Change’ journey for the following data items:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Business Name</li>
+      <li>Business Address</li>
+      <li>Business Telephone</li>
+      <li>Business Mobile</li>
+      <li>Business Email address</li>
+      <li>VAT registration number (also added an ‘Add’ journey for when it is blank)</li>
+    </ul>
+
+    <p class="govuk-body">We also made it possible to:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>change legal status and business type online to test whether users would want to be able to do this</li>
+      <li>edit bank details online to test whether users would want to be able to do this – but the decision was then made to drop this from our MVP prototype. This is activated with the concept feature flag.</li>
+    </ul>
+
+    <p class="govuk-body">We also kept the view only display of Single business identifier (SBI) and Vendor registration number. We learnt that businesses may not have a vendor registration number, so prototyped a feature flag to hide this. Ticket SFDE-146.</p>
+
+    <p class="govuk-body">We also learnt that businesses may have one, multiple or zero County Parish Holding (CPH) numbers. So we added all of these variants too. Ticket SFDE-146.</p>
+
+    <p class="govuk-body">Personal details – we added a ‘Change’ journey for the following data items:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>full name</li>
+      <li>date of birth</li>
+      <li>personal Address</li>
+      <li>personal Telephone</li>
+      <li>personal Mobile</li>
+      <li>personal Email address</li>
+    </ul>
+
+    <p class="govuk-body">We also kept the view only display of Customer reference number and Personal identifier.</p>
+
+    <p class="govuk-body">Each page in the change and add flows has a ‘cancel’ link so users can return to the main details page without making changes.</p>
+
+    <p class="govuk-body">On changing a data item, the user is returned to the full details page (business or personal) and a success notification banner is displayed.</p>
+
+    <p class="govuk-body">Other prototype changes included:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>removing the link to RPS from the beta banner as this does not align with the intended use of a beta banner and previously tested inconclusively. Designers proposed adding wording to the homepage to allow users to find their way back to RPS to do any tasks  which are not going to be possible in our MVP, but the decision was made by Product to have no links to RPS in the MVP</li>
+      <li>minor style changes, for example to capitalisation (for example Single business identifier, not Single Business Identifier), and putting lists in alphabetical order</li>
+      <li>changing the header on each ‘update details’ page to a question, for example ‘What is your full name?’</li>
+      <li>making the personal name field a single field (viewable with the concept feature flag)</li>
+      <li>adding a provisional service level agreement of 2 days for RPS to respond to an email</li>
+      <li>drafting error messages for each field based on typical validation rules, as we did not yet know our specific validation rules</li>
+      <li>page URLs and metadata descriptions for each page in the prototype</li>
+    </ul>
+
+    <p class="govuk-body">We did not draft hint text yet to help users fill in fields on most pages, as we did not yet know what fields we would need to keep and what the validation rules would be.</p>
+
+    <p class="govuk-body">When we are clearer on the requirements and validation rules, we will iterate the prototype again and add hint text if needed.</p>
+
+    
+    <h1 class="govuk-heading-xl">Assumptions tested, outcomes and decisions</h1>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>Most users will be able to update their business name successfully</li>
+      <li>Most users will find the 'contact us' link in the footer of any page, click on it and be able to find out how to contact RPA for support</li>
+      <li>Most users can navigate to both personal and business details</li>
+      <li>Most users can successfully check and amend both personal and business details</li>
+      <li>Most users only need to select one type of business</li>
+      <li>Most users agree with the split between personal and business details</li>
+      <li>Most users would find most or all fields relevant</li>
+      <li>Most users do not feel any fields are missing</li>
+      <li>Most users want to be able to complete as many details as possible (legal status, bank details) online rather than having to call RPA</li>
+      <li>Most users can understand the business type options</li>
+      <li>Most users have no need for an international address</li>
+      <li>Most users are comfortable with providing data like phone number, address, email and believe it will be used for acceptable reasons (eg to contact them)</li>
+      <li>Most users understand why they are asked to provide data in this service</li>
+      <li>Most users understand updating their details in SFD will also update their details in the Rural Payments service</li>
+    </ol>
+
+    <h2 class="govuk-heading-l">Outcomes and decisions</h2>
+
+    <p class="govuk-body">All outcomes are on the <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1708095369498/312f9f5bbd6500ac2e567b6390d0453ecb6bf290" class="govuk-link">design tracker mural</a>.</p>
+
+    <h3 class="govuk-heading-m">Design tickets created after UR analysis</h3>
+
+    <p class="govuk-body">These items were required for the first release:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-195" class="govuk-link">SFDE-195: [from UR Feb 2025 on Prototype v7] Personal and business details - fix findability issues</a></li>
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-196" class="govuk-link">SFDE-196: [from UR Feb 2025 on Prototype v7] Personal and business details - differentiate labelling of data items</a></li>
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-152" class="govuk-link">SFDE-152: Update Buffalo 1.0 MVP based on BA insights</a></li>
+    </ul>
+
+    <p class="govuk-body">These items are on the backlog:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-193" class="govuk-link">SFDE-193: [from UR Feb 2025 on Prototype v7] Personal and business details - content why / what it's used for</a></li>
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-194" class="govuk-link">SFDE-194: [from UR Feb 2025 on Prototype v7] Personal and business details - remove duplication of data entry</a></li>
+    </ul>
+
+    <!-- <h3 class="govuk-heading-m">In summary</h3> -->
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+
+    <h3 class="govuk-heading-m">Assumption 1</h3>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--green " >
+            Proven
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">1. Most users will be able to update their business name successfully</p>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">Findings:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>All 3 users successfully completed this task without issue</li>
+    </ul>
+
+    <p class="govuk-body">Actions:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>No action needed</li>
+    </ul>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h3 class="govuk-heading-m">Design approach</h3>
+    <h3 class="govuk-heading-m">Assumption 2</h3>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--yellow " >
+            Inconclusive
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">2. Most users will find the 'contact us' link in the footer of any page, click on it and be able to find out how to contact RPA for support</p>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">Findings:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>2 of 4 users located help on the service</li>
+      <li>3 of 4 users would phone the RPA</li>
+    </ul>
+
+    <p class="govuk-body">Actions:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Needs more testing, but no change for now</li>
+    </ul>
+
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h2 class="govuk-heading-m">How might we statements</h2>
+    <h3 class="govuk-heading-m">Assumption 3, 4 and 5</h3>
 
-    <!-- <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag sfd-block-tag govuk-tag--yellow sfd-block-tag" >
+            Proven but with issues
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">3. Most users can navigate to both personal and business details</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--red" >
+            Disproved
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">4. Most users can successfully check and amend both personal and business details</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--green" >
+            Proven
+          </strong>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">5. Most users only need to select one type of business </p>
+        </dd>
+      </div>
+    </dl>
 
-    <h2 class="govuk-heading-m">
-      Outcomes and decisions
-    </h2>
 
-    <span class="govuk-caption-m">Hypothesis 1:</span>
-    <h3 class="govuk-heading-m">Hypothesis statement.</h3>
-    <strong class="govuk-tag govuk-tag--red" style="margin-bottom: 20px;">
-      Disproven
-    </strong>
-    <strong class="govuk-tag govuk-tag--orange" style="margin-bottom: 20px;">
-      Inconclusive
-    </strong>
-    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
-      Proven
-    </strong>
-    <p class="govuk-body">High-level outcome.</p>
-    <p class="govuk-body-s"><strong>Design conclusion:</strong></p>
-    <p class="govuk-body-s">Design conclusion content.</p> -->
+    <p class="govuk-body">Findings:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>All users found business details</li>
+      <li>2 users found personal details easily. 2 users struggled. One didn't look for it</li>
+      <li>3 of 4 users input details incorrectly</li>
+      <li>4 of 4 users only needed to input one business type but could see a reason for more</li>
+    </ul>
+
+    <p class="govuk-body">Risks if not iterated:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Risk that users will update one lot of details but not the other </li>
+      <li>Risk that users will update business details with personal mobile phone</li>
+      <li>Risk that communications will get missed</li>
+    </ul>
+
+    <p class="govuk-body">Actions:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Ticket SFDE-194. Will help to remove duplication of data entry (non MVP)</li>
+      <li>Ticket SFDE-195. Will help to solve the findability issues with personal details</li>
+      <li>Ticket SFDE-196. Will help differentiate labels on the business and personal details pages.</li>
+    </ul>
 
 
+
+
+
+
+
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h3 class="govuk-heading-m">Assumptions 6, 7, 8, 9, 10 and 11</h3>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag  govuk-tag--red" >
+            Disproved
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">6. Most users agree with the split between personal and business details</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--yellow sfd-block-tag" >
+            Proven but with issues
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">7. Most users would find most or all fields relevant</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--green" >
+            Proven
+          </strong>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">8. Most users do not feel any fields are missing</p>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--red" >
+            Disproved
+          </strong>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">9. Most users want to be able to complete as many details as possible (legal status, bank details) online rather than having to call RPA</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--red" >
+            Disproved
+          </strong>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">10. Most users can understand the business type options</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--green" >
+            Proven
+          </strong>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">11. Most users have no need for an international address</p>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">Findings:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>4 of 4 users expected the personal and business details to be together</li>
+      <li>3 of 4 users didn't differentiate between their personal and business details and input details incorrectly</li>
+      <li>4 of 4 users didn't like the duplication</li>
+      <li>one user did not look for personal details</li>
+      <li>users were happy with the fields but suggested bank details and an additional CPH</li>
+      <li>4 of 4 users said business type options were unclear</li>
+      <li>4 of 4 users did not need an international address</li>
+      <li>3 of 4 users said it needed the option for more though they personally didn't require it</li>
+      <li>some fields were not clear to users</li>
+    </ul>
+
+    <p class="govuk-body">Actions:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Changing of business type options being removed for MVP so no need to iterate that design. However, a note has been added to ticket SFDE-152 in case we keep a view only list of options - language of business type options needs to be reviewed. </li>
+      <li>Ticket SFDE-194 will help solve these issues by investigating concepts for merging the pages or prompting to reuse answers between business and personal details</li>
+    </ul>
+
+
+
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h3 class="govuk-heading-m">Assumption 12, 13 and 14</h3>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--green" >
+            Proven
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">12. Most users are comfortable with providing data like phone number, address, email and believe it will be used for acceptable reasons (for example, to contact them)</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--red" >
+            Disproved
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">13. Most users understand why they are asked to provide data in this service</p>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--red" >
+            Disproved
+          </strong>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">14. Most users understand updating their details in SFD will also update their details in the Rural Payments service</p>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">Findings:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>1 of 4 knew what the data was collected for</li>
+      <li>3 of 4 users were comfortable sharing data with us</li>
+      <li>2 of 4 users did not understand the knock on effect of amending data here</li>
+      <li>2 of 4 users expressed caution sharing date of birth online</li>
+    </ul>
+
+    <p class="govuk-body">Actions:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Ticket SFDE-193. The need for content to say why we ask for data for example to contact you, and why we need your date of birth will be reviewed for all pages (non MVP)</li>
+    </ul>
 
   </div>
 
