@@ -142,13 +142,20 @@ module.exports = [
       "pagename": "Address - postcode (change) - business details",
       "pageurl": "",
       "pagedesc": ""
-    },,
+    },
     {
       "pageid": "bd24",
       "pagename": "Address - select (change) - business details",
       "pageurl": "",
       "pagedesc": ""
     },
+    {
+      "pageid": "bd25",
+      "pagename": "VAT registration number (remove) - business details",
+      "pageurl": "business-VAT-registration-remove",
+      "pagedesc": "Remove the VAT registration number for your business."
+    },
+    
     {
       "pageid": "bd04",
       "pagename": "Address (change) - business details",
