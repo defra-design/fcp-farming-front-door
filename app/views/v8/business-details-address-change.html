@@ -5,7 +5,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "What is your business address?" %}
+{% set pageTitle = "Enter your business address" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -129,7 +129,7 @@
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">
-            What is your business address?
+            Enter your business address
           </h1>
         </legend>
 
