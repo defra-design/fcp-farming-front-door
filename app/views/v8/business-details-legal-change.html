@@ -5,7 +5,12 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "What is your legal status?" %}
+{% set _dynamicPageTitle = "Change your legal status" %}
+{% if data.release != "b1" %}
+  {% set _dynamicPageTitle = "What is your legal status?" %}
+{% endif %}
+
+{% set pageTitle = _dynamicPageTitle %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -106,7 +111,9 @@
     {% endif %}
 
     {% if data.release == "b1" %}
-    <h1 class="govuk-heading-l">Change your legal status</h1>
+    <h1 class="govuk-heading-l">
+      {{_dynamicPageTitle}}
+    </h1>
 
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">Legal status</span><br>
@@ -156,7 +163,7 @@
         <fieldset class="govuk-fieldset" {% if myData.validationErrors.legalBus %}aria-describedby="legalBus-error"{% endif %}>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
             <h1 class="govuk-fieldset__heading">
-              What is your legal status?
+              {{_dynamicPageTitle}}
             </h1>
           </legend>
           {% if myData.validationErrors.legalBus %}

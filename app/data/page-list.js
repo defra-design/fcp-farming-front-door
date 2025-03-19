@@ -50,20 +50,20 @@ module.exports = [
     {
       "pageid": "pd16",
       "pagename": "Address - postcode (change) - personal details",
-      "pageurl": "",
-      "pagedesc": ""
+      "pageurl": "account-address-change",
+      "pagedesc": "Update the address for your personal account."
     },
     {
       "pageid": "pd17",
       "pagename": "Address - select (change) - personal details",
-      "pageurl": "",
-      "pagedesc": ""
+      "pageurl": "account-address-select",
+      "pagedesc": "Choose the address for your personal account."
     },
     {
       "pageid": "pd06",
       "pagename": "Address (change) - personal details",
-      "pageurl": "account-address-change",
-      "pagedesc": "Update the address for your personal account."
+      "pageurl": "account-address-enter",
+      "pagedesc": "Enter the address for your personal account."
     },
     {
       "pageid": "pd07",
@@ -140,14 +140,14 @@ module.exports = [
     {
       "pageid": "bd23",
       "pagename": "Address - postcode (change) - business details",
-      "pageurl": "",
-      "pagedesc": ""
+      "pageurl": "business-address-change",
+      "pagedesc": "Update the address for your business."
     },
     {
       "pageid": "bd24",
       "pagename": "Address - select (change) - business details",
-      "pageurl": "",
-      "pagedesc": ""
+      "pageurl": "business-address-select",
+      "pagedesc": "Choose the address for your business."
     },
     {
       "pageid": "bd25",
@@ -159,8 +159,8 @@ module.exports = [
     {
       "pageid": "bd04",
       "pagename": "Address (change) - business details",
-      "pageurl": "business-address-change",
-      "pagedesc": "Update the address for your business."
+      "pageurl": "business-address-enter",
+      "pagedesc": "Enter the address for your business."
     },
     {
       "pageid": "bd05",
