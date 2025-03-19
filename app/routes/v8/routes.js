@@ -380,13 +380,13 @@ module.exports = function (router,_myData) {
             req.session.myData.notifications.message = "You have updated your date of birth"
         }
         if(req.query.addresschanged == "true"){
-            req.session.myData.notifications.message = "You have updated your address"
+            req.session.myData.notifications.message = "You have updated your personal address"
         }
         if(req.query.phonechanged == "true"){
-            req.session.myData.notifications.message = "You have updated your phone numbers"
+            req.session.myData.notifications.message = "You have updated your personal phone numbers"
         }
         if(req.query.emailchanged == "true"){
-            req.session.myData.notifications.message = "You have updated your email address"
+            req.session.myData.notifications.message = "You have updated your personal email address"
         }
         
         res.render(version + '/details-personal-details', {
@@ -908,10 +908,10 @@ module.exports = function (router,_myData) {
             req.session.myData.notifications.message = "You have updated your business type"
         }
         if(req.query.legalchanged == "true"){
-            req.session.myData.notifications.message = "You have updated your legal status"
+            req.session.myData.notifications.message = "You have updated your business legal status"
         }
         if(req.query.bankchanged == "true"){
-            req.session.myData.notifications.message = "You have updated your bank details"
+            req.session.myData.notifications.message = "You have updated your business bank details"
         }
         
         res.render(version + '/details-business-details', {
