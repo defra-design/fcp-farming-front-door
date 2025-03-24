@@ -66,6 +66,8 @@
   </div>
 </div>
 
+
+
 {% if data.release != "b1" %}
 <!-- PAYMENTS ROW -->
 <div class="govuk-grid-row">
@@ -202,6 +204,12 @@
     <p><a class="govuk-link--no-visited-state" href="/_common/not-testing">View and update permissions</a></p> 
     {% endif %}
     {% endif %}
+
+
+    {% if data.release != "b1" %}
+      <p class="govuk-link"><a href="test-page" class="govuk-link">Route to test page</a></p>
+    {% endif %}
+
 
   </div>
   
