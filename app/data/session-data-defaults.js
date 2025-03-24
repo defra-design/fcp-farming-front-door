@@ -63,7 +63,7 @@ paymentsPrevious.forEach(function(_payment, indexA) {
 
 module.exports = {
 
-  "version": "v7", //put latest prototype version folder name here as a default
+  "version": "v8", //put latest prototype version folder name here as a default
 
   "release": "b1", //used to show different release versions e.g. buffalo mvp, buffalo v2, capybara, etc. Set on prototype setup page from version 7 onwards. can also be overriddenn on pages with a query string ?release=concept ?release=b1
     //concept = latest designs / conceptual for testing
