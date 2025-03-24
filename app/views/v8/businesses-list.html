@@ -28,7 +28,7 @@
     
   ],
   "notes": [
-    "if someone tries to navigate to a page in the service that requires a business to be selected (i.e. bp02 and all Business details (bpxx) pages) AND they have not selected a business AND they have more than 1 business linked to their account, THEN redirect to bp01.Businesses list. this scenario could occur naturally (not just through hacking the URL) by a user going to pd01 via the new link on bp01, and then using the Home breadcrumb."
+    "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb."
   ]
   
 }
