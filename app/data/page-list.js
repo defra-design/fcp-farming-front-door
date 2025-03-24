@@ -311,5 +311,11 @@ module.exports = [
       "pagename": "Page not found (404)",
       "pageurl": "page-not-found",
       "pagedesc": "We could not find this page. Check the web address is correct and try again."
+    },
+    {
+      "pageid": "x01",
+      "pagename": "This is a test page",
+      "pageurl": "test-page",
+      "pagedesc": "Emma's trying to learn the set-up of this prototype."
     }
    ]
