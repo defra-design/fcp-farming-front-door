@@ -136,6 +136,22 @@ module.exports = function (router,_myData) {
         });
     });
 
+    // emma's test page
+    router.get('/' + version + '/test-page', function (req, res) {
+        req.session.myData.emmaserrors = req.query.emmaserrors
+        res.render(version + '/test-page', {
+            myData: req.session.myData
+        });
+    });
+
+    // defining the submission destintation for test-page
+
+    router.post('/' + version + '/test-page', function (req, res) {
+        
+
+        res.redirect(301, '/' + version + '/business-home');
+    });
+
     // Check a message if it matches search term
     function checkMessageSearchTerm(req, _item, _searchesToDo){
         

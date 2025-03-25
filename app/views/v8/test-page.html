@@ -11,6 +11,8 @@
   {% set pageName = "Error: " + pageTitle %}
 {% endif %}
 
+{#19 & 20 are hard coded #}
+
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 
@@ -18,8 +20,11 @@
   "id": "x01",
   "url": "test-page?r=t&release=b1",
   "release": "Buffalo 1.0 MVP",
-  "variants": [],
-
+  "variants": [
+  {
+    "name": "Show errors",
+    "url": "test-page?r=t&release=b1&emmaserrors=true"
+  }],
   "pagetitle": pageName,
   "pagedesc": "",
   "pageurl": "",
@@ -29,6 +34,8 @@
   
 }
 %}
+
+
 
 {% block beforeContent %}
 
@@ -50,8 +57,7 @@
 
       <p class="govuk-body">This is just some pretend content. No purpose here at all.</p>
 
-      {% set _selectedBusiness = data.selectedBusiness %}
-      
+      {% set _selectedBusiness = myData.selectedBusiness %} 
 
     <span class="govuk-caption-xl">{{data.user.name}}<br></span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
@@ -82,9 +88,9 @@
 
     <form method="POST" novalidate>
 
-      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+      <div class="govuk-form-group">
         <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="nameBus">
+          <label class="govuk-label govuk-label--l" for="emmaTest">
             What is your business name?
           </label>
         </h1>
@@ -100,12 +106,18 @@
             {% set _valueNewNameBus = myData.newNameBus %}
         {% endif %}
 
-        <input class="govuk-input {% if _inError %}govuk-input--error{% endif %}" id="nameBus" name="nameBus" type="text"  value="{{_valueNewNameBus}}" {% if _inError %}aria-describedby="nameBus-error"{% endif %}>
+        <input class="govuk-input" id="emmaTest" name="emmaTest" type="text" >
       </div>
 
       {{govukButton({
         text: "Continue"
       })}}
+
+      {% if myData.emmaserrors == "true" %}
+
+      <p class="govuk-body">Show errors?</p>
+
+      {% endif %}
 
       <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 

@@ -206,7 +206,7 @@
     {% endif %}
 
 
-    {% if data.release != "b1" %}
+    {% if data.release != "b1" and myData.emmaserrors == "true" %}
       <p class="govuk-link"><a href="test-page" class="govuk-link">Route to test page</a></p>
     {% endif %}
 
