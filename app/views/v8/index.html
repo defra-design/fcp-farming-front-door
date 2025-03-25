@@ -30,8 +30,25 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
 
-    <!-- Release -->
+    <!-- Internal/external -->
     <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">External vs internal user</legend>
+          <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                  <input {% if myData.view == 'ext' %}checked{% endif %} class="govuk-radios__input" data-option="ext" id="ext" name="view" type="radio" value="ext">
+                  <label class="govuk-label govuk-radios__label" for="ext"><strong>External user</strong></label>
+              </div>
+              <div class="govuk-radios__item">
+                <input {% if myData.view == 'int' %}checked{% endif %} class="govuk-radios__input" data-option="int" id="int" name="view" type="radio" value="int">
+                <label class="govuk-label govuk-radios__label" for="int"><strong>Internal user</strong></label>
+              </div>
+          </div>
+      </fieldset>
+    </div>
+
+    <!-- Release -->
+    <div class="govuk-form-group" id="releaseContainer">
       <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Release version (feature toggles)</legend>
           <div class="govuk-radios">
@@ -48,7 +65,7 @@
     </div>
 
     <!-- Start from -->
-    <div class="govuk-form-group">
+    <div class="govuk-form-group" id="startFromContainer">
       <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Start journey from</legend>
           <div class="govuk-radios" data-module="govuk-radios">
@@ -80,8 +97,8 @@
         Include validation
       </label>
       <select class="govuk-select" style="min-width: 100%" id="includeValidation" name="includeValidation" data-option="includeValidation">
-          <option {% if data.includeValidation == 'true' %}selected{% endif %} value="true">Yes (throw errors)</option>
-          <option {% if data.includeValidation == 'false' %}selected{% endif %} value="false">No (allow empty fields)</option>
+          <option {% if myData.includeValidation == 'true' %}selected{% endif %} value="true">Yes (throw errors)</option>
+          <option {% if myData.includeValidation == 'false' %}selected{% endif %} value="false">No (allow empty fields)</option>
       </select>
     </div>
 
@@ -886,12 +903,27 @@
 
         _options.change(function(){
             setValues()
+            optionsVisibility()
         }).trigger("change");
 
         _options.on('input', function() {
             setValues()
+            optionsVisibility()
         }).trigger("input");
 
+        //SET VISIBILITY OF OPTIONS BASED ON INTERNAL VS EXTERNAL
+        function optionsVisibility(){
+          var _intExtValue = $('input[name=view]:checked').val()
+
+          if (_intExtValue == "int") {
+            $('#releaseContainer').hide()
+            $('#startFromContainer').hide()
+          } else {
+            $('#releaseContainer').show()
+            $('#startFromContainer').show()
+          }
+
+        }
 
         //SET VALUES
         function setValues(){
@@ -905,23 +937,30 @@
                 _urlPage = "start-sfd-sign-in",
                 _urlNewApplication = "";
             
-            switch(_urlStartFrom) {
-                case "st":
-                  _urlPage = "start-sfd-start"
-                  break;
-                case "si":
+            //Start from
+            if ($('input[name=view]:checked').val() == "int") {
+              _urlPage = "internal-sign-in"
+            } else {
+              switch(_urlStartFrom) {
+                  case "st":
+                    _urlPage = "start-sfd-start"
+                    break;
+                  case "si":
+                    _urlPage = "start-sfd-sign-in"
+                    break;
+                  case "bl":
+                    _urlPage = "businesses-list"
+                    break;
+                  case "home":
+                    _urlPage = "business-home"
+                    break;
+                  default:
                   _urlPage = "start-sfd-sign-in"
-                  break;
-                case "bl":
-                  _urlPage = "businesses-list"
-                  break;
-                case "home":
-                  _urlPage = "business-home"
-                  break;
-                default:
-                _urlPage = "start-sfd-sign-in"
+              }
             }
+
             var _urlRelease = "&release=" + $('input[name=release]:checked').val(),
+                _urlView = "&view=" + $('input[name=view]:checked').val(),
                 // _urlPageQuery = "&start=" + _urlStartFrom;
                 _urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val();
                 // _urlshutter = "&shutter=" + _options.filter("#shutter").val(),
@@ -929,8 +968,12 @@
                 // _urlinviteScenario = "&adb2cLink=" + _options.filter("#inviteScenario").val();
 
 
+            if ($('input[name=view]:checked').val() == "int") {
+              _urlRelease = ""
+            }
+
             //Queries combined
-            var _urlPageQueries = _urlPage + "?r=t" + _urlRelease + _urlincludeValidation;
+            var _urlPageQueries = _urlPage + "?r=t" + _urlRelease + _urlView + _urlincludeValidation;
 
             //URL text
             var _startURLText = _urlBase + _urlPageQueries,

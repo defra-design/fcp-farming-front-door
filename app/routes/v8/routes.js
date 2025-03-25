@@ -55,6 +55,9 @@ module.exports = function (router,_myData) {
         req.session.myData.validationError = "false"
         req.session.myData.includeValidation =  req.query.iv || req.session.myData.includeValidation
 
+        //Used to show either the prototype as internal user or external user
+        req.session.myData.view =  req.query.view || req.session.myData.view
+
         //Reset page notifications
         req.session.myData.notifications = {}
         req.session.myData.showNotification = "false"
