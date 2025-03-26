@@ -283,7 +283,7 @@ module.exports = function (router,_myData) {
         });
     });
 
-    //businesses messages
+    //internal search
     router.get('/' + version + '/internal-search', function (req, res) {
 
         req.session.myData.searchapplied = false
@@ -294,7 +294,7 @@ module.exports = function (router,_myData) {
         }
 
         if(req.query.intSearchType && req.query.intSearchType != ""){
-            req.session.myData.intSearchType = req.query.intSearchType.trim()
+            req.session.myData.intSearchType = req.query.intSearchType
         }
 
         res.render(version + '/internal-search', {

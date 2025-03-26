@@ -29,7 +29,8 @@
 
 {% block beforeContent %}
 
-
+{% set _loginNavClasses = "no-bread" %}
+{% include "_common/login-nav-internal.html" %}
 
 {% endblock %}
 
@@ -88,15 +89,46 @@
       </ul>
     </div>
 
-    <p class="govuk-body" style="color:red">search results to go here</p>
+    <!-- <p class="govuk-body" style="color:red">search results to go here</p> -->
 
-    {% if myData.intSearchType == "all" %}
-    <p class="govuk-body" style="color:red">show businesses and customers in results</p>
-    {% elif myData.intSearchType == "bus" %}
-    <p class="govuk-body" style="color:red">show just businesses in results</p>
-    {% elif myData.intSearchType == "cus" %}
-    <p class="govuk-body" style="color:red">show just customers in results</p>
-    {% endif %}
+      {% set intSearchResults = [
+        {
+          "name": "Bob",
+          "type": "cus"
+        },
+        {
+          "name": "Bracken Estates",
+          "type": "bus"
+        },
+        {
+          "name": "Dave",
+          "type": "cus"
+        },
+        {
+          "name": "Sony",
+          "type": "bus"
+        },
+        {
+          "name": "Zara",
+          "type": "cus"
+        },
+        {
+          "name": "Zoo farms",
+          "type": "bus"
+        }
+      ] %}
+
+      <ul class="govuk-list govuk-list--bullet">
+        {% for _searchResult in intSearchResults %}
+          {% if 
+            myData.intSearchType == "all" 
+            or (myData.intSearchType == "bus" and _searchResult.type == "bus") 
+            or (myData.intSearchType == "cus" and _searchResult.type == "cus")  
+          %}
+            <li>{{_searchResult.name}}</li>
+          {% endif %}
+        {% endfor %}
+      <ul>
 
     {% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
 
