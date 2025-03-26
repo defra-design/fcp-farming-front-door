@@ -56,7 +56,9 @@ var _myData = {
     "cookiesAnalytics": "No",
 
     "includeValidation": "true", //used to show either the prototype as internal user or external user
-    "view": "ext" //used to show either the prototype as internal user or external user
+    "view": "ext", //used to show either the prototype as internal user or external user
+
+    "intSearchType": "all" //used to show default tab displayed on internal search results page
 }
 
 router.post('/which-service-answer', function(request, response) {

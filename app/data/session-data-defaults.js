@@ -2,6 +2,7 @@ const paymentsUpcoming = require("./payments-upcoming");
 const paymentsPrevious = require("./payments-previous");
 const paymentsPreviousItems = require("./payments-previous-items");
 const businesses = require("./businesses");
+const users = require("./users");
 const messages = require("./messages");
 const pageList = require("./page-list");
 
@@ -78,12 +79,10 @@ module.exports = {
     //home - home / business page
   "includeValidation": "true", //used to determine whether any forms will throw validation errors or not. good to turn on for user testing.
 
+  users, //users list
+  "user": users[0],
+
   businesses, //businesses list
-  user: {
-    "name": "Alfred Waldron",
-    "email": "alfred.waldron@gmail.com",
-    "crn": "1101996862"
-  },
   "selectedBusiness": businesses[0], 
 
   //PAYMENTS DATA

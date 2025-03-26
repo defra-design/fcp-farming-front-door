@@ -13,6 +13,7 @@
 @import "components/mobile-phone-mockups";
 @import "components/filter";
 @import "components/definition-list";
+@import "components/tabs";
 
 a:link, .govuk-link:link {
   color: #1d70b8;
@@ -75,52 +76,7 @@ a:link, .govuk-link:link {
   color: #1d70b8;
 }
 
-//Payments tabs (non responsive in mobile)
-.govuk-tabs__list--payments::after {
-  content: "";
-  display: block;
-  clear: both;
-}
-.govuk-tabs__list--payments {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-bottom: 1px solid #b1b4b6;
-}
-.govuk-tabs__list-item--payments::before {
-  content: none;
-}
-.govuk-tabs__list-item--payments {
-  margin-right: 5px;
-  margin-bottom: 0;
-  margin-left: 0;
-  padding: 10px 20px;
-  float: left;
-  background-color: #f3f2f1;
-  text-align: center;
-}
-.govuk-tabs__list-item--payments-selected {
-  position: relative;
-  margin-top: -5px;
-  margin-bottom: -1px;
-  padding-top: 14px;
-  padding-right: 19px;
-  padding-bottom: 16px;
-  padding-left: 19px;
-  border: 1px solid #b1b4b6;
-  border-bottom: 0;
-  background-color: #ffffff;
-}
-.govuk-tabs__tab--payments:link, 
-.govuk-tabs__tab--payments:visited,
-.govuk-tabs__tab--payments {
-  display: inline-block;
-  color: #0b0c0c;
-}
-.govuk-tabs__list-item--payments-selected .govuk-tabs__tab--payments { 
-  text-decoration: none;
-}
-//end payments tabs
+
 
 .unread-message {
     padding: 0 5px;

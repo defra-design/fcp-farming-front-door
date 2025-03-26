@@ -29,7 +29,7 @@
 
 {% block beforeContent %}
 
-  {% include "_common/phase-banner-2.html" %}
+
 
 {% endblock %}
 
@@ -38,75 +38,72 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% set _link = data.deeplink or "businesses-list" %}
+    <form action="internal-search" method="GET">
 
-    <form action="internal-search" method="post">
-
-    <fieldset class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
-          Search for a customer or business
+      <div class="govuk-form-group" data-list-search-filter >
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="search-internal">
+            Search for a customer or business
+          </label>
         </h1>
-      </legend>
 
-      <p class="govuk-body">
-        Enter a: 
-      </p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>customer or business name</li>
-        <li>single business identifier (SBI) </li>
-        <li>customer reference number (CRN)</li>
-        <li>post code</li>
-        <li>trader number</li>
-        <li>vendor registration number</li>
-      </ul>
+        <div class="govuk-hint">Enter a customer or business name, single business identifier (SBI), customer reference number (CRN), post code, trader number or vendor registration number</div>
 
+        <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
 
-      <div class="govuk-form-group">
-        <label class="govuk-label" for="internal-search-input">
-          Label
-        </label>
-        <input class="govuk-input" id="internalSearch" name="internalSearch" type="text" autocomplete="">
       </div>
 
-      <button type="submit" class="govuk-button" data-module="govuk-button">
-        Search
-      </button>
-    </fieldset>
+      <button type="submit" class="govuk-button" >Search</button>
 
     </form>
 
-    <!--<p class="govuk-body"><a class="govuk-link--no-visited-state" href="start-sfd-reset-password">I have forgotten my password</a></p>
+    {% if myData.searchapplied and myData.searchTerm != "zeroresults" %}
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="internal-search">Clear search</a></p>
 
-    <details class="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          Help signing in
-        </span>
-      </summary>
-      <div class="govuk-details__text">
+    <h2 class="govuk-heading-m">10 results for "{{myData.searchTerm}}"</h2>
 
-        <p class="govuk-body">Contact the Rural Payments Agency by email or phone if:</p>
+    <div class="govuk-tabs" >
+      {% set _tabsList = [
+        {
+          "type": "all",
+          "label": "All"
+        },
+        {
+          "type": "bus",
+          "label": "Businesses"
+        },
+        {
+          "type": "cus",
+          "label": "Customers"
+        }
+      ]
+      %}
 
-        <ul class="govuk-list govuk-list--bullet">
-          <li>you have forgotten your CRN</li>
-          <li>you have lost your CRN</li>
-          <li>your CRN is not recognised</li>
-        </ul>  
+      <ul class="govuk-tabs__list--internal" role="tablist">
+        {% for _tab in _tabsList %}
+        <li class="govuk-tabs__list-item--internal {% if myData.intSearchType == _tab.type %}govuk-tabs__list-item--internal-selected{% endif %}">
+          <a class="govuk-tabs__tab--internal govuk-link--no-visited-state" href="internal-search?q={{myData.searchTerm}}&intSearchType={{_tab.type}}" role="tab" {% if myData.intSearchType == _tab.type %}aria-selected="true"{% else %}aria-selected="false"{% endif %}>{{_tab.label}} <span class="govuk-visually-hidden">search results</span></a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
-        <p class="govuk-body">Email: <br><a href="mailto:ruralpayments@defra.gov.uk" class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a></p>
+    <p class="govuk-body" style="color:red">search results to go here</p>
 
-        <p class="govuk-body">Telephone: <br>03000 200 301</p>
+    {% if myData.intSearchType == "all" %}
+    <p class="govuk-body" style="color:red">show businesses and customers in results</p>
+    {% elif myData.intSearchType == "bus" %}
+    <p class="govuk-body" style="color:red">show just businesses in results</p>
+    {% elif myData.intSearchType == "cus" %}
+    <p class="govuk-body" style="color:red">show just customers in results</p>
+    {% endif %}
 
-        <p class="govuk-body">Service opening times: <br>Monday to Friday, 8:30am to 5pm, except bank holidays</p>
-        
-        <p class="govuk-body"><a href="https://www.gov.uk/call-charges" class="govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Find out about call charges (opens in new tab)</a></p>
+    {% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
 
-        <p class="govuk-body"><a href="/_common/not-testing" class="govuk-link--no-visited-state">Register with the Rural Payments service</a> if you do not have an account.</p>
-        
-      </div>
+    <h2 class="govuk-heading-m">0 results for "{{myData.searchTerm}}"</h2>
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="internal-search">Clear search</a></p>
+    {% endif %}
 
-    </details>-->
   </div>
 </div>
 

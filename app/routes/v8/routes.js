@@ -283,6 +283,25 @@ module.exports = function (router,_myData) {
         });
     });
 
+    //businesses messages
+    router.get('/' + version + '/internal-search', function (req, res) {
+
+        req.session.myData.searchapplied = false
+        req.session.myData.searchTerm = ""
+        if(req.query.q && req.query.q != ""){
+            req.session.myData.searchapplied = true
+            req.session.myData.searchTerm = req.query.q.trim()
+        }
+
+        if(req.query.intSearchType && req.query.intSearchType != ""){
+            req.session.myData.intSearchType = req.query.intSearchType.trim()
+        }
+
+        res.render(version + '/internal-search', {
+            myData: req.session.myData
+        });
+    });
+
     //payment action letter
     router.get('/' + version + '/payment-action-letter', function (req, res) {
         res.render(version + '/payment-action-letter', {
