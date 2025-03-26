@@ -195,18 +195,27 @@
         {
           "name": "Internal search",
           "url": "internal-search?r=t&view=int",
-          "release": "-"
+          "release": "-",
+          "variants": [
+            {
+              "name": "Internal search (with results - all tab)",
+              "url": "internal-search?r=t&view=int&q=fos&intSearchType=all"
+            },
+            {
+              "name": "Internal search (with results - business tab)",
+              "url": "internal-search?r=t&view=int&q=fos&intSearchType=bus"
+            },
+            {
+              "name": "Internal search (with results - customers tab)",
+              "url": "internal-search?r=t&view=int&q=fos&intSearchType=cus"
+            },
+            {
+              "name": "Internal search (with zero results)",
+              "url": "internal-search?r=t&view=int&q=zeroresults&intSearchType=cus"
+            }
+          ]
         },
-        {
-          "name": "Internal search (results)",
-          "url": "internal-search?r=t&view=int&q=fos",
-          "release": "-"
-        },
-        {
-          "name": "Internal search (0 results)",
-          "url": "internal-search?r=t&view=int&q=zeroresults",
-          "release": "-"
-        },
+
 
         {
           "type": "HEADING",
