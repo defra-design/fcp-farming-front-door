@@ -3,6 +3,7 @@ const paymentsPrevious = require("./payments-previous");
 const paymentsPreviousItems = require("./payments-previous-items");
 const businesses = require("./businesses");
 const users = require("./users");
+const internalSearchResults = require("./internal-search-results");
 const messages = require("./messages");
 const pageList = require("./page-list");
 
@@ -84,6 +85,8 @@ module.exports = {
 
   businesses, //businesses list
   "selectedBusiness": businesses[0], 
+
+  internalSearchResults, //used to display search results on the internal user view
 
   //PAYMENTS DATA
   paymentsUpcoming, //all upcoming payments
