@@ -67,7 +67,8 @@
       {% set _tabsList = [
         {
           "type": "all",
-          "label": "All"
+          "label": "All data"
+          
         },
         {
           "type": "bus",
@@ -79,6 +80,13 @@
         }
       ]
       %}
+
+      <!---
+      // for playing back the number of results 
+
+      {{data.busResults.length}}
+      {{data.users.length}}
+       -->
 
       <ul class="govuk-tabs__list--internal" role="tablist">
         {% for _tab in _tabsList %}
@@ -94,41 +102,103 @@
       {% set intSearchResults = [
         {
           "name": "Bob",
+          "address": "27 Ship Street, Notley",
+          "postcode": "NW5 2WF",
+          "crn": "12345678",
           "type": "cus"
         },
         {
           "name": "Bracken Estates",
+          "address": "3 Pause Place, Aberdeenshire",
+          "postcode": "AB15 2WF",
+          "sbi": "999999999999",
+          "vendor": "00000000",
+          "trader": "00000000",
           "type": "bus"
         },
         {
           "name": "Dave",
+          "address": "3 Pause Place, Aberdeenshire",
+          "postcode": "E5 2WF",
+          "crn": "12345678",
           "type": "cus"
         },
         {
           "name": "Sony",
+          "address": "13 Jermyn Street, Greater London",
+          "postcode": "W1 2WF",
+          "sbi": "999999999999",
+          "vendor": "00000000",
+          "trader": "00000000",
           "type": "bus"
         },
         {
           "name": "Zara",
+          "address": "15 Bow Street, Devon",
+          "postcode": "EX10 2WF",
+          "crn": "12345678",
           "type": "cus"
         },
         {
           "name": "Zoo farms",
+          "address": "64 Zoo Lane, Somewhere",
+          "postcode": "EY76 4FD",
+          "sbi": "999999999999",
+          "vendor": "00000000",
+          "trader": "00000000",
           "type": "bus"
         }
       ] %}
 
-      <ul class="govuk-list govuk-list--bullet">
+      <ul class="govuk-list internal-list__search">
         {% for _searchResult in intSearchResults %}
           {% if 
             myData.intSearchType == "all" 
-            or (myData.intSearchType == "bus" and _searchResult.type == "bus") 
-            or (myData.intSearchType == "cus" and _searchResult.type == "cus")  
           %}
-            <li>{{_searchResult.name}}</li>
+          <li class="govuk-!-padding-top-6">
+            <header class="govuk-!-padding-bottom-0">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="">{{_searchResult.name}}</a></h3>
+            </header>
+            <div>
+              <p class="govuk-body govuk-!-margin-bottom-0">{{_searchResult.address}}</p>
+              <p class="govuk-body govuk-!-margin-bottom-2">{{_searchResult.postcode}}</p>
+            </div>
+          </li>
+          {% elseif (myData.intSearchType == "bus" and _searchResult.type == "bus")  %}
+          <li class="govuk-!-padding-top-6">
+            <header class="govuk-!-padding-bottom-0">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="">{{_searchResult.name}}</a></h3>
+            </header>
+            <p id="SBI" class="govuk-body govuk-!-margin-bottom-2">SBI: {{_searchResult.sbi}}</p>
+            <div>
+              <p class="govuk-body govuk-!-margin-bottom-0">{{_searchResult.address}}</p>
+              <p class="govuk-body govuk-!-margin-bottom-2">{{_searchResult.postcode}}</p>
+            </div>
+            <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+              <dt class="sfd-definition-list__title">Trader number</dt>
+              <dd class="sfd-definition-list__definition">{{_searchResult.trader}}</dd>
+            </dl>
+            <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+              <dt class="sfd-definition-list__title">Vendor number</dt>
+              <dd class="sfd-definition-list__definition">{{_searchResult.vendor}}</dd>
+            </dl>
+          </li>
+          {% elseif (myData.intSearchType == "cus" and _searchResult.type == "cus")  %}
+          <li class="govuk-!-padding-top-6">
+            <header class="govuk-!-padding-bottom-0">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="">{{_searchResult.name}}</a></h3>
+            </header>
+            <p id="CRN" class="govuk-body govuk-!-margin-bottom-2">CRN: {{_searchResult.crn}}</p>
+            <div>
+              <p class="govuk-body govuk-!-margin-bottom-0">{{_searchResult.address}}</p>
+              <p class="govuk-body govuk-!-margin-bottom-2">{{_searchResult.postcode}}</p>
+            </div>
+          </li>
           {% endif %}
         {% endfor %}
       <ul>
+
+        
 
     {% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
 

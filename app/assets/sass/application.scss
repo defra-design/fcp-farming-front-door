@@ -1192,3 +1192,14 @@ input[type="radio" i] {
   display: inline-block;
 }
 
+// Internal search result blocks 
+
+.internal-list__search header {
+  border-top: 1px solid #b1b4b6;
+  padding: 30px 0;
+}
+
+.internal-list__search li > p {
+  font-weight: 600;
+  color:  #505a5f ;
+}

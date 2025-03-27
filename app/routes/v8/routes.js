@@ -302,6 +302,32 @@ module.exports = function (router,_myData) {
         });
     });
 
+    //internal selected business 
+
+    router.get('/' + version + '/internal-selected-business', function (req, res) {
+        res.render(version + '/internal-selected-business', {
+            myData: req.session.myData
+        });
+    });
+    
+
+    //internal selected customer 
+
+    router.get('/' + version + '/internal-selected-customer', function (req, res) {
+        res.render(version + '/internal-selected-customer', {
+            myData: req.session.myData
+        });
+    });
+
+    router.get('/' + version + '/internal-selected-customer-2', function (req, res) {
+        res.render(version + '/internal-selected-customer-2', {
+            myData: req.session.myData
+        });
+    });
+
+    
+    
+
     //payment action letter
     router.get('/' + version + '/payment-action-letter', function (req, res) {
         res.render(version + '/payment-action-letter', {

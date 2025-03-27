@@ -1,0 +1,96 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = true %}
+
+{% set pageName="Your businesses" %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Selected customer - internal user view",
+  "id": "xx",
+  "url": "businesses-list?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    {
+      "name": "page 2 of list",
+      "url": "businesses-list-p2?r=t&release=b1"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ],
+  "notes": [
+    "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb."
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+{% set _selectedBusiness = myData.selectedBusiness %} 
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      <span class="govuk-caption-l">Single business identifier (SBI) : {{_selectedBusiness.sbiNumber}}</span>
+      {{_selectedBusiness.name}}
+    </h1>
+
+    <p class="govuk-body">
+      <a href="">View and update business details</a>
+    </p>
+  </div>
+</div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <!-- MVP -->
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">Customers linked to this business</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Customer name</th>
+            <th scope="col" class="govuk-table__header">Customer reference number (CRN)</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+
+          {% for _users in data.users %}
+          {% if loop.index < 21 %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="internal-selected-customer">{{_users.name}}</a></th>
+            <td class="govuk-table__cell">{{_users.crn}}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+
+
+        </tbody>
+      </table>
+
+
+      
+    </div>
+
+  </div>
+
+
+
+
+{% endblock %}
