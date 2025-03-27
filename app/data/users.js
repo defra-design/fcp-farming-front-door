@@ -16,8 +16,8 @@ module.exports = [
   {
     "id": 3,
     "firstName": "Sarah",
-    "lastName": "Appleby",
-    "name": "Sarah Appleby",
+    "lastName": "Appleton",
+    "name": "Sarah Appleton",
     "crn": "1105569934"
   }
 ]
