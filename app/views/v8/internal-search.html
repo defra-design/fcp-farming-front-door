@@ -112,8 +112,6 @@
           "address": "3 Pause Place, Aberdeenshire",
           "postcode": "AB15 2WF",
           "sbi": "999999999999",
-          "vendor": "00000000",
-          "trader": "00000000",
           "type": "bus"
         },
         {
@@ -127,9 +125,8 @@
           "name": "Sony",
           "address": "13 Jermyn Street, Greater London",
           "postcode": "W1 2WF",
-          "sbi": "999999999999",
-          "vendor": "00000000",
-          "trader": "00000000",
+          "sbi": "123214325",
+          "trader": "23423432",
           "type": "bus"
         },
         {
@@ -143,9 +140,8 @@
           "name": "Zoo farms",
           "address": "64 Zoo Lane, Somewhere",
           "postcode": "EY76 4FD",
-          "sbi": "999999999999",
-          "vendor": "00000000",
-          "trader": "00000000",
+          "sbi": "99955662452",
+          "vendor": "AB1234",
           "type": "bus"
         }
       ] %}
@@ -154,46 +150,46 @@
         {% for _searchResult in intSearchResults %}
           {% if 
             myData.intSearchType == "all" 
+            or (myData.intSearchType == "bus" and _searchResult.type == "bus")
+            or (myData.intSearchType == "cus" and _searchResult.type == "cus")
           %}
           <li class="govuk-!-padding-top-6">
             <header class="govuk-!-padding-bottom-0">
               <h3 class="govuk-heading-m govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="">{{_searchResult.name}}</a></h3>
             </header>
-            <div>
-              <p class="govuk-body govuk-!-margin-bottom-0">{{_searchResult.address}}</p>
-              <p class="govuk-body govuk-!-margin-bottom-2">{{_searchResult.postcode}}</p>
-            </div>
-          </li>
-          {% elseif (myData.intSearchType == "bus" and _searchResult.type == "bus")  %}
-          <li class="govuk-!-padding-top-6">
-            <header class="govuk-!-padding-bottom-0">
-              <h3 class="govuk-heading-m govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="">{{_searchResult.name}}</a></h3>
-            </header>
+            {% if _searchResult.type == "bus" %}
             <p id="SBI" class="govuk-body govuk-!-margin-bottom-2">SBI: {{_searchResult.sbi}}</p>
+            {% else %}
+            <p id="CRN" class="govuk-body govuk-!-margin-bottom-2">CRN: {{_searchResult.crn}}</p>
+            {% endif %}
             <div>
               <p class="govuk-body govuk-!-margin-bottom-0">{{_searchResult.address}}</p>
               <p class="govuk-body govuk-!-margin-bottom-2">{{_searchResult.postcode}}</p>
             </div>
+            {% if _searchResult.type == "bus" %}
             <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
               <dt class="sfd-definition-list__title">Trader number</dt>
-              <dd class="sfd-definition-list__definition">{{_searchResult.trader}}</dd>
+              <dd class="sfd-definition-list__definition">
+                {% if not _searchResult.trader %}
+                Not added
+                {% else %}
+                {{_searchResult.trader}}
+                {% endif %}
+              </dd>
             </dl>
             <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
               <dt class="sfd-definition-list__title">Vendor number</dt>
-              <dd class="sfd-definition-list__definition">{{_searchResult.vendor}}</dd>
+              <dd class="sfd-definition-list__definition">
+                {% if not _searchResult.vendor %}
+                Not added
+                {% else %}
+                {{_searchResult.vendor}}
+                {% endif %}
+              </dd>
             </dl>
+            {% endif %}
           </li>
-          {% elseif (myData.intSearchType == "cus" and _searchResult.type == "cus")  %}
-          <li class="govuk-!-padding-top-6">
-            <header class="govuk-!-padding-bottom-0">
-              <h3 class="govuk-heading-m govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="">{{_searchResult.name}}</a></h3>
-            </header>
-            <p id="CRN" class="govuk-body govuk-!-margin-bottom-2">CRN: {{_searchResult.crn}}</p>
-            <div>
-              <p class="govuk-body govuk-!-margin-bottom-0">{{_searchResult.address}}</p>
-              <p class="govuk-body govuk-!-margin-bottom-2">{{_searchResult.postcode}}</p>
-            </div>
-          </li>
+         
           {% endif %}
         {% endfor %}
       <ul>
