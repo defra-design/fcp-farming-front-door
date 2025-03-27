@@ -82,9 +82,10 @@ module.exports = {
 
   users, //users list
   "user": users[0],
+  "selectedUser": users[0], 
 
   businesses, //businesses list
-  "selectedBusiness": businesses[0], 
+  "selectedBusiness": businesses[0],
 
   internalSearchResults, //used to display search results on the internal user view
 

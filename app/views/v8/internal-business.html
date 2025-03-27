@@ -7,6 +7,8 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
+{% set _selectedBusiness = myData.selectedBusiness %} 
+
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 
@@ -43,8 +45,6 @@
 
 {% block content %}
 
-{% set _selectedBusiness = myData.selectedBusiness %} 
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
@@ -53,7 +53,7 @@
     </h1>
 
     <p class="govuk-body">
-      <a href="">View and update business details</a>
+      <a href="details-business-details">View and update business details</a>
     </p>
   </div>
 </div>
@@ -71,13 +71,11 @@
         </thead>
         <tbody class="govuk-table__body">
 
-          {% for _users in data.users %}
-          {% if loop.index < 21 %}
+          {% for _user in data.users %}
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="internal-selected-customer">{{_users.name}}</a></th>
-            <td class="govuk-table__cell">{{_users.crn}}</td>
+            <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="internal-customer?user={{_user.id}}">{{_user.name}}</a></th>
+            <td class="govuk-table__cell">{{_user.crn}}</td>
           </tr>
-          {% endif %}
           {% endfor %}
 
 

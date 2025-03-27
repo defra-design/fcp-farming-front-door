@@ -4,7 +4,7 @@ module.exports = [
         "name": "Bob",
         "address": "27 Ship Street, Notley",
         "postcode": "NW5 2WF",
-        "crn": "12345678",
+        "crn": "123bob456",
         "type": "cus"
     },
     {
@@ -12,7 +12,7 @@ module.exports = [
         "name": "Bracken Estates",
         "address": "3 Pause Place, Aberdeenshire",
         "postcode": "AB15 2WF",
-        "sbi": "999999999999",
+        "sbiNumber": "123brack456",
         "type": "bus"
     },
     {
@@ -20,7 +20,7 @@ module.exports = [
         "name": "Dave",
         "address": "3 Pause Place, Aberdeenshire",
         "postcode": "E5 2WF",
-        "crn": "12345678",
+        "crn": "123dave456",
         "type": "cus"
     },
     {
@@ -28,8 +28,8 @@ module.exports = [
         "name": "Sony",
         "address": "13 Jermyn Street, Greater London",
         "postcode": "W1 2WF",
-        "sbi": "123214325",
-        "trader": "23423432",
+        "sbiNumber": "123214325",
+        "trader": "123sony456",
         "type": "bus"
     },
     {
@@ -37,7 +37,7 @@ module.exports = [
         "name": "Zara",
         "address": "15 Bow Street, Devon",
         "postcode": "EX10 2WF",
-        "crn": "12345678",
+        "crn": "123zara456",
         "type": "cus"
     },
     {
@@ -45,7 +45,7 @@ module.exports = [
         "name": "Zoo farms",
         "address": "64 Zoo Lane, Somewhere",
         "postcode": "EY76 4FD",
-        "sbi": "99955662452",
+        "sbiNumber": "123zoo456",
         "vendor": "AB1234",
         "type": "bus"
     }

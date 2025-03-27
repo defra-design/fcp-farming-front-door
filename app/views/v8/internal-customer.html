@@ -7,6 +7,8 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
+{% set _selectedUser = myData.selectedUser %} 
+
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 
@@ -43,8 +45,6 @@
 
 <!-- does this need something in routes to set a selected user? lines 39ish in routes v8?-->
 
-{% set _selectedUser = myData.user %} 
-
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -54,7 +54,7 @@
     </h1>
 
     <p class="govuk-body">
-      <a href="">View and update personal details</a>
+      <a href="details-personal-details">View and update personal details</a>
     </p>
   </div>
 </div>
@@ -77,7 +77,7 @@
           {% for _business in data.businesses %}
           {% if loop.index < 21 %}
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="business-home?business={{_business.id}}">{{_business.name}}</a></th>
+            <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="internal-business?business={{_business.id}}">{{_business.name}}</a></th>
             <td class="govuk-table__cell">{{_business.sbiNumber}}</td>
           </tr>
           {% endif %}
@@ -86,21 +86,21 @@
         </tbody>
       </table>
 
-      <nav class="govuk-pagination"  aria-label="Pagination">
+      <!-- <nav class="govuk-pagination"  aria-label="Pagination">
         <ul class="govuk-pagination__list">
           <li class="govuk-pagination__item govuk-pagination__item--current">
-            <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="internal-selected-customer" aria-label="Page 1" aria-current="page">
+            <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="internal-customer" aria-label="Page 1" aria-current="page">
               1
             </a>
           </li>
           <li class="govuk-pagination__item">
-            <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="internal-selected-customer-2" aria-label="Page 2">
+            <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="internal-customer-2" aria-label="Page 2">
               2
             </a>
           </li>
         </ul>
         <div class="govuk-pagination__next">
-          <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="internal-selected-customer-2" rel="next">
+          <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="internal-customer-2" rel="next">
             <span class="govuk-pagination__link-title">
               Next<span class="govuk-visually-hidden"> page</span>
             </span>
@@ -112,7 +112,7 @@
 
       </nav>
 
-      <p class="">Showing <b>1</b> to <b>20</b> of <b>{{data.businesses.length}}</b> businesses</p>
+      <p class="">Showing <b>1</b> to <b>20</b> of <b>{{data.businesses.length}}</b> businesses</p> -->
 
     </div>
 

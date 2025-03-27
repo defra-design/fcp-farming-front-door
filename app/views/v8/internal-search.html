@@ -122,10 +122,16 @@
 
         <li class="govuk-!-padding-top-6">
           <header class="govuk-!-padding-bottom-0">
-            <h3 class="govuk-heading-m govuk-!-margin-bottom-2"><a class="govuk-link govuk-link--no-visited-state" href="">{{_searchResult.name}}</a></h3>
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              {% set _url = "internal-customer?intSearch=true&user=" + _searchResult.id %}
+              {% if _searchResult.type == "bus" %}
+                {% set _url = "internal-business?intSearch=true&business=" + _searchResult.id %}
+              {% endif %}
+              <a class="govuk-link govuk-link--no-visited-state" href="{{_url}}">{{_searchResult.name}}</a>
+            </h3>
           </header>
           {% if _searchResult.type == "bus" %}
-            <p class="govuk-body govuk-!-margin-bottom-2">SBI: {{_searchResult.sbi}}</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">SBI: {{_searchResult.sbiNumber}}</p>
           {% else %}
             <p class="govuk-body govuk-!-margin-bottom-2">CRN: {{_searchResult.crn}}</p>
           {% endif %}

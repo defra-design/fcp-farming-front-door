@@ -27,9 +27,18 @@ module.exports = function (router,_myData) {
 
         if(!req.session.myData || req.query.r) {
             req.session.myData = JSON.parse(JSON.stringify(_myData))
+
             //selected business defaults - to match session defaults
             req.session.myData.selectedBusiness = req.session.data.selectedBusiness
             req.session.myData.nameBus = req.session.data.selectedBusiness.name
+
+            req.session.myData.selectedUser = req.session.data.selectedUser
+            req.session.myData.namePers = req.session.data.selectedUser.name
+            req.session.myData.nameFirstPers = req.session.data.selectedUser.firstName
+            req.session.myData.nameLastPers = req.session.data.selectedUser.lastName
+            // "nameTitlePers": "",
+            // "nameMiddlePers": "",
+
         }
 
         //version
@@ -37,11 +46,38 @@ module.exports = function (router,_myData) {
 
         //set selected business
         if(req.query.business){
+
             var _selectedBusiness = req.session.data.businesses.find(obj => {return obj.id.toString() === req.query.business.toString()})
+            // main businesses list
+            var _selectedBusiness = req.session.data.businesses.find(obj => {return obj.id.toString() === req.query.business.toString()})
+            //if coming from internal search results use that list instead
+            if(req.query.intSearch){
+                var _selectedBusiness = req.session.data.internalSearchResults.find(obj => {return obj.id.toString() === req.query.business.toString()})
+            }
+
             if(_selectedBusiness){
                 req.session.data.selectedBusiness = _selectedBusiness
                 req.session.myData.selectedBusiness = _selectedBusiness
                 req.session.myData.nameBus = req.session.myData.selectedBusiness.name
+            }
+        }
+
+        //set selected user
+        if(req.query.user){
+
+            // main users list
+            var _selectedUser = req.session.data.users.find(obj => {return obj.id.toString() === req.query.user.toString()})
+            //if coming from internal search results use that list instead
+            if(req.query.intSearch){
+                var _selectedUser = req.session.data.internalSearchResults.find(obj => {return obj.id.toString() === req.query.user.toString()})
+            }
+
+            if(_selectedUser){
+                req.session.data.selectedUser = _selectedUser
+                req.session.myData.selectedUser = _selectedUser
+                req.session.myData.namePers = req.session.myData.selectedUser.name
+                req.session.myData.nameFirstPers = req.session.myData.selectedUser.firstName
+                req.session.myData.nameLastPers = req.session.myData.selectedUser.lastName
             }
         }
 
@@ -303,30 +339,21 @@ module.exports = function (router,_myData) {
     });
 
     //internal selected business 
-
-    router.get('/' + version + '/internal-selected-business', function (req, res) {
-        res.render(version + '/internal-selected-business', {
+    router.get('/' + version + '/internal-business', function (req, res) {
+        res.render(version + '/internal-business', {
             myData: req.session.myData
         });
     });
     
 
     //internal selected customer 
-
-    router.get('/' + version + '/internal-selected-customer', function (req, res) {
-        res.render(version + '/internal-selected-customer', {
+    router.get('/' + version + '/internal-customer', function (req, res) {
+        res.render(version + '/internal-customer', {
             myData: req.session.myData
         });
     });
 
-    router.get('/' + version + '/internal-selected-customer-2', function (req, res) {
-        res.render(version + '/internal-selected-customer-2', {
-            myData: req.session.myData
-        });
-    });
 
-    
-    
 
     //payment action letter
     router.get('/' + version + '/payment-action-letter', function (req, res) {
@@ -539,6 +566,22 @@ module.exports = function (router,_myData) {
         req.session.myData.nameLastPers = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
         req.session.myData.namePers = req.session.myData.newNamePers || req.session.myData.namePers
 
+        if(req.session.data.release == "b1"){
+            req.session.myData.selectedUser.firstName = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
+            req.session.myData.selectedUser.lastName = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
+            req.session.myData.selectedUser.title = req.session.myData.newNameTitlePers || req.session.myData.nameTitlePers
+            req.session.myData.selectedUser.middleName = req.session.myData.newNameMiddlePers || req.session.myData.nameMiddlePers
+            
+            req.session.data.selectedUser.firstName = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
+            req.session.data.selectedUser.lastName = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
+            req.session.data.selectedUser.title = req.session.myData.newNameTitlePers || req.session.myData.nameTitlePers
+            req.session.data.selectedUser.middleName = req.session.myData.newNameMiddlePers || req.session.myData.nameMiddlePers
+        } else {
+            req.session.myData.selectedUser.name = req.session.myData.newNamePers || req.session.myData.namePers
+            req.session.data.selectedUser.name = req.session.myData.newNamePers || req.session.myData.namePers
+        }
+        
+        
         req.session.myData.newNameTitlePers = ""
         req.session.myData.newNameFirstPers = ""
         req.session.myData.newNameMiddlePers = ""
@@ -1025,9 +1068,11 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/business-details-name-check', function (req, res) {
+
         req.session.myData.nameBus = req.session.myData.newNameBus || req.session.myData.nameBus
         req.session.myData.selectedBusiness.name = req.session.myData.newNameBus || req.session.myData.nameBus
         req.session.data.selectedBusiness.name = req.session.myData.newNameBus || req.session.myData.nameBus
+
         req.session.myData.newNameBus = ""
         res.redirect(301, '/' + version + '/details-business-details?changed=true&namechanged=true');
     });
