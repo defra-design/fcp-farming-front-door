@@ -58,3 +58,37 @@ a.login-nav__link:hover {
   }
 
 }
+
+/*** internal user - blue banner across selected customer / business Buffalo screens ***/
+
+.full-width-container {
+  width: 100vw;
+  position: relative;
+  left: calc(-50vw + 50%);
+  background-color: #1d70b8 ;
+  padding: 15px 0;
+}
+
+.login-nav-internal--blue {
+  max-width: 960px;
+  margin: 0 auto;
+  .flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+  }
+  a, li {
+    color: white;
+  }
+}}
+
+.login-nav-internal--blue .sfd-definition-list, .login-nav-internal--blue .sfd-definition-list__title {
+  color: white !important;
+  span {
+    font-weight: 600;
+  }
+}
