@@ -140,26 +140,24 @@
             <p class="govuk-body govuk-!-margin-bottom-2">{{_searchResult.postcode}}</p>
           </div>
           {% if _searchResult.type == "bus" %}
+          {% if not _searchResult.traderNumber %}
+          {% else %}
           <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
             <dt class="sfd-definition-list__title">Trader number</dt>
             <dd class="sfd-definition-list__definition">
-              {% if not _searchResult.trader %}
-              Not added
-              {% else %}
-              {{_searchResult.trader}}
-              {% endif %}
+              {{_searchResult.traderNumber}}
             </dd>
           </dl>
+          {% endif %}
+          {% if not _searchResult.vrnNumber %}
+          {% else %}
           <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
             <dt class="sfd-definition-list__title">Vendor number</dt>
             <dd class="sfd-definition-list__definition">
-              {% if not _searchResult.vendor %}
-              Not added
-              {% else %}
-              {{_searchResult.vendor}}
-              {% endif %}
+              {{_searchResult.vrnNumber}}
             </dd>
           </dl>
+          {% endif %}
           {% endif %}
         </li>
         
