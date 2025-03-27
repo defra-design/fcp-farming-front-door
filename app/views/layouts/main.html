@@ -149,6 +149,26 @@
 
     <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
+    {% if _showIntExtLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
+      <li class="govuk-footer__inline-list-item">Internal/external:</li>
+      <li class="govuk-footer__inline-list-item">
+          {% if data.view == "ext" %}
+          External
+          {% else %}
+          <a class="govuk-footer__link" href="?view=ext">External</a>
+          {% endif %}
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        {% if data.view == "int" %}
+        Internal
+          {% else %}
+          <a class="govuk-footer__link" href="?view=int">Internal</a>
+          {% endif %}
+      </li>
+    </ul>
+    {% endif %}
+
     {% if _showReleaseLinks %}
     <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
       <li class="govuk-footer__inline-list-item">Release:</li>

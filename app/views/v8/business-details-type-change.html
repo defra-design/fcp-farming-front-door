@@ -1,7 +1,14 @@
 {% extends "layouts/main.html" %}
 
 {% set _showFooterLinks = true %}
-{% set _showReleaseLinks = true %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = true %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
 
 {% set _inError = myData.validationError == "true"  %}
 
