@@ -2,6 +2,8 @@ module.exports = [
     {
         "id": 1,
         "name": "Bob",
+        "firstName": "Bob",
+        "lastName": "Surname",
         "address": "27 Ship Street, Notley",
         "postcode": "NW5 2WF",
         "crn": "123bob456",
@@ -18,6 +20,8 @@ module.exports = [
     {
         "id": 3,
         "name": "Dave",
+        "firstName": "Dave",
+        "lastName": "Surname",
         "address": "3 Pause Place, Aberdeenshire",
         "postcode": "E5 2WF",
         "crn": "123dave456",
@@ -35,6 +39,8 @@ module.exports = [
     {
         "id": 5,
         "name": "Zara",
+        "firstName": "Zara",
+        "lastName": "Surname",
         "address": "15 Bow Street, Devon",
         "postcode": "EX10 2WF",
         "crn": "123zara456",
