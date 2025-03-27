@@ -1,7 +1,8 @@
 {% extends "layouts/main.html" %}
 
-{% set _pageID = "" %}
-{% set _showFooterLinks = true %}
+{% if data.view != "int" %}
+  {% set _showFooterLinks = true %}
+{% endif %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName = "You have signed out" %}
@@ -27,7 +28,9 @@
 
 {% block beforeContent %}
 
-  {% include "_common/phase-banner-2.html" %}
+  {% if data.view != "int" %}
+    {% include "_common/phase-banner-2.html" %}
+  {% endif %}
 
 {% endblock %}
 
@@ -41,7 +44,11 @@
         You have signed out 
       </h1>
 
-      <p class="govuk-body" >If this is not what you wanted, you can <a href="start-sfd-sign-in" class="govuk-link govuk-link--no-visited-state">sign back into Manage your land and farm businesses</a>.</p>
+      {% set _url = "start-sfd-sign-in" %}
+      {% if data.view == "int" %}
+        {% set _url = "internal-sign-in" %}
+      {% endif %}
+      <p class="govuk-body" >If this is not what you wanted, you can <a href="{{_url}}" class="govuk-link govuk-link--no-visited-state">sign back into Manage your land and farm businesses</a>.</p>
 
   </div>
 </div>
