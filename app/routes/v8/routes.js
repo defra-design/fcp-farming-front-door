@@ -47,7 +47,6 @@ module.exports = function (router,_myData) {
         //set selected business
         if(req.query.business){
 
-            var _selectedBusiness = req.session.data.businesses.find(obj => {return obj.id.toString() === req.query.business.toString()})
             // main businesses list
             var _selectedBusiness = req.session.data.businesses.find(obj => {return obj.id.toString() === req.query.business.toString()})
             //if coming from internal search results use that list instead
