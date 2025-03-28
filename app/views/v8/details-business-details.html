@@ -10,7 +10,14 @@
 
 {% endif %}
 
-{% set _showReleaseLinks = true %}
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = true %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
 
 
 {% set pageName = "View and update your business details" %}

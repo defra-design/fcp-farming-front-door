@@ -1,15 +1,20 @@
 {% extends "layouts/main.html" %}
 
 {% if data.view == "int" %}
-
-{% set _showFooterLinks = false %}
-
+  {% set _showFooterLinks = false %}
 {% else %}
-
-{% set _showFooterLinks = true %}
-
+  {% set _showFooterLinks = true %}
 {% endif %}
-{% set _showReleaseLinks = false %}
+
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = true %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
 
 {% set pageName="View and update your personal details" %}
 {% set serviceName="Manage your land and farm businesses" %}
