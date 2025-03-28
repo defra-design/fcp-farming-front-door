@@ -67,13 +67,13 @@
       {% if data.release == "b1" %}
 
         <!-- Adds space after title if a title was entered -->
-        {% set _titleValue = myData.newNameTitlePers or myData.nameTitlePers %}
+        {% set _titleValue = myData.newNameTitlePers %}
         {% if _titleValue %}
           {% set _titleValue = _titleValue + " " %}
         {% endif %}
 
         <!-- Adds space after middle name if a title was entered -->
-        {% set _middleValue = myData.newNameMiddlePers or myData.nameMiddlePers %}
+        {% set _middleValue = myData.newNameMiddlePers %}
         {% if _middleValue %}
           {% set _middleValue = _middleValue + " " %}
         {% endif %}

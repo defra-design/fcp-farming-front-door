@@ -559,22 +559,37 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/personal-details-name-check', function (req, res) {
-        req.session.myData.nameTitlePers = req.session.myData.newNameTitlePers || req.session.myData.nameTitlePers
+        req.session.myData.nameTitlePers = req.session.myData.newNameTitlePers
         req.session.myData.nameFirstPers = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
-        req.session.myData.nameMiddlePers = req.session.myData.newNameMiddlePers || req.session.myData.nameMiddlePers
+        req.session.myData.nameMiddlePers = req.session.myData.newNameMiddlePers
         req.session.myData.nameLastPers = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
         req.session.myData.namePers = req.session.myData.newNamePers || req.session.myData.namePers
 
         if(req.session.data.release == "b1"){
-            req.session.myData.selectedUser.firstName = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
-            req.session.myData.selectedUser.lastName = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
-            req.session.myData.selectedUser.title = req.session.myData.newNameTitlePers || req.session.myData.nameTitlePers
-            req.session.myData.selectedUser.middleName = req.session.myData.newNameMiddlePers || req.session.myData.nameMiddlePers
+            req.session.myData.selectedUser.title = req.session.myData.nameTitlePers
+            req.session.myData.selectedUser.firstName = req.session.myData.nameFirstPers
+            req.session.myData.selectedUser.middleName = req.session.myData.nameMiddlePers
+            req.session.myData.selectedUser.lastName = req.session.myData.nameLastPers
             
-            req.session.data.selectedUser.firstName = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
-            req.session.data.selectedUser.lastName = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
-            req.session.data.selectedUser.title = req.session.myData.newNameTitlePers || req.session.myData.nameTitlePers
-            req.session.data.selectedUser.middleName = req.session.myData.newNameMiddlePers || req.session.myData.nameMiddlePers
+            req.session.data.selectedUser.title = req.session.myData.nameTitlePers
+            req.session.data.selectedUser.firstName = req.session.myData.nameFirstPers
+            req.session.data.selectedUser.middleName = req.session.myData.nameMiddlePers
+            req.session.data.selectedUser.lastName = req.session.myData.nameLastPers
+
+            var _fullname = ""
+            var _titleValue = req.session.myData.nameTitlePers
+            if (_titleValue){
+                _titleValue = _titleValue + " "
+            }
+            var _middleValue = req.session.myData.nameMiddlePers
+            if (_middleValue){
+                _middleValue = _middleValue + " "
+            }
+            _fullName = _titleValue + req.session.myData.nameFirstPers + " " + _middleValue + req.session.myData.nameLastPers
+            req.session.myData.selectedUser.name = _fullName
+            req.session.data.selectedUser.name = _fullName
+
+
         } else {
             req.session.myData.selectedUser.name = req.session.myData.newNamePers || req.session.myData.namePers
             req.session.data.selectedUser.name = req.session.myData.newNamePers || req.session.myData.namePers
