@@ -80,33 +80,37 @@
           </dd>
         </div>
 
-        {% if _legalValue == "Public limited company (PLC)" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Company registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{myData.newLegalCHRNBus or "12345678"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-change">Change<span class="govuk-visually-hidden"> company registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+        {% for _legal in data.legalStatuses %}
+        
+          {% if _legal.showCompanyReg and _legalValue == _legal.name %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Company registration number
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{myData.newLegalCHRNBus or "12345678"}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="business-details-legal-change">Change<span class="govuk-visually-hidden"> company registration number</span></a>
+            </dd>
+          </div>
+          {% endif %}
+        
+          {% if _legal.showCharityCommission and _legalValue == _legal.name %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Charity commission registration number
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{myData.newLegalCCRNBus or "0123456"}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="business-details-legal-change">Change<span class="govuk-visually-hidden"> charity commission registration number</span></a>
+            </dd>
+          </div>
+          {% endif %}
 
-        {% if _legalValue == "Charitable incorporated organisation (CIO)" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Charity commission registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{myData.newLegalCCRNBus or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-change">Change<span class="govuk-visually-hidden"> charity commission registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+        {% endfor %}
 
       </dl>
 

@@ -112,6 +112,79 @@ module.exports = {
     {
       "value": "Sustainable farming incentive 2023"
     }
-  ] //used for the filters on messages list
+  ], //used for the filters on messages list
+
+  "legalStatuses": [
+    {
+      "name": "Charitable incorporated organisation (CIO)",
+      "showCompanyReg": false,
+      "showCharityCommission": true
+    },
+    {
+      "name": "Charitable trust",
+      "showCompanyReg": false,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Community interest company (CIC)",
+      "showCompanyReg": true,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Government (central)",
+      "showCompanyReg": false,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Government (local)",
+      "showCompanyReg": false,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Limited liability partnership (LLP)",
+      "showCompanyReg": true,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Limited partnership",
+      "showCompanyReg": true,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Non-UK company",
+      "showCompanyReg": true,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Partnership",
+      "showCompanyReg": false,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Private limited company (Ltd)",
+      "showCompanyReg": true,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Public limited company (PLC)",
+      "showCompanyReg": true,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Sole proprietorship",
+      "showCompanyReg": false,
+      "showCharityCommission": false
+    },
+    {
+      "name": "The Crown",
+      "showCompanyReg": false,
+      "showCharityCommission": false
+    },
+    {
+      "name": "Unlimited company (Ultd)",
+      "showCompanyReg": true,
+      "showCharityCommission": false
+    }
+  ]
 
 }

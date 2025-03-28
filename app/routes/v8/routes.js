@@ -1430,16 +1430,37 @@ module.exports = function (router,_myData) {
     router.post('/' + version + '/business-details-legal-change', function (req, res) {
 
         req.session.myData.newLegalBus = req.body.legalBus
-        req.session.myData.newLegalCHRNBus = req.body.legalCHRNBus
-        req.session.myData.newLegalCCRNBus = req.body.legalCCRNBus
 
         if(req.session.myData.includeValidation == "false"){
             req.session.myData.newLegalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
-            if(req.session.myData.newLegalBus == "Public limited company (PLC)"){
-                req.session.myData.newLegalCHRNBus = req.session.myData.newLegalCHRNBus || "12345678"
+        }
+
+        //LOOP THROUGH ALL LEGAL TYPES
+        var _matchedLegal = false
+        var _legalIndex = 0
+        var _legalToUse
+        req.session.data.legalStatuses.forEach(function(_legalStatus, index) {
+            //CHECK WHICH ONE WE HAVE
+            if(_legalStatus.name == req.session.myData.newLegalBus){
+                _matchedLegal = true
+                //IF WE HAVE ONE THEN GET IT'S LOOP INDEX
+                _legalIndex = index + 1
+                _legalToUse = _legalStatus
             }
-            if(req.session.myData.newLegalBus == "Charitable incorporated organisation (CIO)"){
-                req.session.myData.newLegalCCRNBus = req.session.myData.newLegalCCRNBus || "0123456"
+        });
+        
+        if(_matchedLegal){
+            //THEN WE KNOW THE ID TO TARGET FOR legalCHRNBus-LOOPINDEX
+            req.session.myData.newLegalCHRNBus = req.body["legalCHRNBus-" + _legalIndex]
+            req.session.myData.newLegalCCRNBus = req.body["legalCCRNBus-" + _legalIndex]
+            
+            if(req.session.myData.includeValidation == "false"){
+                if(_legalToUse.showCompanyReg){
+                    req.session.myData.newLegalCHRNBus = req.session.myData.newLegalCHRNBus || "12345678"
+                }
+                if(_legalToUse.showCharityCommission){
+                    req.session.myData.newLegalCCRNBus = req.session.myData.newLegalCCRNBus || "0123456"
+                }
             }
         }
 
@@ -1450,17 +1471,17 @@ module.exports = function (router,_myData) {
                 "message": "Select the legal status"
             }
         } else {
-            if(req.session.myData.newLegalBus == "Public limited company (PLC)" & !req.session.myData.newLegalCHRNBus){
+            if(_legalToUse.showCompanyReg & !req.session.myData.newLegalCHRNBus){
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCHRNBus = {
-                    "anchor": "legalCHRNBus",
+                    "anchor": "legalCHRNBus-" + _legalIndex,
                     "message": "Enter a company registration number"
                 }
             }
-            if(req.session.myData.newLegalBus == "Charitable incorporated organisation (CIO)" & !req.session.myData.newLegalCCRNBus){
+            if(_legalToUse.showCharityCommission & !req.session.myData.newLegalCCRNBus){
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCCRNBus = {
-                    "anchor": "legalCCRNBus",
+                    "anchor": "legalCCRNBus-" + _legalIndex,
                     "message": "Enter a charity commission registration number"
                 }
             }
@@ -1485,7 +1506,8 @@ module.exports = function (router,_myData) {
     router.post('/' + version + '/business-details-legal-check', function (req, res) {
 
         req.session.myData.legalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
-        if(req.session.myData.legalBus == "Public limited company (PLC)"){
+
+        if(req.session.myData.legalBus == "Community interest company (CIC)" || "Limited liability partnership (LLP)" || "Limited partnership" || "Non-UK company" || "Private limited company (Ltd)" || "Public limited company (PLC)" || "Unlimited company (Ultd)"){
             req.session.myData.legalCHRNBus = req.session.myData.newLegalCHRNBus || req.session.myData.legalCHRNBus
         } else {
             req.session.myData.legalCHRNBus = ""
