@@ -1,6 +1,14 @@
 {% extends "layouts/main.html" %}
 
+{% if data.view == "int" %}
+
+{% set _showFooterLinks = false %}
+
+{% else %}
+
 {% set _showFooterLinks = true %}
+
+{% endif %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName="View and update your personal details" %}
@@ -46,7 +54,14 @@
 }
 %}
 
+{% set _selectedUser = myData.selectedUser %}
+
 {% block beforeContent %}
+
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
 
   {% include "_common/phase-banner-2.html" %}
 
@@ -71,6 +86,19 @@
 
     </div>
   </div>
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
+      </li>
+    </ol>
+  </div>
+  {% endif %}
 {% endblock %}
 
 

@@ -1,7 +1,17 @@
 {% extends "layouts/main.html" %}
 
+{% if data.view == "int" %}
+
+{% set _showFooterLinks = false %}
+
+{% else %}
+
 {% set _showFooterLinks = true %}
+
+{% endif %}
+
 {% set _showReleaseLinks = true %}
+
 
 {% set pageName = "View and update your business details" %}
 {% set serviceName = "Manage your land and farm businesses" %}
@@ -102,6 +112,7 @@
 
 {% block beforeContent %}
 
+  {% if data.view != "int" %}
   {% include "_common/phase-banner-2.html" %}
   {% include "_common/sub-header.html" %}
 
@@ -114,7 +125,19 @@
       </li>
     </ol>
   </nav>
-
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-business">{{_selectedBusiness.name}} (SBI: {{_selectedBusiness.sbiNumber}})</a>
+      </li>
+    </ol>
+  </div>
+  {% endif %}
 {% endblock %}
 
 {% block content %}

@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
-{% set _showFooterLinks = true %}
-{% set _showReleaseLinks = true %}
+{% set _showFooterLinks = false %}
+{% set _showReleaseLinks = false %}
 
 {% set pageName="Your businesses" %}
 
@@ -39,6 +39,14 @@
 {% block beforeContent %}
 
 
+{% include "_common/login-nav-internal.html" %}
+<div class="govuk-breadcrumbs" style="display: inline-block">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+    </li>
+  </ol>
+</div>
 
 {% endblock %}
 
