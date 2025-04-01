@@ -12,17 +12,10 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 
-  "name": "Selected customer - internal user view",
-  "id": "xx",
-  "url": "businesses-list?r=t&release=b1",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
-    {
-      "name": "page 2 of list",
-      "url": "businesses-list-p2?r=t&release=b1"
-    }
-  ],
-
+  "name": "Selected business",
+  "id": "intBv01",
+  "url": "internal-business?r=t&view=int",
+  "release": "TO DO",
   "pagetitle": pageName,
   "pagedesc": "",
   "pageurl": "",
@@ -30,7 +23,7 @@
     
   ],
   "notes": [
-    "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb."
+    
   ]
   
 }

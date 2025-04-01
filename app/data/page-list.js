@@ -317,5 +317,26 @@ module.exports = [
       "pagename": "This is a test page",
       "pageurl": "test-page",
       "pagedesc": "Emma's trying to learn the set-up of this prototype."
+    },
+    {
+      "pageid": "intSr01",
+      "pagename": "Search for a customer or business",
+      "pageurl": "internal-search",
+      "pagedesc": ""
     }
+    ,
+    {
+      "pageid": "intBv01",
+      "pagename": "",
+      "pageurl": "internal-business",
+      "pagedesc": ""
+    }
+    ,
+    {
+      "pageid": "intCv01",
+      "pagename": "",
+      "pageurl": "internal-customer",
+      "pagedesc": ""
+    }
+
    ]

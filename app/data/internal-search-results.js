@@ -9,8 +9,8 @@ module.exports = [
         "sbiNumber": "",
         "vrnNumber": "",
         "traderNumber": "",
-        "address": "27 Ship Street, Notley",
-        "postcode": "RH1 7TR"
+        "address": "10 Skirbeck Way, Maidstone",
+        "postcode": "SK22 1DL"
     },
     {
         "id": 2,
