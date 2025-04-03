@@ -37,26 +37,143 @@
       This is achieved with a query string ?view=int, ?view=ext. 
     </p>
 
-    <h2 class="govuk-heading-l">Goals of this iteration</h2>
+    <h2 class="govuk-heading-l">Design changes</h2>
 
-    <h3 class="govuk-heading-m">Why we [did x]</h3>
+    <p>
+      In version 8 of the prototype, we iterated:
+    </p>
 
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <ul class="govuk-list govuk-list--bullet">
+      <li>updates to our MVP - we iterated updating details in version 7 (external view MVP) after BA as-is requirement gathering - this version (v8 external user Buffalo 1.0 MVP) is now with developers</li>
+      <li>messages conceptual exploration</li>
+      <li>internal user journey conceptual exploration</li>
+    </ul>
 
-    <h3 class="govuk-heading-m">Pain points and user needs</h3>
+    <p>
+      This post is about our work on the internal user journey so far.
+    </p>
 
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h3 class="govuk-heading-m">
+      Why we explored the internal user journey
+    </h3>
+
+    <p>
+      Until now, all our design work has focused on the experience of external users - Rural Payments service (RPS) customers, like farmers and agents. We needed to do a first prototype of a journey for internal users, as this is a priority for the delivery of our service. Our internal users are RPS customer services staff, like claims processors and call handlers.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      Design approach
+    </h3>
+
+    <p>
+      Designing the whole internal user journey alongside the whole external journey is a big thing, so we needed to have a strategy for how to approach both in a limited timeframe. Going forward, we have decided that as we focus on each element of the external user journey, like messages and permissions, we will also design an internal user journey. To catch up with this, we needed to design an internal user journey for the <a href="https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/v8/index">external view MVP we already designed (prototype version 8)</a>, which is now in development. In this MVP, users can view and amend their personal and business details. 
+    </p>
+
+    <p>
+      Although the internal journey we have prototyped matches the external MVP, it is not part of the MVP - it will not go into development for MVP. The internal journey is still conceptual. 
+    </p>
+
+    <p>
+      To design an internal user journey to match what we already prototyped, we decided to focus on ideas for how internal users will:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        sign in to their internal system view of the service
+      </li>
+      <li>
+        search for and find a customer (person or business)
+      </li>
+      <li>
+        view and amend personal and business details - mirroring our external user journey designs, except where internal users have a different experience to external users, in being able to amend legal status and business type
+      </li>
+    </ul>
+
+    <p>
+      There is a known user need for internal staff to be able to view exactly what the external customer sees, so they can help when a customer phones or emails. The team’s working assumption is that eventually our service could make a test version of the external journey available to internal staff that shows what the customer sees. As designers, we plan to continue to design a specific service for internal users which is not an exact mirror of the external journey, as it needs to have the functionality internal users require.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      Pain points and user needs
+    </h3>
+
+    <p>
+      From previous rounds of user research on other areas, and other teams' research, we did not yet have detailed pain points and user needs for internal users, but we knew that RPS staff need access to all the information relevant to the customer, so that they can help them.
+    </p>
+
+    <p>
+      Specific user needs to the area in scope for this design were:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>As an RPA call handler, I need to locate the businesses associated with users, so that I can answer end user queries</li>
+      <li>As an RPA call handler, I need to locate and view business and personal account details so that I can share them with the user</li>
+      <li>As an RPA claims processor when handling customer service cases, I need to locate user contact details so that I can contact them to support their application or claim progress</li>
+    </ul>
+
+    <p>
+      A relevant pain point was:
+    </p>
+
+    <p>
+      RPA staff do not have visibility of CPH numbers to help users who are asking for them.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      What we designed
+    </h3>
+
+    <p>
+      For staff users to find the right customer or business, we designed to allow them to search for any SBI, CRN, name, postcode, trader number or vendor number in one search box.
+    </p>
+
+    <img src="/public/images/design-history/search.png" alt="User icon" class="design-history">
+
+    <p>
+      We designed a results page which lets users see a combination of personal and business results, or use tabs to see either personal or business results only. The results show the name of the person or business, the SBI or CRN, the address, and trader and vendor numbers if they are in the system.
+    </p>
+
+    <img src="/public/images/design-history/search-results.png" alt="User icon" class="design-history">
+
+
+    <p>
+      When a user clicks on a personal or business result, they can see:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li> a list of the businesses or people linked to that person or business</li>
+      <li> a link to view and update details for that person or business</li>
+    </ul>
+
+    <img src="/public/images/design-history/int-business.png" alt="User icon" class="design-history">
+
+    <p>
+      When viewing and updating personal details, the internal view is the same as the external view. For viewing and updating business details, we prototyped the slight difference for internal users - in their view, they can amend ‘additional details’: legal status and business type.
+    </p>
+
+    <img src="/public/images/design-history/int-business-details.png" alt="User icon" class="design-history">
+
+
+    <img src="/public/images/design-history/int-personal-details.png" alt="User icon" class="design-history">
+
     
-    <h3 class="govuk-heading-m">Constraints</h3>
+    
+    <h3 class="govuk-heading-m">
+      What we tested
+    </h3>
 
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-
-    <h3 class="govuk-heading-m">Design approach</h3>
-
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-
-    <h2 class="govuk-heading-m">How might we statements</h2>
-
+    <ol class="govuk-list govuk-list--number">
+      <li>
+        Can internal users find and select the right business or customer account?
+      </li>
+      <li>
+        Can internal users amend business and personal details?
+      </li>
+      <li>
+        Do internal users need the name of the internal portal to be differentiated from the external portal?
+      </li>
+    </ol>
+    
     <!-- <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
     <h2 class="govuk-heading-m">

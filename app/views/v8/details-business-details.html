@@ -23,8 +23,10 @@
 {% set pageName = "View and update your business details" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
+{% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
+  "status": 'In development',
   "name": "Manage business details",
   "id": "bd01",
   "url": "details-business-details?r=t&release=b1",
@@ -113,6 +115,9 @@
   ]
 }
 %}
+{% else %}
+
+{% endif %}
 
 
 {% set _selectedBusiness = myData.selectedBusiness %}

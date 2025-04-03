@@ -15,10 +15,19 @@
 
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key govuk-body-s">
+                    Status
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+                    {{ _designSpecData.status }}
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
                     Service name
                 </dt>
                 <dd class="govuk-summary-list__value govuk-body-s">
-                    {{serviceName}}
+                    <span id="service-name">{{serviceName}}</span>
                 </dd>
             </div>
 
@@ -33,7 +42,7 @@
 
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key govuk-body-s">
-                    Released
+                    Release
                 </dt>
                 <dd class="govuk-summary-list__value govuk-body-s">
                     {{ _designSpecData.release }}
@@ -48,10 +57,10 @@
                     {% if _designSpecData.pagetitle == "" %}
                         <p class="" style="color: #d4351c"><span>TO DO</span></p>
                     {% else %}
-                        <p class="govuk-body-s">{{ _designSpecData.pagetitle }} - {{serviceName}} - GOV.UK</p>
+                        <p class="govuk-body-s">{{ _designSpecData.pagetitle }} - <span id="service-name">{{serviceName}}</span> - GOV.UK</p>
                         {% if _designSpecData.errormessages and _designSpecData.errormessages|length > 0 %}
                             <p class="govuk-body-s"><span style="color:#d4351c">If error validation is visible...<br></span>
-                        Error: {{ _designSpecData.pagetitle }} - {{serviceName}} - GOV.UK</p>
+                        Error: {{ _designSpecData.pagetitle }} - <span id="service-name">{{serviceName}}</span> - GOV.UK</p>
                         {% endif %}
                     {% endif %}
                 </dd>

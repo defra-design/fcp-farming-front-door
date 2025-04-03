@@ -1203,3 +1203,21 @@ input[type="radio" i] {
   font-weight: 600;
   color:  #505a5f ;
 }
+
+#service-name {
+  color:  govuk-colour("orange") ;
+}
+
+#service-name::before {
+  content: "{{";
+}
+
+#service-name::after {
+  content: "}}";
+}
+
+img.design-history {
+  width: 100%;
+  border: solid 1px grey;
+  margin: 30px 0;
+}
