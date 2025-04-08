@@ -29,33 +29,37 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Business type (change) - business details (Buffalo 1.0 MVP)",
+    "id": "bd17",
+    "url": "business-details-type-change?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "Concept (edit type online)",
+        "url": "personal-details-type-change?r=t&release=concept&newChange=true"
+      }
+    ],
 
-  "name": "Business type (change) - business details (Buffalo 1.0 MVP)",
-  "id": "bd17",
-  "url": "business-details-type-change?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
-    {
-      "name": "Concept (edit type online)",
-      "url": "personal-details-type-change?r=t&release=concept&newChange=true"
-    }
-  ],
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Nothing selected (concept)",
+        "content": "Select the business type"
+      }
 
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "scenario": "Nothing selected (concept)",
-      "content": "Select the business type"
-    }
+    ]
+    
+  }
+  %}
+{% else %}
 
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 

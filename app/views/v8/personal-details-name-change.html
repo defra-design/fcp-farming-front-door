@@ -24,68 +24,72 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Full name (change) - personal details (Buffalo 1.0 MVP)",
+    "id": "pd02",
+    "url": "personal-details-name-change?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "Concept (one input)",
+        "url": "personal-details-name-change?r=t&release=concept&newChange=true"
+      }
+    ],
 
-  "name": "Full name (change) - personal details (Buffalo 1.0 MVP)",
-  "id": "pd02",
-  "url": "personal-details-name-change?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
-    {
-      "name": "Concept (one input)",
-      "url": "personal-details-name-change?r=t&release=concept&newChange=true"
-    }
-  ],
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "field": "Title",
+        "scenario": "Entry is too long",
+        "content": "Title must be 10 characters or less"
+      },
+      {
+        "field": "First name",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter first name"
+      },
+      {
+        "field": "First name",
+        "scenario": "Entry is too long",
+        "content": "First name must be 100 characters or less"
+      },
+      {
+        "field": "Middle names",
+        "scenario": "Entry is too long",
+        "content": "Middle names must be 100 characters or less"
+      },
+      {
+        "field": "Last name",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter last name"
+      },
+      {
+        "field": "Last name",
+        "scenario": "Entry is too long",
+        "content": "Last name must be 100 characters or less"
+      },
+      {
+        "field": "Full name (concept)",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter full name"
+      },
+      {
+        "field": "Full name (concept)",
+        "scenario": "Entry is too long",
+        "content": "Full name must be [max number] characters or less"
+      }
+    ]
+    
+  }
+  %}
+{% else %}
 
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "field": "Title",
-      "scenario": "Entry is too long",
-      "content": "Title must be 10 characters or less"
-    },
-    {
-      "field": "First name",
-      "scenario": "Empty field / nothing entered",
-      "content": "Enter first name"
-    },
-    {
-      "field": "First name",
-      "scenario": "Entry is too long",
-      "content": "First name must be 100 characters or less"
-    },
-    {
-      "field": "Middle names",
-      "scenario": "Entry is too long",
-      "content": "Middle names must be 100 characters or less"
-    },
-    {
-      "field": "Last name",
-      "scenario": "Empty field / nothing entered",
-      "content": "Enter last name"
-    },
-    {
-      "field": "Last name",
-      "scenario": "Entry is too long",
-      "content": "Last name must be 100 characters or less"
-    },
-    {
-      "field": "Full name (concept)",
-      "scenario": "Empty field / nothing entered",
-      "content": "Enter full name"
-    },
-    {
-      "field": "Full name (concept)",
-      "scenario": "Entry is too long",
-      "content": "Full name must be [max number] characters or less"
-    }
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 

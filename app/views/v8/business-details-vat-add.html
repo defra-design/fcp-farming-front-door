@@ -7,9 +7,7 @@
 {% endif %}
 
 {% set _showReleaseLinks = false %}
-
 {% set _showIntExtLinks = true %}
-
 {% set _inError = myData.validationError == "true"  %}
 
 {% set pageTitle = "Add your VAT registration number" %}
@@ -20,32 +18,35 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "VAT registration number (add) - business details",
+    "id": "bd13",
+    "url": "business-details-vat-add?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
 
-  "name": "VAT registration number (add) - business details",
-  "id": "bd13",
-  "url": "business-details-vat-add?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [],
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a VAT registration number"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter a VAT registration number in the format GB123456789 or 123456789"
+      }
+    ]
+    
+  }
+  %}
+{% else %}
 
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "scenario": "Empty field / nothing entered",
-      "content": "Enter a VAT registration number"
-    },
-    {
-      "scenario": "Wrong format",
-      "content": "Enter a VAT registration number in the format GB123456789 or 123456789"
-    }
-  ]
-  
-}
-%}
-
+{% endif %}
 
 {% block beforeContent %}
 

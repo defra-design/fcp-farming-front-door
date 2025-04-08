@@ -17,9 +17,10 @@
 {% set pageName = "Check your business type is correct before submitting" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
+{% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-
+  "status": 'In development',
   "name": "Business type (check) - business details",
   "id": "bd18",
   "url": "business-details-type-check?r=t&release=b1&newChange=true",
@@ -35,6 +36,9 @@
   
 }
 %}
+{% else %}
+
+{% endif %}
 
 {% block beforeContent %}
 

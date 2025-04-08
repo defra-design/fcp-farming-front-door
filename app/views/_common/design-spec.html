@@ -18,7 +18,11 @@
                     Status
                 </dt>
                 <dd class="govuk-summary-list__value govuk-body-s">
-                    {{ _designSpecData.status }}
+                    {% if _designSpecData.status != "In development" %}
+                        In design
+                    {% else %}
+                        {{ _designSpecData.status }}
+                    {% endif %}
                 </dd>
             </div>
 

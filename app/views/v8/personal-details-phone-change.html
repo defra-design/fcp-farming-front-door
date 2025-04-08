@@ -24,48 +24,52 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Phone numbers (change) - personal details",
+    "id": "pd14",
+    "url": "personal-details-phone-change?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
 
-  "name": "Phone numbers (change) - personal details",
-  "id": "pd14",
-  "url": "personal-details-phone-change?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [],
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "field": "Mobile and telephone",
+        "scenario": "Both are empty fields / nothing entered",
+        "content": "Enter at least one phone number"
+      },
+      {
+        "field": "Mobile",
+        "scenario": "Entry is too long",
+        "content": "Personal mobile phone number must be 100 characters or less"
+      },
+      {
+        "field": "Mobile",
+        "scenario": "Entry is too short",
+        "content": "Personal mobile phone number must be 10 characters or more"
+      },
+      {
+        "field": "Telephone",
+        "scenario": "Entry is too long",
+        "content": "Personal telephone number must be 100 characters or less"
+      },
+      {
+        "field": "Telephone",
+        "scenario": "Entry is too short",
+        "content": "Personal telephone number must be 10 characters or more"
+      }       
+    ]
+    
+  }
+  %}
+{% else %}
 
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "field": "Mobile and telephone",
-      "scenario": "Both are empty fields / nothing entered",
-      "content": "Enter at least one phone number"
-    },
-    {
-      "field": "Mobile",
-      "scenario": "Entry is too long",
-      "content": "Personal mobile phone number must be 100 characters or less"
-    },
-    {
-      "field": "Mobile",
-      "scenario": "Entry is too short",
-      "content": "Personal mobile phone number must be 10 characters or more"
-    },
-    {
-      "field": "Telephone",
-      "scenario": "Entry is too long",
-      "content": "Personal telephone number must be 100 characters or less"
-    },
-    {
-      "field": "Telephone",
-      "scenario": "Entry is too short",
-      "content": "Personal telephone number must be 10 characters or more"
-    }       
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 

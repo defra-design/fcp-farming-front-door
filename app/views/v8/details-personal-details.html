@@ -15,49 +15,52 @@
 
 {% set _showIntExtLinks = true %}
 
-
 {% set pageName="View and update your personal details" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "pd01",
+    "url": "details-personal-details?r=t&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+      }
+    ],
 
-  "name": "Manage personal details",
-  "id": "pd01",
-  "url": "details-personal-details?r=t&release=b1",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
-    {
-      "name": "name changed banner",
-      "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "date of birth changed banner",
-      "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "address changed banner",
-      "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "phone numbers changed banner",
-      "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "email changed banner",
-      "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
-    }
-  ],
-
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
     
-  ]
-  
-}
-%}
+  }
+  %}
+{% else %}
+
+{% endif %}
 
 {% set _selectedUser = myData.selectedUser %}
 

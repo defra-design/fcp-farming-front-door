@@ -17,24 +17,28 @@
 {% set pageName = "Check your personal phone numbers are correct before submitting" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Phone numbers (check) - personal details",
+    "id": "pd15",
+    "url": "personal-details-phone-check?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
 
-  "name": "Phone numbers (check) - personal details",
-  "id": "pd15",
-  "url": "personal-details-phone-check?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [],
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
+    ]
+    
+  }
+  %}
+{% else %}
 
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 

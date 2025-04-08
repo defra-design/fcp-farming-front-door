@@ -17,26 +17,30 @@
 {% set pageName = "Check your personal email address is correct before submitting" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Email address (check) - personal details",
+    "id": "pd13",
+    "url": "personal-details-email-check?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      
+    ],
 
-  "name": "Email address (check) - personal details",
-  "id": "pd13",
-  "url": "personal-details-email-check?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
     
-  ],
+  }
+  %}
+{% else %}
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 

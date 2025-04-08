@@ -1,13 +1,9 @@
 {% extends "layouts/main.html" %}
 
 {% if data.view == "int" %}
-
-{% set _showFooterLinks = false %}
-
+  {% set _showFooterLinks = false %}
 {% else %}
-
-{% set _showFooterLinks = true %}
-
+  {% set _showFooterLinks = true %}
 {% endif %}
 
 {% if data.view == "int" %}
@@ -17,7 +13,6 @@
 {% endif %}
 
 {% set _showIntExtLinks = true %}
-
 
 
 {% set pageName = "View and update your business details" %}

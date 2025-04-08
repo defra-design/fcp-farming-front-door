@@ -7,32 +7,38 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
 
-  "name": "Businesses list",
-  "id": "bp01",
-  "url": "businesses-list?r=t&release=b1",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
-    {
-      "name": "page 2 of list",
-      "url": "businesses-list-p2?r=t&release=b1"
-    }
-  ],
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Businesses list",
+    "id": "bp01",
+    "url": "businesses-list?r=t&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "page 2 of list",
+        "url": "businesses-list-p2?r=t&release=b1"
+      }
+    ],
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ],
+    "notes": [
+      "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb."
+    ]
     
-  ],
-  "notes": [
-    "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb."
-  ]
-  
-}
-%}
+  }
+  %}
+
+{% else %}
+
+{% endif %}
 
 {% block beforeContent %}
 

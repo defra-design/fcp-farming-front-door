@@ -6,29 +6,35 @@
 {% set pageName = "Your business" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
 
-  "name": "SFD Home/Business Page",
-  "id": "bp02",
-  "url": "business-home?r=t&release=b1",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
-    {
-      "name": "SFD Home/Business Page (concept)",
-      "url": "business-home?r=t&release=concept"
-    }
-  ],
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "SFD Home/Business Page",
+    "id": "bp02",
+    "url": "business-home?r=t&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "SFD Home/Business Page (concept)",
+        "url": "business-home?r=t&release=concept"
+      }
+    ],
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-   
-  ]
-  
-}
-%}
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
 
 {% block beforeContent %}
 

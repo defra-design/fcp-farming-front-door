@@ -12,26 +12,30 @@
 {% set pageName = "Check your name is correct before submitting" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Full name (check) - personal details",
+    "id": "pd03",
+    "url": "personal-details-name-check?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      
+    ],
 
-  "name": "Full name (check) - personal details",
-  "id": "pd03",
-  "url": "personal-details-name-check?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
     
-  ],
+    ]
+    
+  }
+  %}
+{% else %}
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-   
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 

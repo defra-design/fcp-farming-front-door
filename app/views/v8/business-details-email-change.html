@@ -20,36 +20,41 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
 
-  "name": "Email address (change) - business details",
-  "id": "bd10",
-  "url": "business-details-email-check?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [],
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Email address (change) - business details",
+    "id": "bd10",
+    "url": "business-details-email-check?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
 
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "scenario": "Empty field / nothing entered",
-      "content": "Enter business email address"
-    },
-    {
-      "scenario": "Entry is too long",
-      "content": "Business email address must be 254 characters or less"
-    },
-    {
-      "scenario": "Wrong format",
-      "content": "Enter an email address, like name@example.com"
-    }
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter business email address"
+      },
+      {
+        "scenario": "Entry is too long",
+        "content": "Business email address must be 254 characters or less"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter an email address, like name@example.com"
+      }
 
-  ]
-  
-}
-%}
+    ]
+    
+  }
+  %}
+{% else %}
+
+{% endif %}
 
 
 {% block beforeContent %}

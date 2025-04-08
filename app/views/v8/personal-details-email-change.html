@@ -24,42 +24,46 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Email address (change) - personal details",
+    "id": "pd12",
+    "url": "personal-details-email-change?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      
+    ],
 
-  "name": "Email address (change) - personal details",
-  "id": "pd12",
-  "url": "personal-details-email-change?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter personal email address"
+      },
+      {
+        "scenario": "Entry is too long",
+        "content": "Personal email address must be 254 characters or less"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter an email address, like name@example.com"
+      },
+      {
+        "scenario": "Not unique",
+        "content": "This email address is already in use for another personal account. Enter a different email address."
+      }
+
+    ]
     
-  ],
+  }
+  %}
+{% else %}
 
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "scenario": "Empty field / nothing entered",
-      "content": "Enter personal email address"
-    },
-    {
-      "scenario": "Entry is too long",
-      "content": "Personal email address must be 254 characters or less"
-    },
-    {
-      "scenario": "Wrong format",
-      "content": "Enter an email address, like name@example.com"
-    },
-    {
-      "scenario": "Not unique",
-      "content": "This email address is already in use for another personal account. Enter a different email address."
-    }
-
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 

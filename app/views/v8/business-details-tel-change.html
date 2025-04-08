@@ -13,31 +13,38 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Telephone (change) - business details",
+    "id": "bd06",
+    "url": "business-details-tel-change?r=t&release=b1&newChange=true",
+    "release": "N/A",
+    "variants": [],
 
-  "name": "Telephone (change) - business details",
-  "id": "bd06",
-  "url": "business-details-tel-change?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [],
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter business telephone number"
+      },
+      {
+        "scenario": "Entry is too long",
+        "content": "Business telephone number must be [max number] characters or less"
+      }
+    ], 
+    "notes": [
+        "Removed from Buffalo 1.0 MVP"
+      ]
+    
+  }
+  %}
+{% else %}
 
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "scenario": "Empty field / nothing entered",
-      "content": "Enter business telephone number"
-    },
-    {
-      "scenario": "Entry is too long",
-      "content": "Business telephone number must be [max number] characters or less"
-    }
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 

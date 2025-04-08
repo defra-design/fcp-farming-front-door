@@ -26,77 +26,81 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Date of birth (change) - personal details",
+    "id": "pd04",
+    "url": "personal-details-dob-change?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      
+    ],
 
-  "name": "Date of birth (change) - personal details",
-  "id": "pd04",
-  "url": "personal-details-dob-change?r=t&release=b1&newChange=true",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "If nothing is entered",
+        "content": "Enter your date of birth"
+      },
+
+      {
+        "scenario": "Incomplete (missing day)",
+        "content": "Date of birth must include a day"
+      },
+
+      {
+        "scenario": "Incomplete (missing month)",
+        "content": "Date of birth must include a month"
+      },
+
+      {
+        "scenario": "Incomplete (missing year)",
+        "content": "Date of birth must include a year"
+      },
+
+      {
+        "scenario": "Incomplete (missing day and month)",
+        "content": "Date of birth must include a day and month"
+      },
+
+      {
+        "scenario": "Incomplete (missing day and year)",
+        "content": "Date of birth must include a day and year"
+      },
+
+      {
+        "scenario": "Incomplete (missing month and year)",
+        "content": "Date of birth must include a month and year"
+      },
+
+
+      {
+        "scenario": "Date entered cannot be correct",
+        "content": "Date of birth must be a real date"
+      },
+
+      {
+        "scenario": "Day and month have valid entries but the year entered is not 4 digits",
+        "content": "Enter a year with 4 numbers, like 1975"
+      },
+      
+
+      {
+        "scenario": "Date is in the future",
+        "content": "Date of birth must be in the past"
+      }
+
+    ]
     
-  ],
+  }
+  %}
+{% else %}
 
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "scenario": "If nothing is entered",
-      "content": "Enter your date of birth"
-    },
-
-    {
-      "scenario": "Incomplete (missing day)",
-      "content": "Date of birth must include a day"
-    },
-
-    {
-      "scenario": "Incomplete (missing month)",
-      "content": "Date of birth must include a month"
-    },
-
-    {
-      "scenario": "Incomplete (missing year)",
-      "content": "Date of birth must include a year"
-    },
-
-    {
-      "scenario": "Incomplete (missing day and month)",
-      "content": "Date of birth must include a day and month"
-    },
-
-    {
-      "scenario": "Incomplete (missing day and year)",
-      "content": "Date of birth must include a day and year"
-    },
-
-    {
-      "scenario": "Incomplete (missing month and year)",
-      "content": "Date of birth must include a month and year"
-    },
-
-
-    {
-      "scenario": "Date entered cannot be correct",
-      "content": "Date of birth must be a real date"
-    },
-
-    {
-      "scenario": "Day and month have valid entries but the year entered is not 4 digits",
-      "content": "Enter a year with 4 numbers, like 1975"
-    },
-    
-
-    {
-      "scenario": "Date is in the future",
-      "content": "Date of birth must be in the past"
-    }
-
-  ]
-  
-}
-%}
+{% endif %}
 
 {% block beforeContent %}
 
