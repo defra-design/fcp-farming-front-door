@@ -1,0 +1,156 @@
+{% extends "layouts/main.html" %}
+
+{% set _pageID = "" %}
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set _includeServiceNavigation = "false" %}
+{% set _paymentsServiceNavigationActive = true %}
+
+<!-- Selected payment -->
+{% set _selectedPaymentPrevious = data.selectedPayment %} 
+{% for _payment in data.paymentsPrevious %}
+  {% if data.payment == _payment.id %}
+    {% set _selectedPaymentPrevious = _payment %} 
+  {% endif %}
+{% endfor %}
+
+{% set pageName = _selectedPaymentPrevious.date + ", " + _selectedPaymentPrevious.total | currency(trailingZeros=false)  %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  {% include "_common/sub-header.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% include "_common/login-nav-3.html" %}
+
+      {% set _returnURL = "business-payments-prev" %}
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="{{_returnURL}}">Your business's payments</a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        {{_selectedPaymentPrevious.date}} <br>{{_selectedPaymentPrevious.total | currency(trailingZeros=false) }}
+      </h1>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+        <!-- <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Date
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{_selectedPaymentPrevious.date}}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Amount
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{_selectedPaymentPrevious.total | currency(trailingZeros=false) }}
+          </dd>
+        </div> -->
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Status
+          </dt>
+          <dd class="govuk-summary-list__value">
+
+            <p class="govuk-body ">
+            {% if _selectedPaymentPrevious.status == "paid" %}
+              <strong class="govuk-tag govuk-tag--green">
+                Paid
+              </strong>
+            {% endif %}
+            </p>
+            
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Covering period
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{_selectedPaymentPrevious.period}}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Paid into
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <p class="govuk-!-margin-bottom-">Bank account ****9276</p> 
+            <p>The payment will be in your account within 2 working days of {{_selectedPaymentPrevious.date}}.</p>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Reference
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{_selectedPaymentPrevious.reference}}
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-l ">What this payment included</h2>
+
+      <table class="govuk-table govuk-!-margin-bottom-8">
+        <!-- <caption class="govuk-table__caption govuk-table__caption--s">Breakdown of payment</caption> -->
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Description</th>
+            <th scope="col" class="govuk-table__header">Agreement and calculations</th>
+            <th scope="col" class="govuk-table__header govuk-table__cell--numeric">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+
+            {% for _item in _selectedPaymentPrevious.items %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{_item.description}}</td>
+              <td class="govuk-table__cell"><a href="/_common/not-testing" class="govuk-link govuk-link--no-visited-state">{{_item.scheme}} {{_selectedPaymentPrevious.year}}</a></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+                {{_item.amount | currency(trailingZeros=false) }}
+              </td>
+            </tr>
+            {% endfor %}
+
+
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">Total</th>
+            <td class="govuk-table__cell">&nbsp;</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_selectedPaymentPrevious.total | currency(trailingZeros=false) }}</strong></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+
+  
+
+{% endblock %}

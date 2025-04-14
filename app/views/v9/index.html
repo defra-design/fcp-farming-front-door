@@ -91,7 +91,7 @@
       </fieldset>
     </div>
 
-    <!-- Include validation checking -->
+    <!-- Include validation checking 
     <div class="govuk-form-group" id="validationContainer">
       <label class="govuk-label" >
         Include validation
@@ -101,7 +101,7 @@
           <option {% if myData.includeValidation == 'false' %}selected{% endif %} value="false">No (allow empty fields)</option>
       </select>
     </div>
-
+    -->
   </div>
 </div>
 
@@ -129,13 +129,6 @@
     </h2>
     <p><a href="_design-history" class="govuk-link govuk-link--no-visited-state">View design history</a> which includes:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>functionality changes</li>
-      <li>why we explored the internal user journey</li>
-      <li>design approach</li>
-      <li>pain points and user needs</li>
-      <li>what we designed</li>
-      <li>what we tested</li>
-      <li>outcomes and decisions</li>
     </ul>
     
 
@@ -145,24 +138,8 @@
     </h2>
     {% set _tickets = [
       {
-        "number": "152",
-        "title": "Update Buffalo 1.0 MVP based on BA insights"
-      },
-      {
-        "number": "173",
-        "title": "Update to Contact us content for MVP"
-      },
-      {
-        "number": "195",
-        "title": "[from UR Feb 2025 on Prototype v7] Personal and business details - fix findability issues"
-      },
-      {
-        "number": "210",
-        "title": "Internal user design (sign in, find user, update details)"
-      },
-      {
-        "number": "190",
-        "title": "Internal user design - business legal status - company reg number visibility"
+        "number": "232",
+        "title": "Bank details design"
       }
 
 
@@ -654,19 +631,29 @@
           "url": "business-details-type-check?r=t&release=concept&newChange=true",
           "release": "Concept"
         },
-
-        
         {
-          "name": "Bank details (change) - business details",
-          "id": "bd19",
-          "url": "business-details-bank-change?r=t&release=b2&newChange=true",
-          "release": "Concept"
+          "name": "Bank details - country (select) - business details (MVP)",
+          "id": "xx",
+          "url": "business-details-bank-country?r=t&release=b2&newChange=true",
+          "release": "xx"
         },
         {
-          "name": "Bank details (check) - business details",
-          "id": "bd20",
-          "url": "business-details-bank-check?r=t&release=b2&newChange=true",
-          "release": "Concept"
+          "name": "Bank details - account type (select) - business details (MVP)",
+          "id": "xx",
+          "url": "business-details-bank-type?r=t&release=b2&newChange=true",
+          "release": "xx"
+        },
+        {
+          "name": "Bank details (change) - business details (MVP)",
+          "id": "xx",
+          "url": "business-details-bank-details-change?r=t&release=b2&newChange=true",
+          "release": "xx"
+        },
+        {
+          "name": "Bank details (check) - business details (MVP)",
+          "id": "xx",
+          "url": "business-details-bank-details-check?r=t&release=b2&newChange=true",
+          "release": "xx"
         },
 
 
@@ -992,11 +979,9 @@
           if (_intExtValue == "int") {
             $('#releaseContainer').hide()
             $('#startFromContainer').hide()
-            $('#validationContainer').hide()
           } else {
             $('#releaseContainer').show()
             $('#startFromContainer').show()
-            $('#validationContainer').show()
           }
 
         }
