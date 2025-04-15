@@ -53,7 +53,6 @@
   {% set _hideAccountLink = true %}
   {% include "_common/login-nav-3.html" %}
 
-  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -83,36 +82,23 @@
     </div>
     {% endif %}
 
-    <form method="POST" novalidate >
+    <form method="POST" novalidate>
+        
+        <h1 class="govuk-heading-l">We could not validate your bank account</h1>
 
-        <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                <h1 class="govuk-fieldset__heading">
-                  Is this a business or personal account?
-                </h1>
-                </legend>
-                <div class="govuk-radios" data-module="govuk-radios">
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="bankAccountTypebus" name="bankAccountTypebus" type="radio" value="Business" {{ checked("bankAccountTypebus","Business") }}>
-                    <label class="govuk-label govuk-radios__label" for="bankAccountTypebus">
-                    Business
-                    </label>
-                </div>
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="bankAccountTypebus-2" name="bankAccountTypebus" type="radio" value="Personal" {{ checked("bankAccountTypebus","Personal") }}>
-                    <label class="govuk-label govuk-radios__label" for="bankAccountTypebus-2">
-                    Personal
-                    </label>
-                </div>
-            </fieldset>
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-visually-hidden">Warning</span>
+            You have 2 attempts left to enter the correct details.
+          </strong>
+        </div>
+        {{govukButton({
+          text: "Enter details again"
+        })}}
+
         </div>
 
-      {{govukButton({
-        text: "Continue"
-      })}}
-
-      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
     </form>
 

@@ -163,6 +163,11 @@
         <h3 class="govuk-notification-banner__heading">
           {{myData.notifications.message}}
         </h3>
+        {% if data.bankchanged == "true" %}
+        <p>
+          It may take up to 30 working days for payments to be made to this account. This could take longer during busy periods or if queries are raised. We'll be in touch if we need more information.
+        </p>
+        {% endif %}
       </div>
     </div>
     {% endif %}
@@ -398,6 +403,142 @@
      </h2>
 
      <dl class="govuk-summary-list">
+      {% if data.bankchanged == "true" %}
+      {% if (data['bankCountrybus'] == "European bank account") %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Country code where the account is held 
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['bankCountryCodebus'] }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> account number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+      <div class="govuk-summary-list__row">
+        {% if (data['bankAccountTypebus'] == "Business") %}
+        <dt class="govuk-summary-list__key">
+          Name on the account
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['bankNameBus']  or "Account name" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> name on the account</span></a>
+        </dd>
+        {% elseif (data['bankAccountTypebus'] == "Personal") %}
+        <dt class="govuk-summary-list__key">
+          First and last name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['bankFirstName'] }} {{ data['bankLastName'] or "Account name" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> name on the account</span></a>
+        </dd>
+        {% else %}
+        <dt class="govuk-summary-list__key">
+          First and last name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Alfred Waldron
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> name on the account</span></a>
+        </dd>
+        {% endif %}
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Sort code
+        </dt>
+        <dd class="govuk-summary-list__value">
+          ****56
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> sort code</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Account number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          ******78
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> account number</span></a>
+        </dd>
+      </div>
+      {% if (data['bankCountrybus'] == "UK bank or building society account") %}
+      
+        {% if data['bankBuildbus'] %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Building society roll number (if you have one) 
+          </dt>
+          <dd class="govuk-summary-list__value">
+            *******89
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
+          </dd>
+        </div>
+        {% else %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Building society roll number (if you have one) 
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <span style="color:#505a5f">No number added</span>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
+          </dd>
+        </div>
+        {% endif %}
+      {% elseif (data['bankCountrybus'] == "European bank account") %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          IBAN
+        </dt>
+        <dd class="govuk-summary-list__value">
+          ***********89
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> IBAN</span></a>
+        </dd>
+      </div>
+        {% if data['bankSwiftCodebus'] %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            SWIFT code (optional)
+          </dt>
+          <dd class="govuk-summary-list__value">
+            ********34
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
+          </dd>
+        </div>
+        {% else %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            SWIFT code (optional)
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <span style="color:#505a5f">No number added</span>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
+          </dd>
+        </div>
+        {% endif %}
+      {% else %}
+      {% endif %} 
+      {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Name on the account
@@ -451,6 +592,7 @@
           <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-change?newChange=true">Change<span class="govuk-visually-hidden"> building society roll number</span></a>
         </dd>
       </div>
+      {% endif %}
     </dl>
 
 

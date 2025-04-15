@@ -53,7 +53,6 @@
   {% set _hideAccountLink = true %}
   {% include "_common/login-nav-3.html" %}
 
-  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -83,36 +82,16 @@
     </div>
     {% endif %}
 
-    <form method="POST" novalidate >
+    <form method="POST" novalidate action="details-business-details">
+        
+        <h1 class="govuk-heading-l">We could not validate your bank account</h1>
 
-        <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                <h1 class="govuk-fieldset__heading">
-                  Is this a business or personal account?
-                </h1>
-                </legend>
-                <div class="govuk-radios" data-module="govuk-radios">
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="bankAccountTypebus" name="bankAccountTypebus" type="radio" value="Business" {{ checked("bankAccountTypebus","Business") }}>
-                    <label class="govuk-label govuk-radios__label" for="bankAccountTypebus">
-                    Business
-                    </label>
-                </div>
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="bankAccountTypebus-2" name="bankAccountTypebus" type="radio" value="Personal" {{ checked("bankAccountTypebus","Personal") }}>
-                    <label class="govuk-label govuk-radios__label" for="bankAccountTypebus-2">
-                    Personal
-                    </label>
-                </div>
-            </fieldset>
+        <p class="govuk-body">Contact the helpline on 0300 200 301 for support.</p>
+        {{govukButton({
+          text: "Return to business details"
+        })}}
         </div>
 
-      {{govukButton({
-        text: "Continue"
-      })}}
-
-      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
     </form>
 

@@ -125,13 +125,11 @@
 
         <!-- Country code for EU bank account -->
 
-        {% if (data['bankCountrybus'] == "European bank account") %}
-
         <div class="govuk-form-group">
-          <label class="govuk-label" for="bankCountryCodebus">
+          <label class="govuk-label" for="bankCountryCode">
             Country code where the account is held
           </label>
-          <select class="govuk-select" id="bankCountryCodebus" name="bankCountryCodebus">
+          <select class="govuk-select" id="bankCountryCode" name="bankCountryCode">
             <option value="AD">AD</option>
             <option value="AE">AE</option>
             <option value="AF">AF</option>
@@ -142,8 +140,6 @@
             <option value="GD">GD</option>
           </select>
         </div>
-
-        {% endif %}
 
         <!-- Name on the account -->
         {% if (data['bankAccountTypebus'] == "Business") %}
@@ -241,27 +237,8 @@
           <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankAccountbus %}govuk-input--error{% endif %}" id="bankAccountbus" name="bankAccountbus" type="text" value="{{data['bankAccountbus']}}" aria-describedby="bankAccountbus-hint {% if myData.validationErrors.bankAccountbus %}bankAccountbus-error{% endif %}" spellcheck="false" inputmode="numeric">
         </div>
 
-        <!-- UK accounts - show building society number field -->
-        {% if (data['bankCountrybus'] != "European bank account") %}
-        <!-- Building society roll number (if you have one) -->
-        <div class="govuk-form-group {% if myData.validationErrors.bankBuildbus %}govuk-form-group--error{% endif %}">
-          <label class="govuk-label" for="bankBuildbus">
-            Building society roll number (if you have one)
-          </label>
-          <div id="bankBuildbus-hint" class="govuk-hint">
-            You can find it on your card, statement or passbook
-          </div>
-          {% if myData.validationErrors.bankBuildbus %}
-          <p id="bankBuildbus-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankBuildbus.message}}
-          </p>
-          {% endif %}
-          <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankBuildbus %}govuk-input--error{% endif %}" id="bankBuildbus" name="bankBuildbus" type="text" value="{{ data['bankBuildbus'] }}" aria-describedby="bankBuildbus-hint {% if myData.validationErrors.bankBuildbus %}bankBuildbus-error{% endif %}" spellcheck="false" >
-        </div>
-        {%endif %}
-
         <!-- European accounts - show bankIBANbus & Swift fields -->
-        {% if (data['bankCountrybus'] == "European bank account") %}
+      
         <div class="govuk-form-group">
           <label class="govuk-label" for="bankIBANbus">
             IBAN
@@ -280,7 +257,7 @@
           </div>
           <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing" id="bankSwiftCodebus" name="bankSwiftCodebus" type="text" value="{{ data['bankSwiftCodebus'] }}" spellcheck="false" aria-describedby="bankSwiftCodebus-hint">
         </div>
-        {% endif %}
+
 
       </fieldset>
 

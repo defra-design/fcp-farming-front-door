@@ -1676,14 +1676,19 @@ module.exports = function (router,_myData) {
         });
     });
 
+    /*router.post('/bank-answer', function(request, response) {
+
+        var bankAnswer = request.session.data['bankCountrybus']
+        if (bankAnswer == "UK bank or building society account"){
+            response.redirect("/v9/business-details-bank-change-uk")
+        } else {
+            response.redirect("/v9/business-details-bank-change-european")
+        }
+    })*/
+
 
     //business details - change bank details - change
 
-
-
-    router.post('/' + version + '/business-details-bank-details-change', function (req, res) {
-        res.redirect(301, '/' + version + '/business-details-bank-details-check');
-    });
 
     router.get('/' + version + '/business-details-bank-details-change', function (req, res) {
         res.render(version + '/business-details-bank-details-change', {
@@ -1691,10 +1696,22 @@ module.exports = function (router,_myData) {
         });
     });
 
+    router.post('/' + version + '/business-details-bank-details-change', function (req, res) {
+        res.redirect(301, '/' + version + '/business-details-bank-details-check');
+    });
+
+    /*router.post('/' + version + '/business-details-bank-change-european', function (req, res) {
+        res.redirect(301, '/' + version + '/business-details-bank-check-european');
+    });*/
+
     //business details - change bank details - check
 
 
-        router.post('/' + version + '/business-details-bank-details-check', function (req, res) {
+    /*    router.post('/' + version + '/business-details-bank-check-uk', function (req, res) {
+        res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
+    });*/
+
+    router.post('/' + version + '/business-details-bank-details-check', function (req, res) {
         res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
     });
 
@@ -1703,7 +1720,6 @@ module.exports = function (router,_myData) {
             myData: req.session.myData
         });
     });
-
 
 
     //business details - change bank details - CONCEPT VERSIONS // outdated
