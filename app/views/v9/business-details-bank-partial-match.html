@@ -83,7 +83,7 @@
     </div>
     {% endif %}
 
-    <form method="POST" novalidate>
+    <form method="POST" novalidate action="/validation-answer">
         <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
           <div class="govuk-notification-banner__header">
             <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
@@ -101,21 +101,55 @@
         <h1 class="govuk-heading-l">Review the partial match</h1>
 
         <h2 class="govuk-heading-m">Your bank account or building society details</h2>
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <dl class="govuk-summary-list">
           <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Currency
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['bankCurrencybus']  or "GBP" }}
+            </dd>
+          </div>
+          {% if (data['bankCountrybus'] == "European bank account") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Country code where the account is held 
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['bankCountryCodebus'] }}
+            </dd>
+          </div>
+          {% endif %}
+          <div class="govuk-summary-list__row">
+            {% if (data['bankAccountTypebus'] == "Business") %}
             <dt class="govuk-summary-list__key">
               Name on the account
             </dt>
             <dd class="govuk-summary-list__value">
-              Sarah Philips
+              {{ data['bankNameBus']  or "Account name" }}
             </dd>
+            {% elseif (data['bankAccountTypebus'] == "Personal") %}
+            <dt class="govuk-summary-list__key">
+              First and last name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['bankFirstName'] }} {{ data['bankLastName'] or "Last name" }}
+            </dd>
+            {% else %}
+            <dt class="govuk-summary-list__key">
+              First and last name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              Alfred Waldron
+            </dd>
+            {% endif %}
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Sort code
             </dt>
             <dd class="govuk-summary-list__value">
-              5 January 1978
+              {{data['bankSortbus'] or "123456"}}
             </dd>
           </div>
           <div class="govuk-summary-list__row">
@@ -123,17 +157,61 @@
               Account number
             </dt>
             <dd class="govuk-summary-list__value">
-              Not provided
+              {{data['bankAccountbus'] or "12345678"}}
             </dd>
           </div>
+          {% if (data['bankCountrybus'] == "UK bank or building society account") %}
+          
+            {% if data['bankBuildbus'] %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Building society roll number (if you have one) 
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ data['bankBuildbus'] }}
+              </dd>
+            </div>
+            {% else %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Building society roll number (if you have one) 
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <span style="color:#505a5f">No number added</span>
+              </dd>
+            </div>
+            {% endif %}
+          {% elseif (data['bankCountrybus'] == "European bank account") %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
-              Address
+              IBAN
             </dt>
             <dd class="govuk-summary-list__value">
-              72 Guild Street<br>London<br>SE23 6FH
+              {{ data['bankIBANbus'] or 123456789}}
             </dd>
           </div>
+            {% if data['bankSwiftCodebus'] %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                SWIFT code (optional)
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ data['bankSwiftCodebus'] }}
+              </dd>
+            </div>
+            {% else %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                SWIFT code (optional)
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <span style="color:#505a5f">No number added</span>
+              </dd>
+
+            </div>
+            {% endif %}
+          {% else %}
+          {% endif %}
         </dl>
 
         <div class="govuk-warning-text">
@@ -151,13 +229,13 @@
             </legend>
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="bankAccountPartialMatch" name="bankAccountPartialMatch" type="radio" value="Yes, submit anyway">
+                <input class="govuk-radios__input" id="bankAccountPartialMatch" name="bankAccountPartialMatch" type="radio" value="Yes">
                 <label class="govuk-label govuk-radios__label" for="bankAccountPartialMatch">
                   Yes, submit anyway
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="bankAccountPartialMatch-2" name="bankAccountPartialMatch" type="radio" value="No, go back and edit details">
+                <input class="govuk-radios__input" id="bankAccountPartialMatch-2" name="bankAccountPartialMatch" type="radio" value="No">
                 <label class="govuk-label govuk-radios__label" for="bankAccountPartialMatch-2">
                   No, go back and edit details
                 </label>

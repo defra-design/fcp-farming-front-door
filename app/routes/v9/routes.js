@@ -1712,6 +1712,9 @@ module.exports = function (router,_myData) {
     });*/
 
     router.post('/' + version + '/business-details-bank-details-check', function (req, res) {
+        if(req.session.data['bankFirstName'] = "Andy") {
+            res.redirect(301, '/' + version + '/business-details-bank-partial-match?changed=true&bankchanged=true');
+        }
         res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
     });
 
@@ -1720,6 +1723,18 @@ module.exports = function (router,_myData) {
             myData: req.session.myData
         });
     });
+
+    // business details - partial match routing based on radios 
+
+    router.post('/validation-answer', function(request, response) {
+
+        var validationAnswer = request.session.data['bankAccountPartialMatch']
+        if (validationAnswer == "Yes"){
+            response.redirect("v9/details-business-details?changed=true&bankchanged=true")
+        } else {
+            response.redirect("v9/business-details-bank-details-check")
+        }
+    })
 
 
     //business details - change bank details - CONCEPT VERSIONS // outdated
