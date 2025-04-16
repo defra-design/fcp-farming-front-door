@@ -82,7 +82,7 @@
     </div>
     {% endif %}
 
-    <form method="POST" novalidate>
+    <form method="POST" novalidate action="/validation-return-to-check-2">
         
         <h1 class="govuk-heading-l">We could not validate your bank account</h1>
 
@@ -96,6 +96,8 @@
         {{govukButton({
           text: "Enter details again"
         })}}
+        <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
         </div>
 
 

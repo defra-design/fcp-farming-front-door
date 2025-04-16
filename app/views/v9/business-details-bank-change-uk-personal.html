@@ -23,9 +23,9 @@
 {% set _designSpecData = {
 
   "name": " Bank details (change) - business details",
-  "id": "xx",
+  "id": "ba04b",
   "url": "business-details-bank-change?r=t&release=b2&newChange=true",
-  "release": "Buffalo 1.X",
+  "release": "MVP",
   "variants": [],
 
   "pagetitle": pageTitle,
@@ -123,27 +123,6 @@
           </div>
         </div>
 
-        <!-- Name on the account -->
-        {% if (data['bankAccountTypebus'] == "Business") %}
-        <div class="govuk-form-group {% if myData.validationErrors.bankNameBus %}govuk-form-group--error{% endif %}">
-          <label class="govuk-label" for="bankNameBus">
-            Name on the account
-          </label>
-          <div id="bankNameBus-hint" class="govuk-hint">
-            Provide the bank account name exactly as it appears on the bank statement
-          </div>
-          {% if myData.validationErrors.bankNameBus %}
-          <p id="bankNameBus-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankNameBus.message}}
-          </p>
-          {% endif %}
-          {% set _valueNewBankNameBus = myData.newBankNameBus or myData.bankNameBus %}
-          {% if myData.validationErrors.bankNameBus %}
-              {% set _valueNewBankNameBus = myData.newBankNameBus %}
-          {% endif %}
-          <input class="govuk-input {% if myData.validationErrors.bankNameBus %}govuk-input--error{% endif %}" id="bankNameBus" name="bankNameBus" type="text" value="{{ data['bankNameBus'] }}" {% if myData.validationErrors.bankNameBus %}aria-describedby="bankNameBus-error"{% endif %} spellcheck="false" aria-describedby="bankNameBus-hint">
-        </div>
-          {% else %}
           <!-- FIRST NAME -->
           <div class="govuk-form-group {% if myData.validationErrors.bankFirstName %}govuk-form-group--error{% endif %}">
             <label class="govuk-label" for="bankFirstName">
@@ -153,10 +132,6 @@
             <p id="bankFirstName-error" class="govuk-error-message">
               <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankFirstName.message}}
             </p>
-            {% endif %}
-            {% set _valueNewbankFirstName = myData.newbankFirstName or myData.bankFirstName %}
-            {% if myData.validationErrors.bankFirstName %}
-                {% set _valueNewbankFirstName = myData.newbankFirstName %}
             {% endif %}
             <input class="govuk-input {% if myData.validationErrors.bankFirstName %}govuk-input--error{% endif %}" id="bankFirstName" name="bankFirstName" type="text" value="{{ data['bankFirstName'] }}" {% if myData.validationErrors.bankFirstName %}aria-describedby="bankFirstName-error"{% endif %}>
           </div>
@@ -171,13 +146,8 @@
               <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankLastName.message}}
             </p>
             {% endif %}
-            {% set _valueNewbankLastName = myData.newbankLastName or myData.bankLastName %}
-            {% if myData.validationErrors.bankLastName %}
-                {% set _valueNewbankLastName = myData.newbankLastName %}
-            {% endif %}
             <input class="govuk-input {% if myData.validationErrors.bankLastName %}govuk-input--error{% endif %}" id="bankLastName" name="bankLastName" type="text" value="{{ data['bankLastName'] }}" {% if myData.validationErrors.bankLastName %}aria-describedby="bankLastName-error"{% endif %}>
           </div>
-        {% endif %}
 
         <!-- Sort code -->
         <div class="govuk-form-group {% if myData.validationErrors.bankSortbus %}govuk-form-group--error{% endif %}">
@@ -191,10 +161,6 @@
           <p id="bankSortbus-error" class="govuk-error-message">
             <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankSortbus.message}}
           </p>
-          {% endif %}
-          {% set _valueNewbankSortbus = myData.newbankSortbus or myData.bankSortbus %}
-          {% if myData.validationErrors.bankSortbus %}
-              {% set _valueNewbankSortbus = myData.newbankSortbus %}
           {% endif %}
           <input class="govuk-input govuk-input--width-5 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankSortbus %}govuk-input--error{% endif %}" id="bankSortbus" name="bankSortbus" type="text" value="{{data['bankSortbus']}}" aria-describedby="bankSortbus-hint {% if myData.validationErrors.bankSortbus %}bankSortbus-error{% endif %}" spellcheck="false" inputmode="numeric">
         </div>
@@ -212,31 +178,24 @@
             <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankAccountbus.message}}
           </p>
           {% endif %}
-          {% set _valueNewbankAccountbus = myData.newbankAccountbus or myData.bankAccountbus %}
-          {% if myData.validationErrors.bankAccountbus %}
-              {% set _valueNewbankAccountbus = myData.newbankAccountbus %}
-          {% endif %}
           <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankAccountbus %}govuk-input--error{% endif %}" id="bankAccountbus" name="bankAccountbus" type="text" value="{{data['bankAccountbus']}}" aria-describedby="bankAccountbus-hint {% if myData.validationErrors.bankAccountbus %}bankAccountbus-error{% endif %}" spellcheck="false" inputmode="numeric">
         </div>
 
+        <!-- UK accounts - show building society number field -->
         <!-- Building society roll number (if you have one) -->
-        <div class="govuk-form-group {% if myData.validationErrors.bankRollBus %}govuk-form-group--error{% endif %}">
-          <label class="govuk-label" for="bankRollBus">
+        <div class="govuk-form-group {% if myData.validationErrors.bankBuildbus %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankBuildbus">
             Building society roll number (if you have one)
           </label>
-          <div id="bankRollBus-hint" class="govuk-hint">
+          <div id="bankBuildbus-hint" class="govuk-hint">
             You can find it on your card, statement or passbook
           </div>
-          {% if myData.validationErrors.bankRollBus %}
-          <p id="bankRollBus-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankRollBus.message}}
+          {% if myData.validationErrors.bankBuildbus %}
+          <p id="bankBuildbus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankBuildbus.message}}
           </p>
           {% endif %}
-          {% set _valueNewBankRollBus = myData.newBankRollBus or myData.bankRollBus %}
-          {% if myData.validationErrors.bankRollBus %}
-              {% set _valueNewBankRollBus = myData.newBankRollBus %}
-          {% endif %}
-          <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankRollBus %}govuk-input--error{% endif %}" id="bankRollBus" name="bankRollBus" type="text" value="{{_valueNewBankRollBus}}" aria-describedby="bankRollBus-hint {% if myData.validationErrors.bankRollBus %}bankRollBus-error{% endif %}" spellcheck="false" >
+          <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankBuildbus %}govuk-input--error{% endif %}" id="bankBuildbus" name="bankBuildbus" type="text" value="{{ data['bankBuildbus'] }}" aria-describedby="bankBuildbus-hint {% if myData.validationErrors.bankBuildbus %}bankBuildbus-error{% endif %}" spellcheck="false" >
         </div>
 
       </fieldset>

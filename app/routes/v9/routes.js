@@ -1665,11 +1665,6 @@ module.exports = function (router,_myData) {
 
         //business details - change bank details - type
 
-
-    router.post('/' + version + '/business-details-bank-type', function (req, res) {
-        res.redirect(301, '/' + version + '/business-details-bank-details-change');
-    });
-
     router.get('/' + version + '/business-details-bank-type', function (req, res) {
         res.render(version + '/business-details-bank-type', {
             myData: req.session.myData
@@ -1686,18 +1681,73 @@ module.exports = function (router,_myData) {
         }
     })*/
 
+        
+
+    router.post('/bank-change-answer', function(request, response) {
+
+        var bankType = request.session.data['bankAccountTypebus']
+        var bankCountry = request.session.data['bankCountrybus']
+        if (bankType == "Business" && bankCountry == "European bank account"){
+            response.redirect("v9/business-details-bank-change-european-business")
+        }
+        else if (bankType == "Personal" && bankCountry == "European bank account"){
+            response.redirect("v9/business-details-bank-change-european-personal")
+        }
+        else if (bankType == "Business" && bankCountry == "UK bank or building society account"){
+            response.redirect("v9/business-details-bank-change-uk-business")
+        }
+        else if (bankType == "Personal" && bankCountry == "UK bank or building society account"){
+            response.redirect("v9/business-details-bank-change-uk-personal")
+        }
+        else {
+            response.redirect("v9/business-details-bank-change-uk-business")
+        }
+    })
+
 
     //business details - change bank details - change
 
 
-    router.get('/' + version + '/business-details-bank-details-change', function (req, res) {
-        res.render(version + '/business-details-bank-details-change', {
+    router.get('/' + version + '/business-details-bank-change-european-business', function (req, res) {
+        res.render(version + '/business-details-bank-change-european-business', {
             myData: req.session.myData
         });
     });
 
-    router.post('/' + version + '/business-details-bank-details-change', function (req, res) {
-        res.redirect(301, '/' + version + '/business-details-bank-details-check');
+    router.get('/' + version + '/business-details-bank-change-european-personal', function (req, res) {
+        res.render(version + '/business-details-bank-change-european-personal', {
+            myData: req.session.myData
+        });
+    });
+
+    router.get('/' + version + '/business-details-bank-change-uk-business', function (req, res) {
+        res.render(version + '/business-details-bank-change-uk-business', {
+            myData: req.session.myData
+        });
+    });
+
+    router.get('/' + version + '/business-details-bank-change-uk-personal', function (req, res) {
+        res.render(version + '/business-details-bank-change-uk-personal', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/business-details-bank-change-european-business', function (req, res) {
+        res.redirect(301, '/' + version + '/business-details-bank-check-european-business');
+    });
+
+    router.post('/' + version + '/business-details-bank-change-european-personal', function (req, res) {
+        res.redirect(301, '/' + version + '/business-details-bank-check-european-personal');
+    });
+
+
+    router.post('/' + version + '/business-details-bank-change-uk-business', function (req, res) {
+        res.redirect(301, '/' + version + '/business-details-bank-check-uk-business');
+    });
+
+
+    router.post('/' + version + '/business-details-bank-change-uk-personal', function (req, res) {
+        res.redirect(301, '/' + version + '/business-details-bank-check-uk-personal');
     });
 
     /*router.post('/' + version + '/business-details-bank-change-european', function (req, res) {
@@ -1714,12 +1764,61 @@ module.exports = function (router,_myData) {
     router.post('/partial-match-answer', function(request, response) {
 
         var partialMatchAnswer = request.session.data['bankFirstName']
+        var incorrectSortCode = request.session.data['bankSortbus']
+        var incorrectAccountNumber = request.session.data['bankAccountbus']
         if (partialMatchAnswer == "Andy"){
             response.redirect("v9/business-details-bank-partial-match?changed=true&bankchanged=true")
-        } else {
+        } 
+        else if (incorrectSortCode == "999999" && incorrectAccountNumber == "99999999") {
+            response.redirect("v9/business-details-bank-unable-to-validate-01?changed=true&bankchanged=true")
+        }
+        else {
             response.redirect("v9/details-business-details?changed=true&bankchanged=true")
         }
     })
+
+    router.post('/validation-return-to-check-1', function(request, response) {
+
+        var bankType = request.session.data['bankAccountTypebus']
+        var bankCountry = request.session.data['bankCountrybus']
+        if (bankType == "Business" && bankCountry == "European bank account"){
+            response.redirect("v9/business-details-bank-check-european-business")
+        }
+        else if (bankType == "Personal" && bankCountry == "European bank account"){
+            response.redirect("v9/business-details-bank-check-european-personal")
+        }
+        else if (bankType == "Business" && bankCountry == "UK bank or building society account"){
+            response.redirect("v9/business-details-bank-check-uk-business")
+        }
+        else if (bankType == "Personal" && bankCountry == "UK bank or building society account"){
+            response.redirect("v9/business-details-bank-check-uk-personal")
+        }
+        else {
+            response.redirect("v9/business-details-bank-check-uk-personal")
+        }
+    })
+
+    router.post('/validation-return-to-check-2', function(request, response) {
+
+        var bankType = request.session.data['bankAccountTypebus']
+        var bankCountry = request.session.data['bankCountrybus']
+        if (bankType == "Business" && bankCountry == "European bank account"){
+            response.redirect("v9/business-details-bank-check-european-business")
+        }
+        else if (bankType == "Personal" && bankCountry == "European bank account"){
+            response.redirect("v9/business-details-bank-check-european-personal")
+        }
+        else if (bankType == "Business" && bankCountry == "UK bank or building society account"){
+            response.redirect("v9/business-details-bank-check-uk-business")
+        }
+        else if (bankType == "Personal" && bankCountry == "UK bank or building society account"){
+            response.redirect("v9/business-details-bank-check-uk-personal")
+        }
+        else {
+            response.redirect("v9/business-details-bank-check-uk-personal")
+        }
+    })
+
 
     router.get('/' + version + '/business-details-bank-details-check', function (req, res) {
         res.render(version + '/business-details-bank-details-check', {

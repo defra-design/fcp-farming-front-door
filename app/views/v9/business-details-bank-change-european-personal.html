@@ -1,0 +1,247 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Change your bank or building society account details" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": " Bank details (change) - business details",
+  "id": "ba04d",
+  "url": "business-details-bank-change?r=t&release=b2&newChange=true",
+  "release": "MVP",
+  "variants": [],
+
+  "pagetitle": pageTitle,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+      "scenario": "[scenario]",
+      "content": "[error message]"
+    }
+  ]
+  
+}
+%}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% if data.view != "int" %}
+    {% include "_common/sub-header.html" %}
+  {% endif %}
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Change your bank or building society account details
+          </h1>
+        </legend>
+
+        {% if data.view == "int" %}
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="bankCRNbus">
+            Enter the CRN
+          </label>
+          <input class="govuk-input govuk-input--width-10" id="bankCRNbus" name="bankCRNbus" type="text" value ="{{ data['bankCRNbus'] }}">
+        </div>
+        {% endif %}
+
+        <!-- Currency - for both UK and European accounts -->
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="bankCurrencybus">
+            What currency would you like to be paid in?
+          </label>
+          <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="bankCurrencybus" name="bankCurrencybus" type="radio" value="GBP"{{ checked("bankCurrencybus","GBP") }}>
+              <label class="govuk-label govuk-radios__label" for="bankCurrencybus" >
+                GBP
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="bankCurrencybus-2" name="bankCurrencybus" type="radio" value="EUR" {{ checked("bankCurrencybus","EUR") }}>
+              <label class="govuk-label govuk-radios__label" for="bankCurrencybus-2">
+                EUR
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Country code for EU bank account -->
+
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="bankCountryCodebus">
+            Country code where the account is held
+          </label>
+          <select class="govuk-select" id="bankCountryCodebus" name="bankCountryCodebus">
+            <option value="AD">AD</option>
+            <option value="AE">AE</option>
+            <option value="AF">AF</option>
+            <option value="AG">AG</option>
+            <option value="FR">FR</option>
+            <option value="GA">GA</option>
+            <option value="GB">GB</option>
+            <option value="GD">GD</option>
+          </select>
+        </div>
+
+        <!-- FIRST NAME -->
+        <div class="govuk-form-group {% if myData.validationErrors.bankFirstName %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankFirstName">
+            First name
+          </label>
+          {% if myData.validationErrors.bankFirstName %}
+          <p id="bankFirstName-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankFirstName.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewbankFirstName = myData.newbankFirstName or myData.bankFirstName %}
+          {% if myData.validationErrors.bankFirstName %}
+              {% set _valueNewbankFirstName = myData.newbankFirstName %}
+          {% endif %}
+          <input class="govuk-input {% if myData.validationErrors.bankFirstName %}govuk-input--error{% endif %}" id="bankFirstName" name="bankFirstName" type="text" value="{{ data['bankFirstName'] }}" {% if myData.validationErrors.bankFirstName %}aria-describedby="bankFirstName-error"{% endif %}>
+        </div>
+
+        <!-- LAST NAME -->
+        <div class="govuk-form-group {% if myData.validationErrors.bankLastName %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankLastName">
+            Last name
+          </label>
+          {% if myData.validationErrors.bankLastName %}
+          <p id="bankLastName-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankLastName.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewbankLastName = myData.newbankLastName or myData.bankLastName %}
+          {% if myData.validationErrors.bankLastName %}
+              {% set _valueNewbankLastName = myData.newbankLastName %}
+          {% endif %}
+          <input class="govuk-input {% if myData.validationErrors.bankLastName %}govuk-input--error{% endif %}" id="bankLastName" name="bankLastName" type="text" value="{{ data['bankLastName'] }}" {% if myData.validationErrors.bankLastName %}aria-describedby="bankLastName-error"{% endif %}>
+        </div>
+
+        <!-- Sort code -->
+        <div class="govuk-form-group {% if myData.validationErrors.bankSortbus %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankSortbus">
+            Sort code
+          </label>
+          <div id="bankSortbus-hint" class="govuk-hint">
+            Must be 6 digits long
+          </div>
+          {% if myData.validationErrors.bankSortbus %}
+          <p id="bankSortbus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankSortbus.message}}
+          </p>
+          {% endif %}
+          <input class="govuk-input govuk-input--width-5 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankSortbus %}govuk-input--error{% endif %}" id="bankSortbus" name="bankSortbus" type="text" value="{{data['bankSortbus']}}" aria-describedby="bankSortbus-hint {% if myData.validationErrors.bankSortbus %}bankSortbus-error{% endif %}" spellcheck="false" inputmode="numeric">
+        </div>
+
+        <!-- Account number -->
+        <div class="govuk-form-group {% if myData.validationErrors.bankAccountbus %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="bankAccountbus">
+            Account number
+          </label>
+          <div id="bankAccountbus-hint" class="govuk-hint">
+            Must be between 6 and 8 digits long
+          </div>
+          {% if myData.validationErrors.bankAccountbus %}
+          <p id="bankAccountbus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.bankAccountbus.message}}
+          </p>
+          {% endif %}
+          <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing {% if myData.validationErrors.bankAccountbus %}govuk-input--error{% endif %}" id="bankAccountbus" name="bankAccountbus" type="text" value="{{data['bankAccountbus']}}" aria-describedby="bankAccountbus-hint {% if myData.validationErrors.bankAccountbus %}bankAccountbus-error{% endif %}" spellcheck="false" inputmode="numeric">
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="bankIBANbus">
+            IBAN
+          </label>
+          <div id="bankIBANbus-hint" class="govuk-hint">
+            You can ask your bank or check your bank statement
+          </div>
+          <input class="govuk-input govuk-input--extra-letter-spacing" id="bankIBANbus" name="bankIBANbus" type="text" spellcheck="false" value="{{ data['bankIBANbus'] }}" aria-describedby="bankIBANbus-hint">
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="bankSwiftCodebus">
+            SWIFT code (optional)
+          </label>
+          <div id="bankSwiftCodebus-hint" class="govuk-hint">
+            Must be between 8 and 11 characters long – you can ask your bank or check your bank statement
+          </div>
+          <input class="govuk-input govuk-input--width-10 govuk-input--extra-letter-spacing" id="bankSwiftCodebus" name="bankSwiftCodebus" type="text" value="{{ data['bankSwiftCodebus'] }}" spellcheck="false" aria-describedby="bankSwiftCodebus-hint">
+        </div>
+
+      </fieldset>
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

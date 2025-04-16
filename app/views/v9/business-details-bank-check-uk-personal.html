@@ -1,0 +1,194 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageName = "Check your business bank or building society details" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Bank details (check) - business details",
+  "id": "ba05b",
+  "url": "business-details-bank-check?r=t&release=b2&newChange=true",
+  "release": "MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  ]
+  
+}
+%}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% if data.view != "int" %}
+    {% include "_common/sub-header.html" %}
+  {% endif %}
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+
+    <form method="POST" novalidate action="/partial-match-answer">
+
+      <h1 class="govuk-heading-l">
+        Check your business bank or building society details
+      </h1>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            How do you want to be paid?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            UK bank or building society account 
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-country">Change<span class="govuk-visually-hidden"> account number</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Account type
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Personal
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-type">Change<span class="govuk-visually-hidden"> account number</span></a>
+          </dd>
+        </div>
+        {% if data.view == "int" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            CRN
+          </dt>
+          {% if data['bankCRNbus'] %}
+          <dd class="govuk-summary-list__value">
+            {{ data['bankCRNbus'] }}
+          </dd>
+          {% else %}
+          <dd class="govuk-summary-list__value">
+            {{_selectedUser.crn}}
+          </dd>
+          {% endif %}
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change-uk-personal">Change<span class="govuk-visually-hidden"> account number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Currency
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['bankCurrencybus']  or "GBP" }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change-uk-personal">Change<span class="govuk-visually-hidden"> account number</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            First and last name
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ data['bankFirstName'] }} {{ data['bankLastName'] or "Person surname" }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change-uk-personal">Change<span class="govuk-visually-hidden"> name on the account</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Sort code
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['bankSortbus'] or "123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change-uk-personal">Change<span class="govuk-visually-hidden"> sort code</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Account number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['bankAccountbus'] or "12345678"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change-uk-personal">Change<span class="govuk-visually-hidden"> account number</span></a>
+          </dd>
+        </div>
+          {% if data['bankBuildbus'] %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Building society roll number (if you have one) 
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['bankBuildbus'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="business-details-bank-change-uk-personal">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
+            </dd>
+          </div>
+          {% else %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Building society roll number (if you have one) 
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <span style="color:#505a5f">No number added</span>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="business-details-bank-change-uk-personal">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
+            </dd>
+          </div>
+          {% endif %}
+        
+      </dl>
+
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+

@@ -23,9 +23,9 @@
 {% set _designSpecData = {
 
   "name": "Bank details - account type (select) - business details",
-  "id": "xx",
+  "id": "ba03",
   "url": "business-details-bank-change?r=t&release=b2&newChange=true",
-  "release": "Buffalo 1.X",
+  "release": "MVP",
   "variants": [],
 
   "pagetitle": pageTitle,
@@ -83,7 +83,8 @@
     </div>
     {% endif %}
 
-    <form method="POST" novalidate >
+    <form method="POST" novalidate action="/bank-change-answer">
+
 
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
