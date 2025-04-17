@@ -1829,14 +1829,23 @@ module.exports = function (router,_myData) {
     // business details - partial match routing based on radios 
 
     router.post('/validation-answer', function(request, response) {
-
+        var bankType = request.session.data['bankAccountTypebus']
+        var bankCountry = request.session.data['bankCountrybus']
         var validationAnswer = request.session.data['bankAccountPartialMatch']
-        if (validationAnswer == "Yes"){
-            response.redirect("v9/details-business-details?changed=true&bankchanged=true")
-        } else {
-            response.redirect("v9/business-details-bank-details-check")
+        if (validationAnswer == "No" && bankType == "Personal" && bankCountry == "European bank account"){
+            response.redirect("v9/business-details-bank-check-european-personal")
         }
+        else if (validationAnswer == "No" && bankType == "Personal" && bankCountry == "UK bank or building society account"){
+            response.redirect("v9/business-details-bank-check-uk-personal")
+        }
+        else if (validationAnswer == "No"){
+            response.redirect("v9/business-details-bank-check-uk-personal")
+        }
+        if (validationAnswer == "Yes") {
+            response.redirect("v9/details-business-details?changed=true&bankchanged=true")
+        } 
     })
+
 
 
     //business details - change bank details - CONCEPT VERSIONS // outdated
