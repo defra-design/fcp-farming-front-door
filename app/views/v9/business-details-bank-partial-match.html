@@ -206,19 +206,21 @@
           {% endif %}
         </dl>
 
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-visually-hidden">Warning</span>
-            This means we could pay into the wrong account.
-          </strong>
-        </div>
-
         <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset">
+          <fieldset class="govuk-fieldset" aria-describedby="bankAccountPartialMatch-hint">
             <legend class="govuk-fieldset__legend  govuk-fieldset__legend--m ">
               Are you sure you want us to pay into this account?
             </legend>
+            <div id="bankAccountPartialMatch-hint" class="govuk-hint">
+              <div class="govuk-warning-text">
+                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong class="govuk-warning-text__text">
+                  <span class="govuk-visually-hidden">Warning</span>
+                  This means we could pay into the wrong account.
+                </strong>
+              </div>
+            </div>
+
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="bankAccountPartialMatch" name="bankAccountPartialMatch" type="radio" value="Yes">
