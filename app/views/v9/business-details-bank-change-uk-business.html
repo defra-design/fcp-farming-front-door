@@ -101,28 +101,6 @@
         </div>
         {% endif %}
 
-        <!-- Currency - for both UK and European accounts -->
-
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="bankCurrencybus">
-            What currency would you like to be paid in?
-          </label>
-          <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="bankCurrencybus" name="bankCurrencybus" type="radio" value="GBP"{{ checked("bankCurrencybus","GBP") }}>
-              <label class="govuk-label govuk-radios__label" for="bankCurrencybus" >
-                GBP
-              </label>
-            </div>
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" id="bankCurrencybus-2" name="bankCurrencybus" type="radio" value="EUR" {{ checked("bankCurrencybus","EUR") }}>
-              <label class="govuk-label govuk-radios__label" for="bankCurrencybus-2">
-                EUR
-              </label>
-            </div>
-          </div>
-        </div>
-
         <!-- Name on the account -->
         <div class="govuk-form-group {% if myData.validationErrors.bankNameBus %}govuk-form-group--error{% endif %}">
           <label class="govuk-label" for="bankNameBus">

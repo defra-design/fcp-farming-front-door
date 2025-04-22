@@ -102,14 +102,6 @@
 
         <h2 class="govuk-heading-m">Your bank account or building society details</h2>
         <dl class="govuk-summary-list">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Currency
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {{ data['bankCurrencybus']  or "GBP" }}
-            </dd>
-          </div>
           {% if (data['bankCountrybus'] == "European bank account") %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
