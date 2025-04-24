@@ -430,7 +430,6 @@
             {{ data['bankCountryCodebus'] }}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> account number</span></a>
           </dd>
         </div>
         {% endif %}
@@ -443,7 +442,6 @@
           {{ data['bankNameBus']  or "Account name" }}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> name on the account</span></a>
         </dd>
         {% elseif (data['bankAccountTypebus'] == "Personal") %}
         <dt class="govuk-summary-list__key">
@@ -453,7 +451,6 @@
           {{ data['bankFirstName'] }} {{ data['bankLastName'] or "Last name" }}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> name on the account</span></a>
         </dd>
         {% else %}
         <dt class="govuk-summary-list__key">
@@ -463,7 +460,6 @@
           Alfred Waldron
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> name on the account</span></a>
         </dd>
         {% endif %}
       </div>
@@ -475,7 +471,6 @@
           ****56
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> sort code</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -486,7 +481,6 @@
           ******78
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> account number</span></a>
         </dd>
       </div>
       {% if (data['bankCountrybus'] == "UK bank or building society account") %}
@@ -500,7 +494,6 @@
             *******89
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
           </dd>
         </div>
         {% else %}
@@ -512,7 +505,6 @@
             <span style="color:#505a5f">No number added</span>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
           </dd>
         </div>
         {% endif %}
@@ -525,7 +517,6 @@
           ***********89
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> IBAN</span></a>
         </dd>
       </div>
         {% if data['bankSwiftCodebus'] %}
@@ -537,7 +528,6 @@
             ********34
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
           </dd>
         </div>
         {% else %}
@@ -549,7 +539,6 @@
             <span style="color:#505a5f">No number added</span>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> SWIFT code (optional)</span></a>
           </dd>
         </div>
         {% endif %}
@@ -568,7 +557,6 @@
           {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> name on the account</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -579,7 +567,6 @@
           ****12
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> sort code</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -590,7 +577,6 @@
           ******78
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-declaration?newChange=true">Change<span class="govuk-visually-hidden"> account number</span></a>
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -606,12 +592,15 @@
           {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-change?newChange=true">Change<span class="govuk-visually-hidden"> building society roll number</span></a>
         </dd>
       </div>
       {% endif %}
     </dl>
      {% endif %}
+
+     <p>
+      <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-declaration">Update bank account details</a>
+     </p>
 
 
   </div>
