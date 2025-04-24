@@ -93,6 +93,8 @@ module.exports = function (router,_myData) {
         //Used to show either the prototype as internal user or external user
         req.session.myData.view =  req.query.view || req.session.myData.view
 
+        req.session.myData.bank =  req.query.bank || req.session.myData.bank
+
         //Reset page notifications
         req.session.myData.notifications = {}
         req.session.myData.showNotification = "false"

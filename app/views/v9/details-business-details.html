@@ -88,8 +88,12 @@
       "url": "details-business-details?r=t&release=b1&vatremoved=true&changed=true&view=ext"
     },
     {
-      "name": "bank details changed banner (concept)",
-      "url": "details-business-details?r=t&release=concept&bankchanged=true&changed=true&view=ext"
+      "name": "bank details changed banner",
+      "url": "details-business-details?bankchanged=true&changed=true"
+    },
+    {
+      "name": "add bank details",
+      "url": "details-business-details?r=t&release=b1&bank=empty"
     }
   ],
 
@@ -402,6 +406,19 @@
         Bank account details
      </h2>
 
+     {% if data.bank == "empty" and data.bankchanged == "false" %}
+
+     <p class="govuk-body">
+      This business has no bank details yet.
+     </p>
+
+     <p class="govuk-body">
+      <a href="business-details-bank-declaration">
+        Add bank account details
+       </a>
+     </p>
+
+     {% else %}
      <dl class="govuk-summary-list">
       {% if data.bankchanged == "true" %}
       {% if (data['bankCountrybus'] == "European bank account") %}
@@ -594,6 +611,7 @@
       </div>
       {% endif %}
     </dl>
+     {% endif %}
 
 
   </div>

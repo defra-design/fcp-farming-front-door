@@ -58,6 +58,7 @@ var _myData = {
 
     "includeValidation": "true", //used to show either the prototype as internal user or external user
     "view": "ext", //used to show either the prototype as internal user or external user
+    "bank": "filled",
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }

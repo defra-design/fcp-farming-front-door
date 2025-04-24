@@ -3,26 +3,27 @@
 {% set pageName = "Search for a customer or business" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = false %}
+{% set _showDesignSpec = true %}
 {% set _designSpecData = {
 
   "name": "Search for a customer or business",
-  "id": "intSr01",
+  "id": "int-sr01",
   "url": "internal-search?r=t&view=int",
-  "release": "TO DO",
+  "release": "Buffalo 1.1 MVP",
   "variants": [
-    
+  {
+    "name": "with results - example with Andrew",
+    "url": "internal-search?view=int&internal-search?q=andrew"
+  },
+  {
+    "name": "no results found",
+    "url": "internal-search?view=int&internal-search?q=zeroresults"
+  }
   ],
 
   "pagetitle": pageName,
   "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "scenario": "[scenario]",
-      "content": "[error message]"
-    }
-  ]
+  "pageurl": ""
   
 }
 %}

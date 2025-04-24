@@ -259,6 +259,12 @@ module.exports = [
       "pagedesc": "Check the phone numbers for your business are correct."
     },
     {
+      "pageid": "ba01",
+      "pagename": "",
+      "pageurl": "",
+      "pagedesc": ""
+    },
+    {
       "pageid": "mp01",
       "pagename": "Cookies",
       "pageurl": "cookies",
@@ -319,24 +325,30 @@ module.exports = [
       "pagedesc": "Emma's trying to learn the set-up of this prototype."
     },
     {
-      "pageid": "intSr01",
+      "pageid": "int-sr01",
       "pagename": "Search for a customer or business",
       "pageurl": "internal-search",
-      "pagedesc": ""
+      "pagedesc": "Search for a customer or business."
     }
     ,
     {
-      "pageid": "intBv01",
-      "pagename": "",
+      "pageid": "int-bv01",
+      "pagename": "Business overview",
       "pageurl": "internal-business",
-      "pagedesc": ""
+      "pagedesc": "See an overview of this business."
     }
     ,
     {
-      "pageid": "intCv01",
-      "pagename": "",
+      "pageid": "int-cv01",
+      "pagename": "Customer overview",
       "pageurl": "internal-customer",
-      "pagedesc": ""
+      "pagedesc": "See an overview of this customer."
+    },
+    {
+      "pageid": "int-pd01",
+      "pagename": "Manage personal details",
+      "pageurl": "personal-details-view-change",
+      "pagedesc": "View and update your personal account details."
     }
 
    ]
