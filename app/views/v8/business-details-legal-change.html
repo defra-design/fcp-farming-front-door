@@ -20,6 +20,9 @@
 {% if data.release != "b1" %}
   {% set _dynamicPageTitle = "What is your legal status?" %}
 {% endif %}
+{% if data.view == "int" %}
+  {% set _dynamicPageTitle = "Change legal status" %}
+{% endif %}
 
 {% set pageTitle = _dynamicPageTitle %}
 {% set pageName = pageTitle %}
@@ -46,44 +49,130 @@
 
     "pagetitle": pageTitle,
     "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
-      {
-        "field": "Legal status radios (concept)",
-        "scenario": "Nothing selected",
-        "content": "Select the legal status"
-      },
+    "pageurl": ""
+    
+  }
+  %}
 
+  {% elif data.view == "int" %}
+    {% set _showDesignSpec = true %}
+    {% set _designSpecData = {
+      "status": 'In development',
+      "name": "Legal status (change) - business details (Buffalo 1.1)",
+      "id": "int-bd15",
+      "url": "business-details-legal-change?r=t&release=b2&view=int",
+      "release": "Buffalo 1.1 MVP",
+
+      "pagetitle": pageName,
+      "pagedesc": "",
+      "pageurl": "",
+      "errormessages": [
       {
-        "field": "Charity commission registration number (concept)",
+        "field": "Charity commission registration number",
         "scenario": "Radio option ‘Charitable incorporated organisation (CIO)’ is selected AND Empty field / nothing entered",
         "content": "Enter a charity commission registration number"
       },
       
       {
-        "field": "Charity commission registration number (concept)",
+        "field": "Charity commission registration number",
         "scenario": "Radio option ‘Charitable incorporated organisation (CIO)’ is selected AND Wrong format",
         "content": "Enter a charity commission registration number, like 12345678"
       },
-
-
       {
-        "field": "Company registration number (concept)",
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Community Interest Company (CIC)’ is selected AND Empty field / nothing entered",
+        "content": "Enter a company registration number"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Community Interest Company (CIC)’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
         "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Empty field / nothing entered",
         "content": "Enter a company registration number"
       },
       
       {
-        "field": "Company registration number (concept)",
+        "field": "Company registration number",
         "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Limited Liability Partnership (LLP)’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Limited Liability Partnership (LLP)’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Limited partnership’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Limited partnership’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option 'Non-UK company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Non-UK company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option 'Private limited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Private limited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option 'Public limited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Public limited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option 'Unlimited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Unlimited company’ is selected AND Wrong format",
         "content": "Enter a company registration number, like 01234567 or SC123456"
       }
 
 
     ]
-    
-  }
-  %}
+      
+    }
+    %}
 {% else %}
 
 {% endif %}

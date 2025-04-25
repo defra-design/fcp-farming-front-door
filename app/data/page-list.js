@@ -349,6 +349,33 @@ module.exports = [
       "pagename": "Manage personal details",
       "pageurl": "personal-details-view-change",
       "pagedesc": "View and update your personal account details."
+    },
+    {
+      "pageid": "int-bd15",
+      "pagename": "Legal status (change) - business details",
+      "pageurl": "internal-legal-status-change",
+      "pagedesc": "Update the legal status of this business."
+    }
+    ,
+    {
+      "pageid": "int-bd16",
+      "pagename": "Legal status (change) - business details",
+      "pageurl": "internal-legal-status-check",
+      "pagedesc": "Check the legal status of this business is correct."
+    }
+    ,
+    {
+      "pageid": "int-bd17",
+      "pagename": "Legal status (change) - business details",
+      "pageurl": "internal-business-type-change",
+      "pagedesc": "Update the type of  business."
+    }
+    ,
+    {
+      "pageid": "int-bd18",
+      "pagename": "Legal status (change) - business details",
+      "pageurl": "internal-business-type-check",
+      "pagedesc": "Check the type of business is correct."
     }
 
    ]
