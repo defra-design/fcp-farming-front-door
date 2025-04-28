@@ -9,7 +9,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Change your bank or building society account details" %}
+{% set pageTitle = "How do you want to be paid?" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -19,27 +19,37 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-  "status": 'In development',
-  "name": "Bank account - country (select) - business details",
-  "id": "ba02",
-  "url": "business-details-bank-change?r=t&release=b2&newChange=true",
-  "release": "MVP",
-  "variants": [],
-
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    {
-      "scenario": "[scenario]",
-      "content": "[error message]"
-    }
-  ]
-  
-}
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank account - country (select) - business details",
+    "id": "ba02",
+    "url": "business-details-bank-country?r=t&view=ext&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": ""
+  }
 %}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank account - country (select) - business details",
+    "id": "int-ba02",
+    "url": "business-details-bank-country?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": ""
+  }
+%}
+
+{% else %}
+
+{% endif %}
 
 
 {% set _selectedBusiness = myData.selectedBusiness %}

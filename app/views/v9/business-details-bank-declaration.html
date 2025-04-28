@@ -9,7 +9,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Declaration" %}
+{% set pageTitle = "Bank declarations" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -26,10 +26,13 @@
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Bank details - declaration (accept) - business details  ",
+    "name": "Bank declaration (accept) - business details",
     "id": "ba01",
-    "url": "business-details-bank-declaration?r=t&release=b2",
-    "release": "Buffalo 1.1 MVP"
+    "url": "business-details-bank-declaration?r=t&view=ext&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": ""
   }
 %}
 
@@ -37,15 +40,15 @@
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
+    "name": "Bank declaration (accept) - business details",
     "id": "int-ba01",
-    "url": "business-details-bank-declaration?r=t&release=b2",
+    "url": "business-details-bank-declaration?r=t&view=int&release=b2",
     "release": "Buffalo 1.1 MVP",
     "pagetitle": pageName,
     "pagedesc": "",
     "pageurl": ""
   }
-  %}
+%}
 
 {% else %}
 

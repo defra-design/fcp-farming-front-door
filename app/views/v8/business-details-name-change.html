@@ -45,7 +45,35 @@
     ]
     
   }
-  %}
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Business name (change) - business details",
+    "id": "int-bd02",
+    "url": "business-details-name-change?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter business name"
+      },
+      {
+        "scenario": "Entry is too long",
+        "content": "Business name must be 300 characters or less"
+      }
+    ]
+    
+  }
+%}
+
 {% else %}
 
 {% endif %}

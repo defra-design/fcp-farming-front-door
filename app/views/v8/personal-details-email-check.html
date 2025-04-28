@@ -23,7 +23,7 @@
     "status": 'In development',
     "name": "Email address (check) - personal details",
     "id": "pd13",
-    "url": "personal-details-email-check?r=t&release=b1&newChange=true",
+    "url": "personal-details-email-check?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
     "variants": [
       
@@ -37,7 +37,28 @@
     ]
     
   }
-  %}
+%}
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Email address (check) - personal details",
+    "id": "int-pd13",
+    "url": "personal-details-email-check?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+%}
 {% else %}
 
 {% endif %}

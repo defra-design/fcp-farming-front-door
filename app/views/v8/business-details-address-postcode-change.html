@@ -60,7 +60,50 @@
       ]
       
     }
-  %}
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+    {% set _designSpecData = {
+      "status": 'In development',
+      "name": "Address - postcode (change) - business details",
+      "id": "int-bd23",
+      "url": "business-details-address-postcode-change?r=t&view=int&release=b2&newChange=true",
+      "release": "Buffalo 1.1 MVP",
+      "variants": [],
+
+      "pagetitle": pageTitle,
+      "pagedesc": "",
+      "pageurl": "",
+      "errormessages": [
+
+        {
+          "scenario": "Empty field / nothing entered",
+          "content": "Enter a postcode"
+        },
+        {
+          "scenario": "Postcode doesn’t pass formatting checks",
+          "content": "Enter a full UK postcode, like AA3 1AB"
+        },
+        {
+          "scenario": "Postcode passes formatting checks but is not a full, valid postcode in the database look up",
+          "content": "No addresses found for this postcode"
+        }
+
+      ],
+
+      "notes": [
+        "If returning from 'select address page (bd24)', THEN pre populate with previously entered postcode ELSE leave the field blank",
+
+        "If entering from 'business details page (bd01)' or returning from 'check address page (bd05)' page AND have known UK postcode on saved address THEN pre populate with current postcode ELSE leave the field blank",
+        
+        "You should let users enter postcodes that contain:<ul class='govuk-list govuk-list--bullet govuk-body-s'><li>upper and lower case letters</li><li>no spaces</li><li>additional spaces at the beginning, middle or end</li><li>punctuation like hyphens, brackets, dashes and full stops</li></ul>"
+        
+      ]
+      
+    }
+%}
+
 {% else %}
 
 {% endif %}

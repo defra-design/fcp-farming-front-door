@@ -1,32 +1,95 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName = "Search for a customer or business" %}
+{% if myData.searchapplied and myData.searchTerm == "andrew" %}
+  {% set pageName = "Search results for a customer or business" %}
+{% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
+  {% set pageName = "No search results for a customer or business" %}
+{% else %}
+  {% set pageName = "Search for a customer or business" %}
+{% endif %}
+
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% set _showDesignSpec = true %}
-{% set _designSpecData = {
+{% if myData.searchapplied and myData.searchTerm == "andrew" %}
+  {% set _designSpecData = {
 
-  "name": "Search for a customer or business",
-  "id": "int-sr01",
-  "url": "internal-search?r=t&view=int",
-  "release": "Buffalo 1.1 MVP",
-  "variants": [
-  {
-    "name": "with results - example with Andrew",
-    "url": "internal-search?view=int&internal-search?q=andrew"
-  },
-  {
-    "name": "no results found",
-    "url": "internal-search?view=int&internal-search?q=zeroresults"
+    "name": "Search for a customer or business - (with results)",
+    "id": "int-sr01a",
+    "url": "internal-search?r=t&view=int",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-sr01a. With results - example with Andrew",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    },
+    {
+      "name": "int-sr01b. No results found",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+      "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard/selecting 'Search'."
+    ]
   }
-  ],
+  %}
+{% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
+  {% set _designSpecData = {
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": ""
-  
-}
-%}
+    "name": "Search for a customer or business - (no results found)",
+    "id": "int-sr01b",
+    "url": "internal-search?view=int&internal-search&q=zeroresults",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-sr01a. With results - example with Andrew",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    },
+    {
+      "name": "int-sr01b. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+      "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard/selecting 'Search'."
+    ]
+  }
+  %}
+{% else %}
+  {% set _designSpecData = {
+
+    "name": "Search for a customer or business",
+    "id": "int-sr01",
+    "url": "internal-search?r=t&view=int",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-sr01a. With results - example with Andrew",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    },
+    {
+      "name": "int-sr01b. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+      "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard/selecting 'Search'."
+    ]
+  }
+  %}
+{% endif %}
 
 {% block beforeContent %}
 

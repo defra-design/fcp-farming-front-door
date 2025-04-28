@@ -260,9 +260,33 @@ module.exports = [
     },
     {
       "pageid": "ba01",
-      "pagename": "",
-      "pageurl": "",
-      "pagedesc": ""
+      "pagename": "Bank declaration (accept) - business details",
+      "pageurl": "business-bank-declarations",
+      "pagedesc": "Read declarations before updating bank details."
+    },
+    {
+      "pageid": "ba02",
+      "pagename": "Bank account - country (select) - business details",
+      "pageurl": "business-bank-country",
+      "pagedesc": "Choose how you want to be paid."
+    },
+    {
+      "pageid": "ba03",
+      "pagename": "Bank details - account type (select) - business details",
+      "pageurl": "business-bank-account-type",
+      "pagedesc": "Select whether you want to be paid into a business or personal account."
+    },
+    {
+      "pageid": "ba04",
+      "pagename": "Bank account details (change) - business details",
+      "pageurl": "business-bank-account-change",
+      "pagedesc": "Update your bank or building society details."
+    },
+    {
+      "pageid": "ba05",
+      "pagename": "Bank account details (check) - business details",
+      "pageurl": "business-bank-account-check",
+      "pagedesc": "Check your bank or building society details."
     },
     {
       "pageid": "mp01",
@@ -332,6 +356,20 @@ module.exports = [
     }
     ,
     {
+      "pageid": "int-sr01a",
+      "pagename": "Search for a customer or business - (with results)",
+      "pageurl": "internal-search-results",
+      "pagedesc": "Search results for a customer or business"
+    }
+    ,
+    {
+      "pageid": "int-sr01b",
+      "pagename": "Search for a customer or business - (no results found)",
+      "pageurl": "internal-search-no-results",
+      "pagedesc": "No search results for a customer or business"
+    }
+    ,
+    {
       "pageid": "int-bv01",
       "pagename": "Business overview",
       "pageurl": "internal-business",
@@ -351,19 +389,179 @@ module.exports = [
       "pagedesc": "View and update your personal account details."
     },
     {
+      "pageid": "int-pd02",
+      "pagename": "Full name (change) - personal details",
+      "pageurl": "account-name-change",
+      "pagedesc": "Update the full name for your personal account."
+    },
+    {
+      "pageid": "int-pd03",
+      "pagename": "Full name (check) - personal details",
+      "pageurl": "account-name-check",
+      "pagedesc": "Check the full name for your personal account is correct."
+    },
+    {
+      "pageid": "int-pd04",
+      "pagename": "Date of birth (change) - personal details",
+      "pageurl": "account-date-of-birth-change",
+      "pagedesc": "Update the date of birth for your personal account."
+    },
+    {
+      "pageid": "int-pd05",
+      "pagename": "Date of birth (check) - personal details",
+      "pageurl": "account-date-of-birth-check",
+      "pagedesc": "Check the date of birth for your personal account is correct."
+    },
+    {
+      "pageid": "int-pd16",
+      "pagename": "Address - postcode (change) - personal details",
+      "pageurl": "account-address-change",
+      "pagedesc": "Update the address for your personal account."
+    },
+    {
+      "pageid": "int-pd17",
+      "pagename": "Address - select (change) - personal details",
+      "pageurl": "account-address-select",
+      "pagedesc": "Choose the address for your personal account."
+    },
+    {
+      "pageid": "int-pd06",
+      "pagename": "Address (enter) - personal details",
+      "pageurl": "account-address-enter",
+      "pagedesc": "Enter the address for your personal account."
+    },
+    {
+      "pageid": "int-pd07",
+      "pagename": "Address (check) - personal details",
+      "pageurl": "account-address-check",
+      "pagedesc": "Check the address for your personal account is correct."
+    },
+    {
+      "pageid": "int-pd12",
+      "pagename": "Email address (change) - personal details",
+      "pageurl": "account-email-change",
+      "pagedesc": "Update the email address for your personal account."
+    },
+    {
+      "pageid": "int-pd13",
+      "pagename": "Email address (check) - personal details",
+      "pageurl": "account-email-check",
+      "pagedesc": "Check the email address for your personal account is correct."
+    },
+    {
+      "pageid": "int-pd14",
+      "pagename": "Phone numbers (change) - personal details",
+      "pageurl": "account-phone-numbers-change",
+      "pagedesc": "Update the phone numbers for your personal account."
+    },
+    {
+      "pageid": "int-pd15",
+      "pagename": "Phone numbers (check) - personal details",
+      "pageurl": "account-phone-numbers-check",
+      "pagedesc": "Check the phone numbers for your personal account are correct."
+    },
+    {
+      "pageid": "int-bd01",
+      "pagename": "Manage business details",
+      "pageurl": "business-details-view-change",
+      "pagedesc": "View and update your business details."
+    },
+    {
+      "pageid": "int-bd02",
+      "pagename": "Business name (change) - business details",
+      "pageurl": "business-name-change",
+      "pagedesc": "Update the name for your business."
+    },
+    {
+      "pageid": "int-bd03",
+      "pagename": "Business name (check) - business details",
+      "pageurl": "business-name-check",
+      "pagedesc": "Check the name for your business is correct."
+    },
+    {
+      "pageid": "int-bd23",
+      "pagename": "Address - postcode (change) - business details",
+      "pageurl": "business-address-change",
+      "pagedesc": "Update the address for your business."
+    },
+    {
+      "pageid": "int-bd24",
+      "pagename": "Address - select (change) - business details",
+      "pageurl": "business-address-select",
+      "pagedesc": "Choose the address for your business."
+    },
+    {
+      "pageid": "int-bd04",
+      "pagename": "Address (change) - business details",
+      "pageurl": "business-address-enter",
+      "pagedesc": "Enter the address for your business."
+    },
+    {
+      "pageid": "int-bd05",
+      "pagename": "Address (check) - business details",
+      "pageurl": "business-address-check",
+      "pagedesc": "Check the address for your business is correct."
+    },
+    {
+      "pageid": "int-bd21",
+      "pagename": "Phone numbers (change) - business details",
+      "pageurl": "business-phone-numbers-change",
+      "pagedesc": "Update the phone numbers for your business."
+    },
+    {
+      "pageid": "int-bd22",
+      "pagename": "Phone numbers (check) - business details",
+      "pageurl": "business-phone-numbers-check",
+      "pagedesc": "Check the phone numbers for your business are correct."
+    },
+    {
+      "pageid": "int-bd10",
+      "pagename": "Email address (change) - business details",
+      "pageurl": "business-email-change",
+      "pagedesc": "Update the email address for your business."
+    },
+    {
+      "pageid": "int-bd11",
+      "pagename": "Email address (check) - business details",
+      "pageurl": "business-email-check",
+      "pagedesc": "Check the email address for your business is correct."
+    },
+    {
+      "pageid": "int-bd12",
+      "pagename": "VAT registration number (change) - business details",
+      "pageurl": "business-VAT-registration-number-change",
+      "pagedesc": "Update the VAT registration number for your business."
+    },
+    {
+      "pageid": "int-bd13",
+      "pagename": "VAT registration number (add) - business details",
+      "pageurl": "business-VAT-registration-number-add",
+      "pagedesc": "Add the VAT registration number for your business."
+    },
+    {
+      "pageid": "int-bd14",
+      "pagename": "VAT registration number (check) - business details",
+      "pageurl": "business-VAT-registration-number-check",
+      "pagedesc": "Check the VAT registration number for your business is correct."
+    },
+    {
+      "pageid": "int-bd25",
+      "pagename": "VAT registration number (remove) - business details",
+      "pageurl": "business-VAT-registration-remove",
+      "pagedesc": "Remove the VAT registration number for your business."
+    },
+    {
       "pageid": "int-bd15",
       "pagename": "Legal status (change) - business details",
       "pageurl": "internal-legal-status-change",
       "pagedesc": "Update the legal status of this business."
-    }
-    ,
+    },
     {
       "pageid": "int-bd16",
       "pagename": "Legal status (change) - business details",
       "pageurl": "internal-legal-status-check",
       "pagedesc": "Check the legal status of this business is correct."
-    }
-    ,
+    },
     {
       "pageid": "int-bd17",
       "pagename": "Legal status (change) - business details",
@@ -376,6 +574,36 @@ module.exports = [
       "pagename": "Legal status (change) - business details",
       "pageurl": "internal-business-type-check",
       "pagedesc": "Check the type of business is correct."
-    }
+    },
+    {
+      "pageid": "int-ba01",
+      "pagename": "Bank declaration (accept) - business details",
+      "pageurl": "business-bank-declarations",
+      "pagedesc": "Read declarations before updating bank details."
+    },
+    {
+      "pageid": "int-ba02",
+      "pagename": "Bank account - country (select) - business details",
+      "pageurl": "business-bank-country",
+      "pagedesc": "Choose how you want to be paid."
+    },
+    {
+      "pageid": "int-ba03",
+      "pagename": "Bank details - account type (select) - business details",
+      "pageurl": "business-bank-account-type",
+      "pagedesc": "Select whether you want to be paid into a business or personal account."
+    },
+    {
+      "pageid": "int-ba04",
+      "pagename": "Bank account details (change) - business details",
+      "pageurl": "business-bank-account-change",
+      "pagedesc": "Update your bank or building society details."
+    },
+    {
+      "pageid": "int-ba05",
+      "pagename": "Bank account details (check) - business details",
+      "pageurl": "business-bank-account-check",
+      "pagedesc": "Check your bank or building society details."
+    },
 
    ]

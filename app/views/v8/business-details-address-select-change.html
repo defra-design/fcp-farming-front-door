@@ -49,7 +49,39 @@
     ]
     
   }
-  %}
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Address - select (change) - business details",
+    "id": "int-bd24",
+    "url": "business-details-address-select-change?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+      {
+        "scenario": "Nothing selected",
+        "content": "Choose an address"
+      }
+
+    ],
+
+    "notes": [
+
+      "If entering from 'business details page (bd01)' or returning from 'check address page (bd05)' page AND have known UK postcode on saved address AND no changes have been made to the entered postcode THEN pre select dropdown with previously selected/correct address ELSE do not pre-select any of the options in the dropdown"
+      
+    ]
+    
+  }
+%}
+
 {% else %}
 
 {% endif %}

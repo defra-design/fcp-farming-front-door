@@ -26,7 +26,7 @@
     "status": 'In development',
     "name": "VAT registration number (remove) - business details",
     "id": "bd25",
-    "url": "business-details-vat-remove?r=t&release=b1&newChange=true",
+    "url": "business-details-vat-remove?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
     "variants": [],
 
@@ -41,7 +41,31 @@
     ]
     
   }
-  %}
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "VAT registration number (remove) - business details",
+    "id": "int-bd25",
+    "url": "business-details-vat-remove?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Nothing selected",
+        "content": "Select yes if you want to remove your VAT registration number"
+      }
+    ]
+    
+  }
+%}
+
 {% else %}
 
 {% endif %}

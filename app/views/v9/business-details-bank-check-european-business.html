@@ -12,23 +12,84 @@
 {% set pageName = "Check your business bank or building society details" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-  "status": 'In development',
-  "name": "Bank account details (check) - European  business - business details",
-  "id": "ba05c",
-  "url": "business-details-bank-check?r=t&release=b2&newChange=true",
-  "release": "MVP",
-  "variants": [],
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank account details (check) - business details",
+    "id": "ba05",
+    "url": "business-details-bank-check-european-business?r=t&view=ext&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "ba05a",
+      "url": "business-details-bank-check-uk-business?r=t&view=ext&release=b2"
+    },
+    {
+      "name": "ba05b",
+      "url": "business-details-bank-check-uk-personal?r=t&view=ext&release=b2"
+    },
+    {
+      "name": "ba05c",
+      "url": "business-details-bank-check-european-business?r=t&view=ext&release=b2"
+    },
+    {
+      "name": "ba05d",
+      "url": "business-details-bank-check-european-personal?r=t&view=ext&release=b2"
+    }
+    ],
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+    "The summary list shown on this page are determined by the selections made on int-ba02 and int-ba03, and therefore the fields completed on ba04c. For this variation (ba05c), 'European' and 'Business' have been selected."
+  ]
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank account details (check) - business details",
+    "id": "int-ba05",
+    "url": "business-details-bank-check-european-business?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-ba05a",
+      "url": "business-details-bank-check-uk-business?r=t&view=int&release=b2"
+    },
+    {
+      "name": "int-ba05b",
+      "url": "business-details-bank-check-uk-personal?r=t&view=int&release=b2"
+    },
+    {
+      "name": "int-ba05c",
+      "url": "business-details-bank-check-european-business?r=t&view=int&release=b2"
+    },
+    {
+      "name": "int-ba05d",
+      "url": "business-details-bank-check-european-personal?r=t&view=int&release=b2"
+    }
+    ],
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+    "The summary list shown on this page are determined by the selections made on int-ba02 and int-ba03, and therefore the fields completed on ba04c. For this variation (ba05c), 'European' and 'Business' have been selected.",
+
+    "The form is a mirror of the external page ba05, except for the addition of the Customer reference number input field."
   ]
   
-}
+
+  }
 %}
+
+{% else %}
+
+{% endif %}
 
 
 {% set _selectedBusiness = myData.selectedBusiness %}

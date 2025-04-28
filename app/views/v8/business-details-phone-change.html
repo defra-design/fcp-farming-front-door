@@ -26,7 +26,7 @@
     "status": 'In development',
     "name": "Phone numbers (change) - business details",
     "id": "bd21",
-    "url": "business-details-phone-change?r=t&release=b1&newChange=true",
+    "url": "business-details-phone-change?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
     "variants": [],
 
@@ -63,7 +63,53 @@
     ]
     
   }
-  %}
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Phone numbers (change) - business details",
+    "id": "int-bd21",
+    "url": "business-details-phone-change?view=int&r=t&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "field": "Mobile and telephone",
+        "scenario": "Both are empty fields / nothing entered",
+        "content": "Enter at least one phone number"
+      },
+      {
+        "field": "Mobile",
+        "scenario": "Entry is too long",
+        "content": "Business mobile phone number must be 100 characters or less"
+      },
+      {
+        "field": "Mobile",
+        "scenario": "Entry is too short",
+        "content": "Business mobile phone number must be 10 characters or more"
+      },
+      {
+        "field": "Telephone",
+        "scenario": "Entry is too long",
+        "content": "Business telephone number must be 100 characters or less"
+      },
+      {
+        "field": "Telephone",
+        "scenario": "Entry is too short",
+        "content": "Business telephone number must be 10 characters or more"
+      }
+      
+    ]
+    
+  }
+%}
+
 {% else %}
 
 {% endif %}

@@ -88,12 +88,8 @@
       "url": "details-business-details?r=t&release=b1&vatremoved=true&changed=true&view=ext"
     },
     {
-      "name": "bank details changed banner",
-      "url": "details-business-details?bankchanged=true&changed=true"
-    },
-    {
-      "name": "add bank details",
-      "url": "details-business-details?r=t&release=b1&bank=empty&bankchanged=false"
+      "name": "bank details changed banner (concept)",
+      "url": "details-business-details?r=t&release=concept&bankchanged=true&changed=true&view=ext"
     }
   ],
 
@@ -114,6 +110,100 @@
   ]
 }
 %}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+  "status": 'In development',
+  "name": "Manage business details",
+  "id": "int-bd01",
+  "url": "details-business-details?r=t&view=int&release=b2",
+  "release": "Buffalo 1.1 MVP",
+  "variants": [
+    {
+      "name": "Vendor registration number	- hidden",
+      "url": "details-business-details?r=t&release=b2&vendorCount=0&view=int"
+    },
+    {
+      "name": "Vendor registration number	- one number",
+      "url": "details-business-details?r=t&release=b2&vendorCount=1&view=int"
+    },
+    {
+      "name": "Trader number	- hidden",
+      "url": "details-business-details?r=t&release=b2&traderCount=0&view=int"
+    },
+    {
+      "name": "Trader number	- one number",
+      "url": "details-business-details?r=t&release=b2&traderCount=1&view=int"
+    },
+    {
+      "name": "County Parish Holding (CPH) number	- hidden",
+      "url": "details-business-details?r=t&release=b2&cphCount=0&view=int"
+    },
+    {
+      "name": "County Parish Holding (CPH) number	- one number",
+      "url": "details-business-details?r=t&release=b2&cphCount=1&view=int"
+    },
+    {
+      "name": "County Parish Holding (CPH) number	- multiple numbers",
+      "url": "details-business-details?r=t&release=b2&cphCount=2&view=int"
+    },
+    {
+      "name": "name changed banner",
+      "url": "details-business-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+    },
+    {
+      "name": "address changed banner",
+      "url": "details-business-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+    },
+    {
+      "name": "phone numbers changed banner",
+      "url": "details-business-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+    },
+    {
+      "name": "email changed banner",
+      "url": "details-business-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+    },
+    {
+      "name": "business type changed banner",
+      "url": "details-business-details?r=t&release=b2&typechanged=true&changed=true&view=int"
+    },
+    {
+      "name": "legal status changed banner",
+      "url": "details-business-details?r=t&release=b2&legalchanged=true&changed=true&view=int"
+    },
+    {
+      "name": "vat number changed banner",
+      "url": "details-business-details?r=t&release=b2&vatchanged=true&changed=true&view=int"
+    },
+    {
+      "name": "vat number removed banner",
+      "url": "details-business-details?r=t&release=b2&vatremoved=true&changed=true&view=int"
+    },
+    {
+      "name": "bank details changed banner (concept)",
+      "url": "details-business-details?r=t&release=concept&bankchanged=true&changed=true&view=int"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ],
+  "notes": [
+    "<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding (CPH) number' row. View example with the query string &cphCount=0",
+
+    "<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH) numbers' label plural and separate each CPH number with a break line tag. View example with the query string &cphCount=2",
+
+    "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
+
+    "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0"
+  ]
+}
+%}
+
 {% else %}
 
 {% endif %}

@@ -26,7 +26,7 @@
     "status": 'In development',
     "name": "VAT registration number (change) - business details",
     "id": "bd12",
-    "url": "business-details-vat-change?r=t&release=b1&newChange=true",
+    "url": "business-details-vat-change?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
     "variants": [],
 
@@ -45,7 +45,35 @@
     ]
     
   }
-  %}
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "VAT registration number (change) - business details",
+    "id": "int-bd12",
+    "url": "business-details-vat-change?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a VAT registration number"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter a VAT registration number in the format GB123456789 or 123456789"
+      }
+    ]
+    
+  }
+%}
+
 {% else %}
 
 {% endif %}

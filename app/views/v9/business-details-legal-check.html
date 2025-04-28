@@ -35,6 +35,23 @@
     
   }
   %}
+  {% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Legal status (change) - business details (Buffalo 1.1)",
+    "id": "int-bd16",
+    "url": "business-details-legal-check?r=t&release=b2&view=int",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": ""
+    
+  }
+  %}
 {% else %}
 
 {% endif %}

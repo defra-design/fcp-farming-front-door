@@ -27,7 +27,7 @@
     "status": 'In development',
     "name": "Address (change) - business details",
     "id": "bd04",
-    "url": "business-details-address-change?r=t&release=b1&newChange=true",
+    "url": "business-details-address-change?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
     "variants": [],
 
@@ -93,7 +93,83 @@
     ]
     
   }
+%}
+
+{% elif data.view == "int" %}
+
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Address (change) - business details",
+    "id": "int-bd04",
+    "url": "business-details-address-change?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "field": "Address line 1",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter address line 1, typically the building and street"
+      },
+      {
+        "field": "Address line 1",
+        "scenario": "Entry is too long",
+        "content": "Address line 1 must be 100 characters or less"
+      },
+
+      {
+        "field": "Address line 2",
+        "scenario": "Entry is too long",
+        "content": "Address line 2 must be 100 characters or less"
+      },
+
+      {
+        "field": "Town or city",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter town or city"
+      },
+      {
+        "field": "Town or city",
+        "scenario": "Entry is too long",
+        "content": "Town or city must be 100 characters or less"
+      },
+
+      {
+        "field": "County",
+        "scenario": "Entry is too long",
+        "content": "County must be 100 characters or less"
+      },
+
+      {
+        "field": "Postal code or zip code",
+        "scenario": "Entry is too long",
+        "content": "Postal code or zip code must be 10 characters or less"
+      },
+
+      {
+        "field": "Country",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a country"
+      },
+      {
+        "field": "Country",
+        "scenario": "Entry is too long",
+        "content": "Country must be 60 characters or less"
+      }
+
+    ],
+
+    "notes": [
+      "Pre populate fields with previously selected/entered address AND also pre-populate fields with known values if an address has been selected from the postcode lookup"
+    ]
+    
+  }
   %}
+
 {% else %}
 
 {% endif %}

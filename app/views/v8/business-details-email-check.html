@@ -19,7 +19,7 @@
     "status": 'In development',
     "name": "Email address (check) - business details",
     "id": "bd11",
-    "url": "business-details-email-check?r=t&release=b1&newChange=true",
+    "url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
     "variants": [],
 
@@ -31,7 +31,28 @@
     ]
     
   }
-  %}
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Email address (check) - business details",
+    "id": "int-bd11",
+    "url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+    ]
+    
+  }
+%}
+
 {% else %}
 
 {% endif %}

@@ -19,27 +19,84 @@
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-  "status": 'In development',
-  "name": " Bank account details (change) - European / business - business details",
-  "id": "ba04c",
-  "url": "business-details-bank-change?r=t&release=b2&newChange=true",
-  "release": "MVP",
-  "variants": [],
-
-  "pagetitle": pageTitle,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank account details (change) - business details",
+    "id": "ba04",
+    "url": "business-details-bank-change-european-business?r=t&view=ext&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
     {
-      "scenario": "[scenario]",
-      "content": "[error message]"
+      "name": "ba04a",
+      "url": "business-details-bank-change-uk-business?r=t&view=ext&release=b2"
+    },
+    {
+      "name": "ba04b",
+      "url": "business-details-bank-change-uk-personal?r=t&view=ext&release=b2"
+    },
+    {
+      "name": "ba04c",
+      "url": "business-details-bank-change-european-business?r=t&view=ext&release=b2"
+    },
+    {
+      "name": "ba04d",
+      "url": "business-details-bank-change-european-personal?r=t&view=ext&release=b2"
     }
+    ],
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+    "Form fields shown on this page are determined by the selections made on ba02 and ba03. For this variation (ba04c), 'European' and 'Personal' have been selected. "
+  ]
+
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank account details (change) - business details",
+    "id": "int-ba04",
+    "url": "business-details-bank-change-european-business?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-ba04a",
+      "url": "business-details-bank-change-uk-business?r=t&view=int&release=b2"
+    },
+    {
+      "name": "int-ba04b",
+      "url": "business-details-bank-change-uk-personal?r=t&view=int&release=b2"
+    },
+    {
+      "name": "int-ba04c",
+      "url": "business-details-bank-change-european-business?r=t&view=int&release=b2"
+    },
+    {
+      "name": "int-ba04d",
+      "url": "business-details-bank-change-european-personal?r=t&view=int&release=b2"
+    }
+    ],
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+    "Form fields shown on this page are determined by the selections made on int-ba02 and int-ba03. For this variation (ba04c), 'European' and 'Personal' have been selected.",
+
+    "The form is a mirror of the external page ba04, except for the addition of the Customer reference number input field."
   ]
   
-}
+
+  }
 %}
+
+{% else %}
+
+{% endif %}
 
 
 {% set _selectedBusiness = myData.selectedBusiness %}

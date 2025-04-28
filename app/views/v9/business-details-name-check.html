@@ -33,7 +33,27 @@
     ]
     
   }
-  %}
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Business name (check) - business details",
+    "id": "int-bd03",
+    "url": "business-details-name-check?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    ]
+    
+  }
+%}
+
 {% else %}
 
 {% endif %}

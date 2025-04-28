@@ -30,7 +30,7 @@
     "status": 'In development',
     "name": "Address - select (change) - personal details",
     "id": "pd17",
-    "url": "personal-details-address-select-change?r=t&release=b1&newChange=true",
+    "url": "personal-details-address-select-change?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
     "variants": [],
 
@@ -54,6 +54,36 @@
     
   }
   %}
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Address - select (change) - personal details",
+    "id": "int-pd17",
+    "url": "personal-details-address-select-change?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+      {
+        "scenario": "Nothing selected",
+        "content": "Choose an address"
+      }
+
+    ],
+
+    "notes": [
+
+      "If entering from 'personal details page (pd01)' or returning from 'check address page (pd07)' page AND have known UK postcode on saved address AND no changes have been made to the entered postcode THEN pre select dropdown with previously selected/correct address ELSE do not pre-select any of the options in the dropdown"
+      
+    ]
+    
+  }
+%}
 {% else %}
 
 {% endif %}
