@@ -110,7 +110,15 @@
 
     "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
 
-    "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0"
+    "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0", 
+
+    "<strong>Bank account details summary list</strong> - this needs to display the according fields depending on the bank details registered to the business. E.g, if the bank account details are European and for a business, the fields for Country code, IBAN number, SWIFT code, Name on the should be displayed in the summary list",
+    
+    "<strong>  Building society roll number and SWIFT code</strong> - if the bank account details stored with the business does not have a Building society roll number (or SWIFT code if European bank account), display the row still, and show 'No number added' in the value field.",
+
+    "<strong>  Obfuscation - first name & last name OR name on the account</strong> - display the <strong>first</strong> TWO characters, and obfuscate the rest of the characters with asterisks",
+
+    "<strong>  Obfuscation - account number, sort code, IBAN number, SWIFT code, Building roll number</strong> - display the <strong>last</strong> TWO characters, and obfuscate the rest of the characters with asterisks"
   ]
 }
 %}
@@ -207,7 +215,15 @@
 
     "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
 
-    "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0"
+    "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0",
+
+    "<strong>Bank account details summary list</strong> - this needs to display the according fields depending on the bank details registered to the business. E.g, if the bank account details are European and for a business, the fields for Country code, IBAN number, SWIFT code, Name on the should be displayed in the summary list",
+    
+    "<strong>  Building society roll number and SWIFT code</strong> - if the bank account details stored with the business does not have a Building society roll number (or SWIFT code if European bank account), display the row still, and show 'No number added' in the value field.",
+    
+    "<strong>  Obfuscation - first name & last name OR name on the account</strong> - display the <strong>first</strong> TWO characters, and obfuscate the rest of the characters with asterisks",
+
+    "<strong>  Obfuscation - account number, sort code, IBAN number, SWIFT code, Building roll number</strong> - display the <strong>last</strong> TWO characters, and obfuscate the rest of the characters with asterisks"
   ]
 }
 %}
