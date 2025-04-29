@@ -289,6 +289,18 @@ module.exports = [
       "pagedesc": "Check your bank or building society details."
     },
     {
+      "pageid": "ba06",
+      "pagename": "Bank details - Partial match (submit/check) - business details",
+      "pageurl": "business-bank-partial-match",
+      "pagedesc": "The name on the account does not match. "
+    },
+    {
+      "pageid": "ba07",
+      "pagename": "Bank details - Unable to validate - business details",
+      "pageurl": "business-bank-unable-validate",
+      "pagedesc": "We could not validate your bank details. "
+    },
+    {
       "pageid": "mp01",
       "pagename": "Cookies",
       "pageurl": "cookies",
@@ -604,6 +616,18 @@ module.exports = [
       "pagename": "Bank account details (check) - business details",
       "pageurl": "business-bank-account-check",
       "pagedesc": "Check your bank or building society details."
+    },
+    {
+      "pageid": "int-ba06",
+      "pagename": "Bank details - Partial match (submit/check) - business details",
+      "pageurl": "business-bank-partial-match",
+      "pagedesc": "The name on the account does not match. "
+    },
+    {
+      "pageid": "int-ba07",
+      "pagename": "Bank details - Unable to validate - business details",
+      "pageurl": "business-bank-unable-validate",
+      "pagedesc": "We could not validate your bank details. "
     },
 
    ]
