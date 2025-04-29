@@ -1758,10 +1758,40 @@ module.exports = function (router,_myData) {
 
     //business details - change bank details - check
 
+    router.get('/' + version + '/business-details-bank-check-european-business', function (req, res) {
+        res.render(version + '/business-details-bank-check-european-business', {
+            myData: req.session.myData
+        });
+    });
+
+    router.get('/' + version + '/business-details-bank-check-european-personal', function (req, res) {
+        res.render(version + '/business-details-bank-check-european-personal', {
+            myData: req.session.myData
+        });
+    });
+
+    router.get('/' + version + '/business-details-bank-check-uk-business', function (req, res) {
+        res.render(version + '/business-details-bank-check-uk-business', {
+            myData: req.session.myData
+        });
+    });
+
+    router.get('/' + version + '/business-details-bank-check-uk-personal', function (req, res) {
+        res.render(version + '/business-details-bank-check-uk-personal', {
+            myData: req.session.myData
+        });
+    });
+
 
     /*    router.post('/' + version + '/business-details-bank-check-uk', function (req, res) {
         res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
     });*/
+
+    router.get('/' + version + '/business-details-bank-partial-match', function (req, res) {
+        res.render(version + '/business-details-bank-partial-match', {
+            myData: req.session.myData
+        });
+    });
 
     router.post('/partial-match-answer', function(request, response) {
 
@@ -1778,6 +1808,12 @@ module.exports = function (router,_myData) {
             response.redirect("v9/details-business-details?changed=true&bankchanged=true")
         }
     })
+
+    router.get('/' + version + '/business-details-bank-unable-to-validate-01', function (req, res) {
+        res.render(version + '/business-details-bank-unable-to-validate-01', {
+            myData: req.session.myData
+        });
+    });
 
     router.post('/validation-return-to-check-1', function(request, response) {
 
@@ -1800,6 +1836,12 @@ module.exports = function (router,_myData) {
         }
     })
 
+    router.get('/' + version + '/business-details-bank-unable-to-validate-02', function (req, res) {
+        res.render(version + '/business-details-bank-unable-to-validate-02', {
+            myData: req.session.myData
+        });
+    });
+
     router.post('/validation-return-to-check-2', function(request, response) {
 
         var bankType = request.session.data['bankAccountTypebus']
@@ -1821,12 +1863,12 @@ module.exports = function (router,_myData) {
         }
     })
 
-
-    router.get('/' + version + '/business-details-bank-details-check', function (req, res) {
-        res.render(version + '/business-details-bank-details-check', {
+    router.get('/' + version + '/business-details-bank-unable-to-validate-03', function (req, res) {
+        res.render(version + '/business-details-bank-unable-to-validate-03', {
             myData: req.session.myData
         });
     });
+
 
     // business details - partial match routing based on radios 
 

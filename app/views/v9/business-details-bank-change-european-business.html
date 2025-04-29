@@ -48,11 +48,59 @@
     "pagetitle": pageName,
     "pagedesc": "",
     "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Choose a country code: Nothing selected",
+        "content": "Select a country code"
+      },
+      {
+        "scenario": "Name on the account: Empty field / nothing entered",
+        "content": "Enter the name on the account"
+      },
+      {
+        "scenario": "Name on the account: Name is too long",
+        "content": "Name must be [max number] characters or less"
+      },
+      {
+        "scenario": "Sort code: Empty field / nothing entered",
+        "content": "Enter a sort code"
+      },
+      {
+        "scenario": "Sort code: Incorrect format, or too long or short",
+        "content": "Enter a valid sort code like 309430"
+      },
+      {
+        "scenario": "Account number: Empty field / nothing entered",
+        "content": "Enter an account number"
+      },
+      {
+        "scenario": "Account number: Too long or short",
+        "content": "Account number must be between 6 and 8 digits"
+      },
+      {
+        "scenario": "Account number: Incorrect format",
+        "content": "Enter a valid account number like 00733445"
+      },
+      {
+        "scenario": "IBAN number: Empty field / nothing entered",
+        "content": "Enter an IBAN"
+      },
+      {
+        "scenario": "IBAN number: Too short",
+        "content": "IBAN must be at least 15 digits"
+      },
+      {
+        "scenario": "SWIFT number: Too long or short",
+        "content": "SWIFT code must be between 8 and 11 characters long"
+      }
+    ],
     "notes": [
-    "Form fields shown on this page are determined by the selections made on ba02 and ba03. For this variation (ba04c), 'European' and 'Personal' have been selected. "
-  ]
+      "Form fields shown on this page are determined by the selections made on int-ba02 and int-ba03. For this variation (ba04c), 'European' and 'Personal' have been selected.", 
 
-  }
+      "The country code select component should be populated using the full list of 2-letter ISO 3166-1 alpha-2 codes, as per the Open Standards for Government guidelines. E.g. France is represented by 'FR' The prototype only lists a few of these countries for the sake of demo/research purposes."
+    ]
+    
+}
 %}
 
 {% elif data.view == "int" %}
@@ -84,10 +132,66 @@
     "pagetitle": pageName,
     "pagedesc": "",
     "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Customer reference number (CRN): Empty field / nothing entered",
+        "content": "Enter the customer’s CRN"
+      },
+      {
+        "scenario": "Customer reference number (CRN): Incorrect format, or too long or short",
+        "content": "Enter a valid CRN, like 1101996862"
+      },
+      {
+        "scenario": "Choose a country code: Nothing selected",
+        "content": "Select a country code"
+      },
+      {
+        "scenario": "Name on the account: Empty field / nothing entered",
+        "content": "Enter the name on the account"
+      },
+      {
+        "scenario": "Name on the account: Name is too long",
+        "content": "Name must be [max number] characters or less"
+      },
+      {
+        "scenario": "Sort code: Empty field / nothing entered",
+        "content": "Enter a sort code"
+      },
+      {
+        "scenario": "Sort code: Incorrect format, or too long or short",
+        "content": "Enter a valid sort code like 309430"
+      },
+      {
+        "scenario": "Account number: Empty field / nothing entered",
+        "content": "Enter an account number"
+      },
+      {
+        "scenario": "Account number: Too long or short",
+        "content": "Account number must be between 6 and 8 digits"
+      },
+      {
+        "scenario": "Account number: Incorrect format",
+        "content": "Enter a valid account number like 00733445"
+      },
+      {
+        "scenario": "IBAN number: Empty field / nothing entered",
+        "content": "Enter an IBAN"
+      },
+      {
+        "scenario": "IBAN number: Too short",
+        "content": "IBAN must be at least 15 digits"
+      },
+      {
+        "scenario": "SWIFT number: Too long or short",
+        "content": "SWIFT code must be between 8 and 11 characters long"
+      }
+    ],
     "notes": [
     "Form fields shown on this page are determined by the selections made on int-ba02 and int-ba03. For this variation (ba04c), 'European' and 'Personal' have been selected.",
 
-    "The form is a mirror of the external page ba04, except for the addition of the Customer reference number input field."
+    "The form is a mirror of the external page ba04, except for the addition of the Customer reference number input field.",
+
+    "The country code select component should be populated using the full list of 2-letter ISO 3166-1 alpha-2 codes, as per the Open Standards for Government guidelines. E.g. France is represented by 'FR' The prototype only lists a few of these countries for the sake of demo/research purposes."
   ]
   
 
@@ -165,6 +269,7 @@
             Country code where the account is held
           </label>
           <select class="govuk-select" id="bankCountryCodebus" name="bankCountryCodebus">
+            <option value="choose" selected>Choose country code</option>
             <option value="AD">AD</option>
             <option value="AE">AE</option>
             <option value="AF">AF</option>
