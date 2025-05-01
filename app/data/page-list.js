@@ -20,7 +20,7 @@ module.exports = [
     {
       "pageid": "pd01",
       "pagename": "Manage personal details",
-      "pageurl": "personal-details-view-change",
+      "pageurl": "personal-details",
       "pagedesc": "View and update your personal account details."
     },
     {
@@ -122,7 +122,7 @@ module.exports = [
     {
       "pageid": "bd01",
       "pagename": "Manage business details",
-      "pageurl": "business-details-view-change",
+      "pageurl": "business-details",
       "pagedesc": "View and update your business details."
     },
     {
@@ -397,7 +397,7 @@ module.exports = [
     {
       "pageid": "int-pd01",
       "pagename": "Manage personal details",
-      "pageurl": "personal-details-view-change",
+      "pageurl": "personal-details",
       "pagedesc": "View and update your personal account details."
     },
     {
@@ -475,7 +475,7 @@ module.exports = [
     {
       "pageid": "int-bd01",
       "pagename": "Manage business details",
-      "pageurl": "business-details-view-change",
+      "pageurl": "business-details",
       "pagedesc": "View and update your business details."
     },
     {
