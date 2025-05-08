@@ -101,7 +101,7 @@
         {% endif %}
 
         <!-- Full name  -->
-        {% set _fullName = _titleValue + (myData.newNameFirstPers or myData.nameFirstPers) + " " + _middleValue + (myData.newNameLastPers or myData.nameLastPers) %}
+        {% set _fullName = (myData.newNameFirstPers or myData.nameFirstPers) + " " + _middleValue + (myData.newNameLastPers or myData.nameLastPers) %}
 
       {% else %}
 
