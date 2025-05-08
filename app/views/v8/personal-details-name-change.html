@@ -44,11 +44,6 @@
     "pageurl": "",
     "errormessages": [
       {
-        "field": "Title",
-        "scenario": "Entry is too long",
-        "content": "Title must be 10 characters or less"
-      },
-      {
         "field": "First name",
         "scenario": "Empty field / nothing entered",
         "content": "Enter first name"
@@ -100,11 +95,6 @@
     "pagedesc": "",
     "pageurl": "",
     "errormessages": [
-      {
-        "field": "Title",
-        "scenario": "Entry is too long",
-        "content": "Title must be 10 characters or less"
-      },
       {
         "field": "First name",
         "scenario": "Empty field / nothing entered",
@@ -191,7 +181,7 @@
           </h1>
         </legend>
 
-        <!-- TITLE -->
+        <!-- TITLE 
         <div class="govuk-form-group {% if myData.validationErrors.nameTitlePers %}govuk-form-group--error{% endif %}">
           <label class="govuk-label" for="nameTitlePers">
             Title (optional)
@@ -206,7 +196,7 @@
               {% set _valueNewNameTitlePers = myData.newNameTitlePers %}
           {% endif %}
           <input class="govuk-input govuk-!-width-one-quarter {% if myData.validationErrors.nameTitlePers %}govuk-input--error{% endif %}" id="nameTitlePers" name="nameTitlePers" type="text" value="{{_valueNewNameTitlePers}}" {% if myData.validationErrors.nameTitlePers %}aria-describedby="nameTitlePers-error"{% endif %}>
-        </div>
+        </div> -->
 
         <!-- FIRST NAME -->
         <div class="govuk-form-group {% if myData.validationErrors.nameFirstPers %}govuk-form-group--error{% endif %}">
