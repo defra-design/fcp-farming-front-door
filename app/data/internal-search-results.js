@@ -26,19 +26,6 @@ module.exports = [
         "postcode": "HG3 8LP"
     },
     {
-        "id": 3,
-        "type": "cus",
-        "name": "Dafos Carey",
-        "firstName": "Dafos",
-        "lastName": "Carey",
-        "crn": "1102876541",
-        "sbiNumber": "",
-        "vrnNumber": "",
-        "traderNumber": "",
-        "address": "Mill House, Shiplake",
-        "postcode": "SH6 7KL"
-    },
-    {
         "id": 4,
         "type": "bus",
         "name": "Fossil Holdings",
@@ -61,34 +48,8 @@ module.exports = [
         "sbiNumber": "875346784",
         "vrnNumber": "",
         "traderNumber": "876432",
-        "address": "Foster Way, MIttenslake",
+        "address": "Foster Way, Mittenslake",
         "postcode": "MT67 9RX"
-    },
-    {
-        "id": 6,
-        "type": "bus",
-        "name": "Foster Pigs",
-        "firstName": "",
-        "lastName": "",
-        "crn": "",
-        "sbiNumber": "018563465",
-        "vrnNumber": "",
-        "traderNumber": "",
-        "address": "25 Oink Way, Darlington",
-        "postcode": "DT3 4FC"
-    },
-    {
-        "id": 7,
-        "type": "cus",
-        "name": "Foster Smedwick",
-        "firstName": "Foster",
-        "lastName": "Smedwick",
-        "crn": "1106547986",
-        "sbiNumber": "",
-        "vrnNumber": "",
-        "traderNumber": "",
-        "address": "907 Urban Road, London",
-        "postcode": "N2 7UR"
     },
     {
         "id": 8,
@@ -128,19 +89,6 @@ module.exports = [
         "traderNumber": "678934",
         "address": "Spring Lane, Careyton",
         "postcode": "GL7 8UR"
-    },
-    {
-        "id": 11,
-        "type": "bus",
-        "name": "Midway Fosfarm",
-        "firstName": "",
-        "lastName": "",
-        "crn": "",
-        "sbiNumber": "589042323",
-        "vrnNumber": "",
-        "traderNumber": "",
-        "address": "4 Cottage Lane, Peaville",
-        "postcode": "FL7 8RW"
     },
     {
         "id": 12,
