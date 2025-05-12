@@ -1197,11 +1197,18 @@ input[type="radio" i] {
 .internal-list__search header {
   border-top: 1px solid #b1b4b6;
   padding: 30px 0;
+  
 }
 
 .internal-list__search li > p {
   font-weight: 600;
   color:  #505a5f ;
+}
+
+.internal-list__search li:last-of-type {
+  border-bottom: 1px solid #b1b4b6;
+  padding: 30px 0;
+  margin: 0 0 30px 0;
 }
 
 #service-name {
@@ -1215,6 +1222,8 @@ input[type="radio" i] {
 #service-name::after {
   content: "}}";
 }
+
+// Design history styling
 
 img.design-history {
   width: 100%;
