@@ -13,7 +13,7 @@
 {% endif %}
 {% set _showIntExtLinks = true %}
 
-{% set pageName="Search for a person to give access to Agile Farm Ltd" %}
+{% set pageName="How can Richard Clark manage Countryside Stewardship applications for this business?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -154,33 +154,88 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
+   <form action="permissions-check-answers" method="POST">
 
-  <form action="user-search-results" method="POST">
 
-    <div class="govuk-form-group" data-list-search-filter >
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="search-internal">
-          Search for a person to give access to Agile Farm Ltd
-        </label>
-      </h1>
+   <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          <span class="govuk-caption-l">Richard Clarke’s access to Agile Farm Ltd</span>
+          How can Richard Clarke manage Countryside Stewardship agreements for this business?
+        </h1>
+      </legend>
 
-      <div class="govuk-hint">Enter their customer reference number (CRN)</div>
+      <div id="contact-hint" class="govuk-hint">
+        Select one option
+      </div>
 
-      <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn">
+            No access
+          </label>
+          <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
+            Cannot: view or manage any Countryside Stewardship (CS) agreements or correspondence
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            View
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            Can: view CS agreements, amendments, claims, transfers, and details of land, features and cover for this business<br>Cannot: create, amend or submit claims, agreements or transfers, make declarations, amend land, features and covers, or receive correspondence relating to agreements
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Amend
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            Can: view all CS agreement details, view, create and amend claims, agreements or transfers, make declarations, and view and amend land, features and covers<br>Cannot: respond to agreement offers, receive correspondence relating to agreements, or submit or withdraw claims, agreement amendments or transfers
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Delegated permission
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            Can: respond to agreement offers, receive correspondence relating to agreements, make declarations, and view, amend, submit or withdraw claims, agreement amendments, transfers, land, features and covers
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
 
-    </div>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-visually-hidden">Warning</span>
+      If you give someone delegated permission for Countryside Stewardship agreements, they will be able to do all actions and receive all correspondence for this business’s agreements for this scheme.
+    </strong>
+  </div>
 
-    <button type="submit" class="govuk-button" >Search</button>
+  {{govukButton({
+    text: "Continue"
+  })}}
+
+  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
   </form>
 
+
+
   </div>
+
 
   <div class="govuk-grid-column-one-third">
-    <h4 class="govuk-heading-s">New users</h4>
-    <p class="govuk-body-s">To add someone who is not already registered with this service, they need to <a href="">register first</a>.</p>
+    <h4 class="govuk-heading-s">Setting permissions</h4>
+    <p class="govuk-body-s">You can choose whatever permission levels you want. There is <a href="#" class="govuk-link">guidance</a> on recommended permission levels depending on the person’s role.</p>
   </div>
-
 
 </div>
 

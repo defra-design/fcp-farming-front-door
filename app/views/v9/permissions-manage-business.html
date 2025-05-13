@@ -13,7 +13,7 @@
 {% endif %}
 {% set _showIntExtLinks = true %}
 
-{% set pageName="What is Richard Clark’s relationship with Agile Farm Ltd?" %}
+{% set pageName="How can Richard Clark manage this business account?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -154,100 +154,57 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="business-relationship-individual" method="POST">
+   <form action="permissions-land-details" method="POST">
 
 
    <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          <span class="govuk-caption-l">Richard Clark’s access to Agile Farm Ltd</span>
-          What is Richard Clark’s relationship with Agile Farm Ltd?
+          <span class="govuk-caption-l">Richard Clarke’s access to Agile Farm Ltd</span>
+          How can Richard Clarke manage this business account?
         </h1>
       </legend>
-      <!-- <div id="signIn-hint" class="govuk-hint">
-        You’ll need an account to prove your identity and complete your Self Assessment
-      </div> -->
-      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+
+      <div id="contact-hint" class="govuk-hint">
+        Select one option
+      </div>
+
+      <div class="govuk-radios" data-module="govuk-radios">
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn">
-            Agent or adviser
+            View
           </label>
           <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
-            Any professional adviser to the business
+            Can: view business details and people associated with the business<br>Cannot: amend any business details or control business permissions
           </div>
         </div>
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn-2">
-            Business partner
+            Amend
           </label>
           <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            A business partner of the owner or sole trader
+            Can: view and amend business contact details<br>Cannot: amend other business details or control business permissions
           </div>
         </div>
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn-2">
-            Company secretary
+            Delegated permission
           </label>
           <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            The business’s company secretary
+            Can: view and amend business name and all business details, including bank account details<br>Cannot: change other users' business permissions
           </div>
         </div>
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn-2">
-            Director
+            Full permission
           </label>
           <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            A director of the business
-          </div>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
-          <label class="govuk-label govuk-radios__label" for="signIn-2">
-            Employee
-          </label>
-          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            Anyone employed by the business who does not have any legal responsibility for it
-          </div>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
-          <label class="govuk-label govuk-radios__label" for="signIn-2">
-            Executor
-          </label>
-          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            A legal executor for the business
-          </div>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
-          <label class="govuk-label govuk-radios__label" for="signIn-2">
-            Helper
-          </label>
-          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            Anyone who helps the business but is not part of the business and not a professional adviser
-          </div>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
-          <label class="govuk-label govuk-radios__label" for="signIn-2">
-            Owner or sole trader
-          </label>
-          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            An owner or sole trader of the business, and the only type of user who can remove another owner or sole trader from this business
-          </div>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
-          <label class="govuk-label govuk-radios__label" for="signIn-2">
-            Trustee
-          </label>
-          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            A trustee for the business
+            Can: view and amend business name and all business details including bank details, control most permissions for the business<br>Cannot: remove or reduce the access of another user with full permission for the business, except by contacting the helpline
           </div>
         </div>
       </div>
@@ -258,7 +215,7 @@
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
     <strong class="govuk-warning-text__text">
       <span class="govuk-visually-hidden">Warning</span>
-      Each business must have at least one owner or sole trader.
+      If you give someone delegated or full permission, they will be able to amend bank details and other important details for this business.<br>If you give someone full permission, you will need to contact the Rural Payments Agency to reduce or remove their permission in future.
     </strong>
   </div>
 
@@ -270,8 +227,11 @@
 
   </form>
 
+  </div>
 
-
+  <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Setting permissions</h4>
+    <p class="govuk-body-s">You can choose whatever permission levels you want. There is <a href="#" class="govuk-link">guidance</a> on recommended permission levels depending on the person’s role.</p>
   </div>
 
 </div>
