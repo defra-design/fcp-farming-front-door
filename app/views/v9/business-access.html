@@ -152,8 +152,9 @@
 
 <div class="govuk-grid-row">
 
+  <div class="govuk-grid-column-full">
 
-<!-- NOTIFCATION MESSAGES START-->    
+<!-- NOTIFCATION MESSAGES DAVE EXAMPLE START-->    
     {% if myData.showNotification == "true" %}
     <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
       <div class="govuk-notification-banner__header">
@@ -168,61 +169,28 @@
       </div>
     </div>
     {% endif %}
-<!-- NOTIFCATION MESSAGES END-->
+<!-- NOTIFCATION MESSAGES DAVE EXAMPLE END-->
 
-<div class="govuk-grid-column-full">
-  <h1 class="govuk-heading-l">
+
+<!-- 
+<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+      Richard Clarke can access Agile Farm Ltd
+    </h3>
+  </div>
+</div> -->
+
+
+   <h1 class="govuk-heading-l">
     Manage access to Agile Farm Ltd
    </h1>
 
-   <h2 class="govuk-heading-m">
-     Your permissions
-    </h2>
-
-    <!-- <dl class="current-user-access-details">
-       <p class="govuk-body">Business owner</p>
-       <p class="govuk-body"></p>
-    </dl> -->
-
-    <div class="govuk-grid-row your-business-permissions_block">
-      <div class="govuk-grid-column-one-half">
-        <table class="govuk-table">
-          <caption class="govuk-table__caption govuk-table__caption--s">Business account</caption>
-          <tbody class="govuk-table__body">
-            <tr class="govuk-table__row user-permissions__list-item_table-row">
-              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage business</th>
-              <td class="govuk-table__cell govuk-body-s">Full permission</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
-            </tr>
-            <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Land details</th>
-              <td class="govuk-table__cell govuk-body-s">Amend</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> land details permissions</span></a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="govuk-grid-column-one-half">
-        <table class="govuk-table">
-          <caption class="govuk-table__caption govuk-table__caption--s">Schemes and grants</caption>
-          <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (applications)</th>
-              <td class="govuk-table__cell govuk-body-s">Full permission</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> land details permissions</span></a></td>
-            </tr>
-            <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (agreements)</th>
-              <td class="govuk-table__cell govuk-body-s">Full permission</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> land details permissions</span></a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <h2 class="govuk-heading-m">
-      Permissions for other people associated with this business
-     </h2>
 </div>
 
 </div>
@@ -231,6 +199,56 @@
 <div class="govuk-grid-column-two-thirds">
 
 
+
+   <h2 class="govuk-heading-m">
+     Your permissions
+    </h2>
+
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row user-permissions__list-item_table-row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Business relationship</th>
+              <td class="govuk-table__cell govuk-body-s">Owner or sole trader</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+
+    <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--s">Business account</caption>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row user-permissions__list-item_table-row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage business</th>
+              <td class="govuk-table__cell govuk-body-s">Full permission</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage land details</th>
+              <td class="govuk-table__cell govuk-body-s">Amend</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> land detail permissions</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+                <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--s">Schemes and grants</caption>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (applications)</th>
+              <td class="govuk-table__cell govuk-body-s">Full permission</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> countryside stewardship application permissions</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (agreements)</th>
+              <td class="govuk-table__cell govuk-body-s">Full permission</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> countryside stewardship agreements permissions</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+<br>
+    <h2 class="govuk-heading-m">
+      Permissions for other people associated with this business
+     </h2>
+
 <!-- BUSINESS USER 1 PERMISSIONS CARD START-->
      <ul class="user-permissions__list">
       <li class="user-permissions__list-item">
@@ -238,9 +256,9 @@
             <table class="govuk-table">
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                  <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">User name</h3></td>
-                  <td class="govuk-table__cell govuk-body">Relationship</td>
-                  <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+                  <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">Kim Canterbury</h3></td>
+                  <td class="govuk-table__cell govuk-body">Helper</td>
+                  <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
                 </tr>
               </tbody>
             </table>
@@ -251,13 +269,13 @@
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row user-permissions__list-item_table-row">
                   <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage business</th>
-                  <td class="govuk-table__cell govuk-body-s">Level</td>
+                  <td class="govuk-table__cell govuk-body-s">View</td>
                   <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
                 </tr>
                 <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Land details</th>
-                  <td class="govuk-table__cell govuk-body-s">Level</td>
-                  <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land details</span></a></td>
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage land details</th>
+                  <td class="govuk-table__cell govuk-body-s">View</td>
+                  <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land detail permissions</span></a></td>
                 </tr>
               </tbody>
             </table>
@@ -266,17 +284,17 @@
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                   <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (applications)</th>
-                  <td class="govuk-table__cell govuk-body-s">Level</td>
+                  <td class="govuk-table__cell govuk-body-s">Amend</td>
                   <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship application permissions</span></a></td>
                 </tr>
                 <tr class="govuk-table__row">
                   <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (agreements)</th>
-                  <td class="govuk-table__cell govuk-body-s">Level</td>
+                  <td class="govuk-table__cell govuk-body-s">Amend</td>
                   <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship agreements permissions</span></a></td>
                 </tr>
               </tbody>
             </table>
-            <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Joe Bloggs from business account</span></a></p>
+            <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Kim Canterbury from business account</span></a></p>
           </div>
       </li>
      </ul>
@@ -293,7 +311,7 @@
             <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">Richard Clarke</h3></td>
               <td class="govuk-table__cell govuk-body">Agent or adviser</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
             </tr>
           </tbody>
         </table>
@@ -308,9 +326,9 @@
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="permissions-manage-business">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
             </tr>
             <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Land details</th>
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage land details</th>
               <td class="govuk-table__cell govuk-body-s">Amend</td>
-              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land details</span></a></td>
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land detail permissions</span></a></td>
             </tr>
           </tbody>
         </table>
@@ -329,7 +347,7 @@
             </tr>
           </tbody>
         </table>
-        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Joe Bloggs from business account</span></a></p>
+        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Richard Clarke from business account</span></a></p>
       </div>
   </li>
  </ul>
@@ -344,9 +362,9 @@
         <table class="govuk-table">
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">User name</h3></td>
-              <td class="govuk-table__cell govuk-body">Relationship</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+              <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">Rachel Foschini</h3></td>
+              <td class="govuk-table__cell govuk-body">Executor</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
             </tr>
           </tbody>
         </table>
@@ -357,13 +375,13 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row user-permissions__list-item_table-row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage business</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">Delegated permission</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
             </tr>
             <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Land details</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
-              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land details</span></a></td>
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage land details</th>
+              <td class="govuk-table__cell govuk-body-s">Amend</td>
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land detail permissions</span></a></td>
             </tr>
           </tbody>
         </table>
@@ -372,17 +390,17 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (applications)</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">No access</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship application permissions</span></a></td>
             </tr>
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (agreements)</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">No access</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship agreements permissions</span></a></td>
             </tr>
           </tbody>
         </table>
-        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Joe Bloggs from business account</span></a></p>
+        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Rachel Foschini from business account</span></a></p>
       </div>
   </li>
  </ul>
@@ -396,9 +414,9 @@
         <table class="govuk-table">
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">User name</h3></td>
-              <td class="govuk-table__cell govuk-body">Relationship</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+              <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">Jessica Hollis</h3></td>
+              <td class="govuk-table__cell govuk-body">Business partner</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
             </tr>
           </tbody>
         </table>
@@ -409,13 +427,13 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row user-permissions__list-item_table-row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage business</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">Full permission</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
             </tr>
             <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Land details</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
-              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land details</span></a></td>
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage land details</th>
+              <td class="govuk-table__cell govuk-body-s">Amend</td>
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land detail permissions</span></a></td>
             </tr>
           </tbody>
         </table>
@@ -424,17 +442,17 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (applications)</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">Full permission</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship application permissions</span></a></td>
             </tr>
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (agreements)</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">Full permission</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship agreements permissions</span></a></td>
             </tr>
           </tbody>
         </table>
-        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Joe Bloggs from business account</span></a></p>
+        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Jessica Hollis from business account</span></a></p>
       </div>
   </li>
  </ul>
@@ -448,9 +466,9 @@
         <table class="govuk-table">
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">User name</h3></td>
-              <td class="govuk-table__cell govuk-body">Relationship</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+              <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">Clara Olivera</h3></td>
+              <td class="govuk-table__cell govuk-body">Employee</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
             </tr>
           </tbody>
         </table>
@@ -461,13 +479,13 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row user-permissions__list-item_table-row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage business</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">Amend</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
             </tr>
             <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Land details</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
-              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land details</span></a></td>
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage land details</th>
+              <td class="govuk-table__cell govuk-body-s">View</td>
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land detail permissions</span></a></td>
             </tr>
           </tbody>
         </table>
@@ -476,17 +494,17 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (applications)</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">View</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship application permissions</span></a></td>
             </tr>
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (agreements)</th>
-              <td class="govuk-table__cell govuk-body-s">Level</td>
+              <td class="govuk-table__cell govuk-body-s">Amend</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship agreements permissions</span></a></td>
             </tr>
           </tbody>
         </table>
-        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Joe Bloggs from business account</span></a></p>
+        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Clara Olivera from business account</span></a></p>
       </div>
   </li>
  </ul>
@@ -531,7 +549,7 @@
   <div class="govuk-grid-column-one-third">
     <form action="user-search" method="POST">
     <button type="submit" class="govuk-button" data-module="govuk-button" href="user-search">
-      Give someone business permissions
+      Give permissions
     </button>
   </form>
 
