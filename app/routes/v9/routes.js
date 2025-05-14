@@ -339,6 +339,13 @@ module.exports = function (router,_myData) {
         });
     });
 
+        //internal selected business 
+    router.get('/' + version + '/internal-search-pagination', function (req, res) {
+        res.render(version + '/internal-search-pagination', {
+            myData: req.session.myData
+        });
+    });
+
     //internal selected business 
     router.get('/' + version + '/internal-business', function (req, res) {
         res.render(version + '/internal-business', {
