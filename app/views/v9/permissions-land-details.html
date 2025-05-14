@@ -177,7 +177,10 @@
             No access
           </label>
           <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
-            Cannot: view or manage land details
+            <p class="govuk-body-s permission-level-text">Cannot:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li class="govuk-body-s permission-level-bullet">view or manage land details</li>
+            </ul>
           </div>
         </div>
         <div class="govuk-radios__item">
@@ -186,7 +189,13 @@
             View
           </label>
           <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            Can: view land details, features and covers<br>Cannot: amend, apply for or transfer land, features or covers
+            <ul class="govuk-list govuk-list--bullet permission-level-list">
+              <li class="govuk-body permission-level-bullet permission-level-list__item">view land details, features and covers</li>
+            </ul>
+            <p class="govuk-body-s permission-level-text">Cannot:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li class="govuk-body-s permission-level-bullet">amend, apply for or transfer land, features or covers</li>
+            </ul>
           </div>
         </div>
         <div class="govuk-radios__item">
@@ -195,7 +204,9 @@
             Amend
           </label>
           <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            Can: view, amend, apply for or transfer land, features and covers
+            <ul class="govuk-list govuk-list--bullet permission-level-list">
+              <li class="govuk-body permission-level-bullet permission-level-list__item">view, amend, apply for or transfer land, features and covers</li>
+            </ul>
           </div>
         </div>
       </div>

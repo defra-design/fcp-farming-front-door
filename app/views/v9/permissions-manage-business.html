@@ -177,7 +177,15 @@
             View
           </label>
           <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
-            Can: view business details and people associated with the business<br>Cannot: amend any business details or control business permissions
+            <!-- <p class="govuk-body permission-level-text">Can:</p> -->
+            <ul class="govuk-list govuk-list--bullet permission-level-list">
+              <li class="govuk-body permission-level-bullet permission-level-list__item">view business details and people associated with the business</li>
+            </ul>
+            <p class="govuk-body-s permission-level-text">Cannot:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li class="govuk-body-s permission-level-bullet">amend any business details</li>
+              <li class="govuk-body-s permission-level-bullet">control business permissions</li>
+            </ul>
           </div>
         </div>
         <div class="govuk-radios__item">
@@ -186,7 +194,15 @@
             Amend
           </label>
           <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            Can: view and amend business contact details<br>Cannot: amend other business details or control business permissions
+            <!-- <p class="govuk-body permission-level-text">Can:</p> -->
+            <ul class="govuk-list govuk-list--bullet permission-level-list">
+              <li class="govuk-body permission-level-bullet permission-level-list__item">view and amend business contact details</li>
+            </ul>
+            <p class="govuk-body-s permission-level-text">Cannot:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li class="govuk-body-s permission-level-bullet">amend other business details</li>
+              <li class="govuk-body-s permission-level-bullet">control business permissions</li>
+            </ul>
           </div>
         </div>
         <div class="govuk-radios__item">
@@ -195,7 +211,13 @@
             Delegated permission
           </label>
           <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            Can: view and amend business name and all business details, including bank account details<br>Cannot: change other users' business permissions
+            <ul class="govuk-list govuk-list--bullet permission-level-list">
+              <li class="govuk-body permission-level-bullet permission-level-list__item">view and amend business name and all business details, including bank account details</li>
+            </ul>
+            <p class="govuk-body-s permission-level-text">Cannot:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li class="govuk-body-s permission-level-bullet">change other users' business permissions</li>
+            </ul>
           </div>
         </div>
         <div class="govuk-radios__item">
@@ -204,7 +226,14 @@
             Full permission
           </label>
           <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
-            Can: view and amend business name and all business details including bank details, control most permissions for the business<br>Cannot: remove or reduce the access of another user with full permission for the business, except by contacting the helpline
+            <ul class="govuk-list govuk-list--bullet permission-level-list">
+              <li class="govuk-body permission-level-bullet permission-level-list__item">view and amend business name and all business details including bank details</li>
+              <li class="govuk-body permission-level-bullet permission-level-list__item">control most permissions for the business</li>
+            </ul>
+            <p class="govuk-body-s permission-level-text">Cannot:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li class="govuk-body-s permission-level-bullet">remove or reduce the access of another user with full permission for the business, except by contacting the helpline</li>
+            </ul>
           </div>
         </div>
       </div>

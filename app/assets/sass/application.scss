@@ -1290,3 +1290,38 @@ img.design-history {
 .your-business-permissions_block{
   margin-bottom: 40px;
 }
+
+.permission-level-text{
+  color: #505a5f;
+  margin-bottom: 0;
+}
+
+.permission-level-bullet{
+  color: #505a5f;
+}
+
+.permission-level-list {
+    list-style-type: none; /* Remove default bullet */
+    padding-left: 0; /* Ensure the icon is flush with the left edge */
+}
+
+.permission-level-list__item:before { /* Create a pseudo-element for the icon */
+    content: "\2713"; /* Tick character (Unicode for tick) */
+    font-family:  Tahoma, Geneva, Verdana, sans-serif; /* Or your chosen font family */
+    font-size: 1.5em; /* Adjust size as needed */
+    left: 0;
+    top: 0;
+    width: 25px;
+    float: left;
+    margin-right: 0.2em; /* Space between icon and text */
+    color: var(--govuk-secondary-text-colour, #00703c); /* Use a suitable color */
+    line-height: 1; /* Ensure the tick is vertically aligned */
+    display: block;
+}
+
+.permission-level-list__item {
+    position: relative; /* Needed for absolute positioning of the pseudo-element */
+    padding-left: .5em; /* Make space for the icon and the text */
+    margin-left: 0; /* Reset any default left margin */
+    color: #00703c;
+}
