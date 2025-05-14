@@ -382,6 +382,13 @@ module.exports = [
     }
     ,
     {
+      "pageid": "int-sr01c",
+      "pagename": "Search for a customer or business - (pagination)",
+      "pageurl": "internal-search-results",
+      "pagedesc": "Search results for a customer or business"
+    }
+    ,
+    {
       "pageid": "int-bv01",
       "pagename": "Business overview",
       "pageurl": "internal-business",
