@@ -13,7 +13,7 @@
 {% endif %}
 {% set _showIntExtLinks = true %}
 
-{% set pageName="Check Richard Clarke's permissions before giving access to Agile Farm Ltd" %}
+{% set pageName="Search for a person to give access to Agile Farm Ltd" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -154,73 +154,50 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="business-access?task-success=01" method="POST">
 
+  <form action="firm-search-results" method="POST">
 
-   <div class="govuk-form-group">
-        <h1 class="govuk-heading-l">
-          <span class="govuk-caption-l">Richard Clarke’s access to Agile Farm Ltd</span>
-          Check Richard Clarke's permissions before giving access to Agile Farm Ltd
-        </h1>
+    <div class="govuk-form-group" data-list-search-filter >
+      <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="search-internal">
+          Search for a firm to give agents or advisers access to Agile Farm Ltd
+        </label>
+      </h1>
 
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m">Business relationship</caption>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header govuk-!-width-one-half">Business relationship</th>
-            <td class="govuk-table__cell">Agent or adviser</td>
-            <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="govuk-hint">Enter the business name or firm reference number for the firm of agents or advisers</div>
+      
+      <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
 
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m">Business account</caption>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header govuk-!-width-one-half">Manage business</th>
-            <td class="govuk-table__cell">Amend</td>
-            <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header govuk-!-width-one-half">Land details</th>
-            <td class="govuk-table__cell">View</td>
-            <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> land details permissions</span></a></td>
-          </tr>
-        </tbody>
-      </table>
+    </div>
 
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m">Schemes and grants</caption>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header govuk-!-width-one-half">Countryside stewardship (applications)</th>
-            <td class="govuk-table__cell">Amend</td>
-            <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> countryside stewardship application permissions</span></a></td>
-          </tr>
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header govuk-!-width-one-half">Countryside stewardship (agreements)</th>
-            <td class="govuk-table__cell">View</td>
-            <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> countryside stewardship agreement permissions</span></a></td>
-          </tr>
-        </tbody>
-      </table>
-
-  </div>
-
-  <p class="govuk-body">By giving this person access, you’re responsible for all information provided to us in any applications, either by you or someone acting for you, including its accuracy.</p>
-  <p class="govuk-body">You are liable for any reductions or financial penalties if these occur when the application is processed.</p>
-
-  {{govukButton({
-    text: "Confirm"
-  })}}
-
-  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+    <button type="submit" class="govuk-button" >Search</button>
 
   </form>
 
+  <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="firm-search">Clear search</a></p>
 
+  <hr style="margin: 40px 0;">
 
+  <h2 class="govuk-heading-m">Search results for "The Agency"</h2>
+
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+    <a class="govuk-link govuk-link--no-visited-state" href="add-firm-users-question">The Agency</a>
+  </h3>
+  <p class="govuk-body govuk-!-margin-bottom-2">Business address: 9 Fossil Way, Gottingley, GY7 8RS</p>
+  <p class="govuk-body govuk-!-margin-bottom-2">Firm reference number: 1101456789</p>
+
+  <hr style="margin: 40px 0;">
+
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+  <a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">The Agency Ltd</a>
+  </h3>
+  <p class="govuk-body govuk-!-margin-bottom-2">Business address: 907 Urban Road, London, N2 7UR</p>
+  <p class="govuk-body govuk-!-margin-bottom-2">Firm reference number: 1101668924</p>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Firms without an account</h4>
+    <p class="govuk-body-s">To add a firm, agent or adviser who is not already registered with this service, they need to <a href="../_common/not-testing.html">register first</a>.</p>
   </div>
 
 

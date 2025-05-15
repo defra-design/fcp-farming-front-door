@@ -154,25 +154,9 @@
 
   <div class="govuk-grid-column-full">
 
-<!-- NOTIFCATION MESSAGES DAVE EXAMPLE START-->    
-    {% if myData.showNotification == "true" %}
-    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-      <div class="govuk-notification-banner__header">
-        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-          Success
-        </h2>
-      </div>
-      <div class="govuk-notification-banner__content">
-        <h3 class="govuk-notification-banner__heading">
-          {{myData.notifications.message}}
-        </h3>
-      </div>
-    </div>
-    {% endif %}
-<!-- NOTIFCATION MESSAGES DAVE EXAMPLE END-->
 
+{% if (data['task-success'] == "01") %}
 
-<!-- 
 <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
   <div class="govuk-notification-banner__header">
     <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
@@ -184,7 +168,65 @@
       Richard Clarke can access Agile Farm Ltd
     </h3>
   </div>
-</div> -->
+</div>
+
+{% elif (data['task-success'] == "02") %}
+
+<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+      Richard Clarke has delegated permission for managing business details for Agile Farm Ltd
+    </h3>
+  </div>
+</div>
+
+{% elif (data['task-success'] == "03") %}
+
+<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+      Agents or advisers from The Agency can access Agile Farm Ltd
+    </h3>
+  </div>
+</div>
+
+{% elif (data['task-success'] == "04") %}
+
+<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+      Hugo Smith can access Agile Farm Ltd
+    </h3>
+  </div>
+</div>
+
+{% else %}
+
+{% endif %}
+
+
+
+
+
+
+
+
+
 
 
    <h1 class="govuk-heading-l">
@@ -301,8 +343,8 @@
 <!-- BUSINESS USER 1 PERMISSIONS CARD END-->
 
 
-
-<!-- BUSINESS USER 2 PERMISSIONS CARD START-->
+{% if (data['task-success'] == "01") or (data['task-success'] == "02") or (data['task-success'] == "03") or (data['task-success'] == "04") %}
+<!-- BUSINESS USER 2b PERMISSIONS CARD START-->
 <ul class="user-permissions__list">
   <li class="user-permissions__list-item">
       <div class="user-permissions__list-item_header">
@@ -322,12 +364,16 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row user-permissions__list-item_table-row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage business</th>
+              {% if (data['task-success'] == "02") or (data['task-success'] == "03") or (data['task-success'] == "04") %}
+              <td class="govuk-table__cell govuk-body-s">Delegated permission</td>              
+              {% else %}
               <td class="govuk-table__cell govuk-body-s">Amend</td>
-              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="permissions-manage-business">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+              {% endif %}
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="permissions-manage-business_selected">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
             </tr>
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage land details</th>
-              <td class="govuk-table__cell govuk-body-s">Amend</td>
+              <td class="govuk-table__cell govuk-body-s">View</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land detail permissions</span></a></td>
             </tr>
           </tbody>
@@ -342,7 +388,7 @@
             </tr>
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (agreements)</th>
-              <td class="govuk-table__cell govuk-body-s">Amend</td>
+              <td class="govuk-table__cell govuk-body-s">View</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship agreements permissions</span></a></td>
             </tr>
           </tbody>
@@ -351,11 +397,10 @@
       </div>
   </li>
  </ul>
-<!-- BUSINESS USER 2 PERMISSIONS CARD END-->
+<!-- BUSINESS USER 2b PERMISSIONS CARD END-->
+{% else %}
 
-
-
-<!-- BUSINESS USER 3 PERMISSIONS CARD START-->
+<!-- BUSINESS USER 2a PERMISSIONS CARD START-->
 <ul class="user-permissions__list">
   <li class="user-permissions__list-item">
       <div class="user-permissions__list-item_header">
@@ -404,8 +449,9 @@
       </div>
   </li>
  </ul>
-<!-- BUSINESS USER 3 PERMISSIONS CARD END-->
+<!-- BUSINESS USER 2a PERMISSIONS CARD END-->
 
+{% endif %}
 
 <!-- BUSINESS USER 4 PERMISSIONS CARD START-->
 <ul class="user-permissions__list">
@@ -511,6 +557,58 @@
 <!-- BUSINESS USER 5 PERMISSIONS CARD END-->
 
 
+<!-- BUSINESS USER 6 PERMISSIONS CARD START-->
+<ul class="user-permissions__list">
+  <li class="user-permissions__list-item">
+      <div class="user-permissions__list-item_header">
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-width-one-half"><h3 class="govuk-heading-m">Don Pitcher</h3></td>
+              <td class="govuk-table__cell govuk-body">Trustee</td>
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      <div class="user-permissions__list-item_main">
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--s">Business account</caption>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row user-permissions__list-item_table-row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage business</th>
+              <td class="govuk-table__cell govuk-body-s">Delegated permission</td>
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Manage land details</th>
+              <td class="govuk-table__cell govuk-body-s">Delegated permission</td>
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> land detail permissions</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--s">Schemes and grants</caption>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (applications)</th>
+              <td class="govuk-table__cell govuk-body-s">Amend</td>
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship application permissions</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Countryside stewardship (agreements)</th>
+              <td class="govuk-table__cell govuk-body-s">Amend</td>
+              <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Change<span class="govuk-visually-hidden"> countryside stewardship agreements permissions</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Remove user<span class="govuk-visually-hidden"> Clara Olivera from business account</span></a></p>
+      </div>
+  </li>
+ </ul>
+<!-- BUSINESS USER 6 PERMISSIONS CARD END-->
+
+
     <nav class="govuk-pagination"  aria-label="Pagination">
       <ul class="govuk-pagination__list">
         <li class="govuk-pagination__item govuk-pagination__item--current">
@@ -556,6 +654,28 @@
     <p class="govuk-body">
     <a class="govuk-link govuk-link--no-visited-state" href="firm-search">Give a firm of agents access</a>
     </p>
+
+    {% if (data['task-success'] == "03") %}
+    
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m">Your tasks</h2>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--red">
+        Action needed
+      </strong>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-">
+      <a href="business-access-request" class="govuk-link govuk-link--no-visited-state">Review business access request</a> from Hugo Smith at The Agency
+    </p>
+
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+    {% else %}
+    {% endif %}
+
+
   </div>
 
 </div>
