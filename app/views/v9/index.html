@@ -129,6 +129,8 @@
     </h2>
     <p><a href="_design-history" class="govuk-link govuk-link--no-visited-state">View design history</a> which includes:</p>
     <ul class="govuk-list govuk-list--bullet">
+      <li>view and update your bank details for external and internal users</li>
+      <li>internal user iterations, based on R3 UR</li>
     </ul>
     
 
@@ -140,6 +142,21 @@
       {
         "number": "232",
         "title": "Bank details design"
+      }, 
+
+      {
+        "number": "249",
+        "title": "Bank details - metadata and error scenarios"
+      }, 
+
+      {
+        "number": "258",
+        "title": "Internal user designs - iterations from UR"
+      }, 
+
+      {
+        "number": "259",
+        "title": "Internal user designs - iterations from UR (Prototype)"
       }
 
 
@@ -177,12 +194,12 @@
         {
           "name": "Internal sign in",
           "url": "internal-sign-in?r=t&view=int",
-          "release": "-"
+          "release": "Buffalo 1.1 MVP"
         },
         {
           "name": "Internal search",
           "url": "internal-search?r=t&view=int",
-          "release": "-",
+          "release": "Buffalo 1.1 MVP",
           "variants": [
             {
               "name": "Internal search (with results - all tab)",
@@ -200,17 +217,22 @@
               "name": "Internal search (with zero results)",
               "url": "internal-search?r=t&view=int&q=zeroresults&intSearchType=cus"
             }
+            ,
+            {
+              "name": "Internal search (with pagination)",
+              "url": "internal-search-pagination?r=t&view=int"
+            }
           ]
         },
         {
           "name": "Internal - selected business view",
           "url": "internal-business?r=t&view=int",
-          "release": "-"
+          "release": "Buffalo 1.1 MVP"
         },
         {
           "name": "Internal - selected customer view",
           "url": "internal-customer?r=t&view=int",
-          "release": "-"
+          "release": "Buffalo 1.1 MVP"
         },
 
 
