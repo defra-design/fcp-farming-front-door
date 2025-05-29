@@ -1,0 +1,253 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="index">Version 9</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Version 9
+      <span class="govuk-caption-xl">Design history</span>
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-l">Permissions v1.0</h2>
+
+    <h3 class="govuk-heading-m">
+      Why we explored permissions
+    </h3>
+
+    <p class="govuk-body">
+      Earlier this year we created a high-level view of capabilities that need to be in our service by the time the existing technology contracts end in early 2026.
+    </p>
+
+    <p class="govuk-body">
+      We prioritised these capabilities, considering which are the highest impact for external users and operational colleagues, and the amount of work needed to have a replacement capability in place by next year.
+    </p>
+
+    <p class="govuk-body">
+      Permissions was one of the areas at the top of our list due to its perceived complexity and the number of linked user needs and pain points.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      Constraints
+    </h3>
+    
+    <p class="govuk-body">
+      Our working assumption is the underlying model and logic for permissions is something we won’t be able to alter prior to next year. Our focus has been to consider improvements to the front-end user experience that will deliver better business outcomes. 
+    </p>
+
+    <p class="govuk-body">
+      As we test designs with users, we’ll be gathering insights related to the underlying permissions model, as this may be something we need to consider addressing in future.
+    </p>    
+
+    <h3 class="govuk-heading-m">
+      Pain points and user needs
+    </h3>
+
+    <p class="govuk-body">
+      Various user needs and pain points had been uncovered during the Discovery and Alpha phases. We took these, along with our understanding of the permissions model and high-level requirements, to a workshop with Rural Payments Agency (RPA) stakeholders.
+    </p>
+
+    <p class="govuk-body">
+      We reviewed and validated the existing information, plus gathered additional detail around the issues experienced by external users and operational colleagues.
+    </p>
+
+    <p class="govuk-body">
+      We also used this workshop to get RPA colleagues more involved in the design process. We dot voted and selected the three highest priority pain points, then spent time sketching out ideas that could resolve the issues.
+    </p>
+
+
+    <img src="/public/images/design-history/v9/permissions-workshop-sketch.png" alt="Photo of sketch created at the permissions workshop with RPA colleagues, showing potential screens needed in a new approach to setting permissions." class="design-history">
+
+
+    <h3 class="govuk-heading-m">
+      Design hypotheses
+    </h3>    
+
+    <p class="govuk-body">
+      Using the Lean Product Canvas, we brought together our user needs, pain points and business problems, to form three high-level design hypotheses: 
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design hypothesis 1
+    </h4> 
+
+    <p class="govuk-body">
+      <strong>We believe</strong> that there will be a reduction in permissions related calls to the RPA<br>
+      <strong>if</strong> farmers / land managers<br>
+      <strong>can</strong> more accurately assign permission levels to other users<br>
+      <strong>by</strong> reducing their complexity and presenting them in plain English
+    </p>
+
+
+    <h4 class="govuk-heading-s">
+      Design hypothesis 2
+    </h4> 
+
+    <p class="govuk-body">
+      <strong>We believe</strong> that there will be a reduction in permissions related calls to the RPA<br>
+      <strong>if</strong> farmers / land managers<br>
+      <strong>can</strong> more accurately assign permission levels to other users<br>
+      <strong>by</strong> making the way permissions are assigned more intuitive
+    </p>    
+
+    <h4 class="govuk-heading-s">
+      Design hypothesis 3
+    </h4> 
+
+    <p class="govuk-body">
+      <strong>We believe</strong> that there will be a reduction in calls to the RPA from agents requesting business access<br>
+      <strong>if</strong> agents and other users<br>
+      <strong>can</strong> more easily request access to a business<br>
+      <strong>by</strong> using a self-serve process that notifies the account owner directly
+    </p>
+
+    <p class="govuk-body">
+      We’ve used these hypotheses to inform the first iterations of our designs. 
+    </p>
+
+<img src="/public/images/design-history/v9/permissions-lean-product-canvas.png" alt="Screenshot of the Lean Product Canvas including permissions related pain points and user needs." class="design-history">
+
+    <h3 class="govuk-heading-m">
+      Design approach: content
+    </h3>   
+
+    <p class="govuk-body">We have had limited insights on permissions from previous user research and information from the business to design from, so we have not had full visibility of pain points. But based on the workshop and what we do know from previous UR, we knew some people are confused and even misled by permissions.</p>
+
+
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>
+    “I need to be assigned the right permission level”
+  </li>
+  <li>
+    "I find that the default settings for some schemes are inadequate“
+  </li>
+  <li>
+    “There is insufficient guidance on permission levels - it is not in plain English”
+  </li>
+  <li>
+    Users have been assigned 'full permissions' incorrectly. Reports of agents changing bank details so that the funding is paid to them, instead of farmers or landowners directly
+  </li>
+</ul>
+
+    <p class="govuk-body">It's easy to assign or not assign high level permissions without realising, which can lead to confusion and conflict between farmers and agents, helpline calls, and risk of fraud.</p>
+
+
+    <h4 class="govuk-heading-s">
+      Users need more flexibility with assigning permissions
+    </h4>
+
+    <p class="govuk-body">Permission levels have different names in different areas and schemes, for example there is inconsistency between permission level names for business details and schemes.</p>
+<p class="govuk-body">In response to these issues, we explored the following changes:</p>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>
+    flexibility to assign custom permissions to other users as the default, rather than being led to assign blanket permissions based on role
+  </li>
+  <li>
+    warnings before assigning high permissions to help users understand the risk of assigning high permission levels to others, for example being able to edit bank details
+  </li>
+  <li>
+    specific information on what each permission level means and consistent names for permission levels to help users understand what someone will and will not be able to do when they assign someone a permission level
+  </li>
+  <li>
+    wording to signpost farmers and agents when requesting and giving access in the digital service to help them understand the process and know what to expect 
+  </li>
+</ul>
+<p class="govuk-body">We need to be mindful that change is likely to be difficult for our users, especially if they are not digitally savvy, so we will be wary of making changes to permission level names and the way we present permission levels shouldn't be too radical – many users are familiar with and happy with the current system.</p>
+<p class="govuk-body">We expect the permissions designs to need more fundamental iteration in future, especially how each set of permissions is explained and presented to users.</p>
+
+
+    <h3 class="govuk-heading-m">
+      Design hypotheses for testing
+    </h3>
+
+<ol class="govuk-list govuk-list--number">
+  <li>An overview page showing a summary of their own and others' permissions is helpful for users</li>
+  <li>Users prefer the flexibility to assign custom permissions to other users rather than being led to make blanket permissions based on role</li>
+  <li>Users need to be able to add a group of agents in a batch</li>
+  <li>Warnings before assigning high permissions helps users understand the risk of assigning high permission levels to others</li>
+  <li>Specific information on what each permission level means and consistent names for permission levels help users understand what someone will and will not be able to do when they assign someone a permission level</li>
+  <li>Farmers and agents feel comfortable and safe requesting and giving access in the digital service</li>
+  <li>Users expect notifications after changing or adding permissions by email, text and post</li>
+</ol>
+    
+    <h3 class="govuk-heading-m">
+      Design flows and screens
+    </h3>
+
+    <p class="govuk-body">Version 1 of the permission designs caters for the following scenarios:</p>
+
+<p class="govuk-body"><strong>Farmer:</strong></p>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>
+    add new individual to a business
+  </li>
+  <li>
+    change permission levels of an existing user
+  </li>
+  <li>
+    add multiple users from a firm of agents
+  </li>
+  <li>
+    review and accept a business access request
+  </li>
+</ul>
+
+<p class="govuk-body"><strong>Agent or other user:</strong></p>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>
+    request access to a business
+  </li>
+</ul>
+
+    <p class="govuk-body">We’ve created a series of new screen designs to support these flows, further information about individual design decisions below.</p>
+
+    <h4 class="govuk-heading-s">
+      Manage access screen
+    </h4>
+
+
+    <h4 class="govuk-heading-s">
+      Search screen variants
+    </h4>
+
+    <h4 class="govuk-heading-s">
+      Set business relationship screen
+    </h4>
+
+    <h4 class="govuk-heading-s">
+      Set premissions screens
+    </h4>
+
+
+    <h4 class="govuk-heading-s">
+      Accept business access request
+    </h4>
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
