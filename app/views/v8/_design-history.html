@@ -21,23 +21,20 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      Version {{myData.version.slice(myData.version|length - 1)}}
+      Internal user journey
       <span class="govuk-caption-xl">Design history</span>
     </h1>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
 
-    <h2 class="govuk-heading-l">Functionality changes</h2>
+    <h2 class="govuk-heading-l">Design changes</h2>
 
-
-    <p>Building on the functionality added in <a href="../v7/_design-history">version 7 of the prototype</a>, we added a toggle to show the internal or external user view of the prototype. </p>
+     <p>Building on the functionality added in <a href="../v7/_design-history">version 7 of the prototype</a>, we added a toggle to show the internal or external user view of the prototype. </p>
 
     <p>
       This is achieved with a query string ?view=int, ?view=ext. 
     </p>
-
-    <h2 class="govuk-heading-l">Design changes</h2>
 
     <p>
       In version 8 of the prototype, we iterated:
@@ -159,20 +156,135 @@
     
     
     <h3 class="govuk-heading-m">
-      What we tested
+      What we tested, outcomes and decisions
     </h3>
 
-    <ol class="govuk-list govuk-list--number">
-      <li>
-        Can internal users find and select the right business or customer account?
-      </li>
-      <li>
-        Can internal users amend business and personal details?
-      </li>
-      <li>
-        Do internal users need the name of the internal portal to be differentiated from the external portal?
-      </li>
-    </ol>
+    <h4 class="govuk-heading-s govuk-!-margin-top-6">
+      Question 1
+    </h4>
+
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--yellow " >
+            Inconclusive
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">
+            Can internal users find and select the right business or customer account?
+          </p>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">
+      Findings:
+    </p>
+
+    <p class="govuk-body">
+      Users struggled to find the link to view and amend business details. 
+    </p>
+
+    <p class="govuk-body">
+      Design conclusion:
+    </p>
+
+        <p class="govuk-body">
+      Make it more obvious and visible how to view and update business and customer details.
+    </p>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <h4 class="govuk-heading-s govuk-!-margin-top-6">
+      Question 2
+    </h4>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--green " >
+            Proven
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">
+            Can internal users amend business and personal details?
+          </p>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">
+      Findings:
+    </p>
+
+    <p class="govuk-body">
+      All users were able to amend business and personal details.
+    </p>
+
+    <p class="govuk-body">
+      Design conclusion:
+    </p>
+
+    <p class="govuk-body">
+      Continue with this approach
+    </p>
+
+    <hr class="govuk-section-break govuk-section-break--m
+    govuk-section-break--visible">
+
+    <h4 class="govuk-heading-s govuk-!-margin-top-6">
+      Question 3
+    </h4>
+
+        <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <strong class="govuk-tag govuk-tag--yellow " >
+            Inconclusive
+          </strong> 
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p class="govuk-body">
+            Do internal users need the name of the internal portal to be differentiated from the external portal?
+          </p>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">
+      Findings:
+    </p>
+
+    <p class="govuk-body">
+      2 out of 6 users want the internal view labelled as internal, but 2 out of 6 disagreed. 4 out of 6 want the same view as external users have.
+    </p>
+
+    <p class="govuk-body">
+      Design conclusion:
+    </p>
+
+    <p class="govuk-body">
+      Continue with current approach but keep an eye on this in future.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design tickets created after UR analysis
+    </h4>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-258">SFDE-258: Internal user designs - iterations from UR</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-m">
+      Next steps - version 9
+    </h3>
+
+    <p>
+      We iterated on the internal user journey in version 9 of the prototype. The <a href="../v9/_design-history/design-history_internal-users">design history for version 9 - internal user journey iterations</a> details what we changed and why. 
+    </p>
     
     <!-- <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
