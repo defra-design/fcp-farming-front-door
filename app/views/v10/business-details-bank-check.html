@@ -1,0 +1,119 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "Check your bank or building society details" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Bank details (check) - business details",
+  "id": "bd20",
+  "url": "business-details-bank-check?r=t&release=b2&newChange=true",
+  "release": "Buffalo 1.X",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  ]
+  
+}
+%}
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your bank or building society details
+      </h1>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Name on the account
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{myData.newBankNameBus or myData.bankNameBus}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> name on the account</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Sort code
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{myData.newBankSortBus or myData.bankSortBus}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> sort code</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Account number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{myData.newBankAccountBus or myData.bankAccountBus}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> account number</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Building society roll number (if you have one)
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% set _bankRollValue = myData.newBankRollBus or myData.bankRollBus %}
+            {% if _bankRollValue and _bankRollValue != "" %}
+              {{_bankRollValue}}
+            {% else %}
+            <span style="color:#505a5f">No number added</span>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-bank-change">Change<span class="govuk-visually-hidden"> building society roll number</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

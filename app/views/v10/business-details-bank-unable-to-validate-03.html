@@ -1,0 +1,149 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Change your bank or building society account details" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - Unable to validate - business details",
+    "id": "ba07",
+    "url": "business-details-bank-unable-to-validate-03?r=t&view=ext&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-ba07a",
+      "url": "business-details-bank-unable-to-validate-01?r=t&view=ext&release=b2"
+    },
+    {
+      "name": "int-ba07b",
+      "url": "business-details-bank-unable-to-validate-02?r=t&view=ext&release=b2"
+    },
+    {
+      "name": "int-ba07c",
+      "url": "business-details-bank-unable-to-validate-03?r=t&view=ext&release=b2"
+    }
+    ],
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+    "This page is reached where a user has submitted bank account details that do not pass the bank account validation, and is their THIRD attempt."
+  ]
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - Unable to validate - business details",
+    "id": "int-ba07",
+    "url": "business-details-bank-unable-to-validate-03?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-ba07a",
+      "url": "business-details-bank-unable-to-validate-01?r=t&view=int&release=b2"
+    },
+    {
+      "name": "int-ba07b",
+      "url": "business-details-bank-unable-to-validate-02?r=t&view=int&release=b2"
+    },
+    {
+      "name": "int-ba07c",
+      "url": "business-details-bank-unable-to-validate-03?r=t&view=int&release=b2"
+    }
+    ],
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+    "This page is reached where a user has submitted bank account details that do not pass the bank account validation, and is their THIRD attempt."
+  ]
+  }
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% if data.view != "int" %}
+    {% include "_common/sub-header.html" %}
+  {% endif %}
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate action="details-business-details">
+        
+        <h1 class="govuk-heading-l">We could not validate your bank account</h1>
+
+        <p class="govuk-body">For security, you will not be able to change your bank details online for 24 hours. Contact the helpline on 0300 200 301 for support.</p>
+        {{govukButton({
+          text: "Return to business details"
+        })}}
+        </div>
+
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

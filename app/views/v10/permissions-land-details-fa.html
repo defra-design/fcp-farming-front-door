@@ -1,0 +1,242 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = true %}
+{% endif %}
+{% set _showIntExtLinks = true %}
+
+{% set pageName="How can these agents manage land details for this business?" %}
+{% set serviceName="Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "pd01",
+    "url": "details-personal-details?r=t&view=ext&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "int-pd01",
+    "url": "details-personal-details?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+          {% if data.release != "b1" %}
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
+          </li>
+          {% endif %}
+        </ol>
+      </div>
+
+    </div>
+  </div>
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
+      </li>
+    </ol>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+   <form action="permissions-cs-application-fa" method="POST">
+
+
+   <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          <span class="govuk-caption-l">These agents' access to Agile Farm Ltd</span>
+          How can these agents manage land details for this business?
+        </h1>
+      </legend>
+
+      <div id="contact-hint" class="govuk-hint">
+        Select one option
+      </div>
+
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn">
+            No access
+          </label>
+          <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint permission-level_hint">
+            <p class="govuk-body-s permission-level-text">Cannot:</p>
+            <ul class="govuk-list govuk-list--bullet permission-level-list__items">
+              <li class="govuk-body-s permission-level-bullet">view or manage land details</li>
+            </ul>
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            View
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint permission-level_hint">
+            <p class="govuk-body-s permission-level-text">Can:</p>
+            <ul class="govuk-list govuk-list--bullet permission-level-list__items">
+              <li class="govuk-body-s permission-level-bullet">view land details, features and covers</li>
+            </ul>
+            <p class="govuk-body-s permission-level-text">Cannot:</p>
+            <ul class="govuk-list govuk-list--bullet permission-level-list__items">
+              <li class="govuk-body-s permission-level-bullet">amend, apply for or transfer land, features or covers</li>
+            </ul>
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Amend
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint permission-level_hint">
+            <p class="govuk-body-s permission-level-text">Can:</p>
+            <ul class="govuk-list govuk-list--bullet permission-level-list__items">
+              <li class="govuk-body-s permission-level-bullet">view, amend, apply for or transfer land, features and covers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  {{govukButton({
+    text: "Continue"
+  })}}
+
+  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+  </form>
+
+
+
+  </div>
+
+
+  <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Setting permissions</h4>
+    <p class="govuk-body-s">You can choose whatever permission levels you want. There is <a href="#" class="govuk-link">guidance</a> on recommended permission levels depending on the person’s role.</p>
+  </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

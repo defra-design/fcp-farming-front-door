@@ -78,3 +78,4 @@ require('./routes/v6/routes.js')(router);
 require('./routes/v7/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v8/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v9/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
+require('./routes/v10/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
