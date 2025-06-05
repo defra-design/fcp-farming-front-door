@@ -1,0 +1,133 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Your businesses - page 2" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Businesses list",
+    "id": "bp01",
+    "url": "businesses-list?r=t&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "page 2 of list",
+        "url": "businesses-list-p2?r=t&release=b1"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ],
+    "notes": [
+      "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb."
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3.html" %}
+      
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      <span class="govuk-caption-l">{{data.user.name}}</span>
+      Your businesses
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m"></caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Business name</th>
+          <th scope="col" class="govuk-table__header">Single business identifier (SBI)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        
+        {% for _business in data.businesses %}
+        {% if loop.index > 20 %}
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="business-home?business={{_business.id}}">{{_business.name}}</a></th>
+          <td class="govuk-table__cell">{{_business.sbiNumber}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+
+      </tbody>
+    </table>
+    <nav class="govuk-pagination" aria-label="Pagination">
+      <div class="govuk-pagination__prev">
+        <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list" rel="prev">
+          <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+            <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+          </svg>
+          <span class="govuk-pagination__link-title">
+            Previous<span class="govuk-visually-hidden"> page</span>
+          </span>
+        </a>
+      </div>
+      <ul class="govuk-pagination__list">
+        <li class="govuk-pagination__item">
+          <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list" aria-label="Page 1">
+            1
+          </a>
+        </li>
+        <li class="govuk-pagination__item govuk-pagination__item--current">
+          <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list-p2" aria-label="Page 2" aria-current="page">
+            2
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p class="">Showing <b>21</b> to <b>{{data.businesses.length}}</b> of <b>{{data.businesses.length}}</b> businesses</p>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    {% if data.release == "b1" %}
+    <h3 class="govuk-heading-m govuk-!-margin-top-4">
+      Personal details
+    </h3>
+    <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}

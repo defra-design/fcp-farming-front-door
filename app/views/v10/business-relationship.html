@@ -1,0 +1,296 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = true %}
+{% endif %}
+{% set _showIntExtLinks = true %}
+
+{% set pageName="What is Richard Clarke’s relationship with Agile Farm Ltd?" %}
+{% set serviceName="Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "pd01",
+    "url": "details-personal-details?r=t&view=ext&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "int-pd01",
+    "url": "details-personal-details?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+          {% if data.release != "b1" %}
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
+          </li>
+          {% endif %}
+        </ol>
+      </div>
+
+    </div>
+  </div>
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
+      </li>
+    </ol>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+   <form action="permissions-manage-business" method="POST">
+
+
+   <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          <span class="govuk-caption-l">Richard Clarke’s access to Agile Farm Ltd</span>
+          What is Richard Clarke’s relationship with Agile Farm Ltd?
+        </h1>
+      </legend>
+
+      <div id="contact-hint" class="govuk-hint">
+        Select one option
+      </div>
+
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn">
+            Agent or adviser
+          </label>
+          <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
+            Any professional adviser to the business
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Business partner
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            A business partner of the owner or sole trader
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Company secretary
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            The business’s company secretary
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Director
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            A director of the business
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Employee
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            Anyone employed by the business who does not have any legal responsibility for it
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Executor
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            A legal executor for the business
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Helper
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            Anyone who helps the business but is not part of the business and not a professional adviser
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Owner or sole trader
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            An owner or sole trader of the business, and the only type of user who can remove another owner or sole trader from this business
+          </div>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            Trustee
+          </label>
+          <div id="signIn-2-item-hint" class="govuk-hint govuk-radios__hint">
+            A trustee for the business
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-visually-hidden">Warning</span>
+      Each business must have at least one owner or sole trader.
+    </strong>
+  </div>
+
+  {{govukButton({
+    text: "Continue"
+  })}}
+
+  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+  </form>
+
+
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Why do we need to know your business relationship?</h4>
+    <p class="govuk-body-s">We need to know this so we can identify the relationships of the people who are involved in this business, to protect against potential fraud.</p>
+    <p class="govuk-body-s">Someone’s role could affect what they are normally allowed to do for the business, for example:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li class="govuk-body-s">only an owner or sole trader can remove another owner or sole trader from a business</li>
+      <li class="govuk-body-s">if someone has a role where there could be a conflict of interest, they cannot do certain tasks, for example a vet is not allowed to submit an claim as a business owner for a vet visit they have provided evidence for</li>
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}

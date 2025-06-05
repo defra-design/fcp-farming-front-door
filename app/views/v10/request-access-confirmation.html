@@ -1,0 +1,180 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = true %}
+{% endif %}
+{% set _showIntExtLinks = true %}
+
+{% set pageName="Access request submitted" %}
+{% set serviceName="Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "pd01",
+    "url": "details-personal-details?r=t&view=ext&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "int-pd01",
+    "url": "details-personal-details?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+          {% if data.release != "b1" %}
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
+          </li>
+          {% endif %}
+        </ol>
+      </div>
+
+    </div>
+  </div>
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
+      </li>
+    </ol>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+
+<div class="govuk-panel govuk-panel--confirmation">
+  <h1 class="govuk-panel__title">
+    Access request submitted
+  </h1>
+</div>
+
+<h2 class="govuk-heading-m">What happens next</h2>
+<p class="govuk-body">We've sent your access request for Valley Farm to authorised users at the business.</p>
+<p class="govuk-body">You will receive an email once they've reviewed your access request.</p>
+<p class="govuk-body">
+ <a class="govuk-link govuk-link--no-visited-state" href="businesses-list">Back to your businesses</a>
+</p>
+
+
+  </div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}

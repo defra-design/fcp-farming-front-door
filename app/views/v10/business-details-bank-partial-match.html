@@ -1,0 +1,291 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Change your bank or building society account details" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - Partial match (submit/check) - business details",
+    "id": "ba06",
+    "url": "business-details-bank-partial-match?r=t&view=ext&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "No radio button selected",
+        "content": "Choose whether you want to use this account or edit the account details"
+      }
+    ],
+    "notes": [
+    "This page is reached where the bank account details submitted are a partial match during the bank account validation – e.g. the bank account first name is 'Andrew', but the user has submitted 'Andy', with the rest of the bank account details being correct/a match. We allow the user to either submit with these bank account details, or return to the check page (the relevant variation of ba05) to edit.",
+    "The summary list under 'Your bank account or building society details' should show the same inputs as displayed on whatever is the relevant variant of ba05 preceeding this page. I.e. if a European personal account was submitted, then it should display the fields entered accordingly."
+  ]
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - Partial match (submit/check) - business details",
+    "id": "int-ba06",
+    "url": "business-details-bank-partial-match?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "No radio button selected",
+        "content": "Choose whether you want to use this account or edit the account details"
+      }
+    ],
+    "notes": [
+    "This page is reached where the bank account details submitted are a partial match during the bank account validation – e.g. the bank account first name is 'Andrew', but the user has submitted 'Andy', with the rest of the bank account details being correct/a match. We allow the user to either submit with these bank account details, or return to the check page (the relevant variation of int-ba05) to edit.",
+    "The summary list under 'Your bank account or building society details' should show the same inputs as displayed on whatever is the relevant variant of ba05 preceeding this page. I.e. if a European personal account was submitted, then it should display the fields entered accordingly."
+  ]
+  }
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% if data.view != "int" %}
+    {% include "_common/sub-header.html" %}
+  {% endif %}
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate action="/validation-answer">
+        <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+          <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+              Important
+            </h2>
+          </div>
+          <div class="govuk-notification-banner__content">
+            <p class="govuk-notification-banner__heading">
+              The name on the account does not match
+            </p>
+            <p>The account details you entered are successfully validated, but the account name you have entered is only a partial match with the name on the account. For example, there may be a slight difference in spelling.</p>
+          </div>
+        </div>
+
+        <h1 class="govuk-heading-l">Review the account details you entered</h1>
+
+        <h2 class="govuk-heading-m">Your bank account or building society details</h2>
+        <dl class="govuk-summary-list">
+          {% if (data['bankCountrybus'] == "European bank account") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Country code where the account is held 
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['bankCountryCodebus'] }}
+            </dd>
+          </div>
+          {% endif %}
+          <div class="govuk-summary-list__row">
+            {% if (data['bankAccountTypebus'] == "Business") %}
+            <dt class="govuk-summary-list__key">
+              Name on the account
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['bankNameBus']  or "Account name" }}
+            </dd>
+            {% elseif (data['bankAccountTypebus'] == "Personal") %}
+            <dt class="govuk-summary-list__key">
+              First and last name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['bankFirstName'] }} {{ data['bankLastName'] or "Last name" }}
+            </dd>
+            {% else %}
+            <dt class="govuk-summary-list__key">
+              First and last name
+            </dt>
+            <dd class="govuk-summary-list__value">
+              Alfred Waldron
+            </dd>
+            {% endif %}
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Sort code
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data['bankSortbus'] or "123456"}}
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Account number
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{data['bankAccountbus'] or "12345678"}}
+            </dd>
+          </div>
+          {% if (data['bankCountrybus'] == "UK bank or building society account") %}
+          
+            {% if data['bankBuildbus'] %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Building society roll number (if you have one) 
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ data['bankBuildbus'] }}
+              </dd>
+            </div>
+            {% else %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Building society roll number (if you have one) 
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <span style="color:#505a5f">No number added</span>
+              </dd>
+            </div>
+            {% endif %}
+          {% elseif (data['bankCountrybus'] == "European bank account") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              IBAN
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['bankIBANbus'] or 123456789}}
+            </dd>
+          </div>
+            {% if data['bankSwiftCodebus'] %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                SWIFT code (optional)
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ data['bankSwiftCodebus'] }}
+              </dd>
+            </div>
+            {% else %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                SWIFT code (optional)
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <span style="color:#505a5f">No number added</span>
+              </dd>
+
+            </div>
+            {% endif %}
+          {% else %}
+          {% endif %}
+        </dl>
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="bankAccountPartialMatch-hint">
+            <legend class="govuk-fieldset__legend  govuk-fieldset__legend--m ">
+              Are you sure you want us to pay into this account?
+            </legend>
+            <div id="bankAccountPartialMatch-hint" class="govuk-hint">
+              <div class="govuk-warning-text">
+                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong class="govuk-warning-text__text">
+                  <span class="govuk-visually-hidden">Warning</span>
+                  This means we could pay into the wrong account.
+                </strong>
+              </div>
+            </div>
+
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="bankAccountPartialMatch" name="bankAccountPartialMatch" type="radio" value="Yes">
+                <label class="govuk-label govuk-radios__label" for="bankAccountPartialMatch">
+                  Yes, pay into this account
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="bankAccountPartialMatch-2" name="bankAccountPartialMatch" type="radio" value="No">
+                <label class="govuk-label govuk-radios__label" for="bankAccountPartialMatch-2">
+                  No, go back and edit account details
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+
+        
+        
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

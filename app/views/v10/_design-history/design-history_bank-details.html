@@ -1,0 +1,146 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="index">Version 9</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Version 9
+      <span class="govuk-caption-xl">Design history</span>
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-l">Bank details</h2>
+
+    <h3 class="govuk-heading-m">
+      Design changes
+    </h3>
+
+    <p class="govuk-body">
+      In version 9 of the prototype, we iterated adding and updating bank details, for external and internal users.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Why we explored bank details
+    </h3>
+
+    <p class="govuk-body">
+      The team decided bank details would be a logical next step after our recent work prototyping updating business and personal details - especially as our business analysts already had a solid understanding of the as-is processes for changing bank details in the Rural Payments service (RPS).
+    </p>
+
+    <h3 class="govuk-heading-m">
+      Design approach
+    </h3>
+
+    <h4 class="govuk-heading-s">
+      Pain points and user needs
+    </h4>
+
+    
+    <p class="govuk-body">
+      No user needs or pain points relating to updating or adding bank details were known from any previous user research from Single Front Door or other farming teams. 
+    </p>
+
+    <h4 class="govuk-heading-s">
+      What we designed
+    </h4>
+
+    <p class="govuk-body">
+      RPS recently introduced a way for farmers and agents to be able to add or update their bank details in the digital service, without having to phone the helpline. We tried to iterate on and improve this.
+    </p>
+
+    <p class="govuk-body">
+      At the start of our journey, users can see any bank details we already hold for their business, on the business details page. After consulting with other teams' security experts and content designers, we decided to obfuscate sensitive data (for example, the name on the account, sort code and account number) here and throughout our journey, showing asterisks and only 2 characters of each piece of data. The only exception is the check your answers page, where we show the full data without asterisks, so that users can easily and accessibly review what they have just added within a single session.
+    </p>
+
+    <img src="/public/images/design-history/v9/update-bank-account-details.png" alt="Screen design showing bank account details registered to a business. The values are obfuscated by asterisks. Underneath, is a link that says 'Update bank account details'." class="design-history">
+
+    <p class="govuk-body">
+      In the live RPS version, it’s not clear whether users are amending or adding bank details, so we tried to make this clearer. In our prototype, users can choose to update existing bank details, or if they have not entered bank details for their business yet, they can add them for the first time. 
+    </p>
+
+    <img src="/public/images/design-history/v9/add-bank-account-details.png" alt="Screen design showing that the business does not currently have any bank account details registered to it. Underneath, is a link to 'Add bank account details'." class="design-history">
+
+    <p class="govuk-body">
+      Both options (update and add) in fact lead to the same journey where users read and confirm a legal declaration. The wording for this is taken from the live RPS version, but updated for clarity and in line with GOV.UK style. Defra’s legal team has approved these changes, but have raised potential legal issues with the live RPS version, and we also noted that the declaration only covers updating and not adding a bank account. As a team we are now exploring these issues with RPS.
+    </p>
+
+    <p class="govuk-body">
+      After agreeing to the legal declaration, users select the type of account (UK or European, business or personal) and then add their bank details from scratch, in a form based on the standard GDS pattern. Depending on what combination of UK/European/business/personal the user selects, they see a variant of the form for entering bank details which is appropriate for the chosen type of account.
+    </p>
+    
+    <img src="/public/images/design-history/v9/bank-details.png" alt="Screen design for filling out bank details where the user has selected a 'UK bank or building society account' and 'Personal account' on the preceeding screens. The fields they need to fill out are First and Last name, Sort code, Account numer, and an optional field for Building society roll number" class="design-history">
+
+    <p class="govuk-body">
+      We decided to make users enter the bank details in full as a new record at this stage in the journey (not to allow users to edit played back existing bank details as per usual GDS guidance), because multiple users could have the permission to view this business’s details, which seems to be an added security risk.  
+    </p>
+
+    <p class="govuk-body">
+      We established that the live version’s options for payment in another currency are no longer needed, so removed those. 
+    </p>
+
+    <p class="govuk-body">
+      The entire journey for adding or updating bank details is identical for external and internal users, except that internal users have to add the customer reference number (CRN) on this page, so Rural Payments staff can audit who is requesting the bank details change.
+    </p>
+
+    <img src="/public/images/design-history/v9/internal-bank-details.png" alt="Screen design for an internal user filling out bank details where the user has selected a 'European bank account' and 'Business account' on the preceeding screens. It shows the same fields an external user would fill out, except for the additional field for CRN at the top." class="design-history">
+
+    <p class="govuk-body">
+      Users check their answers to confirm the bank details, and a back-end validation check is done (as agreed in the legal declaration). 
+    </p>
+
+    <p class="govuk-body">
+      If the details they entered are validated, the user returns to the business details page where a success banner confirms the request and explains a SLA of up to 30 working days to process this (to improve timescales which are inconsistently communicated to users in the live RPS version). 
+    </p>
+
+    <p class="govuk-body">
+      We should then send emails (and possibly texts and letters) to confirm the request to amend or add bank details, and in due course to confirm the change has been made. Our BAs are investigating whether we can amend any notifications in the live service.
+    </p>
+
+    <p class="govuk-body">
+      If the bank sort code and account number are validated but the name on the account is only a partial match (for example ‘Andy’ for ‘Andrew’), the user sees a screen where this is explained and they can review what they entered to make a decision on whether to continue using the details they entered or re-enter them. We explain there is a risk money could be paid into the wrong account. The content on this screen is a significant redraft from the live version, which we felt was unclear.
+    </p>
+
+    <img src="/public/images/design-history/v9/partial-match.png" alt="Screen designs for alerting a user to a partial match" class="design-history">
+
+    <p class="govuk-body">
+      If the verification fails, the user sees a screen where this is explained and they are invited to enter the bank details again. They have 3 chances to do this in the session, and if the third verification fails, they see content inviting them to contact the helpline and explaining they will not be able to try to change bank details again for 24 hours for security. This part of the journey is confusing in the live RPS version, so we have tried to make it clear. Users cannot click ‘back’ on these screens, because they are limited to 3 chances at verification.
+    </p>
+
+    <img src="/public/images/design-history/v9/unable-to-validate.png" alt="Screen designs for letting users know that the details they entered haven't been successfully validated in the backend validation process" class="design-history">
+
+    <h3 class="govuk-heading-m">
+      Testing plans
+    </h3>
+
+    <p class="govuk-body">
+      The team plan to do external user testing of this first bank details prototype in coming sprints. 
+    </p>
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
