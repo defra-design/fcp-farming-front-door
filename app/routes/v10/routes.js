@@ -1,11 +1,11 @@
 const e = require("express");
 
-module.exports = function (router,_myData) {
+module.exports = function (router, _myData) {
 
     var version = "v10";
 
     //coverts a number to a month
-    function toMonth(_monthNumber){
+    function toMonth(_monthNumber) {
 
         _monthNumber = _monthNumber - 1
 
@@ -14,7 +14,7 @@ module.exports = function (router,_myData) {
         var month = months[_monthNumber];
 
         //if not valid month number - November returned as default value
-        if(!month){
+        if (!month) {
             month = "November"
         }
 
@@ -25,7 +25,7 @@ module.exports = function (router,_myData) {
     // Every GET and POST
     router.all('/' + version + '/*', function (req, res, next) {
 
-        if(!req.session.myData || req.query.r) {
+        if (!req.session.myData || req.query.r) {
             req.session.myData = JSON.parse(JSON.stringify(_myData))
 
             //selected business defaults - to match session defaults
@@ -45,16 +45,16 @@ module.exports = function (router,_myData) {
         req.session.myData.version = version
 
         //set selected business
-        if(req.query.business){
+        if (req.query.business) {
 
             // main businesses list
-            var _selectedBusiness = req.session.data.businesses.find(obj => {return obj.id.toString() === req.query.business.toString()})
+            var _selectedBusiness = req.session.data.businesses.find(obj => { return obj.id.toString() === req.query.business.toString() })
             //if coming from internal search results use that list instead
-            if(req.query.intSearch){
-                var _selectedBusiness = req.session.data.internalSearchResults.find(obj => {return obj.id.toString() === req.query.business.toString()})
+            if (req.query.intSearch) {
+                var _selectedBusiness = req.session.data.internalSearchResults.find(obj => { return obj.id.toString() === req.query.business.toString() })
             }
 
-            if(_selectedBusiness){
+            if (_selectedBusiness) {
                 req.session.data.selectedBusiness = _selectedBusiness
                 req.session.myData.selectedBusiness = _selectedBusiness
                 req.session.myData.nameBus = req.session.myData.selectedBusiness.name
@@ -62,16 +62,16 @@ module.exports = function (router,_myData) {
         }
 
         //set selected user
-        if(req.query.user){
+        if (req.query.user) {
 
             // main users list
-            var _selectedUser = req.session.data.users.find(obj => {return obj.id.toString() === req.query.user.toString()})
+            var _selectedUser = req.session.data.users.find(obj => { return obj.id.toString() === req.query.user.toString() })
             //if coming from internal search results use that list instead
-            if(req.query.intSearch){
-                var _selectedUser = req.session.data.internalSearchResults.find(obj => {return obj.id.toString() === req.query.user.toString()})
+            if (req.query.intSearch) {
+                var _selectedUser = req.session.data.internalSearchResults.find(obj => { return obj.id.toString() === req.query.user.toString() })
             }
 
-            if(_selectedUser){
+            if (_selectedUser) {
                 req.session.data.selectedUser = _selectedUser
                 req.session.myData.selectedUser = _selectedUser
                 req.session.myData.namePers = req.session.myData.selectedUser.name
@@ -88,14 +88,14 @@ module.exports = function (router,_myData) {
         // Reset page validation to false by default. Will only be set to true, if applicable, on a POST of a page
         req.session.myData.validationErrors = {}
         req.session.myData.validationError = "false"
-        req.session.myData.includeValidation =  req.query.iv || req.session.myData.includeValidation
+        req.session.myData.includeValidation = req.query.iv || req.session.myData.includeValidation
 
         //Used to show either the prototype as internal user or external user
-        req.session.myData.view =  req.query.view || req.session.myData.view
+        req.session.myData.view = req.query.view || req.session.myData.view
 
-        req.session.myData.bank =  req.query.bank || req.session.myData.bank
+        req.session.myData.bank = req.query.bank || req.session.myData.bank
 
-        req.session.myData.rollNumber =  req.query.bank || req.session.myData.rollNumber
+        req.session.myData.rollNumber = req.query.bank || req.session.myData.rollNumber
 
         //Reset page notifications
         req.session.myData.notifications = {}
@@ -110,19 +110,19 @@ module.exports = function (router,_myData) {
         var _checkboxQueries = [
             "schemefilters"
         ]
-        _checkboxQueries.forEach(function(_checkboxQuery, index) {
+        _checkboxQueries.forEach(function (_checkboxQuery, index) {
             req.session.myData[_checkboxQuery] = req.query[_checkboxQuery] || []
-            if(req.session.myData[_checkboxQuery] == "_unchecked"){
+            if (req.session.myData[_checkboxQuery] == "_unchecked") {
                 req.session.myData[_checkboxQuery] = []
             }
-            if(!Array.isArray(req.session.myData[_checkboxQuery])){
+            if (!Array.isArray(req.session.myData[_checkboxQuery])) {
                 req.session.myData[_checkboxQuery] = [req.session.myData[_checkboxQuery]]
             }
         });
 
         // can do data setting and checking here - that will happen on every get and post
 
-        
+
 
         next()
     });
@@ -190,97 +190,97 @@ module.exports = function (router,_myData) {
     });
 
     // Check a message if it matches search term
-    function checkMessageSearchTerm(req, _item, _searchesToDo){
-        
+    function checkMessageSearchTerm(req, _item, _searchesToDo) {
+
         _item.search = false
         _item.searchrelevance = 0
 
         var _matchedsearch = false
         for (var i = 0; i < _searchesToDo.length; i++) {
             var _thisItem = _searchesToDo[i]
-            if(Array.isArray(_thisItem.searchOn)){
-                _thisItem.searchOn.forEach(function(_arrayPart, index) {
+            if (Array.isArray(_thisItem.searchOn)) {
+                _thisItem.searchOn.forEach(function (_arrayPart, index) {
                     doSearches(_arrayPart)
                 });
             } else {
                 doSearches(_thisItem.searchOn)
             }
-            function doSearches(_itemToSearch){
+            function doSearches(_itemToSearch) {
                 //Exact check
-                if(_thisItem.exactrelevance && _itemToSearch.toUpperCase() == req.session.myData.searchTerm.toUpperCase()){
+                if (_thisItem.exactrelevance && _itemToSearch.toUpperCase() == req.session.myData.searchTerm.toUpperCase()) {
                     _item.searchrelevance = _item.searchrelevance + _thisItem.exactrelevance
                     _matchedsearch = true
-                    if(_thisItem.ifmatch == "exit"){
+                    if (_thisItem.ifmatch == "exit") {
                         return
                     }
                 }
                 // Within check
-                if(_thisItem.withinrelevance && _itemToSearch.toUpperCase().indexOf(req.session.myData.searchTerm.toUpperCase()) != -1){
+                if (_thisItem.withinrelevance && _itemToSearch.toUpperCase().indexOf(req.session.myData.searchTerm.toUpperCase()) != -1) {
                     _item.searchrelevance = _item.searchrelevance + _thisItem.withinrelevance
                     _matchedsearch = true
-                    if(_thisItem.ifmatch == "exit"){
-                        return 
+                    if (_thisItem.ifmatch == "exit") {
+                        return
                     }
                 }
             }
-            if(_matchedsearch == true && _thisItem.ifmatch == "exit") {
+            if (_matchedsearch == true && _thisItem.ifmatch == "exit") {
                 break
             }
         }
-        if(_matchedsearch && _item.searchrelevance > 1){
+        if (_matchedsearch && _item.searchrelevance > 1) {
             req.session.myData.hasAMatchcount++
         }
     }
 
     // Search filtering
-    function searchFilterSetup(req,_selectedLabel){
+    function searchFilterSetup(req, _selectedLabel) {
         req.session.myData.searchapplied = false
         req.session.myData.searchTerm = ""
-        if(req.query.q && req.query.q != ""){
+        if (req.query.q && req.query.q != "") {
             req.session.myData.displaycount = 0
             req.session.myData.needToMatchCount++
             req.session.myData.searchapplied = true
             req.session.myData.searchTerm = req.query.q.trim()
-            req.session.myData.searchfilters.push({"value": "‘" + req.session.myData.searchTerm + "’", "type": "search", "typeText": _selectedLabel})
+            req.session.myData.searchfilters.push({ "value": "‘" + req.session.myData.searchTerm + "’", "type": "search", "typeText": _selectedLabel })
         }
     }
 
     // Scheme filters - setup
-    function schemeFilterSetup(req){
+    function schemeFilterSetup(req) {
         req.session.myData.schemefilterapplied = false
-        if(req.session.myData.schemefilters.length > 0){
+        if (req.session.myData.schemefilters.length > 0) {
             req.session.myData.displaycount = 0
             req.session.myData.needToMatchCount++
             req.session.myData.schemefilterapplied = true
             var schemefiltersValues = []
-            req.session.myData.schemefilters.forEach(function(_schemeFilter, index) {
+            req.session.myData.schemefilters.forEach(function (_schemeFilter, index) {
                 var _scheme = req.session.data.schemes.find(obj => obj.value === _schemeFilter)
-                if(_scheme){
+                if (_scheme) {
                     schemefiltersValues.push({
-                        "label":_scheme.value,
-                        "id":_scheme.value
+                        "label": _scheme.value,
+                        "id": _scheme.value
                     })
                 }
             });
-            req.session.myData.searchfilters.push({"value": schemefiltersValues, "type": "schemefilters", "typeText": "Schemes","typeof":"array"})
+            req.session.myData.searchfilters.push({ "value": schemefiltersValues, "type": "schemefilters", "typeText": "Schemes", "typeof": "array" })
         }
     }
 
-     //businesses messages
-     router.get('/' + version + '/business-messages', function (req, res) {
+    //businesses messages
+    router.get('/' + version + '/business-messages', function (req, res) {
 
         req.session.myData.searchfilters = []
         req.session.myData.displaycount = req.session.data.messages.length
         req.session.myData.needToMatchCount = 0
 
         // Keyword search reset/setup
-        searchFilterSetup(req,"Messages")
+        searchFilterSetup(req, "Messages")
 
         // Scheme filter reset/setup
         schemeFilterSetup(req)
 
 
-        req.session.data.messages.forEach(function(_message, index) {
+        req.session.data.messages.forEach(function (_message, index) {
 
             req.session.myData.hasAMatchcount = 0
 
@@ -288,25 +288,25 @@ module.exports = function (router,_myData) {
             _message.search = true
 
             //SEARCH TERM
-            if(req.session.myData.searchapplied) {
+            if (req.session.myData.searchapplied) {
                 var _searchesToDo = [
-                    {"searchOn": _message.subject,"exactrelevance": 999999,"withinrelevance": 100000,"ifmatch": "exit"},
-                    {"searchOn": _message.scheme,"exactrelevance": 99999,"withinrelevance": 10000,"ifmatch": "exit"}
+                    { "searchOn": _message.subject, "exactrelevance": 999999, "withinrelevance": 100000, "ifmatch": "exit" },
+                    { "searchOn": _message.scheme, "exactrelevance": 99999, "withinrelevance": 10000, "ifmatch": "exit" }
                 ]
-                checkMessageSearchTerm(req,_message,_searchesToDo)
+                checkMessageSearchTerm(req, _message, _searchesToDo)
             }
 
             //SCHEME
-            if(req.session.myData.schemefilterapplied) {
+            if (req.session.myData.schemefilterapplied) {
                 _message.search = false
                 var _scheme = req.session.myData.schemefilters.find(obj => obj === _message.scheme.toString())
-                if(_scheme){
+                if (_scheme) {
                     req.session.myData.hasAMatchcount++
                 }
             }
 
             //MATCHES ALL IT NEEDS TO?
-            if(req.session.myData.needToMatchCount > 0 && req.session.myData.needToMatchCount == req.session.myData.hasAMatchcount){
+            if (req.session.myData.needToMatchCount > 0 && req.session.myData.needToMatchCount == req.session.myData.hasAMatchcount) {
                 _message.search = true
                 req.session.myData.displaycount++
             }
@@ -325,12 +325,12 @@ module.exports = function (router,_myData) {
 
         req.session.myData.searchapplied = false
         req.session.myData.searchTerm = ""
-        if(req.query.q && req.query.q != ""){
+        if (req.query.q && req.query.q != "") {
             req.session.myData.searchapplied = true
             req.session.myData.searchTerm = req.query.q.trim()
         }
 
-        if(req.query.intSearchType && req.query.intSearchType != ""){
+        if (req.query.intSearchType && req.query.intSearchType != "") {
             req.session.myData.intSearchType = req.query.intSearchType
         }
 
@@ -339,7 +339,7 @@ module.exports = function (router,_myData) {
         });
     });
 
-        //internal selected business 
+    //internal selected business 
     router.get('/' + version + '/internal-search-pagination', function (req, res) {
         res.render(version + '/internal-search-pagination', {
             myData: req.session.myData
@@ -352,7 +352,7 @@ module.exports = function (router,_myData) {
             myData: req.session.myData
         });
     });
-    
+
 
     //internal selected customer 
     router.get('/' + version + '/internal-customer', function (req, res) {
@@ -421,7 +421,7 @@ module.exports = function (router,_myData) {
         req.session.myData.showCookieBanner2 = req.query.showCookieBanner2
         req.session.myData.showCookieBanner3 = req.query.showCookieBanner3
 
-        if(req.query.changed == "true"){
+        if (req.query.changed == "true") {
             req.session.myData.notifications.type = "success"
             req.session.myData.showNotification = "true"
             // req.session.myData.notifications.message = "You have updated your full name"
@@ -466,28 +466,28 @@ module.exports = function (router,_myData) {
     //
     router.get('/' + version + '/details-personal-details', function (req, res) {
 
-        if(req.query.changed == "true"){
+        if (req.query.changed == "true") {
             req.session.myData.notifications.type = "success"
             req.session.myData.showNotification = "true"
         }
 
         // Notification banner messages
-        if(req.query.namechanged == "true"){
+        if (req.query.namechanged == "true") {
             req.session.myData.notifications.message = "You have updated your full name"
         }
-        if(req.query.dobchanged == "true"){
+        if (req.query.dobchanged == "true") {
             req.session.myData.notifications.message = "You have updated your date of birth"
         }
-        if(req.query.addresschanged == "true"){
+        if (req.query.addresschanged == "true") {
             req.session.myData.notifications.message = "You have updated your personal address"
         }
-        if(req.query.phonechanged == "true"){
+        if (req.query.phonechanged == "true") {
             req.session.myData.notifications.message = "You have updated your personal phone numbers"
         }
-        if(req.query.emailchanged == "true"){
+        if (req.query.emailchanged == "true") {
             req.session.myData.notifications.message = "You have updated your personal email address"
         }
-        
+
         res.render(version + '/details-personal-details', {
             myData: req.session.myData
         });
@@ -495,7 +495,7 @@ module.exports = function (router,_myData) {
 
     //personal details - change name
     router.get('/' + version + '/personal-details-name-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newNameFirstPers = ""
             req.session.myData.newNameMiddlePers = ""
             req.session.myData.newNameLastPers = ""
@@ -508,7 +508,7 @@ module.exports = function (router,_myData) {
     });
     router.post('/' + version + '/personal-details-name-change', function (req, res) {
 
-        if(req.session.data.release == "b1"){
+        if (req.session.data.release == "b1") {
             req.session.myData.newNameFirstPers = req.body.nameFirstPers.trim()
             req.session.myData.newNameMiddlePers = req.body.nameMiddlePers.trim()
             req.session.myData.newNameLastPers = req.body.nameLastPers.trim()
@@ -516,31 +516,31 @@ module.exports = function (router,_myData) {
             req.session.myData.newNamePers = req.body.namePers.trim()
         }
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newNameFirstPers = req.session.myData.newNameFirstPers || req.session.myData.nameFirstPers
             req.session.myData.newNameLastPers = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
             req.session.myData.newNamePers = req.session.myData.newNamePers || req.session.myData.namePers
         }
 
         // MVP
-        if(req.session.data.release == "b1"){
-            if(!req.session.myData.newNameFirstPers){
+        if (req.session.data.release == "b1") {
+            if (!req.session.myData.newNameFirstPers) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.nameFirstPers = {
                     "anchor": "nameFirstPers",
                     "message": "Enter first name"
                 }
             }
-            if(!req.session.myData.newNameLastPers){
+            if (!req.session.myData.newNameLastPers) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.nameLastPers = {
                     "anchor": "nameLastPers",
                     "message": "Enter last name"
                 }
             }
-        // CONCEPT
+            // CONCEPT
         } else {
-            if(!req.session.myData.newNamePers){
+            if (!req.session.myData.newNamePers) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.namePers = {
                     "anchor": "namePers",
@@ -549,14 +549,14 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/personal-details-name-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/personal-details-name-check');
         }
-        
+
     });
 
     //personal details - check name
@@ -571,18 +571,18 @@ module.exports = function (router,_myData) {
         req.session.myData.nameLastPers = req.session.myData.newNameLastPers || req.session.myData.nameLastPers
         req.session.myData.namePers = req.session.myData.newNamePers || req.session.myData.namePers
 
-        if(req.session.data.release == "b1"){
+        if (req.session.data.release == "b1") {
             req.session.myData.selectedUser.firstName = req.session.myData.nameFirstPers
             req.session.myData.selectedUser.middleName = req.session.myData.nameMiddlePers
             req.session.myData.selectedUser.lastName = req.session.myData.nameLastPers
-            
+
             req.session.data.selectedUser.firstName = req.session.myData.nameFirstPers
             req.session.data.selectedUser.middleName = req.session.myData.nameMiddlePers
             req.session.data.selectedUser.lastName = req.session.myData.nameLastPers
 
             var _fullname = ""
             var _middleValue = req.session.myData.nameMiddlePers
-            if (_middleValue){
+            if (_middleValue) {
                 _middleValue = _middleValue + " "
             }
             _fullName = req.session.myData.nameFirstPers + " " + _middleValue + req.session.myData.nameLastPers
@@ -594,8 +594,8 @@ module.exports = function (router,_myData) {
             req.session.myData.selectedUser.name = req.session.myData.newNamePers || req.session.myData.namePers
             req.session.data.selectedUser.name = req.session.myData.newNamePers || req.session.myData.namePers
         }
-        
-        
+
+
         req.session.myData.newNameFirstPers = ""
         req.session.myData.newNameMiddlePers = ""
         req.session.myData.newNameLastPers = ""
@@ -606,7 +606,7 @@ module.exports = function (router,_myData) {
 
     //personal details - change date of birth
     router.get('/' + version + '/personal-details-dob-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newDobDayPers = ""
             req.session.myData.newDobMonthPers = ""
             req.session.myData.newDobYearPers = ""
@@ -621,7 +621,7 @@ module.exports = function (router,_myData) {
         req.session.myData.newDobMonthPers = req.body.dobMonthPers.trim()
         req.session.myData.newDobYearPers = req.body.dobYearPers.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newDobDayPers = req.session.myData.newDobDayPers || req.session.myData.dobDayPers
             req.session.myData.newDobMonthPers = req.session.myData.newDobMonthPers || req.session.myData.dobMonthPers
             req.session.myData.newDobYearPers = req.session.myData.newDobYearPers || req.session.myData.dobYearPers
@@ -633,23 +633,23 @@ module.exports = function (router,_myData) {
                 "month": false,
                 "year": false
             }
-        if(!req.session.myData.newDobYearPers){
+        if (!req.session.myData.newDobYearPers) {
             _anchor = "dobYearPers"
             req.session.myData.validationErrors.dobYearPers = true
             _errors.year = true
         }
-        if(!req.session.myData.newDobMonthPers){
+        if (!req.session.myData.newDobMonthPers) {
             _anchor = "dobMonthPers"
             req.session.myData.validationErrors.dobMonthPers = true
             _errors.month = true
         }
-        if(!req.session.myData.newDobDayPers){
+        if (!req.session.myData.newDobDayPers) {
             _anchor = "dobDayPers"
             req.session.myData.validationErrors.dobDayPers = true
             _errors.day = true
         }
 
-        if(_errors.day || _errors.month || _errors.year){
+        if (_errors.day || _errors.month || _errors.year) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.dobPers = {
                 "anchor": _anchor,
@@ -657,39 +657,39 @@ module.exports = function (router,_myData) {
             }
 
             // Day is good
-            if(!_errors.day){
+            if (!_errors.day) {
                 req.session.myData.validationErrors.dobPers.message = "Date of birth must include a month and year"
                 // Month is good
-                if(!_errors.month){
+                if (!_errors.month) {
                     req.session.myData.validationErrors.dobPers.message = "Date of birth must include a year"
-                // Year is good
-                } else if(!_errors.year) {
+                    // Year is good
+                } else if (!_errors.year) {
                     req.session.myData.validationErrors.dobPers.message = "Date of birth must include a month"
                 }
-            // Day is bad
+                // Day is bad
             } else {
                 // Month bad and year good
-                if(_errors.month && !_errors.year){
+                if (_errors.month && !_errors.year) {
                     req.session.myData.validationErrors.dobPers.message = "Date of birth must include a day and month"
-                // Month good and year bad
-                } else if(!_errors.month && _errors.year){
+                    // Month good and year bad
+                } else if (!_errors.month && _errors.year) {
                     req.session.myData.validationErrors.dobPers.message = "Date of birth must include a day and year"
-                // Month good and year good
-                } else if(!_errors.month && !_errors.year){
+                    // Month good and year good
+                } else if (!_errors.month && !_errors.year) {
                     req.session.myData.validationErrors.dobPers.message = "Date of birth must include a day"
                 }
             }
 
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/personal-details-dob-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/personal-details-dob-check');
         }
-        
+
     });
 
     //personal details - check date of birth
@@ -712,7 +712,7 @@ module.exports = function (router,_myData) {
 
     //personal details - search postcode
     router.get('/' + version + '/personal-details-address-postcode-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newAddressPostcodePers = null
         }
         res.render(version + '/personal-details-address-postcode-change', {
@@ -723,30 +723,30 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newAddressPostcodePers = req.body.addressPostcodePers.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newAddressPostcodePers = req.session.myData.newAddressPostcodePers || req.session.myData.addressPostcodePers
         }
 
-        if(!req.session.myData.newAddressPostcodePers){
+        if (!req.session.myData.newAddressPostcodePers) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressPostcodePers = {
                 "anchor": "addressPostcodePers",
                 "message": "Enter a postcode"
             }
         }
-        
-        if(req.session.myData.validationError == "true") {
+
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/personal-details-address-postcode-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/personal-details-address-select-change');
         }
-        
+
     });
     //personal details - select address
     router.get('/' + version + '/personal-details-address-select-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             // req.session.myData.newAddress1Pers = ""
         }
         res.render(version + '/personal-details-address-select-change', {
@@ -757,24 +757,24 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newAddressPers = req.body.addressPers
 
-        if(req.session.myData.includeValidation == "false"){
-            if(req.session.myData.newAddressPers == "select"){
+        if (req.session.myData.includeValidation == "false") {
+            if (req.session.myData.newAddressPers == "select") {
                 req.session.myData.newAddressPers = "10 Skirbeck Way"
             } else {
                 req.session.myData.newAddressPers = req.session.myData.newAddressPers || "10 Skirbeck Way"
             }
         }
 
-        if(req.session.myData.newAddressPers == "select"){
+        if (req.session.myData.newAddressPers == "select") {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressPers = {
                 "anchor": "addressPers",
                 "message": "Choose an address"
             }
         }
-        
 
-        if(req.session.myData.validationError == "true") {
+
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/personal-details-address-select-change', {
                 myData: req.session.myData
             });
@@ -789,11 +789,11 @@ module.exports = function (router,_myData) {
 
             res.redirect(301, '/' + version + '/personal-details-address-check');
         }
-        
+
     });
     //personal details - change address
     router.get('/' + version + '/personal-details-address-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newAddress1Pers = ""
             req.session.myData.newAddress2Pers = ""
             req.session.myData.newAddressCityPers = ""
@@ -814,43 +814,43 @@ module.exports = function (router,_myData) {
         req.session.myData.newAddressPostcodePers = req.body.addressPostcodePers.trim()
         req.session.myData.newAddressCountryPers = req.body.addressCountryPers.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newAddress1Pers = req.session.myData.newAddress1Pers || req.session.myData.address1Pers
             req.session.myData.newAddressCityPers = req.session.myData.newAddressCityPers || req.session.myData.addressCityPers
             req.session.myData.newAddressCountryPers = req.session.myData.newAddressCountryPers || req.session.myData.addressCountryPers
         }
 
-        if(!req.session.myData.newAddress1Pers){
+        if (!req.session.myData.newAddress1Pers) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.address1Pers = {
                 "anchor": "address1Pers",
                 "message": "Enter address line 1, typically the building and street"
             }
         }
-        if(!req.session.myData.newAddressCityPers){
+        if (!req.session.myData.newAddressCityPers) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressCityPers = {
                 "anchor": "addressCityPers",
                 "message": "Enter town or city"
             }
         }
-        if(!req.session.myData.newAddressCountryPers){
+        if (!req.session.myData.newAddressCountryPers) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressCountryPers = {
                 "anchor": "addressCountryPers",
                 "message": "Enter a country"
             }
         }
-        
 
-        if(req.session.myData.validationError == "true") {
+
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/personal-details-address-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/personal-details-address-check');
         }
-        
+
     });
     //personal details - check address
     router.get('/' + version + '/personal-details-address-check', function (req, res) {
@@ -863,13 +863,13 @@ module.exports = function (router,_myData) {
         req.session.myData.address2Pers = req.session.myData.newAddress2Pers || req.session.myData.address2Pers
         req.session.myData.addressCityPers = req.session.myData.newAddressCityPers || req.session.myData.addressCityPers
         req.session.myData.addressCountyPers = req.session.myData.newAddressCountyPers || req.session.myData.addressCountyPers
-        if(req.session.myData.newAddressPostcodePers == null){
+        if (req.session.myData.newAddressPostcodePers == null) {
             req.session.myData.addressPostcodePers = req.session.myData.addressPostcodePers
         } else {
             req.session.myData.addressPostcodePers = req.session.myData.newAddressPostcodePers
         }
         req.session.myData.addressCountryPers = req.session.myData.newAddressCountryPers || req.session.myData.addressCountryPers
-        
+
         req.session.myData.newAddress1Pers = ""
         req.session.myData.newAddress2Pers = ""
         req.session.myData.newAddressCityPers = ""
@@ -882,7 +882,7 @@ module.exports = function (router,_myData) {
 
     //personal details - change phone numbers
     router.get('/' + version + '/personal-details-phone-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newMobNumberPers = null
             req.session.myData.newTelNumberPers = null
         }
@@ -895,12 +895,12 @@ module.exports = function (router,_myData) {
         req.session.myData.newMobNumberPers = req.body.mobNumberPers.trim()
         req.session.myData.newTelNumberPers = req.body.telNumberPers.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newMobNumberPers = req.session.myData.newMobNumberPers || req.session.myData.mobNumberPers
             req.session.myData.newTelNumberPers = req.session.myData.newTelNumberPers || req.session.myData.telNumberPers
         }
 
-        if(!req.session.myData.newTelNumberPers && !req.session.myData.newMobNumberPers){
+        if (!req.session.myData.newTelNumberPers && !req.session.myData.newMobNumberPers) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.phoneNumbersPers = {
                 "anchor": "telNumberPers",
@@ -908,14 +908,14 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/personal-details-phone-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/personal-details-phone-check');
         }
-        
+
     });
     //personal details - check phone numbers
     router.get('/' + version + '/personal-details-phone-check', function (req, res) {
@@ -924,12 +924,12 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/personal-details-phone-check', function (req, res) {
-        if(req.session.myData.newMobNumberPers == null){
+        if (req.session.myData.newMobNumberPers == null) {
             req.session.myData.mobNumberPers = req.session.myData.mobNumberPers
         } else {
             req.session.myData.mobNumberPers = req.session.myData.newMobNumberPers
         }
-        if(req.session.myData.newTelNumberPers == null){
+        if (req.session.myData.newTelNumberPers == null) {
             req.session.myData.telNumberPers = req.session.myData.telNumberPers
         } else {
             req.session.myData.telNumberPers = req.session.myData.newTelNumberPers
@@ -941,7 +941,7 @@ module.exports = function (router,_myData) {
 
     //personal details - change email
     router.get('/' + version + '/personal-details-email-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newEmailPers = ""
         }
         res.render(version + '/personal-details-email-change', {
@@ -952,11 +952,11 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newEmailPers = req.body.emailPers.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newEmailPers = req.session.myData.newEmailPers || req.session.myData.emailPers
         }
 
-        if(!req.session.myData.newEmailPers){
+        if (!req.session.myData.newEmailPers) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.emailPers = {
                 "anchor": "emailPers",
@@ -964,7 +964,7 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/personal-details-email-change', {
                 myData: req.session.myData
             });
@@ -972,7 +972,7 @@ module.exports = function (router,_myData) {
             // req.session.myData.emailPers = req.session.myData.newEmailPers
             res.redirect(301, '/' + version + '/personal-details-email-check');
         }
-        
+
     });
 
     //personal details - check email
@@ -987,7 +987,7 @@ module.exports = function (router,_myData) {
         res.redirect(301, '/' + version + '/details-personal-details?changed=true&emailchanged=true');
     });
 
-    
+
 
 
 
@@ -1000,40 +1000,40 @@ module.exports = function (router,_myData) {
         req.session.myData.vendorCount = req.query.vendorCount
         req.session.myData.traderCount = req.query.traderCount
 
-        if(req.query.changed == "true"){
+        if (req.query.changed == "true") {
             req.session.myData.notifications.type = "success"
             req.session.myData.showNotification = "true"
         }
 
         // Notification banner messages
-        if(req.query.namechanged == "true"){
+        if (req.query.namechanged == "true") {
             req.session.myData.notifications.message = "You have updated your business name"
         }
-        if(req.query.addresschanged == "true"){
+        if (req.query.addresschanged == "true") {
             req.session.myData.notifications.message = "You have updated your business address"
         }
-        if(req.query.phonechanged == "true"){
+        if (req.query.phonechanged == "true") {
             req.session.myData.notifications.message = "You have updated your business phone numbers"
         }
-        if(req.query.emailchanged == "true"){
+        if (req.query.emailchanged == "true") {
             req.session.myData.notifications.message = "You have updated your business email address"
         }
-        if(req.query.vatchanged == "true"){
+        if (req.query.vatchanged == "true") {
             req.session.myData.notifications.message = "You have updated your VAT registration number"
         }
-        if(req.query.vatremoved == "true"){
+        if (req.query.vatremoved == "true") {
             req.session.myData.notifications.message = "You have removed your VAT registration number"
         }
-        if(req.query.typechanged == "true"){
+        if (req.query.typechanged == "true") {
             req.session.myData.notifications.message = "You have updated your business type"
         }
-        if(req.query.legalchanged == "true"){
+        if (req.query.legalchanged == "true") {
             req.session.myData.notifications.message = "You have updated your business legal status"
         }
-        if(req.query.bankchanged == "true"){
+        if (req.query.bankchanged == "true") {
             req.session.myData.notifications.message = "You have updated your business bank details"
         }
-        
+
         res.render(version + '/details-business-details', {
             myData: req.session.myData
         });
@@ -1041,7 +1041,7 @@ module.exports = function (router,_myData) {
 
     //business details - change business name
     router.get('/' + version + '/business-details-name-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newNameBus = ""
         }
         res.render(version + '/business-details-name-change', {
@@ -1052,11 +1052,11 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newNameBus = req.body.nameBus.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newNameBus = req.session.myData.newNameBus || req.session.myData.nameBus
         }
 
-        if(!req.session.myData.newNameBus){
+        if (!req.session.myData.newNameBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.nameBus = {
                 "anchor": "nameBus",
@@ -1064,7 +1064,7 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-name-change', {
                 myData: req.session.myData
             });
@@ -1072,7 +1072,7 @@ module.exports = function (router,_myData) {
             // req.session.myData.nameBus = req.session.myData.newNameBus
             res.redirect(301, '/' + version + '/business-details-name-check');
         }
-        
+
     });
     //business details - check business name
     router.get('/' + version + '/business-details-name-check', function (req, res) {
@@ -1092,7 +1092,7 @@ module.exports = function (router,_myData) {
 
     //business details - search postcode
     router.get('/' + version + '/business-details-address-postcode-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newAddressPostcodeBus = null
         }
         res.render(version + '/business-details-address-postcode-change', {
@@ -1103,30 +1103,30 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newAddressPostcodeBus = req.body.addressPostcodeBus.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newAddressPostcodeBus = req.session.myData.newAddressPostcodeBus || req.session.myData.addressPostcodeBus
         }
 
-        if(!req.session.myData.newAddressPostcodeBus){
+        if (!req.session.myData.newAddressPostcodeBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressPostcodeBus = {
                 "anchor": "addressPostcodeBus",
                 "message": "Enter a postcode"
             }
         }
-        
-        if(req.session.myData.validationError == "true") {
+
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-address-postcode-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/business-details-address-select-change');
         }
-        
+
     });
     //business details - select address
     router.get('/' + version + '/business-details-address-select-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             // req.session.myData.newAddress1Bus = ""
         }
         res.render(version + '/business-details-address-select-change', {
@@ -1137,24 +1137,24 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newAddressBus = req.body.addressBus
 
-        if(req.session.myData.includeValidation == "false"){
-            if(req.session.myData.newAddressBus == "select"){
+        if (req.session.myData.includeValidation == "false") {
+            if (req.session.myData.newAddressBus == "select") {
                 req.session.myData.newAddressBus = "10 Skirbeck Way"
             } else {
                 req.session.myData.newAddressBus = req.session.myData.newAddressBus || "10 Skirbeck Way"
             }
         }
 
-        if(req.session.myData.newAddressBus == "select"){
+        if (req.session.myData.newAddressBus == "select") {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressBus = {
                 "anchor": "addressBus",
                 "message": "Choose an address"
             }
         }
-        
 
-        if(req.session.myData.validationError == "true") {
+
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-address-select-change', {
                 myData: req.session.myData
             });
@@ -1170,11 +1170,11 @@ module.exports = function (router,_myData) {
 
             res.redirect(301, '/' + version + '/business-details-address-check');
         }
-        
+
     });
     //business details - change address
     router.get('/' + version + '/business-details-address-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newAddress1Bus = ""
             req.session.myData.newAddress2Bus = ""
             req.session.myData.newAddressCityBus = ""
@@ -1195,43 +1195,43 @@ module.exports = function (router,_myData) {
         req.session.myData.newAddressPostcodeBus = req.body.addressPostcodeBus.trim()
         req.session.myData.newAddressCountryBus = req.body.addressCountryBus.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newAddress1Bus = req.session.myData.newAddress1Bus || req.session.myData.address1Bus
             req.session.myData.newAddressCityBus = req.session.myData.newAddressCityBus || req.session.myData.addressCityBus
             req.session.myData.newAddressCountryBus = req.session.myData.newAddressCountryBus || req.session.myData.addressCountryBus
         }
 
-        if(!req.session.myData.newAddress1Bus){
+        if (!req.session.myData.newAddress1Bus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.address1Bus = {
                 "anchor": "address1Bus",
                 "message": "Enter address line 1, typically the building and street"
             }
         }
-        if(!req.session.myData.newAddressCityBus){
+        if (!req.session.myData.newAddressCityBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressCityBus = {
                 "anchor": "addressCityBus",
                 "message": "Enter town or city"
             }
         }
-        if(!req.session.myData.newAddressCountryBus){
+        if (!req.session.myData.newAddressCountryBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.addressCountryBus = {
                 "anchor": "addressCountryBus",
                 "message": "Enter a country"
             }
         }
-        
 
-        if(req.session.myData.validationError == "true") {
+
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-address-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/business-details-address-check');
         }
-        
+
     });
     //business details - check address
     router.get('/' + version + '/business-details-address-check', function (req, res) {
@@ -1244,13 +1244,13 @@ module.exports = function (router,_myData) {
         req.session.myData.address2Bus = req.session.myData.newAddress2Bus || req.session.myData.address2Bus
         req.session.myData.addressCityBus = req.session.myData.newAddressCityBus || req.session.myData.addressCityBus
         req.session.myData.addressCountyBus = req.session.myData.newAddressCountyBus || req.session.myData.addressCountyBus
-        if(req.session.myData.newAddressPostcodeBus == null){
+        if (req.session.myData.newAddressPostcodeBus == null) {
             req.session.myData.addressPostcodeBus = req.session.myData.addressPostcodeBus
         } else {
             req.session.myData.addressPostcodeBus = req.session.myData.newAddressPostcodeBus
         }
         req.session.myData.addressCountryBus = req.session.myData.newAddressCountryBus || req.session.myData.addressCountryBus
-        
+
         req.session.myData.newAddress1Bus = ""
         req.session.myData.newAddress2Bus = ""
         req.session.myData.newAddressCityBus = ""
@@ -1265,7 +1265,7 @@ module.exports = function (router,_myData) {
 
     //business details - change phone numbers
     router.get('/' + version + '/business-details-phone-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newMobNumberBus = null
             req.session.myData.newTelNumberBus = null
         }
@@ -1278,12 +1278,12 @@ module.exports = function (router,_myData) {
         req.session.myData.newMobNumberBus = req.body.mobNumberBus.trim()
         req.session.myData.newTelNumberBus = req.body.telNumberBus.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newMobNumberBus = req.session.myData.newMobNumberBus || req.session.myData.mobNumberBus
             req.session.myData.newTelNumberBus = req.session.myData.newTelNumberBus || req.session.myData.telNumberBus
         }
 
-        if(!req.session.myData.newTelNumberBus && !req.session.myData.newMobNumberBus){
+        if (!req.session.myData.newTelNumberBus && !req.session.myData.newMobNumberBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.phoneNumbersBus = {
                 "anchor": "telNumberBus",
@@ -1291,14 +1291,14 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-phone-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/business-details-phone-check');
         }
-        
+
     });
     //business details - check phone numbers
     router.get('/' + version + '/business-details-phone-check', function (req, res) {
@@ -1307,12 +1307,12 @@ module.exports = function (router,_myData) {
         });
     });
     router.post('/' + version + '/business-details-phone-check', function (req, res) {
-        if(req.session.myData.newMobNumberBus == null){
+        if (req.session.myData.newMobNumberBus == null) {
             req.session.myData.mobNumberBus = req.session.myData.mobNumberBus
         } else {
             req.session.myData.mobNumberBus = req.session.myData.newMobNumberBus
         }
-        if(req.session.myData.newTelNumberBus == null){
+        if (req.session.myData.newTelNumberBus == null) {
             req.session.myData.telNumberBus = req.session.myData.telNumberBus
         } else {
             req.session.myData.telNumberBus = req.session.myData.newTelNumberBus
@@ -1325,7 +1325,7 @@ module.exports = function (router,_myData) {
 
     //business details - change email
     router.get('/' + version + '/business-details-email-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newEmailBus = ""
         }
         res.render(version + '/business-details-email-change', {
@@ -1336,11 +1336,11 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newEmailBus = req.body.emailBus.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newEmailBus = req.session.myData.newEmailBus || req.session.myData.emailBus
         }
 
-        if(!req.session.myData.newEmailBus){
+        if (!req.session.myData.newEmailBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.emailBus = {
                 "anchor": "emailBus",
@@ -1348,7 +1348,7 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-email-change', {
                 myData: req.session.myData
             });
@@ -1356,7 +1356,7 @@ module.exports = function (router,_myData) {
             // req.session.myData.emailBus = req.session.myData.newEmailBus
             res.redirect(301, '/' + version + '/business-details-email-check');
         }
-        
+
     });
     //business details - check email
     router.get('/' + version + '/business-details-email-check', function (req, res) {
@@ -1371,7 +1371,7 @@ module.exports = function (router,_myData) {
     });
     //business details - change type
     router.get('/' + version + '/business-details-type-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newTypeBus = ""
         }
         res.render(version + '/business-details-type-change', {
@@ -1382,11 +1382,11 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newTypeBus = req.body.typeBus
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newTypeBus = req.session.myData.newTypeBus || req.session.myData.typeBus
         }
 
-        if(!req.session.myData.newTypeBus){
+        if (!req.session.myData.newTypeBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.typeBus = {
                 "anchor": "typeBus-1",
@@ -1394,7 +1394,7 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-type-change', {
                 myData: req.session.myData
             });
@@ -1402,7 +1402,7 @@ module.exports = function (router,_myData) {
             // req.session.myData.typeBus = req.session.myData.newTypeBus
             res.redirect(301, '/' + version + '/business-details-type-check');
         }
-        
+
     });
     //business details - check type
     router.get('/' + version + '/business-details-type-check', function (req, res) {
@@ -1417,7 +1417,7 @@ module.exports = function (router,_myData) {
     });
     //business details - change legal status
     router.get('/' + version + '/business-details-legal-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newLegalBus = ""
             req.session.myData.newLegalCHRNBus = ""
             req.session.myData.newLegalCCRNBus = ""
@@ -1430,7 +1430,7 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newLegalBus = req.body.legalBus
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newLegalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
         }
 
@@ -1438,46 +1438,46 @@ module.exports = function (router,_myData) {
         var _matchedLegal = false
         var _legalIndex = 0
         var _legalToUse
-        req.session.data.legalStatuses.forEach(function(_legalStatus, index) {
+        req.session.data.legalStatuses.forEach(function (_legalStatus, index) {
             //CHECK WHICH ONE WE HAVE
-            if(_legalStatus.name == req.session.myData.newLegalBus){
+            if (_legalStatus.name == req.session.myData.newLegalBus) {
                 _matchedLegal = true
                 //IF WE HAVE ONE THEN GET IT'S LOOP INDEX
                 _legalIndex = index + 1
                 _legalToUse = _legalStatus
             }
         });
-        
-        if(_matchedLegal){
+
+        if (_matchedLegal) {
             //THEN WE KNOW THE ID TO TARGET FOR legalCHRNBus-LOOPINDEX
             req.session.myData.newLegalCHRNBus = req.body["legalCHRNBus-" + _legalIndex]
             req.session.myData.newLegalCCRNBus = req.body["legalCCRNBus-" + _legalIndex]
-            
-            if(req.session.myData.includeValidation == "false"){
-                if(_legalToUse.showCompanyReg){
+
+            if (req.session.myData.includeValidation == "false") {
+                if (_legalToUse.showCompanyReg) {
                     req.session.myData.newLegalCHRNBus = req.session.myData.newLegalCHRNBus || "12345678"
                 }
-                if(_legalToUse.showCharityCommission){
+                if (_legalToUse.showCharityCommission) {
                     req.session.myData.newLegalCCRNBus = req.session.myData.newLegalCCRNBus || "0123456"
                 }
             }
         }
 
-        if(!req.session.myData.newLegalBus){
+        if (!req.session.myData.newLegalBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.legalBus = {
                 "anchor": "legalBus-1",
                 "message": "Select the legal status"
             }
         } else {
-            if(_legalToUse.showCompanyReg & !req.session.myData.newLegalCHRNBus){
+            if (_legalToUse.showCompanyReg & !req.session.myData.newLegalCHRNBus) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCHRNBus = {
                     "anchor": "legalCHRNBus-" + _legalIndex,
                     "message": "Enter a company registration number"
                 }
             }
-            if(_legalToUse.showCharityCommission & !req.session.myData.newLegalCCRNBus){
+            if (_legalToUse.showCharityCommission & !req.session.myData.newLegalCCRNBus) {
                 req.session.myData.validationError = "true"
                 req.session.myData.validationErrors.legalCCRNBus = {
                     "anchor": "legalCCRNBus-" + _legalIndex,
@@ -1486,7 +1486,7 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-legal-change', {
                 myData: req.session.myData
             });
@@ -1494,7 +1494,7 @@ module.exports = function (router,_myData) {
             // req.session.myData.legalBus = req.session.myData.newLegalBus
             res.redirect(301, '/' + version + '/business-details-legal-check');
         }
-        
+
     });
     //business details - check legal status
     router.get('/' + version + '/business-details-legal-check', function (req, res) {
@@ -1506,12 +1506,12 @@ module.exports = function (router,_myData) {
 
         req.session.myData.legalBus = req.session.myData.newLegalBus || req.session.myData.legalBus
 
-        if(req.session.myData.legalBus == "Community interest company (CIC)" || "Limited liability partnership (LLP)" || "Limited partnership" || "Non-UK company" || "Private limited company (Ltd)" || "Public limited company (PLC)" || "Unlimited company (Ultd)"){
+        if (req.session.myData.legalBus == "Community interest company (CIC)" || "Limited liability partnership (LLP)" || "Limited partnership" || "Non-UK company" || "Private limited company (Ltd)" || "Public limited company (PLC)" || "Unlimited company (Ultd)") {
             req.session.myData.legalCHRNBus = req.session.myData.newLegalCHRNBus || req.session.myData.legalCHRNBus
         } else {
             req.session.myData.legalCHRNBus = ""
         }
-        if(req.session.myData.legalBus == "Charitable incorporated organisation (CIO)"){
+        if (req.session.myData.legalBus == "Charitable incorporated organisation (CIO)") {
             req.session.myData.legalCCRNBus = req.session.myData.newLegalCCRNBus || req.session.myData.legalCCRNBus
         } else {
             req.session.myData.legalCCRNBus = ""
@@ -1520,12 +1520,12 @@ module.exports = function (router,_myData) {
         req.session.myData.newLegalBus = ""
         req.session.myData.newLegalCCRNBus = ""
         req.session.myData.newLegalCHRNBus = ""
-        
+
         res.redirect(301, '/' + version + '/details-business-details?changed=true&legalchanged=true');
     });
     //business details - add VAT
     router.get('/' + version + '/business-details-vat-add', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newVatBus = ""
         }
         res.render(version + '/business-details-vat-add', {
@@ -1536,11 +1536,11 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newVatBus = req.body.vatBus.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newVatBus = req.session.myData.newVatBus || "GB123456789"
         }
 
-        if(!req.session.myData.newVatBus){
+        if (!req.session.myData.newVatBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.vatBus = {
                 "anchor": "vatBus",
@@ -1548,7 +1548,7 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-vat-add', {
                 myData: req.session.myData
             });
@@ -1556,11 +1556,11 @@ module.exports = function (router,_myData) {
             // req.session.myData.vatBus = req.session.myData.newVatBus
             res.redirect(301, '/' + version + '/business-details-vat-check');
         }
-        
+
     });
     //business details - change VAT
     router.get('/' + version + '/business-details-vat-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newVatBus = ""
         }
         res.render(version + '/business-details-vat-change', {
@@ -1571,11 +1571,11 @@ module.exports = function (router,_myData) {
 
         req.session.myData.newVatBus = req.body.vatBus.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newVatBus = req.session.myData.newVatBus || "GB123456789"
         }
 
-        if(!req.session.myData.newVatBus){
+        if (!req.session.myData.newVatBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.vatBus = {
                 "anchor": "vatBus",
@@ -1583,7 +1583,7 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-vat-change', {
                 myData: req.session.myData
             });
@@ -1591,7 +1591,7 @@ module.exports = function (router,_myData) {
             // req.session.myData.vatBus = req.session.myData.newVatBus
             res.redirect(301, '/' + version + '/business-details-vat-check');
         }
-        
+
     });
     //business details - check VAT
     router.get('/' + version + '/business-details-vat-check', function (req, res) {
@@ -1613,13 +1613,13 @@ module.exports = function (router,_myData) {
     router.post('/' + version + '/business-details-vat-remove', function (req, res) {
 
         req.session.myData.newVATRemoveBus = req.body.vatRemoveBus
-        
 
-        if(req.session.myData.includeValidation == "false"){
+
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newVATRemoveBus = req.session.myData.vatRemoveBus || "Yes"
         }
 
-        if(!req.session.myData.newVATRemoveBus){
+        if (!req.session.myData.newVATRemoveBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.vatBus = {
                 "anchor": "vatRemoveBus-1",
@@ -1627,13 +1627,13 @@ module.exports = function (router,_myData) {
             }
         }
 
-        if(req.session.myData.validationError == "true") {
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-vat-remove', {
                 myData: req.session.myData
             });
         } else {
 
-            if(req.session.myData.newVATRemoveBus == "Yes"){
+            if (req.session.myData.newVATRemoveBus == "Yes") {
                 req.session.myData.vatRemoveBus = ""
                 req.session.myData.newVATRemoveBus = ""
                 req.session.myData.vatBus = ""
@@ -1643,7 +1643,7 @@ module.exports = function (router,_myData) {
                 res.redirect(301, '/' + version + '/details-business-details');
             }
         }
-        
+
     });
 
     router.get('/' + version + '/business-details-bank-declaration', function (req, res) {
@@ -1664,7 +1664,7 @@ module.exports = function (router,_myData) {
         res.redirect(301, '/' + version + '/business-details-bank-type');
     });
 
-        //business details - change bank details - type
+    //business details - change bank details - type
 
     router.get('/' + version + '/business-details-bank-type', function (req, res) {
         res.render(version + '/business-details-bank-type', {
@@ -1682,22 +1682,22 @@ module.exports = function (router,_myData) {
         }
     })*/
 
-        
 
-    router.post('/bank-change-answer', function(request, response) {
+
+    router.post('/bank-change-answer', function (request, response) {
 
         var bankType = request.session.data['bankAccountTypebus']
         var bankCountry = request.session.data['bankCountrybus']
-        if (bankType == "Business" && bankCountry == "European bank account"){
+        if (bankType == "Business" && bankCountry == "European bank account") {
             response.redirect("v9/business-details-bank-change-european-business")
         }
-        else if (bankType == "Personal" && bankCountry == "European bank account"){
+        else if (bankType == "Personal" && bankCountry == "European bank account") {
             response.redirect("v9/business-details-bank-change-european-personal")
         }
-        else if (bankType == "Business" && bankCountry == "UK bank or building society account"){
+        else if (bankType == "Business" && bankCountry == "UK bank or building society account") {
             response.redirect("v9/business-details-bank-change-uk-business")
         }
-        else if (bankType == "Personal" && bankCountry == "UK bank or building society account"){
+        else if (bankType == "Personal" && bankCountry == "UK bank or building society account") {
             response.redirect("v9/business-details-bank-change-uk-personal")
         }
         else {
@@ -1792,14 +1792,14 @@ module.exports = function (router,_myData) {
         });
     });
 
-    router.post('/partial-match-answer', function(request, response) {
+    router.post('/partial-match-answer', function (request, response) {
 
         var partialMatchAnswer = request.session.data['bankFirstName']
         var incorrectSortCode = request.session.data['bankSortbus']
         var incorrectAccountNumber = request.session.data['bankAccountbus']
-        if (partialMatchAnswer == "Andy"){
+        if (partialMatchAnswer == "Andy") {
             response.redirect("v9/business-details-bank-partial-match?changed=true&bankchanged=true")
-        } 
+        }
         else if (incorrectSortCode == "999999" && incorrectAccountNumber == "99999999") {
             response.redirect("v9/business-details-bank-unable-to-validate-01?changed=true&bankchanged=true")
         }
@@ -1814,20 +1814,20 @@ module.exports = function (router,_myData) {
         });
     });
 
-    router.post('/validation-return-to-check-1', function(request, response) {
+    router.post('/validation-return-to-check-1', function (request, response) {
 
         var bankType = request.session.data['bankAccountTypebus']
         var bankCountry = request.session.data['bankCountrybus']
-        if (bankType == "Business" && bankCountry == "European bank account"){
+        if (bankType == "Business" && bankCountry == "European bank account") {
             response.redirect("v9/business-details-bank-check-european-business")
         }
-        else if (bankType == "Personal" && bankCountry == "European bank account"){
+        else if (bankType == "Personal" && bankCountry == "European bank account") {
             response.redirect("v9/business-details-bank-check-european-personal")
         }
-        else if (bankType == "Business" && bankCountry == "UK bank or building society account"){
+        else if (bankType == "Business" && bankCountry == "UK bank or building society account") {
             response.redirect("v9/business-details-bank-check-uk-business")
         }
-        else if (bankType == "Personal" && bankCountry == "UK bank or building society account"){
+        else if (bankType == "Personal" && bankCountry == "UK bank or building society account") {
             response.redirect("v9/business-details-bank-check-uk-personal")
         }
         else {
@@ -1841,20 +1841,20 @@ module.exports = function (router,_myData) {
         });
     });
 
-    router.post('/validation-return-to-check-2', function(request, response) {
+    router.post('/validation-return-to-check-2', function (request, response) {
 
         var bankType = request.session.data['bankAccountTypebus']
         var bankCountry = request.session.data['bankCountrybus']
-        if (bankType == "Business" && bankCountry == "European bank account"){
+        if (bankType == "Business" && bankCountry == "European bank account") {
             response.redirect("v9/business-details-bank-check-european-business")
         }
-        else if (bankType == "Personal" && bankCountry == "European bank account"){
+        else if (bankType == "Personal" && bankCountry == "European bank account") {
             response.redirect("v9/business-details-bank-check-european-personal")
         }
-        else if (bankType == "Business" && bankCountry == "UK bank or building society account"){
+        else if (bankType == "Business" && bankCountry == "UK bank or building society account") {
             response.redirect("v9/business-details-bank-check-uk-business")
         }
-        else if (bankType == "Personal" && bankCountry == "UK bank or building society account"){
+        else if (bankType == "Personal" && bankCountry == "UK bank or building society account") {
             response.redirect("v9/business-details-bank-check-uk-personal")
         }
         else {
@@ -1871,29 +1871,29 @@ module.exports = function (router,_myData) {
 
     // business details - partial match routing based on radios 
 
-    router.post('/validation-answer', function(request, response) {
+    router.post('/validation-answer', function (request, response) {
         var bankType = request.session.data['bankAccountTypebus']
         var bankCountry = request.session.data['bankCountrybus']
         var validationAnswer = request.session.data['bankAccountPartialMatch']
-        if (validationAnswer == "No" && bankType == "Personal" && bankCountry == "European bank account"){
+        if (validationAnswer == "No" && bankType == "Personal" && bankCountry == "European bank account") {
             response.redirect("v9/business-details-bank-check-european-personal")
         }
-        else if (validationAnswer == "No" && bankType == "Personal" && bankCountry == "UK bank or building society account"){
+        else if (validationAnswer == "No" && bankType == "Personal" && bankCountry == "UK bank or building society account") {
             response.redirect("v9/business-details-bank-check-uk-personal")
         }
-        else if (validationAnswer == "No"){
+        else if (validationAnswer == "No") {
             response.redirect("v9/business-details-bank-check-uk-personal")
         }
         if (validationAnswer == "Yes") {
             response.redirect("v9/details-business-details?changed=true&bankchanged=true")
-        } 
+        }
     })
 
 
 
     //business details - change bank details - CONCEPT VERSIONS // outdated
     router.get('/' + version + '/business-details-bank-change', function (req, res) {
-        if(req.query.newChange){
+        if (req.query.newChange) {
             req.session.myData.newAddress1Bus = ""
             req.session.myData.newAddress2Bus = ""
             req.session.myData.newAddressCityBus = ""
@@ -1911,43 +1911,43 @@ module.exports = function (router,_myData) {
         req.session.myData.newBankAccountBus = req.body.bankAccountBus.trim()
         req.session.myData.newBankRollBus = req.body.bankRollBus.trim()
 
-        if(req.session.myData.includeValidation == "false"){
+        if (req.session.myData.includeValidation == "false") {
             req.session.myData.newBankNameBus = req.session.myData.newBankNameBus || req.session.myData.bankNameBus
             req.session.myData.newBankSortBus = req.session.myData.newBankSortBus || req.session.myData.bankSortBus
             req.session.myData.newBankAccountBus = req.session.myData.newBankAccountBus || req.session.myData.bankAccountBus
         }
 
-        if(!req.session.myData.newBankNameBus){
+        if (!req.session.myData.newBankNameBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.bankNameBus = {
                 "anchor": "bankNameBus",
                 "message": "[error message - blank - bank account name]"
             }
         }
-        if(!req.session.myData.newBankSortBus){
+        if (!req.session.myData.newBankSortBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.bankSortBus = {
                 "anchor": "bankSortBus",
                 "message": "[error message - blank - sort code]"
             }
         }
-        if(!req.session.myData.newBankAccountBus){
+        if (!req.session.myData.newBankAccountBus) {
             req.session.myData.validationError = "true"
             req.session.myData.validationErrors.bankAccountBus = {
                 "anchor": "bankAccountBus",
                 "message": "[error message - blank - account number]"
             }
         }
-        
 
-        if(req.session.myData.validationError == "true") {
+
+        if (req.session.myData.validationError == "true") {
             res.render(version + '/business-details-bank-change', {
                 myData: req.session.myData
             });
         } else {
             res.redirect(301, '/' + version + '/business-details-bank-check');
         }
-        
+
     });
     //business details - check bank details
     router.get('/' + version + '/business-details-bank-check', function (req, res) {
@@ -1960,13 +1960,160 @@ module.exports = function (router,_myData) {
         req.session.myData.bankSortBus = req.session.myData.newBankSortBus || req.session.myData.bankSortBus
         req.session.myData.bankAccountBus = req.session.myData.newBankAccountBus || req.session.myData.bankAccountBus
         req.session.myData.bankRollBus = req.session.myData.newBankRollBus || req.session.myData.bankRollBus
-        
+
         req.session.myData.newBankNameBus = ""
         req.session.myData.newBankSortBus = ""
         req.session.myData.newBankAccountBus = ""
         req.session.myData.newBankRollBus = ""
 
         res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
+    });
+
+    // Register a business - business owner 
+
+    router.get('/' + version + '/register-ab-business-owner', function (req, res) {
+        res.render(version + '/register-ab-business-owner', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/register-ab-owner-answer', function (request, response) {
+
+        var RABOwner = request.session.data['RegisterBusinessOwner']
+        if (RABOwner == "Yes") {
+            response.redirect("v10/register-ab-business-type")
+        }
+        else {
+            response.redirect("v9/business-details-bank-change-uk-business")
+        }
+    })
+
+    // Register a business - business type (agri or agent)
+
+    router.get('/' + version + '/register-ab-business-type', function (req, res) {
+        res.render(version + '/register-ab-business-type', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/register-ab-type-answer', function (request, response) {
+
+        var RABType = request.session.data['RegisterBusinessType']
+        if (RABType == "Yes") {
+            response.redirect("v10/register-ab-business-legal-status")
+        }
+        else {
+            response.redirect("v9/business-details-bank-change-uk-business")
+        }
+    })
+
+    // Register a business - legal status
+
+    router.get('/' + version + '/register-ab-business-legal-status', function (req, res) {
+        res.render(version + '/register-ab-business-legal-status', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-legal-status', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-business-type');
+    });
+
+    // Register a business - business type
+
+    router.get('/' + version + '/register-ab-business-business-type', function (req, res) {
+        res.render(version + '/register-ab-business-business-type', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-business-type', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-name');
+    });
+
+    // Register a business - business type
+
+    router.get('/' + version + '/register-ab-business-name', function (req, res) {
+        res.render(version + '/register-ab-business-name', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-name', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-address-postcode');
+    });
+
+
+    // Register a business - business address postcode
+
+    router.get('/' + version + '/register-ab-business-address-postcode', function (req, res) {
+        res.render(version + '/register-ab-business-address-postcode', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-address-postcode', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-address-select');
+    });
+
+    // Register a business - business address select
+
+    router.get('/' + version + '/register-ab-business-address-select', function (req, res) {
+        res.render(version + '/register-ab-business-address-select', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-address-select', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-phone');
+    });
+
+    // Register a business - business address select
+
+    router.get('/' + version + '/register-ab-business-address-manual', function (req, res) {
+        res.render(version + '/register-ab-business-address-manual', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-address-manual', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-phone');
+    });
+
+        // Register a business - business phone
+
+    router.get('/' + version + '/register-ab-business-phone', function (req, res) {
+        res.render(version + '/register-ab-business-phone', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-phone', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-email');
+    });
+
+            // Register a business - business email
+
+    router.get('/' + version + '/register-ab-business-email', function (req, res) {
+        res.render(version + '/register-ab-business-email', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-email', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-VAT');
+    });
+
+                // Register a business - business email
+
+    router.get('/' + version + '/register-ab-business-VAT', function (req, res) {
+        res.render(version + '/register-ab-business-VAT', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-VAT', function (req, res) {
+        res.redirect(301, '/' + version + '/businesses-list');
     });
 
 }

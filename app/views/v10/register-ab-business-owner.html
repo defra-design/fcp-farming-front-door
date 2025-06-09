@@ -1,0 +1,128 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "Are you the owner of the business?" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "name": "TBC",
+    "id": "TBC",
+    "url": "",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "No radio button selected",
+        "content": "Select whether this is a business or personal account."
+      }
+    ]
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "TBC",
+    "id": "int-TBC",
+    "url": "",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    {
+      "scenario": "No radio button selected",
+      "content": "Select whether this is a business or personal account."
+    }
+  ]
+  }
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% if data.view != "int" %}
+    {% include "_common/sub-header-2.html" %}
+  {% endif %}
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate action="/register-ab-owner-answer">
+
+
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                  Are you the owner of the business?
+                </h1>
+                </legend>
+                <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="RegisterBusinessOwner" name="RegisterBusinessOwner" type="radio" value="Yes" {{ checked("RegisterBusinessOwner","Yes") }}>
+                    <label class="govuk-label govuk-radios__label" for="RegisterBusinessOwner">
+                    Yes
+                    </label>
+                </div>
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="RegisterBusinessOwner-2" name="RegisterBusinessOwner" type="radio" value="No" {{ checked("RegisterBusinessOwner","No") }}>
+                    <label class="govuk-label govuk-radios__label" for="RegisterBusinessOwner-2">
+                    No
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
