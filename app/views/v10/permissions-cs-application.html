@@ -111,40 +111,9 @@
 {% include "_common/phase-banner-2.html" %}
 {% include "_common/sub-header.html" %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-
-      {% set _hideAccountLink = true %}
-      {% include "_common/login-nav-3.html" %}
-
-      <div class="govuk-breadcrumbs" style="display: inline-block">
-        <ol class="govuk-breadcrumbs__list">
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
-          </li>
-          {% if data.release != "b1" %}
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
-          </li>
-          {% endif %}
-        </ol>
-      </div>
-
-    </div>
-  </div>
-  {% else %}
-  {% include "_common/login-nav-internal.html" %}
-  <div class="govuk-breadcrumbs" style="display: inline-block">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
-      </li>
-    </ol>
-  </div>
   {% endif %}
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
 {% endblock %}
 
 
@@ -152,7 +121,7 @@
 
 
 <div class="govuk-grid-row">
-<div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-column-full">
 
    <form action="permissions-cs-agreement" method="POST">
 
@@ -161,16 +130,247 @@
     <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          <span class="govuk-caption-l">Richard Clarke’s access to Agile Farm Ltd</span>
-          How can Richard Clarke manage Countryside Stewardship applications for this business?
+          <span class="govuk-caption-l">Richard Clarke permissions 3 of 4</span>
+          Countryside Stewardship applications
         </h1>
       </legend>
 
+<!-- Radio Buttons block START -->
+
+  <div class="permission-level-radios-block">
+    <div class="permission-level-radios-block_left">
       <div id="contact-hint" class="govuk-hint">
         Select one option
       </div>
+    </div>
 
+    <div class="permission-level-radios-block_right">
       <div class="govuk-radios" data-module="govuk-radios">
+
+        <div class="permission-input-outer_one-fourth grey-column-bg">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="csApplication" name="csApplication" type="radio" value="view" aria-describedby="csApplication-item-hint">
+          <label class="govuk-label govuk-radios__label" for="csApplication">
+            <span class="govuk-body-s"><strong>No access</strong></span>
+          </label>
+        </div>
+        </div>
+
+        <div class="permission-input-outer_one-fourth">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="csApplication-2" name="csApplication" type="radio" value="amend" aria-describedby="csApplication-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="csApplication-2">
+            <span class="govuk-body-s"><strong>View</strong></span>
+          </label>
+        </div>
+        </div>
+
+        <div class="permission-input-outer_one-fourth grey-column-bg">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="csApplication-3" name="csApplication" type="radio" value="delegate" aria-describedby="csApplication-3-item-hint">
+          <label class="govuk-label govuk-radios__label" for="csApplication-3">
+            <span class="govuk-body-s"><strong>Create</strong></span>
+          </label>
+        </div>
+        </div>
+
+        <div class="permission-input-outer_one-fourth">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="csApplication-4" name="csApplication" type="radio" value="full" aria-describedby="csApplication-4-item-hint">
+          <label class="govuk-label govuk-radios__label" for="csApplication-4">
+            <span class="govuk-body-s"><strong>Submit</strong></span>
+          </label>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Radio Buttons block END -->
+
+
+<table class="govuk-table permission-level-table">
+  <thead class="govuk-table__head govuk-visually-hidden">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header permission-level-table_width-two-sixths"><span style="font-weight: normal;">I want this person to...</span></th>
+      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">No access</th>
+      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">View</th>
+      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">Create</th>
+      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">Submit</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">View eligibility, applications and agreement offers</th>
+      <td class="govuk-table__cell grey-column-bg permission-table-cell_one-fourth">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell permission-table-cell_one-fourth">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg permission-table-cell_one-fourth">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell permission-table-cell_one-fourth">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr>
+    <!-- <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">View land details, features and covers</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr> -->
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Create and amend applications</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr>
+    <!-- <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Amend land, features and covers</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr> -->
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Make active farmer declaration</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Submit or withdraw applications</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Receive application correspondance</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+      <!-- <div id="contact-hint" class="govuk-hint">
+        Select one option
+      </div> -->
+
+      <!-- <div class="govuk-radios" data-module="govuk-radios">
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn">
@@ -236,7 +436,9 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div> -->
+
+
     </fieldset>
   </div>
 
@@ -244,7 +446,7 @@
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
     <strong class="govuk-warning-text__text">
       <span class="govuk-visually-hidden">Warning</span>
-      If you give someone delegated permission for Countryside Stewardship applications, they will be able to do all actions and receive all correspondence for this business’s applications for this scheme.
+      If you give someone submit permission for Countryside Stewardship applications, they will be able to do all actions and receive all correspondence for this business’s applications for this scheme.
     </strong>
   </div>
 
@@ -259,10 +461,10 @@
   </div>
 
 
-  <div class="govuk-grid-column-one-third">
+  <!-- <div class="govuk-grid-column-one-third">
     <h4 class="govuk-heading-s">Setting permissions</h4>
     <p class="govuk-body-s">You can choose whatever permission levels you want. There is <a href="#" class="govuk-link">guidance</a> on recommended permission levels depending on the person’s role.</p>
-  </div>
+  </div> -->
 
 </div>
 
