@@ -13,7 +13,7 @@
 {% endif %}
 {% set _showIntExtLinks = true %}
 
-{% set pageName="Choose what level of access Richard Clark should have for this business" %}
+{% set pageName="Richard Clarke can access Agile Farm Ltd" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -109,11 +109,41 @@
 
 {% if data.view != "int" %}
 {% include "_common/phase-banner-2.html" %}
-{% include "_common/sub-header.html" %}
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+          {% if data.release != "b1" %}
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
+          </li>
+          {% endif %}
+        </ol>
+      </div>
+
+    </div>
+  </div>
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
+      </li>
+    </ol>
+  </div>
   {% endif %}
-  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
-  
 {% endblock %}
 
 
@@ -123,35 +153,19 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="business-relationship" method="POST">
 
+<div class="govuk-panel govuk-panel--confirmation">
+  <h1 class="govuk-panel__title">
+    Richard Clarke can access Agile Farm Ltd
+  </h1>
+</div>
 
-        <h1 class="govuk-heading-l">
-          Choose what level of access Richard Clark should have for this business
-        </h1>
-
-        <p class="govuk-body">Next, you will be able to tell us about Richard Clark’s relationship to this business.</p> 
-        <p class="govuk-body">Then, you will be able to set permission levels for Richard Clark’s access to this business’s:</p>
-        <ul class="govuk-list govuk-list--bullet">
-  <li>business account</li>
-  <li>land details</li>
-  <li>individual schemes and grants</li>
-</ul>
-
-        <h2 class="govuk-heading-m">
-          Setting permissions
-        </h2>
-
-  <p class="govuk-body">You can choose whatever permission levels you want. There is <a href="#" class="govuk-link govuk-link--no-visited-state">guidance</a> on recommended permission levels depending on the person’s role.</p>
-
-  {{govukButton({
-    text: "Continue"
-  })}}
-
-  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
-
-  </form>
-
+<h2 class="govuk-heading-m">What happens next</h2>
+<p class="govuk-body">We've sent your access request for Valley Farm to authorised users at the business.</p>
+<p class="govuk-body">You will receive an email once they've reviewed your access request.</p>
+<p class="govuk-body">
+ <a class="govuk-link govuk-link--no-visited-state" href="businesses-list">Back to your businesses</a>
+</p>
 
 
   </div>
