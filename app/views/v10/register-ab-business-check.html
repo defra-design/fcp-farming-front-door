@@ -1,0 +1,331 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterLinks = false %}
+{% else %}
+{% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Check your business details" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"name": "TBC",
+"id": "TBC",
+"url": "",
+"release": "Buffalo 1.1 MVP",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "No radio button selected",
+"content": "Select whether this is a business or personal account."
+}
+]
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "TBC",
+"id": "int-TBC",
+"url": "",
+"release": "Buffalo 1.1 MVP",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "No radio button selected",
+"content": "Select whether this is a business or personal account."
+}
+]
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+{% if data.view != "int" %}
+{% include "_common/sub-header-2.html" %}
+{% endif %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Check your answers before registering your business</h1>
+    <h2 class="govuk-heading-m">Personal details</h2>
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Why are you registering the business?
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessType'] or 'Agricultural or other business' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-type">Change<span class="govuk-visually-hidden"> why you are registering the business</span></a>
+        </dd>
+      </div>
+      {% if data['RegisterBusinessType'] != "Firm of agents" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Legal status
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal'] or 'Charitable trust' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              legal status</span></a>
+        </dd>
+      </div>
+      {% if data['RegisterBusinessLegal'] == "Community interest company (CIC)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal-company'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% elif data['RegisterBusinessLegal'] == "Limited liability partnership (LLP)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal-company-2'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% elif data['RegisterBusinessLegal'] == "Limited partnership" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal-company-3'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% elif data['RegisterBusinessLegal'] == "Non-UK company" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal-company-4'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% elif data['RegisterBusinessLegal'] == "Private limited company (Ltd)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal-company-5'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% elif data['RegisterBusinessLegal'] == "Public limited company (PLC)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal-company-6'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% elif data['RegisterBusinessLegal'] == "Unlimited company (Ultd)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal-company-7'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
+      {% if data['RegisterBusinessLegal'] == "Charitable incorporated organisation (CIO)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Charity reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessLegal-charity']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-legal-status">Change<span class="govuk-visually-hidden">
+              charity reference number</span></a>
+        </dd>
+      </div>
+      {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Type of business
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessBusType'] or 'Farmer' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-VAT">Change<span class="govuk-visually-hidden"> type of
+              business
+              number</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Is your business VAT registered?
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessVAT-route'] or 'No' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-VAT-route">Change<span class="govuk-visually-hidden"> if your business is VAT registered</span></a>
+        </dd>
+      </div>
+      {% if data['RegisterBusinessVAT-route'] == "Yes" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          VAT registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessVAT'] or 'GB112233449' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-VAT">Change<span class="govuk-visually-hidden"> VAT registration
+              number</span></a>
+        </dd>
+      </div>
+      {% endif %}
+      <!-- end of conditional statement for hiding these fields is user selected registering a 'Firm of agents'-->
+      {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Business name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessName'] or 'Holly Farm' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-VAT">Change<span class="govuk-visually-hidden"> business
+              name</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Business address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessAddressSelect'] or '5 Grange Road, Maidstone, SW1 2PX' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-address">Change<span class="govuk-visually-hidden"> business
+              name</span></a>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Business phone numbers
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Telephone: {{ data['RegisterBusinessTelephone'] or '01234 111111'}}
+          <br>
+          Mobile: {{ data['RegisterBusinessMobile'] or 'Not provided' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-phone">Change<span class="govuk-visually-hidden"> business
+              phone numbers</span></a>
+        </dd>
+      </div>
+            <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Business email address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['RegisterBusinessEmail'] or 'pretend-email@companyname.com' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="register-ab-business-email">Change<span class="govuk-visually-hidden"> business
+              email</span></a>
+        </dd>
+      </div>
+
+    </dl>
+
+    <form action="/form-handler" method="post" novalidate>
+      <input type="hidden" name="answers-checked" value="true">
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+    </form>
+
+    <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a>
+    </p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

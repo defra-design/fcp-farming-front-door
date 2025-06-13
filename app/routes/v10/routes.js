@@ -1999,11 +1999,11 @@ module.exports = function (router, _myData) {
     router.post('/register-ab-type-answer', function (request, response) {
 
         var RABType = request.session.data['RegisterBusinessType']
-        if (RABType == "Yes") {
+        if (RABType == "Agricultural or other business") {
             response.redirect("v10/register-ab-business-legal-status")
         }
         else {
-            response.redirect("v9/business-details-bank-change-uk-business")
+            response.redirect("v10/register-ab-business-name")
         }
     })
 
@@ -2028,10 +2028,41 @@ module.exports = function (router, _myData) {
     });
 
     router.post('/' + version + '/register-ab-business-business-type', function (req, res) {
+        res.redirect(301, '/' + version + '/register-ab-business-VAT-route');
+    });
+
+        // Register a business - business VAT route
+
+    router.get('/' + version + '/register-ab-business-VAT-route', function (req, res) {
+        res.render(version + '/register-ab-business-VAT-route', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/register-ab-vat-answer', function (request, response) {
+
+        var RABVAT = request.session.data['RegisterBusinessVAT-route']
+        if (RABVAT == "Yes") {
+            response.redirect("v10/register-ab-business-VAT")
+        }
+        else {
+            response.redirect("v10/register-ab-business-name")
+        }
+    })
+
+    // Register a business - business VAT
+
+    router.get('/' + version + '/register-ab-business-VAT', function (req, res) {
+        res.render(version + '/register-ab-business-VAT', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/register-ab-business-VAT', function (req, res) {
         res.redirect(301, '/' + version + '/register-ab-business-name');
     });
 
-    // Register a business - business type
+    // Register a business - business name
 
     router.get('/' + version + '/register-ab-business-name', function (req, res) {
         res.render(version + '/register-ab-business-name', {
@@ -2080,7 +2111,7 @@ module.exports = function (router, _myData) {
         res.redirect(301, '/' + version + '/register-ab-business-phone');
     });
 
-        // Register a business - business phone
+    // Register a business - business phone
 
     router.get('/' + version + '/register-ab-business-phone', function (req, res) {
         res.render(version + '/register-ab-business-phone', {
@@ -2092,7 +2123,7 @@ module.exports = function (router, _myData) {
         res.redirect(301, '/' + version + '/register-ab-business-email');
     });
 
-            // Register a business - business email
+    // Register a business - business email
 
     router.get('/' + version + '/register-ab-business-email', function (req, res) {
         res.render(version + '/register-ab-business-email', {
@@ -2101,19 +2132,22 @@ module.exports = function (router, _myData) {
     });
 
     router.post('/' + version + '/register-ab-business-email', function (req, res) {
-        res.redirect(301, '/' + version + '/register-ab-business-VAT');
+
+        res.redirect(301, '/' + version + '/register-ab-business-check');
+
     });
 
-                // Register a business - business email
+        router.post('/' + version + '/register-ab-business-check', function (req, res) {
 
-    router.get('/' + version + '/register-ab-business-VAT', function (req, res) {
-        res.render(version + '/register-ab-business-VAT', {
-            myData: req.session.myData
-        });
-    });
+        if (req.query.businessregistered == "true") {
+            req.session.myData.notifications.type = "success"
+            req.session.myData.showNotification = "true"
+        }
+        if (req.query.businessregistered == "true") {
+            req.session.myData.notifications.message = "You have registered your business"
+        }
+        res.redirect(301, '/' + version + '/businesses-list?businessregistered=true');
 
-    router.post('/' + version + '/register-ab-business-VAT', function (req, res) {
-        res.redirect(301, '/' + version + '/businesses-list');
     });
 
 }
