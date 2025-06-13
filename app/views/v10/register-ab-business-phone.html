@@ -1,111 +1,113 @@
 {% extends "layouts/main.html" %}
 
 {% if data.view == "int" %}
-  {% set _showFooterLinks = false %}
+{% set _showFooterLinks = false %}
 {% else %}
-  {% set _showFooterLinks = true %}
+{% set _showFooterLinks = true %}
 {% endif %}
 
 {% set _showReleaseLinks = false %}
 
 {% set _showIntExtLinks = true %}
 
-{% set _inError = myData.validationError == "true"  %}
+{% set _inError = myData.validationError == "true" %}
 
 {% set pageTitle = "What are your business phone numbers?" %}
 {% set pageName = pageTitle %}
-{% if _inError %} 
-  {% set pageName = "Error: " + pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
 {% endif %}
 
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
-    "name": "TBC",
-    "id": "TBC",
-    "url": "",
-    "release": "Buffalo 1.0 MVP",
-    "variants": [],
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": '',
+"name": "TBC",
+"id": "TBC",
+"url": "TBC",
+"release": "Buffalo 1.0 MVP",
+"variants": [],
 
-    "pagetitle": pageTitle,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
-      {
-        "field": "Mobile and telephone",
-        "scenario": "Both are empty fields / nothing entered",
-        "content": "Enter at least one phone number"
-      },
-      {
-        "field": "Mobile",
-        "scenario": "Entry is too long",
-        "content": "Business mobile phone number must be 100 characters or less"
-      },
-      {
-        "field": "Mobile",
-        "scenario": "Entry is too short",
-        "content": "Business mobile phone number must be 10 characters or more"
-      },
-      {
-        "field": "Telephone",
-        "scenario": "Entry is too long",
-        "content": "Business telephone number must be 100 characters or less"
-      },
-      {
-        "field": "Telephone",
-        "scenario": "Entry is too short",
-        "content": "Business telephone number must be 10 characters or more"
-      }
-      
-    ]
-    
-  }
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"field": "Mobile and telephone",
+"scenario": "Both are empty fields / nothing entered",
+"content": "Enter at least one phone number"
+},
+{
+"field": "Mobile",
+"scenario": "Entry is too long",
+"content": "Business mobile phone number must be 100 characters or less"
+},
+{
+"field": "Mobile",
+"scenario": "Entry is too short",
+"content": "Business mobile phone number must be 10 characters or more"
+},
+{
+"field": "Telephone",
+"scenario": "Entry is too long",
+"content": "Business telephone number must be 100 characters or less"
+},
+{
+"field": "Telephone",
+"scenario": "Entry is too short",
+"content": "Business telephone number must be 10 characters or more"
+}
+
+]
+
+}
 %}
 
 {% elif data.view == "int" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
-    "name": "TBC",
-    "id": "TBC",
-    "url": "",
-    "release": "Buffalo 1.1 MVP",
-    "variants": [],
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": '',
+"name": "TBC",
+"id": "TBC",
+"url": "TBC",
+"release": "Buffalo 1.1 MVP",
+"variants": [],
 
-    "pagetitle": pageTitle,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
-      {
-        "field": "Mobile and telephone",
-        "scenario": "Both are empty fields / nothing entered",
-        "content": "Enter at least one phone number"
-      },
-      {
-        "field": "Mobile",
-        "scenario": "Entry is too long",
-        "content": "Business mobile phone number must be 100 characters or less"
-      },
-      {
-        "field": "Mobile",
-        "scenario": "Entry is too short",
-        "content": "Business mobile phone number must be 10 characters or more"
-      },
-      {
-        "field": "Telephone",
-        "scenario": "Entry is too long",
-        "content": "Business telephone number must be 100 characters or less"
-      },
-      {
-        "field": "Telephone",
-        "scenario": "Entry is too short",
-        "content": "Business telephone number must be 10 characters or more"
-      }
-      
-    ]
-    
-  }
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"field": "Mobile and telephone",
+"scenario": "Both are empty fields / nothing entered",
+"content": "Enter at least one phone number"
+},
+{
+"field": "Mobile",
+"scenario": "Entry is too long",
+"content": "Business mobile phone number must be 100 characters or less"
+},
+{
+"field": "Mobile",
+"scenario": "Entry is too short",
+"content": "Business mobile phone number must be 10 characters or more"
+},
+{
+"field": "Telephone",
+"scenario": "Entry is too long",
+"content": "Business telephone number must be 100 characters or less"
+},
+{
+"field": "Telephone",
+"scenario": "Entry is too short",
+"content": "Business telephone number must be 10 characters or more"
+}
+
+]
+
+}
 %}
 
 {% else %}
@@ -116,16 +118,16 @@
 
 {% if data.view != "int" %}
 
-  {% include "_common/phase-banner-2.html" %}
-  {% include "_common/sub-header-2.html" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header-2.html" %}
 
-  {% set _hideAccountLink = true %}
-  {% include "_common/login-nav-3.html" %}
-  {% else %}
-  {% include "_common/login-nav-internal.html" %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
 {% endif %}
 
-  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -158,68 +160,43 @@
 
       <div class="govuk-form-group {% if myData.validationErrors.phoneNumbersBus %}govuk-form-group--error{% endif %}">
 
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">
-            What are your business phone numbers?
-          </h1>
-        </legend>
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              What are your business phone numbers?
+            </h1>
+          </legend>
 
-        <div id="nationality-hint" class="govuk-hint">
-          Enter at least one phone number
-        </div>
+          <div id="nationality-hint" class="govuk-hint">
+            Enter at least one phone number
+          </div>
 
-        {% if myData.validationErrors.phoneNumbersBus %}
-          <p id="phoneNumbersBus-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.phoneNumbersBus.message}}
-          </p>
-        {% endif %}
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="RegisterBusinessTelephone">
+              Business telephone number
+            </label>
+            <input class="govuk-input govuk-input--width-20" id="RegisterBusinessTelephone"
+              name="RegisterBusinessTelephone" type="text" value="{{ data['RegisterBusinessTelephone'] }}">
+          </div>
 
-        <div class="govuk-form-group {% if myData.validationErrors.RegisterBusinessPhone %}govuk-form-group--error{% endif %}">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="RegisterBusinessMobile">
+              Business mobile number
+            </label>
+            <input class="govuk-input govuk-input--width-20" id="RegisterBusinessMobile"
+              name="RegisterBusinessMobile" type="text" value="{{ data['RegisterBusinessMobile'] }}">
+          </div>
 
-          <label class="govuk-label" for="RegisterBusinessPhone">
-            Business telephone number
-          </label>
-  
-          {% if myData.validationErrors.RegisterBusinessPhone %}
-          <p id="RegisterBusinessPhone-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.RegisterBusinessPhone.message}}
-          </p>
-          {% endif %}
-  
-          <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.RegisterBusinessPhone or myData.validationErrors.phoneNumbersBus %}govuk-input--error{% endif %}" id="RegisterBusinessPhone" name="RegisterBusinessPhone" type="tel" autocomplete="tel" value="{{_valueNewRegisterBusinessPhone}}" {% if myData.validationErrors.RegisterBusinessPhone %}aria-describedby="RegisterBusinessPhone-error"{% endif %} {% if myData.validationErrors.phoneNumbersBus %}aria-describedby="phoneNumbersBus-error"{% endif %}>
-        </div>
-
-        <div class="govuk-form-group {% if myData.validationErrors.RegisterBusinessMob %}govuk-form-group--error{% endif %}">
-
-          <label class="govuk-label" for="RegisterBusinessMob">
-            Business mobile phone number
-          </label>
-
-          {% if myData.validationErrors.RegisterBusinessMob %}
-          <p id="RegisterBusinessMob-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.RegisterBusinessMob.message}}
-          </p>
-          {% endif %}
-
-          {% set _valueNewRegisterBusinessMob = myData.newRegisterBusinessMob %}
-          {% if _valueNewRegisterBusinessMob == null %}
-            {% set _valueNewRegisterBusinessMob = myData.RegisterBusinessMob %}
-          {% endif %}
-
-          <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.RegisterBusinessMob or myData.validationErrors.phoneNumbersBus %}govuk-input--error{% endif %}" id="RegisterBusinessMob" name="RegisterBusinessMob" type="tel" autocomplete="tel" value="{{_valueNewRegisterBusinessMob}}" {% if myData.validationErrors.RegisterBusinessMob %}aria-describedby="RegisterBusinessMob-error"{% endif %} {% if myData.validationErrors.phoneNumbersBus %}aria-describedby="phoneNumbersBus-error"{% endif %}>
-
-        </div>
-
-      </fieldset>
+        </fieldset>
 
       </div>
 
       {{govukButton({
-        text: "Continue"
+      text: "Continue"
       })}}
 
-      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+      <p class="govuk-body"><a href="details-business-details"
+          class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
     </form>
 

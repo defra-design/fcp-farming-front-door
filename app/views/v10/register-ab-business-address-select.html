@@ -23,7 +23,7 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
+"status": '',
 "name": "TBC",
 "id": "TBC",
 "url": "",
@@ -56,7 +56,7 @@ selected/correct address ELSE do not pre-select any of the options in the dropdo
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
+"status": '',
 "name": "TBC",
 "id": "TBC",
 "url": "",
@@ -100,8 +100,11 @@ selected/correct address ELSE do not pre-select any of the options in the dropdo
 
 {% set _hideAccountLink = true %}
 {% include "_common/login-nav-3.html" %}
+
 {% else %}
+
 {% include "_common/login-nav-internal.html" %}
+
 {% endif %}
 
 <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
@@ -142,44 +145,25 @@ selected/correct address ELSE do not pre-select any of the options in the dropdo
       <div class="govuk-form-group">
         <p class="govuk-body govuk-!-margin-bottom-">
           <span class="govuk-!-font-weight-bold">UK postcode</span><br>
-          {% set _postCodeToShow = myData.newAddressPostcodeBus or myData.addressPostcodeBus %}
-          {{_postCodeToShow}}<br>
+          {{ data['RegisterBusinessPostcode'] }}<br>
           <a class="govuk-link govuk-link--no-visited-state" href="register-ab-business-address-postcode">
             Change <span class="govuk-visually-hidden">postcode</span>
           </a>
         </p>
       </div>
 
-      <div class="govuk-form-group {% if myData.validationErrors.addressBus %}govuk-form-group--error{% endif %}">
-
-        <label class="govuk-label govuk-!-font-weight-bold" for="addressBus">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="RegisterBusinessAddressSelect">
           Select an address
         </label>
-
-        {% if myData.validationErrors.addressBus %}
-        <p id="addressBus-error" class="govuk-error-message">
-          <span class="govuk-visually-hidden">Error:</span>
-          {{myData.validationErrors.addressBus.message}}
-        </p>
-        {% endif %}
-
-        {% set _numberAddresses = 19 %}
-
-        <select class="govuk-select {% if myData.validationErrors.addressBus %}govuk-input--error{%endif %}"
-          id="addressBus" name="addressBus">
-          <option value="select" selected>{{_numberAddresses}} addresses found</option>
-          {% for i in range(1, _numberAddresses+1) -%}
-          {% set _addressLine1 = i + ' Skirbeck Way' %}
-          {% set _postcodeNotChanged = true %}
-          {% if _postCodeToShow != myData.addressPostcodeBus %}
-          {% set _postcodeNotChanged = false %}
-          {% endif %}
-          {% set _fullAddress = i + ' Skirbeck Way, ' + myData.addressCityBus + ', ' + _postCodeToShow %}
-          <option value="{{_addressLine1}}" {% if myData.address1Bus==_addressLine1 and _postcodeNotChanged %}selected{%
-            endif %}>{{_fullAddress}}</option>
-          {%- endfor %}
+        <select class="govuk-select" id="RegisterBusinessAddressSelect" name="RegisterBusinessAddressSelect">
+          <option value="5 addresses found">5 addresses found</option>
+          <option value="5 Grange Road, Maidstone {{ data['RegisterBusinessPostcode'] }}">5 Grange Road, Maidstone, {{ data['RegisterBusinessPostcode'] }}</option>
+          <option value="6 Grange Road, Maidstone {{ data['RegisterBusinessPostcode'] }}">6 Grange Road, Maidstone, {{ data['RegisterBusinessPostcode'] }}</option>
+          <option value="7 Grange Road, Maidstone {{ data['RegisterBusinessPostcode'] }}">7 Grange Road, Maidstone, {{ data['RegisterBusinessPostcode'] }}</option>
+          <option value="8 Grange Road, Maidstone {{ data['RegisterBusinessPostcode'] }}">8 Grange Road, Maidstone, {{ data['RegisterBusinessPostcode'] }}</option>
+          <option value="9 Grange Road, Maidstone {{ data['RegisterBusinessPostcode'] }}">9 Grange Road, Maidstone, {{ data['RegisterBusinessPostcode'] }}</option>
         </select>
-
       </div>
 
       <p class="govuk-body govuk-!-margin-bottom-6">

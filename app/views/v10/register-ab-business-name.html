@@ -20,42 +20,43 @@
 {% set serviceName = "Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
-    "status": 'In development',
-    "name": "TBC",
-    "id": "TBC",
-    "url": "",
-    "release": "Buffalo 1.1 MVP",
-    "pagetitle": pageName,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
-    {
-    "scenario": "No radio button selected",
-    "content": "Select whether this is a business or personal account."
-    }
-    ]
-  }
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": '',
+"name": "TBC",
+"id": "TBC",
+"url": "TBC",
+"release": "Buffalo 1.1 MVP",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "No radio button selected",
+"content": "Select whether this is a business or personal account."
+}
+]
+}
 %}
 
 {% elif data.view == "int" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
-    "name": "TBC",
-    "id": "int-TBC",
-    "url": "",
-    "release": "Buffalo 1.1 MVP",
-    "pagetitle": pageName,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
-    {
-    "scenario": "No radio button selected",
-    "content": "Select whether this is a business or personal account."
-    }
-    ]
-  }
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": '',
+"name": "TBC",
+"id": "TBC",
+"url": "TBC",
+"release": "Buffalo 1.1 MVP",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "No radio button selected",
+"content": "Select whether this is a business or personal account."
+}
+]
+}
 %}
 
 {% else %}
@@ -91,7 +92,8 @@
             What is your business name?
           </label>
         </h1>
-        <input class="govuk-input" id="RegisterBusinessName" name="RegisterBusinessName" type="text">
+        <input class="govuk-input" id="RegisterBusinessName" name="RegisterBusinessName" type="text"
+          value="{{ data['RegisterBusinessName'] }}">
       </div>
 
       {{govukButton({
