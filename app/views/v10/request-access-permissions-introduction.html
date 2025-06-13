@@ -13,7 +13,7 @@
 {% endif %}
 {% set _showIntExtLinks = true %}
 
-{% set pageName="Choose what level of access Richard Clark should have for this business" %}
+{% set pageName="Choose what level of access you would like for this business" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -123,15 +123,16 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="business-relationship" method="POST">
+   <form action="request-access-relationship" method="POST">
 
 
         <h1 class="govuk-heading-l">
-          Choose what level of access Richard Clark should have for this business
+          <span class="govuk-caption-l">Request access to Valley Farm</span>
+          Choose what level of access you would like for this business
         </h1>
 
-        <p class="govuk-body">Next, you will be able to tell us about Richard Clark’s relationship to this business.</p> 
-        <p class="govuk-body">Then, you will be able to set permission levels for Richard Clark’s access to this business’s:</p>
+        <p class="govuk-body">Next, you will be able to tell us about your relationship to this business.</p> 
+        <p class="govuk-body">Then, you will be able to set your suggested permission levels for your access to this business:</p>
         <ul class="govuk-list govuk-list--bullet">
   <li>business account</li>
   <li>land details</li>

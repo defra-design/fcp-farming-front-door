@@ -13,7 +13,7 @@
 {% endif %}
 {% set _showIntExtLinks = true %}
 
-{% set pageName="Choose what level of access Richard Clark should have for this business" %}
+{% set pageName="Choose what level of access you would like for this business" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -123,26 +123,14 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="business-relationship" method="POST">
+   <form action="business-access" method="POST">
 
 
         <h1 class="govuk-heading-l">
-          Choose what level of access Richard Clark should have for this business
+          Jessica Hollis can't be removed from Agile Farm Ltd
         </h1>
 
-        <p class="govuk-body">Next, you will be able to tell us about Richard Clark’s relationship to this business.</p> 
-        <p class="govuk-body">Then, you will be able to set permission levels for Richard Clark’s access to this business’s:</p>
-        <ul class="govuk-list govuk-list--bullet">
-  <li>business account</li>
-  <li>land details</li>
-  <li>individual schemes and grants</li>
-</ul>
-
-        <h2 class="govuk-heading-m">
-          Setting permissions
-        </h2>
-
-  <p class="govuk-body">You can choose whatever permission levels you want. There is <a href="#" class="govuk-link govuk-link--no-visited-state">guidance</a> on recommended permission levels depending on the person’s role.</p>
+        <p class="govuk-body">This person has full permission for managing Agile Farm Ltd, you will need to contact the RPA to request their removal from the business.</p> 
 
   {{govukButton({
     text: "Continue"
