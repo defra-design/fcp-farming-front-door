@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
 {% set pageName="Search for a person to give access to Agile Farm Ltd" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
     "name": "Manage personal details",
-    "id": "pd01",
+    "id": "ma01",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
