@@ -13,15 +13,15 @@
 {% endif %}
 {% set _showIntExtLinks = false %}
 
-{% set pageName="Do you want to request access to Valley Farm?" %}
+{% set pageName="Hugo Smith can access Agile Farm Ltd" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
   {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Do you want to request access to business?",
-    "id": "ra02",
+    "name": "Person can access business",
+    "id": "ar10",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -153,42 +153,19 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="request-access-introduction" method="POST">
 
+<div class="govuk-panel govuk-panel--confirmation">
+  <h1 class="govuk-panel__title">
+    Hugo Smith can access Agile Farm Ltd
+  </h1>
+</div>
 
-   <div class="govuk-form-group">
-    <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-        <h1 class="govuk-fieldset__heading">
-          Do you want to request access to Valley Farm?
-        </h1>
-      </legend>
+<h2 class="govuk-heading-m">What happens next</h2>
+<p class="govuk-body">We will send an email and letter to confirm this to Hugo Smith and all authorised people at Agile Farm Ltd.</p>
+<p class="govuk-body">
+ <a class="govuk-link govuk-link--no-visited-state" href="business-access?task-success=00">Manage access to Agile Farm Ltd</a>
+</p>
 
-
-      <div class="govuk-radios" data-module="govuk-radios">
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
-          <label class="govuk-label govuk-radios__label" for="signIn">
-            Yes, request access
-          </label>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
-          <label class="govuk-label govuk-radios__label" for="signIn-2">
-            No
-          </label>
-        </div>
-      </div>
-    </fieldset>
-  </div>
-
-  {{govukButton({
-    text: "Continue"
-  })}}
-
-  <!-- <p class="govuk-body"><a href="request-access-business-search" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> -->
-
-  </form>
 
   </div>
 

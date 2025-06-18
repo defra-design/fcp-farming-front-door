@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
-{% set pageName="What is Hugo Smith’s relationship with Agile Farm Ltd?" %}
+{% set pageName="What is Richard Clarke’s relationship with Agile Farm Ltd?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "What is person's relationship with the business?",
+    "id": "ma04",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -154,25 +154,37 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="business-access?task-success=04" method="POST">
+   <form action="add-person-permissions-business-details" method="POST">
 
 
    <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          <span class="govuk-caption-l">Hugo Smith’s access to Agile Farm Ltd</span>
-          What is Hugo Smith’s relationship with Agile Farm Ltd?
+          What is Richard Clarke’s relationship with Agile Farm Ltd?
         </h1>
       </legend>
 
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Why do we need to know the business relationship?
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    <p class="govuk-body">We need to know this so we can identify the relationships of the people who are involved in this business, to protect against potential fraud.</p>
+    <p class="govuk-body">Someone's relationship could affect what they are normally allowed to do for the business if there is a conflict of interest. For example, a vet is not allowed to submit a claim as a business owner for a vet visit they provided evidence for.</p>
+  </div>
+</details>
+
+      
       <div id="contact-hint" class="govuk-hint">
         Select one option
       </div>
 
       <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint" checked="checked">
+          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn">
             Agent or adviser
           </label>
@@ -276,15 +288,7 @@
 
   </div>
 
-  <div class="govuk-grid-column-one-third">
-    <h4 class="govuk-heading-s">Why do we need to know your business relationship?</h4>
-    <p class="govuk-body-s">We need to know this so we can identify the relationships of the people who are involved in this business, to protect against potential fraud.</p>
-    <p class="govuk-body-s">Someone’s role could affect what they are normally allowed to do for the business, for example:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li class="govuk-body-s">only an owner or sole trader can remove another owner or sole trader from a business</li>
-      <li class="govuk-body-s">if someone has a role where there could be a conflict of interest, they cannot do certain tasks, for example a vet is not allowed to submit an claim as a business owner for a vet visit they have provided evidence for</li>
-    </ul>
-  </div>
+
 
 
 </div>

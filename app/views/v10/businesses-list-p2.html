@@ -60,7 +60,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
-      <span class="govuk-caption-l">{{data.user.name}}</span>
+      <span class="govuk-caption-l">
+        {% if data.access == "new" %}
+        Hugo Smith
+        {% elif data.access == "full" %}
+        {{data.user.name}}
+        {% endif %}
+      </span>
       Your businesses
     </h1>
   </div>
@@ -68,6 +74,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+
+    <p><a class="govuk-link--no-visited-state" href="request-access-business-search">Request access to another business</a></p>
+
+    <p><a class="govuk-link--no-visited-state" href="register-ab-business-owner">Register a new business</a></p>
 
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-table__caption--m"></caption>
@@ -121,7 +131,7 @@
 
   <div class="govuk-grid-column-one-third">
     {% if data.release == "b1" %}
-    <h3 class="govuk-heading-m govuk-!-margin-top-4">
+    <h3 class="govuk-heading-m">
       Personal details
     </h3>
     <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 

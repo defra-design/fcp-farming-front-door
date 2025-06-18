@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
 {% set pageName="How can Richard Clark manage this business account?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Business details",
+    "id": "ra05",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -109,7 +109,6 @@
 
 {% if data.view != "int" %}
 {% include "_common/phase-banner-2.html" %}
-{% include "_common/sub-header.html" %}
 
   {% endif %}
   <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
@@ -123,14 +122,14 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-full">
 
-   <form action="permissions-land-details" method="POST">
+   <form action="request-access-permissions-land-details" method="POST">
 
    <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="businessAccount-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          <span class="govuk-caption-l">Richard Clarke permissions 1 of 4</span>
-          Business account
+          <span class="govuk-caption-l">Valley Farm permissions - page 1 of 5</span>
+          Business details
         </h1>
       </legend>
 
@@ -139,7 +138,7 @@
   <div class="permission-level-radios-block">
     <div class="permission-level-radios-block_left">
       <div id="contact-hint" class="govuk-hint">
-        Select one option
+        Select a permission level
       </div>
     </div>
 
@@ -150,7 +149,7 @@
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="businessAccount" name="businessAccount" type="radio" value="view" aria-describedby="businessAccount-item-hint">
           <label class="govuk-label govuk-radios__label" for="businessAccount">
-            <span class="govuk-body-s"><strong>View</strong></span>
+            <span class="govuk-body-s"><strong>View only</strong></span>
           </label>
         </div>
         </div>
@@ -192,12 +191,8 @@
 <table class="govuk-table permission-level-table">
   <thead class="govuk-table__head govuk-visually-hidden">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header permission-level-table_width-two-sixths"><span style="font-weight: normal;">I want this person to...</span></th>
-      <!-- <th scope="col" class="govuk-table__header permission-table-cell_one-fourth"></th>
-      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth"></th>
-      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth"></th>
-      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth"></th> -->
-      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">View</th>
+      <th scope="col" class="govuk-table__header permission-level-table_width-two-sixths"><span style="font-weight: normal;">Do you want this person to?</span></th>
+      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">View only</th>
       <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">Amend</th>
       <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">Make legal changes</th>
       <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">Full permission</th>
@@ -205,7 +200,7 @@
   </thead>
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">View business details and users</th>
+      <th scope="row" class="govuk-table__header">View business details and people</th>
       <td class="govuk-table__cell grey-column-bg permission-table-cell_one-fourth">
         <strong class="govuk-tag govuk-tag--green">
           Yes
@@ -274,7 +269,7 @@
       </td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Change other users permissions</th>
+      <th scope="row" class="govuk-table__header">Change other people's business access</th>
       <td class="govuk-table__cell grey-column-bg">
         <strong class="govuk-tag govuk-tag--red">
           No
@@ -361,20 +356,12 @@
 
 </div>
 
-  
-  <div class="govuk-warning-text" style="clear: both;">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-      <span class="govuk-visually-hidden">Warning</span>
-      If you give someone make legal changes or full permission, they will be able to amend bank details and other important details for this business. If you give someone full permission, you will need to contact the Rural Payments Agency to reduce or remove their permission in future.
-    </strong>
-  </div>
 
   {{govukButton({
     text: "Continue"
   })}}
 
-  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+  <p class="govuk-body"><a href="businesses-list" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
   </form>
 

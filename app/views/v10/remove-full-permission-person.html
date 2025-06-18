@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
-{% set pageName="Choose what level of access you would like for this business" %}
+{% set pageName="You cannot remove Jessica Hollis's access to Agile Farm Ltd online" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Person can't be removed from business",
+    "id": "rv02",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -123,23 +123,13 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="business-access" method="POST">
-
-
         <h1 class="govuk-heading-l">
-          Jessica Hollis can't be removed from Agile Farm Ltd
+          You cannot remove Jessica Hollis's access to Agile Farm Ltd online
         </h1>
 
-        <p class="govuk-body">This person has full permission for managing Agile Farm Ltd, you will need to contact the RPA to request their removal from the business.</p> 
+        <p class="govuk-body">This person has full permission for managing Agile Farm Ltd. If you would like to request their removal from the business, <a href="#">call the helpline</a>.</p> 
 
-  {{govukButton({
-    text: "Continue"
-  })}}
-
-  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
-
-  </form>
-
+  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Manage access to Agile Farm Ltd</a></p>
 
 
   </div>

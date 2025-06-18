@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
-{% set pageName="Search for a person to give access to Agile Farm Ltd" %}
+{% set pageName="Search for a business you want to request access to" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Search for a business you want to request access to",
+    "id": "ra01",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -109,7 +109,6 @@
 
 {% if data.view != "int" %}
 {% include "_common/phase-banner-2.html" %}
-{% include "_common/sub-header.html" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -155,16 +154,16 @@
 <div class="govuk-grid-column-two-thirds">
 
 
-  <form action="user-search-results#search-results" method="POST">
+  <form action="request-access-search-results" method="POST">
 
     <div class="govuk-form-group" data-list-search-filter >
       <h1 class="govuk-label-wrapper">
         <label class="govuk-label govuk-label--l" for="search-internal">
-          Search for a person to give access to Agile Farm Ltd
+          Search for a business you want to request access to
         </label>
       </h1>
 
-      <div class="govuk-hint">Enter their customer reference number (CRN)</div>
+      <div class="govuk-hint">Enter the single business identifier (SBI) of the business</div>
       
       <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
 
@@ -174,28 +173,30 @@
 
   </form>
 
-<p class="govuk-body">If you do not know the person's CRN, ask them for it. They can find it in their personal details in their account.</p>
-<p class="govuk-body">To add someone who is not already registered with this service, they need to <a href="../_common/not-testing.html">register first</a>.</p>
+  <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="request-access-business-search">Clear search</a></p>
 
-<!-- <details class="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      Finding a customer reference number (CRN)
-    </span>
-  </summary>
-  <div class="govuk-details__text">
-    If you do not know the person's CRN, ask them for it. They can find it in their personal details in their account.
+  <hr style="margin: 40px 0;" id="search-results">
+
+  <h2 class="govuk-heading-m">Search results for "110176585"</h2>
+
+  <!-- <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+  <a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Green Valley Farm</a>
+  </h3>
+  <p class="govuk-body govuk-!-margin-bottom-2">Business address: 10 Skirbeck Way, Maidstone, SK22 1DL</p>
+  <p class="govuk-body govuk-!-margin-bottom-2">Single business identifier: 110100712</p>
+
+  <hr style="margin: 40px 0;"> -->
+
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+    <a class="govuk-link govuk-link--no-visited-state" href="request-access-question">Valley Farm</a>
+  </h3>
+  <p class="govuk-body govuk-!-margin-bottom-2">Business address: 102 Roman Way, Ribchester, PR3 8RS</p>
+  <p class="govuk-body govuk-!-margin-bottom-2">Single business identifier: 110176585</p>
+
+
   </div>
-</details> -->
 
-  </div>
-
-  <!-- <div class="govuk-grid-column-one-third">
-    <h4 class="govuk-heading-s">Users without an account</h4>
-    <p class="govuk-body-s">To add someone who is not already registered with this service, they need to <a href="../_common/not-testing.html">register first</a>.</p>
-  </div> -->
-
-
+  
 </div>
 
 

@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
-{% set pageName="Do you want to give Richard Clarke access to Agile Farm Ltd?" %}
+{% set pageName="Hugo Smith has requested access to Agile Farm Ltd" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Person has requested access to business",
+    "id": "ar01",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -154,31 +154,102 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="permissions-introduction" method="POST">
+<h1 class="govuk-heading-l">
+    Hugo Smith has requested access to Agile Farm Ltd
+   </h1>
 
+<!-- HUGO SMITH DETAILS BLOCK START -->
+     <ul class="user-permissions__list">
+      <li class="user-permissions__list-item">
+          <div class="user-permissions__list-item_main">
+            <table class="govuk-table">
+              <caption class="govuk-table__caption govuk-table__caption--s">User details</caption>
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row user-permissions__list-item_table-row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Name</th>
+                  <td class="govuk-table__cell govuk-body-s">Hugo Smith</td>
+                </tr>
+                <tr class="govuk-table__row user-permissions__list-item_table-row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Email address</th>
+                  <td class="govuk-table__cell govuk-body-s">hugo.smith@theagency.co.uk</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Business name</th>
+                  <td class="govuk-table__cell govuk-body-s">The Agency</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Business address</th>
+                  <td class="govuk-table__cell govuk-body-s">9 Fossil Way, Gottingley, GY7 8RS</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Firm reference number</th>
+                  <td class="govuk-table__cell govuk-body-s">1101456789</td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="govuk-table">
+              <caption class="govuk-table__caption govuk-table__caption--s">Hugo Smith's suggested access</caption>
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Business relationship</th>
+                  <td class="govuk-table__cell govuk-body-s">Agent or adviser</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Business details</th>
+                  <td class="govuk-table__cell govuk-body-s">Full permission</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Land details</th>
+                  <td class="govuk-table__cell govuk-body-s">Amend</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Countryside Stewardship applications</th>
+                  <td class="govuk-table__cell govuk-body-s">Submit</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Countryside Stewardship agreements and claims</th>
+                  <td class="govuk-table__cell govuk-body-s">Submit</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Sustainable Farming Incentive and Basic Payment Scheme</th>
+                  <td class="govuk-table__cell govuk-body-s">Submit</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-third">Reason for request</th>
+                  <td class="govuk-table__cell govuk-body-s">As an agent for this farm, I need to manage land and funding details, submit and amend applications, and receive correspondence.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </li>
+     </ul>
+<!-- HUGO SMITH DETAILS BLOCK END -->   
+
+   <form action="accept-request-introduction" method="POST">
 
    <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-        <h1 class="govuk-fieldset__heading">
-          <span class="govuk-caption-l">Richard Clarke’s access to Agile Farm Ltd</span>
-          Do you want to give Richard Clarke access to Agile Farm Ltd?
-        </h1>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h2 class="govuk-fieldset__heading">
+          Give Hugo Smith access to Agile Farm Ltd?
+        </h2>
       </legend>
-
 
       <div class="govuk-radios" data-module="govuk-radios">
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn">
-            Yes, continue to set this person's permissions
+            Yes, continue to set this person's access
           </label>
         </div>
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn-2">
-            No
+            No, I do not give this person access
           </label>
+        <div id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
+          If you refuse this access request, Hugo Smith will be notified that the request has been declined by this business.
+        </div>
         </div>
       </div>
     </fieldset>

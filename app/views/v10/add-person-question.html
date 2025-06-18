@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
-{% set pageName="Search for a person to give access to Agile Farm Ltd" %}
+{% set pageName="Do you want to give Richard Clarke access to Agile Farm Ltd?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Do you want to give person access to the business?",
+    "id": "ma02",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -154,52 +154,42 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
+   <form action="add-person-introduction" method="POST">
 
-  <form action="user-search-results" method="POST">
 
-    <div class="govuk-form-group" data-list-search-filter >
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="search-internal">
-          Search for a person to give access to Agile Farm Ltd
-        </label>
-      </h1>
+   <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          Do you want to give Richard Clarke access to Agile Farm Ltd?
+        </h1>
+      </legend>
 
-      <div class="govuk-hint">Enter their customer reference number (CRN)</div>
 
-      <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn">
+            Yes, continue to set this person's access
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login" aria-describedby="signIn-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="signIn-2">
+            No
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
 
-    </div>
+  {{govukButton({
+    text: "Continue"
+  })}}
 
-    <button type="submit" class="govuk-button" >Search</button>
+  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
   </form>
-
-  
-  <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="user-search">Clear search</a></p>
-
-  <!-- <p class="govuk-body-s">If you do not know the person's CRN, ask them for it. They can find it in their personal details in their account.</p>
-     -->
-  <!-- <details class="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      Finding a customer reference number (CRN)
-    </span>
-  </summary>
-  <div class="govuk-details__text">
-    If you do not know the person's CRN, ask them for it. They can find it in their personal details in their account.
-  </div>
-</details>  -->
-
-  <hr style="margin: 40px 0;" id="search-results">
-
-  <h2 class="govuk-heading-m">Search results for "1107685652"</h2>
-
-  <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
-    <a class="govuk-link govuk-link--no-visited-state" href="add-user-question">Richard Clarke</a>
-  </h3>
-  <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1107685652</p>
-
-<div>
 
   </div>
 
@@ -207,10 +197,6 @@
 </div>
 
 
-  <!-- <div class="govuk-grid-column-one-third">
-    <h4 class="govuk-heading-s">Adding new users</h4>
-    <p class="govuk-body-s">To add someone who is not already registered with this service, they need to <a href="../_common/not-testing.html">register first</a>.</p>
-  </div> -->
 
 
 
