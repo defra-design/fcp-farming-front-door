@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
 {% set pageName="How can Richard Clark manage Countryside Stewardship applications for this business?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Countryside Stewardship applications",
+    "id": "ma07",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -123,14 +123,14 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-full">
 
-   <form action="permissions-cs-agreement" method="POST">
+   <form action="add-person-permissions-cs-agreement" method="POST">
 
 
    <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          <span class="govuk-caption-l">Richard Clarke permissions 3 of 4</span>
+          <span class="govuk-caption-l">Richard Clarke permissions - page 3 of 5</span>
           Countryside Stewardship applications
         </h1>
       </legend>
@@ -140,7 +140,7 @@
   <div class="permission-level-radios-block">
     <div class="permission-level-radios-block_left">
       <div id="contact-hint" class="govuk-hint">
-        Select one option
+        Select a permission level
       </div>
     </div>
 
@@ -160,7 +160,7 @@
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="csApplication-2" name="csApplication" type="radio" value="amend" aria-describedby="csApplication-2-item-hint">
           <label class="govuk-label govuk-radios__label" for="csApplication-2">
-            <span class="govuk-body-s"><strong>View</strong></span>
+            <span class="govuk-body-s"><strong>View only</strong></span>
           </label>
         </div>
         </div>
@@ -193,9 +193,9 @@
 <table class="govuk-table permission-level-table">
   <thead class="govuk-table__head govuk-visually-hidden">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header permission-level-table_width-two-sixths"><span style="font-weight: normal;">I want this person to...</span></th>
+      <th scope="col" class="govuk-table__header permission-level-table_width-two-sixths"><span style="font-weight: normal;">Do you want this person to?</span></th>
       <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">No access</th>
-      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">View</th>
+      <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">View only</th>
       <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">Amend</th>
       <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">Submit</th>
     </tr>
@@ -317,7 +317,7 @@
       </td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Submit or withdraw applications</th>
+      <th scope="row" class="govuk-table__header">Submit and withdraw applications</th>
       <td class="govuk-table__cell grey-column-bg">
         <strong class="govuk-tag govuk-tag--red">
           No
@@ -442,13 +442,13 @@
     </fieldset>
   </div>
 
-  <div class="govuk-warning-text">
+  <!-- <div class="govuk-warning-text">
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
     <strong class="govuk-warning-text__text">
       <span class="govuk-visually-hidden">Warning</span>
       If you give someone submit permission for Countryside Stewardship applications, they will be able to do all actions and receive all correspondence for this business’s applications for this scheme.
     </strong>
-  </div>
+  </div> -->
 
   {{govukButton({
     text: "Continue"

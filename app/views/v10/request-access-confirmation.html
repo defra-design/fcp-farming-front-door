@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
 {% set pageName="Access request submitted" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Access request submitted",
+    "id": "ra12",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -161,8 +161,10 @@
 </div>
 
 <h2 class="govuk-heading-m">What happens next</h2>
-<p class="govuk-body">We've sent your access request for Valley Farm to authorised users at the business.</p>
-<p class="govuk-body">You will receive an email once they've reviewed your access request.</p>
+<p class="govuk-body">We've sent your access request to Valley Farm for review.</p>
+<p class="govuk-body">The request will stay active until Valley Farm approves or declines it.</p>
+<p class="govuk-body">You will receive an email to tell you the outcome of your access request.</p>
+<p class="govuk-body">If the business does not approve or decline your request within 30 days of your submission, the request will expire and you will need to create a new one.</p>
 <p class="govuk-body">
  <a class="govuk-link govuk-link--no-visited-state" href="businesses-list">Back to your businesses</a>
 </p>

@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
 {% set pageName="Are you sure you want to remove Hugo Smith from Agile Farm Ltd?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Are you sure you want to remove person from business?",
+    "id": "rv01",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -153,14 +153,14 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="request-access-permissions-introduction" method="POST">
+   <form action="business-access?scenario=removekim&access=full" method="POST">
 
 
    <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          Are you sure you want to remove Hugo Smith from Agile Farm Ltd?
+          Are you sure you want to remove Kim Canterbury from Agile Farm Ltd?
         </h1>
       </legend>
 
@@ -169,7 +169,7 @@
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn">
-            Yes, remove Hugo Smith
+            Yes, remove Kim Canterbury
           </label>
         </div>
         <div class="govuk-radios__item">

@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
 {% set pageName="You no longer have access to Agile Farm Ltd" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "You no longer have access to business",
+    "id": "rv04",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -161,8 +161,7 @@
 </div>
 
 <h2 class="govuk-heading-m">What happens next</h2>
-<p class="govuk-body">We've sent your access request for Valley Farm to authorised users at the business.</p>
-<p class="govuk-body">You will receive an email once they've reviewed your access request.</p>
+<p class="govuk-body">We will confirm this to you and all authorised people at Agile Farm Ltd.</p>
 <p class="govuk-body">
  <a class="govuk-link govuk-link--no-visited-state" href="businesses-list">Back to your businesses</a>
 </p>

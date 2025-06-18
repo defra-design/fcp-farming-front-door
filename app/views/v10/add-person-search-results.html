@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
-{% set pageName="Hugo Smith can access Agile Farm Ltd" %}
+{% set pageName="Search for a person to give access to Agile Farm Ltd" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Search for a person to give access to business",
+    "id": "ma01",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -109,6 +109,7 @@
 
 {% if data.view != "int" %}
 {% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -154,19 +155,51 @@
 <div class="govuk-grid-column-two-thirds">
 
 
-<div class="govuk-panel govuk-panel--confirmation">
-  <h1 class="govuk-panel__title">
-    Hugo Smith can access Agile Farm Ltd
-  </h1>
-</div>
+  <form action="add-person-search-results" method="POST">
 
-<h2 class="govuk-heading-m">What happens next</h2>
-<p class="govuk-body">We've sent your access request for Valley Farm to authorised users at the business.</p>
-<p class="govuk-body">You will receive an email once they've reviewed your access request.</p>
-<p class="govuk-body">
- <a class="govuk-link govuk-link--no-visited-state" href="businesses-list">Back to your businesses</a>
-</p>
+    <div class="govuk-form-group" data-list-search-filter >
+      <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="search-internal">
+          Search for a person to give access to Agile Farm Ltd
+        </label>
+      </h1>
 
+      <div class="govuk-hint">Enter their customer reference number (CRN)</div>
+
+      <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
+
+    </div>
+
+    <button type="submit" class="govuk-button" >Search</button>
+
+  </form>
+
+  
+  <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="add-person-search">Clear search</a></p>
+
+  <!-- <p class="govuk-body-s">If you do not know the person's CRN, ask them for it. They can find it in their personal details in their account.</p>
+     -->
+  <!-- <details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Finding a customer reference number (CRN)
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    If you do not know the person's CRN, ask them for it. They can find it in their personal details in their account.
+  </div>
+</details>  -->
+
+  <hr style="margin: 40px 0;" id="search-results">
+
+  <h2 class="govuk-heading-m">Search results for "1107685652"</h2>
+
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+    <a class="govuk-link govuk-link--no-visited-state" href="add-person-question">Richard Clarke</a>
+  </h3>
+  <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1107685652</p>
+
+<div>
 
   </div>
 
@@ -174,6 +207,10 @@
 </div>
 
 
+  <!-- <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Adding new users</h4>
+    <p class="govuk-body-s">To add someone who is not already registered with this service, they need to <a href="../_common/not-testing.html">register first</a>.</p>
+  </div> -->
 
 
 

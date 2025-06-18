@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
-{% set pageName="Search for a business you want to request access to" %}
+{% set pageName="Choose what level of access Richard Clark should have for this business" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Choose what level of access person should have for this business",
+    "id": "ar02",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -109,41 +109,11 @@
 
 {% if data.view != "int" %}
 {% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-
-      {% set _hideAccountLink = true %}
-      {% include "_common/login-nav-3.html" %}
-
-      <div class="govuk-breadcrumbs" style="display: inline-block">
-        <ol class="govuk-breadcrumbs__list">
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
-          </li>
-          {% if data.release != "b1" %}
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
-          </li>
-          {% endif %}
-        </ol>
-      </div>
-
-    </div>
-  </div>
-  {% else %}
-  {% include "_common/login-nav-internal.html" %}
-  <div class="govuk-breadcrumbs" style="display: inline-block">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
-      </li>
-    </ol>
-  </div>
   {% endif %}
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+  
 {% endblock %}
 
 
@@ -153,25 +123,35 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
+   <form action="accept-request-business-relationship" method="POST">
 
-  <form action="business-search-results#search-results" method="POST">
 
-    <div class="govuk-form-group" data-list-search-filter >
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="search-internal">
-          Search for a business you want to request access to
-        </label>
-      </h1>
+        <h1 class="govuk-heading-l">
+          Choose what level of access Hugo Smith should have for this business
+        </h1>
 
-      <div class="govuk-hint">Enter the business name or single business identifier (SBI) of the business</div>
-      
-      <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
+        <p class="govuk-body">Next, you will be able to confirm Hugo Smith’s relationship to this business.</p> 
+        <p class="govuk-body">Then, you will be able to set permission levels for Hugo Smith’s access to this business’s:</p>
+        <ul class="govuk-list govuk-list--bullet">
+  <li>business and land details</li>
+  <li>individual schemes and grants</li>
+</ul>
 
-    </div>
+        <h2 class="govuk-heading-m">
+          Setting permissions
+        </h2>
 
-    <button type="submit" class="govuk-button" >Search</button>
+  <p class="govuk-body">You can choose whatever permission levels you want. There is <a href="#" class="govuk-link govuk-link--no-visited-state">guidance</a> on recommended permission levels depending on the person’s role.</p>
+
+  {{govukButton({
+    text: "Continue"
+  })}}
+
+  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
   </form>
+
+
 
   </div>
 

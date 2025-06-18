@@ -20,8 +20,8 @@
   {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Countryside Stewardship agreements and claims",
-    "id": "ra08",
+    "name": "Sustainable Farming Incentive (SFI) and Basic Payment Scheme (BPS)",
+    "id": "ra09",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -111,7 +111,6 @@
 {% include "_common/phase-banner-2.html" %}
 
   {% endif %}
-
   <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
@@ -123,15 +122,15 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-full">
 
-   <form action="request-access-permissions-sfi-bps" method="POST">
+   <form action="request-access-details" method="POST">
 
 
    <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          <span class="govuk-caption-l">Valley Farm permissions - page 4 of 5</span>
-          Countryside Stewardship agreements and claims 
+          <span class="govuk-caption-l">Valley Farm permissions - page 5 of 5</span>
+          Sustainable Farming Incentive (SFI) and Basic Payment Scheme (BPS)
         </h1>
       </legend>
 
@@ -149,8 +148,8 @@
 
         <div class="permission-input-outer_one-fourth grey-column-bg">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="csAgreement" name="csAgreement" type="radio" value="view" aria-describedby="csAgreement-item-hint">
-          <label class="govuk-label govuk-radios__label" for="csAgreement">
+          <input class="govuk-radios__input" id="csApplication" name="csApplication" type="radio" value="view" aria-describedby="csApplication-item-hint">
+          <label class="govuk-label govuk-radios__label" for="csApplication">
             <span class="govuk-body-s"><strong>No access</strong></span>
           </label>
         </div>
@@ -158,8 +157,8 @@
 
         <div class="permission-input-outer_one-fourth">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="csAgreement-2" name="csAgreement" type="radio" value="amend" aria-describedby="csAgreement-2-item-hint">
-          <label class="govuk-label govuk-radios__label" for="csAgreement-2">
+          <input class="govuk-radios__input" id="csApplication-2" name="csApplication" type="radio" value="amend" aria-describedby="csApplication-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="csApplication-2">
             <span class="govuk-body-s"><strong>View only</strong></span>
           </label>
         </div>
@@ -167,8 +166,8 @@
 
         <div class="permission-input-outer_one-fourth grey-column-bg">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="csAgreement-3" name="csAgreement" type="radio" value="delegate" aria-describedby="csAgreement-3-item-hint">
-          <label class="govuk-label govuk-radios__label" for="csAgreement-3">
+          <input class="govuk-radios__input" id="csApplication-3" name="csApplication" type="radio" value="delegate" aria-describedby="csApplication-3-item-hint">
+          <label class="govuk-label govuk-radios__label" for="csApplication-3">
             <span class="govuk-body-s"><strong>Amend</strong></span>
           </label>
         </div>
@@ -176,8 +175,8 @@
 
         <div class="permission-input-outer_one-fourth">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="csAgreement-4" name="csAgreement" type="radio" value="full" aria-describedby="csAgreement-4-item-hint">
-          <label class="govuk-label govuk-radios__label" for="csAgreement-4">
+          <input class="govuk-radios__input" id="csApplication-4" name="csApplication" type="radio" value="full" aria-describedby="csApplication-4-item-hint">
+          <label class="govuk-label govuk-radios__label" for="csApplication-4">
             <span class="govuk-body-s"><strong>Submit</strong></span>
           </label>
         </div>
@@ -202,7 +201,7 @@
   </thead>
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">View agreements, claims or transfers</th>
+      <th scope="row" class="govuk-table__header">View eligibility, applications and agreement offers</th>
       <td class="govuk-table__cell grey-column-bg permission-table-cell_one-fourth">
         <strong class="govuk-tag govuk-tag--red">
           No
@@ -224,8 +223,77 @@
         </strong>
       </td>
     </tr>
+    <!-- <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">View land details, features and covers</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr> -->
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Create and amend agreements, claims or transfers</th>
+      <th scope="row" class="govuk-table__header">Create and amend applications</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr>
+    <!-- <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Amend land, features and covers</th>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--red">
+          No
+        </strong>
+      </td>
+      <td class="govuk-table__cell grey-column-bg">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--green">
+          Yes
+        </strong>
+      </td>
+    </tr> -->
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Make active farmer declaration</th>
       <td class="govuk-table__cell grey-column-bg">
         <strong class="govuk-tag govuk-tag--red">
           No
@@ -248,7 +316,7 @@
       </td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Respond to agreement offers</th>
+      <th scope="row" class="govuk-table__header">Submit or withdraw applications</th>
       <td class="govuk-table__cell grey-column-bg">
         <strong class="govuk-tag govuk-tag--red">
           No
@@ -271,7 +339,7 @@
       </td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Receive agreement correspondence</th>
+      <th scope="row" class="govuk-table__header">Receive application correspondance</th>
       <td class="govuk-table__cell grey-column-bg">
         <strong class="govuk-tag govuk-tag--red">
           No
@@ -297,6 +365,7 @@
 </table>
 
 
+
     </fieldset>
   </div>
 
@@ -308,8 +377,6 @@
   <p class="govuk-body"><a href="businesses-list" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
   </form>
-
-
 
   </div>
 

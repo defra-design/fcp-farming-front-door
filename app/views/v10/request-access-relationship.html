@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
 {% set pageName="What is your relationship to this business?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "What is your relationship to this business?",
+    "id": "ra04",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -153,7 +153,7 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="request-access-permissions-manage-business" method="POST">
+   <form action="request-access-permissions-business-details" method="POST">
 
 
    <div class="govuk-form-group">
@@ -168,16 +168,12 @@
 <details class="govuk-details">
   <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
-      Why do we need to know your business relationship?
+      Why do we need to know the business relationship?
     </span>
   </summary>
   <div class="govuk-details__text">
-    <p class="govuk-body-s">We need to know this so we can identify the relationships of the people who are involved in this business, to protect against potential fraud.</p>
-    <p class="govuk-body-s">Someone’s role could affect what they are normally allowed to do for the business, for example:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li class="govuk-body-s">only an owner or sole trader can remove another owner or sole trader from a business</li>
-      <li class="govuk-body-s">if someone has a role where there could be a conflict of interest, they cannot do certain tasks, for example a vet is not allowed to submit an claim as a business owner for a vet visit they have provided evidence for</li>
-    </ul>
+    <p class="govuk-body">We need to know this so we can identify the relationships of the people who are involved in this business, to protect against potential fraud.</p>
+    <p class="govuk-body">Someone's relationship could affect what they are normally allowed to do for the business if there is a conflict of interest. For example, a vet is not allowed to submit a claim as a business owner for a vet visit they provided evidence for.</p>
   </div>
 </details>
 
@@ -277,7 +273,7 @@
     text: "Continue"
   })}}
 
-  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+  <p class="govuk-body"><a href="businesses-list" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
   </form>
 

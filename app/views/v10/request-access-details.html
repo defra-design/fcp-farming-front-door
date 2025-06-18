@@ -9,19 +9,19 @@
 {% if data.view == "int" %}
   {% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = true %}
+  {% set _showReleaseLinks = false %}
 {% endif %}
-{% set _showIntExtLinks = true %}
+{% set _showIntExtLinks = false %}
 
 {% set pageName="Why do you need access to this business?" %}
 {% set serviceName="Manage your land and farm businesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
+  {% set _showDesignSpec = false %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Manage personal details",
-    "id": "pd01",
+    "name": "Why do you need access to this business?",
+    "id": "ra10",
     "url": "details-personal-details?r=t&view=ext&release=b1",
     "release": "Buffalo 1.0 MVP",
     "variants": [
@@ -153,7 +153,7 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="request-access-permissions-check-answers" method="POST">
+   <form action="request-access-check-answers" method="POST">
 
 
 
@@ -165,7 +165,7 @@
     </label>
   </h1>
   <div id="more-detail-hint" class="govuk-hint">
-    Give details of why you need access to this business and the typical tasks you need to do
+    Give details of why you need access to this business and the typical tasks you need to do. For example, ‘As an agent for this farm, I need to manage land and funding details, submit and amend applications, and receive correspondence.’
   </div>
   <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="8" aria-describedby="more-detail-hint"></textarea>
 </div>
@@ -173,10 +173,10 @@
 
 
   {{govukButton({
-    text: "Submit"
+    text: "Continue"
   })}}
 
-  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+  <p class="govuk-body"><a href="businesses-list" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
   </form>
 
