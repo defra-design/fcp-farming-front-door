@@ -89,7 +89,9 @@ page) without selecting one already in their session, redirect them to bp01 (Bus
       <span class="govuk-caption-l">
         {% if data.access == "new" %}
         Hugo Smith
-        {% elif data.access == "full" %}
+        {% elif data.access == "view" %}
+        Tom Smyth
+        {% else %}
         {{data.user.name}}
         {% endif %}
     

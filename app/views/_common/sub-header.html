@@ -9,7 +9,11 @@
   </div>
 
   <div class="govuk-grid-column-one-third">
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1 sub-header-user-name" >{{data.user.name}}</h3>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1 sub-header-user-name" >
+        {% if data.access == "view" %}Tom Smyth
+        {% else %}{{data.user.name}}
+        {% endif %}
+      </h3>
       {% if _subHeaderShowApplyLink %}
         <p class="govuk-body-s govuk-!-margin-bottom-2 sub-header-dif-business"><a href="#" class="govuk-link govuk-link--no-visited-state">Apply for a different business</a></p>
       {% endif %}

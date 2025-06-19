@@ -61,7 +61,14 @@
 
     {% set _selectedBusiness = myData.selectedBusiness %} 
 
-    <span class="govuk-caption-xl">{{data.user.name}}<br></span>
+    <span class="govuk-caption-xl">
+        {% if data.access == "new" %}
+        Hugo Smith
+        {% elif data.access == "view" %}
+        Tom Smyth
+        {% else %}
+        {{data.user.name}}
+        {% endif %}<br></span>
 
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
       {{_selectedBusiness.name}}
@@ -204,7 +211,7 @@
     <p><a class="govuk-link--no-visited-state" href="business-access">
       {% if data.access == "view" %}
       View who has access to this business
-      {% elif data.access == "full" %}
+      {% else %}
       Manage who has access to this business
       {% endif %}
     </a></p>
