@@ -1977,17 +1977,6 @@ module.exports = function (router, _myData) {
         });
     });
 
-    router.post('/register-ab-owner-answer', function (request, response) {
-
-        var RABOwner = request.session.data['RegisterBusinessOwner']
-        if (RABOwner == "Yes") {
-            response.redirect("v10/register-ab-business-type")
-        }
-        else {
-            response.redirect("v9/business-details-bank-change-uk-business")
-        }
-    })
-
     // Register a business - business type (agri or agent)
 
     router.get('/' + version + '/register-ab-business-type', function (req, res) {
@@ -1999,7 +1988,7 @@ module.exports = function (router, _myData) {
     router.post('/register-ab-type-answer', function (request, response) {
 
         var RABType = request.session.data['RegisterBusinessType']
-        if (RABType == "Agricultural or other business") {
+        if (RABType == "I want to apply for, manage and receive rural payments") {
             response.redirect("v10/register-ab-business-legal-status")
         }
         else {
@@ -2028,16 +2017,16 @@ module.exports = function (router, _myData) {
     });
 
     router.post('/' + version + '/register-ab-business-business-type', function (req, res) {
-        res.redirect(301, '/' + version + '/register-ab-business-VAT-route');
+        res.redirect(301, '/' + version + '/register-ab-business-VAT');
     });
 
         // Register a business - business VAT route
 
-    router.get('/' + version + '/register-ab-business-VAT-route', function (req, res) {
+    /*router.get('/' + version + '/register-ab-business-VAT-route', function (req, res) {
         res.render(version + '/register-ab-business-VAT-route', {
             myData: req.session.myData
-        });
-    });
+         });
+     });
 
     router.post('/register-ab-vat-answer', function (request, response) {
 
@@ -2048,7 +2037,7 @@ module.exports = function (router, _myData) {
         else {
             response.redirect("v10/register-ab-business-name")
         }
-    })
+    }) */
 
     // Register a business - business VAT
 

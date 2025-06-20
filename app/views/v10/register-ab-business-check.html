@@ -94,7 +94,8 @@
           {{ data['RegisterBusinessType'] or 'Agricultural or other business' }}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="register-ab-business-type">Change<span class="govuk-visually-hidden"> why you are registering the business</span></a>
+          <a class="govuk-link" href="register-ab-business-type">Change<span class="govuk-visually-hidden"> why you are
+              registering the business</span></a>
         </dd>
       </div>
       {% if data['RegisterBusinessType'] != "Firm of agents" %}
@@ -229,7 +230,7 @@
               number</span></a>
         </dd>
       </div>
-      <div class="govuk-summary-list__row">
+      <!-- <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Is your business VAT registered?
         </dt>
@@ -237,23 +238,27 @@
           {{ data['RegisterBusinessVAT-route'] or 'No' }}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="register-ab-business-VAT-route">Change<span class="govuk-visually-hidden"> if your business is VAT registered</span></a>
+          <a class="govuk-link" href="register-ab-business-VAT-route">Change<span class="govuk-visually-hidden"> if your
+              business is VAT registered</span></a>
         </dd>
-      </div>
-      {% if data['RegisterBusinessVAT-route'] == "Yes" %}
+      </div>-->
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          VAT registration number
+          VAT registration number (optional)
         </dt>
         <dd class="govuk-summary-list__value">
-          {{ data['RegisterBusinessVAT'] or 'GB112233449' }}
+          {% if data['RegisterBusinessVAT'] %}
+          {{ data['RegisterBusinessVAT'] }}
+          {% else %}
+          Not provided
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="register-ab-business-VAT">Change<span class="govuk-visually-hidden"> VAT registration
+          <a class="govuk-link" href="register-ab-business-VAT">Change<span class="govuk-visually-hidden"> VAT
+              registration
               number</span></a>
         </dd>
       </div>
-      {% endif %}
       <!-- end of conditional statement for hiding these fields is user selected registering a 'Firm of agents'-->
       {% endif %}
       <div class="govuk-summary-list__row">
@@ -294,7 +299,7 @@
               phone numbers</span></a>
         </dd>
       </div>
-            <div class="govuk-summary-list__row">
+      <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Business email address
         </dt>
@@ -309,7 +314,7 @@
 
     </dl>
 
-    <form action="/form-handler" method="post" novalidate>
+    <form action="register-ab-business-confirmation" method="post" novalidate>
       <input type="hidden" name="answers-checked" value="true">
       <button type="submit" class="govuk-button" data-module="govuk-button">
         Submit

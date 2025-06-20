@@ -9,7 +9,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What type of business do you have?" %}
+{% set pageTitle = "Why are you registering the business?" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -22,19 +22,19 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-  "status": '',
-  "name": "TBC",
-  "id": "TBC",
-  "url": "TBC",
-  "release": "Buffalo 1.1 MVP",
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-  {
-    "scenario": "No radio button selected",
-    "content": "Select whether this is a business or personal account."
-  }
+"status": '',
+"name": "TBC",
+"id": "TBC",
+"url": "TBC",
+"release": "Buffalo 1.1 MVP",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "No radio button selected",
+"content": "Select whether this is a business or personal account."
+}
 ]
 }
 %}
@@ -42,18 +42,18 @@
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-  "status": '',
-  "name": "TBC",
-  "id": "TBC",
-  "url": "TBC",
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-  {
-    "scenario": "No radio button selected",
-    "content": "Select whether this is a business or personal account."
-  }
+"status": '',
+"name": "TBC",
+"id": "TBC",
+"url": "TBC",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "No radio button selected",
+"content": "Select whether this is a business or personal account."
+}
 ]
 }
 %}
@@ -91,33 +91,25 @@
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
             <h1 class="govuk-fieldset__heading">
-              What type of business do you have?
+              Why are you registering the business?
             </h1>
           </legend>
           <div class="govuk-radios" data-module="govuk-radios">
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="RegisterBusinessType" name="RegisterBusinessType" type="radio"
-                value="Agricultural or other business" aria-describedby="RegisterBusinessType-hint" {{
-                checked("RegisterBusinessType","Agricultural or other business") }}>
+                value="I want to apply for, manage and receive rural payments" {{ checked("RegisterBusinessType","I want
+                to apply for, manage and receive rural payments") }}>
               <label class="govuk-label govuk-radios__label" for="RegisterBusinessType">
-                Agricultural or other business
+                I want to apply for, manage and receive rural payments
               </label>
-              <div id="RegisterBusinessType-hint" class="govuk-hint govuk-radios__hint">
-                This is an agricultural or other business which you must register with us in order to apply for CAP
-                schemes and receive payments.
-              </div>
             </div>
             <div class="govuk-radios__item">
               <input class="govuk-radios__input" id="RegisterBusinessType-2" name="RegisterBusinessType" type="radio"
-                value="Firm of agents" aria-describedby="RegisterBusinessType-2-hint" {{
-                checked("RegisterBusinessType","Firm of agents") }}>
+                value="I want to act on behalf of another business as an agent" {{ checked("RegisterBusinessType","I
+                want to act on behalf of another business as an agent") }}>
               <label class="govuk-label govuk-radios__label" for="RegisterBusinessType-2">
-                Firm of agents
+                I want to act on behalf of another business as an agent
               </label>
-              <div id="RegisterBusinessType-2-hint" class="govuk-hint govuk-radios__hint">
-                This is a business of agents or advisers that act on behalf of an agricultural or farming business to
-                manage CAP schemes, applications and claims
-              </div>
             </div>
         </fieldset>
       </div>

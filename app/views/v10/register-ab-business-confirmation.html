@@ -9,7 +9,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "Are you the owner of the business?" %}
+{% set pageTitle = "Check your business details" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -22,10 +22,9 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": '',
 "name": "TBC",
 "id": "TBC",
-"url": "TBC",
+"url": "",
 "release": "Buffalo 1.1 MVP",
 "pagetitle": pageName,
 "pagedesc": "",
@@ -42,10 +41,10 @@
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": '',
+"status": 'In development',
 "name": "TBC",
-"id": "TBC",
-"url": "TBC",
+"id": "int-TBC",
+"url": "",
 "release": "Buffalo 1.1 MVP",
 "pagetitle": pageName,
 "pagedesc": "",
@@ -84,44 +83,20 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-    <form method="POST" novalidate action="register-ab-business-type">
-
-      <h1 class="govuk-heading-l">
-        Please read the declarations before registering your business
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        Your business has been registered
       </h1>
-
-
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-visually-hidden">Warning</span>
-          You can only register a business as an owner or sole trader.
-        </strong>
-      </div>
-
-      <p class="govuk-body">
-        I confirm that I am the business owner or sole trader.
-      </p>
-      <p class="govuk-body">
-        I understand that my business may be subject to validation checks, including with third parties.
-      </p>
-      <p class="govuk-body">
-        Please confirm you accept these declarations.
-      </p>
-
-      {{govukButton({
-      text: "Accept and continue"
-      })}}
-
-      <p class="govuk-body"><a href="details-business-details"
-          class="govuk-link govuk-link--no-visited-state">I do not accept</a></p>
-
-    </form>
-
+    </div>
+    <h2 class="govuk-heading-m">What happens next</h2>
+    <p class="govuk-body">
+      We will send you an email confirming the business details you have registered.
+    </p>
+    <p class="govuk-body">
+      <a href="businesses-list">Return to your businesses</a>
+    </p>
   </div>
 </div>
-
 
 
 
