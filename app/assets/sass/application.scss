@@ -1250,6 +1250,11 @@ img.design-history {
   border-bottom: 4px solid #b1b4b6;
 }
 
+.user-permissions__list .govuk-heading-m, .user-permissions__list .govuk-table{
+margin-bottom: 15px;}
+
+
+
 .user-permissions__list-item_header{
   background-color: #f3f2f1;
   display: block;
@@ -1265,7 +1270,7 @@ img.design-history {
 }
 
 .user-permissions__list-item_main{
-  padding: 20px 20px 0;
+  padding: 10px 20px 0;
   border-bottom: 1px solid #b1b4b6;
 }
 
