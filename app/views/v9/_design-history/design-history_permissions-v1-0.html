@@ -46,19 +46,23 @@
       Permissions was one of the areas at the top of our list due to its perceived complexity and the number of linked user needs and pain points.
     </p>
 
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
     <h3 class="govuk-heading-m">
       Constraints
     </h3>
     
     <p class="govuk-body">
-      Our working assumption is the underlying model and logic for permissions is something we won’t be able to alter prior to next year. Our focus has been to consider improvements to the front-end user experience that will deliver better business outcomes. 
+      Our working assumption is the underlying model and logic for permissions is something we won’t be able to alter prior to next year. Our focus has been to consider improvements to the front-end user experience that will deliver better user and business outcomes. 
     </p>
 
     <p class="govuk-body">
       As we test designs with users, we’ll be gathering insights related to the underlying permissions model, as this may be something we need to consider addressing in future.
     </p>    
 
-    <h3 class="govuk-heading-m">
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h3 class="govuk-heading-m">
       Pain points and user needs
     </h3>
 
@@ -79,7 +83,7 @@
 
 
     <h3 class="govuk-heading-m">
-      Design hypotheses
+      High-level design hypotheses
     </h3>    
 
     <p class="govuk-body">
@@ -174,26 +178,13 @@
 <p class="govuk-body">We need to be mindful that change is likely to be difficult for our users, especially if they are not digitally savvy, so we will be wary of making changes to permission level names and the way we present permission levels shouldn't be too radical – many users are familiar with and happy with the current system.</p>
 <p class="govuk-body">We expect the permissions designs to need more fundamental iteration in future, especially how each set of permissions is explained and presented to users.</p>
 
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
     <h3 class="govuk-heading-m">
-      Design hypotheses for testing
+      Design scenarios
     </h3>
 
-<ol class="govuk-list govuk-list--number">
-  <li>An overview page showing a summary of their own and others' permissions is helpful for users</li>
-  <li>Users prefer the flexibility to assign custom permissions to other users rather than being led to make blanket permissions based on role</li>
-  <li>Users need to be able to add a group of agents in a batch</li>
-  <li>Warnings before assigning high permissions helps users understand the risk of assigning high permission levels to others</li>
-  <li>Specific information on what each permission level means and consistent names for permission levels help users understand what someone will and will not be able to do when they assign someone a permission level</li>
-  <li>Farmers and agents feel comfortable and safe requesting and giving access in the digital service</li>
-  <li>Users expect notifications after changing or adding permissions by email, text and post</li>
-</ol>
-    
-    <h3 class="govuk-heading-m">
-      Design flows and screens
-    </h3>
-
-    <p class="govuk-body">Version 1 of the permission designs caters for the following scenarios:</p>
+    <p class="govuk-body">Version 1.0 of the permission designs caters for the following scenarios:</p>
 
 <p class="govuk-body"><strong>Farmer:</strong></p>
 <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
@@ -218,29 +209,86 @@
   </li>
 </ul>
 
-    <p class="govuk-body">We’ve created a series of new screen designs to support these flows, further information about individual design decisions below.</p>
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h4 class="govuk-heading-s">
-      Manage access screen
-    </h4>
-
-
-    <h4 class="govuk-heading-s">
-      Search screen variants
-    </h4>
-
-    <h4 class="govuk-heading-s">
-      Set business relationship screen
-    </h4>
-
-    <h4 class="govuk-heading-s">
-      Set premissions screens
-    </h4>
+    <h2 class="govuk-heading-m">
+      Design hypotheses, outcomes and decisions
+    </h2>
 
 
-    <h4 class="govuk-heading-s">
-      Accept business access request
-    </h4>
+    <span class="govuk-caption-m">Statement 1:</span>
+    <h4 class="govuk-heading-s">An overview page showing a summary of their own and others' permissions is helpful for users</h4>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">The hypothesis was proven but the page failed to meet user needs. Some users found the page helpful but others said it contained too much information at first glance.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">We have removed subheadings to make the page less wordy, and will retest this.</p>
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Statement 2:</span>
+    <h4 class="govuk-heading-s">Users prefer the flexibility to assign custom permissions to other users rather than being led to make blanket permissions based on role</h4>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">All users preferred custom permissions to blanket permissions.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">We will continue with the de-coupling of business relationship and permission level.</p>
+
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Statement 3:</span>
+    <h4 class="govuk-heading-s">Users need to be able to add a group of agents in a batch</h4>
+    <strong class="govuk-tag govuk-tag--yellow" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">There was no clear need to do this expressed by any users.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">Agreed with product to descope this feature for now, as there is no obvious user need from testing, and we are not sure of the business requirement to have this.</p>
+    
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Statement 4:</span>
+    <h4 class="govuk-heading-s">Warnings before assigning high permissions helps users understand the risk of assigning high permission levels to others</h4>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">Users generally found the warnings appropriate and helpful.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">The warnings may not be needed anymore now we have made the selection of permission levels clearer. We have generally removed them, except where the warning is not mentioned in the permissions grid, to avoid duplication of wording. We need to test this approach.</p>
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Statement 5:</span>
+    <h4 class="govuk-heading-s">Specific information on what each permission level means and consistent names for permission levels help users understand what someone will and will not be able to do when they assign someone a permission level</h4>
+    <strong class="govuk-tag govuk-tag--green" style="margin-bottom: 20px;">
+      Proven
+    </strong>
+    <p class="govuk-body">The concept of specific information and consistent names was not a problem, but all users found the permissions setting screens confusing, and some were confused by changes in permission level names and preferred the as-is layout. Overall, there was too much information displayed, making it hard to understand.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">The hypothesis was proven but the way we displayed information did not meet user needs. We have redesigned the permission setting screens to be much simpler, and reverted to the original permission names to avoid radical change for users. (Though we have changed ‘view’ to ‘view only’ to try to make it clearer and more consistent with typical permissions mental models).</p>
+    <p class="govuk-body">The new screen design presents the permission levels horizontally in a table view, allowing users to quickly scan the different actions available for each level. We have provisionally removed information which is currently duplicated between tables in the as-is, to make choices clearer. The radio selection and tables are separate elements within the code which we believe will allow users with screen readers to access the content.</p>
+    <p class="govuk-body">We have also included an SFI permissions page, which is not clear in the as-is. This new approach needs testing with users, and the duplicates issue needs thorough review by RPA.</p>  
+
+    
+    <span class="govuk-caption-m govuk-!-margin-top-8">Statement 6:</span>
+    <h4 class="govuk-heading-s">Farmers and agents feel comfortable and safe requesting and giving access in the digital service</h4>
+    <strong class="govuk-tag govuk-tag--yellow" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">All farmers successfully granted access and all agents successfully requested access, though some were confused by a new feature that differed from their mental model. Agents liked the idea but some raised that the farmer would still have to log in to approve permissions, which might be hard for some farmers. Some agents struggled to find the link to request access. All agents were not clear about what would happen to their request.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">We have iterated content to explain what happens after you make a request, including who it is sent to and timescales. We have tried to make the link to request access easier to find for agents. The new iteration and whole concept needs further testing.</p>
+
+
+    <span class="govuk-caption-m govuk-!-margin-top-8">Statement 7:</span>
+    <h4 class="govuk-heading-s">Users expect notifications after changing or adding permissions by email, text and post</h4>
+    <strong class="govuk-tag govuk-tag--yellow" style="margin-bottom: 20px;">
+      Inconclusive
+    </strong>
+    <p class="govuk-body">Users would expect an email, but more UR testing is needed on letters and text notifications.</p>
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-2">Design conclusion</h4>
+    <p class="govuk-body">We need to explore whether users expect letter and text notifications on changing permissions in future UR testing.</p>
+
+
 
   </div>
 
