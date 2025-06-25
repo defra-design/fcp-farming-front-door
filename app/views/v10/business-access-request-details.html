@@ -111,24 +111,13 @@
 {% include "_common/phase-banner-2.html" %}
 {% include "_common/sub-header.html" %}
 
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
       {% set _hideAccountLink = true %}
-      {% include "_common/login-nav-3.html" %}
 
-      <div class="govuk-breadcrumbs" style="display: inline-block">
-        <ol class="govuk-breadcrumbs__list">
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
-          </li>
-          {% if data.release != "b1" %}
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
-          </li>
-          {% endif %}
-        </ol>
-      </div>
 
     </div>
   </div>
@@ -163,7 +152,7 @@
       <li class="user-permissions__list-item">
           <div class="user-permissions__list-item_main">
             <table class="govuk-table">
-              <caption class="govuk-table__caption govuk-table__caption--s">User details</caption>
+              <caption class="govuk-table__caption govuk-table__caption--s govuk-!-margin-top-3 govuk-!-margin-bottom-2">User details</caption>
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row user-permissions__list-item_table-row">
                   <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Name</th>
@@ -188,7 +177,7 @@
               </tbody>
             </table>
             <table class="govuk-table">
-              <caption class="govuk-table__caption govuk-table__caption--s">Hugo Smith's suggested access</caption>
+              <caption class="govuk-table__caption govuk-table__caption--s govuk-!-margin-top-3 govuk-!-margin-bottom-2">Hugo Smith has suggested the following access</caption>
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                   <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Business relationship</th>
@@ -239,7 +228,7 @@
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn">
-            Yes, continue to set this person's access
+            Yes, continue to review and decide this person's access
           </label>
         </div>
         <div class="govuk-radios__item">
