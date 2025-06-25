@@ -111,24 +111,12 @@
 {% include "_common/phase-banner-2.html" %}
 {% include "_common/sub-header.html" %}
 
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
       {% set _hideAccountLink = true %}
-      {% include "_common/login-nav-3.html" %}
-
-      <div class="govuk-breadcrumbs" style="display: inline-block">
-        <ol class="govuk-breadcrumbs__list">
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
-          </li>
-          {% if data.release != "b1" %}
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
-          </li>
-          {% endif %}
-        </ol>
-      </div>
 
     </div>
   </div>
@@ -188,7 +176,7 @@
 
       <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint" checked="checked">
+          <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway" aria-describedby="signIn-item-hint">
           <label class="govuk-label govuk-radios__label" for="signIn">
             Agent or adviser
           </label>
