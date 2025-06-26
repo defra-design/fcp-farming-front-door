@@ -1,0 +1,210 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+{% set _showIntExtLinks = false %}
+
+{% set pageName="Search for a person to give access to Agile Farm Ltd" %}
+{% set serviceName="Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = false %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "fa01",
+    "url": "details-personal-details?r=t&view=ext&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "int-pd01",
+    "url": "details-personal-details?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+          {% if data.release != "b1" %}
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
+          </li>
+          {% endif %}
+        </ol>
+      </div>
+
+    </div>
+  </div>
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
+      </li>
+    </ol>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+
+  <form action="firm-search-results" method="POST">
+
+    <div class="govuk-form-group" data-list-search-filter >
+      <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="search-internal">
+          Search for a firm to give agents or advisers access to Agile Farm Ltd
+        </label>
+      </h1>
+
+      <div class="govuk-hint">Enter the business name or firm reference number for the firm of agents or advisers</div>
+      
+      <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
+
+    </div>
+
+    <button type="submit" class="govuk-button" >Search</button>
+
+  </form>
+
+  <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="firm-search">Clear search</a></p>
+
+  <hr style="margin: 40px 0;" id="search-results">
+
+  <h2 class="govuk-heading-m">Search results for "The Agency"</h2>
+
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+    <a class="govuk-link govuk-link--no-visited-state" href="add-firm-users-question">The Agency</a>
+  </h3>
+  <p class="govuk-body govuk-!-margin-bottom-2">Business address: 9 Fossil Way, Gottingley, GY7 8RS</p>
+  <p class="govuk-body govuk-!-margin-bottom-2">Firm reference number: 1101456789</p>
+
+  <hr style="margin: 40px 0;">
+
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+  <a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">The Agency Ltd</a>
+  </h3>
+  <p class="govuk-body govuk-!-margin-bottom-2">Business address: 907 Urban Road, London, N2 7UR</p>
+  <p class="govuk-body govuk-!-margin-bottom-2">Firm reference number: 1101668924</p>
+  </div>
+
+  <!-- <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Firms without an account</h4>
+    <p class="govuk-body-s">To add a firm, agent or adviser who is not already registered with this service, they need to <a href="../_common/not-testing.html">register first</a>.</p>
+  </div> -->
+
+
+</div>
+
+
+
+
+
+{% endblock %}

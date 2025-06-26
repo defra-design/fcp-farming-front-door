@@ -1,0 +1,1356 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block beforeContent %}
+{{super()}}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      Buffalo MVP
+      <!-- <span class="govuk-caption-xl">Private Beta. Round 1: 16 to 20 December 2024</span> -->
+    </h1>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+
+    <!-- Internal/external -->
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">External vs internal user</legend>
+          <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                  <input {% if myData.view == 'ext' %}checked{% endif %} class="govuk-radios__input" data-option="ext" id="ext" name="view" type="radio" value="ext">
+                  <label class="govuk-label govuk-radios__label" for="ext"><strong>External user</strong></label>
+              </div>
+              <div class="govuk-radios__item">
+                <input {% if myData.view == 'int' %}checked{% endif %} class="govuk-radios__input" data-option="int" id="int" name="view" type="radio" value="int">
+                <label class="govuk-label govuk-radios__label" for="int"><strong>Internal user</strong></label>
+              </div>
+          </div>
+      </fieldset>
+    </div>
+
+    <!-- Release -->
+    <div class="govuk-form-group" id="releaseContainer">
+      <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Release version (feature toggles)</legend>
+          <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                  <input {% if data.release == 'b1' %}checked{% endif %} class="govuk-radios__input" data-option="b1" id="b1" name="release" type="radio" value="b1">
+                  <label class="govuk-label govuk-radios__label" for="b1"><strong>Buffalo 1.0 MVP</strong></label>
+              </div>
+              <div class="govuk-radios__item">
+                <input {% if data.release == 'concept' %}checked{% endif %} class="govuk-radios__input" data-option="concept" id="concept" name="release" type="radio" value="concept">
+                <label class="govuk-label govuk-radios__label" for="concept"><strong>Concept / latest designs</strong></label>
+              </div>
+          </div>
+      </fieldset>
+    </div>
+
+    <!-- Start from -->
+    <div class="govuk-form-group" id="startFromContainer">
+      <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Start journey from</legend>
+          <div class="govuk-radios" data-module="govuk-radios">
+
+            <div class="govuk-radios__item">
+              <input {% if data.startFrom == 'si' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-2" id="startFrom-2" name="startFrom" type="radio" value="si" >
+              <label class="govuk-label govuk-radios__label" for="startFrom-2">Sign in (SFD)</label>
+            </div>
+            <div class="govuk-radios__item">
+                <input {% if data.startFrom == 'st' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-1" id="startFrom-1" name="startFrom" type="radio" value="st" >
+                <label class="govuk-label govuk-radios__label" for="startFrom-1">Start page (SFD)</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input {% if data.startFrom == 'bl' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-3" id="startFrom-3" name="startFrom" type="radio" value="bl" >
+              <label class="govuk-label govuk-radios__label" for="startFrom-3">Businesses list</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input {% if data.startFrom == 'home' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-4" id="startFrom-4" name="startFrom" type="radio" value="home" >
+              <label class="govuk-label govuk-radios__label" for="startFrom-4">Home - business page</label>
+            </div>
+
+          </div>
+      </fieldset>
+    </div>
+
+    <!-- Include validation checking 
+    <div class="govuk-form-group" id="validationContainer">
+      <label class="govuk-label" >
+        Include validation
+      </label>
+      <select class="govuk-select" style="min-width: 100%" id="includeValidation" name="includeValidation" data-option="includeValidation">
+          <option {% if myData.includeValidation == 'true' %}selected{% endif %} value="true">Yes (throw errors)</option>
+          <option {% if myData.includeValidation == 'false' %}selected{% endif %} value="false">No (allow empty fields)</option>
+      </select>
+    </div>
+    -->
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <p class="govuk-body" id="start-url" style="display:none">
+            <a href="#" role="button" draggable="false" class="govuk-button">Start prototype</a>
+        </p>
+
+        <p class="govuk-body" >
+            <span class="govuk-!-font-weight-bold">Shareable link (uses settings made above):</span><br>
+            <span class="govuk-body" id="start-url-label" style="display:none"></span>
+        </p>
+
+        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+    </div>
+</div>
+  
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <!-- <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"> -->
+    <h2 class="govuk-heading-m">
+      Design history
+    </h2>
+
+    <p class="govuk-body">
+      <a href="_design-history/design-history_bank-details">View design history</a>
+    for add and update your bank details, for external and internal users.
+    </p>
+    <p class="govuk-body">
+      <a href="_design-history/design-history_internal-users">View design history</a>
+    for internal user iterations, based on R3 UR.
+    </p>
+    <p class="govuk-body">
+      Design history for permisions v1 coming soon.
+    </p>
+    
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-m">
+      Design tickets (on JIRA)
+    </h2>
+    {% set _tickets = [
+      {
+        "number": "232",
+        "title": "Bank details design"
+      }, 
+
+      {
+        "number": "249",
+        "title": "Bank details - metadata and error scenarios"
+      }, 
+
+      {
+        "number": "258",
+        "title": "Internal user designs - iterations from UR"
+      }, 
+
+      {
+        "number": "259",
+        "title": "Internal user designs - iterations from UR (Prototype)"
+      }
+
+
+    ]
+    %}
+    <ul class="govuk-list govuk-list--bullet">
+      {% for _ticket in _tickets %}
+      <li><a href="https://eaflood.atlassian.net/browse/SFDE-{{_ticket.number}}" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">SFDE-{{_ticket.number}} (opens in new tab)</a> - {{_ticket.title}}</li>
+      {% endfor %}
+    </ul>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  </div>
+</div>
+  
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--xl">Full page list</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">ID</th>
+          <th scope="col" class="govuk-table__header">Name</th>
+          <th scope="col" class="govuk-table__header">Prototype link</th>
+          <th scope="col" class="govuk-table__header">Release</th>
+        </tr>
+      </thead>
+      {% set _pages = [
+
+        {
+          "type": "HEADING",
+          "name": "Internal users"
+        },
+        {
+          "name": "Internal sign in",
+          "url": "internal-sign-in?r=t&view=int",
+          "release": "Buffalo 1.1 MVP"
+        },
+        {
+          "name": "Internal search",
+          "url": "internal-search?r=t&view=int",
+          "release": "Buffalo 1.1 MVP",
+          "variants": [
+            {
+              "name": "Internal search (with results - all tab)",
+              "url": "internal-search?r=t&view=int&q=fos&intSearchType=all"
+            },
+            {
+              "name": "Internal search (with results - business tab)",
+              "url": "internal-search?r=t&view=int&q=fos&intSearchType=bus"
+            },
+            {
+              "name": "Internal search (with results - customers tab)",
+              "url": "internal-search?r=t&view=int&q=fos&intSearchType=cus"
+            },
+            {
+              "name": "Internal search (with zero results)",
+              "url": "internal-search?r=t&view=int&q=zeroresults&intSearchType=cus"
+            }
+            ,
+            {
+              "name": "Internal search (with pagination)",
+              "url": "internal-search-pagination?r=t&view=int"
+            }
+          ]
+        },
+        {
+          "name": "Internal - selected business view",
+          "url": "internal-business?r=t&view=int",
+          "release": "Buffalo 1.1 MVP"
+        },
+        {
+          "name": "Internal - selected customer view",
+          "url": "internal-customer?r=t&view=int",
+          "release": "Buffalo 1.1 MVP"
+        },
+
+
+        {
+          "type": "HEADING",
+          "name": "Start pages"
+        },
+        {
+          "name": "RPS start page",
+          "url": "start-rps-start-og",
+          "release": "-"
+        },
+        {
+          "name": "SFD start page",
+          "url": "start-sfd-start?r=t&release=b2",
+          "release": "Buffalo 1.X"
+        },
+        
+
+        {
+          "type": "HEADING",
+          "name": "Sign in"
+        },
+        {
+          "name": "RPS sign in",
+          "url": "start-rps-sign-in",
+          "release": "-"
+        },
+        {
+          "name": "SFD sign in",
+          "id": "si01",
+          "url": "start-sfd-sign-in?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "SFD reset password",
+          "id": "si02",
+          "url": "start-sfd-reset-password?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Business pages"
+        },
+        {
+          "name": "Your businesses list (Buffalo 1.0 MVP)",
+          "id": "bp01",
+          "url": "businesses-list?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Your businesses list (concept)",
+          "id": "bp01",
+          "url": "businesses-list?r=t&release=concept",
+          "release": "Concept"
+        },
+        {
+          "name": "SFD Home/Business Page (Buffalo 1.0 MVP)",
+          "id": "bp02",
+          "url": "business-home?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "SFD Home/Business Page (concept)",
+          "id": "bp02",
+          "url": "business-home?r=t&release=concept",
+          "release": "Concept"
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Messages pages"
+        },
+        {
+          "name": "Messages",
+          "id": "me01",
+          "url": "business-messages?r=t&release=concept",
+          "release": "Concept"
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Manage account"
+        },
+        {
+          "name": "Account Home (concept)",
+          "id": "ma01",
+          "url": "account-home?r=t&release=concept",
+          "release": "Concept"
+        },
+
+
+
+
+        {
+          "type": "HEADING",
+          "name": "Personal details"
+        },
+        {
+          "name": "Manage personal details",
+          "id": "pd01",
+          "url": "details-personal-details?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP",
+          "variants": [
+            {
+              "name": "name changed banner",
+              "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true"
+            },
+            {
+              "name": "date of birth changed banner",
+              "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true"
+            },
+            {
+              "name": "address changed banner",
+              "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true"
+            },
+            {
+              "name": "phone numbers changed banner",
+              "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true"
+            },
+            {
+              "name": "email changed banner",
+              "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true"
+            }
+          ]
+        },
+
+        {
+          "name": "Full name (change) - personal details (Buffalo 1.0 MVP)",
+          "id": "pd02",
+          "url": "personal-details-name-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Full name (change) - personal details (concept)",
+          "id": "pd02",
+          "url": "personal-details-name-change?r=t&release=concept&newChange=true",
+          "release": "Concept"
+        },
+        {
+          "name": "Full name (check) - personal details",
+          "id": "pd03",
+          "url": "personal-details-name-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "Date of birth (change) - personal details",
+          "id": "pd04",
+          "url": "personal-details-dob-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Date of birth (check) - personal details",
+          "id": "pd05",
+          "url": "personal-details-dob-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "Address - postcode (change) - personal details",
+          "id": "pd16",
+          "url": "personal-details-address-postcode-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Address - select (change) - personal details",
+          "id": "pd17",
+          "url": "personal-details-address-select-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Address (change) - personal details",
+          "id": "pd06",
+          "url": "personal-details-address-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Address (check) - personal details",
+          "id": "pd07",
+          "url": "personal-details-address-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "Phone numbers (change) - personal details",
+          "id": "pd14",
+          "url": "personal-details-phone-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Phone numbers (check) - personal details",
+          "id": "pd15",
+          "url": "personal-details-phone-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "Email address (change) - personal details",
+          "id": "pd12",
+          "url": "personal-details-email-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Email address (check) - personal details",
+          "id": "pd13",
+          "url": "personal-details-email-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+       
+        {
+          "type": "HEADING",
+          "name": "Business details"
+        },
+        {
+          "name": "Manage business details",
+          "id": "bd01",
+          "url": "details-business-details?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP",
+          "variants": [
+            {
+              "name": "Vendor registration number	- hidden",
+              "url": "details-business-details?r=t&release=b1&vendorCount=0"
+            },
+            {
+              "name": "Vendor registration number	- one number",
+              "url": "details-business-details?r=t&release=b1&vendorCount=1"
+            },
+            {
+              "name": "Trader number	- hidden",
+              "url": "details-business-details?r=t&release=b1&traderCount=0"
+            },
+            {
+              "name": "Trader number	- one number",
+              "url": "details-business-details?r=t&release=b1&traderCount=1"
+            },
+            {
+              "name": "County Parish Holding (CPH) number	- hidden",
+              "url": "details-business-details?r=t&release=b1&cphCount=0"
+            },
+            {
+              "name": "County Parish Holding (CPH) number	- one number",
+              "url": "details-business-details?r=t&release=b1&cphCount=1"
+            },
+            {
+              "name": "County Parish Holding (CPH) number	- multiple numbers",
+              "url": "details-business-details?r=t&release=b1&cphCount=2"
+            },
+            {
+              "name": "name changed banner",
+              "url": "details-business-details?r=t&release=b1&namechanged=true&changed=true"
+            },
+            {
+              "name": "address changed banner",
+              "url": "details-business-details?r=t&release=b1&addresschanged=true&changed=true"
+            },
+            {
+              "name": "phone numbers changed banner",
+              "url": "details-business-details?r=t&release=b1&phonechanged=true&changed=true"
+            },
+            {
+              "name": "email changed banner",
+              "url": "details-business-details?r=t&release=b1&emailchanged=true&changed=true"
+            },
+            {
+              "name": "vat number changed banner",
+              "url": "details-business-details?r=t&release=b1&vatchanged=true&changed=true"
+            },
+            {
+              "name": "vat number removed banner",
+              "url": "details-business-details?r=t&release=b1&vatremoved=true&changed=true"
+            },
+            {
+              "name": "business type changed banner (concept)",
+              "url": "details-business-details?r=t&release=concept&typechanged=true&changed=true"
+            },
+            {
+              "name": "legal status changed banner (concept)",
+              "url": "details-business-details?r=t&release=concept&legalchanged=true&changed=true"
+            },
+            {
+              "name": "bank details changed banner (concept)",
+              "url": "details-business-details?r=t&release=concept&bankchanged=true&changed=true"
+            }
+          ]
+        },
+
+        {
+          "name": "Business name (change) - business details",
+          "id": "bd02",
+          "url": "business-details-name-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "Business name (check) - business details",
+          "id": "bd03",
+          "url": "business-details-name-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+
+        {
+          "name": "Address - postcode (change) - business details",
+          "id": "bd23",
+          "url": "business-details-address-postcode-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Address - select (change) - business details",
+          "id": "bd24",
+          "url": "business-details-address-select-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Address (change) - business details",
+          "id": "bd04",
+          "url": "business-details-address-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Address (check) - business details",
+          "id": "bd05",
+          "url": "business-details-address-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+
+        {
+          "name": "Phone numbers (change) - business details",
+          "id": "bd21",
+          "url": "business-details-phone-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Phone numbers (check) - business details",
+          "id": "bd22",
+          "url": "business-details-phone-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+
+        {
+          "name": "Email address (change) - business details",
+          "id": "bd10",
+          "url": "business-details-email-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Email address (check) - business details",
+          "id": "bd11",
+          "url": "business-details-email-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "VAT registration number (change) - business details",
+          "id": "bd12",
+          "url": "business-details-vat-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "VAT registration number (add) - business details",
+          "id": "bd13",
+          "url": "business-details-vat-add?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "VAT registration number (check) - business details",
+          "id": "bd14",
+          "url": "business-details-vat-check?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "VAT registration number (remove) - business details",
+          "id": "bd25",
+          "url": "business-details-vat-remove?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+        {
+          "name": "Legal status (change) - business details (Buffalo 1.0 MVP)",
+          "id": "bd15",
+          "url": "business-details-legal-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Legal status (change) - business details (Concept)",
+          "id": "bd15",
+          "url": "business-details-legal-change?r=t&release=concept&newChange=true",
+          "release": "Concept"
+        },
+        {
+          "name": "Legal status (check) - business details",
+          "id": "bd16",
+          "url": "business-details-legal-check?r=t&release=concept&newChange=true",
+          "release": "Concept"
+        },
+
+        
+        {
+          "name": "Business type (change) - business details (Buffalo 1.0 MVP)",
+          "id": "bd17",
+          "url": "business-details-type-change?r=t&release=b1&newChange=true",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Business type (change) - business details (Concept)",
+          "id": "bd17",
+          "url": "business-details-type-change?r=t&release=concept&newChange=true",
+          "release": "Concept"
+        },
+        {
+          "name": "Business type (check) - business details",
+          "id": "bd18",
+          "url": "business-details-type-check?r=t&release=concept&newChange=true",
+          "release": "Concept"
+        },
+        {
+          "name": "Bank declaration (accept) - business details",
+          "id": "ba01",
+          "url": "business-details-bank-declaration?r=t&release=b2&newChange=true",
+          "release": "Buffalo 1.1 MVP"
+        },
+        {
+          "name": "Bank account - country (select) - business details",
+          "id": "ba02",
+          "url": "business-details-bank-country?r=t&release=b2&newChange=true",
+          "release": "Buffalo 1.1 MVP"
+        },
+        {
+          "name": "Bank account - type (select) - business details ",
+          "id": "ba03",
+          "url": "business-details-bank-type?r=t&release=b2&newChange=true",
+          "release": "Buffalo 1.1 MVP"
+        },
+        {
+          "name": "Bank account details - (change) - business details - UK/personal",
+          "id": "ba04a",
+          "url": "business-details-bank-change-uk-personal?r=t&release=b2&newChange=true",
+          "release": "Buffalo 1.1 MVP",
+          "variants": [
+            {
+              "name": "ba04b. Bank account details - change - business details - UK/business",
+              "url": "business-details-bank-change-uk-business?r=t&release=b2&newChange=true"
+            },
+            {
+              "name": "ba04c. Bank account details - change - business details - European/personal",
+              "url": "business-details-bank-change-european-personal?r=t&release=b2&newChange=true"
+            },
+            {
+              "name": "ba04d. Bank account details - change - business details - European/business",
+              "url": "business-details-bank-change-european-business?r=t&release=b2&newChange=true"
+            }
+            
+          ]
+          
+        },
+        {
+          "name": "Bank account details (check) - business details - UK/personal",
+          "id": "ba05a",
+          "url": "business-details-bank-check-uk-personal?r=t&release=b2&newChange=true",
+          "release": "Buffalo 1.1 MVP",
+          "variants": [
+            {
+              "name": "ba05b. Bank details - check - business details - UK/business",
+              "url": "business-details-bank-change-uk-business?r=t&release=b2&newChange=true"
+            },
+            {
+              "name": "ba05c. Bank details - check - business details - European/personal",
+              "url": "business-details-bank-change-european-personal?r=t&release=b2&newChange=true"
+            },
+            {
+              "name": "ba05d. Bank details - check - business details - European/business",
+              "url": "business-details-bank-change-european-business?r=t&release=b2&newChange=true"
+            }
+            
+          ]
+          
+        },
+        {
+          "name": "Bank details - Partial match (submit/check) - business details",
+          "id": "ba06",
+          "url": "business-details-bank-partial-match?r=t&release=b2&newChange=true",
+          "release": "Buffalo 1.1 MVP"
+        },
+        {
+          "name": "Bank details - Unable to validate - business details",
+          "id": "ba07a",
+          "url": "business-details-bank-unable-to-validate-01?r=t&release=b2&newChange=true",
+          "release": "Buffalo 1.1 MVP",
+          "variants": [
+            {
+              "name": "ba07b. Bank details - Unable to validate - 2nd attempt - business details",
+              "url": "business-details-bank-unable-to-validate-02?r=t&release=b2&newChange=true"
+            },
+            {
+              "name": "ba07c. Bank details - Unable to validate - 3nd attempt - business details",
+              "url": "business-details-bank-unable-to-validate-03?r=t&release=b2&newChange=true"
+            }
+            
+          ]
+          
+        },
+
+
+        
+        {
+          "type": "HEADING",
+          "name": "Permissions: manage access"
+        },
+        {
+          "name": "Manage access",
+          "id": "ma01",
+          "url": "business-access",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "New user added - confirmation banner",
+              "url": "business-access?task-success=01"
+            },
+            {
+              "name": "New agent users added - confirmation banner",
+              "url": "business-access?task-success=03"
+            },
+            {
+              "name": "Individual user permission level changes - confirmation banner",
+              "url": "business-access?task-success=02"
+            },
+            {
+              "name": "Action needed - Review business access request",
+              "url": "business-access?task-success=03"
+            }
+          ]
+        },
+        {
+          "name": "Search for a person",
+          "id": "ma02",
+          "url": "user-search",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "Search results - Richard Clarke",
+              "url": "user-search-results#search-results"
+            }
+          ]          
+        },
+        {
+          "name": "Do you want to give access?",
+          "id": "ma03",
+          "url": "add-user-question",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "Add individual user variant",
+              "url": "add-user-question"
+            },
+            {
+              "name": "Add multiple agent users variant",
+              "url": "add-firm-users-question"
+            }
+          ]          
+        },
+        {
+          "name": "Select business relationship",
+          "id": "ma04",
+          "url": "business-relationship",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "Business relationship - individual user variant",
+              "url": "business-relationship"
+            }
+          ]  
+        },
+        {
+          "name": "Permissions: manage business",
+          "id": "ma05",
+          "url": "permissions-manage-business",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "Manage business - individual user variant",
+              "url": "permissions-manage-business"
+            },
+            {
+              "name": "Manage business - multiple agent users variant",
+              "url": "permissions-manage-business-fa"
+            }
+          ]          
+        },
+        {
+          "name": "Permissions: manage land details",
+          "id": "ma06",
+          "url": "permissions-land-details",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "Manage land details - individual user variant",
+              "url": "permissions-land-details"
+            },
+            {
+              "name": "Manage land details - multiple agent users variant",
+              "url": "permissions-land-details-fa"
+            }
+          ]          
+        },
+        {
+          "name": "Permissions: CS applications",
+          "id": "ma07",
+          "url": "permissions-cs-application",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "CS application permissions - individual user variant",
+              "url": "permissions-cs-application"
+            },
+            {
+              "name": "CS application permissions - multiple agent users variant",
+              "url": "permissions-cs-application-fa"
+            }
+          ]          
+        },
+        {
+          "name": "Permissions: CS agreements",
+          "id": "ma08",
+          "url": "permissions-cs-agreement",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "CS agreement permissions - individual user variant",
+              "url": "permissions-cs-agreement"
+            },
+            {
+              "name": "CS agreement permissions - multiple agent users variant",
+              "url": "permissions-cs-agreement-fa"
+            }
+          ]          
+        },
+        {
+          "name": "Check permissions",
+          "id": "ma09",
+          "url": "permissions-check-answers",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "Permissions check answers - individual user variant",
+              "url": "permissions-check-answers"
+            },
+            {
+              "name": "Permissions check answers - multiple agent users variant",
+              "url": "permissions-check-answers-fa"
+            }
+          ]          
+        },
+        {
+          "name": "Search for firm of agents",
+          "id": "ma10",
+          "url": "firm-search",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "Search results - The Agency",
+              "url": "firm-search-results#search-results"
+            }
+          ]          
+        },
+        {
+          "name": "Which agents need access",
+          "id": "ma11",
+          "url": "select-firm-users",
+          "release": "RPS Migration"          
+        },
+        {
+          "name": "Review business access request",
+          "id": "ma12",
+          "url": "business-access-request",
+          "release": "RPS Migration"          
+        },
+
+
+
+        {
+          "type": "HEADING",
+          "name": "Permissions: request business access"
+        },
+        {
+          "name": "Search for a business",
+          "id": "ra01",
+          "url": "business-search",
+          "release": "RPS Migration",
+          "variants": [
+            {
+              "name": "Business search results - Valley Farm",
+              "url": "business-search-results#search-results"
+            }
+          ]
+        },        
+        {
+          "name": "Do you want to request access?",
+          "id": "ra02",
+          "url": "request-access-question",
+          "release": "RPS Migration"          
+        },
+        {
+          "name": "Suggested business relationship",
+          "id": "ra03",
+          "url": "request-access-relationship",
+          "release": "RPS Migration"          
+        },
+        {
+          "name": "Access request details",
+          "id": "ra04",
+          "url": "request-access-details",
+          "release": "RPS Migration"          
+        },
+        {
+          "name": "Access request submitted (confirmation screen)",
+          "id": "ra05",
+          "url": "request-access-confirmation",
+          "release": "RPS Migration"          
+        },
+
+
+
+
+        {
+          "type": "HEADING",
+          "name": "Miscellaneous pages"
+        },
+        {
+          "name": "Cookies page",
+          "id": "mp01",
+          "url": "misc-cookies?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP",
+          "variants": [
+            {
+              "name": "Including analytics cookies",
+              "url": "misc-cookies?r=t&release=b1&cookiesVariant1=true"
+            },
+            {
+              "name": "Cookie settings changed banner",
+              "url": "misc-cookies?r=t&release=b1&cookiesVariant1=true&changed=true"
+            },
+            {
+              "name": "Cookies need JavaScript",
+              "url": "misc-cookies?r=t&release=b1&cookiesVariant1=true&cookiesNeedJS=true"
+            },
+
+            {
+              "name": "Cookies banner - pre accept/reject",
+              "url": "misc-cookies?r=t&release=b1&cookiesVariant1=true&showCookieBanner1=true"
+            },
+            {
+              "name": "Cookies banner - rejected",
+              "url": "misc-cookies?r=t&release=b1&cookiesVariant1=true&showCookieBanner2=true"
+            },
+            {
+              "name": "Cookies banner - accepted",
+              "url": "misc-cookies?r=t&release=b1&cookiesVariant1=true&showCookieBanner3=true"
+            }
+
+            
+            
+          ]
+        },
+
+
+        {
+          "name": "Accessibility statement",
+          "id": "mp02",
+          "url": "misc-accessibility?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Contact us/help",
+          "id": "mp03",
+          "url": "misc-contact?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Privacy policy",
+          "id": "mp04",
+          "url": "misc-privacy?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Personal information charter",
+          "id": "mp05",
+          "url": "misc-information?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Signed out page",
+          "id": "mp06",
+          "url": "misc-signed-out?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Auto signed out (TBC if MVP/NEEDED)",
+          "id": "mp07",
+          "url": "misc-signed-out-auto?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Terms and conditions (TBC if MVP/NEEDED)",
+          "id": "mp08",
+          "url": "misc-terms?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+
+        
+
+        {
+          "type": "HEADING",
+          "name": "Service errors"
+        },
+        {
+          "name": "Service unavailable (503/shutter page)",
+          "id": "se01",
+          "url": "error-shutter?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Problem with service (500/server error page)",
+          "id": "se02",
+          "url": "error-server?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Page not found (404)",
+          "id": "se03",
+          "url": "error-not-found?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+
+
+
+        {
+          "type": "HEADING",
+          "name": "Payments"
+        },
+        {
+          "name": "Payments - upcoming payments",
+          "url": "business-payments?r=t&release=concept",
+          "release": "Concept"
+        },
+        {
+          "name": "Upcoming payment detail - confirmed",
+          "url": "business-payments-detail?r=t&release=concept&payment=1",
+          "release": "Concept"
+        },
+        {
+          "name": "Upcoming payment detail - planned",
+          "url": "business-payments-detail?r=t&release=concept&payment=3",
+          "release": "Concept"
+        },
+        {
+          "name": "Upcoming payment detail - action needed",
+          "url": "business-payments-detail?r=t&release=concept&payment=2",
+          "release": "Concept"
+        },
+        {
+          "name": "Payments - past payments",
+          "url": "business-payments-prev?r=t&release=concept",
+          "release": "Concept"
+        },
+        {
+          "name": "Past payment detail - paid",
+          "url": "business-payments-prev-detail?r=t&release=concept&payment=84",
+          "release": "Concept"
+        },
+
+        {
+          "type": "HEADING",
+          "name": "Payments notifications"
+        },
+        {
+          "name": "Upcoming payment (email)",
+          "url": "payment-next-email?r=t&release=concept",
+          "release": "Concept"
+        },
+        {
+          "name": "Action needed (text message)",
+          "url": "payment-action-text?r=t&release=concept",
+          "release": "Concept"
+        },
+        {
+          "name": "Action needed (letter)",
+          "url": "payment-action-letter?r=t&release=concept",
+          "release": "Concept"
+        },
+
+
+        {
+          "type": "HEADING",
+          "name": "Vet visits Manage your claims screen and email"
+        },
+        {
+          "name": "Claim approved email",
+          "url": "vets-claim-approved-email",
+          "release": "-"
+        },
+        {
+          "name": "Manage your claims",
+          "url": "vets-manage-your-claims",
+          "release": "-"
+        },
+        {
+          "name": "Terms and conditions",
+          "url": "vets-ts-cs",
+          "release": "-"
+        },
+        {
+          "name": "Agreement summary",
+          "url": "vets-agreement-summary",
+          "release": "-"
+        }, 
+
+        {
+          "type": "HEADING",
+          "name": "Emma's test page"
+        },
+        {
+          "name": "Emma's test page",
+          "id": "x01",
+          "url": "test-page?r=t&release=b1",
+          "release": "Test",
+          "variants": [
+            {
+              "name": "Emma's errors",
+              "url": "test-page?r=t&release=b1&emmaserrors=true"
+            }
+            
+          ]
+        }
+
+        
+
+      ] %}
+      <tbody class="govuk-table__body">
+        {% for _page in _pages %}
+          {% if _page.type == "HEADING" %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header" colspan="4"><h2 class="govuk-heading-m govuk-!-margin-top-6 govuk-!-margin-bottom-2">{{_page.name}}</h2></th>
+          </tr>
+          {% else %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header" {% if _page.todo %}style="color:red"{% endif %}>
+              {{_page.id}}.
+            </th>
+            <th scope="row" class="govuk-table__header" {% if _page.todo %}style="color:red"{% endif %}>
+              {{_page.name}}
+            </th>
+            <td class="govuk-table__cell" >
+              {% if _page.todo %}
+                <span style="color:red">TO DO</span>
+              {% else %}
+                <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="{{_page.url}}">/{{_page.url}}</a></p>
+                {% if _page.variants %}
+                  <p class="govuk-body govuk-!-margin-bottom-0">Variants:</p>
+                  <ul class="govuk-list govuk-list--bullet">
+                  {% for _variant in _page.variants %}
+                    <li><a class="govuk-link govuk-link--no-visited-state" href="{{_variant.url}}">{{_variant.name}}</a></li>
+                  {% endfor %}
+                  </ul>
+                {% endif %}
+              {% endif %}
+            </td>
+            <td class="govuk-table__cell" style="min-width: 200px;">
+              {% if _page.release == "Concept" %}💡 {% elif _page.release == "Buffalo 1.X" or _page.release == "Buffalo 1.0 MVP"  %}🐃 {% endif %}{{_page.release}}
+            </td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <!-- <div class="govuk-grid-column-one-third">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-m" id="subsection-title">
+        Information
+        <span class="govuk-caption-s">(all links open in a new tab)</span>
+      </h2>
+
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <a href="_design-history">
+              Design history
+            </a>
+          </li>
+          <li>
+            <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1708095369498/312f9f5bbd6500ac2e567b6390d0453ecb6bf290?wid=0-1726655395429" target="_blank">
+              Hypothesis
+            </a>
+          </li>
+          <li>
+            <a href="https://app.mural.co/t/coredefra2548/m/defraallcompany8330/1700644751131/8f9698d767ce508393323a6dacb8abb8d923b960?wid=0-1726065444141" target="_blank">
+              Planning scenario and flow for research
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div> -->
+</div>
+
+{% endblock %}
+
+{% block pageScriptsAfter %}
+<script>
+    $(document).ready(function(){
+
+        var _startURL = $("#start-url a"),
+            _startURLLabel = $("#start-url-label"),
+            _options = $("[data-option]")
+
+        _options.change(function(){
+            setValues()
+            optionsVisibility()
+        }).trigger("change");
+
+        _options.on('input', function() {
+            setValues()
+            optionsVisibility()
+        }).trigger("input");
+
+        //SET VISIBILITY OF OPTIONS BASED ON INTERNAL VS EXTERNAL
+        function optionsVisibility(){
+          var _intExtValue = $('input[name=view]:checked').val()
+
+          if (_intExtValue == "int") {
+            $('#releaseContainer').hide()
+            $('#startFromContainer').hide()
+          } else {
+            $('#releaseContainer').hide()
+            $('#startFromContainer').show()
+          }
+
+        }
+
+        //SET VALUES
+        function setValues(){
+
+            //Base URL
+            var _urlBase = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + {{myData.version|dump|safe}} + "/";
+
+
+            //Queries
+            var _urlStartFrom = $('input[name=startFrom]:checked').val(),
+                _urlPage = "start-sfd-sign-in",
+                _urlNewApplication = "";
+            
+            //Start from
+            if ($('input[name=view]:checked').val() == "int") {
+              _urlPage = "internal-sign-in"
+            } else {
+              switch(_urlStartFrom) {
+                  case "st":
+                    _urlPage = "start-sfd-start"
+                    break;
+                  case "si":
+                    _urlPage = "start-sfd-sign-in"
+                    break;
+                  case "bl":
+                    _urlPage = "businesses-list"
+                    break;
+                  case "home":
+                    _urlPage = "business-home"
+                    break;
+                  default:
+                  _urlPage = "start-sfd-sign-in"
+              }
+            }
+
+            var _urlRelease = "&release=" + $('input[name=release]:checked').val(),
+                _urlView = "&view=" + $('input[name=view]:checked').val();
+                // _urlPageQuery = "&start=" + _urlStartFrom;
+                //_urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val();
+                // _urlshutter = "&shutter=" + _options.filter("#shutter").val(),
+                // _urlcookies = "&c=" + _options.filter("#cookies").val(),
+                // _urlinviteScenario = "&adb2cLink=" + _options.filter("#inviteScenario").val();
+
+
+            if ($('input[name=view]:checked').val() == "int") {
+              _urlRelease = ""
+            }
+
+            //Queries combined
+            var _urlPageQueries = _urlPage + "?r=t" + _urlRelease + _urlView;
+
+            //URL text
+            var _startURLText = _urlBase + _urlPageQueries,
+                _startURLHREF =  _urlPageQueries;
+            // update label
+            _startURLLabel
+                .text(_startURLText)
+                .show()
+            //update link
+            _startURL
+                .attr("href", _startURLHREF)
+                .parent().show()
+        }
+
+    });
+</script>
+{% endblock %}

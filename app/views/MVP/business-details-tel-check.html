@@ -1,0 +1,95 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "Check your business telephone number is correct before submitting" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Telephone (check) - business details",
+    "id": "bd07",
+    "url": "business-details-tel-check?r=t&release=b1&newChange=true",
+    "release": "N/A",
+    "variants": [],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ], 
+    "notes": [
+        "Removed from Buffalo 1.0 MVP"
+      ]
+    
+  }
+  %}
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your business telephone number is correct before submitting     
+      </h1>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Business telephone number"
+            },
+            value: {
+              text: myData.newTelNumberBus or myData.telNumberBus
+
+            },
+            actions: {
+              items: [
+                {
+                  href: "business-details-tel-change",
+                  text: "Change",
+                  visuallyHiddenText: "business telephone number"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+{% endblock %}
