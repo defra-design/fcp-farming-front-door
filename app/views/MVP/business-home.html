@@ -1,0 +1,230 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "Your business" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "SFD Home/Business Page",
+    "id": "bp02",
+    "url": "business-home?r=t&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "SFD Home/Business Page (concept)",
+        "url": "business-home?r=t&release=concept"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% if data.release == "b1" %}
+        {% set _hideAccountLink = true %}
+      {% endif %}
+      {% include "_common/login-nav-2.html" %}
+
+      <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% set _selectedBusiness = myData.selectedBusiness %} 
+
+    <span class="govuk-caption-xl">{{data.user.name}}<br></span>
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      {{_selectedBusiness.name}}
+    </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}
+      <!-- <br>Customer reference number (CRN): {{data.user.crn}} -->
+    </p>
+
+  </div>
+</div>
+
+
+
+{% if data.release != "b1" %}
+<!-- PAYMENTS ROW -->
+<div class="govuk-grid-row">
+  
+  <div class="govuk-grid-column-two-thirds">
+
+    <!-- <h2 class="govuk-heading-m">Your payments</h2> -->
+
+    <!-- UPCOMING PAYMENTS CONTENT -->
+    <div class="callout-box " >
+      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
+        Next monthly payment
+      </p>
+      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
+        <strong>{{data.paymentsUpcoming[0].date}}</strong>
+      </p>
+      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
+        <strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong>
+      </p>
+
+      <!-- <p class="govuk-body govuk-!-margin-bottom-2">
+        This is your total Defra funding for {{data.paymentsUpcoming[0].period}}. 
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-2">
+        The payment will be in your bank account ending 9276 within 2 working days of {{data.paymentsUpcoming[0].date}}. 
+      </p>
+      <p class="govuk-body"> 
+        Payment reference: {{data.paymentsUpcoming[0].reference}}.
+      </p> -->
+
+      <p class="govuk-body govuk-!-margin-bottom-5">
+        {% if data.paymentsUpcoming[0].status == "action" %}
+          <strong class="govuk-tag govuk-tag--red">
+            Action needed
+          </strong>
+          {% elif data.paymentsUpcoming[0].status == "expected" %}
+          <strong class="govuk-tag govuk-tag--blue">
+            Planned
+          </strong>
+          {% elif data.paymentsUpcoming[0].status == "confirmed" %}
+          <strong class="govuk-tag govuk-tag--green">
+            Confirmed
+          </strong>
+        {% endif %}
+      </p>
+
+      <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments">View all payments</a></p>
+
+      <!-- <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments-detail?payment={{data.paymentsUpcoming[0].id}}">View details<span class="govuk-visually-hidden"> for payment on {{data.paymentsUpcoming[0].date}}</span></a></p> -->
+      
+    </div>
+
+  </div>
+  
+  <div class="govuk-grid-column-one-third">
+
+    <h2 class="govuk-heading-m">Your tasks</h2>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--red">
+        Action needed
+      </strong>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-">
+      <a href="business-payments-detail?payment=2" class="govuk-link govuk-link--no-visited-state">Provide evidence by 29 December 2024</a> for your February 2025 animal health and welfare review claim payment.
+    </p>
+
+    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+  </div>
+</div>
+{% endif %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% set _schemesCards = [
+      {
+        "name": "Get funding to improve animal health and welfare",
+        "link": "vets-manage-your-claims",
+        "release": "b1"
+      },
+      {
+        "name": "Calf housing for health and welfare grant",
+        "link": "/_common/not-testing",
+        "release": "concept"
+      },
+      {
+        "name": "Sustainable farming incentive",
+        "link": "/_common/not-testing",
+        "release": "concept"
+      },
+      {
+        "name": "Countryside stewardship",
+        "link": "/_common/not-testing",
+        "release": "concept"
+      }
+    ] %}
+
+    <h2 class="govuk-heading-m">Your schemes and grants</h2>
+
+    <div class="gem-c-cards card-page">
+      <ul class="gem-c-cards__list gem-c-cards__list-cards">
+
+        {% for _schemeCard in _schemesCards %}
+        {% if (data.release == "b1" and _schemeCard.release == "b1") or data.release != "b1" %}
+        <li class="gem-c-cards__list-item-variant">
+            <div class="gem-c-cards__list-item-wrapper-variant">
+              <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link" style="font-weight: normal"><a class="govuk-link govuk-link--no-visited-state link-style" href="{{_schemeCard.link}}">{{_schemeCard.name}}</a></h2> 
+            </div>
+          </a> 
+        </li>
+        {% endif %}
+        {% endfor %}
+
+      </ul>
+    </div>
+
+    
+
+    {% if data.release == "b1" %}
+    <h3 class="govuk-heading-m">
+      Business details
+    </h3>
+    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
+    <!-- <p><a class="govuk-link--no-visited-state" href="business-access">View who has access to this business account</a></p> -->
+    <p><a class="govuk-link--no-visited-state" href="business-access">Manage who has access to this business account</a></p>
+    <h3 class="govuk-heading-m">
+      Personal details
+    </h3>
+    <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 
+    {% else %}
+    <h3 class="govuk-heading-m">
+      Business details
+    </h3>
+
+    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
+    {% if data.release != "b1" %}
+    <p><a class="govuk-link--no-visited-state" href="/_common/not-testing">View and update permissions</a></p> 
+    {% endif %}
+    {% endif %}
+
+
+    {% if data.release != "b1" and myData.emmaserrors == "true" %}
+      <p class="govuk-link"><a href="test-page" class="govuk-link">Route to test page</a></p>
+    {% endif %}
+
+
+  </div>
+  
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "layouts/main.html" %}
+
+{% set _pageID = "" %}
+{% set _showFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "For your security, we have signed you out" %}
+{% set serviceName = "Manage your land and farm businesses" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Auto signed out",
+  "id": "mp07",
+  "url": "misc-signed-out-auto?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        For your security, we have signed you out
+      </h1>
+
+      {{govukButton({
+        text: "Sign back in",
+        href: "start-sfd-sign-in"
+      })}}
+
+  </div>
+</div>
+
+
+{% endblock %}
