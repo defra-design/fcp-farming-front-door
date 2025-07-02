@@ -129,51 +129,17 @@
     </h2>
 
     <p class="govuk-body">
-      <a href="_design-history/design-history_bank-details">View design history</a>
-    for add and update your bank details, for external and internal users.
+      This is the version being developed for Buffalo MVP, based on version 8 and some of version 9 of the prototype.
     </p>
+
+    <h3 class="govuk-heading-s">
+      What's unique in this version
+    </h3>    
+
     <p class="govuk-body">
-      <a href="_design-history/design-history_internal-users">View design history</a>
-    for internal user iterations, based on R3 UR.
+      Coming soon.
     </p>
-    <p class="govuk-body">
-      Design history for permisions v1 coming soon.
-    </p>
-    
 
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-    <h2 class="govuk-heading-m">
-      Design tickets (on JIRA)
-    </h2>
-    {% set _tickets = [
-      {
-        "number": "232",
-        "title": "Bank details design"
-      }, 
-
-      {
-        "number": "249",
-        "title": "Bank details - metadata and error scenarios"
-      }, 
-
-      {
-        "number": "258",
-        "title": "Internal user designs - iterations from UR"
-      }, 
-
-      {
-        "number": "259",
-        "title": "Internal user designs - iterations from UR (Prototype)"
-      }
-
-
-    ]
-    %}
-    <ul class="govuk-list govuk-list--bullet">
-      {% for _ticket in _tickets %}
-      <li><a href="https://eaflood.atlassian.net/browse/SFDE-{{_ticket.number}}" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">SFDE-{{_ticket.number}} (opens in new tab)</a> - {{_ticket.title}}</li>
-      {% endfor %}
-    </ul>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
   </div>
@@ -201,12 +167,12 @@
         {
           "name": "Internal sign in",
           "url": "internal-sign-in?r=t&view=int",
-          "release": "Buffalo 1.1 MVP"
+          "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Internal search",
           "url": "internal-search?r=t&view=int",
-          "release": "Buffalo 1.1 MVP",
+          "release": "Buffalo 1.0 MVP",
           "variants": [
             {
               "name": "Internal search (with results - all tab)",
@@ -234,12 +200,12 @@
         {
           "name": "Internal - selected business view",
           "url": "internal-business?r=t&view=int",
-          "release": "Buffalo 1.1 MVP"
+          "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Internal - selected customer view",
           "url": "internal-customer?r=t&view=int",
-          "release": "Buffalo 1.1 MVP"
+          "release": "Buffalo 1.0 MVP"
         },
 
 
@@ -255,7 +221,7 @@
         {
           "name": "SFD start page",
           "url": "start-sfd-start?r=t&release=b2",
-          "release": "Buffalo 1.X"
+          "release": "Buffalo 1.0 MVP"
         },
         
 
@@ -292,47 +258,11 @@
           "release": "Buffalo 1.0 MVP"
         },
         {
-          "name": "Your businesses list (concept)",
-          "id": "bp01",
-          "url": "businesses-list?r=t&release=concept",
-          "release": "Concept"
-        },
-        {
           "name": "SFD Home/Business Page (Buffalo 1.0 MVP)",
           "id": "bp02",
           "url": "business-home?r=t&release=b1",
           "release": "Buffalo 1.0 MVP"
         },
-        {
-          "name": "SFD Home/Business Page (concept)",
-          "id": "bp02",
-          "url": "business-home?r=t&release=concept",
-          "release": "Concept"
-        },
-
-        {
-          "type": "HEADING",
-          "name": "Messages pages"
-        },
-        {
-          "name": "Messages",
-          "id": "me01",
-          "url": "business-messages?r=t&release=concept",
-          "release": "Concept"
-        },
-
-        {
-          "type": "HEADING",
-          "name": "Manage account"
-        },
-        {
-          "name": "Account Home (concept)",
-          "id": "ma01",
-          "url": "account-home?r=t&release=concept",
-          "release": "Concept"
-        },
-
-
 
 
         {
@@ -373,12 +303,6 @@
           "id": "pd02",
           "url": "personal-details-name-change?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Full name (change) - personal details (concept)",
-          "id": "pd02",
-          "url": "personal-details-name-change?r=t&release=concept&newChange=true",
-          "release": "Concept"
         },
         {
           "name": "Full name (check) - personal details",
@@ -513,18 +437,6 @@
             {
               "name": "vat number removed banner",
               "url": "details-business-details?r=t&release=b1&vatremoved=true&changed=true"
-            },
-            {
-              "name": "business type changed banner (concept)",
-              "url": "details-business-details?r=t&release=concept&typechanged=true&changed=true"
-            },
-            {
-              "name": "legal status changed banner (concept)",
-              "url": "details-business-details?r=t&release=concept&legalchanged=true&changed=true"
-            },
-            {
-              "name": "bank details changed banner (concept)",
-              "url": "details-business-details?r=t&release=concept&bankchanged=true&changed=true"
             }
           ]
         },
@@ -628,18 +540,6 @@
           "url": "business-details-legal-change?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
         },
-        {
-          "name": "Legal status (change) - business details (Concept)",
-          "id": "bd15",
-          "url": "business-details-legal-change?r=t&release=concept&newChange=true",
-          "release": "Concept"
-        },
-        {
-          "name": "Legal status (check) - business details",
-          "id": "bd16",
-          "url": "business-details-legal-check?r=t&release=concept&newChange=true",
-          "release": "Concept"
-        },
 
         
         {
@@ -648,325 +548,6 @@
           "url": "business-details-type-change?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
         },
-        {
-          "name": "Business type (change) - business details (Concept)",
-          "id": "bd17",
-          "url": "business-details-type-change?r=t&release=concept&newChange=true",
-          "release": "Concept"
-        },
-        {
-          "name": "Business type (check) - business details",
-          "id": "bd18",
-          "url": "business-details-type-check?r=t&release=concept&newChange=true",
-          "release": "Concept"
-        },
-        {
-          "name": "Bank declaration (accept) - business details",
-          "id": "ba01",
-          "url": "business-details-bank-declaration?r=t&release=b2&newChange=true",
-          "release": "Buffalo 1.1 MVP"
-        },
-        {
-          "name": "Bank account - country (select) - business details",
-          "id": "ba02",
-          "url": "business-details-bank-country?r=t&release=b2&newChange=true",
-          "release": "Buffalo 1.1 MVP"
-        },
-        {
-          "name": "Bank account - type (select) - business details ",
-          "id": "ba03",
-          "url": "business-details-bank-type?r=t&release=b2&newChange=true",
-          "release": "Buffalo 1.1 MVP"
-        },
-        {
-          "name": "Bank account details - (change) - business details - UK/personal",
-          "id": "ba04a",
-          "url": "business-details-bank-change-uk-personal?r=t&release=b2&newChange=true",
-          "release": "Buffalo 1.1 MVP",
-          "variants": [
-            {
-              "name": "ba04b. Bank account details - change - business details - UK/business",
-              "url": "business-details-bank-change-uk-business?r=t&release=b2&newChange=true"
-            },
-            {
-              "name": "ba04c. Bank account details - change - business details - European/personal",
-              "url": "business-details-bank-change-european-personal?r=t&release=b2&newChange=true"
-            },
-            {
-              "name": "ba04d. Bank account details - change - business details - European/business",
-              "url": "business-details-bank-change-european-business?r=t&release=b2&newChange=true"
-            }
-            
-          ]
-          
-        },
-        {
-          "name": "Bank account details (check) - business details - UK/personal",
-          "id": "ba05a",
-          "url": "business-details-bank-check-uk-personal?r=t&release=b2&newChange=true",
-          "release": "Buffalo 1.1 MVP",
-          "variants": [
-            {
-              "name": "ba05b. Bank details - check - business details - UK/business",
-              "url": "business-details-bank-change-uk-business?r=t&release=b2&newChange=true"
-            },
-            {
-              "name": "ba05c. Bank details - check - business details - European/personal",
-              "url": "business-details-bank-change-european-personal?r=t&release=b2&newChange=true"
-            },
-            {
-              "name": "ba05d. Bank details - check - business details - European/business",
-              "url": "business-details-bank-change-european-business?r=t&release=b2&newChange=true"
-            }
-            
-          ]
-          
-        },
-        {
-          "name": "Bank details - Partial match (submit/check) - business details",
-          "id": "ba06",
-          "url": "business-details-bank-partial-match?r=t&release=b2&newChange=true",
-          "release": "Buffalo 1.1 MVP"
-        },
-        {
-          "name": "Bank details - Unable to validate - business details",
-          "id": "ba07a",
-          "url": "business-details-bank-unable-to-validate-01?r=t&release=b2&newChange=true",
-          "release": "Buffalo 1.1 MVP",
-          "variants": [
-            {
-              "name": "ba07b. Bank details - Unable to validate - 2nd attempt - business details",
-              "url": "business-details-bank-unable-to-validate-02?r=t&release=b2&newChange=true"
-            },
-            {
-              "name": "ba07c. Bank details - Unable to validate - 3nd attempt - business details",
-              "url": "business-details-bank-unable-to-validate-03?r=t&release=b2&newChange=true"
-            }
-            
-          ]
-          
-        },
-
-
-        
-        {
-          "type": "HEADING",
-          "name": "Permissions: manage access"
-        },
-        {
-          "name": "Manage access",
-          "id": "ma01",
-          "url": "business-access",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "New user added - confirmation banner",
-              "url": "business-access?task-success=01"
-            },
-            {
-              "name": "New agent users added - confirmation banner",
-              "url": "business-access?task-success=03"
-            },
-            {
-              "name": "Individual user permission level changes - confirmation banner",
-              "url": "business-access?task-success=02"
-            },
-            {
-              "name": "Action needed - Review business access request",
-              "url": "business-access?task-success=03"
-            }
-          ]
-        },
-        {
-          "name": "Search for a person",
-          "id": "ma02",
-          "url": "user-search",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "Search results - Richard Clarke",
-              "url": "user-search-results#search-results"
-            }
-          ]          
-        },
-        {
-          "name": "Do you want to give access?",
-          "id": "ma03",
-          "url": "add-user-question",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "Add individual user variant",
-              "url": "add-user-question"
-            },
-            {
-              "name": "Add multiple agent users variant",
-              "url": "add-firm-users-question"
-            }
-          ]          
-        },
-        {
-          "name": "Select business relationship",
-          "id": "ma04",
-          "url": "business-relationship",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "Business relationship - individual user variant",
-              "url": "business-relationship"
-            }
-          ]  
-        },
-        {
-          "name": "Permissions: manage business",
-          "id": "ma05",
-          "url": "permissions-manage-business",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "Manage business - individual user variant",
-              "url": "permissions-manage-business"
-            },
-            {
-              "name": "Manage business - multiple agent users variant",
-              "url": "permissions-manage-business-fa"
-            }
-          ]          
-        },
-        {
-          "name": "Permissions: manage land details",
-          "id": "ma06",
-          "url": "permissions-land-details",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "Manage land details - individual user variant",
-              "url": "permissions-land-details"
-            },
-            {
-              "name": "Manage land details - multiple agent users variant",
-              "url": "permissions-land-details-fa"
-            }
-          ]          
-        },
-        {
-          "name": "Permissions: CS applications",
-          "id": "ma07",
-          "url": "permissions-cs-application",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "CS application permissions - individual user variant",
-              "url": "permissions-cs-application"
-            },
-            {
-              "name": "CS application permissions - multiple agent users variant",
-              "url": "permissions-cs-application-fa"
-            }
-          ]          
-        },
-        {
-          "name": "Permissions: CS agreements",
-          "id": "ma08",
-          "url": "permissions-cs-agreement",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "CS agreement permissions - individual user variant",
-              "url": "permissions-cs-agreement"
-            },
-            {
-              "name": "CS agreement permissions - multiple agent users variant",
-              "url": "permissions-cs-agreement-fa"
-            }
-          ]          
-        },
-        {
-          "name": "Check permissions",
-          "id": "ma09",
-          "url": "permissions-check-answers",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "Permissions check answers - individual user variant",
-              "url": "permissions-check-answers"
-            },
-            {
-              "name": "Permissions check answers - multiple agent users variant",
-              "url": "permissions-check-answers-fa"
-            }
-          ]          
-        },
-        {
-          "name": "Search for firm of agents",
-          "id": "ma10",
-          "url": "firm-search",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "Search results - The Agency",
-              "url": "firm-search-results#search-results"
-            }
-          ]          
-        },
-        {
-          "name": "Which agents need access",
-          "id": "ma11",
-          "url": "select-firm-users",
-          "release": "RPS Migration"          
-        },
-        {
-          "name": "Review business access request",
-          "id": "ma12",
-          "url": "business-access-request",
-          "release": "RPS Migration"          
-        },
-
-
-
-        {
-          "type": "HEADING",
-          "name": "Permissions: request business access"
-        },
-        {
-          "name": "Search for a business",
-          "id": "ra01",
-          "url": "business-search",
-          "release": "RPS Migration",
-          "variants": [
-            {
-              "name": "Business search results - Valley Farm",
-              "url": "business-search-results#search-results"
-            }
-          ]
-        },        
-        {
-          "name": "Do you want to request access?",
-          "id": "ra02",
-          "url": "request-access-question",
-          "release": "RPS Migration"          
-        },
-        {
-          "name": "Suggested business relationship",
-          "id": "ra03",
-          "url": "request-access-relationship",
-          "release": "RPS Migration"          
-        },
-        {
-          "name": "Access request details",
-          "id": "ra04",
-          "url": "request-access-details",
-          "release": "RPS Migration"          
-        },
-        {
-          "name": "Access request submitted (confirmation screen)",
-          "id": "ra05",
-          "url": "request-access-confirmation",
-          "release": "RPS Migration"          
-        },
-
-
-
 
         {
           "type": "HEADING",
@@ -1077,107 +658,6 @@
           "id": "se03",
           "url": "error-not-found?r=t&release=b1",
           "release": "Buffalo 1.0 MVP"
-        },
-
-
-
-        {
-          "type": "HEADING",
-          "name": "Payments"
-        },
-        {
-          "name": "Payments - upcoming payments",
-          "url": "business-payments?r=t&release=concept",
-          "release": "Concept"
-        },
-        {
-          "name": "Upcoming payment detail - confirmed",
-          "url": "business-payments-detail?r=t&release=concept&payment=1",
-          "release": "Concept"
-        },
-        {
-          "name": "Upcoming payment detail - planned",
-          "url": "business-payments-detail?r=t&release=concept&payment=3",
-          "release": "Concept"
-        },
-        {
-          "name": "Upcoming payment detail - action needed",
-          "url": "business-payments-detail?r=t&release=concept&payment=2",
-          "release": "Concept"
-        },
-        {
-          "name": "Payments - past payments",
-          "url": "business-payments-prev?r=t&release=concept",
-          "release": "Concept"
-        },
-        {
-          "name": "Past payment detail - paid",
-          "url": "business-payments-prev-detail?r=t&release=concept&payment=84",
-          "release": "Concept"
-        },
-
-        {
-          "type": "HEADING",
-          "name": "Payments notifications"
-        },
-        {
-          "name": "Upcoming payment (email)",
-          "url": "payment-next-email?r=t&release=concept",
-          "release": "Concept"
-        },
-        {
-          "name": "Action needed (text message)",
-          "url": "payment-action-text?r=t&release=concept",
-          "release": "Concept"
-        },
-        {
-          "name": "Action needed (letter)",
-          "url": "payment-action-letter?r=t&release=concept",
-          "release": "Concept"
-        },
-
-
-        {
-          "type": "HEADING",
-          "name": "Vet visits Manage your claims screen and email"
-        },
-        {
-          "name": "Claim approved email",
-          "url": "vets-claim-approved-email",
-          "release": "-"
-        },
-        {
-          "name": "Manage your claims",
-          "url": "vets-manage-your-claims",
-          "release": "-"
-        },
-        {
-          "name": "Terms and conditions",
-          "url": "vets-ts-cs",
-          "release": "-"
-        },
-        {
-          "name": "Agreement summary",
-          "url": "vets-agreement-summary",
-          "release": "-"
-        }, 
-
-        {
-          "type": "HEADING",
-          "name": "Emma's test page"
-        },
-        {
-          "name": "Emma's test page",
-          "id": "x01",
-          "url": "test-page?r=t&release=b1",
-          "release": "Test",
-          "variants": [
-            {
-              "name": "Emma's errors",
-              "url": "test-page?r=t&release=b1&emmaserrors=true"
-            }
-            
-          ]
         }
 
         

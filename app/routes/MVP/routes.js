@@ -1523,41 +1523,6 @@ module.exports = function (router,_myData) {
         
         res.redirect(301, '/' + version + '/details-business-details?changed=true&legalchanged=true');
     });
-    //business details - add VAT
-    router.get('/' + version + '/business-details-vat-add', function (req, res) {
-        if(req.query.newChange){
-            req.session.myData.newVatBus = ""
-        }
-        res.render(version + '/business-details-vat-add', {
-            myData: req.session.myData
-        });
-    });
-    router.post('/' + version + '/business-details-vat-add', function (req, res) {
-
-        req.session.myData.newVatBus = req.body.vatBus.trim()
-
-        if(req.session.myData.includeValidation == "false"){
-            req.session.myData.newVatBus = req.session.myData.newVatBus || "GB123456789"
-        }
-
-        if(!req.session.myData.newVatBus){
-            req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.vatBus = {
-                "anchor": "vatBus",
-                "message": "Enter a VAT registration number"
-            }
-        }
-
-        if(req.session.myData.validationError == "true") {
-            res.render(version + '/business-details-vat-add', {
-                myData: req.session.myData
-            });
-        } else {
-            // req.session.myData.vatBus = req.session.myData.newVatBus
-            res.redirect(301, '/' + version + '/business-details-vat-check');
-        }
-        
-    });
     //business details - change VAT
     router.get('/' + version + '/business-details-vat-change', function (req, res) {
         if(req.query.newChange){
