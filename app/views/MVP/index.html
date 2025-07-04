@@ -48,7 +48,7 @@
     </div>
 
     <!-- Release -->
-    <div class="govuk-form-group" id="releaseContainer">
+    <!--<div class="govuk-form-group" id="releaseContainer">
       <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Release version (feature toggles)</legend>
           <div class="govuk-radios">
@@ -62,7 +62,7 @@
               </div>
           </div>
       </fieldset>
-    </div>
+    </div>-->
 
     <!-- Start from -->
     <div class="govuk-form-group" id="startFromContainer">
@@ -510,7 +510,7 @@
         },
 
         {
-          "name": "VAT registration number (change) - business details",
+          "name": "VAT registration number (add/change) - business details",
           "id": "bd12",
           "url": "business-details-vat-change?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
@@ -762,7 +762,7 @@
             $('#releaseContainer').hide()
             $('#startFromContainer').hide()
           } else {
-            $('#releaseContainer').hide()
+            $('#releaseContainer').show()
             $('#startFromContainer').show()
           }
 
@@ -802,10 +802,10 @@
               }
             }
 
-            var _urlRelease = "&release=" + $('input[name=release]:checked').val(),
-                _urlView = "&view=" + $('input[name=view]:checked').val();
+            var _urlRelease = "&release=b1",
+                _urlView = "&view=" + $('input[name=view]:checked').val(),
                 // _urlPageQuery = "&start=" + _urlStartFrom;
-                //_urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val();
+                _urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val();
                 // _urlshutter = "&shutter=" + _options.filter("#shutter").val(),
                 // _urlcookies = "&c=" + _options.filter("#cookies").val(),
                 // _urlinviteScenario = "&adb2cLink=" + _options.filter("#inviteScenario").val();
@@ -816,7 +816,7 @@
             }
 
             //Queries combined
-            var _urlPageQueries = _urlPage + "?r=t" + _urlRelease + _urlView;
+            var _urlPageQueries = _urlPage + "?r=t" + _urlRelease + _urlView + _urlincludeValidation;
 
             //URL text
             var _startURLText = _urlBase + _urlPageQueries,

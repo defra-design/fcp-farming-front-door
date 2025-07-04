@@ -206,7 +206,7 @@ module.exports = [
     },
     {
       "pageid": "bd12",
-      "pagename": "VAT registration number (change) - business details",
+      "pagename": "VAT registration number (add/change) - business details",
       "pageurl": "business-VAT-registration-number-change",
       "pagedesc": "Update the VAT registration number for your business."
     },
@@ -547,7 +547,7 @@ module.exports = [
     },
     {
       "pageid": "int-bd12",
-      "pagename": "VAT registration number (change) - business details",
+      "pagename": "VAT registration number (add/change) - business details",
       "pageurl": "business-VAT-registration-number-change",
       "pagedesc": "Update the VAT registration number for your business."
     },

@@ -127,11 +127,7 @@
     <h2 class="govuk-heading-m">
       Design history
     </h2>
-    <p><a href="_design-history/_design-history" class="govuk-link govuk-link--no-visited-state">View design history</a> which includes:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>view and update your bank details for external and internal users</li>
-      <li>internal user iterations, based on R3 UR</li>
-    </ul>
+    <p class="govuk-body">Coming soon.</p>
     
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
@@ -140,23 +136,7 @@
     </h2>
     {% set _tickets = [
       {
-        "number": "232",
-        "title": "Bank details design"
-      }, 
-
-      {
-        "number": "249",
-        "title": "Bank details - metadata and error scenarios"
-      }, 
-
-      {
-        "number": "258",
-        "title": "Internal user designs - iterations from UR"
-      }, 
-
-      {
-        "number": "259",
-        "title": "Internal user designs - iterations from UR (Prototype)"
+        
       }
 
 
@@ -194,12 +174,12 @@
         {
           "name": "Internal sign in",
           "url": "internal-sign-in?r=t&view=int",
-          "release": "Buffalo 1.1 MVP"
+          "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Internal search",
           "url": "internal-search?r=t&view=int",
-          "release": "Buffalo 1.1 MVP",
+          "release": "Buffalo 1.0 MVP",
           "variants": [
             {
               "name": "Internal search (with results - all tab)",
@@ -227,12 +207,12 @@
         {
           "name": "Internal - selected business view",
           "url": "internal-business?r=t&view=int",
-          "release": "Buffalo 1.1 MVP"
+          "release": "Buffalo 1.0 MVP"
         },
         {
           "name": "Internal - selected customer view",
           "url": "internal-customer?r=t&view=int",
-          "release": "Buffalo 1.1 MVP"
+          "release": "Buffalo 1.0 MVP"
         },
 
 
@@ -1242,10 +1222,10 @@
 
         {
           "type": "HEADING",
-          "name": "Emma's test page"
+          "name": "Emma's test page (for reference only)"
         },
         {
-          "name": "Emma's test page",
+          "name": "Emma's test page (for reference only)",
           "id": "x01",
           "url": "test-page?r=t&release=b1",
           "release": "Test",
@@ -1400,8 +1380,8 @@
               }
             }
 
-            var _urlRelease = "&release=" + $('input[name=release]:checked').val(),
-                _urlView = "&view=" + $('input[name=view]:checked').val(),
+            var _urlRelease = "&release=b1",
+                _urlView = "&view=ext",
                 // _urlPageQuery = "&start=" + _urlStartFrom;
                 _urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val();
                 // _urlshutter = "&shutter=" + _options.filter("#shutter").val(),
