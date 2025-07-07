@@ -109,7 +109,7 @@
 
 {% if data.view != "int" %}
 {% include "_common/phase-banner-2.html" %}
-{% include "_common/sub-header.html" %}
+{% include "_common/sub-header-2.html" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -120,13 +120,8 @@
       <div class="govuk-breadcrumbs" style="display: inline-block">
         <ol class="govuk-breadcrumbs__list">
           <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+            <a href="#" class="govuk-back-link govuk-breadcrumbs__link govuk-!-margin-top-0">Back</a>
           </li>
-          {% if data.release != "b1" %}
-          <li class="govuk-breadcrumbs__list-item">
-            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
-          </li>
-          {% endif %}
         </ol>
       </div>
 
