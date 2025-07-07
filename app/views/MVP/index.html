@@ -37,7 +37,7 @@
           <div class="govuk-radios">
               <div class="govuk-radios__item">
                   <input {% if myData.view == 'ext' %}checked{% endif %} class="govuk-radios__input" data-option="ext" id="ext" name="view" type="radio" value="ext">
-                  <label class="govuk-label govuk-radios__label" for="ext"><strong>External user</strong></label>
+                  <label class="govuk-label govuk-radios__label" for="ext" selected><strong>External user</strong></label>
               </div>
               <div class="govuk-radios__item">
                 <input {% if myData.view == 'int' %}checked{% endif %} class="govuk-radios__input" data-option="int" id="int" name="view" type="radio" value="int">
@@ -604,12 +604,6 @@
           "release": "Buffalo 1.0 MVP"
         },
         {
-          "name": "Privacy policy",
-          "id": "mp04",
-          "url": "misc-privacy?r=t&release=b1",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
           "name": "Personal information charter",
           "id": "mp05",
           "url": "misc-information?r=t&release=b1",
@@ -627,13 +621,6 @@
           "url": "misc-signed-out-auto?r=t&release=b1",
           "release": "Buffalo 1.0 MVP"
         },
-        {
-          "name": "Terms and conditions (TBC if MVP/NEEDED)",
-          "id": "mp08",
-          "url": "misc-terms?r=t&release=b1",
-          "release": "Buffalo 1.0 MVP"
-        },
-
 
         
 
