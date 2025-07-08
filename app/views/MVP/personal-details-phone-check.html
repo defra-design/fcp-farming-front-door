@@ -15,7 +15,7 @@
 {% set _showIntExtLinks = true %}
 
 {% set pageName = "Check your personal phone numbers are correct before submitting" %}
-{% set serviceName = "Manage your land and farm businesses" %}
+{% set serviceName = "Manage your land and farm Persinesses" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
   {% set _showDesignSpec = true %}
@@ -25,7 +25,15 @@
     "id": "pd15",
     "url": "personal-details-phone-check?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
-    "variants": [],
+    "variants": [
+      {
+        "name": "no telephone number provided",
+        "url": "personal-details-phone-check?r=t&release=b2&view=ext&telNumberPers=empty&mobNumberPers=filled"
+      },
+      {
+        "name": "no mobile number provided",
+        "url": "personal-details-phone-check?r=t&release=b2&view=ext&mobNumberPers=empty&telNumberPers=filled"
+      }],
 
     "pagetitle": pageName,
     "pagedesc": "",
@@ -44,7 +52,16 @@
     "id": "int-pd15",
     "url": "personal-details-phone-check?r=t&view=int&release=b2&newChange=true",
     "release": "Buffalo 1.1 MVP",
-    "variants": [],
+    "variants": [
+      {
+        "name": "no telephone number provided",
+        "url": "personal-details-phone-check?r=t&release=b2&view=int&telNumberPers=empty&mobNumberPers=filled"
+      },
+      {
+        "name": "no mobile number provided",
+        "url": "personal-details-phone-check?r=t&release=b2&view=int&mobNumberPers=empty&telNumberPers=filled"
+      }
+    ],
 
     "pagetitle": pageName,
     "pagedesc": "",
@@ -94,29 +111,36 @@
             Personal phone numbers
           </dt>
           <dd class="govuk-summary-list__value">
-            {% set _telValue = myData.newTelNumberPers %}
-            {% if _telValue == null %}
-              {% set _telValue = myData.telNumberPers %}
-            {% endif %}
-
             Telephone: 
-            {% if not _telValue %}
+            {% if data.telNumberPers == "empty" %}
               <span style="color:#505a5f">Not added</span>
             {% else %}
-              {{_telValue}}
-            {% endif %}
-            
-            <br>
-            {% set _mobValue = myData.newMobNumberPers %}
-            {% if _mobValue == null %}
-              {% set _mobValue = myData.mobNumberPers %}
-            {% endif %}
+              {% set _telValue = myData.newTelNumberPers %}
+              {% if _telValue == null %}
+                {% set _telValue = myData.telNumberPers %}
+              {% endif %}
 
+              {% if not _telValue %}
+                <span style="color:#505a5f">Not added</span>
+              {% else %}
+                {{_telValue}}
+              {% endif %}
+            {% endif %}
+            <br>
             Mobile: 
-            {% if not _mobValue %}
+            {% if data.mobNumberPers == "empty" %}
               <span style="color:#505a5f">Not added</span>
             {% else %}
-              {{_mobValue}}
+              {% set _mobValue = myData.newMobNumberPers %}
+              {% if _mobValue == null %}
+                {% set _mobValue = myData.mobNumberPers %}
+              {% endif %}
+
+              {% if not _mobValue %}
+                <span style="color:#505a5f">Not added</span>
+              {% else %}
+                {{_mobValue}}
+              {% endif %}
             {% endif %}
           </dd>
           <dd class="govuk-summary-list__actions">
