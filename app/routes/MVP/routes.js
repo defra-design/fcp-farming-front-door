@@ -95,6 +95,9 @@ module.exports = function (router,_myData) {
 
         req.session.myData.bank =  req.query.bank || req.session.myData.bank
 
+        req.session.myData.regBus =  req.query.regBus || req.session.myData.regBus
+
+
         req.session.myData.rollNumber =  req.query.bank || req.session.myData.rollNumber
 
         //Reset page notifications
