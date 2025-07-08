@@ -60,6 +60,7 @@ var _myData = {
     "view": "ext", //used to show either the prototype as internal user or external user
     "bank": "filled",
     "rollNumber": "no",
+    "regBus" : "true", // used to display the business list with businesses - or not
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }
