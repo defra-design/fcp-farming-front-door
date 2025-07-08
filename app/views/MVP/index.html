@@ -254,8 +254,14 @@
         {
           "name": "Your businesses list (Buffalo 1.0 MVP)",
           "id": "bp01",
-          "url": "businesses-list?r=t&release=b1",
-          "release": "Buffalo 1.0 MVP"
+          "url": "/businesses-list?release=b1&regBus=true",
+          "release": "Buffalo 1.0 MVP",
+          "variants": [
+            {
+              "name": "User has no registered businesses",
+              "url": "/businesses-list?release=b2&regBus=false"
+            }
+          ]
         },
         {
           "name": "SFD Home/Business Page (Buffalo 1.0 MVP)",
@@ -386,6 +392,18 @@
           "url": "details-business-details?r=t&release=b1",
           "release": "Buffalo 1.0 MVP",
           "variants": [
+            {
+              "name": "External user with full permissions (default)",
+              "url": "details-business-details?r=t&release=b1&view=ext&access=full"
+            },
+            {
+              "name": "External user with amend permissions",
+              "url": "details-business-details?r=t&release=b1&view=ext&access=amend"
+            },
+            {
+              "name": "External user with view permissions",
+              "url": "details-business-details?r=t&release=b1&view=ext&access=view"
+            },            
             {
               "name": "Vendor registration number	- hidden",
               "url": "details-business-details?r=t&release=b1&vendorCount=0"

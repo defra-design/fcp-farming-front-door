@@ -61,6 +61,7 @@ var _myData = {
     "bank": "filled",
     "rollNumber": "no",
     "regBus" : "true", // used to display the business list with businesses - or not
+    "access" : "full",
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }
