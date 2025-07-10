@@ -109,7 +109,6 @@
 
 {% if data.view != "int" %}
 {% include "_common/phase-banner-2.html" %}
-{% include "_common/sub-header-2.html" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -163,6 +162,7 @@
     </div>
     {% endif %}
 
+    <span class="govuk-caption-l">{{_selectedUser.name}}</span>
     <h1 class="govuk-heading-l">
      View and update your personal details
     </h1>
