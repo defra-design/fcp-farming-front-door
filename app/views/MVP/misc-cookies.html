@@ -115,16 +115,38 @@
           </thead>
           <tbody class="govuk-table__body">
               <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header" style="color: red">??</th>
-              <td class="govuk-table__cell" style="color: red">??</td>
-              <td class="govuk-table__cell" style="color: red">??</td>
+              <th scope="row" class="govuk-table__header">session</th>
+              <td class="govuk-table__cell" >Used to store page information</td>
+              <td class="govuk-table__cell" >As soon as you close your browser</td>
               </tr>
           </tbody>
       </table>
 
-      {% if myData.cookiesVariant1 == "true" %}
+      <h2 class="govuk-heading-m" >Cookie banner cookies</h2>
+
+      <p class="govuk-body">You may see a message at the top of your screen when you first visit the service asking you to accept or reject analytics cookies. A cookie is stored so that your computer knows you've seen it and not to show it to you again.</p>
+
+      <table class="govuk-table responsive">
+          <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Name</th>
+              <th scope="col" class="govuk-table__header">Purpose</th>
+              <th scope="col" class="govuk-table__header">Expires</th>
+              </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">accept_analytics_cookies</th>
+              <td class="govuk-table__cell" >Lets us know you've already seen our cookie message</td>
+              <td class="govuk-table__cell" >12 months</td>
+              </tr>
+          </tbody>
+      </table>
+
         <h2 class="govuk-heading-m" >Analytics cookies (optional)</h2>
-        <p class="govuk-body">With your permission, we use Google Analytics to collect data about how you use this service. This information helps us improve our service.</p>
+        <p class="govuk-body">
+          With your permission, we use Google Analytics to collect data about how you use this service. This information helps us to improve our service.
+        </p>
         <p>Google is not allowed to use or share our analytics data with anyone.</p>
         <p class="govuk-body">Google Analytics stores anonymized information about:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -142,10 +164,20 @@
           </thead>
           <tbody class="govuk-table__body">
               <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header" style="color: red">??</th>
-              <td class="govuk-table__cell" style="color: red">??</td>
-              <td class="govuk-table__cell" style="color: red">??</td>
+              <th scope="row" class="govuk-table__header">_ga</th>
+              <td class="govuk-table__cell">Helps us count how many people visit our service by checking if you’ve visited before</td>
+              <td class="govuk-table__cell">2 years</td>
               </tr>
+              <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">_ga_</th>
+              <td class="govuk-table__cell">Helps us measure how you use the service</td>
+              <td class="govuk-table__cell">2 years</td>
+              </tr>
+              <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">_gid</th>
+              <td class="govuk-table__cell">Helps us identify unique users, the referring sites that brought them to the service, and track and count sessions and visitors</td>
+              <td class="govuk-table__cell">24 hours</td>
+              </tr>                            
           </tbody>
         </table>
 
@@ -208,7 +240,6 @@
         </form>
         {% endif %}
 
-      {% endif %}
 
   </div>
 </div>
