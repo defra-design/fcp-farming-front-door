@@ -254,12 +254,12 @@
         {
           "name": "Your businesses list (Buffalo 1.0 MVP)",
           "id": "bp01",
-          "url": "/businesses-list?release=b1&regBus=true",
+          "url": "businesses-list?release=b1&regBus=true",
           "release": "Buffalo 1.0 MVP",
           "variants": [
             {
               "name": "User has no registered businesses",
-              "url": "/businesses-list?release=b2&regBus=false"
+              "url": "businesses-list?release=b2&regBus=false"
             }
           ]
         },
@@ -267,7 +267,17 @@
           "name": "SFD Home/Business Page (Buffalo 1.0 MVP)",
           "id": "bp02",
           "url": "business-home?r=t&release=b1",
-          "release": "Buffalo 1.0 MVP"
+          "release": "Buffalo 1.0 MVP",
+          "variants": [
+            {
+              "name": "Full permissions",
+              "url": "business-home?r=t&release=b1&access=full"
+            }, 
+            {
+              "name": "View permissions",
+              "url": "business-home?r=t&release=b1&access=view"
+            }
+          ]
         },
 
 
@@ -662,6 +672,12 @@
           "name": "Page not found (404)",
           "id": "se03",
           "url": "error-not-found?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Forbidden (401)",
+          "id": "se04",
+          "url": "error-forbidden?r=t&release=b1",
           "release": "Buffalo 1.0 MVP"
         }
 
