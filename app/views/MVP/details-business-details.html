@@ -265,7 +265,7 @@
     </div>
     {% endif %}
 
-    {% if data.access == "view" and data.view == "ext" %}
+    {% if data.permissionsMVP == "view" and data.view == "ext" %}
     <h1 class="govuk-heading-l">
      View business details
     </h1>
@@ -273,7 +273,7 @@
     <p class="govuk-body">
       You do not have permission to update details for this business. You can ask the business to raise your permission level.
     </p>
-    {% elif data.access == "amend" and data.view == "ext" %}
+    {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
     <h1 class="govuk-heading-l">
      View and update your business details
     </h1>
@@ -299,10 +299,12 @@
         <dd class="govuk-summary-list__value">
           {{myData.nameBus}}
         </dd>
-        {% if data.access == "view" and data.view == "ext" %}
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
           
-        {% elif data.access == "amend" and data.view == "ext" %}
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
+        <dd class="govuk-summary-list__actions">
           
+        </dd>
         {% else %}
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="business-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> business name</span></a>
@@ -321,9 +323,9 @@
           {% if myData.addressPostcodeBus != "" %}{{myData.addressPostcodeBus}}<br>{% endif %}
           {{myData.addressCountryBus}}
         </dd>
-        {% if data.access == "view" and data.view == "ext" %}
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
           
-        {% elif data.access == "amend" and data.view == "ext" %}
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
         </dd>
@@ -334,10 +336,10 @@
         {% endif %}
       </div>
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
+        <dt class="govuk-summary-list__key govuk-!-width-two-thirds">
           Business phone numbers
         </dt>
-        <dd class="govuk-summary-list__value">
+        <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
           Telephone: 
           {% if myData.telNumberBus == "" %}
             <span style="color:#505a5f">Not added</span>
@@ -352,15 +354,15 @@
             {{myData.mobNumberBus}}
           {% endif %}
         </dd>
-        {% if data.access == "view" and data.view == "ext" %}
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
 
-        {% elif data.access == "amend" and data.view == "ext" %}
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
         </dd>
         {% else %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
         </dd>
         {% endif %}
       </div>
@@ -371,9 +373,9 @@
         <dd class="govuk-summary-list__value">
           {{myData.emailBus}}
         </dd>
-        {% if data.access == "view" and data.view == "ext" %}
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
         
-        {% elif data.access == "amend" and data.view == "ext" %}
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="business-details-email-change?newChange=true">Change<span class="govuk-visually-hidden"> business email address</span></a>
         </dd>
@@ -411,9 +413,9 @@
             {{myData.vatBus}}
           {% endif %}
         </dd>
-        {% if data.access == "view" and data.view == "ext" %}
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
         
-        {% elif data.access == "amend" and data.view == "ext" %}
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
 
         {% else %}
         <dd class="govuk-summary-list__actions">
@@ -496,9 +498,9 @@
         <dd class="govuk-summary-list__value">
           {{myData.legalBus}}
         </dd>
-        {% if data.access == "view" and data.view == "ext" %}
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
           
-        {% elif data.access == "amend" and data.view == "ext" %}
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         
         {% else %}
         <dd class="govuk-summary-list__actions">
@@ -545,9 +547,9 @@
         <dd class="govuk-summary-list__value">
           {{myData.typeBus}}
         </dd>
-        {% if data.access == "view" and data.view == "ext" %}
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
           
-        {% elif data.access == "amend" and data.view == "ext" %}
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         
         {% else %}
         <dd class="govuk-summary-list__actions">
