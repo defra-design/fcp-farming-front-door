@@ -21,9 +21,14 @@
         "url": "business-home?r=t&release=b1&permissionsMVP=full"
       }, 
       {
+        "name": "SFD Home/Business Page (amend permissions)",
+        "url": "business-home?r=t&release=b1&permissionsMVP=amend"
+      }, 
+      {
         "name": "SFD Home/Business Page (view permissions)",
         "url": "business-home?r=t&release=b1&permissionsMVP=view"
       }
+      
     ],
 
     "pagetitle": pageName,
@@ -33,7 +38,7 @@
     
     ],
     "notes": [
-      "Conditional link text: the text for 'View and update your business details' should change according to the permission level. See variants."
+      "Conditional link text: the visible link text for 'View and update your business details' should change according to the permission level. See variants. Note that full and amend permissions have the same link text."
       
     ]
     
@@ -84,81 +89,6 @@
 
   </div>
 </div>
-
-
-
-{% if data.release != "b1" %}
-<!-- PAYMENTS ROW -->
-<div class="govuk-grid-row">
-  
-  <div class="govuk-grid-column-two-thirds">
-
-    <!-- <h2 class="govuk-heading-m">Your payments</h2> -->
-
-    <!-- UPCOMING PAYMENTS CONTENT -->
-    <div class="callout-box " >
-      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
-        Next monthly payment
-      </p>
-      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
-        <strong>{{data.paymentsUpcoming[0].date}}</strong>
-      </p>
-      <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
-        <strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong>
-      </p>
-
-      <!-- <p class="govuk-body govuk-!-margin-bottom-2">
-        This is your total Defra funding for {{data.paymentsUpcoming[0].period}}. 
-      </p>
-      <p class="govuk-body govuk-!-margin-bottom-2">
-        The payment will be in your bank account ending 9276 within 2 working days of {{data.paymentsUpcoming[0].date}}. 
-      </p>
-      <p class="govuk-body"> 
-        Payment reference: {{data.paymentsUpcoming[0].reference}}.
-      </p> -->
-
-      <p class="govuk-body govuk-!-margin-bottom-5">
-        {% if data.paymentsUpcoming[0].status == "action" %}
-          <strong class="govuk-tag govuk-tag--red">
-            Action needed
-          </strong>
-          {% elif data.paymentsUpcoming[0].status == "expected" %}
-          <strong class="govuk-tag govuk-tag--blue">
-            Planned
-          </strong>
-          {% elif data.paymentsUpcoming[0].status == "confirmed" %}
-          <strong class="govuk-tag govuk-tag--green">
-            Confirmed
-          </strong>
-        {% endif %}
-      </p>
-
-      <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments">View all payments</a></p>
-
-      <!-- <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments-detail?payment={{data.paymentsUpcoming[0].id}}">View details<span class="govuk-visually-hidden"> for payment on {{data.paymentsUpcoming[0].date}}</span></a></p> -->
-      
-    </div>
-
-  </div>
-  
-  <div class="govuk-grid-column-one-third">
-
-    <h2 class="govuk-heading-m">Your tasks</h2>
-
-    <p class="govuk-body">
-      <strong class="govuk-tag govuk-tag--red">
-        Action needed
-      </strong>
-    </p>
-    <p class="govuk-body govuk-!-margin-bottom-">
-      <a href="business-payments-detail?payment=2" class="govuk-link govuk-link--no-visited-state">Provide evidence by 29 December 2024</a> for your February 2025 animal health and welfare review claim payment.
-    </p>
-
-    <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
-
-  </div>
-</div>
-{% endif %}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -213,6 +143,8 @@
     </h3>
     {% if data.permissionsMVP == "view" %}
     <p><a class="govuk-link--no-visited-state" href="details-business-details">View your business details</a></p> 
+    {% elif data.permissionsMVP == "amend" %}
+    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
     {% else %}
     <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
     {% endif %}
