@@ -40,6 +40,10 @@
       "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=view"
     },        
     {
+      "name": "no existing phone numbers - add",
+      "url": "details-business-details?r=t&release=b2&addNumberBus=empty&view=ext"
+    },
+    {
       "name": "Vendor registration number	- hidden",
       "url": "details-business-details?r=t&release=b1&vendorCount=0&view=ext"
     },
@@ -128,6 +132,10 @@
   "url": "details-business-details?r=t&view=int&release=b2",
   "release": "Buffalo 1.1 MVP",
   "variants": [
+    {
+      "name": "no existing phone numbers - add",
+      "url": "details-business-details?r=t&release=b2&addNumberBus=empty&view=int"
+    },
     {
       "name": "Vendor registration number	- hidden",
       "url": "details-business-details?r=t&release=b2&vendorCount=0&view=int"
@@ -335,6 +343,23 @@
         </dd>
         {% endif %}
       </div>
+      {% if data.addNumberBus == "empty"  %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key govuk-!-width-two-thirds">
+          Business phone numbers
+        </dt>
+        <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
+          Telephone: 
+            <span style="color:#505a5f">Not added</span>
+          <br>
+          Mobile: 
+            <span style="color:#505a5f">Not added</span>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change?newChange=true&addNumberBus=empty">Add<span class="govuk-visually-hidden"> business address</span></a>
+        </dd>
+      </div>
+      {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key govuk-!-width-two-thirds">
           Business phone numbers
@@ -366,6 +391,7 @@
         </dd>
         {% endif %}
       </div>
+      {% endif %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Business email address
