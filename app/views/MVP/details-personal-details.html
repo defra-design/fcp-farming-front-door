@@ -26,6 +26,10 @@
     "release": "Buffalo 1.0 MVP",
     "variants": [
       {
+        "name": "no existing phone numbers - add",
+        "url": "details-personal-details?r=t&release=b2&addNumberPers=empty&view=ext"
+      },    
+      {
         "name": "name changed banner",
         "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
       },
@@ -66,6 +70,10 @@
     "url": "details-personal-details?r=t&view=int&release=b2",
     "release": "Buffalo 1.1 MVP",
     "variants": [
+      {
+        "name": "no existing phone numbers - add",
+        "url": "details-personal-details?r=t&release=b2&addNumberPers=empty&view=int"
+      },    
       {
         "name": "name changed banner",
         "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
@@ -218,6 +226,23 @@
           <a class="govuk-link govuk-link--no-visited-state" href="personal-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> personal address</span></a>
         </dd>
       </div>
+      {% if data.addNumberPers == "empty"  %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Personal phone numbers
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Telephone: 
+            <span style="color:#505a5f">Not added</span>
+          <br>
+          Mobile: 
+            <span style="color:#505a5f">Not added</span>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-phone-change?addNumberPers=empty">Add<span class="govuk-visually-hidden"> personal phone numbers</span></a>
+        </dd>
+      </div>
+      {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Personal phone numbers
@@ -241,6 +266,7 @@
           <a class="govuk-link govuk-link--no-visited-state" href="personal-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> personal phone numbers</span></a>
         </dd>
       </div>
+      {% endif %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Personal email address

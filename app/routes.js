@@ -63,6 +63,8 @@ var _myData = {
     "regBus" : "true", // used to display the business list with businesses - or not
     "access" : "full",
     "permissionsMVP" : "full",
+    "addNumberBus" : "full",
+    "addNumberPers" : "full",
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }

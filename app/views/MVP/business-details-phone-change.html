@@ -193,9 +193,18 @@
           {% if _valueNewTelNumberBus == null %}
             {% set _valueNewTelNumberBus = myData.telNumberBus %}
           {% endif %}
+
+          {% if data.addNumberBus == "empty"  %}
+
+          <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.telNumberBus or myData.validationErrors.phoneNumbersBus %}govuk-input--error{% endif %}" id="telNumberBus" name="telNumberBus" type="tel" autocomplete="tel" value="" {% if myData.validationErrors.telNumberBus %}aria-describedby="telNumberBus-error"{% endif %} {% if myData.validationErrors.phoneNumbersBus %}aria-describedby="phoneNumbersBus-error"{% endif %}>
+        </div>
+
+          {% else %}
   
           <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.telNumberBus or myData.validationErrors.phoneNumbersBus %}govuk-input--error{% endif %}" id="telNumberBus" name="telNumberBus" type="tel" autocomplete="tel" value="{{_valueNewTelNumberBus}}" {% if myData.validationErrors.telNumberBus %}aria-describedby="telNumberBus-error"{% endif %} {% if myData.validationErrors.phoneNumbersBus %}aria-describedby="phoneNumbersBus-error"{% endif %}>
         </div>
+
+          {% endif %}
 
         <div class="govuk-form-group {% if myData.validationErrors.mobNumberBus %}govuk-form-group--error{% endif %}">
 
@@ -214,7 +223,15 @@
             {% set _valueNewMobNumberBus = myData.mobNumberBus %}
           {% endif %}
 
+          {% if data.addNumberBus == "empty"  %}
+
+          <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.mobNumberBus or myData.validationErrors.phoneNumbersBus %}govuk-input--error{% endif %}" id="mobNumberBus" name="mobNumberBus" type="tel" autocomplete="tel" value="" {% if myData.validationErrors.mobNumberBus %}aria-describedby="mobNumberBus-error"{% endif %} {% if myData.validationErrors.phoneNumbersBus %}aria-describedby="phoneNumbersBus-error"{% endif %}>
+
+          {% else %}
+  
           <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.mobNumberBus or myData.validationErrors.phoneNumbersBus %}govuk-input--error{% endif %}" id="mobNumberBus" name="mobNumberBus" type="tel" autocomplete="tel" value="{{_valueNewMobNumberBus}}" {% if myData.validationErrors.mobNumberBus %}aria-describedby="mobNumberBus-error"{% endif %} {% if myData.validationErrors.phoneNumbersBus %}aria-describedby="phoneNumbersBus-error"{% endif %}>
+
+          {% endif %}
 
         </div>
 
