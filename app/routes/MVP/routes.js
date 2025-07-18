@@ -178,23 +178,6 @@ module.exports = function (router,_myData) {
         });
     });
 
-    // business home - cookie banner
-
-        router.get('/' + version + '/business-home', function (req, res) {
-        req.session.myData.showCookieBanner1 = req.query.showCookieBanner1
-        req.session.myData.showCookieBanner2 = req.query.showCookieBanner2
-        req.session.myData.showCookieBanner3 = req.query.showCookieBanner3
-
-        if(req.query.changed == "true"){
-            req.session.myData.notifications.type = "success"
-            req.session.myData.showNotification = "true"
-            // req.session.myData.notifications.message = "You have updated your full name"
-        }
-        res.render(version + '/business-home', {
-            myData: req.session.myData
-        });
-    });
-
     // emma's test page
     router.get('/' + version + '/test-page', function (req, res) {
         req.session.myData.emmaserrors = req.query.emmaserrors
