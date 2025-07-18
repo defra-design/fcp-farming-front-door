@@ -6,9 +6,6 @@
 {% set pageName = "Your business" %}
 {% set serviceName = "Manage your land and farm businesses" %}
 
-{% set _showCookieBanner1 = myData.showCookieBanner1 %}
-{% set _showCookieBanner2 = myData.showCookieBanner2 %}
-{% set _showCookieBanner3 = myData.showCookieBanner3 %}
 
 {% if data.view == "ext" and data.release != "concept" %}
 
@@ -31,10 +28,6 @@
       {
         "name": "SFD Home/Business Page (view permissions)",
         "url": "business-home?r=t&release=b1&permissionsMVP=view"
-      }, 
-      {
-      "name": "Cookies banner - pre accept/reject",
-      "url": "business-home?r=t&release=b1&permissionsMVP=view&showCookieBanner1=true"
       }
       
     ],
