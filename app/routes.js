@@ -65,6 +65,7 @@ var _myData = {
     "permissionsMVP" : "full",
     "addNumberBus" : "full",
     "addNumberPers" : "full",
+    "addDOBPers" : "full",
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }

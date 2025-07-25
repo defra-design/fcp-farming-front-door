@@ -26,6 +26,10 @@
     "release": "Buffalo 1.0 MVP",
     "variants": [
       {
+        "name": "no existing DOB - add",
+        "url": "details-personal-details?r=t&release=b1&addDOBPers=empty&view=ext"
+      },    
+      {
         "name": "no existing phone numbers - add",
         "url": "details-personal-details?r=t&release=b1&addNumberPers=empty&view=ext"
       },    
@@ -70,6 +74,10 @@
     "url": "details-personal-details?r=t&view=int&release=b2",
     "release": "Buffalo 1.1 MVP",
     "variants": [
+      {
+        "name": "no existing DOB - add",
+        "url": "details-personal-details?r=t&release=b1&addDOBPers=empty&view=int"
+      },    
       {
         "name": "no existing phone numbers - add",
         "url": "details-personal-details?r=t&release=b1&addNumberPers=empty&view=int"
@@ -191,6 +199,19 @@
           <a class="govuk-link govuk-link--no-visited-state" href="personal-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> name</span></a>
         </dd>
       </div>
+      {% if data.addDOBPers == "empty" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Date of birth
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <span style="color:#505a5f">Not added</span>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-dob-change?newChange=true">Add<span class="govuk-visually-hidden"> date of birth</span></a>
+        </dd>
+      </div>
+      {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Date of birth
@@ -202,6 +223,7 @@
           <a class="govuk-link govuk-link--no-visited-state" href="personal-details-dob-change?newChange=true">Change<span class="govuk-visually-hidden"> date of birth</span></a>
         </dd>
       </div>
+      {% endif %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Customer reference number
