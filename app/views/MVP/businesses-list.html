@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 
-{% set _showFooterMVPLinks = true %}
+{% set _showDefraIDFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName="Your businesses" %}
@@ -33,7 +33,9 @@
 
     ],
     "notes": [
-      "This page should be served to all external users upon sign-in. It should either display a list of their linked businesses (even if they only have one registered business), or the empty state version (see Variations in the 'Links' section)"
+      "This page should be served to all external users upon sign-in. It should either display a list of their linked businesses (even if they only have one registered business), or the empty state version (see Variations in the 'Links' section)", 
+      "Assumption is that this will be DefraID owned. This has been prototyped for demos and user research. ", 
+      "The footer links shown on this page are specific to Defra ID."
     ]
     
   }

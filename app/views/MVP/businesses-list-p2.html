@@ -2,7 +2,7 @@
 
 {% set pageName = "Your businesses - page 2" %}
 
-{% set _showFooterMVPLinks = true %}
+{% set _showDefraIDFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set serviceName = "Manage your land and farm businesses" %}
@@ -30,7 +30,9 @@
       
     ],
     "notes": [
-      "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb."
+      "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb.", 
+      "Assumption is that this will be DefraID owned. This has been prototyped for demos and user research. ", 
+      "The footer links shown on this page are specific to Defra ID."
     ]
     
   }

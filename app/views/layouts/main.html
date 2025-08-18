@@ -160,6 +160,26 @@
     </ul>
     {% endif %}
 
+    {% if _showDefraIDFooterLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-bottom-8">
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/help" rel="noreferrer noopener" target="_blank">Help</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/privacy-notice" rel="noreferrer noopener" target="_blank">Privacy notice</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/terms-and-conditions" rel="noreferrer noopener" target="_blank">Terms and conditions</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/cookies" rel="noreferrer noopener" target="_blank">Cookies</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/accessibility" rel="noreferrer noopener" target="_blank">Accessibility</a>
+      </li>
+    </ul>
+    {% endif %}
+
     {% if _viewToggleLinks %}
       {{_viewToggleLinks|safe}}
     {% endif %}
