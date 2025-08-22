@@ -5,7 +5,7 @@
 
 {% set pageName="Your businesses" %}
 
-{% set serviceName = "Manage your land and farm businesses" %}
+{% set serviceName = "Land and farm service" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
 
@@ -33,7 +33,7 @@
 
     ],
     "notes": [
-      "This page should be served to all external users upon sign-in. It should either display a list of their linked businesses (even if they only have one registered business), or the empty state version (see Variations in the 'Links' section)", 
+      "This page should be served to all external users upon sign-in who have more than one business. If they only have one business, redirect them to bp02 (home/business page) for that single business upon sign-in.", 
       "Assumption is that this will be DefraID owned. This has been prototyped for demos and user research. ", 
       "The footer links shown on this page are specific to Defra ID."
     ]
@@ -138,12 +138,12 @@
 
     </div>
 
-    <div class="govuk-grid-column-one-third">
+    <!--<div class="govuk-grid-column-one-third">
       <h3 class="govuk-heading-m">
         Personal details
       </h3>
       <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 
-    </div>
+    </div>-->
 
   </div>
 
