@@ -5,7 +5,7 @@
 {% set _showDefraIDFooterLinks = true %}
 {% set _showReleaseLinks = false %}
 
-{% set serviceName = "Manage your land and farm businesses" %}
+{% set serviceName = "Land and farm service" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
 
@@ -30,7 +30,7 @@
       
     ],
     "notes": [
-      "If a user with multiple businesses linked navigates to a page requiring a selected business (e.g., bp02 or any bpxx page) without selecting one already in their session, redirect them to bp01 (Businesses list). This can happen naturally - for example, by visiting pd01 from bp01 and then clicking the Home breadcrumb.", 
+      "This page should be served to all external users upon sign-in who have more than one business. If they only have one business, redirect them to bp02 (home/business page) for that single business upon sign-in.", 
       "Assumption is that this will be DefraID owned. This has been prototyped for demos and user research. ", 
       "The footer links shown on this page are specific to Defra ID."
     ]
@@ -121,14 +121,14 @@
 
   </div>
 
-  <div class="govuk-grid-column-one-third">
+  <!--<div class="govuk-grid-column-one-third">
     {% if data.release == "b1" %}
     <h3 class="govuk-heading-m govuk-!-margin-top-4">
       Personal details
     </h3>
     <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 
     {% endif %}
-  </div>
+  </div>-->
 
 </div>
 
