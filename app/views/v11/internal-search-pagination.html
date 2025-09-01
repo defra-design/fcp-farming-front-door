@@ -1,0 +1,322 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Search results for a customer or business" %}
+
+
+{% set serviceName = "Land and farm service" %}
+
+{% set _showDesignSpec = true %}
+
+{% set _designSpecData = {
+
+    "name": "Search for a customer or business",
+    "id": "int-sr01c",
+    "url": "internal-search-pagination?r=t&view=int",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-sr01a. With results - example with Andrew",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    },
+    {
+      "name": "int-sr01b. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    },
+        {
+      "name": "int-sr01c. Results with pagination",
+      "url": "internal-search-pagination?view=int"
+    }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+      "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard/selecting 'Search'.",
+
+      "Allow users to enter more than one search term, separated by a space.",
+
+      "Allow users to enter a minimum of three characters to perform a search. Return results based on this, even where it returns a partial match.",
+
+      "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither.",
+
+      "Pagination should appear on any tab where there are more than 10 results. e.g. if there are 20 results in 'All', pagination should appear. Of those 20, if there are 5 'Customers', pagination should not appear. However, that leaves 15 for 'Businesses', where pagination would appear."
+    ]
+  }
+%}cd
+
+
+{% block beforeContent %}
+
+{% set _loginNavClasses = "no-bread" %}
+{% include "_common/login-nav-internal.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="GET">
+
+      <div class="govuk-form-group" data-list-search-filter >
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="search-internal">
+            Search for a customer or business
+          </label>
+        </h1>
+
+        <div class="govuk-hint">Enter a customer or business name, single business identifier (SBI), customer reference number (CRN), post code, trader number or vendor registration number</div>
+
+        <input type="search" value="fos" id="search-internal" name="q" title="Search" class="govuk-input" >
+
+      </div>
+
+      <button type="submit" class="govuk-button" >Search</button>
+
+    </form>
+
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="internal-search">Clear search</a></p>
+
+    <!-- Display counts -->
+    {% set _allResultsCount = data.internalSearchResults.length %}
+    {% set _busResultsCount = 0 %}
+    {% set _cusResultsCount = 0 %}
+    {% for _searchResult in data.internalSearchResults %}
+      {% if _searchResult.type == "bus" %}
+        {% set _busResultsCount = _busResultsCount + 1 %}
+      {% endif %}
+      {% if _searchResult.type == "cus" %}
+        {% set _cusResultsCount = _cusResultsCount + 1 %}
+      {% endif %}
+    {% endfor %}
+
+    <h2 class="govuk-heading-m">14 results for "fos"</h2>
+
+    <div class="govuk-tabs" >
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#past-day">
+            All
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#past-week">
+            Businesses (8)
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#past-month">
+            Customers (6)
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <ol class="govuk-list internal-list__search">
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">Andrew Fossden</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1509995431</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">10 Skirbeck Way, Maidstone</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">SK22 1DL</p>
+          </div>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">Braithwaite and Fossicle Ltd</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">SBI: 976544726</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">Smithfield Hall, Vootleton, near Harwick</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">HG3 8LP</p>
+          </div>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">Dafos Carey</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1102876541</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">Mill House, Shiplake</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">SH6 7KL</p>
+          </div>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">Fossil Holdings</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">SBI: 095674512</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">Marine House, The Mile, Westcliff-on-Sea</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">WR3 5TY</p>
+          </div>
+          <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+            <dt class="sfd-definition-list__title">Trader number</dt>
+            <dd class="sfd-definition-list__definition">
+              451963
+            </dd>
+          </dl>
+          <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+            <dt class="sfd-definition-list__title">Vendor number</dt>
+            <dd class="sfd-definition-list__definition">
+              537438
+            </dd>
+          </dl>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">The Foster Farm</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">SBI: 875346784</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">Foster Way, Mittenslake</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">MT67 9RX</p>
+          </div>
+          <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+            <dt class="sfd-definition-list__title">Trader number</dt>
+            <dd class="sfd-definition-list__definition">
+              876432
+            </dd>
+          </dl>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">Foster Pigs</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">SBI: 018563465</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">25 Oink Way, Darlington</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">DT3 4FC</p>
+          </div>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">Foster Smedwick</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1106547986</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">907 Urban Road, London</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">N2 7UR</p>
+          </div>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">FOSTER & SONS</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">SBI: 221097732</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">10 Skirbeck Way, Moretonhampstead</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">SK22 1DL</p>
+          </div>
+          <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+            <dt class="sfd-definition-list__title">Vendor number</dt>
+            <dd class="sfd-definition-list__definition">
+              855385
+            </dd>
+          </dl>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">John Foss</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1104689030</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">7 Clara Street, Middleton</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">VB4 6YU</p>
+          </div>
+        </li>
+
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              <a class="govuk-link govuk-link--no-visited-state" href="">John Foss</a>
+            </h3>
+          </header>
+            <p class="govuk-body govuk-!-margin-bottom-2">SBI: 636783444</p>
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">Spring Lane, Careyton</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">GL7 8UR</p>
+          </div>
+          <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+            <dt class="sfd-definition-list__title">Trader number</dt>
+            <dd class="sfd-definition-list__definition">
+              678934
+            </dd>
+          </dl>
+        </li>
+
+    <ol>
+
+      
+
+  </div>
+
+  
+</div>
+
+<nav class="govuk-pagination" aria-label="Pagination">
+  <ul class="govuk-pagination__list">
+    <li class="govuk-pagination__item govuk-pagination__item--current">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1" aria-current="page">
+        1
+      </a>
+    </li>
+    <li class="govuk-pagination__item">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2">
+        2
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+{% endblock %}

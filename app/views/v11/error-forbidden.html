@@ -1,0 +1,56 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "You do not have permission to access this page" %}
+{% set serviceName = "Land and farm service" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Forbidden (403)",
+  "id": "se04",
+  "url": "error-forbidden?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+       You do not have access to this service
+      </h1>
+
+      <p class="govuk-body">
+        You must be signed in to access this service.
+      </p>
+
+      <p class="govuk-body">
+        <a href="start-sfd-sign-in" class="govuk-link govuk-link--no-visited-state">Sign into Land and farm service</a>.
+      </p>
+
+  </div>
+</div>
+
+
+{% endblock %}
