@@ -1,0 +1,279 @@
+{% extends "layouts/main.html" %}
+
+{% if myData.searchapplied and myData.searchTerm == "andrew" %}
+  {% set pageName = "Search results for a customer or business" %}
+{% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
+  {% set pageName = "No search results for a customer or business" %}
+{% else %}
+  {% set pageName = "Search for a customer or business" %}
+{% endif %}
+
+{% set serviceName = "Land and farm service" %}
+
+{% set _showDesignSpec = true %}
+{% if myData.searchapplied and myData.searchTerm == "andrew" %}
+  {% set _designSpecData = {
+
+    "name": "Search for a customer or business - (with results)",
+    "id": "int-sr01a",
+    "url": "internal-search?r=t&view=int",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-sr01a. With results - example with Andrew",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    },
+    {
+      "name": "int-sr01b. No results found",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    },
+        {
+      "name": "int-sr01c. Results with pagination",
+      "url": "internal-search-pagination?view=int"
+    }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+      "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard/selecting 'Search'.",
+
+      "Allow users to enter more than one search term, separated by a space.",
+
+      "Allow users to enter a minimum of three characters to perform a search. Return results based on this, even where it returns a partial match.",
+
+      "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither.",
+
+      "Pagination should appear on any tab where there are more than 10 results. e.g. if there are 20 results in 'All', pagination should appear. Of those 20, if there are 5 'Customers', pagination should not appear. However, that leaves 15 for 'Businesses', where pagination would appear. See int-sr01c under 'Variations'."
+      ]
+  }
+  %}
+{% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
+  {% set _designSpecData = {
+
+    "name": "Search for a customer or business - (no results found)",
+    "id": "int-sr01b",
+    "url": "internal-search?view=int&internal-search&q=zeroresults",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-sr01a. With results - example with Andrew",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    },
+    {
+      "name": "int-sr01b. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    },
+        {
+      "name": "int-sr01c. Results with pagination",
+      "url": "internal-search-pagination?view=int"
+    }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+      "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard/selecting 'Search'.",
+
+      "Allow users to enter more than one search term, separated by a space.",
+
+      "Allow users to enter a minimum of three characters to perform a search. Return results based on this, even where it returns a partial match.",
+
+      "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither.",
+
+      "Pagination should appear on any tab where there are more than 10 results. e.g. if there are 20 results in 'All', pagination should appear. Of those 20, if there are 5 'Customers', pagination should not appear. However, that leaves 15 for 'Businesses', where pagination would appear. See int-sr01c under 'Variations'."
+      ]
+  }
+  %}
+{% else %}
+  {% set _designSpecData = {
+
+    "name": "Search for a customer or business",
+    "id": "int-sr01",
+    "url": "internal-search?r=t&view=int",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    {
+      "name": "int-sr01a. With results - example with Andrew",
+      "url": "internal-search?view=int&internal-search&q=andrew"
+    },
+    {
+      "name": "int-sr01b. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    },
+        {
+      "name": "int-sr01c. Results with pagination",
+      "url": "internal-search-pagination?view=int"
+    }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "notes": [
+      "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard/selecting 'Search'.",
+
+      "Allow users to enter more than one search term, separated by a space.",
+
+      "Allow users to enter a minimum of three characters to perform a search. Return results based on this, even where it returns a partial match.",
+
+      "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither.",
+
+      "Pagination should appear on any tab where there are more than 10 results. e.g. if there are 20 results in 'All', pagination should appear. Of those 20, if there are 5 'Customers', pagination should not appear. However, that leaves 15 for 'Businesses', where pagination would appear. See int-sr01c under 'Variations'."
+      ]
+  }
+  %}
+{% endif %}
+
+{% block beforeContent %}
+
+{% set _loginNavClasses = "no-bread" %}
+{% include "_common/login-nav-internal.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="internal-search" method="GET">
+
+      <div class="govuk-form-group" data-list-search-filter >
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="search-internal">
+            Search for a customer or business
+          </label>
+        </h1>
+
+        <div class="govuk-hint">Enter a customer or business name, single business identifier (SBI), customer reference number (CRN), post code, trader number or vendor registration number</div>
+
+        <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
+
+      </div>
+
+      <button type="submit" class="govuk-button" >Search</button>
+
+    </form>
+
+    {% if myData.searchapplied and myData.searchTerm != "zeroresults" %}
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="internal-search">Clear search</a></p>
+
+    <!-- Display counts -->
+    {% set _allResultsCount = data.internalSearchResults.length %}
+    {% set _busResultsCount = 0 %}
+    {% set _cusResultsCount = 0 %}
+    {% for _searchResult in data.internalSearchResults %}
+      {% if _searchResult.type == "bus" %}
+        {% set _busResultsCount = _busResultsCount + 1 %}
+      {% endif %}
+      {% if _searchResult.type == "cus" %}
+        {% set _cusResultsCount = _cusResultsCount + 1 %}
+      {% endif %}
+    {% endfor %}
+
+    <h2 class="govuk-heading-m">{{_allResultsCount}} results for "{{myData.searchTerm}}"</h2>
+
+    <div class="govuk-tabs" >
+      {% set _tabsList = [
+        {
+          "type": "all",
+          "label": "All"
+          
+        },
+        {
+          "type": "bus",
+          "label": "Businesses (" + _busResultsCount + ")"
+        },
+        {
+          "type": "cus",
+          "label": "Customers (" + _cusResultsCount + ")"
+        }
+      ]
+      %}
+
+      <!---
+      // for playing back the number of results 
+
+      {{data.busResults.length}}
+      {{data.users.length}}
+       -->
+
+      <ul class="govuk-tabs__list--internal" role="tablist">
+        {% for _tab in _tabsList %}
+        <li class="govuk-tabs__list-item--internal {% if myData.intSearchType == _tab.type %}govuk-tabs__list-item--internal-selected{% endif %}">
+          <a class="govuk-tabs__tab--internal govuk-link--no-visited-state" href="internal-search?q={{myData.searchTerm}}&intSearchType={{_tab.type}}" role="tab" {% if myData.intSearchType == _tab.type %}aria-selected="true"{% else %}aria-selected="false"{% endif %}>{{_tab.label}} <span class="govuk-visually-hidden">search results</span></a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <ol class="govuk-list internal-list__search">
+
+      {% for _searchResult in data.internalSearchResults %}
+
+        {% if 
+          myData.intSearchType == "all" 
+          or (myData.intSearchType == "bus" and _searchResult.type == "bus")
+          or (myData.intSearchType == "cus" and _searchResult.type == "cus")
+        %}
+
+        <li class="govuk-!-padding-top-6">
+          <header class="govuk-!-padding-bottom-0">
+            <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+              {% set _url = "internal-customer?intSearch=true&user=" + _searchResult.id %}
+              {% if _searchResult.type == "bus" %}
+                {% set _url = "internal-business?intSearch=true&business=" + _searchResult.id %}
+              {% endif %}
+              <a class="govuk-link govuk-link--no-visited-state" href="{{_url}}">{{_searchResult.name}}</a>
+            </h3>
+          </header>
+          {% if _searchResult.type == "bus" %}
+            <p class="govuk-body govuk-!-margin-bottom-2">SBI: {{_searchResult.sbiNumber}}</p>
+          {% else %}
+            <p class="govuk-body govuk-!-margin-bottom-2">CRN: {{_searchResult.crn}}</p>
+          {% endif %}
+          <div>
+            <p class="govuk-body govuk-!-margin-bottom-0">{{_searchResult.address}}</p>
+            <p class="govuk-body govuk-!-margin-bottom-2">{{_searchResult.postcode}}</p>
+          </div>
+          {% if _searchResult.type == "bus" %}
+          {% if not _searchResult.traderNumber %}
+          {% else %}
+          <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+            <dt class="sfd-definition-list__title">Trader number</dt>
+            <dd class="sfd-definition-list__definition">
+              {{_searchResult.traderNumber}}
+            </dd>
+          </dl>
+          {% endif %}
+          {% if not _searchResult.vrnNumber %}
+          {% else %}
+          <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+            <dt class="sfd-definition-list__title">Vendor number</dt>
+            <dd class="sfd-definition-list__definition">
+              {{_searchResult.vrnNumber}}
+            </dd>
+          </dl>
+          {% endif %}
+          {% endif %}
+        </li>
+        
+        {% endif %}
+
+      {% endfor %}
+
+    <ol>
+
+    {% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
+
+    <h2 class="govuk-heading-m">0 results for "{{myData.searchTerm}}"</h2>
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="internal-search">Clear search</a></p>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}
