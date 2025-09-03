@@ -2,7 +2,26 @@
 
 {% set pageName="Home" %}
 
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
 {% block content %}
+
+
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -118,79 +137,6 @@ Documents for Agile Farm </h1>
 
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">
-            <h3 class="govuk-heading-m"><a class="govuk-link--no-visited-state" href="v8/index">Version&nbsp;8</a></h3>
-          </th>
-          <td class="govuk-table__cell">
-            <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-1">
-              Tested
-            </strong><br>
-            Internal users: Round 1: 1 to 9 April 2025
-          </td>
-          <td class="govuk-table__cell">
-            <p class="govuk-!-margin-bottom-1">All changes agreed for the first release of Buffalo 1.0, for external users.</p>
-            <p class="govuk-!-margin-bottom-1">We also created the first design iterations for:</p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>internal user view, covering:</li>
-                <ul>
-                  <li>sign in</li>
-                  <li>search for a business or customer</li>
-                  <li>view and amend personal or business details</li>
-                </ul>
-              <li>messages for external users</li>
-            </ul>
-          </td>
-        </tr>
-
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">
-            <h3 class="govuk-heading-m"><a class="govuk-link--no-visited-state" href="v7/index">Version&nbsp;7</a></h3>
-          </th>
-          <td class="govuk-table__cell">
-            <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-1">
-              Tested
-            </strong><br>
-            Private Beta. <br>Round 2: <br>tested 17 to 26 February 2025
-          </td>
-          <td class="govuk-table__cell">
-            <p class="govuk-!-margin-bottom-1">Buffalo 1.0 MVP related changes:</p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>all pages required for first release prototyped</li>
-            </ul>
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">
-            <h3 class="govuk-heading-m"><a class="govuk-link--no-visited-state" href="v6/index">Version&nbsp;6</a></h3>
-          </th>
-          <td class="govuk-table__cell">
-            <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-1">
-              Tested
-            </strong><br>
-            Private Beta. <br>Round 1: <br>tested 16 to 20 December 2024
-          </td>
-          <td class="govuk-table__cell">
-            <p class="govuk-!-margin-bottom-1">Payments related changes:</p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>home page redesign to incorporate a route into payments</li>
-              <li>payments section
-                <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0 govuk-!-margin-top-0">
-                  <li>upcoming payments</li>
-                  <li>past payments</li>
-                  <li>individual payment details</li>
-                </ul>
-              </li>
-              <li>notifications: 
-                <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0 govuk-!-margin-top-0">
-                  <li>email (upcoming payment)</li>
-                  <li>text message (action required to prevent a delay to a payment)</li>
-                  <li>letter (action required to prevent a delay to a payment)</li>
-                </ul>
-              </li>
-            </ul>
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">
             <h3 class="govuk-heading-m"><a class="govuk-link--no-visited-state" href="to-be/v5/index">Version&nbsp;5</a></h3>
           </th>
           <td class="govuk-table__cell">
@@ -215,51 +161,7 @@ Documents for Agile Farm </h1>
             Alpaca: How the initial release might work
           </td>
         </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m"><a class="govuk-link--no-visited-state" href="to-be/v3/index">Version&nbsp;3</a></h3></th>
-          <td class="govuk-table__cell">
-            <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-1">
-              Tested
-            </strong><br>
-            Round 5: 30th Apr - 3rd May
-          </td>
-          <td class="govuk-table__cell">
-            Iterating version 2 after usability testing
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m"><a class="govuk-link--no-visited-state" href="to-be/v2/index">Version&nbsp;2</a></h3></th>
-          <td class="govuk-table__cell">
-            <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-1">
-              Tested
-            </strong><br>
-            Round 4: 17th - 19th Apr
-          </td>
-          <td class="govuk-table__cell">
-            Integrating SFD, the animal health and welfare review and RPS
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m"><a class="govuk-link--no-visited-state" href="to-be/v1/index">Version&nbsp;1</a></h3></th>
-          <td class="govuk-table__cell">
-            <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-1">
-              Tested
-            </strong><br>
-            Round 2: 6th - 11th Mar
-          </td>
-          <td class="govuk-table__cell">
-            Focus on messages, tasks and contact preferences
-          </td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><h3 class="govuk-heading-m"><a class="govuk-link--no-visited-state" href="to-be/exploration/index">Version&nbsp;0<br>(exploration)</a></h3></th>
-          <td class="govuk-table__cell">
-            &nbsp;
-          </td>
-          <td class="govuk-table__cell">
-            Exploration of various areas including: Landing page, Your account concept and update details, Single front door as a webpage concept, Messages and Handling double log-in issue.
-          </td>
-        </tr>
+       
       </tbody>
     </table>
 
