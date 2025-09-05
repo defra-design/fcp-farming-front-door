@@ -1,4 +1,3 @@
-const e = require("express");
 
 module.exports = function (router,_myData) {
 

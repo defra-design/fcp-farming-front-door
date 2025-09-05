@@ -1,11 +1,9 @@
-@import "base";
+@import "index";
 
-@import "core/all";
-@import "objects/all";
-
-@import "components/all";
-
-@import "utilities/all";
-@import "overrides/all";
+@include _warning(
+  "import-using-all",
+  "Importing using 'govuk/all' is deprecated. Update your import statement to import 'govuk/index'.",
+  $silence-further-warnings: false
+);
 
 /*# sourceMappingURL=all.scss.map */

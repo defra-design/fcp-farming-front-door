@@ -18,7 +18,8 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section\">Sub-section</a>\n    </li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section\">Sub-section</a>\n    </li>\n  </ol>\n</nav>"
         },
         {
             "name": "with one level",
@@ -33,7 +34,8 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n  </ol>\n</nav>"
         },
         {
             "name": "with multiple levels",
@@ -60,7 +62,8 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section\">Sub-section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section/sub-sub-section\">Sub Sub-section</a>\n    </li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section\">Sub-section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section/sub-sub-section\">Sub Sub-section</a>\n    </li>\n  </ol>\n</nav>"
         },
         {
             "name": "without the home section",
@@ -79,7 +82,8 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/service-manual\">Service Manual</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/service-manual/agile-delivery\">Agile Delivery</a>\n    </li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/service-manual\">Service Manual</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/service-manual/agile-delivery\">Agile Delivery</a>\n    </li>\n  </ol>\n</nav>"
         },
         {
             "name": "with last breadcrumb as current page",
@@ -101,7 +105,8 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/browse/abroad\">Passports, travel and living abroad</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Travel abroad</li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/browse/abroad\">Passports, travel and living abroad</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Travel abroad</li>\n  </ol>\n</nav>"
         },
         {
             "name": "with collapse on mobile",
@@ -125,7 +130,8 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs govuk-breadcrumbs--collapse-on-mobile\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/education\">Education, training and skills</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/education/special-educational-needs-and-disability-send-and-high-needs\">Special educational needs and disability (SEND) and high needs</a>\n    </li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs govuk-breadcrumbs--collapse-on-mobile\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/education\">Education, training and skills</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/education/special-educational-needs-and-disability-send-and-high-needs\">Special educational needs and disability (SEND) and high needs</a>\n    </li>\n  </ol>\n</nav>"
         },
         {
             "name": "inverse",
@@ -150,7 +156,8 @@
             "previewLayoutModifiers": [
                 "inverse"
             ],
-            "html": "<div class=\"govuk-breadcrumbs govuk-breadcrumbs--inverse\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/browse/abroad\">Passports, travel and living abroad</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Travel abroad</li>\n  </ol>\n</div>"
+            "screenshot": true,
+            "html": "<nav class=\"govuk-breadcrumbs govuk-breadcrumbs--inverse\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/browse/abroad\">Passports, travel and living abroad</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Travel abroad</li>\n  </ol>\n</nav>"
         },
         {
             "name": "classes",
@@ -165,14 +172,15 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs app-breadcrumbs--custom-modifier\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Home</li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs app-breadcrumbs--custom-modifier\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Home</li>\n  </ol>\n</nav>"
         },
         {
             "name": "attributes",
             "options": {
                 "attributes": {
                     "id": "my-navigation",
-                    "role": "navigation"
+                    "data-foo": "bar"
                 },
                 "items": [
                     {
@@ -183,7 +191,8 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\" id=\"my-navigation\" role=\"navigation\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Home</li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" id=\"my-navigation\" data-foo=\"bar\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Home</li>\n  </ol>\n</nav>"
         },
         {
             "name": "item attributes",
@@ -202,28 +211,35 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\" data-attribute=\"my-attribute\" data-attribute-2=\"my-attribute-2\">Section 1</a>\n    </li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\" data-attribute=\"my-attribute\" data-attribute-2=\"my-attribute-2\">Section 1</a>\n    </li>\n  </ol>\n</nav>"
         },
         {
             "name": "html as text",
             "options": {
                 "items": [
                     {
-                        "text": "<span>Section 1</span>"
+                        "text": "<span>Section 1</span>",
+                        "href": "/section-1"
+                    },
+                    {
+                        "text": "<span>Section 2</span>"
                     }
                 ]
             },
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">&lt;span&gt;Section 1&lt;/span&gt;</li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section-1\">&lt;span&gt;Section 1&lt;/span&gt;</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">&lt;span&gt;Section 2&lt;/span&gt;</li>\n  </ol>\n</nav>"
         },
         {
             "name": "html",
             "options": {
                 "items": [
                     {
-                        "html": "<em>Section 1</em>"
+                        "html": "<em>Section 1</em>",
+                        "href": "/section-1"
                     },
                     {
                         "html": "<em>Section 2</em>",
@@ -234,7 +250,29 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
-            "html": "<div class=\"govuk-breadcrumbs\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\"><em>Section 1</em></li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section-2\"><em>Section 2</em></a>\n    </li>\n  </ol>\n</div>"
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section-1\"><em>Section 1</em></a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section-2\"><em>Section 2</em></a>\n    </li>\n  </ol>\n</nav>"
+        },
+        {
+            "name": "custom label",
+            "options": {
+                "labelText": "Briwsion bara",
+                "items": [
+                    {
+                        "text": "Hafan",
+                        "href": "/"
+                    },
+                    {
+                        "text": "Sefydliadau",
+                        "href": "/organisations"
+                    }
+                ]
+            },
+            "hidden": true,
+            "description": "",
+            "previewLayoutModifiers": [],
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Briwsion bara\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Hafan</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/organisations\">Sefydliadau</a>\n    </li>\n  </ol>\n</nav>"
         }
     ]
 }

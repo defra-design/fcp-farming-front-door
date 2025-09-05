@@ -10,6 +10,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#test-target-element\" class=\"govuk-skip-link\" data-module=\"govuk-skip-link\">Skip to main content</a>"
         },
         {
@@ -22,6 +23,7 @@
             "hidden": false,
             "description": "Simulate triggering the :focus CSS pseudo-class, not available in the production build.",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#test-target-element\" class=\"govuk-skip-link :focus\" data-module=\"govuk-skip-link\">Skip to main content</a>"
         },
         {
@@ -32,6 +34,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#content\" class=\"govuk-skip-link\" data-module=\"govuk-skip-link\">Skip to main content</a>"
         },
         {
@@ -43,6 +46,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#custom\" class=\"govuk-skip-link\" data-module=\"govuk-skip-link\">Skip to custom content</a>"
         },
         {
@@ -53,6 +57,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#content\" class=\"govuk-skip-link\" data-module=\"govuk-skip-link\">skip</a>"
         },
         {
@@ -63,6 +68,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#content\" class=\"govuk-skip-link\" data-module=\"govuk-skip-link\">&lt;p&gt;skip&lt;/p&gt;</a>"
         },
         {
@@ -73,6 +79,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#content\" class=\"govuk-skip-link\" data-module=\"govuk-skip-link\"><p>skip</p></a>"
         },
         {
@@ -84,6 +91,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#content\" class=\"govuk-skip-link app-skip-link--custom-class\" data-module=\"govuk-skip-link\">Skip link</a>"
         },
         {
@@ -98,6 +106,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<a href=\"#content\" class=\"govuk-skip-link\" data-test=\"attribute\" aria-label=\"Skip to content\" data-module=\"govuk-skip-link\">Skip link</a>"
         }
     ]

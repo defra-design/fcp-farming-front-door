@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "@govuk-prototype-kit/common-templates": "2.0.1",
+    "@ministryofjustice/frontend": "^5.1.5",
     "@x-govuk/govuk-prototype-filters": "^1.4.3",
-    "govuk-frontend": "5.7.1",
-    "govuk-prototype-kit": "13.16.2",
+    "express": "^4.21.2",
+    "govuk-frontend": "5.11.2",
+    "govuk-prototype-kit": "13.18.0",
     "hmrc-frontend": "^6.78.0"
   }
 }

@@ -32,8 +32,8 @@
     {
         "name": "errorList",
         "type": "array",
-        "required": true,
-        "description": "The list of errors to include in the error summary.",
+        "required": false,
+        "description": "A list of errors to include in the error summary.",
         "params": [
             {
                 "name": "href",

@@ -6,42 +6,6 @@
             "options": {
                 "items": [
                     {
-                        "text": "Section",
-                        "href": "/section"
-                    },
-                    {
-                        "text": "Sub-section",
-                        "href": "/section/sub-section"
-                    }
-                ]
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section\">Sub-section</a>\n    </li>\n  </ol>\n</nav>"
-        },
-        {
-            "name": "with one level",
-            "options": {
-                "items": [
-                    {
-                        "text": "Section",
-                        "href": "/section"
-                    }
-                ]
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n  </ol>\n</nav>"
-        },
-        {
-            "name": "with multiple levels",
-            "options": {
-                "items": [
-                    {
                         "text": "Home",
                         "href": "/"
                     },
@@ -61,9 +25,25 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section\">Sub-section</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section/sub-section/sub-sub-section\">Sub Sub-section</a>\n    </li>\n  </ol>\n</nav>"
+        },
+        {
+            "name": "with one level",
+            "options": {
+                "items": [
+                    {
+                        "text": "Section",
+                        "href": "/section"
+                    }
+                ]
+            },
+            "hidden": false,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\">Section</a>\n    </li>\n  </ol>\n</nav>"
         },
         {
             "name": "without the home section",
@@ -81,7 +61,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/service-manual\">Service Manual</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/service-manual/agile-delivery\">Agile Delivery</a>\n    </li>\n  </ol>\n</nav>"
         },
@@ -104,7 +84,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/browse/abroad\">Passports, travel and living abroad</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Travel abroad</li>\n  </ol>\n</nav>"
         },
@@ -129,8 +109,8 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<nav class=\"govuk-breadcrumbs govuk-breadcrumbs--collapse-on-mobile\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/education\">Education, training and skills</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/education/special-educational-needs-and-disability-send-and-high-needs\">Special educational needs and disability (SEND) and high needs</a>\n    </li>\n  </ol>\n</nav>"
         },
         {
@@ -153,9 +133,9 @@
             },
             "hidden": false,
             "description": "Breadcrumbs that appear on dark backgrounds",
-            "previewLayoutModifiers": [
-                "inverse"
-            ],
+            "pageTemplateOptions": {
+                "bodyClasses": "app-template__body--inverse"
+            },
             "screenshot": true,
             "html": "<nav class=\"govuk-breadcrumbs govuk-breadcrumbs--inverse\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Home</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/browse/abroad\">Passports, travel and living abroad</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Travel abroad</li>\n  </ol>\n</nav>"
         },
@@ -171,7 +151,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<nav class=\"govuk-breadcrumbs app-breadcrumbs--custom-modifier\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Home</li>\n  </ol>\n</nav>"
         },
@@ -190,7 +170,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<nav class=\"govuk-breadcrumbs\" id=\"my-navigation\" data-foo=\"bar\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">Home</li>\n  </ol>\n</nav>"
         },
@@ -210,7 +190,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section\" data-attribute=\"my-attribute\" data-attribute-2=\"my-attribute-2\">Section 1</a>\n    </li>\n  </ol>\n</nav>"
         },
@@ -229,7 +209,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section-1\">&lt;span&gt;Section 1&lt;/span&gt;</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\" aria-current=\"page\">&lt;span&gt;Section 2&lt;/span&gt;</li>\n  </ol>\n</nav>"
         },
@@ -249,7 +229,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section-1\"><em>Section 1</em></a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/section-2\"><em>Section 2</em></a>\n    </li>\n  </ol>\n</nav>"
         },
@@ -270,7 +250,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<nav class=\"govuk-breadcrumbs\" aria-label=\"Briwsion bara\">\n  <ol class=\"govuk-breadcrumbs__list\">\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/\">Hafan</a>\n    </li>\n    <li class=\"govuk-breadcrumbs__list-item\">\n      <a class=\"govuk-breadcrumbs__link\" href=\"/organisations\">Sefydliadau</a>\n    </li>\n  </ol>\n</nav>"
         }

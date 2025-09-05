@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/moj/utilities/_width-container.scss"],"names":[],"mappings":"AAAA,sCAAsC;;AAEtC;EACE,4BAA4B;AAC9B","file":"_width-container.scss","sourcesContent":["@use \"../objects/width-container\" as *;\n\n.moj-width-container {\n  @include moj-width-container;\n}\n"]}

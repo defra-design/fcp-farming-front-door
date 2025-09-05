@@ -7,14 +7,13 @@
                 "label": {
                     "text": "National Insurance number"
                 },
-                "id": "input-example",
                 "name": "test-name"
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-example\">\n    National Insurance number\n  </label>\n  <input class=\"govuk-input\" id=\"input-example\" name=\"test-name\" type=\"text\">\n</div>"
+            "pageTemplateOptions": {},
+            "screenshot": true,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"test-name\">\n    National Insurance number\n  </label>\n  <input class=\"govuk-input\" id=\"test-name\" name=\"test-name\" type=\"text\">\n</div>"
         },
         {
             "name": "with hint text",
@@ -30,7 +29,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-hint-text\">\n    National insurance number\n  </label>\n  <div id=\"input-with-hint-text-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input\" id=\"input-with-hint-text\" name=\"test-name-2\" type=\"text\" aria-describedby=\"input-with-hint-text-hint\">\n</div>"
         },
@@ -48,7 +47,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"input-with-error-message\">\n    National Insurance number\n  </label>\n  <p id=\"input-with-error-message-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> Enter a National Insurance number in the correct format\n  </p>\n  <input class=\"govuk-input govuk-input--error\" id=\"input-with-error-message\" name=\"test-name-3\" type=\"text\" aria-describedby=\"input-with-error-message-error\">\n</div>"
         },
@@ -69,7 +68,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"with-error-hint\">\n    National insurance number\n  </label>\n  <div id=\"with-error-hint-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <p id=\"with-error-hint-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> Enter a National Insurance number in the correct format\n  </p>\n  <input class=\"govuk-input govuk-input--error\" id=\"with-error-hint\" name=\"with-error-hint\" type=\"text\" aria-describedby=\"with-error-hint-hint with-error-hint-error\">\n</div>"
         },
@@ -88,7 +87,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-width-2\">\n    National insurance number\n  </label>\n  <div id=\"input-width-2-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input govuk-input--width-2\" id=\"input-width-2\" name=\"test-width-2\" type=\"text\" aria-describedby=\"input-width-2-hint\">\n</div>"
         },
@@ -107,7 +106,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-width-3\">\n    National insurance number\n  </label>\n  <div id=\"input-width-3-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input govuk-input--width-3\" id=\"input-width-3\" name=\"test-width-3\" type=\"text\" aria-describedby=\"input-width-3-hint\">\n</div>"
         },
@@ -126,7 +125,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-width-4\">\n    National insurance number\n  </label>\n  <div id=\"input-width-4-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input govuk-input--width-4\" id=\"input-width-4\" name=\"test-width-4\" type=\"text\" aria-describedby=\"input-width-4-hint\">\n</div>"
         },
@@ -145,7 +144,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-width-5\">\n    National insurance number\n  </label>\n  <div id=\"input-width-5-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input govuk-input--width-5\" id=\"input-width-5\" name=\"test-width-5\" type=\"text\" aria-describedby=\"input-width-5-hint\">\n</div>"
         },
@@ -164,7 +163,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-width-10\">\n    National insurance number\n  </label>\n  <div id=\"input-width-10-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input govuk-input--width-10\" id=\"input-width-10\" name=\"test-width-10\" type=\"text\" aria-describedby=\"input-width-10-hint\">\n</div>"
         },
@@ -183,7 +182,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-width-20\">\n    National insurance number\n  </label>\n  <div id=\"input-width-20-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input govuk-input--width-20\" id=\"input-width-20\" name=\"test-width-20\" type=\"text\" aria-describedby=\"input-width-20-hint\">\n</div>"
         },
@@ -202,7 +201,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-width-30\">\n    National insurance number\n  </label>\n  <div id=\"input-width-30-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input govuk-input--width-30\" id=\"input-width-30\" name=\"test-width-30\" type=\"text\" aria-describedby=\"input-width-30-hint\">\n</div>"
         },
@@ -219,126 +218,9 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <h1 class=\"govuk-label-wrapper\">\n    <label class=\"govuk-label govuk-label--l\" for=\"input-with-page-heading\">\n      National Insurance number\n    </label>\n  </h1>\n  <input class=\"govuk-input\" id=\"input-with-page-heading\" name=\"test-name\" type=\"text\">\n</div>"
-        },
-        {
-            "name": "with optional form-group classes",
-            "options": {
-                "label": {
-                    "text": "National Insurance number"
-                },
-                "id": "input-example",
-                "name": "test-name",
-                "formGroup": {
-                    "classes": "extra-class"
-                }
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group extra-class\">\n  <label class=\"govuk-label\" for=\"input-example\">\n    National Insurance number\n  </label>\n  <input class=\"govuk-input\" id=\"input-example\" name=\"test-name\" type=\"text\">\n</div>"
-        },
-        {
-            "name": "with autocomplete attribute",
-            "options": {
-                "label": {
-                    "text": "Postcode"
-                },
-                "id": "input-with-autocomplete-attribute",
-                "name": "postcode",
-                "autocomplete": "postal-code"
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-autocomplete-attribute\">\n    Postcode\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-autocomplete-attribute\" name=\"postcode\" type=\"text\" autocomplete=\"postal-code\">\n</div>"
-        },
-        {
-            "name": "with pattern attribute",
-            "options": {
-                "label": {
-                    "text": "Numbers only"
-                },
-                "id": "input-with-pattern-attribute",
-                "name": "numbers-only",
-                "type": "number",
-                "pattern": "[0-9]*"
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-pattern-attribute\">\n    Numbers only\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-pattern-attribute\" name=\"numbers-only\" type=\"number\" pattern=\"[0-9]*\">\n</div>"
-        },
-        {
-            "name": "with spellcheck enabled",
-            "options": {
-                "label": {
-                    "text": "Spellcheck is enabled"
-                },
-                "id": "input-with-spellcheck-enabled",
-                "name": "spellcheck",
-                "type": "text",
-                "spellcheck": true
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-spellcheck-enabled\">\n    Spellcheck is enabled\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-spellcheck-enabled\" name=\"spellcheck\" type=\"text\" spellcheck=\"true\">\n</div>"
-        },
-        {
-            "name": "with spellcheck disabled",
-            "options": {
-                "label": {
-                    "text": "Spellcheck is disabled"
-                },
-                "id": "input-with-spellcheck-disabled",
-                "name": "spellcheck",
-                "type": "text",
-                "spellcheck": false
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-spellcheck-disabled\">\n    Spellcheck is disabled\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-spellcheck-disabled\" name=\"spellcheck\" type=\"text\" spellcheck=\"false\">\n</div>"
-        },
-        {
-            "name": "with autocapitalize turned off",
-            "options": {
-                "label": {
-                    "text": "Autocapitalize is turned off"
-                },
-                "id": "input-with-autocapitalize-off",
-                "name": "autocapitalize",
-                "type": "text",
-                "autocapitalize": "none"
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-autocapitalize-off\">\n    Autocapitalize is turned off\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-autocapitalize-off\" name=\"autocapitalize\" type=\"text\" autocapitalize=\"none\">\n</div>"
-        },
-        {
-            "name": "disabled",
-            "options": {
-                "label": {
-                    "text": "Disabled input"
-                },
-                "id": "disabled-input",
-                "disabled": true
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"disabled-input\">\n    Disabled input\n  </label>\n  <input class=\"govuk-input\" id=\"disabled-input\" name=\"\" type=\"text\" disabled>\n</div>"
         },
         {
             "name": "with prefix",
@@ -354,7 +236,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-prefix\">\n    Amount, in pounds\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\">£</div>\n    <input class=\"govuk-input\" id=\"input-with-prefix\" name=\"amount\" type=\"text\">\n  </div>\n</div>"
         },
@@ -372,7 +254,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-suffix\">\n    Weight, in kilograms\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <input class=\"govuk-input\" id=\"input-with-suffix\" name=\"weight\" type=\"text\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\">kg</div>\n  </div>\n</div>"
         },
@@ -393,30 +275,9 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-prefix-suffix\">\n    Cost per item, in pounds\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\">£</div>\n    <input class=\"govuk-input\" id=\"input-with-prefix-suffix\" name=\"cost\" type=\"text\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\">per item</div>\n  </div>\n</div>"
-        },
-        {
-            "name": "with prefix and long suffix",
-            "options": {
-                "label": {
-                    "text": "Cost per item, in pounds, per household member"
-                },
-                "id": "input-with-prefix-suffix",
-                "name": "cost",
-                "prefix": {
-                    "text": "£"
-                },
-                "suffix": {
-                    "text": "per household member"
-                }
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-prefix-suffix\">\n    Cost per item, in pounds, per household member\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\">£</div>\n    <input class=\"govuk-input\" id=\"input-with-prefix-suffix\" name=\"cost\" type=\"text\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\">per household member</div>\n  </div>\n</div>"
         },
         {
             "name": "with prefix and suffix and error",
@@ -438,7 +299,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"input-with-prefix-suffix\">\n    Cost per item, in pounds\n  </label>\n  <p id=\"input-with-prefix-suffix-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> Error message goes here\n  </p>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\">£</div>\n    <input class=\"govuk-input govuk-input--error\" id=\"input-with-prefix-suffix\" name=\"cost\" type=\"text\" aria-describedby=\"input-with-prefix-suffix-error\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\">per item</div>\n  </div>\n</div>"
         },
@@ -460,7 +321,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-prefix-suffix\">\n    Cost per item, in pounds\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\">£</div>\n    <input class=\"govuk-input govuk-input--width-5\" id=\"input-with-prefix-suffix\" name=\"cost\" type=\"text\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\">per item</div>\n  </div>\n</div>"
         },
@@ -476,8 +337,8 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-extra-letter-spacing\">\n    National insurance number\n  </label>\n  <input class=\"govuk-input govuk-input--width-30 govuk-input--extra-letter-spacing\" id=\"input-with-extra-letter-spacing\" name=\"\" type=\"text\" value=\"QQ 12 34 56 C\">\n</div>"
         },
         {
@@ -492,9 +353,24 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-classes\">\n    With classes\n  </label>\n  <input class=\"govuk-input app-input--custom-modifier\" id=\"with-classes\" name=\"with-classes\" type=\"text\">\n</div>"
+        },
+        {
+            "name": "id",
+            "options": {
+                "id": "input-id",
+                "name": "testing-name",
+                "label": {
+                    "text": "With custom id"
+                }
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-id\">\n    With custom id\n  </label>\n  <input class=\"govuk-input\" id=\"input-id\" name=\"testing-name\" type=\"text\">\n</div>"
         },
         {
             "name": "custom type",
@@ -508,7 +384,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-custom-type\">\n    With custom type\n  </label>\n  <input class=\"govuk-input\" id=\"with-custom-type\" name=\"with-custom-type\" type=\"number\">\n</div>"
         },
@@ -524,7 +400,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-value\">\n    With value\n  </label>\n  <input class=\"govuk-input\" id=\"with-value\" name=\"with-value\" type=\"text\" value=\"QQ 12 34 56 C\">\n</div>"
         },
@@ -540,7 +416,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-zero-value\">\n    With zero value\n  </label>\n  <input class=\"govuk-input\" id=\"with-zero-value\" name=\"with-zero-value\" type=\"text\" value=\"0\">\n</div>"
         },
@@ -556,7 +432,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-describedby\">\n    With describedBy\n  </label>\n  <input class=\"govuk-input\" id=\"with-describedby\" name=\"with-describedby\" type=\"text\" aria-describedby=\"test-target-element\">\n</div>"
         },
@@ -574,7 +450,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-attributes\">\n    With attributes\n  </label>\n  <input class=\"govuk-input\" id=\"with-attributes\" name=\"with-attributes\" type=\"text\" data-attribute=\"my data value\">\n</div>"
         },
@@ -593,7 +469,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-hint-describedby\">\n    With hint describedBy\n  </label>\n  <div id=\"with-hint-describedby-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <input class=\"govuk-input\" id=\"with-hint-describedby\" name=\"with-hint-describedby\" type=\"text\" aria-describedby=\"test-target-element with-hint-describedby-hint\">\n</div>"
         },
@@ -612,7 +488,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"with-error-describedby\">\n    With error describedBy\n  </label>\n  <p id=\"with-error-describedby-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> Error message\n  </p>\n  <input class=\"govuk-input govuk-input--error\" id=\"with-error-describedby\" name=\"with-error-describedby\" type=\"text\" aria-describedby=\"test-target-element with-error-describedby-error\">\n</div>"
         },
@@ -634,7 +510,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"with-error-hint-describedby\">\n    With error, hint and describedBy\n  </label>\n  <div id=\"with-error-hint-describedby-hint\" class=\"govuk-hint\">\n    Hint\n  </div>\n  <p id=\"with-error-hint-describedby-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> Error message\n  </p>\n  <input class=\"govuk-input govuk-input--error\" id=\"with-error-hint-describedby\" name=\"with-error-hint-describedby\" type=\"text\" aria-describedby=\"test-target-element with-error-hint-describedby-hint with-error-hint-describedby-error\">\n</div>"
         },
@@ -650,7 +526,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-inputmode\">\n    With inputmode\n  </label>\n  <input class=\"govuk-input\" id=\"with-inputmode\" name=\"with-inputmode\" type=\"text\" inputmode=\"decimal\">\n</div>"
         },
@@ -668,7 +544,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-prefix\">\n    Amount, in pounds\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\">&lt;span&gt;£&lt;/span&gt;</div>\n    <input class=\"govuk-input\" id=\"input-with-prefix\" name=\"amount\" type=\"text\">\n  </div>\n</div>"
         },
@@ -686,7 +562,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-prefix\">\n    Amount, in pounds\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\"><span>£</span></div>\n    <input class=\"govuk-input\" id=\"input-with-prefix\" name=\"amount\" type=\"text\">\n  </div>\n</div>"
         },
@@ -705,7 +581,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-prefix-element\">\n    Amount, in pounds\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix app-input__prefix--custom-modifier\" aria-hidden=\"true\">£</div>\n    <input class=\"govuk-input\" id=\"input-with-prefix-element\" name=\"amount\" type=\"text\">\n  </div>\n</div>"
         },
@@ -726,7 +602,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-prefix-element\">\n    Amount, in pounds\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\" data-attribute=\"value\">£</div>\n    <input class=\"govuk-input\" id=\"input-with-prefix-element\" name=\"amount\" type=\"text\">\n  </div>\n</div>"
         },
@@ -744,7 +620,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-suffix\">\n    Weight, in kilograms\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <input class=\"govuk-input\" id=\"input-with-suffix\" name=\"weight\" type=\"text\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\">&lt;span&gt;kg&lt;/span&gt;</div>\n  </div>\n</div>"
         },
@@ -762,7 +638,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-suffix\">\n    Weight, in kilograms\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <input class=\"govuk-input\" id=\"input-with-suffix\" name=\"weight\" type=\"text\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\"><span>kg</span></div>\n  </div>\n</div>"
         },
@@ -781,7 +657,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-suffix\">\n    Weight, in kilograms\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <input class=\"govuk-input\" id=\"input-with-suffix\" name=\"weight\" type=\"text\">\n    <div class=\"govuk-input__suffix app-input__suffix--custom-modifier\" aria-hidden=\"true\"><span>kg</span></div>\n  </div>\n</div>"
         },
@@ -802,7 +678,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-suffix\">\n    Weight, in kilograms\n  </label>\n  <div class=\"govuk-input__wrapper\">\n    <input class=\"govuk-input\" id=\"input-with-suffix\" name=\"weight\" type=\"text\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\" data-attribute=\"value\"><span>kg</span></div>\n  </div>\n</div>"
         },
@@ -829,9 +705,126 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-customised-input-wrapper\">\n    Cost per item, in pounds\n  </label>\n  <div class=\"govuk-input__wrapper app-input-wrapper--custom-modifier\" data-attribute=\"value\">\n    <div class=\"govuk-input__prefix\" aria-hidden=\"true\">£</div>\n    <input class=\"govuk-input\" id=\"input-with-customised-input-wrapper\" name=\"cost\" type=\"text\">\n    <div class=\"govuk-input__suffix\" aria-hidden=\"true\">per item</div>\n  </div>\n</div>"
+        },
+        {
+            "name": "with optional form-group classes",
+            "options": {
+                "label": {
+                    "text": "National Insurance number"
+                },
+                "id": "input-example",
+                "name": "test-name",
+                "formGroup": {
+                    "classes": "extra-class"
+                }
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group extra-class\">\n  <label class=\"govuk-label\" for=\"input-example\">\n    National Insurance number\n  </label>\n  <input class=\"govuk-input\" id=\"input-example\" name=\"test-name\" type=\"text\">\n</div>"
+        },
+        {
+            "name": "with autocomplete attribute",
+            "options": {
+                "label": {
+                    "text": "Postcode"
+                },
+                "id": "input-with-autocomplete-attribute",
+                "name": "postcode",
+                "autocomplete": "postal-code"
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-autocomplete-attribute\">\n    Postcode\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-autocomplete-attribute\" name=\"postcode\" type=\"text\" autocomplete=\"postal-code\">\n</div>"
+        },
+        {
+            "name": "with pattern attribute",
+            "options": {
+                "label": {
+                    "text": "Numbers only"
+                },
+                "id": "input-with-pattern-attribute",
+                "name": "numbers-only",
+                "type": "number",
+                "pattern": "[0-9]*"
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-pattern-attribute\">\n    Numbers only\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-pattern-attribute\" name=\"numbers-only\" type=\"number\" pattern=\"[0-9]*\">\n</div>"
+        },
+        {
+            "name": "with spellcheck enabled",
+            "options": {
+                "label": {
+                    "text": "Spellcheck is enabled"
+                },
+                "id": "input-with-spellcheck-enabled",
+                "name": "spellcheck",
+                "type": "text",
+                "spellcheck": true
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-spellcheck-enabled\">\n    Spellcheck is enabled\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-spellcheck-enabled\" name=\"spellcheck\" type=\"text\" spellcheck=\"true\">\n</div>"
+        },
+        {
+            "name": "with spellcheck disabled",
+            "options": {
+                "label": {
+                    "text": "Spellcheck is disabled"
+                },
+                "id": "input-with-spellcheck-disabled",
+                "name": "spellcheck",
+                "type": "text",
+                "spellcheck": false
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-spellcheck-disabled\">\n    Spellcheck is disabled\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-spellcheck-disabled\" name=\"spellcheck\" type=\"text\" spellcheck=\"false\">\n</div>"
+        },
+        {
+            "name": "with autocapitalize turned off",
+            "options": {
+                "label": {
+                    "text": "Autocapitalize is turned off"
+                },
+                "id": "input-with-autocapitalize-off",
+                "name": "autocapitalize",
+                "type": "text",
+                "autocapitalize": "none"
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"input-with-autocapitalize-off\">\n    Autocapitalize is turned off\n  </label>\n  <input class=\"govuk-input\" id=\"input-with-autocapitalize-off\" name=\"autocapitalize\" type=\"text\" autocapitalize=\"none\">\n</div>"
+        },
+        {
+            "name": "disabled",
+            "options": {
+                "label": {
+                    "text": "Disabled input"
+                },
+                "id": "disabled-input",
+                "disabled": true
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"disabled-input\">\n    Disabled input\n  </label>\n  <input class=\"govuk-input\" id=\"disabled-input\" name=\"\" type=\"text\" disabled>\n</div>"
         }
     ]
 }

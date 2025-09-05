@@ -1,13 +1,13 @@
-import { getBreakpoint, getFragmentFromUrl } from '../../common/index.mjs';
+import { getBreakpoint } from '../../common/index.mjs';
+import { Component } from '../../component.mjs';
 import { ElementError } from '../../errors/index.mjs';
-import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
 
 /**
  * Tabs component
  *
  * @preserve
  */
-class Tabs extends GOVUKFrontendComponent {
+class Tabs extends Component {
   /**
    * @param {Element | null} $root - HTML element to use for tabs
    */
@@ -133,7 +133,7 @@ class Tabs extends GOVUKFrontendComponent {
     return this.$root.querySelector(`a.govuk-tabs__tab[href="${hash}"]`);
   }
   setAttributes($tab) {
-    const panelId = getFragmentFromUrl($tab.href);
+    const panelId = $tab.hash.replace('#', '');
     if (!panelId) {
       return;
     }
@@ -237,7 +237,7 @@ class Tabs extends GOVUKFrontendComponent {
     this.createHistoryEntry($previousTab);
   }
   getPanel($tab) {
-    const panelId = getFragmentFromUrl($tab.href);
+    const panelId = $tab.hash.replace('#', '');
     if (!panelId) {
       return null;
     }

@@ -1,14 +1,14 @@
-import { getFragmentFromUrl, setFocus } from '../../common/index.mjs';
+import { setFocus } from '../../common/index.mjs';
+import { Component } from '../../component.mjs';
 import { ElementError } from '../../errors/index.mjs';
-import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
 
 /**
  * Skip link component
  *
  * @preserve
- * @augments GOVUKFrontendComponent<HTMLAnchorElement>
+ * @augments Component<HTMLAnchorElement>
  */
-class SkipLink extends GOVUKFrontendComponent {
+class SkipLink extends Component {
   /**
    * @param {Element | null} $root - HTML element to use for skip link
    * @throws {ElementError} when $root is not set or the wrong type
@@ -20,16 +20,10 @@ class SkipLink extends GOVUKFrontendComponent {
     super($root);
     const hash = this.$root.hash;
     const href = (_this$$root$getAttrib = this.$root.getAttribute('href')) != null ? _this$$root$getAttrib : '';
-    let url;
-    try {
-      url = new window.URL(this.$root.href);
-    } catch (error) {
-      throw new ElementError(`Skip link: Target link (\`href="${href}"\`) is invalid`);
-    }
-    if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) {
+    if (this.$root.origin !== window.location.origin || this.$root.pathname !== window.location.pathname) {
       return;
     }
-    const linkedElementId = getFragmentFromUrl(hash);
+    const linkedElementId = hash.replace('#', '');
     if (!linkedElementId) {
       throw new ElementError(`Skip link: Target link (\`href="${href}"\`) has no hash fragment`);
     }

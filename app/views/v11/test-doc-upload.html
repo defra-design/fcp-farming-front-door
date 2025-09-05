@@ -1,0 +1,135 @@
+{% extends "layouts/main.html" %}
+
+{% block head %}
+
+{{ super() }}
+
+<script type="module" src="/public/javascripts/doc-upload.js"></script>
+
+{% endblock %}
+
+{% if data.view != "int" %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "You have signed out" %}
+{% set serviceName = "Land and farm service" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Signed out page",
+"id": "mp06",
+"url": "misc-signed-out?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+]
+
+}
+%}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">Upload files</h1>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span>
+        Keep your own copies of anything you send us.
+      </strong>
+    </div>
+
+    <p class="govuk-body">
+      You can upload up to 10 files in one batch.
+    </p>
+
+    <p class="govuk-body">
+      The size of each file must be less than 10MB, and files must be in one of these formats: doc, docx, docm, gif, jfif, jpeg, jpg, odt, pdf, pptx, tiff, txt, xls, xlsx, xlsm. If you’ve used standard settings and programmes on a phone, tablet, digital camera or computer, files will likely meet these requirements.
+    </p>
+
+    <p class="govuk-body">
+      Each file name must be unique, 20 characters or less, contain only letters and numbers, and contain no gaps.
+    </p>
+
+    <p class="govuk-body">
+      If you're sending files in relation to a grant or funding claim (Funding for farmers, growers and land managers).
+    </p>
+
+    <p class="govuk-body">
+      If documents do not meet the required standards, we may need to request further evidence from you, which could cause delays.
+    </p>
+
+    <form action="/components/multi-file-upload/examples/default" method="post" enctype="multipart/form-data">
+
+      <div class="moj-multi-file-upload" data-module="moj-multi-file-upload">
+        <div class="moj-multi-file__uploaded-files ">
+          <h2 class="govuk-heading-m">Files added</h2>
+          <div class="govuk-summary-list moj-multi-file-upload__list">
+
+          </div>
+        </div>
+
+        <div class="moj-multi-file-upload__upload">
+
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--m" for="documents">
+              Upload a file
+            </label>
+
+            <input class="govuk-file-upload moj-multi-file-upload__input" id="documents" name="documents" type="file"
+              multiple="">
+
+          </div>
+
+          <button type="submit" class="govuk-button govuk-button--secondary moj-multi-file-upload__button"
+            data-module="govuk-button">
+            Upload file
+          </button>
+
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+    
+  </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+
+<script type="module" src="/public/javascripts/govuk-frontend.min.js"></script>
+<script type="module" src="/public/javascripts/moj-frontend.min.js"></script>
+
+<script type="module">
+  import * as GOVUKFrontend from '/public/javascripts/govuk-frontend.min.js'
+  import * as MOJFrontend from '/public/javascripts/moj-frontend.min.js'
+
+  GOVUKFrontend.initAll()
+  MOJFrontend.initAll()
+</script>
+
+{% endblock %}

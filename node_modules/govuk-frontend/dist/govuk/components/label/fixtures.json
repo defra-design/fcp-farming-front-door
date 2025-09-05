@@ -8,8 +8,8 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<label class=\"govuk-label\">\n  National Insurance number\n</label>"
         },
         {
@@ -20,7 +20,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label govuk-label--s\">\n  National Insurance number\n</label>"
         },
@@ -32,7 +32,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label govuk-label--xl\">\n  National Insurance number\n</label>"
         },
@@ -44,7 +44,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label govuk-label--l\">\n  National Insurance number\n</label>"
         },
@@ -56,7 +56,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label govuk-label--m\">\n  National Insurance number\n</label>"
         },
@@ -68,7 +68,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label govuk-label--s\">\n  National Insurance number\n</label>"
         },
@@ -81,7 +81,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<h1 class=\"govuk-label-wrapper\">\n  <label class=\"govuk-label govuk-label--xl\">\n    National Insurance number\n  </label>\n</h1>"
         },
@@ -94,7 +94,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<h1 class=\"govuk-label-wrapper\">\n  <label class=\"govuk-label govuk-label--l\">\n    National Insurance number\n  </label>\n</h1>"
         },
@@ -107,7 +107,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<h1 class=\"govuk-label-wrapper\">\n  <label class=\"govuk-label govuk-label--m\">\n    National Insurance number\n  </label>\n</h1>"
         },
@@ -120,7 +120,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<h1 class=\"govuk-label-wrapper\">\n  <label class=\"govuk-label govuk-label--s\">\n    National Insurance number\n  </label>\n</h1>"
         },
@@ -132,7 +132,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<h1 class=\"govuk-label-wrapper\">\n  <label class=\"govuk-label\">\n    National Insurance number\n  </label>\n</h1>"
         },
@@ -141,7 +141,7 @@
             "options": {},
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": ""
         },
@@ -153,7 +153,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label extra-class one-more-class\">\n  National Insurance number\n</label>"
         },
@@ -164,7 +164,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label\">\n  National Insurance number, &lt;em&gt;NINO&lt;/em&gt;\n</label>"
         },
@@ -175,7 +175,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label\">\n  National Insurance number <em>NINO</em>\n</label>"
         },
@@ -187,7 +187,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label\" for=\"test-target-element\">\n  National Insurance number\n</label>"
         },
@@ -202,7 +202,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<label class=\"govuk-label\" first-attribute=\"foo\" second-attribute=\"bar\">\n  National Insurance number\n</label>"
         }
