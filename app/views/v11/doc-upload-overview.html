@@ -1,0 +1,251 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Uploaded documents" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <span class="govuk-caption-xl">Alfred Waldron</span>
+    <h1 class="govuk-heading-l">
+      Documents for Agile Farm Ltd </h1>
+
+    <p class="govuk-caption-m">Single business identifier (SBI): 123456789
+
+  </div>
+
+  <div class="govuk-grid-column-full">
+    <div class="govuk-inset-text">
+      Keep your own copies of anything you send us.
+    </div>
+
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+      Upload one or more documents
+    </button>
+
+    <h2 class="govuk-heading-m">Search and filters</h2>
+
+    <div class="govuk-form-group">
+      <div class="govuk-date-input__item">
+        <label class="govuk-label" for="width-20">
+          Search
+        </label>
+        <input class="govuk-input govuk-input--width-20" id="width-20" name="width20" type="text">
+      </div>
+
+      <div class="govuk-date-input__item">
+        <label class="govuk-label" for="sort">
+          Filter by subject
+        </label>
+        <select class="govuk-select" id="filtersubject" name="filtersubject" style="width: 10px">
+          <option value="Agreement" selected="selected"> </option>
+          <option value="published">Business change evidence</option>
+          <option value="updated">Complaint evidence</option>
+          <option value="comments">Funding or grant amendment, claim, declaration or evidence</option>
+          <option value="views">General appeal evidence</option>
+          <option value="comments">Probate evidence</option>
+        </select>
+      </div>
+
+      <div class="govuk-date-input__item">
+        <label class="govuk-label" for="sort">
+          Filter by tag
+        </label>
+        <select class="govuk-select" id="sort" name="sort" style="width: 20px">
+          <option value="Agreement" selected="selected"> </option>
+          <option value="Agreement">Agreement</option>
+          <option value="Amendment">Amendment</option>
+          <option value="Captial-claim">Captial claim</option>
+          <option value="Capital-grant-application">Capital grant application</option>
+          <option value="Claim">Claim</option>
+          <option value="CS">CS</option>
+          <option value="Declaration">Declaration</option>
+          <option value="CS">Delinked payments</option>
+          <option value="ES">ES</option>
+          <option value="Evidence">Evidence</option>
+          <option value="Facilitation-Fund">Facilitation Fund</option>
+          <option value="Grants">Grants</option>
+          <option value="Revenue-claim">Revenue claim</option>
+          <option value="SFI">SFI</option>
+          <option value="SFI-expanded-offer">SFI Expanded offer</option>
+          <option value="SFI-pilot">SFI pilot</option>
+          <option value="SFI23">SFI 23</option>
+        </select>
+      </div>
+    </div>
+    </fieldset>
+  </div>
+
+  <br><br>
+
+
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" style="width:20%">Date</th>
+          <th scope="col" class="govuk-table__header">Subject</th>
+          <th scope="col" class="govuk-table__header">File name</th>
+          <th scope="col" class="govuk-table__header">Submission reference</th>
+          <th scope="col" class="govuk-table__header">Action</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">17 September 2025</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">17 September 2025</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">15 August 2025</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">22 March 2025</td>
+          <td class="govuk-table__cell">Complaint</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">11 December 2024</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">18 June 2024</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">20 January 2024</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">12 October 2023</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">19 July 2022</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">30 April 2021</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell"><a href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    </tbody>
+    </table>
+<p class="govuk-body" style="text-align:right">Showing documents 1-10 of 28</p>
+
+    <nav class="govuk-pagination" aria-label="Pagination">
+      <div class="govuk-pagination__prev">
+        <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
+          <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg"
+            height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+            <path
+              d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z">
+            </path>
+          </svg>
+          <span class="govuk-pagination__link-title">
+            Previous<span class="govuk-visually-hidden"> page</span>
+          </span>
+        </a>
+      </div>
+      <ul class="govuk-pagination__list">
+        <li class="govuk-pagination__item">
+          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1">
+            1
+          </a>
+        </li>
+        <li class="govuk-pagination__item govuk-pagination__item--current">
+          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2" aria-current="page">
+            2
+          </a>
+        </li>
+        <li class="govuk-pagination__item">
+          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 3">
+            3
+          </a>
+        </li>
+       </ul>
+      <div class="govuk-pagination__next">
+        <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+          <span class="govuk-pagination__link-title">
+            Next<span class="govuk-visually-hidden"> page</span>
+          </span>
+          <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg"
+            height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+            <path
+              d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
+            </path>
+          </svg>
+        </a>
+       
+      </div>
+    </nav>
+
+
+
+  </div>
+
+
+</div>
+
+{% endblock %}
