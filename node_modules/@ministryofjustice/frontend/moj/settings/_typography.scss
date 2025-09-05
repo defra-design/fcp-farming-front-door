@@ -1,0 +1,15 @@
+@use "sass:list";
+
+/* ==========================================================================
+   #TYPOGRAPHY
+   ========================================================================== */
+
+/// Font families to use for all typography on screen media
+
+$moj-font-family: "GDS Transport", arial, sans-serif !default;
+
+/// Exclude @font-face declarations already included in GOV.UK Frontend
+
+$moj-include-default-font-face: false;
+
+/*# sourceMappingURL=_typography.scss.map */

@@ -1,12 +1,12 @@
+import { Component } from '../../component.mjs';
 import { ElementError } from '../../errors/index.mjs';
-import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
 
 /**
  * Radios component
  *
  * @preserve
  */
-class Radios extends GOVUKFrontendComponent {
+class Radios extends Component {
   /**
    * Radios can be associated with a 'conditionally revealed' content block –
    * for example, a radio for 'Phone' could reveal an additional form field for

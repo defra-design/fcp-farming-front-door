@@ -8,8 +8,8 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<p class=\"govuk-error-message\">\n  <span class=\"govuk-visually-hidden\">Error:</span> Error message about full name goes here\n</p>"
         },
         {
@@ -20,7 +20,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<p class=\"govuk-error-message\">\n  <span class=\"govuk-visually-hidden\">Gwall:</span> Neges gwall am yr enw llawn yn mynd yma\n</p>"
         },
@@ -32,7 +32,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<p id=\"my-error-message-id\" class=\"govuk-error-message\">\n  <span class=\"govuk-visually-hidden\">Error:</span> This is an error message\n</p>"
         },
@@ -44,7 +44,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<p class=\"govuk-error-message custom-class\">\n  <span class=\"govuk-visually-hidden\">Error:</span> This is an error message\n</p>"
         },
@@ -55,7 +55,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<p class=\"govuk-error-message\">\n  <span class=\"govuk-visually-hidden\">Error:</span> Unexpected &gt; in body\n</p>"
         },
@@ -66,7 +66,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<p class=\"govuk-error-message\">\n  <span class=\"govuk-visually-hidden\">Error:</span> Unexpected <b>bold text</b> in body copy\n</p>"
         },
@@ -81,7 +81,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<p class=\"govuk-error-message\" data-test=\"attribute\" id=\"my-error-message\">\n  <span class=\"govuk-visually-hidden\">Error:</span> This is an error message\n</p>"
         },
@@ -93,7 +93,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<p class=\"govuk-error-message\">\n  <span class=\"govuk-visually-hidden\">Gwall:</span> Rhowch eich enw llawn\n</p>"
         },
@@ -105,7 +105,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<p class=\"govuk-error-message\">\n  There is an error on line 42\n</p>"
         }

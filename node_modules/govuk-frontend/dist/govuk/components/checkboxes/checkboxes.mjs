@@ -1,12 +1,12 @@
+import { Component } from '../../component.mjs';
 import { ElementError } from '../../errors/index.mjs';
-import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
 
 /**
  * Checkboxes component
  *
  * @preserve
  */
-class Checkboxes extends GOVUKFrontendComponent {
+class Checkboxes extends Component {
   /**
    * Checkboxes can be associated with a 'conditionally revealed' content block
    * – for example, a checkbox for 'Phone' could reveal an additional form field

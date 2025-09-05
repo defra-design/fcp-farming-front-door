@@ -159,7 +159,7 @@
   // to be an even number in order to be centred under the 40px checkbox or radio.
   $conditional-border-width: $govuk-border-width-narrow;
   // Calculate the amount of padding needed to keep the border centered against the checkbox.
-  $conditional-border-padding: ($govuk-checkboxes-size / 2) - ($conditional-border-width / 2);
+  $conditional-border-padding: ($govuk-touch-target-size / 2) - ($conditional-border-width / 2);
   // Move the border centered with the checkbox
   $conditional-margin-left: $conditional-border-padding;
   // Move the contents of the conditional inline with the label
@@ -253,6 +253,11 @@
       $margin-left: ($govuk-small-checkboxes-size / 2) - ($conditional-border-width / 2);
       margin-left: $margin-left;
       padding-left: ($govuk-touch-target-size - $input-offset) - ($margin-left + $conditional-border-width);
+    }
+
+    .govuk-checkboxes__divider {
+      width: $govuk-small-checkboxes-size;
+      margin-bottom: govuk-spacing(1);
     }
 
     // Hover state for small checkboxes.

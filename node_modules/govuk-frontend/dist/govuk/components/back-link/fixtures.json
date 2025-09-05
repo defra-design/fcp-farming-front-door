@@ -6,32 +6,9 @@
             "options": {},
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<a href=\"#\" class=\"govuk-back-link\">Back</a>"
-        },
-        {
-            "name": "with custom text",
-            "options": {
-                "text": "Back to home"
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<a href=\"#\" class=\"govuk-back-link\">Back to home</a>"
-        },
-        {
-            "name": "with custom link",
-            "options": {
-                "href": "/home",
-                "text": "Back to home"
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<a href=\"/home\" class=\"govuk-back-link\">Back to home</a>"
         },
         {
             "name": "inverse",
@@ -40,9 +17,9 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [
-                "inverse"
-            ],
+            "pageTemplateOptions": {
+                "bodyClasses": "app-template__body--inverse"
+            },
             "screenshot": true,
             "html": "<a href=\"#\" class=\"govuk-back-link govuk-back-link--inverse\">Back</a>"
         },
@@ -53,7 +30,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<a href=\"#\" class=\"govuk-back-link app-back-link--custom-class\">Back</a>"
         },
@@ -64,7 +41,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<a href=\"#\" class=\"govuk-back-link\">&lt;b&gt;Home&lt;/b&gt;</a>"
         },
@@ -75,9 +52,21 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<a href=\"#\" class=\"govuk-back-link\"><b>Back</b></a>"
+        },
+        {
+            "name": "with custom text and link",
+            "options": {
+                "href": "/home",
+                "text": "Back to home"
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<a href=\"/home\" class=\"govuk-back-link\">Back to home</a>"
         },
         {
             "name": "attributes",
@@ -89,7 +78,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<a href=\"#\" class=\"govuk-back-link\" data-test=\"attribute\" aria-label=\"Back to home\">Back</a>"
         }

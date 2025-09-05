@@ -1,4 +1,4 @@
-import { formatErrorMessage } from '../common/index.mjs';
+import { isObject, formatErrorMessage } from '../common/index.mjs';
 
 class GOVUKFrontendError extends Error {
   constructor(...args) {
@@ -27,7 +27,7 @@ class ConfigError extends GOVUKFrontendError {
 class ElementError extends GOVUKFrontendError {
   constructor(messageOrOptions) {
     let message = typeof messageOrOptions === 'string' ? messageOrOptions : '';
-    if (typeof messageOrOptions === 'object') {
+    if (isObject(messageOrOptions)) {
       const {
         component,
         identifier,
@@ -36,7 +36,9 @@ class ElementError extends GOVUKFrontendError {
       } = messageOrOptions;
       message = identifier;
       message += element ? ` is not of type ${expectedType != null ? expectedType : 'HTMLElement'}` : ' not found';
-      message = formatErrorMessage(component, message);
+      if (component) {
+        message = formatErrorMessage(component, message);
+      }
     }
     super(message);
     this.name = 'ElementError';
@@ -50,7 +52,7 @@ class InitError extends GOVUKFrontendError {
   }
 }
 /**
- * @typedef {import('../common/index.mjs').ComponentWithModuleName} ComponentWithModuleName
+ * @import { ComponentWithModuleName } from '../common/index.mjs'
  */
 
 export { ConfigError, ElementError, GOVUKFrontendError, InitError, SupportError };

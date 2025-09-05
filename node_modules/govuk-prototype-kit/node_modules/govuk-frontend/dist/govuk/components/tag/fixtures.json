@@ -9,6 +9,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag\">\n  Alpha\n</strong>"
         },
         {
@@ -20,6 +21,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--grey\">\n  Grey\n</strong>"
         },
         {
@@ -31,6 +33,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--blue\">\n  Blue\n</strong>"
         },
         {
@@ -42,6 +45,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--light-blue\">\n  Light blue\n</strong>"
         },
         {
@@ -53,6 +57,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--turquoise\">\n  Turquoise\n</strong>"
         },
         {
@@ -64,6 +69,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--green\">\n  Green\n</strong>"
         },
         {
@@ -75,6 +81,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--purple\">\n  Purple\n</strong>"
         },
         {
@@ -86,6 +93,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--pink\">\n  Pink\n</strong>"
         },
         {
@@ -97,6 +105,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--red\">\n  Red\n</strong>"
         },
         {
@@ -108,6 +117,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--orange\">\n  Orange\n</strong>"
         },
         {
@@ -119,6 +129,7 @@
             "hidden": false,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag govuk-tag--yellow\">\n  Yellow\n</strong>"
         },
         {
@@ -133,6 +144,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag\" data-test=\"attribute\" id=\"my-tag\">\n  Tag with attributes\n</strong>"
         },
         {
@@ -143,6 +155,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag\">\n  &lt;span&gt;Alpha&lt;/span&gt;\n</strong>"
         },
         {
@@ -153,6 +166,7 @@
             "hidden": true,
             "description": "",
             "previewLayoutModifiers": [],
+            "screenshot": false,
             "html": "<strong class=\"govuk-tag\">\n  <span>Alpha</span>\n</strong>"
         }
     ]

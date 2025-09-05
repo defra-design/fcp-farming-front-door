@@ -48,12 +48,12 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">January</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£85</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£95</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">February</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£75</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£55</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">March</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£165</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£125</td>\n    </tr>\n  </tbody>\n</table>"
         },
         {
-            "name": "table with head",
+            "name": "with head",
             "options": {
                 "head": [
                     {
@@ -112,12 +112,12 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <thead class=\"govuk-table__head\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"col\" class=\"govuk-table__header\">Month you apply</th>\n      <th scope=\"col\" class=\"govuk-table__header govuk-table__header--numeric\">Rate for bicycles</th>\n      <th scope=\"col\" class=\"govuk-table__header govuk-table__header--numeric\">Rate for vehicles</th>\n    </tr>\n  </thead>\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">January</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£85</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£95</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">February</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£75</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£55</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">March</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£165</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£125</td>\n    </tr>\n  </tbody>\n</table>"
         },
         {
-            "name": "table with head and caption",
+            "name": "with head and caption",
             "options": {
                 "caption": "Caption 1: Months and rates",
                 "captionClasses": "govuk-table__caption--m",
@@ -179,61 +179,9 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<table class=\"govuk-table\">\n  <caption class=\"govuk-table__caption govuk-table__caption--m\">Caption 1: Months and rates</caption>\n  <thead class=\"govuk-table__head\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"col\" class=\"govuk-table__header\">Month you apply</th>\n      <th scope=\"col\" class=\"govuk-table__header govuk-table__header--numeric\">Rate for bicycles</th>\n      <th scope=\"col\" class=\"govuk-table__header govuk-table__header--numeric\">Rate for vehicles</th>\n    </tr>\n  </thead>\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\">January</th>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£85</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£95</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\">February</th>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£75</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£55</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\">March</th>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£165</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£125</td>\n    </tr>\n  </tbody>\n</table>"
-        },
-        {
-            "name": "with small text modifier for tables with a lot of data",
-            "options": {
-                "classes": "govuk-table--small-text-until-tablet",
-                "rows": [
-                    [
-                        {
-                            "text": "January"
-                        },
-                        {
-                            "text": "£85",
-                            "format": "numeric"
-                        },
-                        {
-                            "text": "£95",
-                            "format": "numeric"
-                        }
-                    ],
-                    [
-                        {
-                            "text": "February"
-                        },
-                        {
-                            "text": "£75",
-                            "format": "numeric"
-                        },
-                        {
-                            "text": "£55",
-                            "format": "numeric"
-                        }
-                    ],
-                    [
-                        {
-                            "text": "March"
-                        },
-                        {
-                            "text": "£165",
-                            "format": "numeric"
-                        },
-                        {
-                            "text": "£125",
-                            "format": "numeric"
-                        }
-                    ]
-                ]
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<table class=\"govuk-table govuk-table--small-text-until-tablet\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">January</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£85</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£95</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">February</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£75</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£55</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">March</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£165</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£125</td>\n    </tr>\n  </tbody>\n</table>"
         },
         {
             "name": "classes",
@@ -252,7 +200,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table custom-class-goes-here\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">Jan</td>\n      <td class=\"govuk-table__cell\">Feb</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -275,7 +223,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\" data-foo=\"bar\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">Jan</td>\n      <td class=\"govuk-table__cell\">Feb</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -297,7 +245,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <thead class=\"govuk-table__head\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"col\" class=\"govuk-table__header\">Foo &lt;script&gt;hacking.do(1337)&lt;/script&gt;</th>\n    </tr>\n  </thead>\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">Foo &lt;script&gt;hacking.do(1337)&lt;/script&gt;</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -319,7 +267,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <thead class=\"govuk-table__head\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"col\" class=\"govuk-table__header\">Foo <span>bar</span></th>\n    </tr>\n  </thead>\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">Foo <span>bar</span></td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -345,7 +293,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <thead class=\"govuk-table__head\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"col\" class=\"govuk-table__header my-custom-class\">Foo</th>\n    </tr>\n  </thead>\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">Jan</td>\n      <td class=\"govuk-table__cell\">Feb</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -372,7 +320,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <thead class=\"govuk-table__head\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"col\" class=\"govuk-table__header\" colspan=\"2\" rowspan=\"2\">Foo</th>\n    </tr>\n  </thead>\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">Jan</td>\n      <td class=\"govuk-table__cell\">Feb</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -400,7 +348,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <thead class=\"govuk-table__head\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"col\" class=\"govuk-table__header\" data-fizz=\"buzz\">Foo</th>\n    </tr>\n  </thead>\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">Jan</td>\n      <td class=\"govuk-table__cell\">Feb</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -452,7 +400,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\">January</th>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£85</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£95</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\">February</th>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£75</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£55</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\">March</th>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£165</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£125</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -471,7 +419,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header my-custom-class\">Foo</th>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -489,7 +437,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\">Foo <span>bar</span></th>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -507,7 +455,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\">Foo &lt;script&gt;hacking.do(1337)&lt;/script&gt;</th>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -527,7 +475,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\" colspan=\"2\" rowspan=\"2\">Foo</th>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -548,7 +496,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <th scope=\"row\" class=\"govuk-table__header\" data-fizz=\"buzz\">Foo</th>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -586,7 +534,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">A</td>\n      <td class=\"govuk-table__cell\">1</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">B</td>\n      <td class=\"govuk-table__cell\">2</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">C</td>\n      <td class=\"govuk-table__cell\">3</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -604,7 +552,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell my-custom-class\">Foo</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -623,7 +571,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\" colspan=\"2\" rowspan=\"2\">Foo</td>\n    </tr>\n  </tbody>\n</table>"
         },
@@ -643,9 +591,61 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<table class=\"govuk-table\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\" data-fizz=\"buzz\">Foo</td>\n    </tr>\n  </tbody>\n</table>"
+        },
+        {
+            "name": "with small text modifier for tables with a lot of data",
+            "options": {
+                "classes": "govuk-table--small-text-until-tablet",
+                "rows": [
+                    [
+                        {
+                            "text": "January"
+                        },
+                        {
+                            "text": "£85",
+                            "format": "numeric"
+                        },
+                        {
+                            "text": "£95",
+                            "format": "numeric"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "February"
+                        },
+                        {
+                            "text": "£75",
+                            "format": "numeric"
+                        },
+                        {
+                            "text": "£55",
+                            "format": "numeric"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "March"
+                        },
+                        {
+                            "text": "£165",
+                            "format": "numeric"
+                        },
+                        {
+                            "text": "£125",
+                            "format": "numeric"
+                        }
+                    ]
+                ]
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<table class=\"govuk-table govuk-table--small-text-until-tablet\">\n  <tbody class=\"govuk-table__body\">\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">January</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£85</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£95</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">February</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£75</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£55</td>\n    </tr>\n    <tr class=\"govuk-table__row\">\n      <td class=\"govuk-table__cell\">March</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£165</td>\n      <td class=\"govuk-table__cell govuk-table__cell--numeric\">£125</td>\n    </tr>\n  </tbody>\n</table>"
         }
     ]
 }

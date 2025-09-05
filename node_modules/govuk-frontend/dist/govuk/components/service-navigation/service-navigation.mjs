@@ -1,13 +1,13 @@
 import { getBreakpoint } from '../../common/index.mjs';
+import { Component } from '../../component.mjs';
 import { ElementError } from '../../errors/index.mjs';
-import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
 
 /**
  * Service Navigation component
  *
  * @preserve
  */
-class ServiceNavigation extends GOVUKFrontendComponent {
+class ServiceNavigation extends Component {
   /**
    * @param {Element | null} $root - HTML element to use for header
    */

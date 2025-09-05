@@ -1,13 +1,13 @@
 import { getBreakpoint } from '../../common/index.mjs';
+import { Component } from '../../component.mjs';
 import { ElementError } from '../../errors/index.mjs';
-import { GOVUKFrontendComponent } from '../../govuk-frontend-component.mjs';
 
 /**
  * Header component
  *
  * @preserve
  */
-class Header extends GOVUKFrontendComponent {
+class Header extends Component {
   /**
    * Apply a matchMedia for desktop which will trigger a state sync if the
    * browser viewport moves between states.
@@ -24,6 +24,7 @@ class Header extends GOVUKFrontendComponent {
     if (!$menuButton) {
       return this;
     }
+    this.$root.classList.add('govuk-header--with-js-navigation');
     const menuId = $menuButton.getAttribute('aria-controls');
     if (!menuId) {
       throw new ElementError({

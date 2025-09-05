@@ -8,8 +8,8 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<div class=\"govuk-hint\">\n  It&#39;s on your National Insurance card, benefit letter, payslip or P60.\nFor example, &#39;QQ 12 34 56 C&#39;.\n\n</div>"
         },
         {
@@ -19,7 +19,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-hint\">\n  It's on your National Insurance card, benefit letter, payslip or <a class=\"govuk-link\" href=\"#\">P60</a>.\n  For example, 'QQ 12 34 56 C'.\n</div>"
         },
@@ -32,7 +32,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div id=\"example-hint\" class=\"govuk-hint app-hint--custom-modifier\">\n  It&#39;s on your National Insurance card, benefit letter, payslip or P60.\n</div>"
         },
@@ -44,7 +44,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div id=\"my-hint\" class=\"govuk-hint\">\n  It&#39;s on your National Insurance card, benefit letter, payslip or P60.\n</div>"
         },
@@ -55,7 +55,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-hint\">\n  Unexpected &lt;strong&gt;bold text&lt;/strong&gt; in body\n</div>"
         },
@@ -69,7 +69,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-hint\" data-attribute=\"my data value\">\n  It&#39;s on your National Insurance card, benefit letter, payslip or P60.\n</div>"
         }

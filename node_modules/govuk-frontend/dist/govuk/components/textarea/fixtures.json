@@ -5,15 +5,14 @@
             "name": "default",
             "options": {
                 "name": "more-detail",
-                "id": "more-detail",
                 "label": {
                     "text": "Can you provide more detail?"
                 }
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
+            "pageTemplateOptions": {},
+            "screenshot": true,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"more-detail\">\n    Can you provide more detail?\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"more-detail\" name=\"more-detail\" rows=\"5\"></textarea>\n</div>"
         },
         {
@@ -30,7 +29,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"more-detail\">\n    Can you provide more detail?\n  </label>\n  <div id=\"more-detail-hint\" class=\"govuk-hint\">\n    Don&#39;t include personal or financial information, eg your National Insurance number or credit card details.\n  </div>\n  <textarea class=\"govuk-textarea\" id=\"more-detail\" name=\"more-detail\" rows=\"5\" aria-describedby=\"more-detail-hint\"></textarea>\n</div>"
         },
@@ -48,7 +47,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"no-ni-reason\">\n    Why can’t you provide a National Insurance number?\n  </label>\n  <p id=\"no-ni-reason-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> You must provide an explanation\n  </p>\n  <textarea class=\"govuk-textarea govuk-textarea--error\" id=\"no-ni-reason\" name=\"no-ni-reason\" rows=\"5\" aria-describedby=\"no-ni-reason-error\"></textarea>\n</div>"
         },
@@ -64,7 +63,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"full-address\">\n    Full address\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"full-address\" name=\"address\" rows=\"5\">221B Baker Street\nLondon\nNW1 6XE\n</textarea>\n</div>"
         },
@@ -80,7 +79,7 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"full-address\">\n    Full address\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"full-address\" name=\"address\" rows=\"8\"></textarea>\n</div>"
         },
@@ -97,75 +96,24 @@
             },
             "hidden": false,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <h1 class=\"govuk-label-wrapper\">\n    <label class=\"govuk-label govuk-label--l\" for=\"textarea-with-page-heading\">\n      Full address\n    </label>\n  </h1>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-page-heading\" name=\"address\" rows=\"5\"></textarea>\n</div>"
         },
         {
-            "name": "with optional form-group classes",
+            "name": "id",
             "options": {
-                "id": "textarea-with-page-heading",
-                "name": "address",
+                "id": "textarea-id",
+                "name": "test-name",
                 "label": {
-                    "text": "Full address"
-                },
-                "formGroup": {
-                    "classes": "extra-class"
+                    "text": "With custom id"
                 }
             },
-            "hidden": false,
+            "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
-            "html": "<div class=\"govuk-form-group extra-class\">\n  <label class=\"govuk-label\" for=\"textarea-with-page-heading\">\n    Full address\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-page-heading\" name=\"address\" rows=\"5\"></textarea>\n</div>"
-        },
-        {
-            "name": "with autocomplete attribute",
-            "options": {
-                "id": "textarea-with-autocomplete-attribute",
-                "name": "address",
-                "label": {
-                    "text": "Full address"
-                },
-                "autocomplete": "street-address"
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"textarea-with-autocomplete-attribute\">\n    Full address\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-autocomplete-attribute\" name=\"address\" rows=\"5\" autocomplete=\"street-address\"></textarea>\n</div>"
-        },
-        {
-            "name": "with spellcheck enabled",
-            "options": {
-                "label": {
-                    "text": "Spellcheck is enabled"
-                },
-                "id": "textarea-with-spellcheck-enabled",
-                "name": "spellcheck",
-                "spellcheck": true
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"textarea-with-spellcheck-enabled\">\n    Spellcheck is enabled\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-spellcheck-enabled\" name=\"spellcheck\" rows=\"5\" spellcheck=\"true\"></textarea>\n</div>"
-        },
-        {
-            "name": "with spellcheck disabled",
-            "options": {
-                "label": {
-                    "text": "Spellcheck is disabled"
-                },
-                "id": "textarea-with-spellcheck-disabled",
-                "name": "spellcheck",
-                "spellcheck": false
-            },
-            "hidden": false,
-            "description": "",
-            "previewLayoutModifiers": [],
-            "screenshot": false,
-            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"textarea-with-spellcheck-disabled\">\n    Spellcheck is disabled\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-spellcheck-disabled\" name=\"spellcheck\" rows=\"5\" spellcheck=\"false\"></textarea>\n</div>"
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"textarea-id\">\n    With custom id\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-id\" name=\"test-name\" rows=\"5\"></textarea>\n</div>"
         },
         {
             "name": "classes",
@@ -179,7 +127,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-classes\">\n    With classes\n  </label>\n  <textarea class=\"govuk-textarea app-textarea--custom-modifier\" id=\"with-classes\" name=\"with-classes\" rows=\"5\"></textarea>\n</div>"
         },
@@ -197,7 +145,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-attributes\">\n    With attributes\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"with-attributes\" name=\"with-attributes\" rows=\"5\" data-attribute=\"my data value\"></textarea>\n</div>"
         },
@@ -213,7 +161,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-describedby\">\n    With describedBy\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"with-describedby\" name=\"with-describedby\" rows=\"5\" aria-describedby=\"test-target-element\"></textarea>\n</div>"
         },
@@ -232,7 +180,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"with-hint-describedby\">\n    With hint and describedBy\n  </label>\n  <div id=\"with-hint-describedby-hint\" class=\"govuk-hint\">\n    It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.\n  </div>\n  <textarea class=\"govuk-textarea\" id=\"with-hint-describedby\" name=\"with-hint-describedby\" rows=\"5\" aria-describedby=\"test-target-element with-hint-describedby-hint\"></textarea>\n</div>"
         },
@@ -251,7 +199,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"textarea-with-error\">\n    Textarea with error\n  </label>\n  <p id=\"textarea-with-error-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> Error message\n  </p>\n  <textarea class=\"govuk-textarea govuk-textarea--error\" id=\"textarea-with-error\" name=\"textarea-with-error\" rows=\"5\" aria-describedby=\"test-target-element textarea-with-error-error\"></textarea>\n</div>"
         },
@@ -272,7 +220,7 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"with-hint-error\">\n    With hint and error\n  </label>\n  <div id=\"with-hint-error-hint\" class=\"govuk-hint\">\n    Hint\n  </div>\n  <p id=\"with-hint-error-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> Error message\n  </p>\n  <textarea class=\"govuk-textarea govuk-textarea--error\" id=\"with-hint-error\" name=\"with-hint-error\" rows=\"5\" aria-describedby=\"with-hint-error-hint with-hint-error-error\"></textarea>\n</div>"
         },
@@ -294,9 +242,75 @@
             },
             "hidden": true,
             "description": "",
-            "previewLayoutModifiers": [],
+            "pageTemplateOptions": {},
             "screenshot": false,
             "html": "<div class=\"govuk-form-group govuk-form-group--error\">\n  <label class=\"govuk-label\" for=\"with-hint-error-describedby\">\n    With hint, error and describedBy\n  </label>\n  <div id=\"with-hint-error-describedby-hint\" class=\"govuk-hint\">\n    Hint\n  </div>\n  <p id=\"with-hint-error-describedby-error\" class=\"govuk-error-message\">\n    <span class=\"govuk-visually-hidden\">Error:</span> Error message\n  </p>\n  <textarea class=\"govuk-textarea govuk-textarea--error\" id=\"with-hint-error-describedby\" name=\"with-hint-error-describedby\" rows=\"5\" aria-describedby=\"test-target-element with-hint-error-describedby-hint with-hint-error-describedby-error\"></textarea>\n</div>"
+        },
+        {
+            "name": "with optional form-group classes",
+            "options": {
+                "id": "textarea-with-page-heading",
+                "name": "address",
+                "label": {
+                    "text": "Full address"
+                },
+                "formGroup": {
+                    "classes": "extra-class"
+                }
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group extra-class\">\n  <label class=\"govuk-label\" for=\"textarea-with-page-heading\">\n    Full address\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-page-heading\" name=\"address\" rows=\"5\"></textarea>\n</div>"
+        },
+        {
+            "name": "with autocomplete attribute",
+            "options": {
+                "id": "textarea-with-autocomplete-attribute",
+                "name": "address",
+                "label": {
+                    "text": "Full address"
+                },
+                "autocomplete": "street-address"
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"textarea-with-autocomplete-attribute\">\n    Full address\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-autocomplete-attribute\" name=\"address\" rows=\"5\" autocomplete=\"street-address\"></textarea>\n</div>"
+        },
+        {
+            "name": "with spellcheck enabled",
+            "options": {
+                "label": {
+                    "text": "Spellcheck is enabled"
+                },
+                "id": "textarea-with-spellcheck-enabled",
+                "name": "spellcheck",
+                "spellcheck": true
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"textarea-with-spellcheck-enabled\">\n    Spellcheck is enabled\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-spellcheck-enabled\" name=\"spellcheck\" rows=\"5\" spellcheck=\"true\"></textarea>\n</div>"
+        },
+        {
+            "name": "with spellcheck disabled",
+            "options": {
+                "label": {
+                    "text": "Spellcheck is disabled"
+                },
+                "id": "textarea-with-spellcheck-disabled",
+                "name": "spellcheck",
+                "spellcheck": false
+            },
+            "hidden": true,
+            "description": "",
+            "pageTemplateOptions": {},
+            "screenshot": false,
+            "html": "<div class=\"govuk-form-group\">\n  <label class=\"govuk-label\" for=\"textarea-with-spellcheck-disabled\">\n    Spellcheck is disabled\n  </label>\n  <textarea class=\"govuk-textarea\" id=\"textarea-with-spellcheck-disabled\" name=\"spellcheck\" rows=\"5\" spellcheck=\"false\"></textarea>\n</div>"
         }
     ]
 }

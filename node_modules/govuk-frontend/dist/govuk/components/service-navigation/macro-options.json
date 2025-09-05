@@ -48,6 +48,12 @@
         "description": "Classes to add to the navigation menu container."
     },
     {
+        "name": "collapseNavigationOnMobile",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the navigation should be collapsed inside a menu on mobile. Defaults to true if there is more than one navigation item."
+    },
+    {
         "name": "serviceName",
         "type": "string",
         "required": false,
