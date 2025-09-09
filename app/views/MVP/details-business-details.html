@@ -522,7 +522,7 @@
           Business legal status
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.legalBus}}
+          {{ data['legalBus'] or "Sole proprietorship"}}
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
           
@@ -534,37 +534,125 @@
         </dd>
         {% endif %}
       </div>
-      {% for _legal in data.legalStatuses %}
+      {% if data['legalBus'] == "Community interest company (CIC)" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Company registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['legalCCRNBus'] or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+                company registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
 
-          {% if _legal.showCompanyReg and myData.legalBus == _legal.name %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Company registration number
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {{myData.legalCHRNBus}}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link govuk-link--no-visited-state" href="business-details-legal-change?newChange=true">Change<span class="govuk-visually-hidden"> company registration number</span></a>
-            </dd>
-          </div>
-          {% endif %}
-      
-          {% if _legal.showCharityCommission and myData.legalBus == _legal.name %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Charity commission registration number
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {{myData.legalCCRNBus}}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link govuk-link--no-visited-state" href="business-details-legal-change?newChange=true">Change<span class="govuk-visually-hidden"> charity commission registration number</span></a>
-            </dd>
-          </div>
-          {% endif %}
+        {% if data['legalBus'] == "Limited liability partnership (LLP)" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Company registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['legalCCRNBus'] or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+                company registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
 
-      {% endfor %}
+        {% if data['legalBus'] == "Limited partnership" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Company registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['legalCCRNBus'] or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+                company registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+
+        {% if data['legalBus'] == "Non-UK company" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Company registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['legalCCRNBus'] or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+                company registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+
+        {% if data['legalBus'] == "Private limited company (Ltd)" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Company registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['legalCCRNBus'] or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+                company registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+
+        {% if data['legalBus'] == "Public limited company (PLC)" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Company registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['legalCCRNBus'] or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+                company registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+
+        {% if data['legalBus'] == "Unlimited company (Ultd)" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Company registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['legalCCRNBus'] or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+                company registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
+
+        {% if data['legalBus'] == "Charitable incorporated organisation (CIO)" %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Charity commission registration number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['legalCHRNBus'] or "0123456"}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="business-details-legal-charity">Change<span class="govuk-visually-hidden">
+                charity commission registration number</span></a>
+          </dd>
+        </div>
+        {% endif %}
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">

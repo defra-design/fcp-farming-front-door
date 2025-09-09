@@ -249,7 +249,7 @@
     <p class="govuk-body govuk-!-margin-top-6"><a class="govuk-button" href="details-business-details">Return to business details</a></p>
 
     {% else %}
-    <form method="POST" novalidate>
+    <form action="/legal-answer" method="POST" novalidate>
 
       <div class="govuk-form-group {% if myData.validationErrors.legalBus %}govuk-form-group--error{% endif %}">
         <fieldset class="govuk-fieldset" {% if myData.validationErrors.legalBus %}aria-describedby="legalBus-error"{% endif %}>
@@ -275,65 +275,11 @@
 
               <!-- Radio button -->
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="legalBus-{{loop.index}}" name="legalBus" type="radio" value="{{_legal.name}}" {% if _valueNewLegalBus == _legal.name %}checked{% endif %} {% if _legal.showCompanyReg %}data-aria-controls="conditional-legalCHRNBus-{{loop.index}}"{% endif %} {% if _legal.showCharityCommission %}data-aria-controls="conditional-legalCCRNBus-{{loop.index}}"{% endif %} >
+                <input class="govuk-radios__input" id="legalBus-{{loop.index}}" name="legalBus" type="radio" value="{{_legal.name}}" >
                 <label class="govuk-label govuk-radios__label" for="legalBus-{{loop.index}}">
                   {{_legal.name}}
                 </label>
               </div>
-
-              <!-- Conditionally revealed 'Company registration number' input -->
-              {% if _legal.showCompanyReg %}
-
-                {% set _valueNewLegalCHRNBus = myData.newLegalCHRNBus or myData.legalCHRNBus %}
-                {% if data.newChange != "true" %}
-                  {% set _valueNewLegalCHRNBus = _valueNewLegalCHRNBus or "12345678" %}
-                {% endif %}
-                {% if myData.validationErrors.legalCHRNBus %}
-                    {% set _valueNewLegalCHRNBus = myData.newLegalCHRNBus %}
-                {% endif %}
-
-                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-legalCHRNBus-{{loop.index}}">
-                  <div class="govuk-form-group {% if myData.validationErrors.legalCHRNBus %}govuk-form-group--error{% endif %}">
-                    <label class="govuk-label" for="legalCHRNBus-{{loop.index}}">
-                      Company registration number
-                    </label>
-                    {% if myData.validationErrors.legalCHRNBus %}
-                    <p id="legalCHRNBus-error-{{loop.index}}" class="govuk-error-message">
-                      <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.legalCHRNBus.message}}
-                    </p>
-                    {% endif %}
-                    <input class="govuk-input govuk-input--width-10 {% if myData.validationErrors.legalCHRNBus %}govuk-input--error{% endif %}" id="legalCHRNBus-{{loop.index}}" name="legalCHRNBus-{{loop.index}}" type="text" value="{{_valueNewLegalCHRNBus}}" {% if myData.validationErrors.legalCHRNBus %}aria-describedby="legalCHRNBus-error-{{loop.index}}"{% endif %} >
-                  </div>
-                </div>
-              {% endif %}
-
-              <!-- Conditionally revealed 'Charity commission registration number' input -->
-              {% if _legal.showCharityCommission %}
-
-                {% set _valueNewLegalCCRNBus = myData.newLegalCCRNBus or myData.legalCCRNBus %}
-                {% if data.newChange != "true" %}
-                  {% set _valueNewLegalCCRNBus = _valueNewLegalCCRNBus or "0123456" %}
-                {% endif %}
-                {% if myData.validationErrors.legalCCRNBus %}
-                    {% set _valueNewLegalCCRNBus = myData.newLegalCCRNBus %}
-                {% endif %}
-
-                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-legalCCRNBus-{{loop.index}}">
-                  <div class="govuk-form-group {% if myData.validationErrors.legalCCRNBus %}govuk-form-group--error{% endif %}">
-                    <label class="govuk-label" for="legalCCRNBus-{{loop.index}}">
-                      Charity commission registration number
-                    </label>
-                    {% if myData.validationErrors.legalCCRNBus %}
-                    <p id="legalCCRNBus-error-{{loop.index}}" class="govuk-error-message">
-                      <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.legalCCRNBus.message}}
-                    </p>
-                    {% endif %}
-                    <input class="govuk-input govuk-input--width-10 {% if myData.validationErrors.legalCCRNBus %}govuk-input--error{% endif %}" id="legalCCRNBus-{{loop.index}}" name="legalCCRNBus-{{loop.index}}" type="text" value="{{_valueNewLegalCCRNBus}}" {% if myData.validationErrors.legalCCRNBus %}aria-describedby="legalCCRNBus-error-{{loop.index}}"{% endif %} >
-                  </div>
-                </div>
-              {% endif %}
-
-
 
             {% endfor %}
 
