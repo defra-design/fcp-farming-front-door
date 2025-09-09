@@ -1,0 +1,459 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+{% set _showReleaseLinks = false %}
+{% else %}
+{% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+
+{% set pageName = "Check your upload" %}
+{% set serviceName = "Land and farm service" %}
+
+<!--{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Manage business details",
+"id": "bd01",
+"url": "details-business-details?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "External user with full permissions",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=full"
+},
+{
+"name": "External user with amend permissions",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=amend"
+},
+{
+"name": "External user with view permissions",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=view"
+},
+{
+"name": "no existing phone numbers - add",
+"url": "details-business-details?r=t&release=b1&addNumberBus=empty&view=ext"
+},
+{
+"name": "Vendor registration number - hidden",
+"url": "details-business-details?r=t&release=b1&vendorCount=0&view=ext"
+},
+{
+"name": "Vendor registration number - one number",
+"url": "details-business-details?r=t&release=b1&vendorCount=1&view=ext"
+},
+{
+"name": "Trader number - hidden",
+"url": "details-business-details?r=t&release=b1&traderCount=0&view=ext"
+},
+{
+"name": "Trader number - one number",
+"url": "details-business-details?r=t&release=b1&traderCount=1&view=ext"
+},
+{
+"name": "County Parish Holding (CPH) number - hidden",
+"url": "details-business-details?r=t&release=b1&cphCount=0&view=ext"
+},
+{
+"name": "County Parish Holding (CPH) number - one number",
+"url": "details-business-details?r=t&release=b1&cphCount=1&view=ext"
+},
+{
+"name": "County Parish Holding (CPH) number - multiple numbers",
+"url": "details-business-details?r=t&release=b1&cphCount=2&view=ext"
+},
+{
+"name": "name changed banner",
+"url": "details-business-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+},
+{
+"name": "address changed banner",
+"url": "details-business-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+},
+{
+"name": "phone numbers changed banner",
+"url": "details-business-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+},
+{
+"name": "email changed banner",
+"url": "details-business-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+},
+{
+"name": "business type changed banner",
+"url": "details-business-details?r=t&release=b1&typechanged=true&changed=true&view=ext"
+},
+{
+"name": "legal status changed banner",
+"url": "details-business-details?r=t&release=b1&legalchanged=true&changed=true&view=ext"
+},
+{
+"name": "vat number changed banner",
+"url": "details-business-details?r=t&release=b1&vatchanged=true&changed=true&view=ext"
+},
+{
+"name": "vat number removed banner",
+"url": "details-business-details?r=t&release=b1&vatremoved=true&changed=true&view=ext"
+}
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+],
+"notes": [
+"<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding
+(CPH) number' row. View example with the query string &cphCount=0",
+
+"<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH)
+numbers' label plural and separate each CPH number with a break line tag. View example with the query string
+&cphCount=2",
+
+"<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not
+render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
+
+"<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number'
+row. View example with the query string &traderCount=0"
+]
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Manage business details",
+"id": "int-bd01",
+"url": "details-business-details?r=t&view=int&release=b2",
+"release": "Buffalo 1.1 MVP",
+"variants": [
+{
+"name": "no existing phone numbers - add",
+"url": "details-business-details?r=t&release=b1&addNumberBus=empty&view=int"
+},
+{
+"name": "Vendor registration number - hidden",
+"url": "details-business-details?r=t&release=b2&vendorCount=0&view=int"
+},
+{
+"name": "Vendor registration number - one number",
+"url": "details-business-details?r=t&release=b2&vendorCount=1&view=int"
+},
+{
+"name": "Trader number - hidden",
+"url": "details-business-details?r=t&release=b2&traderCount=0&view=int"
+},
+{
+"name": "Trader number - one number",
+"url": "details-business-details?r=t&release=b2&traderCount=1&view=int"
+},
+{
+"name": "County Parish Holding (CPH) number - hidden",
+"url": "details-business-details?r=t&release=b2&cphCount=0&view=int"
+},
+{
+"name": "County Parish Holding (CPH) number - one number",
+"url": "details-business-details?r=t&release=b2&cphCount=1&view=int"
+},
+{
+"name": "County Parish Holding (CPH) number - multiple numbers",
+"url": "details-business-details?r=t&release=b2&cphCount=2&view=int"
+},
+{
+"name": "name changed banner",
+"url": "details-business-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+},
+{
+"name": "address changed banner",
+"url": "details-business-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+},
+{
+"name": "phone numbers changed banner",
+"url": "details-business-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+},
+{
+"name": "email changed banner",
+"url": "details-business-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+},
+{
+"name": "business type changed banner",
+"url": "details-business-details?r=t&release=b2&typechanged=true&changed=true&view=int"
+},
+{
+"name": "legal status changed banner",
+"url": "details-business-details?r=t&release=b2&legalchanged=true&changed=true&view=int"
+},
+{
+"name": "vat number changed banner",
+"url": "details-business-details?r=t&release=b2&vatchanged=true&changed=true&view=int"
+},
+{
+"name": "vat number removed banner",
+"url": "details-business-details?r=t&release=b2&vatremoved=true&changed=true&view=int"
+}
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+],
+"notes": [
+"<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding
+(CPH) number' row. View example with the query string &cphCount=0",
+
+"<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH)
+numbers' label plural and separate each CPH number with a break line tag. View example with the query string
+&cphCount=2",
+
+"<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not
+render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
+
+"<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number'
+row. View example with the query string &traderCount=0"
+]
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}-->
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% include "_common/login-nav-3.html" %}
+
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a href="javascript:history.back()" class="govuk-back-link govuk-breadcrumbs__link govuk-!-margin-top-0">Back</a>
+    </li>
+  </ol>
+</nav>
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+<div class="govuk-breadcrumbs" style="display: inline-block">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="internal-business">{{_selectedBusiness.name}} (SBI:
+        {{_selectedBusiness.sbiNumber}})</a>
+    </li>
+  </ol>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <!--{% if myData.showNotification == "true" %}
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          {{myData.notifications.message}}
+        </h3>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if data.permissionsMVP == "view" and data.view == "ext" %}
+    <h1 class="govuk-heading-l">
+     View business details
+    </h1>
+    
+    <p class="govuk-body">
+      You do not have permission to update details for this business. You can ask the business to raise your permission level.
+    </p>
+    {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
+    <h1 class="govuk-heading-l">
+     View and update your business details
+    </h1>
+
+    <p class="govuk-body">
+      You only have permission to update contact details for this business. You can ask the business to raise your permission level.
+    </p>
+    {% else %}-->
+
+
+    <h1 class="govuk-heading-l">
+      Check your upload
+    </h1>
+    {% endif %}
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span>
+        Check you are sending the right documents. Once you submit them, we will attach them to this business's account
+        for the next 7 years. If you want to request to remove them in future, you will need to contact the Land and
+        farm service.
+        <br><br>
+        Check you have followed <a class="govuk-link govuk-link--no-visited-state" href="#">the rules on submitting
+          documents</a>. This means we can process them as fast as possible.
+      </strong>
+
+    </div>
+
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What do you want to send us?
+        </dt>
+        <!--<dd class="govuk-summary-list__value">
+          {{myData.nameBus}}
+        </dd>
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
+          
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
+        <dd class="govuk-summary-list__actions">
+          
+        </dd>
+        {% else %}
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> business name</span></a>
+        </dd>
+        {% endif %}-->
+        <dd class="govuk-summary-list__value">
+          Funding or grant amendment, claim, declaration or evidence
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> what do
+              you want to send us</span></a>
+        </dd>
+      </div>
+
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Subject
+        </dt>
+
+        <!--{{myData.address1Bus}}<br>
+          {% if myData.address2Bus != "" %}{{myData.address2Bus}}<br>{% endif %}
+          {{myData.addressCityBus}}<br>
+          {% if myData.addressCountyBus != "" %}{{myData.addressCountyBus}}<br>{% endif %}
+          {% if myData.addressPostcodeBus != "" %}{{myData.addressPostcodeBus}}<br>{% endif %}
+          {{myData.addressCountryBus}}
+        </dd>
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
+          
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
+        </dd>
+        {% else %}
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
+        </dd>
+        {% endif %}-->
+
+        <dd class="govuk-summary-list__value">
+          Countryside Stewardship
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden">
+              subject</span></a>
+        </dd>
+        </dt>
+      </div>
+
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What does this relate to?
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Capital grant application
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> what
+              does this relate to</span></a>
+        </dd>
+        </dt>
+      </div>
+
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What is this?
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Evidence
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> what is
+              this</span></a>
+        </dd>
+        </dt>
+      </div>
+
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS application number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          1457317
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          fencepic1.jpeg
+          <br>
+          fencereceipt1.pdf
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+    </dl>
+
+    <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+      Submit
+    </button>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
