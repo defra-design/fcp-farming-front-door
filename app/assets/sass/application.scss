@@ -1463,3 +1463,14 @@ margin-bottom: 15px;}
 .defra-table-column-width {
   width: 18ch !important;
 }
+
+// doc upload CSS
+
+// doc upload container 
+
+.govuk-button-group--doc-upload {
+  outline: 3px dashed #0b0c0c;
+  padding: 60px 15px;
+  text-align: center;
+  margin-bottom: 30px;
+}
