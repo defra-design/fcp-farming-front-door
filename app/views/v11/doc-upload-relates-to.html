@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What do you want to send to us?" %}
+{% set pageTitle = "What does this relate to?" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -101,7 +101,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% if _inError %}
+    <!--{% if _inError %}
     <div class="govuk-error-summary" data-module="govuk-error-summary">
       <div role="alert">
         <h2 class="govuk-error-summary__title">
@@ -118,20 +118,18 @@
         </div>
       </div>
     </div>
-    {% endif %}
+    {% endif %}-->
 
     <form method="POST" novalidate>
 
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="vatBus">
-            What do you want to send us?
+            What does this relate to?
           </label>
         </h1>
 
         <div id="vatBus-hint" class="govuk-body ">
-          We need to know so we can process your documents as quickly as possible.
-          <br><br>
           Select the option that fits best.
 
         </div>
@@ -139,42 +137,41 @@
           <fieldset class="govuk-fieldset">
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="whatToSend" name="whatToSend" type="radio"
+                <input class="govuk-radios__input" id="relatesTo" name="relatesTo" type="radio"
                   value="CompliantEvidence">
-                <label class="govuk-label govuk-radios__label" for="whatToSend">
-                  Business change evidence
+                <label class="govuk-label govuk-radios__label" for="relatesTo">
+                 Countryside Stewardship (CS)
                 </label>
               </div>
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                   <div class="govuk-radios" data-module="govuk-radios">
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="whatToSend-1" name="whatToSend" type="radio"
+                      <input class="govuk-radios__input" id="relatesTo-1" name="relatesTo" type="radio"
                         value="BusinessChangeEvidence">
-                      <label class="govuk-label govuk-radios__label" for="whatToSend-1">
-                        Complaint evidence
+                      <label class="govuk-label govuk-radios__label" for="relatesTo-1">
+                        Delinked payments
                       </label>
                     </div>
 
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="whatToSend-2" name="whatToSend" type="radio"
+                      <input class="govuk-radios__input" id="relatesTo-2" name="relatesTo" type="radio"
                         value="FundingOrGrant">
-                      <label class="govuk-label govuk-radios__label" for="whatToSend-2">
-                        Funding or grant amendment, claim, declaration or evidence
-                      </label>
+                      <label class="govuk-label govuk-radios__label" for="relatesTo-2">
+Environmental Stewardship                      </label>
                     </div>
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="whatToSend-3" name="whatToSend" type="radio"
+                      <input class="govuk-radios__input" id="relatesTo-3" name="relatesTo" type="radio"
                         value="AppealEvidence">
-                      <label class="govuk-label govuk-radios__label" for="whatToSend-3">
-                        General appeal evidence
+                      <label class="govuk-label govuk-radios__label" for="relatesTo-3">
+                        Grants
                       </label>
                     </div>
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="whatToSend-4" name="whatToSend" type="radio"
+                      <input class="govuk-radios__input" id="relatesTo-4" name="relatesTo" type="radio"
                         value="ProbateEvidence">
-                      <label class="govuk-label govuk-radios__label" for="whatToSend-4">
-                        Probate evidence
+                      <label class="govuk-label govuk-radios__label" for="relatesTo-4">
+                       Sustainable Farming Incentive (SFI)
                       </label>
                     </div>
                   </div>
