@@ -66,6 +66,7 @@ var _myData = {
     "addNumberBus" : "full",
     "addNumberPers" : "full",
     "addDOBPers" : "full",
+    "filesUploaded" : "empty",
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }

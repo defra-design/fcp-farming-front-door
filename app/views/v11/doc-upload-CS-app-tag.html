@@ -102,7 +102,7 @@
   <div class="govuk-grid-column-two-thirds">
 
 
-    <form action="/CS-tag-answer" method="POST" novalidate>
+    <form action="/cs-app-tag-answer" method="POST" novalidate>
 
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
         <h1 class="govuk-label-wrapper">
@@ -118,9 +118,9 @@
           <fieldset class="govuk-fieldset">
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="CStag" name="CStag" type="radio" value="A declaration" {{
-                  checked('CStag','A declaration') }}>
-                <label class="govuk-label govuk-radios__label" for="CStag">
+                <input class="govuk-radios__input" id="cs-app-tag" name="cs-app-tag" type="radio" value="A declaration" {{
+                  checked('cs-app-tag','A declaration') }}>
+                <label class="govuk-label govuk-radios__label" for="cs-app-tag">
                   A declaration
                 </label>
               </div>
@@ -128,9 +128,9 @@
                 <fieldset class="govuk-fieldset">
                   <div class="govuk-radios" data-module="govuk-radios">
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="CStag-1" name="CStag" type="radio" value="Evidence" {{
-                        checked('CStag','Evidence') }}>
-                      <label class="govuk-label govuk-radios__label" for="CStag-1">
+                      <input class="govuk-radios__input" id="cs-app-tag-1" name="cs-app-tag" type="radio" value="Evidence" {{
+                        checked('cs-app-tag','Evidence') }}>
+                      <label class="govuk-label govuk-radios__label" for="cs-app-tag-1">
                         Evidence
                       </label>
                     </div>

@@ -141,6 +141,7 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
+        {% if data.filesUploaded == "yes" %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
           <td class="govuk-table__cell">Funding or grant</td>
@@ -157,6 +158,7 @@
           <td class="govuk-table__cell"><a class="govuk-link" href="doc-upload-view-receipt.html">View</a> | <a
               href="#">Download</a></td>
         </tr>
+        {% endif %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">15 August 2025</td>
           <td class="govuk-table__cell">Funding or grant</td>
@@ -213,6 +215,24 @@
           <td class="govuk-table__cell">5478963258</td>
           <td class="govuk-table__cell"><a class="govuk-link" href="#">View</a> | <a href="#">Download</a></td>
         </tr>
+        {% if data.filesUploaded != "yes" %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">30 April 2021</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">evidence-doc-final-v1.jpg</td>
+          <td class="govuk-table__cell">5478963258</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="doc-upload-view-fence.html">View</a> | <a
+              href="#">Download</a></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">30 April 2021</td>
+          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">amendment.pdf</td>
+          <td class="govuk-table__cell">5478963258</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="doc-upload-view-receipt.html">View</a> | <a
+              href="#">Download</a></td>
+        </tr>
+        {% endif %}
       </tbody>
     </table>
 
@@ -221,26 +241,13 @@
     <p class="govuk-body" style="text-align:right">Showing documents 1-10 of 28</p>
 
     <nav class="govuk-pagination" aria-label="Pagination">
-      <div class="govuk-pagination__prev">
-        <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
-          <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg"
-            height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-            <path
-              d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z">
-            </path>
-          </svg>
-          <span class="govuk-pagination__link-title">
-            Previous<span class="govuk-visually-hidden"> page</span>
-          </span>
-        </a>
-      </div>
-      <ul class="govuk-pagination__list">
-        <li class="govuk-pagination__item">
+      <ul class="govuk-pagination__list ">
+        <li class="govuk-pagination__item govuk-pagination__item--current">
           <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1">
             1
           </a>
         </li>
-        <li class="govuk-pagination__item govuk-pagination__item--current">
+        <li class="govuk-pagination__item">
           <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2" aria-current="page">
             2
           </a>

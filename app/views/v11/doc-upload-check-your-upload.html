@@ -345,7 +345,8 @@ row. View example with the query string &traderCount=0"
           Funding or grant amendment, claim, declaration or evidence
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> what do
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
+              class="govuk-visually-hidden"> what do
               you want to send us</span></a>
         </dd>
       </div>
@@ -356,30 +357,12 @@ row. View example with the query string &traderCount=0"
           Subject
         </dt>
 
-        <!--{{myData.address1Bus}}<br>
-          {% if myData.address2Bus != "" %}{{myData.address2Bus}}<br>{% endif %}
-          {{myData.addressCityBus}}<br>
-          {% if myData.addressCountyBus != "" %}{{myData.addressCountyBus}}<br>{% endif %}
-          {% if myData.addressPostcodeBus != "" %}{{myData.addressPostcodeBus}}<br>{% endif %}
-          {{myData.addressCountryBus}}
-        </dd>
-        {% if data.permissionsMVP == "view" and data.view == "ext" %}
-          
-        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
-        </dd>
-        {% else %}
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
-        </dd>
-        {% endif %}-->
-
         <dd class="govuk-summary-list__value">
           Countryside Stewardship
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-relates-to">Change<span
+              class="govuk-visually-hidden">
               subject</span></a>
         </dd>
         </dt>
@@ -394,7 +377,8 @@ row. View example with the query string &traderCount=0"
           Capital grant application
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> what
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-CS">Change<span
+              class="govuk-visually-hidden"> what
               does this relate to</span></a>
         </dd>
         </dt>
@@ -409,7 +393,8 @@ row. View example with the query string &traderCount=0"
           Evidence
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> what is
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-tag">Change<span
+              class="govuk-visually-hidden"> what is
               this</span></a>
         </dd>
         </dt>
@@ -424,7 +409,8 @@ row. View example with the query string &traderCount=0"
           1457317
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> CS
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+              class="govuk-visually-hidden"> CS
               application number</span></a>
         </dd>
         </dt>
@@ -440,16 +426,19 @@ row. View example with the query string &traderCount=0"
           fencereceipt1.pdf
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
               Documents</span></a>
         </dd>
         </dt>
       </div>
     </dl>
 
-    <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
-      Submit
-    </button>
+    <form method="POST">
+      <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+    </form>
   </div>
 </div>
 

@@ -2018,7 +2018,7 @@ module.exports = function (router, _myData) {
         res.redirect(301, '/' + version + '/register-ab-business-VAT');
     });
 
-        // Register a business - business VAT route
+    // Register a business - business VAT route
 
     /*router.get('/' + version + '/register-ab-business-VAT-route', function (req, res) {
         res.render(version + '/register-ab-business-VAT-route', {
@@ -2124,7 +2124,7 @@ module.exports = function (router, _myData) {
 
     });
 
-        router.post('/' + version + '/register-ab-business-check', function (req, res) {
+    router.post('/' + version + '/register-ab-business-check', function (req, res) {
 
         if (req.query.businessregistered == "true") {
             req.session.myData.notifications.type = "success"
@@ -2195,7 +2195,7 @@ module.exports = function (router, _myData) {
 
         var CSAnswer = request.session.data['CSrelatesTo']
         if (CSAnswer == "Capital grant application") {
-            response.redirect("v11/doc-upload-CS-tag")
+            response.redirect("v11/doc-upload-cs-app-tag")
         }
         else {
             response.redirect("v11/index")
@@ -2203,17 +2203,31 @@ module.exports = function (router, _myData) {
 
     });
 
-    // doc-upload-CS-tag
+    // doc-upload-cs-app-tag
 
-    router.post('/CS-tag-answer', function (request, response) {
+    router.post('/cs-app-tag-answer', function (request, response) {
 
-        var CStag = request.session.data['CStag']
+        var CStag = request.session.data['cs-app-tag']
         if (CStag == "Evidence") {
             response.redirect("v11/doc-upload-cs-app-ref")
         }
         else {
             response.redirect("v11/index")
         }
+
+    });
+
+    // doc-upload-check-your-upload
+
+    router.get('/' + version + '/doc-upload-check-your-upload', function (req, res) {
+        res.render(version + '/doc-upload-check-your-upload', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/doc-upload-check-your-upload', function (req, res) {
+
+        res.redirect(301, '/' + version + '/doc-upload-overview?filesUploaded=yes');
 
     });
 
