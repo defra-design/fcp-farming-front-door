@@ -1,12 +1,12 @@
 {% extends "layouts/main.html" %}
 
 {% set pageName="Uploaded documents for" %}
- 
+
 
 {% if data.view == "int" %}
-  {% set _showFooterMVPLinks = false %}
+{% set _showFooterMVPLinks = false %}
 {% else %}
-  {% set _showFooterMVPLinks = true %}
+{% set _showFooterMVPLinks = true %}
 {% endif %}
 
 {% block beforeContent %}
@@ -32,12 +32,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+    {% set _selectedBusiness = myData.selectedBusiness %}
 
-    <span class="govuk-caption-xl">Alfred Waldron</span>
-    <h1 class="govuk-heading-l">
-      Documents for Agile Farm Ltd </h1>
 
-    <p class="govuk-caption-m">Single business identifier (SBI): 123456789
+    <span class="govuk-caption-xl">{{data.user.name}}</span>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-1">
+      Documents for {{_selectedBusiness.name}}</h1>
+    <span class="govuk-caption-m">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</span>
 
   </div>
 
@@ -46,27 +47,30 @@
       Keep your own copies of anything you send us.
     </div>
 
-    <button type="submit" class="govuk-button" data-module="govuk-button">
-      Upload one or more documents
-    </button>
-<details class="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-If you cannot send documents online    </span>
-  </summary>
-  <div class="govuk-details__text">
-You can also send them by email to <a class="govuk-link" href="#">landandfarm@defra.gov.uk</a> or 
-by post to:
-<br><br>
-Land and farm service<br>
-PO Box 324<br>
-Worksop<br>
-S95 1DF<br>
-<br>
-Please tell us your SBI which is at the top of this page.
-<br><br>
-We recommend you get proof of postage.  </div>
-</details>
+    <form method="POST">
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Upload one or more documents
+      </button>
+    </form>
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          If you cannot send documents online </span>
+      </summary>
+      <div class="govuk-details__text">
+        You can also send them by email to <a class="govuk-link" href="#">landandfarm@defra.gov.uk</a> or
+        by post to:
+        <br><br>
+        Land and farm service<br>
+        PO Box 324<br>
+        Worksop<br>
+        S95 1DF<br>
+        <br>
+        Please tell us your SBI which is at the top of this page.
+        <br><br>
+        We recommend you get proof of postage.
+      </div>
+    </details>
 
 
     <h2 class="govuk-heading-m">Search and filters</h2>
@@ -142,14 +146,16 @@ We recommend you get proof of postage.  </div>
           <td class="govuk-table__cell">Funding or grant</td>
           <td class="govuk-table__cell">fencepic1.jpg</td>
           <td class="govuk-table__cell">1733826312</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="doc-upload-view-fence.html">View</a> | <a href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="doc-upload-view-fence.html">View</a> | <a
+              href="#">Download</a></td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
           <td class="govuk-table__cell">Funding or grant</td>
           <td class="govuk-table__cell">fenccereceipt.pdf</td>
           <td class="govuk-table__cell">1733826312</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="doc-upload-view-receipt.html">View</a> | <a href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="doc-upload-view-receipt.html">View</a> | <a
+              href="#">Download</a></td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">15 August 2025</td>
@@ -212,7 +218,7 @@ We recommend you get proof of postage.  </div>
 
     </tbody>
     </table>
-<p class="govuk-body" style="text-align:right">Showing documents 1-10 of 28</p>
+    <p class="govuk-body" style="text-align:right">Showing documents 1-10 of 28</p>
 
     <nav class="govuk-pagination" aria-label="Pagination">
       <div class="govuk-pagination__prev">
@@ -244,7 +250,7 @@ We recommend you get proof of postage.  </div>
             3
           </a>
         </li>
-       </ul>
+      </ul>
       <div class="govuk-pagination__next">
         <a class="govuk-link govuk-pagination__link" href="#" rel="next">
           <span class="govuk-pagination__link-title">
@@ -257,7 +263,7 @@ We recommend you get proof of postage.  </div>
             </path>
           </svg>
         </a>
-       
+
       </div>
     </nav>
 

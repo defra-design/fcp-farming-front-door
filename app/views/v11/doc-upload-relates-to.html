@@ -101,26 +101,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <!--{% if _inError %}
-    <div class="govuk-error-summary" data-module="govuk-error-summary">
-      <div role="alert">
-        <h2 class="govuk-error-summary__title">
-          There is a problem
-        </h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            {% for name, item in myData.validationErrors %}
-            <li>
-              <a href="#{{item.anchor}}">{{item.message}}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </div>
-    {% endif %}-->
 
-    <form method="POST" novalidate>
+    <form action="/relates-answer" method="POST" novalidate>
 
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
         <h1 class="govuk-label-wrapper">
@@ -138,7 +120,7 @@
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="relatesTo" name="relatesTo" type="radio"
-                  value="CompliantEvidence">
+                  value="Countryside Stewardship (CS)" {{ checked('relatesTo','Countryside Stewardship (CS)') }}>
                 <label class="govuk-label govuk-radios__label" for="relatesTo">
                  Countryside Stewardship (CS)
                 </label>
@@ -148,7 +130,7 @@
                   <div class="govuk-radios" data-module="govuk-radios">
                     <div class="govuk-radios__item">
                       <input class="govuk-radios__input" id="relatesTo-1" name="relatesTo" type="radio"
-                        value="BusinessChangeEvidence">
+                        value="Delinked payments" {{ checked('relatesTo','Delinked payments') }}>
                       <label class="govuk-label govuk-radios__label" for="relatesTo-1">
                         Delinked payments
                       </label>
@@ -156,20 +138,21 @@
 
                     <div class="govuk-radios__item">
                       <input class="govuk-radios__input" id="relatesTo-2" name="relatesTo" type="radio"
-                        value="FundingOrGrant">
+                        value="Environmental Stewardship" {{ checked('relatesTo','Environmental Stewardship') }}>
                       <label class="govuk-label govuk-radios__label" for="relatesTo-2">
-Environmental Stewardship                      </label>
+                        Environmental Stewardship
+                      </label>
                     </div>
                     <div class="govuk-radios__item">
                       <input class="govuk-radios__input" id="relatesTo-3" name="relatesTo" type="radio"
-                        value="AppealEvidence">
+                        value="Grants" {{ checked('relatesTo','Grants') }}>
                       <label class="govuk-label govuk-radios__label" for="relatesTo-3">
                         Grants
                       </label>
                     </div>
                     <div class="govuk-radios__item">
                       <input class="govuk-radios__input" id="relatesTo-4" name="relatesTo" type="radio"
-                        value="ProbateEvidence">
+                        value="Sustainable Farming Incentive (SFI)" {{ checked('relatesTo','Sustainable Farming Incentive (SFI)') }}>
                       <label class="govuk-label govuk-radios__label" for="relatesTo-4">
                        Sustainable Farming Incentive (SFI)
                       </label>
