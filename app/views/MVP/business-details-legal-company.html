@@ -77,23 +77,26 @@
 {% block content %}
 
 <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <form method="post">
-          <div class="govuk-form-group">
-            <h1 class="govuk-label-wrapper">
-              <label class="govuk-label govuk-label--l" for="legalCCRNBus">
-                Enter your company registration number
-              </label>
-            </h1>
-            <input class="govuk-input govuk-input--width-10" id="legalCCRNBus" name="legalCCRNBus" type="text" 
-            value="{{ data['legalCCRNBus']}}">
-          </div>
-          <button type="submit" class="govuk-button" data-module="govuk-button">
-            Continue
-          </button>
-        </form>
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="legalCCRNBus">
+            Enter your company registration number
+          </label>
+        </h1>
+        <div id="legalCCRNBus-hint" class="govuk-hint">
+          This is 8 characters, which may be either 8 numbers or 2 letters and 6 numbers. For example, 12345678 or SC123456.
+        </div>
+        <input class="govuk-input govuk-input--width-10" id="legalCCRNBus" name="legalCCRNBus" type="text"
+          value="{{ data['legalCCRNBus']}}">
       </div>
-    </div>
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>
 
 
 

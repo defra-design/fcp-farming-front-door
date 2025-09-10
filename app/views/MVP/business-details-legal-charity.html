@@ -77,23 +77,26 @@
 {% block content %}
 
 <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <form method="post">
-          <div class="govuk-form-group">
-            <h1 class="govuk-label-wrapper">
-              <label class="govuk-label govuk-label--l" for="legalCHRNBus">
-                Enter your charity commission registration number
-              </label>
-            </h1>
-            <input class="govuk-input govuk-input--width-10" id="legalCHRNBus" name="legalCHRNBus" type="text" 
-            value="{{ data['legalCHRNBus']}}"  >
-          </div>
-          <button type="submit" class="govuk-button" data-module="govuk-button">
-            Continue
-          </button>
-        </form>
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="legalCHRNBus">
+            Enter your charity commission registration number
+          </label>
+        </h1>
+        <div id="legalCHRNBus-hint" class="govuk-hint">
+          This is 7 or 8 numbers, for example, 12345678.
+        </div>
+        <input class="govuk-input govuk-input--width-10" id="legalCHRNBus" name="legalCHRNBus" type="text"
+          value="{{ data['legalCHRNBus']}}">
       </div>
-    </div>
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>
 
 
 
