@@ -58,9 +58,9 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <form action="/form-handler" method="post" novalidate>
+        <form action="doc-upload-check-your-upload" method="post" novalidate>
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
-                Check your uploaded files
+                Upload files
             </h1>
 
             <div class="govuk-warning-text">
@@ -75,16 +75,19 @@
                 You can upload up to 10 files in one batch.
             </p>
             <p class="govuk-body">
-                The size of each file must be less than 10MB, and files must be in one of these formats: doc, docx, docm,
+                The size of each file must be less than 10MB, and files must be in one of these formats: doc, docx,
+                docm,
                 gif, jfif, jpeg, jpg, odt, pdf, pptx, tiff, txt, xls, xlsx, xlsm. If you’ve used standard settings and
                 programmes on a phone, tablet, digital camera or computer, files will likely meet these requirements.
             </p>
             <p class="govuk-body">
-                Each file name must be unique, 20 characters or less, contain only letters and numbers, and contain no gaps.
+                Each file name must be unique, 20 characters or less, contain only letters and numbers, and contain no
+                gaps.
             </p>
             <p class="govuk-body">
                 If you're sending files in relation to a grant or funding claim, <a
-                    href="https://www.gov.uk/guidance/funding-for-farmers">check if there is any other guidance to follow,
+                    href="https://www.gov.uk/guidance/funding-for-farmers">check if there is any other guidance to
+                    follow,
                     depending on the scheme</a>.
             </p>
 
@@ -135,27 +138,18 @@
                 </div>
             </div>
 
-            {% from "govuk/components/radios/macro.njk" import govukRadios %}
+            <div class="container--doc-upload">
+                <h2 class="govuk-heading-m govuk-!-margin-top-7">
+                    Upload a file
+                </h2>
 
-            {{ govukRadios({
-            name: "whereDoYouLive",
-            fieldset: {
-                legend: {
-                text: "Do you want to add more files?",
-                classes: "govuk-fieldset__legend--m"
-                }
-            },
-            items: [
-                {
-                value: "yes",
-                text: "Yes"
-                },
-                {
-                value: "no",
-                text: "No"
-                }
-            ]
-            }) }}
+                <div class="govuk-button-group govuk-button-group--doc-upload">
+                    <p class="govuk-body">Drag and drop files here or</p>
+                    <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                        Upload files
+                    </button>
+                </div>
+            </div>
 
             <button type="submit" class="govuk-button" data-module="govuk-button">
                 Continue
