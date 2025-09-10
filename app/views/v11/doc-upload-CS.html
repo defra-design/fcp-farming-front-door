@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What do you want to send to us?" %}
+{% set pageTitle = "Which aspect of Countryside Stewardship does this relate to?" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -102,61 +102,58 @@
   <div class="govuk-grid-column-two-thirds">
 
 
-    <form action="/send-answer" method="POST" novalidate>
+    <form action="/CS-answer" method="POST" novalidate>
 
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="vatBus">
-            What do you want to send us?
+            Which aspect of Countryside Stewardship does this relate to?
           </label>
         </h1>
 
-        <div id="vatBus-hint" class="govuk-body ">
-          We need to know so we can process your documents as quickly as possible.
-          <br><br>
-          Select the option that fits best.
-
-        </div>
+        <p class="govuk-hint">
+          Select the option that fits best. 
+        </p>
         <div class="govuk-form-group">
           <fieldset class="govuk-fieldset">
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="whatToSend" name="whatToSend" type="radio"
-                  value="Business change evidence" {{ checked('whatToSend','Business change evidence') }}>
-                <label class="govuk-label govuk-radios__label" for="whatToSend">
-                  Business change evidence
+                <input class="govuk-radios__input" id="CSrelatesTo" name="CSrelatesTo" type="radio"
+                  value="Capital grant application" {{ checked('CSrelatesTo','Capital grant application') }}>
+                <label class="govuk-label govuk-radios__label" for="CSrelatesTo">
+                 Capital grant application
                 </label>
               </div>
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                   <div class="govuk-radios" data-module="govuk-radios">
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="whatToSend-1" name="whatToSend" type="radio"
-                        value="Complaint evidence" {{ checked('whatToSend','Complaint evidence') }}>
-                      <label class="govuk-label govuk-radios__label" for="whatToSend-1">
-                        Complaint evidence
+                      <input class="govuk-radios__input" id="CSrelatesTo-1" name="CSrelatesTo" type="radio"
+                        value="Agreement" {{ checked('CSrelatesTo','Agreement') }}>
+                      <label class="govuk-label govuk-radios__label" for="CSrelatesTo-1">
+                        Agreement
                       </label>
                     </div>
 
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="whatToSend-2" name="whatToSend" type="radio"
-                        value="Funding or grant amendment, claim, declaration or evidence" {{ checked('whatToSend','Funding or grant amendment, claim, declaration or evidence') }}>
-                      <label class="govuk-label govuk-radios__label" for="whatToSend-2">
-                        Funding or grant amendment, claim, declaration or evidence
+                      <input class="govuk-radios__input" id="CSrelatesTo-2" name="CSrelatesTo" type="radio"
+                        value="Capital claim" {{ checked('CSrelatesTo','Capital claim') }}>
+                      <label class="govuk-label govuk-radios__label" for="CSrelatesTo-2">
+                        Capital claim
                       </label>
                     </div>
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="whatToSend-3" name="whatToSend" type="radio"
-                        value="General appeal evidence" {{ checked('whatToSend','General appeal evidence') }}>
-                      <label class="govuk-label govuk-radios__label" for="whatToSend-3">
-                        General appeal evidence
+                      <input class="govuk-radios__input" id="CSrelatesTo-3" name="CSrelatesTo" type="radio"
+                        value="Facilitation fund" {{ checked('CSrelatesTo','Facilitation fund') }}>
+                      <label class="govuk-label govuk-radios__label" for="CSrelatesTo-3">
+                        Facilitation fund
                       </label>
                     </div>
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="whatToSend-4" name="whatToSend" type="radio"
-                        value="Probate evidence" {{ checked('whatToSend','Probate evidence') }}>
-                      <label class="govuk-label govuk-radios__label" for="whatToSend-4">
-                        Probate evidence
+                      <input class="govuk-radios__input" id="CSrelatesTo-4" name="CSrelatesTo" type="radio"
+                        value="Revenue claim" {{ checked('CSrelatesTo','Revenue claim') }}>
+                      <label class="govuk-label govuk-radios__label" for="CSrelatesTo-4">
+                       Revenue claim
                       </label>
                     </div>
                   </div>

@@ -1987,10 +1987,10 @@ module.exports = function (router, _myData) {
 
         var RABType = request.session.data['RegisterBusinessType']
         if (RABType == "I want to apply for, manage and receive rural payments") {
-            response.redirect("v10/register-ab-business-legal-status")
+            response.redirect("v11/register-ab-business-legal-status")
         }
         else {
-            response.redirect("v10/register-ab-business-name")
+            response.redirect("v11/register-ab-business-name")
         }
     })
 
@@ -2030,10 +2030,10 @@ module.exports = function (router, _myData) {
 
         var RABVAT = request.session.data['RegisterBusinessVAT-route']
         if (RABVAT == "Yes") {
-            response.redirect("v10/register-ab-business-VAT")
+            response.redirect("v11/register-ab-business-VAT")
         }
         else {
-            response.redirect("v10/register-ab-business-name")
+            response.redirect("v11/register-ab-business-name")
         }
     }) */
 
@@ -2134,6 +2134,86 @@ module.exports = function (router, _myData) {
             req.session.myData.notifications.message = "You have registered your business"
         }
         res.redirect(301, '/' + version + '/businesses-list?businessregistered=true');
+
+    });
+
+    // DOC UPLOAD ROUTING AND BRANCHING
+
+    // doc-upload-overview
+
+    router.get('/' + version + '/doc-upload-overview', function (req, res) {
+        res.render(version + '/doc-upload-overview', {
+            myData: req.session.myData
+        });
+    });
+
+    router.post('/' + version + '/doc-upload-overview', function (req, res) {
+
+        res.redirect(301, '/' + version + '/doc-upload-valid-docs');
+
+    });
+
+    // doc-upload-valid-docs
+
+    router.post('/' + version + '/doc-upload-valid-docs', function (req, res) {
+
+        res.redirect(301, '/' + version + '/doc-upload-what-do-you-want-to-send');
+
+    });
+
+    // doc-upload-what-do-you-want-to-send
+
+    router.post('/send-answer', function (request, response) {
+
+        var sendAnswer = request.session.data['whatToSend']
+        if (sendAnswer == "Funding or grant amendment, claim, declaration or evidence") {
+            response.redirect("v11/doc-upload-relates-to")
+        }
+        else {
+            response.redirect("v11/index")
+        }
+
+    });
+
+    // doc-upload-relates-to
+
+    router.post('/relates-answer', function (request, response) {
+
+        var relatesAnswer = request.session.data['relatesTo']
+        if (relatesAnswer == "Countryside Stewardship (CS)") {
+            response.redirect("v11/doc-upload-CS")
+        }
+        else {
+            response.redirect("v11/index")
+        }
+
+    });
+
+    // doc-upload-CS
+
+    router.post('/CS-answer', function (request, response) {
+
+        var CSAnswer = request.session.data['CSrelatesTo']
+        if (CSAnswer == "Capital grant application") {
+            response.redirect("v11/doc-upload-CS-tag")
+        }
+        else {
+            response.redirect("v11/index")
+        }
+
+    });
+
+    // doc-upload-CS-tag
+
+    router.post('/CS-tag-answer', function (request, response) {
+
+        var CStag = request.session.data['CStag']
+        if (CStag == "Evidence") {
+            response.redirect("v11/doc-upload-cs-app-ref")
+        }
+        else {
+            response.redirect("v11/index")
+        }
 
     });
 
