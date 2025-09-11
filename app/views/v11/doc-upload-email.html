@@ -8,20 +8,20 @@
 {% endif %}
 {% endfor %}
 
-<!-- Upcoming payment 
-{% set _selectedPayment = data.paymentsUpcoming[0] %}
 
 {% set _showEmailMeta = true %}
-{% set _emailSubject = "Your Countryside Stewardship capital grant application is missing information for " + _selectedBusiness.name + ", " +
-_selectedPayment.date %}
+{% set _emailSubject = "Your Countryside Stewardship capital grant application is missing information for " + _selectedBusiness.name %}
+{% set _serviceName = "Land and farm service" %}
 
 {% set serviceName = "" %}
 
 {% block pageTitle %}
 Subject: {{_emailSubject}}
-{% endblock %} -->
+{% endblock %}
 
 {% block content %}
+
+{% set _selectedBusiness = myData.selectedBusiness %}
 
 <style>
   .email-layout p,
@@ -63,13 +63,12 @@ Subject: {{_emailSubject}}
 
 
 
-    <p class="govuk-body">Please send us the information detailed above. The fastest way to get us the information is to
-      [send it to us online using the new Land and farm service](deep link).</p>
+    <p class="govuk-body">Please send us the information detailed above. The fastest way to get us the information is to <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-sfd-sign-in">send it to us online using the new Land and farm service</a>.</p>
 
     <p class="govuk-body">If you cannot send the information online, you can attach it in a reply to this email, or post
       it to:
       <br><br>
-      Land and farm service<br>
+      Rural payments agency<br>
       PO Box 324<br>
       Worksop<br>
       S95 1DF<br>
@@ -77,7 +76,7 @@ Subject: {{_emailSubject}}
 
 
     <p>Make sure you note your single business identifier (SBI) on anything you post us. You can find this at the top of
-      this letter.</p>
+      this email.</p>
 
     <h2 class="govuk-heading-s">If you have any questions about this email</h2>
 
@@ -86,7 +85,7 @@ Subject: {{_emailSubject}}
 
     </p>
 
-    <p class="govuk-body">Please tell us your SBI which is at the top of this letter.</p>
+    <p class="govuk-body">Please tell us your SBI which is at the top of this email.</p>
 
     <p class="govuk-body">Yours sincerely</p>
 
@@ -102,16 +101,6 @@ Subject: {{_emailSubject}}
 {% endblock %}
 
 {% block footer %}
-
-{% set _customFooterContent %}
-<p class="govuk-body govuk-!-font-size-16 govuk-!-margin-bottom-1">Go to:</p>
-<ul class="govuk-footer__inline-list">
-  <li class="govuk-footer__inline-list-item">Email (this email)</li>
-  <li class="govuk-footer__inline-list-item"><a href="payment-action-text" class="govuk-footer__link">Text</a></li>
-  <li class="govuk-footer__inline-list-item"><a href="payment-action-letter" class="govuk-footer__link">Letter</a></li>
-  <li class="govuk-footer__inline-list-item"><a href="business-home" class="govuk-footer__link">Service</a></li>
-</ul>
-{% endset %}
 
 {{ govukFooter({
 meta: {

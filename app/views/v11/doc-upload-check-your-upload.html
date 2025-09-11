@@ -327,22 +327,8 @@ row. View example with the query string &traderCount=0"
         <dt class="govuk-summary-list__key">
           What do you want to send us?
         </dt>
-        <!--<dd class="govuk-summary-list__value">
-          {{myData.nameBus}}
-        </dd>
-        {% if data.permissionsMVP == "view" and data.view == "ext" %}
-          
-        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
-        <dd class="govuk-summary-list__actions">
-          
-        </dd>
-        {% else %}
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> business name</span></a>
-        </dd>
-        {% endif %}-->
         <dd class="govuk-summary-list__value">
-          Funding or grant amendment, claim, declaration or evidence
+          {{data['whatToSend']}}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
@@ -351,62 +337,14 @@ row. View example with the query string &traderCount=0"
         </dd>
       </div>
 
+      {% if data['whatToSend'] == "Funding or grant amendment, claim, declaration or evidence" %}
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Subject
         </dt>
-
         <dd class="govuk-summary-list__value">
-          Countryside Stewardship
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-relates-to">Change<span
-              class="govuk-visually-hidden">
-              subject</span></a>
-        </dd>
-        </dt>
-      </div>
-
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          What does this relate to?
-        </dt>
-        <dd class="govuk-summary-list__value">
-          Capital grant application
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-CS">Change<span
-              class="govuk-visually-hidden"> what
-              does this relate to</span></a>
-        </dd>
-        </dt>
-      </div>
-
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          What is this?
-        </dt>
-        <dd class="govuk-summary-list__value">
-          Evidence
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-tag">Change<span
-              class="govuk-visually-hidden"> what is
-              this</span></a>
-        </dd>
-        </dt>
-      </div>
-
-
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          CS application number
-        </dt>
-        <dd class="govuk-summary-list__value">
-          1457317
+          {{data['relatesTo']}}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
@@ -415,6 +353,52 @@ row. View example with the query string &traderCount=0"
         </dd>
         </dt>
       </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What does this relate to
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['CSrelatesTo']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What is this
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['cs-app-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+              class="govuk-visually-hidden"> CS
+              application reference number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS application number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['CS-app-ref'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -432,6 +416,43 @@ row. View example with the query string &traderCount=0"
         </dd>
         </dt>
       </div>
+
+      {% else %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Complaint reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          8251390
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-complaint-ref">Change<span
+              class="govuk-visually-hidden">complaint reference number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          file.jpeg
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+
+      {% endif %}
+
+
+
     </dl>
 
     <form method="POST">

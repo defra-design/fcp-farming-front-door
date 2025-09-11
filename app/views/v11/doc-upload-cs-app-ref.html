@@ -105,14 +105,14 @@
 
       <div class="govuk-form-group">
         <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="event-name">
+          <label class="govuk-label govuk-label--l" for="CS-app-ref">
             Enter your Countryside Stewardship application reference number
           </label>
         </h1>
-        <div id="event-name-hint" class="govuk-hint">
+        <div id="CS-app-ref-hint" class="govuk-hint">
           You can find this in emails about your application from the Land and farm service.
         </div>
-        <input class="govuk-input" id="event-name" name="eventName" type="text" aria-describedby="event-name-hint">
+        <input class="govuk-input" id="CS-app-ref" name="CS-app-ref" type="text" aria-describedby="CS-app-ref-hint" value="{{data['CS-app-ref']}}">
       </div>
 
       {{govukButton({
