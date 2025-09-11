@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
 
-  <a class="govuk-link" href="#">Help</a>
+  <a style="margin: 20px;" href="#">Help</a>
   <br><br>
 
   <title>error scenario 2</title>
@@ -20,10 +20,13 @@
       padding: 8px;
       text-align: left;
     }
- th {
-      background-color: #b2b1b1; /* Dark grey header */
+
+    th {
+      background-color: #c4c4c4;
+      /* Dark grey header */
       color: rgb(1, 1, 1);
     }
+
     tr:nth-child(even) {
       background-color: #f2f2f2;
       /* Light grey */
@@ -37,8 +40,84 @@
 </head>
 
 <body>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+
+  <div style="margin-left: 20px; margin-right: 80px;">
+
+    <table>
+      <tr>
+        <th>Year</th>
+        <th>App. number</th>
+        <th>Type</th>
+        <th>Active</th>
+        <th>Submit Date</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+      <tr>
+        <td>2025</td>
+        <td>123456 </td>
+        <td>Capital Grants</td>
+        <td>Yes</td>
+        <td>14/08/2025 11:43:24 PM</td>
+
+        <td>Application created</td>
+        <td><button type="submit" data-module="govuk-button" style="background-color: green; color: white;">
+            Open
+          </button></td>
+
+      </tr>
+      <tr>
+        <td>2023</td>
+        <td>2345678</td>
+        <td>CS Capital Grants</td>
+        <td>No</td>
+        <td>31/12/2023 7:15:56 AM</td>
+        <td>Closed</td>
+
+        <td> </td>
+      </tr>
+      <tr>
+        <td>2022</td>
+        <td>3456789</td>
+        <td>CS Capital Grants</td>
+        <td>No</td>
+        <td>24/4/2022 12:122:58 PM</td>
+        <td>Withdrawn</td>
+
+        <td> </td>
+      </tr>
+
+      <tr>
+        <td>2020</td>
+        <td>4567890</td>
+        <td>Mid-Tier application pack</td>
+        <td>No</td>
+        <td>1/9/2020 9:10:23 PM</td>
+        <td>Closed</td>
+
+        <td> </td>
+      </tr>
+      <tr>
+        <td>2019</td>
+        <td>5678901</td>
+        <td>Mid-Tier application pack</td>
+        <td>No</td>
+        <td>26/11/2019 11:13:04 AM</td>
+        <td>Closed</td>
+
+        <td> </td>
+
+      </tr>
+
+    </table>
+    <br>
+    <button type="submit" style="background-color: green; color: white;" data-module="govuk-button">
+      Apply for a Woodland Management Plan
+    </button>
+  </div>
+
+<div style="margin-top: 40px; margin-left: 20px;">
+
 
   <table>
     <tr>
@@ -47,65 +126,15 @@
       <th>Type</th>
       <th>Active</th>
       <th>Submit Date</th>
-      <th>Status</th>
-      <th><button type="submit" class="govuk-button" data-module="govuk-button">
-          Open
-        </button></th>
     </tr>
     <tr>
-      <td>2024</td>
+      <td>2025</td>
+      <td>123456 </td>
       <td>Capital Grants</td>
       <td>Yes</td>
-      <td>14/11/2024 11:43:24 PM</td>
-
-      <td>Application created</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td>CS Captial Grants</td>
-      <td>No</td>
-      <td>31/12/2023 7:15:56 AM</td>
-      <td>Closed</td>
-      <td></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>2022</td>
-      <td>CS Captial Grants</td>
-      <td>No</td>
-      <td>24/4/2022 12:122:58 PM</td>
-      <td>Withdrawn</td>
-      <td></td>
-      <td> </td>
-    </tr>
-
-    <tr>
-      <td>2020</td>
-      <td>Mid-Tier application pack</td>
-      <td>No</td>
-      <td>1/9/2020 9:10:23 PM</td>
-      <td>Closed</td>
-      <td></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>2019</td>
-      <td>Mid-Tier application pack</td>
-      <td>No</td>
-      <td>26/11/2019 11:13:04 AM</td>
-      <td>Closed</td>
-      <td></td>
-      <td> </td>
+      <td>14/08/2025 11:43:24 PM</td>
 
     </tr>
-
 </table>
 </div>
-</div>
-
-
-
-
 </html>
