@@ -1,0 +1,148 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+<!--{% set _inError = myData.validationError == "true" %}-->
+
+{% set pageTitle = "Sorry, there was a problem with the service" %}
+{% set pageName = pageTitle %}
+<!--{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Land and farm service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "VAT registration number (add/change) - business details",
+"id": "bd12",
+"url": "business-details-vat-change?r=t&view=ext&release=b1&newChange=true",
+"release": "Buffalo 1.0 MVP",
+"variants": [],
+
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "Empty field / nothing entered",
+"content": "Enter a VAT registration number"
+},
+{
+"scenario": "Wrong format",
+"content": "Enter a VAT registration number in the format GB123456789 or 123456789"
+}
+]
+
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "VAT registration number (add/change) - business details",
+"id": "int-bd12",
+"url": "business-details-vat-change?r=t&view=int&release=b2&newChange=true",
+"release": "Buffalo 1.1 MVP",
+"variants": [],
+
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "Empty field / nothing entered",
+"content": "Enter a VAT registration number"
+},
+{
+"scenario": "Wrong format",
+"content": "Enter a VAT registration number in the format GB123456789 or 123456789"
+}
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}-->
+
+<!--{% block beforeContent %}-->
+
+<!--{% if data.view != "int" %}-->
+
+<!--{% include "_common/phase-banner-2.html" %}-->
+<!--{% include "_common/sub-header.html" %}-->
+
+<!--{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}-->
+
+<!--<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Backadfdf</a>
+-->
+<!--{% endblock %}-->
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <!-- {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}-->
+
+    <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+      <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="vatBus">
+          Sorry, there was a problem with the service
+        </label>
+      </h1>
+
+      <p class="govuk-body">Try again later.</p>
+
+      <p class="govuk-body">If you were in the middle of updating your details, they may not have been saved. You may
+        need to start again when the service is available.
+      <h2 class="govuk-heading-m">Contact Rural Payments for help</h2>
+      <p class="govuk-body">Phone: 03000 200 301</p>
+      <p class="govuk-body">Monday to Friday, 8.30am to 5pm (except bank holidays)</p>
+      <p class="govuk-body"><a class="govuk-link" href="#">Find out about call charges (opens in new tab)</a>.</p>
+      <p class="govuk-body">Email: <a class="govuk-link" href="#">ruralpayments@defra.gov.uk</a></p>
+      <p class="govuk-body">We aim to respond to emails within 10 working days.</p>
+
+    </div>
+  </div>
+
+
+
+
+
+  {% endblock %}
