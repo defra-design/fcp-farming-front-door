@@ -34,6 +34,33 @@
 
     {% set _selectedBusiness = myData.selectedBusiness %}
 
+    {% if data.filesUploaded == "yes" %}
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert"
+      aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          You have successfully uploaded the following documents:
+        </h3>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>fencepic1.jpeg</li>
+          <li>fencereceipt1.pdf</li>
+        </ul>
+        <p class="govuk-body govuk-!-font-weight-bold">
+          Submission reference: 1733826312
+        </p>
+
+        <p class="govuk-body">
+          We have emailed confirmation of this to you and all authorised users at the business.
+        </p>
+      </div>
+    </div>
+    {% endif %}
+
 
     <span class="govuk-caption-xl">{{data.user.name}}</span>
     <h1 class="govuk-heading-l govuk-!-margin-bottom-1">
@@ -47,7 +74,7 @@
       Keep your own copies of anything you send us.
     </div>
 
-    <form method="POST">
+    <form action="doc-upload-valid-docs">
       <button type="submit" class="govuk-button" data-module="govuk-button">
         Upload one or more documents
       </button>
@@ -97,7 +124,7 @@
         </select>
       </div>
 
-      <div class="govuk-date-input__item">
+      <!--<div class="govuk-date-input__item">
         <label class="govuk-label" for="sort">
           Filter by tag
         </label>
@@ -121,9 +148,8 @@
           <option value="SFI-pilot">SFI pilot</option>
           <option value="SFI23">SFI 23</option>
         </select>
-      </div>
+      </div>-->
     </div>
-    </fieldset>
   </div>
 
   <br><br>

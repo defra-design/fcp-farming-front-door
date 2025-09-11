@@ -2147,12 +2147,6 @@ module.exports = function (router, _myData) {
         });
     });
 
-    router.post('/' + version + '/doc-upload-overview', function (req, res) {
-
-        res.redirect(301, '/' + version + '/doc-upload-valid-docs');
-
-    });
-
     // doc-upload-valid-docs
 
     router.post('/' + version + '/doc-upload-valid-docs', function (req, res) {
@@ -2168,6 +2162,9 @@ module.exports = function (router, _myData) {
         var sendAnswer = request.session.data['whatToSend']
         if (sendAnswer == "Funding or grant amendment, claim, declaration or evidence") {
             response.redirect("v11/doc-upload-relates-to")
+        }
+        if (sendAnswer == "Complaint evidence") {
+            response.redirect("v11/doc-upload-complaint-ref")
         }
         else {
             response.redirect("v11/index")

@@ -9,42 +9,43 @@
 
 {% if data.view == "ext" and data.release != "concept" %}
 
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
-    "status": 'In development',
-    "name": "SFD Home/Business Page",
-    "id": "bp02",
-    "url": "business-home?r=t&release=b1",
-    "release": "Buffalo 1.0 MVP",
-    "variants": [
-      {
-        "name": "SFD Home/Business Page (full permissions - default)",
-        "url": "business-home?r=t&release=b1&permissionsMVP=full"
-      }, 
-      {
-        "name": "SFD Home/Business Page (amend permissions)",
-        "url": "business-home?r=t&release=b1&permissionsMVP=amend"
-      }, 
-      {
-        "name": "SFD Home/Business Page (view permissions)",
-        "url": "business-home?r=t&release=b1&permissionsMVP=view"
-      }
-      
-    ],
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "SFD Home/Business Page",
+"id": "bp02",
+"url": "business-home?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "SFD Home/Business Page (full permissions - default)",
+"url": "business-home?r=t&release=b1&permissionsMVP=full"
+},
+{
+"name": "SFD Home/Business Page (amend permissions)",
+"url": "business-home?r=t&release=b1&permissionsMVP=amend"
+},
+{
+"name": "SFD Home/Business Page (view permissions)",
+"url": "business-home?r=t&release=b1&permissionsMVP=view"
+}
 
-    "pagetitle": pageName,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
-    
-    ],
-    "notes": [
-      "Conditional link text: the visible link text for 'View and update your business details' should change according to the permission level. See variants. Note that full and amend permissions have the same link text."
-      
-    ]
-    
-  }
-  %}
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+],
+"notes": [
+"Conditional link text: the visible link text for 'View and update your business details' should change according to the
+permission level. See variants. Note that full and amend permissions have the same link text."
+
+]
+
+}
+%}
 
 {% else %}
 
@@ -52,20 +53,20 @@
 
 {% block beforeContent %}
 
-  {% include "_common/phase-banner-2.html" %}
+{% include "_common/phase-banner-2.html" %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
 
-      {% if data.release == "b1" %}
-        {% set _hideAccountLink = true %}
-      {% endif %}
-      {% include "_common/login-nav-2.html" %}
+    {% if data.release == "b1" %}
+    {% set _hideAccountLink = true %}
+    {% endif %}
+    {% include "_common/login-nav-2.html" %}
 
-      <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
+    <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
 
-    </div>
   </div>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -73,7 +74,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% set _selectedBusiness = myData.selectedBusiness %} 
+    {% set _selectedBusiness = myData.selectedBusiness %}
 
     {% if data.access == "view" %}
     <span class="govuk-caption-xl">Tom Smyth<br></span>
@@ -95,26 +96,26 @@
   <div class="govuk-grid-column-two-thirds">
 
     {% set _schemesCards = [
-      {
-        "name": "Get funding to improve animal health and welfare",
-        "link": "vets-manage-your-claims",
-        "release": "b1"
-      },
-      {
-        "name": "Calf housing for health and welfare grant",
-        "link": "/_common/not-testing",
-        "release": "concept"
-      },
-      {
-        "name": "Sustainable farming incentive",
-        "link": "/_common/not-testing",
-        "release": "concept"
-      },
-      {
-        "name": "Countryside stewardship",
-        "link": "/_common/not-testing",
-        "release": "concept"
-      }
+    {
+    "name": "Get funding to improve animal health and welfare",
+    "link": "vets-manage-your-claims",
+    "release": "b1"
+    },
+    {
+    "name": "Calf housing for health and welfare grant",
+    "link": "/_common/not-testing",
+    "release": "concept"
+    },
+    {
+    "name": "Sustainable farming incentive",
+    "link": "/_common/not-testing",
+    "release": "concept"
+    },
+    {
+    "name": "Countryside stewardship",
+    "link": "/_common/not-testing",
+    "release": "concept"
+    }
     ] %}
 
     <!--<h2 class="govuk-heading-m">Your schemes and grants</h2>
@@ -136,36 +137,56 @@
       </ul>
     </div>-->
 
-    
+
 
 
     <h3 class="govuk-heading-m">
       Business details
     </h3>
     {% if data.permissionsMVP == "view" %}
-    <p><a class="govuk-link--no-visited-state" href="details-business-details">View your business details</a></p> 
+    <p>
+      <a class="govuk-link--no-visited-state" href="details-business-details">
+        View your business details
+      </a>
+    </p>
     {% elif data.permissionsMVP == "amend" %}
-    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p> 
+    <p>
+      <a class="govuk-link--no-visited-state" href="details-business-details">
+        View and update your business details
+      </a>
+    </p>
     {% else %}
-    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a></p>
-    
-    <p><a class="govuk-link--no-visited-state" href="doc-upload-overview">View and submit documents</a></p> 
+    <p>
+      <a class="govuk-link--no-visited-state" href="details-business-details">
+        View and update your business details
+      </a>
+    </p>
+
+    <p>
+      <a class="govuk-link--no-visited-state" href="doc-upload-overview?filesUploaded=no">
+        View and submit documents
+      </a>
+    </p>
     {% endif %}
-    
+
     <h3 class="govuk-heading-m">
       Personal details
     </h3>
-    <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 
+    <p>
+      <a class="govuk-link--no-visited-state" href="details-personal-details">
+        View and update your personal details
+      </a>
+    </p>
 
 
 
     {% if data.release != "b1" and myData.emmaserrors == "true" %}
-      <p class="govuk-link"><a href="test-page" class="govuk-link">Route to test page</a></p>
+    <p class="govuk-link"><a href="test-page" class="govuk-link">Route to test page</a></p>
     {% endif %}
 
 
   </div>
-  
+
 </div>
 
 {% endblock %}
