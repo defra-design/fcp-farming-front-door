@@ -90,3 +90,4 @@ require('./routes/v11/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 
 
 require('./routes/MVP/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
+require('./routes/AHWP/routes.js')(router,JSON.parse(JSON.stringify(_myData)));

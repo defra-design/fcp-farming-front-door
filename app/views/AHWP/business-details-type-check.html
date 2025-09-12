@@ -1,0 +1,127 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageName = "Check your business type is correct before submitting" %}
+{% set serviceName = "Land and farm service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+  "status": 'In development',
+  "name": "Business type (check) - business details",
+  "id": "bd18",
+  "url": "business-details-type-check?r=t&release=b1&newChange=true",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+   
+  ]
+  
+}
+%}
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Business type (change) - business details (Buffalo 1.1)",
+    "id": "int-bd18",
+    "url": "business-details-type-check?r=t&release=b2&view=int",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": ""
+    
+  }
+%}
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your business type is correct before submitting
+      </h1>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Business type"
+            },
+            value: {
+              text: myData.newTypeBus or myData.typeBus
+
+            },
+            actions: {
+              items: [
+                {
+                  href: "business-details-type-change",
+                  text: "Change",
+                  visuallyHiddenText: "business type"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

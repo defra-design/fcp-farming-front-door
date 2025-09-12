@@ -1,0 +1,226 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set _dynamicPageTitle = "Change your business type" %}
+{% if data.release != "b1" %}
+  {% set _dynamicPageTitle = "What is your business type?" %}
+{% endif %}
+
+{% set pageTitle = _dynamicPageTitle %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Land and farm service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Business type (change) - business details (Buffalo 1.0 MVP)",
+    "id": "bd17",
+    "url": "business-details-type-change?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "Concept (edit type online)",
+        "url": "personal-details-type-change?r=t&release=concept&newChange=true"
+      }
+    ],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Nothing selected (concept)",
+        "content": "Select the business type"
+      }
+
+    ]
+    
+  }
+  %}
+  {% elif data.view == "int" %}
+    {% set _showDesignSpec = true %}
+    {% set _designSpecData = {
+      "status": 'In development',
+      "name": "Business type (change) - business details (Buffalo 1.1)",
+      "id": "int-bd17",
+      "url": "business-details-type-change?r=t&release=b1&view=int",
+      "release": "Buffalo 1.1 MVP",
+
+      "pagetitle": pageName,
+      "pagedesc": "",
+      "pageurl": "",
+      "errormessages": [
+        
+      ]
+      
+    }
+    %}
+  
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if data.release == "b1" and data.view != "int" %}
+
+    <h1 class="govuk-heading-l">
+      {{_dynamicPageTitle}}
+    </h1>
+
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">Business type</span><br>
+        {{myData.typeBus}}
+    </p>
+
+    <p class="govuk-body">If your business type is incorrect, contact the Rural Payments Agency to update it.</p>
+
+    <h2 class="govuk-heading-m">Contact the Rural Payments Agency</h2>
+
+    <p class="govuk-body">Phone: 03000 200 301</p>
+
+    <p class="govuk-body">Monday to Friday, 8.30am to 5pm (except bank holidays)</p>
+
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="http://www.gov.uk/call-charges" rel="noreferrer noopener" target="_blank">Find out about call charges (opens in new tab)</a>.</p>
+
+    <p class="govuk-body">Email: <a class="govuk-link govuk-link--no-visited-state" href="mailto:ruralpayments@defra.gov.uk">ruralpayments@defra.gov.uk</a></p>
+
+    <p class="govuk-body">We aim to respond to emails within 10 working days.</p>
+
+
+    <p class="govuk-body govuk-!-margin-top-6"><a class="govuk-button" href="details-business-details">Return to business details</a></p>
+
+    {% else %}
+    
+    <form method="POST" novalidate>
+
+      {% set _types = [
+        "Agency or agent",
+        "Central or local government",
+        "Commons or graziers association",
+        "Education or training provider",
+        "Farmer",
+        "Forestry or woodland owner",
+        "Hobby livestock keeper",
+        "Horticultural business",
+        "Intervention or private storage",
+        "Land manager",
+        "Leader group",
+        "Meat industry",
+        "Official receiver or administrator",
+        "Professional livestock keeper",
+        "Rural community, voluntary or third sector organisation",
+        "Tourism"
+        ] 
+      %}
+
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <fieldset class="govuk-fieldset" {% if _inError %}aria-describedby="typeBus-error"{% endif %}>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              {{_dynamicPageTitle}}
+            </h1>
+          </legend>
+          {% if _inError %}
+          <p id="typeBus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.typeBus.message}}
+          </p>
+          {% endif %}
+          <div class="govuk-radios" data-module="govuk-radios">
+
+            {% set _valueNewTypeBus = myData.newTypeBus or myData.typeBus %}
+            {% if myData.validationErrors.typeBus %}
+                {% set _valueNewTypeBus = myData.newTypeBus %}
+            {% endif %}
+
+            {% for _type in _types %}
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="typeBus-{{loop.index}}" name="typeBus" type="radio" value="{{_type}}" {% if _valueNewTypeBus == _type %}checked{% endif %} >
+              <label class="govuk-label govuk-radios__label" for="typeBus-{{loop.index}}">
+                {{_type}}
+              </label>
+            </div>
+            {% endfor %}
+
+          </div>
+        </fieldset>
+      </div>
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    </form>
+
+    {% endif %}
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

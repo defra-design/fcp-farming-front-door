@@ -65,7 +65,7 @@ paymentsPrevious.forEach(function(_payment, indexA) {
 
 module.exports = {
 
-  "version": "v10", //put latest prototype version folder name here as a default
+  "version": "v11", //put latest prototype version folder name here as a default
 
   "view": "ext", //used to show either the prototype as internal user or external user
 
