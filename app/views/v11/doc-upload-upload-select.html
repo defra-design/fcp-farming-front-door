@@ -81,7 +81,7 @@
             Each file name must be unique, 20 characters or less, contain only letters and numbers, and contain no gaps.
         </p>
         <p class="govuk-body">
-            If you're sending files in relation to a grant or funding claim, <a class="govuk-link govuk=govuk-link--no-visited-state"
+            If you're sending files in relation to a grant or funding claim, <a class="govuk-link govuk-link--no-visited-state"
                 href="https://www.gov.uk/guidance/funding-for-farmers">check if there is any other guidance to follow,
                 depending on the scheme</a>.
         </p>
@@ -91,9 +91,19 @@
             could cause delays.
         </p>
 
+        {% if data['whatToSend'] == "Complaint evidence" %}
+
+        <a href="doc-upload-upload-added">
+            <img src="/public/images/doc-upload-file-select-complaint.png" alt="" id="doc-upload-anchor">
+        </a>
+
+        {% else %}
+
         <a href="doc-upload-upload-added">
             <img src="/public/images/doc-upload-file-select.png" alt="" id="doc-upload-anchor">
         </a>
+
+        {% endif %}
 
     </div>
 </div>
