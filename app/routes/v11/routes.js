@@ -2177,7 +2177,7 @@ module.exports = function (router, _myData) {
         if (relatesAnswer == "Countryside Stewardship (CS)") {
             response.redirect("v11/doc-upload-CS")
         }
-        if (relatesAnswer == "Your business: a change, complaint, general appeal or probate") {
+        if (relatesAnswer == "Your business changes, complaints, general appeals or probate") {
             response.redirect("v11/doc-upload-what-do-you-want-to-send")
         }
         else {

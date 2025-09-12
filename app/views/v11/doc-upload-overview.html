@@ -13,7 +13,7 @@
 
 {% if data.view != "int" %}
 
-
+{% set serviceName = "Land and farm service" %}
 
 {% set _hideAccountLink = true %}
 {% include "_common/login-nav-3.html" %}
@@ -46,7 +46,7 @@
         <h3 class="govuk-notification-banner__heading">
           You have successfully uploaded the following documents:
         </h3>
-        {% if data['relatesTo'] == "Your business: a change, complaint, general appeal or probate" %}
+        {% if data['relatesTo'] == "Your business changes, complaints, general appeals or probate" %}
         <ul class="govuk-list govuk-list--bullet">
           <li>file.jpeg</li>
         </ul>
@@ -56,7 +56,7 @@
           <li>fencereceipt1.pdf</li>
         </ul>
         {% endif %}
-        {% if data['relatesTo'] == "Your business: a change, complaint, general appeal or probate" %}
+        {% if data['relatesTo'] == "Your business changes, complaints, general appeals or probate" %}
         <p class="govuk-body govuk-!-font-weight-bold">
           Submission reference: 1743259315
         </p>
@@ -128,11 +128,12 @@
         </label>
         <select class="govuk-select" id="filtersubject" name="filtersubject" style="width: 10px">
           <option value="Agreement" selected="selected"> </option>
-          <option value="published">Business change evidence</option>
-          <option value="updated">Complaint evidence</option>
-          <option value="comments">Funding or grant amendment, claim, declaration or evidence</option>
-          <option value="views">General appeal evidence</option>
-          <option value="comments">Probate evidence</option>
+          <option value="published">Business, complaints and appeals</option>
+          <option value="updated">Countryside Stewardship</option>
+          <option value="comments">Delinked payments</option>
+          <option value="views">Environmental Stewardship</option>
+          <option value="comments">Grants</option>
+          <option value="comments">Sustainable Farming Incentive</option>
         </select>
       </div>
 
@@ -172,18 +173,18 @@
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header" style="width:20%">Date</th>
-          <th scope="col" class="govuk-table__header">Subject</th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-half">Subject</th>
           <th scope="col" class="govuk-table__header">File name</th>
           <th scope="col" class="govuk-table__header">Submission reference</th>
-          <th scope="col" class="govuk-table__header">Action</th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-third">Action</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
         {% if data.filesUploaded == "yes" %}
-        {% if data['relatesTo'] == "Your business: a change, complaint, general appeal or probate" %}
+        {% if data['relatesTo'] == "Your business changes, complaints, general appeals or probate" %}
                 <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Business, complaints and appeals</td>
           <td class="govuk-table__cell">file.jpg</td>
           <td class="govuk-table__cell">1743259315</td>
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state"
@@ -192,7 +193,7 @@
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">fencepic1.jpg</td>
           <td class="govuk-table__cell">1743259315</td>
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state"
@@ -201,7 +202,7 @@
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">fenccereceipt.pdf</td>
           <td class="govuk-table__cell">1733826312</td>
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state"
@@ -211,7 +212,7 @@
         {% else %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">fencepic1.jpg</td>
           <td class="govuk-table__cell">1733826312</td>
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state"
@@ -220,7 +221,7 @@
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">fenccereceipt.pdf</td>
           <td class="govuk-table__cell">1733826312</td>
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state"
@@ -231,50 +232,50 @@
         {% endif %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">15 August 2025</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">tractor.xls</td>
           <td class="govuk-table__cell">1234567890</td>
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> |<a
+          <td class="govuk-table__cell"> <a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">22 March 2025</td>
-          <td class="govuk-table__cell">Complaint</td>
+          <td class="govuk-table__cell">Business, complaints and appeals</td>
           <td class="govuk-table__cell">complaintdetails.pdf</td>
           <td class="govuk-table__cell">1234567893</td>
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> |<a
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">11 December 2024</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Environmental Stewardship</td>
           <td class="govuk-table__cell">application.pdf</td>
-          <td class="govuk-table__cell">123546894</td>
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> |<a
+          <td class="govuk-table__cell">1235468942</td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">18 June 2024</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Business, complaints and appeals</td>
           <td class="govuk-table__cell">bizchange.pdf</td>
           <td class="govuk-table__cell">3694567897</td>
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> |<a
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">20 January 2024</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Environmental Stewardship</td>
           <td class="govuk-table__cell">amendment.pdf</td>
-          <td class="govuk-table__cell">426867897</td>
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> |<a
+          <td class="govuk-table__cell">4268678971</td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">12 October 2023</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Environmental Stewardship</td>
           <td class="govuk-table__cell">funding.pdf</td>
           <td class="govuk-table__cell">9652467834</td>
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> |<a
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
         <tr class="govuk-table__row">
@@ -282,23 +283,23 @@
           <td class="govuk-table__cell">Funding or grant</td>
           <td class="govuk-table__cell">pilot.pdf</td>
           <td class="govuk-table__cell">4598326651</td>
-          <td class="govuk-table__cell"><a class="govuk-link" href="d#">View</a> |<a
+          <td class="govuk-table__cell"><a class="govuk-link" href="#">View</a> | <a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
-        {% if data['relatesTo'] != "Your business: a change, complaint, general appeal or probate" %}
+        {% if data['relatesTo'] != "Your business changes, complaints, general appeals or probate" %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">30 April 2021</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">CGA.pdf</td>
           <td class="govuk-table__cell">5478963258</td>
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> |<a
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
         {% endif %}
         {% if data.filesUploaded != "yes" %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">30 April 2021</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">evidence-doc-final-v1.jpg</td>
           <td class="govuk-table__cell">5478963258</td>
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
@@ -306,7 +307,7 @@
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">30 April 2021</td>
-          <td class="govuk-table__cell">Funding or grant</td>
+          <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">amendment.pdf</td>
           <td class="govuk-table__cell">5478963258</td>
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
