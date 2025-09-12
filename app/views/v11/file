@@ -1,0 +1,129 @@
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            What does this relate to
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{data['relatesTo']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-relates-to">Change<span
+                    class="govuk-visually-hidden"> CS
+                    application number</span></a>
+        </dd>
+        </dt>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+
+            Which aspect of Countryside Stewardship does this relate to?
+
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{data['CSrelatesTo']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
+                    class="govuk-visually-hidden"> what do
+                    you want to send us</span></a>
+        </dd>
+    </div>
+
+    {% if data['relatesTo='] == "Countryside Stewardship (CS)" %}
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            What does this relate to
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{data['CSrelatesTo']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+                    class="govuk-visually-hidden"> CS
+                    application number</span></a>
+        </dd>
+        </dt>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            What is this
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{data['cs-app-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+                    class="govuk-visually-hidden"> CS
+                    application reference number</span></a>
+        </dd>
+        </dt>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            CS application number
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{ data['CS-app-ref'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+                    class="govuk-visually-hidden"> CS
+                    application number</span></a>
+        </dd>
+        </dt>
+    </div>
+
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+            fencepic1.jpeg
+            <br>
+            fencereceipt1.pdf
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+                    class="govuk-visually-hidden">
+                    Documents</span></a>
+        </dd>
+        </dt>
+    </div>
+
+    {% else %}
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Complaint reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{ data['CS-app-ref'] or "COM-3326" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-complaint-ref">Change<span
+                    class="govuk-visually-hidden">complaint reference number</span></a>
+        </dd>
+        </dt>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+            file.jpeg
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+                    class="govuk-visually-hidden">
+                    Documents</span></a>
+        </dd>
+        </dt>
+    </div>
+
+
+    {% endif %}
