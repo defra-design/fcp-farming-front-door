@@ -315,7 +315,7 @@ row. View example with the query string &traderCount=0"
         for the next 7 years. If you want to request to remove them in future, you will need to contact the Land and
         farm service.
         <br><br>
-        Check you have followed <a class="govuk-link govuk-link--no-visited-state" href="#">the rules on submitting
+        Check you have followed <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">the rules on submitting
           documents</a>. This means we can process them as fast as possible.
       </strong>
 
@@ -424,7 +424,7 @@ row. View example with the query string &traderCount=0"
           Complaint reference number
         </dt>
         <dd class="govuk-summary-list__value">
-          8251390
+          {{ data['CS-app-ref'] or "COM-3326" }}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-complaint-ref">Change<span

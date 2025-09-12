@@ -2192,7 +2192,7 @@ module.exports = function (router, _myData) {
 
         var CSAnswer = request.session.data['CSrelatesTo']
         if (CSAnswer == "Capital grant application") {
-            response.redirect("v11/doc-upload-cs-app-tag")
+            response.redirect("v11/doc-upload-CS-app-tag")
         }
         else {
             response.redirect("v11/index")
@@ -2200,9 +2200,9 @@ module.exports = function (router, _myData) {
 
     });
 
-    // doc-upload-cs-app-tag
+    // doc-upload-CS-app-tag
 
-    router.post('/cs-app-tag-answer', function (request, response) {
+    router.post('/CS-app-tag-answer', function (request, response) {
 
         var CStag = request.session.data['cs-app-tag']
         if (CStag == "Evidence") {
