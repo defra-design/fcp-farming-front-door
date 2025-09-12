@@ -46,7 +46,7 @@
         <h3 class="govuk-notification-banner__heading">
           You have successfully uploaded the following documents:
         </h3>
-        {% if data['whatToSend'] == "Complaint evidence" %}
+        {% if data['relatesTo'] == "Your business: a change, complaint, general appeal or probate" %}
         <ul class="govuk-list govuk-list--bullet">
           <li>file.jpeg</li>
         </ul>
@@ -56,7 +56,7 @@
           <li>fencereceipt1.pdf</li>
         </ul>
         {% endif %}
-        {% if data['whatToSend'] == "Complaint evidence" %}
+        {% if data['relatesTo'] == "Your business: a change, complaint, general appeal or probate" %}
         <p class="govuk-body govuk-!-font-weight-bold">
           Submission reference: 1743259315
         </p>
@@ -180,12 +180,12 @@
       </thead>
       <tbody class="govuk-table__body">
         {% if data.filesUploaded == "yes" %}
-        {% if data['whatToSend'] == "Complaint evidence" %}
-        <tr class="govuk-table__row">
+        {% if data['relatesTo'] == "Your business: a change, complaint, general appeal or probate" %}
+                <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Complaint</td>
+          <td class="govuk-table__cell">Funding or grant</td>
           <td class="govuk-table__cell">file.jpg</td>
-          <td class="govuk-table__cell">1733826312</td>
+          <td class="govuk-table__cell">1743259315</td>
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state"
               href="doc-upload-view-fence.html">View</a> | <a class="govuk-link govuk-link--no-visited-state"
               href="#">Download</a></td>
@@ -285,7 +285,7 @@
           <td class="govuk-table__cell"><a class="govuk-link" href="d#">View</a> |<a
               class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
         </tr>
-        {% if data['whatToSend'] != "Complaint evidence" %}
+        {% if data['relatesTo'] != "Your business: a change, complaint, general appeal or probate" %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">30 April 2021</td>
           <td class="govuk-table__cell">Funding or grant</td>

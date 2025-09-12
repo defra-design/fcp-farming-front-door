@@ -315,30 +315,16 @@ row. View example with the query string &traderCount=0"
         for the next 7 years. If you want to request to remove them in future, you will need to contact the Land and
         farm service.
         <br><br>
-        Check you have followed <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">the rules on submitting
+        Check you have followed <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">the
+          rules on submitting
           documents</a>. This means we can process them as fast as possible.
       </strong>
 
     </div>
 
 
+
     <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          What do you want to send us?
-        </dt>
-        <dd class="govuk-summary-list__value">
-          {{data['whatToSend']}}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
-              class="govuk-visually-hidden"> what do
-              you want to send us</span></a>
-        </dd>
-      </div>
-
-      {% if data['whatToSend'] == "Funding or grant amendment, claim, declaration or evidence" %}
-
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Subject
@@ -347,41 +333,45 @@ row. View example with the query string &traderCount=0"
           {{data['relatesTo']}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-relates-to">Change<span
               class="govuk-visually-hidden"> CS
               application number</span></a>
         </dd>
         </dt>
       </div>
 
+      {% if data['relatesTo'] == "Countryside Stewardship (CS)" %}
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          What does this relate to
+
+          What this relates to
+
         </dt>
         <dd class="govuk-summary-list__value">
           {{data['CSrelatesTo']}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
-              class="govuk-visually-hidden"> CS
-              application number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
+              class="govuk-visually-hidden"> what do
+              you want to send us</span></a>
         </dd>
-        </dt>
       </div>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
+
           What is this
+
         </dt>
         <dd class="govuk-summary-list__value">
           {{data['cs-app-tag']}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
-              class="govuk-visually-hidden"> CS
-              application reference number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
+              class="govuk-visually-hidden"> what do
+              you want to send us</span></a>
         </dd>
-        </dt>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -421,6 +411,22 @@ row. View example with the query string &traderCount=0"
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
+
+          What this relates to
+
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['whatToSend']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
+              class="govuk-visually-hidden"> what do
+              you want to send us</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
           Complaint reference number
         </dt>
         <dd class="govuk-summary-list__value">
@@ -447,7 +453,6 @@ row. View example with the query string &traderCount=0"
         </dd>
         </dt>
       </div>
-
 
       {% endif %}
 

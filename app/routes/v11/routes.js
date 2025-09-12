@@ -2151,7 +2151,7 @@ module.exports = function (router, _myData) {
 
     router.post('/' + version + '/doc-upload-valid-docs', function (req, res) {
 
-        res.redirect(301, '/' + version + '/doc-upload-what-do-you-want-to-send');
+        res.redirect(301, '/' + version + '/doc-upload-relates-to');
 
     });
 
@@ -2160,14 +2160,11 @@ module.exports = function (router, _myData) {
     router.post('/send-answer', function (request, response) {
 
         var sendAnswer = request.session.data['whatToSend']
-        if (sendAnswer == "Funding or grant amendment, claim, declaration or evidence") {
-            response.redirect("v11/doc-upload-relates-to")
-        }
         if (sendAnswer == "Complaint evidence") {
             response.redirect("v11/doc-upload-complaint-ref")
         }
         else {
-            response.redirect("v11/index")
+            response.redirect("_common/not-testing")
         }
 
     });
@@ -2180,8 +2177,11 @@ module.exports = function (router, _myData) {
         if (relatesAnswer == "Countryside Stewardship (CS)") {
             response.redirect("v11/doc-upload-CS")
         }
+        if (relatesAnswer == "Your business: a change, complaint, general appeal or probate") {
+            response.redirect("v11/doc-upload-what-do-you-want-to-send")
+        }
         else {
-            response.redirect("v11/index")
+            response.redirect("_common/not-testing")
         }
 
     });
@@ -2195,7 +2195,7 @@ module.exports = function (router, _myData) {
             response.redirect("v11/doc-upload-CS-app-tag")
         }
         else {
-            response.redirect("v11/index")
+            response.redirect("_common/not-testing")
         }
 
     });
@@ -2209,7 +2209,7 @@ module.exports = function (router, _myData) {
             response.redirect("v11/doc-upload-cs-app-ref")
         }
         else {
-            response.redirect("v11/index")
+            response.redirect("_common/not-testing")
         }
 
     });
