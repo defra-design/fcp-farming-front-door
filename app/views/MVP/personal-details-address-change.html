@@ -55,6 +55,13 @@
         "content": "Address line 2 must be 100 characters or less"
       },
 
+
+      {
+        "field": "Address line 3",
+        "scenario": "Entry is too long",
+        "content": "Address line 3 must be 100 characters or less"
+      },
+
       {
         "field": "Town or city",
         "scenario": "Empty field / nothing entered",
@@ -126,6 +133,12 @@
         "field": "Address line 2",
         "scenario": "Entry is too long",
         "content": "Address line 2 must be 100 characters or less"
+      },
+
+      {
+        "field": "Address line 3",
+        "scenario": "Entry is too long",
+        "content": "Address line 3 must be 100 characters or less"
       },
 
       {
@@ -261,6 +274,14 @@
               {% set _valueNewAddress2Pers = myData.newAddress2Pers %}
           {% endif %}
           <input class="govuk-input {% if myData.validationErrors.address2Pers %}govuk-input--error{% endif %}" id="address2Pers" name="address2Pers" type="text" value="{{_valueNewAddress2Pers}}" {% if myData.validationErrors.address2Pers %}aria-describedby="address2Pers-error"{% endif %} autocomplete="address-line2">
+        </div>
+
+        <!-- ADDRESS LINE 3 -->
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="address3Pers">
+            Address line 3 (optional)
+          </label>
+          <input class="govuk-input" id="address2Pers" name="address3Pers" type="text" value="{{address3Pers}}" autocomplete="address-line3">
         </div>
 
         <!-- ADDRESS CITY -->

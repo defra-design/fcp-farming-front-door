@@ -105,18 +105,18 @@
 
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
         <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="docUploadComplaintRef">
+          <label class="govuk-label govuk-label--l" for="complaint-ref">
              Enter your complaint reference number
           </label>
         </h1>
         
-        <div id="docUploadComplaintRef-hint" class="govuk-hint">
+        <div id="complaint-ref-hint" class="govuk-hint">
           You can find this in emails about your complaint from the Land and farm service.
         </div>
 
       
 
-        <input class="govuk-input govuk-input--width-20 {% if _inError %}govuk-input--error{% endif %}" id="docUploadComplaintRef" name="docUploadComplaintRef" type="text"  value="{{_valueNewdocUploadComplaintRef}}" aria-describedby="docUploadComplaintRef-hint ">
+        <input class="govuk-input govuk-input--width-20" id="complaint-ref" name="complaint-ref" type="text"  value="{{complaint-ref}}" aria-describedby="complaint-ref-hint ">
       </div>
 
       {{govukButton({

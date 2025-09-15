@@ -92,8 +92,8 @@
         </p>
 
         {% if data['whatToSend'] == "Complaint evidence" %}
-        <div class="moj-multi-file__uploaded-files">
-            <h2 class="govuk-heading-m">Files selected</h2>
+        <div id="doc-upload-anchor"class="moj-multi-file__uploaded-files">
+            <h2 class="govuk-heading-m" id="doc-upload-anchor">Files selected</h2>
             <div class="govuk-summary-list moj-multi-file-upload__list">
                 <div class="govuk-summary-list__row moj-multi-file-upload__row">
                     <div class="govuk-summary-list__value moj-multi-file-upload__message">
@@ -111,7 +111,7 @@
         </div>
         {% else %}
         <div class="moj-multi-file__uploaded-files">
-            <h2 class="govuk-heading-m">Files selected</h2>
+            <h2 class="govuk-heading-m" id="doc-upload-anchor">Files selected</h2>
             <div class="govuk-summary-list moj-multi-file-upload__list">
                 <div class="govuk-summary-list__row moj-multi-file-upload__row">
                     <div class="govuk-summary-list__value moj-multi-file-upload__message">
