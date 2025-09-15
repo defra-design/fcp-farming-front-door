@@ -116,8 +116,12 @@
 
             <!-- Address line 1 -->
             {{myData.newAddress1Bus or myData.address1Bus}}<br>
-            <!-- Address line 1 -->
+            <!-- Address line 2 -->
             {% if _address2Value != "" %}{{_address2Value}}<br>{% endif %}
+            <!-- Address line 3 -->
+            {% if address3Bus != "" %}
+            {{data['address3Bus']}}<br>
+            {% endif %}
             <!-- Town or city -->
             {{myData.newAddressCityBus or myData.addressCityBus}}<br>
             <!-- County -->

@@ -239,6 +239,7 @@
         <dd class="govuk-summary-list__value">
           {{myData.address1Pers}}<br>
           {% if myData.address2Pers != "" %}{{myData.address2Pers}}<br>{% endif %}
+          {% if address3Pers != "" %}{{data['address3Pers']}}<br>{% endif %}
           {{myData.addressCityPers}}<br>
           {% if myData.addressCountyPers != "" %}{{myData.addressCountyPers}}<br>{% endif %}
           {% if myData.addressPostcodePers != "" %}{{myData.addressPostcodePers}}<br>{% endif %}
