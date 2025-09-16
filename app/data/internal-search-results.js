@@ -8,7 +8,7 @@ module.exports = [
         "crn": "",
         "sbiNumber": "221097732",
         "vrnNumber": "855385",
-        "traderNumber": "",
+        "traderNumber": "876432",
         "address": "10 Skirbeck Way, Moretonhampstead",
         "postcode": "SK22 1DL"
     }
