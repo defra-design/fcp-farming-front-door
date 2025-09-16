@@ -326,7 +326,9 @@
         <dd class="govuk-summary-list__value">
           {{myData.address1Bus}}<br>
           {% if myData.address2Bus != "" %}{{myData.address2Bus}}<br>{% endif %}
-          {% if address3Bus != "" %}{{data['address3Bus']}}<br>{% endif %}
+          {% if data['address3Bus'] %}{{data['address3Bus']}}<br>
+          {% else %}
+          {% endif %}
           {{myData.addressCityBus}}<br>
           {% if myData.addressCountyBus != "" %}{{myData.addressCountyBus}}<br>{% endif %}
           {% if myData.addressPostcodeBus != "" %}{{myData.addressPostcodeBus}}<br>{% endif %}
