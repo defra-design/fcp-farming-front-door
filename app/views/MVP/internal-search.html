@@ -303,45 +303,7 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
     {% endif %}
     {% endfor %}
 
-    <h2 class="govuk-heading-m">{{_allResultsCount}} results for "{{myData.searchTerm}}"</h2>
-
-    <div class="govuk-tabs">
-      {% set _tabsList = [
-      {
-      "type": "all",
-      "label": "All"
-
-      },
-      {
-      "type": "bus",
-      "label": "Businesses (" + _busResultsCount + ")"
-      },
-      {
-      "type": "cus",
-      "label": "Customers (" + _cusResultsCount + ")"
-      }
-      ]
-      %}
-
-      <!---
-      // for playing back the number of results 
-
-      {{data.busResults.length}}
-      {{data.users.length}}
-       -->
-
-      <ul class="govuk-tabs__list--internal" role="tablist">
-        {% for _tab in _tabsList %}
-        <li
-          class="govuk-tabs__list-item--internal {% if myData.intSearchType == _tab.type %}govuk-tabs__list-item--internal-selected{% endif %}">
-          <a class="govuk-tabs__tab--internal govuk-link--no-visited-state"
-            href="internal-search?q={{myData.searchTerm}}&intSearchType={{_tab.type}}" role="tab" {% if
-            myData.intSearchType==_tab.type %}aria-selected="true" {% else %}aria-selected="false" {% endif
-            %}>{{_tab.label}} <span class="govuk-visually-hidden">search results</span></a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+    <h2 class="govuk-heading-m">{{_allResultsCount}} result for "{{myData.searchTerm}}"</h2>
 
     <ol class="govuk-list internal-list__search">
 
