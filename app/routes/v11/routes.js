@@ -2192,7 +2192,7 @@ module.exports = function (router, _myData) {
 
         var CSAnswer = request.session.data['CSrelatesTo']
         if (CSAnswer == "Capital claim") {
-            response.redirect("v11/doc-upload-CS-app-ref")
+            response.redirect("v11/doc-upload-cs-app-ref")
         }
         else {
             response.redirect("_common/not-testing")
