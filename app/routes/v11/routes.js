@@ -2191,8 +2191,8 @@ module.exports = function (router, _myData) {
     router.post('/CS-answer', function (request, response) {
 
         var CSAnswer = request.session.data['CSrelatesTo']
-        if (CSAnswer == "Capital grant application") {
-            response.redirect("v11/doc-upload-CS-app-tag")
+        if (CSAnswer == "Capital claim") {
+            response.redirect("v11/doc-upload-CS-app-ref")
         }
         else {
             response.redirect("_common/not-testing")
