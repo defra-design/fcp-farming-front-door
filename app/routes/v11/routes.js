@@ -2184,7 +2184,7 @@ module.exports = function (router, _myData) {
 
         var relatesAnswer = request.session.data['doc-upload-subject']
         if (relatesAnswer == "Countryside Stewardship (CS)") {
-            response.redirect("v11/doc-upload-cs")
+            response.redirect("v11/doc-upload-CS")
         }
         if (relatesAnswer == "Your business changes, complaints, general appeals or probate") {
             response.redirect("v11/doc-upload-what-do-you-want-to-send")
