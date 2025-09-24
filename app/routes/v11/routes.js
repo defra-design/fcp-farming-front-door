@@ -2151,7 +2151,7 @@ module.exports = function (router, _myData) {
 
     router.post('/' + version + '/doc-upload-valid-docs', function (req, res) {
 
-        res.redirect(301, '/' + version + '/doc-upload-what-do-you-want-to-send');
+        res.redirect(301, '/' + version + '/doc-upload-relates-to');
 
     });
 
@@ -2159,15 +2159,21 @@ module.exports = function (router, _myData) {
 
     router.post('/send-answer', function (request, response) {
 
-        var sendAnswer = request.session.data['whatToSend']
-        if (sendAnswer == "Funding or grant amendment, claim, declaration or evidence") {
-            response.redirect("v11/doc-upload-relates-to")
-        }
+        var sendAnswer = request.session.data['what-to-send']
         if (sendAnswer == "Complaint evidence") {
-            response.redirect("v11/doc-upload-complaint-ref")
+            response.redirect("v11/doc-upload-ref-complaint")
+        }
+        if (sendAnswer == "General appeal evidence") {
+            response.redirect("v11/doc-upload-ref-appeal")
+        }
+        if (sendAnswer == "Business change evidence") {
+            response.redirect("v11/doc-upload-upload-files")
+        }
+        if (sendAnswer == "Probate evidence") {
+            response.redirect("v11/doc-upload-upload-files")
         }
         else {
-            response.redirect("v11/index")
+            response.redirect("_common/not-testing")
         }
 
     });
@@ -2176,40 +2182,53 @@ module.exports = function (router, _myData) {
 
     router.post('/relates-answer', function (request, response) {
 
-        var relatesAnswer = request.session.data['relatesTo']
+        var relatesAnswer = request.session.data['doc-upload-subject']
         if (relatesAnswer == "Countryside Stewardship (CS)") {
-            response.redirect("v11/doc-upload-CS")
+            response.redirect("v11/doc-upload-cs")
+        }
+        if (relatesAnswer == "Your business changes, complaints, general appeals or probate") {
+            response.redirect("v11/doc-upload-what-do-you-want-to-send")
+        }
+        if (relatesAnswer == "Delinked payments") {
+            response.redirect("v11/doc-upload-payment-tag")
+        }
+        if (relatesAnswer == "Environmental Stewardship") {
+            response.redirect("v11/doc-upload-es-tag")
+        }
+        if (relatesAnswer == "Grants") {
+            response.redirect("v11/doc-upload-ref-grants-project")
+        }
+        if (relatesAnswer == "Sustainable Farming Incentive (SFI)") {
+            response.redirect("v11/doc-upload-sfi")
         }
         else {
-            response.redirect("v11/index")
+            response.redirect("_common/not-testing")
         }
 
     });
 
-    // doc-upload-CS
+    // doc-upload-cs
 
     router.post('/CS-answer', function (request, response) {
 
-        var CSAnswer = request.session.data['CSrelatesTo']
+        var CSAnswer = request.session.data['doc-upload-cs-tag']
+        if (CSAnswer == "Capital claim") {
+            response.redirect("v11/doc-upload-ref-cs-agreement")
+        }
         if (CSAnswer == "Capital grant application") {
-            response.redirect("v11/doc-upload-CS-app-tag")
+            response.redirect("v11/doc-upload-cs-tag-app")
+        }
+        if (CSAnswer == "Agreement") {
+            response.redirect("v11/doc-upload-cs-tag-agreement")
+        }
+        if (CSAnswer == "Facilitation fund") {
+            response.redirect("v11/doc-upload-cs-tag-ff")
+        }
+        if (CSAnswer == "Revenue claim") {
+            response.redirect("v11/doc-upload-cs-tag-revenue")
         }
         else {
-            response.redirect("v11/index")
-        }
-
-    });
-
-    // doc-upload-CS-app-tag
-
-    router.post('/CS-app-tag-answer', function (request, response) {
-
-        var CStag = request.session.data['cs-app-tag']
-        if (CStag == "Evidence") {
-            response.redirect("v11/doc-upload-cs-app-ref")
-        }
-        else {
-            response.redirect("v11/index")
+            response.redirect("_common/not-testing")
         }
 
     });

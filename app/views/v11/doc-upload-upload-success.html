@@ -38,18 +38,19 @@
 
 {% block beforeContent %}
 
-{% include "_common/phase-banner-2.html" %}
+    {% if data.view != "int" %}
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+        {% include "_common/phase-banner-2.html" %}
+        {% include "_common/sub-header.html" %}
 
         {% set _hideAccountLink = true %}
         {% include "_common/login-nav-3.html" %}
+    {% else %}
+        {% include "_common/login-nav-internal.html" %}
+    {% endif %}
 
-        <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
-    </div>
-</div>
 {% endblock %}
 
 
@@ -95,7 +96,7 @@
             could cause delays.
         </p>
 
-        {% if data['whatToSend'] == "Complaint evidence" %}
+        {% if data['what-to-send'] == "Complaint evidence" %}
         <div class="moj-multi-file__uploaded-files">
             <h2 class="govuk-heading-m">Files added</h2>
             <div class="govuk-summary-list moj-multi-file-upload__list">

@@ -10,7 +10,7 @@
 
 
 {% set _showEmailMeta = true %}
-{% set _emailSubject = "Your Countryside Stewardship capital grant application is missing information for " + _selectedBusiness.name %}
+{% set _emailSubject = "Your Countryside Stewardship capital claim is missing information for " + _selectedBusiness.name %}
 {% set _serviceName = "Land and farm service" %}
 
 {% set serviceName = "" %}
@@ -39,16 +39,15 @@ Subject: {{_emailSubject}}
     <p class="govuk-body">17 September 2025</p>
     <br>
     <p class="govuk-body">SBI: {{_selectedBusiness.sbiNumber}}</p>
-    <p class="govuk-body">Application reference: 1457317</p>
-    <p class="govuk-body">Our ref: CS cap grant miss info 1457317</p>
+    <p class="govuk-body">Agreement number: 1457317</p>
+    <p class="govuk-body">Our ref: CS CCmis v01</p>
     <br><br>
     <p class="govuk-body">Dear {{data.user.name}},</p>
 
-    <h2 class="govuk-heading-s">Countryside Stewardship capital grant application for Agile Farm Ltd - missing
+    <h2 class="govuk-heading-s">Countryside Stewardship capital claim for Agile Farm Ltd - missing
       information</h2>
 
-    <p class="govuk-body">Thank you for sending your Countryside Stewardship capital grant application. We need the
-      following information to progress your application: evidence you have bought fencing. This could include:</p>
+    <p class="govuk-body">Thank you for sending your Countryside Stewardship capital claim. We need the following information to progress your claim: evidence you have bought fencing. This could include:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>a photo showing the fencing on site</li>
@@ -56,9 +55,7 @@ Subject: {{_emailSubject}}
       <li>a screenshot of your bank statement to show the payment</li>
     </ul>
 
-    <p class="govuk-body">We need to receive this information by 27 September 2025. If we do not, or you don’t write to
-      us to explain why you can’t send it by this deadline, we’ll issue your agreement offer including the eligible
-      options only. If the application as a whole becomes ineligible, then we may have to reject it.</p>
+    <p class="govuk-body">We need to receive this information by 27 September 2025. If we do not, we’ll remove this item from the claim. We'll write to you separately if this is the case. </p>
     <h2 class="govuk-heading-s">What you need to do</h2>
 
 
@@ -68,20 +65,20 @@ Subject: {{_emailSubject}}
     <p class="govuk-body">If you cannot send the information online, you can attach it in a reply to this email, or post
       it to:
       <br><br>
-      Rural payments agency<br>
-      PO Box 324<br>
+      Rural Payments Agency<br>
+      PO Box 352<br>
       Worksop<br>
-      S95 1DF<br>
+      S80 9FG<br>
     </p>
 
 
-    <p>Make sure you note your single business identifier (SBI) on anything you post us. You can find this at the top of
+    <p>Make sure you note your single business identifier (SBI) and agreement number on anything you post us. You can find these at the top of
       this email.</p>
 
     <h2 class="govuk-heading-s">If you have any questions about this email</h2>
 
     <p class="govuk-body">You can call us on 0300 200 301 (Monday to Friday, 8:30am to 5pm) or email <a
-        class="govuk-link" href="#">landandfarm@defra.gov.uk</a>.
+        class="govuk-link" href="#">ruralpayments@defra.gov.uk</a>.
 
     </p>
 

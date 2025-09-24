@@ -115,8 +115,12 @@
 
             <!-- Address line 1 -->
             {{myData.newAddress1Pers or myData.address1Pers}}<br>
-            <!-- Address line 1 -->
+            <!-- Address line 2 -->
             {% if _address2Value != "" %}{{_address2Value}}<br>{% endif %}
+            <!-- Address line 3 -->
+            {% if data['address3Pers'] %}
+              {{data['address3Pers']}}<br>
+            {% endif %}
             <!-- Town or city -->
             {{myData.newAddressCityPers or myData.addressCityPers}}<br>
             <!-- County -->

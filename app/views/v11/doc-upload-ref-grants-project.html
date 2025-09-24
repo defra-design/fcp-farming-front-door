@@ -1,0 +1,131 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Enter your Countryside Stewardship application reference number" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Land and farm service" %}
+
+<!--{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "VAT registration number (add/change) - business details",
+    "id": "bd12",
+    "url": "business-details-vat-change?r=t&view=ext&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a VAT registration number"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter a VAT registration number in the format GB123456789 or 123456789"
+      }
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "VAT registration number (add/change) - business details",
+    "id": "int-bd12",
+    "url": "business-details-vat-change?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a VAT registration number"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter a VAT registration number in the format GB123456789 or 123456789"
+      }
+    ]
+    
+  }
+%}
+
+{% else %}
+
+{% endif %}-->
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="doc-upload-upload-files" method="POST" novalidate>
+
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="ref-grants-project">
+            Enter your project code
+          </label>
+        </h1>
+        <div id="ref-grants-project-hint" class="govuk-hint">
+          You can find this in emails about your grant from the Land and farm service.
+        </div>
+        <input class="govuk-input" id="ref-grants-project" name="ref-grants-project" type="text" aria-describedby="ref-grants-project-hint" value="{{data['ref-grants-project']}}">
+      </div>
+
+      {{govukButton({
+      text: "Continue"
+      })}}
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

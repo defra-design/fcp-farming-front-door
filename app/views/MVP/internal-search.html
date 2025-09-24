@@ -213,13 +213,15 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
           id="search-internal" name="q" title="Search" class="govuk-input">
         </div>
 
+        
         <div class="govuk-form-group">
-          <label class="govuk-label govuk-label--m" for="passport-number">
+          <label class="govuk-label govuk-label--m" for="c-number">
             First name (optional)
           </label>
-          <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}"
-          id="search-internal" name="q" title="Search" class="govuk-input">
+          <input type="x" value="" 
+          id="search-extra" name="q" title="a" class="govuk-input">
         </div>
+
 
 
         {% elif data['searchCriteria'] == "int-sr-cusPostcode" %}
@@ -303,55 +305,61 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
     {% endif %}
     {% endfor %}
 
-    <h2 class="govuk-heading-m">{{_allResultsCount}} results for "{{myData.searchTerm}}"</h2>
+    {% if data['searchCriteria'] == "int-sr-cusPostcode" %}
 
-    <div class="govuk-tabs">
-      {% set _tabsList = [
-      {
-      "type": "all",
-      "label": "All"
+    <h2 class="govuk-heading-m">3 results for "{{myData.searchTerm}}"</h2>
 
-      },
-      {
-      "type": "bus",
-      "label": "Businesses (" + _busResultsCount + ")"
-      },
-      {
-      "type": "cus",
-      "label": "Customers (" + _cusResultsCount + ")"
-      }
-      ]
-      %}
+    {% else %}
 
-      <!---
-      // for playing back the number of results 
+    <h2 class="govuk-heading-m">{{_allResultsCount}} result for "{{myData.searchTerm}}"</h2>
 
-      {{data.busResults.length}}
-      {{data.users.length}}
-       -->
-
-      <ul class="govuk-tabs__list--internal" role="tablist">
-        {% for _tab in _tabsList %}
-        <li
-          class="govuk-tabs__list-item--internal {% if myData.intSearchType == _tab.type %}govuk-tabs__list-item--internal-selected{% endif %}">
-          <a class="govuk-tabs__tab--internal govuk-link--no-visited-state"
-            href="internal-search?q={{myData.searchTerm}}&intSearchType={{_tab.type}}" role="tab" {% if
-            myData.intSearchType==_tab.type %}aria-selected="true" {% else %}aria-selected="false" {% endif
-            %}>{{_tab.label}} <span class="govuk-visually-hidden">search results</span></a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+    {% endif %}
 
     <ol class="govuk-list internal-list__search">
 
-      {% for _searchResult in data.internalSearchResults %}
+      {% if data['searchCriteria'] == "int-sr-cusPostcode" %}
 
-      {% if
-      myData.intSearchType == "all"
-      or (myData.intSearchType == "bus" and _searchResult.type == "bus")
-      or (myData.intSearchType == "cus" and _searchResult.type == "cus")
-      %}
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="{{_url}}">Colin Rook</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1103765975</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Foster Way, Mittenslake</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CM1 1QG</p>
+        </div>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="{{_url}}">Quentin Astonfoss-Parsley</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1100056783</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Smithfield Hall, Vootleton, near Harwick</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CM1 1QG</p>
+        </div>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="{{_url}}">Sarah Appleton</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">CRN:  	1105569934</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Spring Lane, Careyton</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CM1 1QG</p>
+        </div>
+      </li>
+
+      {% else %}
+      {% for _searchResult in data.internalSearchResults %}
 
       <li class="govuk-!-padding-top-6">
         <header class="govuk-!-padding-bottom-0">
@@ -394,9 +402,9 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
         {% endif %}
       </li>
 
-      {% endif %}
-
       {% endfor %}
+
+      {% endif %}
 
       <ol>
 
