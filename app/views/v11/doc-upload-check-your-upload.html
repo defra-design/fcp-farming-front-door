@@ -312,7 +312,8 @@ row. View example with the query string &traderCount=0"
       <strong class="govuk-warning-text__text">
         <span class="govuk-visually-hidden">Warning</span>
         Check you are sending the right documents. Once you submit them, we will attach them to this business's account
-        for the next 7 years. If you want to request to remove them in future, you will need to contact the Rural Payments Agency.
+        for the next 7 years. If you want to request to remove them in future, you will need to contact the Rural
+        Payments Agency.
         <br><br>
         Check you have followed <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">the
           rules on submitting
@@ -329,7 +330,7 @@ row. View example with the query string &traderCount=0"
           Subject
         </dt>
         <dd class="govuk-summary-list__value">
-          {{data['relatesTo']}}
+          {{ data['doc-upload-subject'] or 'Your business changes, complaints, general appeals or probate' }}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-relates-to">Change<span
@@ -338,38 +339,84 @@ row. View example with the query string &traderCount=0"
         </dt>
       </div>
 
-      {% if data['relatesTo'] == "Countryside Stewardship (CS)" %}
+      {% if data['doc-upload-subject'] == "Countryside Stewardship (CS)" %}
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-
           What this relates to
-
         </dt>
         <dd class="govuk-summary-list__value">
-          {{data['CSrelatesTo']}}
+          {{data['doc-upload-cs-tag']}}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-CS">Change<span
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      {% if data['doc-upload-cs-tag'] == "Agreement" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-tag-agreement">Change<span
               class="govuk-visually-hidden"> what this relates to</span></a>
         </dd>
       </div>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          CS agreement number
+          CS agreement reference number
         </dt>
         <dd class="govuk-summary-list__value">
-          {{ data['CS-app-ref'] or "1457317" }}
+          {{ data['ref-cs-agreement'] or "1457317" }}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-app-ref">Change<span
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
               class="govuk-visually-hidden"> CS
               application number</span></a>
         </dd>
         </dt>
       </div>
 
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          file.jpeg
+          <br>
+          file-2-final.pdf
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-cs-tag'] == "Capital claim" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS agreement reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-cs-agreement'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -388,23 +435,366 @@ row. View example with the query string &traderCount=0"
         </dt>
       </div>
 
+      {% elif data['doc-upload-cs-tag'] == "Capital grant application" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-tag-agreement">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS application reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-cs-agreement'] or "90765122" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          another-image-file-with-a-long-name.jpeg
+          <br>
+          final-file-version-4.pdf
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-cs-tag'] == "Facilitation fund" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-tag-agreement">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS facilitation fund reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-csff'] or "22309876" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          imagefile.jpeg
+          <br>
+          this-is-a-file-with-a-longer-name-on-it-version-5.pdf
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-cs-tag'] == "Revenue claim" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-tag-ff">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS agreement reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-cs-agreement'] or "90765122" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          imagefile.jpeg
+          <br>
+          this-is-a-file-with-a-longer-name-on-it-version-5.pdf
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
       {% else %}
+
+      {% endif %}
+
+      {% elif data['doc-upload-subject'] == "Delinked payments" %}
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
 
-          What this relates to
+          What this is
 
         </dt>
         <dd class="govuk-summary-list__value">
-          {{data['whatToSend']}}
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-payment-tag">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Payment year
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-payment-year'] or "2025" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-payment">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          photo.jpeg
+          <br>
+          document-2.pdf
+          <br>
+          document-3.pdf
+          <br>
+          file-name-final.xlsx
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-subject'] == "Environmental Stewardship" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+
+          What this is
+
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag-es'] or 'A claim' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-es-tag">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          ES agreement reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-es'] or "126678349" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-es">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          photo.jpeg
+          <br>
+          document-2.pdf
+          <br>
+          document-3.pdf
+          <br>
+          file-name-final.xlsx
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-subject'] == "Grants" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Project code
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-grants-project'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-grants-project">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          photo.jpeg
+          <br>
+          document-2.pdf
+          <br>
+          document-3.pdf
+          <br>
+          file-name-final.xlsx
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-subject'] == "Sustainable Farming Incentive (SFI)" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is for
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['sfi-relates-to'] or "SFI pilot offer" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-sfi">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          SFI application reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-sfi-app'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-sfi-app">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          photo.jpeg
+          <br>
+          document-2.pdf
+          <br>
+          document-3.pdf
+          <br>
+          file-name-final.xlsx
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['what-to-send'] }}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
-              class="govuk-visually-hidden"> what do
-              you want to send us</span></a>
+              class="govuk-visually-hidden">complaint reference number</span></a>
         </dd>
+        </dt>
       </div>
+
+
+      {% if data['what-to-send'] == "Complaint evidence" %}
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -414,8 +804,60 @@ row. View example with the query string &traderCount=0"
           {{ data['complaint-ref'] or "COM-3326" }}
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-complaint-ref">Change<span
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-complaint">Change<span
               class="govuk-visually-hidden">complaint reference number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['what-to-send'] == "General appeal evidence" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Appeal reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-appeal'] or "APP-1246" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-complaint">Change<span
+              class="govuk-visually-hidden">complaint reference number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% else %}
+
+      {% endif %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Documents
+        </dt>
+        <dd class="govuk-summary-list__value">
+          file.jpeg
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-upload-success">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% else %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is for
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Business change evidence
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
+              class="govuk-visually-hidden">
+              Documents</span></a>
         </dd>
         </dt>
       </div>

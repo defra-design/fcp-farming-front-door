@@ -102,12 +102,12 @@
   <div class="govuk-grid-column-two-thirds">
 
 
-    <form action="/CS-answer" method="POST" novalidate>
+    <form action="doc-upload-ref-sfi-app" method="POST" novalidate>
 
       <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="vatBus">
-            Which aspect of Countryside Stewardship does this relate to?
+            Is this evidence for: 
           </label>
         </h1>
 
@@ -118,42 +118,28 @@
           <fieldset class="govuk-fieldset">
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="doc-upload-cs-tag" name="doc-upload-cs-tag" type="radio"
-                  value="Agreement" {{ checked('doc-upload-cs-tag','Agreement') }}>
-                <label class="govuk-label govuk-radios__label" for="doc-upload-cs-tag">
-                 Agreement
+                <input class="govuk-radios__input" id="sfi-relates-to" name="sfi-relates-to" type="radio"
+                  value="SFI expanded offer" {{ checked('sfi-relates-to','SFI expanded offer') }}>
+                <label class="govuk-label govuk-radios__label" for="sfi-relates-to">
+                 SFI expanded offer
                 </label>
               </div>
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                   <div class="govuk-radios" data-module="govuk-radios">
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="doc-upload-cs-tag-1" name="doc-upload-cs-tag" type="radio"
-                        value="Capital claim" {{ checked('doc-upload-cs-tag','Capital claim') }}>
-                      <label class="govuk-label govuk-radios__label" for="doc-upload-cs-tag-1">
-                        Capital claim
+                      <input class="govuk-radios__input" id="sfi-relates-to-1" name="sfi-relates-to" type="radio"
+                        value="SFI pilot" {{ checked('sfi-relates-to','SFI pilot') }}>
+                      <label class="govuk-label govuk-radios__label" for="sfi-relates-to-1">
+                        SFI pilot
                       </label>
                     </div>
 
                     <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="doc-upload-cs-tag-2" name="doc-upload-cs-tag" type="radio"
-                        value="Capital grant application" {{ checked('doc-upload-cs-tag','Capital grant application') }}>
-                      <label class="govuk-label govuk-radios__label" for="doc-upload-cs-tag-2">
-                        Capital grant application
-                      </label>
-                    </div>
-                    <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="doc-upload-cs-tag-3" name="doc-upload-cs-tag" type="radio"
-                        value="Facilitation fund" {{ checked('doc-upload-cs-tag','Facilitation fund') }}>
-                      <label class="govuk-label govuk-radios__label" for="doc-upload-cs-tag-3">
-                        Facilitation fund
-                      </label>
-                    </div>
-                    <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="doc-upload-cs-tag-4" name="doc-upload-cs-tag" type="radio"
-                        value="Revenue claim" {{ checked('doc-upload-cs-tag','Revenue claim') }}>
-                      <label class="govuk-label govuk-radios__label" for="doc-upload-cs-tag-4">
-                       Revenue claim
+                      <input class="govuk-radios__input" id="sfi-relates-to-2" name="sfi-relates-to" type="radio"
+                        value=" SFI 23" {{ checked('sfi-relates-to','SFI 23') }}>
+                      <label class="govuk-label govuk-radios__label" for="sfi-relates-to-2">
+                        SFI 23
                       </label>
                     </div>
                   </div>

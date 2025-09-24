@@ -1466,6 +1466,19 @@ margin-bottom: 15px;}
 
 // doc upload CSS
 
+// doc upload overview
+
+.govuk-container--doc-upload-filters {
+  display: flex;
+  align-items: center;
+
+  .govuk-button-group {
+    align-items: flex-end;
+    margin-bottom: 0;
+  }
+  
+}
+
 // doc upload container 
 
 .govuk-button-group--doc-upload {

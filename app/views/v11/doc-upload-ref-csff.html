@@ -1,21 +1,21 @@
 {% extends "layouts/main.html" %}
 
 {% if data.view == "int" %}
-  {% set _showFooterMVPLinks = false %}
+{% set _showFooterMVPLinks = false %}
 {% else %}
-  {% set _showFooterMVPLinks = true %}
+{% set _showFooterMVPLinks = true %}
 {% endif %}
 
 {% set _showReleaseLinks = false %}
 
 {% set _showIntExtLinks = true %}
 
-{% set _inError = myData.validationError == "true"  %}
+{% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "Enter your complaint reference number" %}
+{% set pageTitle = "Enter your Countryside Stewardship application reference number" %}
 {% set pageName = pageTitle %}
-{% if _inError %} 
-  {% set pageName = "Error: " + pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
 {% endif %}
 
 {% set serviceName = "Land and farm service" %}
@@ -82,16 +82,16 @@
 
 {% if data.view != "int" %}
 
-  {% include "_common/phase-banner-2.html" %}
-  {% include "_common/sub-header.html" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
 
-  {% set _hideAccountLink = true %}
-  {% include "_common/login-nav-3.html" %}
-  {% else %}
-  {% include "_common/login-nav-internal.html" %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
 {% endif %}
 
-  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -101,26 +101,22 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <form action="doc-upload-upload-files?filesUploaded=complaint">
+    <form action="doc-upload-upload-files" method="POST" novalidate>
 
-      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+      <div class="govuk-form-group">
         <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="complaint-ref">
-             Enter your complaint reference number
+          <label class="govuk-label govuk-label--l" for="ref-csff">
+            Enter your Countryside Stewardship Facilitation Fund reference number
           </label>
         </h1>
-        
-        <div id="complaint-ref-hint" class="govuk-hint">
-          You can find this in emails about your complaint from the Land and farm service.
+        <div id="ref-csff-hint" class="govuk-hint">
+          You can find this in emails about your Countryside Stewardship Facilitation Fund claim from the Land and farm service.
         </div>
-
-      
-
-        <input class="govuk-input govuk-input--width-20" id="complaint-ref" name="complaint-ref" type="text"  value="{{ data['complaint-ref'] }}" aria-describedby="complaint-ref-hint ">
+        <input class="govuk-input" id="ref-csff" name="ref-csff" type="text" aria-describedby="ref-csff-hint" value="{{data['ref-csff']}}">
       </div>
 
       {{govukButton({
-        text: "Continue"
+      text: "Continue"
       })}}
 
     </form>

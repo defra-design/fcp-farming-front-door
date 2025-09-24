@@ -102,50 +102,54 @@
   <div class="govuk-grid-column-two-thirds">
 
 
-    <form action="/CS-app-tag-answer" method="POST" novalidate>
+    <form action="doc-upload-ref-cs-agreement" method="POST" novalidate>
 
-      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
-        <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="cs-app-tag">
-            What is this?
-          </label>
-        </h1>
-
-        <p class="govuk-hint">
-          Select the option that best describes what this is.
-        </p>
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset">
-            <div class="govuk-radios" data-module="govuk-radios">
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="cs-app-tag" name="cs-app-tag" type="radio" value="A declaration" {{
-                  checked('cs-app-tag','A declaration') }}>
-                <label class="govuk-label govuk-radios__label" for="cs-app-tag">
-                  A declaration
-                </label>
-              </div>
-              <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                  <div class="govuk-radios" data-module="govuk-radios">
-                    <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" id="cs-app-tag-1" name="cs-app-tag" type="radio" value="Evidence" {{
-                        checked('cs-app-tag','Evidence') }}>
-                      <label class="govuk-label govuk-radios__label" for="cs-app-tag-1">
-                        Evidence
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-              <br><br>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              What is this?
+            </h1>
+          </legend>
+          <div id="changedName-hint" class="govuk-hint">
+             Select the option that best describes what this is. 
+          </div>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag" name="doc-upload-tag" type="radio" value="An amendment" {{ checked('doc-upload-tag','An amendment') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag">
+                An amendment
+              </label>
             </div>
-            {{govukButton({
-            text: "Continue"
-            })}}
+            <!--<div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-2" name="doc-upload-tag" type="radio"
+                value="A claim" {{ checked('doc-upload-tag','A claim') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-2">
+                A claim
+              </label>
+            </div>-->
+            <!--<div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-3" name="doc-upload-tag" type="radio" value="A declaration" {{ checked('doc-upload-tag','A declaration') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-3">
+                A declaration
+              </label>
+            </div>-->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-4" name="doc-upload-tag" type="radio"
+                value="Evidence" {{ checked('doc-upload-tag','Evidence') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-4">
+               Evidence
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
 
     </form>
-
-
 
   </div>
 
