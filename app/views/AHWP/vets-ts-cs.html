@@ -1,5 +1,32 @@
-{% extends "layouts/vet-visits.html" %}
+{% extends "layouts/AHWP-gov-brand.html" %}
 
+{% block header %}
+{{ govukHeader({
+  classes: "govuk-header--full-width-border",
+  rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+  serviceName: "Get funding to improve animal health and welfare",
+  serviceUrl: "/"
+}) }}
+
+<div class="govuk-width-container app-width-container">
+  <div class="govuk-phase-banner">
+    <p class="govuk-phase-banner__content">
+      <strong class="govuk-tag govuk-phase-banner__content__tag">
+        Beta
+      </strong>
+      <span class="govuk-phase-banner__text">
+        This is a new service - your <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+      </span>
+    </p>
+  </div>
+</div>
+
+
+
+{% endblock %}
 {% set pageName="Terms and conditions" %}
 
 {%- block beforeContent -%}

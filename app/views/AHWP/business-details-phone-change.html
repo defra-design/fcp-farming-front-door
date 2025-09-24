@@ -1,4 +1,31 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/AHWP-gov-brand.html" %}
+
+{% block header %}
+{{ govukHeader({
+  classes: "govuk-header--full-width-border",
+  rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+  serviceName: serviceName,
+  serviceUrl: "/"
+}) }}
+
+{% endblock %}
+
+
+{% block header %}
+{{ govukHeader({
+  classes: "govuk-header--full-width-border"
+}) }}
+
+{{ govukServiceNavigation({
+  serviceName: serviceName,
+  serviceUrl: "/"
+}) }}
+
+{% endblock %}
+
 
 {% if data.view == "int" %}
   {% set _showFooterMVPLinks = false %}

@@ -1,4 +1,17 @@
-{% extends "layouts/gov-guidance.html" %}
+{% extends "layouts/AHWP-gov-brand.html" %}
+
+{% block header %}
+{{ govukHeader({
+  classes: "govuk-header--full-width-border",
+  rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+ 
+  serviceUrl: "/"
+}) }}
+
+{% endblock %}
 
 {% set pageName="Land and farm service service" %}
 

@@ -1,4 +1,17 @@
-{% extends "layouts/rps.html" %}
+{% extends "layouts/AHWP-gov-brand.html" %}
+
+{% block header %}
+{{ govukHeader({
+  classes: "govuk-header--full-width-border",
+  rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+  serviceName: "Rural Payments",
+  serviceUrl: "/"
+}) }}
+
+{% endblock %}
 
 {% set pageName="Sign in" %}
 

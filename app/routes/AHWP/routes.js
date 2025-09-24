@@ -1650,9 +1650,27 @@ module.exports = function (router,_myData) {
         req.session.myData.newBankNameBus = ""
         req.session.myData.newBankSortBus = ""
         req.session.myData.newBankAccountBus = ""
-        req.session.myData.newBankRollBus = ""
+        req.session.myData.newBankRollBus = "" 
 
         res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
     });
+
+
+// Run this code when a form is submitted to 'juggling-balls-answer'
+router.post('/detailsroute', function (req, res) {
+
+  // Make a variable and give it the value from 'how-many-balls'
+  var variabledetails = req.session.data['correctdetails']
+ 
+  // Check whether the variable matches a condition
+  if (variabledetails == "value1"){
+    // Send user to next page
+    res.redirect('AHWP/AHWP-what-you-can-claim')
+  } else {
+    // Send user to ineligible page
+    // ADD PAGE TO GO TO
+    res.redirect('AHWP/AHWP-sign-in-details-incorrect')
+  }
+});
 
 }
