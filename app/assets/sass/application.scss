@@ -1468,15 +1468,20 @@ margin-bottom: 15px;}
 
 // doc upload overview
 
-.govuk-container--doc-upload-filters {
+.doc-upload--container {
+  float: none;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 
-  .govuk-button-group {
-    align-items: flex-end;
-    margin-bottom: 0;
+  button {
+    margin-bottom: 0px;
+    margin-left: 20px;
   }
-  
+
+  p {
+    margin-top: 20px;
+  }
 }
 
 // doc upload container 
