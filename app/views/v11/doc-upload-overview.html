@@ -74,35 +74,38 @@
   <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m">Search and filters</h2>
 
-    <div class="govuk-container--doc-upload-filters">
-      <div class="govuk-date-input__item">
-        <label class="govuk-label" for="width-20">
-          Search
-        </label>
-        <input class="govuk-input govuk-input--width-20" id="width-20" name="width20" type="text">
+    <div class="doc-upload--container">
+
+      <div class="doc-upload-container--filters">
+        <div class="govuk-form-group govuk-!-display-inline-block">
+          <div class="govuk-date-input__item">
+            <label class="govuk-label" for="width-20">
+              Search
+            </label>
+            <input class="govuk-input govuk-input--width-20" id="width-20" name="width20" type="text">
+          </div>
+        </div>
+        <div class="govuk-form-group govuk-!-display-inline-block">
+          <label class="govuk-label" for="sort">
+            Filter by subject
+          </label>
+          <select class="govuk-select" id="filtersubject" name="filtersubject" style="width: 10px">
+            <option value="Agreement" selected="selected"> </option>
+            <option value="published">Business, complaints and appeals</option>
+            <option value="updated">Countryside Stewardship</option>
+            <option value="comments">Delinked payments</option>
+            <option value="views">Environmental Stewardship</option>
+            <option value="comments">Grants</option>
+            <option value="comments">Sustainable Farming Incentive</option>
+          </select>
+          <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+            Search
+          </button>
+        </div>
       </div>
 
-      <div class="govuk-date-input__item">
-        <label class="govuk-label" for="sort">
-          Filter by subject
-        </label>
-        <select class="govuk-select" id="filtersubject" name="filtersubject" style="width: 10px">
-          <option value="Agreement" selected="selected"> </option>
-          <option value="published">Business, complaints and appeals</option>
-          <option value="updated">Countryside Stewardship</option>
-          <option value="comments">Delinked payments</option>
-          <option value="views">Environmental Stewardship</option>
-          <option value="comments">Grants</option>
-          <option value="comments">Sustainable Farming Incentive</option>
-        </select>
-      </div>
+      <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Clear filters</a></p>
 
-      <div class="govuk-button-group">
-        <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-          Search
-        </button>
-        <a class="govuk-link" href="#">Clear filters</a>
-      </div>
 
     </div>
 
