@@ -1,0 +1,162 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Which aspect of Countryside Stewardship does this relate to?" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Land and farm service" %}
+
+<!--{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "VAT registration number (add/change) - business details",
+    "id": "bd12",
+    "url": "business-details-vat-change?r=t&view=ext&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a VAT registration number"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter a VAT registration number in the format GB123456789 or 123456789"
+      }
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "VAT registration number (add/change) - business details",
+    "id": "int-bd12",
+    "url": "business-details-vat-change?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a VAT registration number"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter a VAT registration number in the format GB123456789 or 123456789"
+      }
+    ]
+    
+  }
+%}
+
+{% else %}
+
+{% endif %}-->
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <form action="doc-upload-ref-es" method="POST" novalidate>
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              What is this?
+            </h1>
+          </legend>
+          <div id="changedName-hint" class="govuk-hint">
+             Select the option that best describes what this is. 
+          </div>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-es" name="doc-upload-tag-es" type="radio" value="An agreement amendment" {{ checked('doc-upload-tag-es','An agreement amendment') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-es">
+                An agreement amendment
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-es-2" name="doc-upload-tag-es" type="radio"
+                value="A claim" {{ checked('doc-upload-tag-es','A claim') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-es-2">
+                A claim
+              </label>
+            </div>
+            <!--<div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-es-3" name="doc-upload-tag-es" type="radio" value="A declaration" {{ checked('doc-upload-tag-es','A declaration') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-es-3">
+                A declaration
+              </label>
+            </div>-->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-es-4" name="doc-upload-tag-es" type="radio"
+                value="Claim evidence" {{ checked('doc-upload-tag-es','Claim evidence') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-es-4">
+               Claim evidence
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

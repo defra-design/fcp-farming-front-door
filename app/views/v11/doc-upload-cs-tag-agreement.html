@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "Enter your Countryside Stewardship application reference number" %}
+{% set pageTitle = "Which aspect of Countryside Stewardship does this relate to?" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -101,27 +101,58 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <form action="doc-upload-upload-files" method="POST" novalidate>
+
+    <form action="doc-upload-ref-cs-agreement" method="POST" novalidate>
 
       <div class="govuk-form-group">
-        <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="CS-app-ref">
-            Enter your Countryside Stewardship agreement number
-          </label>
-        </h1>
-        <div id="CS-app-ref-hint" class="govuk-hint">
-          You can find this in emails about your agreement from the Land and farm service.
-        </div>
-        <input class="govuk-input" id="CS-app-ref" name="CS-app-ref" type="text" aria-describedby="CS-app-ref-hint" value="{{data['CS-app-ref']}}">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              What is this?
+            </h1>
+          </legend>
+          <div id="changedName-hint" class="govuk-hint">
+             Select the option that best describes what this is. 
+          </div>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag" name="doc-upload-tag" type="radio" value="An amendment" {{ checked('doc-upload-tag','An amendment') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag">
+                An amendment
+              </label>
+            </div>
+            <!--<div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-2" name="doc-upload-tag" type="radio"
+                value="A claim" {{ checked('doc-upload-tag','A claim') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-2">
+                A claim
+              </label>
+            </div>-->
+            <!--<div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-3" name="doc-upload-tag" type="radio" value="A declaration" {{ checked('doc-upload-tag','A declaration') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-3">
+                A declaration
+              </label>
+            </div>-->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="doc-upload-tag-4" name="doc-upload-tag" type="radio"
+                value="Evidence" {{ checked('doc-upload-tag','Evidence') }}>
+              <label class="govuk-label govuk-radios__label" for="doc-upload-tag-4">
+               Evidence
+              </label>
+            </div>
+          </div>
+        </fieldset>
       </div>
 
-      {{govukButton({
-      text: "Continue"
-      })}}
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
 
     </form>
 
   </div>
+
 </div>
 
 
