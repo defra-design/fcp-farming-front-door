@@ -210,16 +210,15 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
             Enter at least the first 3 characters
           </div>
           <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}"
-          id="search-internal" name="q" title="Search" class="govuk-input">
+            id="search-internal" name="q" title="Search" class="govuk-input">
         </div>
 
-        
+
         <div class="govuk-form-group">
           <label class="govuk-label govuk-label--m" for="c-number">
             First name (optional)
           </label>
-          <input type="x" value="" 
-          id="search-extra" name="q" title="a" class="govuk-input">
+          <input type="x" value="" id="search-extra" name="q" title="a" class="govuk-input">
         </div>
 
 
@@ -305,7 +304,15 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
     {% endif %}
     {% endfor %}
 
-    {% if data['searchCriteria'] == "int-sr-cusPostcode" %}
+    {% if data['searchCriteria'] == "int-sr-busName" %}
+
+    <h2 class="govuk-heading-m">32 results for "{{myData.searchTerm}}"</h2>
+
+    {% elif data['searchCriteria'] == "int-sr-busPostcode" %}
+
+    <h2 class="govuk-heading-m">3 results for "{{myData.searchTerm}}"</h2>
+
+    {% elif data['searchCriteria'] == "int-sr-cusPostcode" %}
 
     <h2 class="govuk-heading-m">3 results for "{{myData.searchTerm}}"</h2>
 
@@ -317,7 +324,314 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
 
     <ol class="govuk-list internal-list__search">
 
-      {% if data['searchCriteria'] == "int-sr-cusPostcode" %}
+      {% if data['searchCriteria'] == "int-sr-CRN" %}
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="internal-customer?nameFirstPers=Colin&nameLastPers=Rook">Alfred Waldron</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1101996862</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">10 Skirbeck Way, Maidstone</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">SK22 1DL</p>
+        </div>
+      </li>
+
+      {% elif data['searchCriteria'] == "int-sr-busPostcode" %}
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Braithwaite and Fossicle Ltd</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 976544726</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Smithfield Hall, Vootleton, near Harwick</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CH7 9EW</p>
+        </div>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Foal holdings LTD</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 987654321</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">157 Small Lane, Brightling</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CH7 9EW</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Trader number</dt>
+          <dd class="sfd-definition-list__definition">
+            901234
+          </dd>
+        </dl>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Vendor number</dt>
+          <dd class="sfd-definition-list__definition">
+            789012
+          </dd>
+        </dl>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Zenofosh National Park</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 736366903</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Treetops Estate, Harteton</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CH7 9EW</p>
+        </div>
+      </li>
+
+      {% elif data['searchCriteria'] == "int-sr-busName" %}
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Foal holdings LTD</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 987654321</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">157 Small Lane, Brightling</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CH7 9EW</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Trader number</dt>
+          <dd class="sfd-definition-list__definition">
+            901234
+          </dd>
+        </dl>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Vendor number</dt>
+          <dd class="sfd-definition-list__definition">
+            789012
+          </dd>
+        </dl>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Foley & Sons</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 890123456</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Beckwith House, Howhill Stubbing Road</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">BD24 0HZ</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Vendor number</dt>
+          <dd class="sfd-definition-list__definition">
+            567890
+          </dd>
+        </dl>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Ford and Rivers Group</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 234567890</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Frinton Court, Runnymede</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">KT15 3RA</p>
+        </div>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Forrester Farms</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 112233445</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">125 Guildford Lane, Ripley Springs </p>
+          <p class="govuk-body govuk-!-margin-bottom-2">TW5 6HE</p>
+        </div>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Forrester Farms Ltd</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 234567890</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Sefton Meadows, Prescott</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">L35 5EZ</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Vendor number</dt>
+          <dd class="sfd-definition-list__definition">
+            426189
+          </dd>
+        </dl>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Foster Farm</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 345876129</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">25 Breach Barns lane, Essex</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">IG8 8NM</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Trader number</dt>
+          <dd class="sfd-definition-list__definition">
+            901234
+          </dd>
+        </dl>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">FOSTER & SONS</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 345876129</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">41 Upshire Road, Elmbridge, Surrey</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">KT22 0TR</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Trader number</dt>
+          <dd class="sfd-definition-list__definition">
+            907154
+          </dd>
+        </dl>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Vendor number</dt>
+          <dd class="sfd-definition-list__definition">
+            345671
+          </dd>
+        </dl>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Fossick Farm</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 345876129</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Upper Nether Cottage, How Hill Road, Craven</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">LS29 8HE</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Trader number</dt>
+          <dd class="sfd-definition-list__definition">
+            321098
+          </dd>
+        </dl>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Vendor number</dt>
+          <dd class="sfd-definition-list__definition">
+            567890
+          </dd>
+        </dl>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Foxglove Holdings</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 345876129</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">90 Talbot Road, Leeds</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">LS8 5UN</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Vendor number</dt>
+          <dd class="sfd-definition-list__definition">
+            345678
+          </dd>
+        </dl>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Fowler farms LTD</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 345876129</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">42 Parlington Lane, Cheddar, Somerset</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">BS27 8IE</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Trader number</dt>
+          <dd class="sfd-definition-list__definition">
+            789012
+          </dd>
+        </dl>
+      </li>
+
+      {% elif data['searchCriteria'] == "int-sr-cusName" %}
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="internal-customer?nameFirstPers=Colin&nameLastPers=Rook">Alfred Waldron</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1101996862</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">10 Skirbeck Way, Maidstone</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">SK22 1DL</p>
+        </div>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="{{_url}}">Alice Waldington</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1109678951</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Smithfield Hall, Vootleton, near Harwick</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CM1 1QG</p>
+        </div>
+      </li>
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="{{_url}}">Mick Waldington</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1135569134</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">Smithfield Hall, Vootleton, near Harwick</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CM1 1QG</p>
+        </div>
+      </li>
+
+      {% elif data['searchCriteria'] == "int-sr-cusPostcode" %}
 
       <li class="govuk-!-padding-top-6">
         <header class="govuk-!-padding-bottom-0">
@@ -351,11 +665,58 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
             <a class="govuk-link govuk-link--no-visited-state" href="{{_url}}">Sarah Appleton</a>
           </h3>
         </header>
-        <p class="govuk-body govuk-!-margin-bottom-2">CRN:  	1105569934</p>
+        <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1105569934</p>
         <div>
           <p class="govuk-body govuk-!-margin-bottom-0">Spring Lane, Careyton</p>
           <p class="govuk-body govuk-!-margin-bottom-2">CM1 1QG</p>
         </div>
+      </li>
+
+      {% elif data['searchCriteria'] == "int-sr-traderNo" %}
+
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Fowler farms LTD</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 345876129</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">42 Parlington Lane, Cheddar, Somerset</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">BS27 8IE</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Trader number</dt>
+          <dd class="sfd-definition-list__definition">
+            789012
+          </dd>
+        </dl>
+      </li>
+
+      {% elif data['searchCriteria'] == "int-sr-vendorNo" %}
+      <li class="govuk-!-padding-top-6">
+        <header class="govuk-!-padding-bottom-0">
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Foal holdings LTD</a>
+          </h3>
+        </header>
+        <p class="govuk-body govuk-!-margin-bottom-2">SBI: 987654321</p>
+        <div>
+          <p class="govuk-body govuk-!-margin-bottom-0">157 Small Lane, Brightling</p>
+          <p class="govuk-body govuk-!-margin-bottom-2">CH7 9EW</p>
+        </div>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Trader number</dt>
+          <dd class="sfd-definition-list__definition">
+            901234
+          </dd>
+        </dl>
+        <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+          <dt class="sfd-definition-list__title">Vendor number</dt>
+          <dd class="sfd-definition-list__definition">
+            789012
+          </dd>
+        </dl>
       </li>
 
       {% else %}
@@ -415,7 +776,47 @@ for 'Businesses', where pagination would appear. See int-sr01c under 'Variations
         </p>
         {% endif %}
 
+
   </div>
 </div>
+
+{% if data['searchCriteria'] == "int-sr-busName" and myData.searchapplied %}
+
+<nav class="govuk-pagination" aria-label="Pagination">
+  <ul class="govuk-pagination__list">
+    <li class="govuk-pagination__item govuk-pagination__item--current">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1" aria-current="page">
+        1
+      </a>
+    </li>
+    <li class="govuk-pagination__item">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2">
+        2
+      </a>
+    </li>
+    <li class="govuk-pagination__item">
+      <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 3">
+        3
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13"
+        width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path
+          d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
+        </path>
+      </svg>
+    </a>
+  </div>
+</nav>
+
+{% endif %}
+
+
 
 {% endblock %}
