@@ -34,6 +34,44 @@
 
     {% set _selectedBusiness = myData.selectedBusiness %}
 
+    {% if data.filesUploaded == "yes" %}
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert"
+      aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          You have successfully uploaded the following documents:
+        </h3>
+        {% if data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
+        <ul class="govuk-list govuk-list--bullet">
+          <li>file.jpeg</li>
+        </ul>
+        {% else %}
+        <ul class="govuk-list govuk-list--bullet">
+          <li>fencepic1.jpeg</li>
+          <li>fencereceipt1.pdf</li>
+        </ul>
+        {% endif %}
+        {% if data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
+        <p class="govuk-body govuk-!-font-weight-bold">
+          Submission reference: 1743259315
+        </p>
+        {% else %}
+        <p class="govuk-body govuk-!-font-weight-bold">
+          Submission reference: 1733826312
+        </p>
+        {% endif %}
+        <p class="govuk-body">
+          We have emailed confirmation of this to you and all authorised users at the business.
+        </p>
+      </div>
+    </div>
+    {% endif %}
+
     <span class="govuk-caption-xl">{{data.user.name}}</span>
     <h1 class="govuk-heading-l govuk-!-margin-bottom-1">
       Documents for {{_selectedBusiness.name}}</h1>

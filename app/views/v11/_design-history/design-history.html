@@ -20,134 +20,340 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">Design history</span>
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">Design history</span>
-      MVP prototype
+      Document upload v1.0
     </h1>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
 
     <h2 class="govuk-heading-l">
-      Design changes
+      Why we explored document upload
     </h2>
 
     <p class="govuk-body">
-      This is the version being developed for Buffalo MVP, based on version 8 and some of version 9 of the prototype.
+      'Document upload' is a way for external users (like farmers and agents) to send files through the digital service to internal users (RPA customer service staff) to support:
     </p>
 
-    <h2 class="govuk-heading-m">
-      What’s unique for this version:
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>claims for grants and funding</li>
+      <li>complaints, appeals and updates to business records</li>
+    </ul>
+
+    <p class="govuk-body">
+      A document upload feature has been agreed with Rural Payments Agency (RPA) as one of the first things we need to deliver, because there is a strong business need for it.
+    </p>
+
+    <p class="govuk-body">
+      Document upload is not currently available as part of the Rural Payments service (RPS). Farmers and agents need to send a document through the post or by email, which customer service staff have to triage manually - a time-consuming and resource-heavy process.
+    </p>
+
+    <p class="govuk-body">
+      If internal users could get documents automatically tagged and categorised as part of the upload process, this should reduce the amount of time and money staff spend manually triaging documents sent via email, and dealing with related phone calls, for example to check the document in the email was received.
+    </p>
+
+    <p class="govuk-body">
+      RPA’s Improving Customer Experience (ICE) team is already developing their own prototype for doc upload, and has decided requirements for that.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Constraints and brief
     </h2>
+
+    <p class="govuk-body">
+      The brief was to focus on what is possible to deliver in a short term MVP, rather than freely exploring long term transformation.
+    </p>
+    
+    <p class="govuk-body">
+      Due to the short term nature of our scope, we were asked to use the RPA’s existing technical requirements and processes. This includes a categorisation matrix for the ICE doc uploader prototype, a spreadsheet which shows what tags are needed in order to auto-triage documents and get them to the relevant customer service team. For example, the tags show whether a document is for a particular funding grant or scheme or a complaint or appeal, or whether it’s evidence or declaration, and depending on the combination of tags, the document lands in the right queue for staff to work on.
+    </p>
+
+    <p class="govuk-body">
+      We were asked to design a standalone doc upload feature in the first instance, more like a proof of concept than part of an end-to-end journey. Initially, doc upload will not be integrated into claim journeys. This lack of end-to-end integration, and the inherent limitations of the current categorisation matrix and CRM, mean this limited initial design risks not meeting the needs of external users. 
+    </p>
+
+    <p class="govuk-body">
+      <i>
+        'Concerns raised over what happens if someone logs a document under the wrong category, or the category isn’t there. Make it clear what categories are available without the lists being overwhelming. Ensure there is a route for people to follow if a drop-down menu doesn’t include the item they need. Would it be possible to submit evidence when submitting a claim, rather than having to come out of the claim page and go to upload a document. Please make steps as simple as possible to avoid customers getting lost between pages/processes.'
+      </i>
+      <br>[Recommendation from RPA’s Customer Insight Team from interviews with 22 farmers, March 2025]
+    </p>
+
+    <p class="govuk-body">
+      However, for the business, a standalone feature is only the first step in a long term transformation plan.
+    </p>
+    
+    <p class="govuk-body">
+      RPA preferred that users should not be able to remove successfully uploaded documents via the online service (due to fraud risk). 
+    </p>
+
+    <p class="govuk-body">
+      RPA also preferred not to allow an ‘other’ category of any kind, due to concerns most users would default to selecting this.
+    </p>    
+
+    <h2 class="govuk-heading-l">
+      Pain points and user needs
+    </h2>
+
+    <p class="govuk-body">
+      RPA shared with us the feedback they got from farmers and agents on their prototype, and discussed the difficulties for staff with the current system, all of which was extremely helpful. We were able to use this to guide our design decisions.
+    </p>
+
+    <p class="govuk-body">
+      Pain points for staff (internal) users include:
+    </p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        updated the service name across the prototype to 'Land and farm service'
-      </li>
-      <li>removed bank details from internal and external journeys as this is not in scope for Buffalo MVP</li>
-      <li>
-        removed bd13 VAT registration number (add) - business details. We will keep the ‘Change’ link for businesses
-        that have a VAT registration number and ‘Add’ for businesses that do not, on bd01 - but they will both go to
-        bd12.
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          this is to minimise tech debt in maintaining similar question pages. We believe that we can ask the same
-          question, ‘What is your VAT registration number’ to both users that need to add and change their VAT
-          registration numbers.
-        </li>
-      </ul>
-      <li>
-        in keeping with the approach to VAT registration number, on pd01 we added an ‘Add’ link for users that do not
-        have a date of birth on the service, and kept the ‘Change’ link for those that do. Both links will go to pd04
-        Date of birth (add/change)
+        manually attaching tags for triage
       </li>
       <li>
-        added variant examples for business telephone numbers, e.g. where the user has added a telephone number, but not
-        a mobile number, to document how this should be displayed on the check page (and when submitted to bd01).
+        having to sift through irrelevant files (like embedded images from an email signature) to find the ‘right’ files
       </li>
       <li>
-        added variant examples for personal telephone numbers, e.g. where the user has added a telephone number, but not
-        a mobile number, to document how this should be displayed on the check page (and when submitted to pd01).
+        dealing with calls just to confirm a document was received
       </li>
       <li>
-        there is no managing of permissions as that is out of scope for Buffalo MVP, but users can see pages according
-        to the permission level they have
+        processing documents sent ad hoc
       </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          this applies to bp02 (business home) and bd01 (view and update your business details) in terms of what the
-          user can see / have access to from that page
-        </li>
-      </ul>
-      <li>
-        updated mp01 Cookies with results of Cookies audit. Cookie banner content still TBC
-      </li>
-      <li>
-        created 2 new error pages:
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          se05 401 Unauthorised, returned to the user if they need to provide or correct authentication details. For
-          example, a user tries to open a link they have favourited after their session has expired, or they provide
-          incorrect or invalid authentication credentials (eg, their password has expired). The user can correct the
-          error by signing in
-        </li>
-        <li>
-          se04 403 Forbidden, returned to the user if they do not have permission to access the requested resource. For
-          example, a user who may have ‘View’ permissions in the service is sent a link to update bank details. The user
-          cannot correct the error. They can ask the business to raise their permissions
-        </li>
-      </ul>
-      <li>
-        reviewed existing error pages within our MVP and updated for consistency:
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          contact details on error pages use the Contact RPA pattern. Updated for se01. Service unavailable (503/shutter
-          page), se02. Service unavailable (500/service error page) and se03. Page not found (404)
-        </li>
-        <li>
-          call to action to sign in to service use a hyperlink to direct users to the sign in page. Updated for se05 401
-          Unauthorised, mp06 Auto signed out and mp07 Signed out
-        </li>
-      </ul>
-      <li>
-        reviewed the misc pages for our MVP (mp00), where we have:
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          removed mp08 terms and conditions - confirmed as not needed for our initial launch
-        </li>
-        <li>
-          removed mp04 privacy policy - confirmed that we will launch linking to the Personal information charter for
-          our initial launch
-        </li>
-        <li>
-          no action for now on the accessibility statement
-        </li>
-        <li>
-          prototyped an auto-sign out warning page (mp07)
-        </li>
-      </ul>
-      <li>reviewed the navigation within our MVP, where we have: </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          removed ‘cancel’ links from any change and check pages within the view and update your business or personal
-          details journeys. ‘Change’ and ‘back’ links remain as in previous versions of the prototype.
-        </li>
-        <li>
-          removed the ‘home’ breadcrumb from bd01 and pd01, and replaced it with ‘back’ links to take the user to the
-          relevant previous page they came from (e.g. for pd01, they could come from bp01 or bp02)
-        </li>
-        <li>
-          updated the heading for pd01 by adding a heading caption to display the user’s full name, and removed the sub
-          header banner that was displaying the selected business information (this is because the user would not
-          necessarily have come to this page from a selected business)
-        </li>
-        <li>because of our integration with Defra ID for signing in users, bp01 will be built by their team and used by other services. This means that we cannot customise this page, and we have therefore removed the link to 'View personal details'</li>
-      </ul>
     </ul>
+
+    <p class="govuk-body">
+      Pain points for external users include:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        lack of confirmation they have sent in a specific thing
+      </li>
+      <li>
+        having to input too many categorisation details
+      </li>
+      <li>
+        losing track of what you have sent in and when
+      </li>
+      <li>
+        not being clear on what should be submitted
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      Our user researcher identified the following user needs for external users:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        to be able to send any documents requested to RPA
+      </li>
+      <li>
+        a fast way to send documents
+      </li>
+      <li>
+        to feel assured that RPA has received my documents
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      There are some benefits of a doc upload feature that meet external user needs:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        being able to keep a record of all documents uploaded for a business (including who uploaded them and when), all in one place
+      </li>
+      <li>
+        hopefully getting a faster response to any documents sent in because they have reached the correct customer service team faster
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      But in general, the drive for designing a doc upload feature comes from internal, not external users. In fact, RPAs own feedback on the ICE prototype from farmers and agents has confirmed that continuing to send documents by email is just easier for some. It is significantly easier to reply to an email and attach a document than to log into a digital service and upload - especially when using a mobile device, as is likely to be the case when sending photographs (the commonest type of evidence).
+    </p>
+
+    <p class="govuk-body">
+      <i>
+        ‘Be clear on how this process makes it quicker and easier for farmers (not just RPA). Some questioned whether just sending an email would remain quicker and easier for them.’ 
+      </i>
+      <br>[Recommendation from RPA’s Customer Insight Team from interviews with 22 farmers, March 2025]
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Design approach
+    </h2>
+
+    <p class="govuk-body">
+      For our initial prototype, we created a scenario for an external user with high permissions (low permissions users would not be able to upload or view documents). 
+    </p>
+
+    <p class="govuk-body">
+      Our RPA colleagues confirmed to us that the fundamental business need for the categorisation is for RPA to know, from farmers and agents, ‘why are you sending us this and what is it for’. With this in mind, we restructured the categorisation journey to try to meet the needs of external users as much as internal users. 
+    </p>
+
+    <p class="govuk-body">
+      We know from all of our previous user research that our users want everything ‘in one place’ and as simple as possible. So we changed the order of steps and reworded questions to cut down the number of options users are presented with, and put the emphasis on terms we believe, from past research, that users are likelier to immediately grasp (like ‘SFI’ and ‘complaint’, compared to ‘submit amendments’). 
+    </p>
+
+    <p class="govuk-body">
+      This means that documents will still capture the necessary tags and go to the same 12 end customer service teams, but we tried to make the journey as simple and intuitive for farmers and agents as possible, to encourage them to use this feature. 
+    </p>
+
+    <p class="govuk-body">
+      The new system is modular and adaptable, so that the metadata collected can evolve in years to come. 
+    </p>
+
+    <img src="/public/images/design-history/v11/doc-upload-mapping.png" alt="Mural mapping for the categorisation / tagging for document upload" class="design-history">
+
+    <p class="govuk-body">
+      It’s important to note, though, that our design scope was constrained, as although we can change the order and names of categories that external users see, the back end categories and routing have to fit into the existing matrix. The matrix may fit internal users' mental models, because it was designed to fit with RPA’s familiar customer relationship management (CRM) system to meet RPA business requirements. But it has not been designed to focus on external user needs, so may confuse farmers and agents. 
+    </p>
+
+    <p class="govuk-body">
+      Many of the categories can overlap, for example appeals and complaints and schemes, and grants can fall into multiple categories. If a farmer has a capital grant application, do they see that as a grant, or CS? External users are extremely likely to struggle to know which category is 'correct'. Also, the CRM itself is built to facilitate a confusing existing landscape of multiple funding and grant schemes. A systemic redesign of the information architecture for categorisation, including the CRM, could address this problem, and support a system that works well for all users.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Longer term plans
+    </h2>
+
+    <p class="govuk-body">
+      One idea, if it can be brought into scope, is auto-triage using process automation or AI. For example, farmers could just send a reply to an email request with attachments and the documents would automatically be triaged to the right customer service team, or the email request could take farmers to a page in the service pre-categorised with what they need to upload, so all they need to do is drag in the documents. For ad-hoc uploads, we could only show options based on what schemes someone has enrolled in. 
+    </p>
+
+    <p class="govuk-body">
+      This approach would mean farmers would not need to choose categories themselves, or could at least reduce the number of irrelevant options available. This could cut multiple potentially confusing steps out of the journey for them and avoid the high risk of a farmer selecting the wrong category, improving customer service efficiency. If this could be done, the need for an improved information architecture for categories to meet farmer needs may become less critical. The wider team could explore process automation options. 
+    </p>
+
+    <p class="govuk-body">
+      Other ideas to explore include:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        integration of doc upload with two-way messaging
+      </li>
+      <li>
+        end-to-end integration into scheme journeys and <a href="https://www.gov.uk/">GOV.UK</a>  guidance
+      </li>
+      <li>
+        CRM information architecture restructure, to be more logical and make sense to internal and external users
+      </li>
+      <li>
+        scheme-agnostic categories in line with future policy where actions become more important than schemes
+      </li>
+      <li>
+        for users to be able to assign uploads to more than one purpose - for example an invoice could be used as evidence for multiple schemes and an appeal
+      </li>
+      <li>
+        Whitehall guidance on what counts as suitable evidence could be standardised
+      </li>
+      <li>
+        including a tag for document type (invoice, receipt, map) could help internal staff in future - this could be done with AI
+      </li>
+      <li>
+        reducing the number and length of reference numbers
+      </li>
+      <li>
+        status updates and calls to action in the portal, for example regarding the need to upload evidence in order to get paid
+      </li>
+      <li>
+        further improvements to email and letter templates to request evidence and confirm receipt of documents
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-l">
+      What we designed
+    </h2>
+
+    <p class="govuk-body">
+      Within the limited scope we have, we have tried to make the doc upload process as user centred as possible for the farmers and agents who RPA want to use this service, while still meeting business requirements.
+    </p>
+
+    <p class="govuk-body">
+      For testing, we prototyped 2 journeys:
+    </p>
+
+    <ul class="govuk-list govuk-list--number">
+      <li>
+        a farmer who needs to send evidence to support a Countryside Stewardship (CS) capital claim for fencing 
+      </li>
+      <li>
+        a farmer who needs to send evidence to support a complaint - we chose this to ensure that we test a situation where a farmer is likely to be unhappy as they have a complaint
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      Some of the things we have done in our designs, in response to our understanding of user needs:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        We offer an alternative option (email and post) for users who may not find it easy or possible to use an online doc upload service
+      </li>
+      <li>
+        Users can search for keywords (to be confirmed exactly what), and can filter by the subject of the upload
+      </li>
+      <li>
+        we have used the <a href="https://design-patterns.service.justice.gov.uk/components/multi-file-upload/">Ministry of Justice multi file upload component</a> as the basis for our designs of the upload component, because we believe that users will prefer being able to upload multiple documents at once given that this is what they currently do with attachments via email
+      </li>
+      <li>
+        Users can preview (where possible depending on the document type) and download their document after submitting it, which gives them details including who uploaded the document and when, what it’s for, and relevant reference numbers
+      </li>
+      <li>
+        Because users will not be able to remove uploaded documents online, we explain this to users 
+      </li>
+      <li>
+        Because we could not offer an ‘other’ option of categorisation at any point, we ask users in hint text to select the option that fits best
+      </li>
+      <li>
+        We explain the benefits of using the online service to upload to users (to get their documents processed faster) in an attempt to motivate them to use this service
+      </li>
+      <li>
+        We remind users to keep their own copies of documents
+      </li>
+      <li>
+        To add to users' information and avoid them wasting time, we provide a link to <a href="http://gov.uk/">GOV.UK</a> guidance on how to make sure evidence meets requirements, and give guidance on what ‘official’ documents cannot be sent online
+      </li>
+      <li>
+        We prototyped updated RPA email requests for evidence, giving users more information to help them to upload the correct documents
+      </li>
+      <li>
+        All authorised (high permission) users would get an email notification of someone making an upload to their business account
+      </li>
+    </ul>
+
+    <img src="/public/images/design-history/v11/doc-upload-overview.png" alt="" class="design-history">
+
+    <img src="/public/images/design-history/v11/doc-upload-tagging.png" alt="" class="design-history">    
+
+    <img src="/public/images/design-history/v11/doc-upload-files.png" alt="" class="design-history">
+    
+    <img src="/public/images/design-history/v11/doc-upload-check.png" alt="" class="design-history">
+
+    <img src="/public/images/design-history/v11/doc-upload-overview-success.png" alt="" class="design-history">
+
+    <h2 class="govuk-heading-l">
+      What we tested, outcomes and decisions
+    </h2>
+
+    <h3 class="govuk-heading-m">
+      How might we encourage external users to make use of document upload within the service, rather than continuing to send documents by email?
+    </h3>
+
+    <h3 class="govuk-heading-m">
+      How might we help external users categorise document uploads so that they get triaged more quickly and correctly in CRM?
+    </h3>
+
+    <h3 class="govuk-heading-m">
+      How might we provide users with the right level of guidance to successfully and confidently complete their document uploads?
+    </h3>
+
+    <p class="govuk-body">
+      Hypotheses and how they tested coming soon.
+    </p>
+
+
 
 
   </div>
