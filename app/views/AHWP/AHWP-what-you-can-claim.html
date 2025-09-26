@@ -13,9 +13,10 @@ serviceUrl: "/"
 {% endblock %}
 
 {% block pageTitle %}
-  Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+  What you can claim– {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 {% block beforeContent %}
+{% include "_common/phase-banner-2.html" %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
