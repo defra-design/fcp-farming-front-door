@@ -170,30 +170,42 @@
           "release": "Buffalo 1.0 MVP"
         },
         {
-          "name": "Internal search",
-          "url": "internal-search?r=t&view=int",
+          "name": "Internal search criteria",
+          "url": "internal-search-criteria?r=t&view=int",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Internal search (default - Search by single business identifier (SBI))",
+          "url": "internal-search?r=t&view=int&searchCriteria=int-sr-SBI",
           "release": "Buffalo 1.0 MVP",
           "variants": [
             {
-              "name": "Internal search (with results - all tab)",
-              "url": "internal-search?r=t&view=int&q=fos&intSearchType=all"
+              "name": "Internal search - search by customer reference number (CRN)",
+              "url": "internal-search?r=t&view=int&searchCriteria=int-sr-CRN"
             },
             {
-              "name": "Internal search (with results - business tab)",
-              "url": "internal-search?r=t&view=int&q=fos&intSearchType=bus"
+              "name": "Internal search - search by business name",
+              "url": "internal-search?r=t&view=int&searchCriteria=int-sr-busName"
             },
             {
-              "name": "Internal search (with results - customers tab)",
-              "url": "internal-search?r=t&view=int&q=fos&intSearchType=cus"
+              "name": "Internal search - search by business postcode",
+              "url": "internal-search?r=t&view=int&searchCriteria=int-sr-busPostcode"
             },
             {
-              "name": "Internal search (with zero results)",
-              "url": "internal-search?r=t&view=int&q=zeroresults&intSearchType=cus"
-            }
-            ,
+              "name": "Internal search - search by customer name",
+              "url": "internal-search-customer-name?r=t&view=int"
+            },
             {
-              "name": "Internal search (with pagination)",
-              "url": "internal-search-pagination?r=t&view=int"
+              "name": "Internal search - search by customer postcode",
+              "url": "internal-search?r=t&view=int&searchCriteria=int-sr-cusPostcode"
+            },
+            {
+              "name": "Internal search - search by trader number",
+              "url": "internal-search?r=t&view=int&searchCriteria=int-sr-traderNo"
+            },
+            {
+              "name": "Internal search - search by vendor registration number",
+              "url": "internal-search?r=t&view=int&searchCriteria=int-sr-vendorNo"
             }
           ]
         },
@@ -205,6 +217,36 @@
         {
           "name": "Internal - selected customer view",
           "url": "internal-customer?r=t&view=int",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Business type (change) - business details",
+          "url": "business-details-type-change?r=t&view=int",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Business type (check) - business details ",
+          "url": "business-details-type-check?r=t&view=int",
+          "release": "Buffalo 1.0 MVP"
+        },
+        {
+          "name": "Legal status (change) - business details ",
+          "url": "business-details-legal-change?r=t&view=int",
+          "release": "Buffalo 1.0 MVP",
+          "variants": [
+            {
+              "name": "Legal status - charity registration number (add) - business details ",
+              "url": "business-details-legal-charity?r=t&view=int"
+            },
+            {
+              "name": "Legal status - company registration number (add) - business details ",
+              "url": "business-details-legal-company?r=t&view=int"
+            }
+          ]
+        },
+        {
+          "name": "Legal status (check) - business details ",
+          "url": "business-details-legal-check?r=t&view=int",
           "release": "Buffalo 1.0 MVP"
         },
 
@@ -557,12 +599,6 @@
           "name": "VAT registration number (add/change) - business details",
           "id": "bd12",
           "url": "business-details-vat-change?r=t&release=b1&newChange=true",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "VAT registration number (add) - business details",
-          "id": "bd13",
-          "url": "business-details-vat-add?r=t&release=b1&newChange=true",
           "release": "Buffalo 1.0 MVP"
         },
         {
