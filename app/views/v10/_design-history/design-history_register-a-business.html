@@ -1,0 +1,145 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="index">Version 9</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Design history</span>
+      Register a business
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-l">
+      Why we explored register a business
+    </h2>
+
+    <p class="govuk-body">
+      We chose to look at register a business alongside permissions as the 2 are intrinsically linked. Only an owner or sole trader may register a business. On registering, a user will automatically be assigned a business relationship of owner or sole trader, and given full permissions for that business. They may then only be removed from the business if they or their legal representative agrees to it.
+    </p>
+
+    <p class="govuk-body">
+      We estimated the size of register a business as small, requiring relatively low effort by our team to deliver a high value for users.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Pain points and user needs
+    </h2>
+
+    <p class="govuk-body">
+      Operational colleagues shared some of the challenges they encounter with users registering duplicate businesses. Examples include:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        a user registering a business that was already registered and that they had access to because they missed that it was listed in ‘Your businesses’
+      </li>
+      <li>
+        multiple users in a large organisation registering a business that was already registered on the portal, but that they did not currently have access to - they should ask the business to give them permission instead
+      </li>
+      <li>
+        an agent registering a new client they’ve started working with that’s already registered the business themselves - they should ask the business to give them permission instead
+      </li>
+      <li>
+        a user creating duplicate business records in error due to refreshing the page after submitting their details to register a business
+      </li>
+    </ul>
+
+    <p>
+      There has been minimal user research with external users on registering a business to date. 
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Constraints
+    </h2>
+
+    <p class="govuk-body">
+      Given the project timeframe, we were advised to replicate the functionality of the as-is service as much as possible.
+    </p>
+    <p class="govuk-body">
+      If in this work we identify opportunities for improvement, we will consider how our designs might support this within the scope of existing service capabilities. Any larger scale improvements will be added to our backlog for post-service launch. 
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Design approach
+    </h2>
+
+    <p class="govuk-body">
+      From engaging with operational colleagues, we understood the scenarios in which external users need to register a business. This includes users who want to: 
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        apply for and claim grants and payments from the RPA
+      </li>
+      <li>
+        get a single business identifier (SBI), if they are a livestock keeper registering and reporting livestock movements
+      </li>
+      <li>
+        get a trader number, if they are a business importing or exporting agricultural products
+      </li>
+      <li>act on behalf of someone else as an agent</li>
+    </ul>
+
+    <p class="govuk-body">
+      The as-is offers a separate journey for an agent registering a firm of agents.
+    </p>
+
+    <p class="govuk-body">
+      In our first iteration we focused on the happy path of those users classified as ‘Agricultural or other business’, whereby these users are able to successfully register a unique business.
+    </p>
+
+    <p class="govuk-body">
+      We explored the following:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        strengthening the messaging that only an owner or sole trader may register a business and placing the onus on that user to accept the responsibilities that come with this business relationship
+      </li>
+      <li>
+        considering how we might better support the registration experience for users with different needs
+      </li>
+      <li>
+        reusing the business details updates pages, designed and tested in previous iterations (bd02 to bd24)
+      </li>
+      <li>
+        adding the ‘Check answers' and 'confirmation pages’ patterns to support accurate, successful submissions
+      </li>
+      <li>
+        exploring how we might better indicate processing time and minimise the risk of users resubmitting a service request 
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      We paused design work when the team split into 2 squads to focus on getting Buffalo 1.0 ready to launch. We'll return to register a business in a future sprint.
+    </p>
+    
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
