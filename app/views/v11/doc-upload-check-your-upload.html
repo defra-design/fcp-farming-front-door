@@ -330,7 +330,11 @@ row. View example with the query string &traderCount=0"
           Subject
         </dt>
         <dd class="govuk-summary-list__value">
-          {{ data['doc-upload-subject'] or 'Your business changes, complaints, general appeals or probate' }}
+           {% if data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
+          Business, complaints and appeals
+          {% else %}
+          {{ data['doc-upload-subject'] or 'Business, complaints and appeals' }}
+          {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-relates-to">Change<span

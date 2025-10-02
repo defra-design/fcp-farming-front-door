@@ -17,30 +17,12 @@
 {% set pageName = "Enter your company registration number" %}
 {% set serviceName = "Land and farm service" %}
 
-{% if data.view == "ext" and data.release != "concept" %}
+{% if data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In development',
 "name": "Legal status company registration number - business details",
-"id": "bd15b",
-"url": "business-details-legal-company?r=t&release=b1&newChange=true",
-"release": "Buffalo 1.0 MVP",
-"variants": [],
-
-"pagetitle": pageName,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
-]
-
-}
-%}
-{% elif data.view == "int" %}
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-"status": 'In development',
-"name": "Legal status company registration number - business details",
-"id": "bd15b",
+"id": "int-bd15b",
 "url": "business-details-legal-company?r=t&release=b2&view=int",
 "release": "Buffalo 1.1 MVP",
 "variants": [
@@ -48,7 +30,21 @@
 
 "pagetitle": pageName,
 "pagedesc": "",
-"pageurl": ""
+"pageurl": "",
+"errormessages": [
+      {
+        "field": "Company registration number",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a company registration number"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      }
+
+    ]
 
 }
 %}

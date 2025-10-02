@@ -369,23 +369,65 @@ module.exports = [
   ,
   {
     "pageid": "int-sr01a",
-    "pagename": "Search for a customer or business - (with results)",
-    "pageurl": "internal-search-results",
-    "pagedesc": "Search results for a customer or business"
+    "pagename": "Search by single business identifier (SBI)",
+    "pageurl": "internal-search-sbi",
+    "pagedesc": "Search for a business by single business identifier (SBI)."
   }
   ,
   {
     "pageid": "int-sr01b",
-    "pagename": "Search for a customer or business - (no results found)",
-    "pageurl": "internal-search-no-results",
-    "pagedesc": "No search results for a customer or business"
+    "pagename": "Search by customer reference number (CRN)",
+    "pageurl": "internal-search-crn",
+    "pagedesc": "Search for a customer by customer reference number (CRN)."
   }
   ,
   {
     "pageid": "int-sr01c",
-    "pagename": "Search for a customer or business - (pagination)",
-    "pageurl": "internal-search-results",
-    "pagedesc": "Search results for a customer or business"
+    "pagename": "Search by business name",
+    "pageurl": "internal-search-business-name",
+    "pagedesc": "Search for a business by business name."
+  }
+  ,
+  {
+    "pageid": "int-sr01d",
+    "pagename": "Search by business postcode name",
+    "pageurl": "internal-search-business-postcode",
+    "pagedesc": "Search for a business by business postcode."
+  }
+  ,
+  {
+    "pageid": "int-sr01e",
+    "pagename": "Search by customer name",
+    "pageurl": "internal-search-customer-name",
+    "pagedesc": "Search for a customer by customer name."
+  }
+  ,
+  {
+    "pageid": "int-sr01f",
+    "pagename": "Search by customer postcode",
+    "pageurl": "internal-search-customer-postcode",
+    "pagedesc": "Search for a customer by customer postcode."
+  }
+  ,
+  {
+    "pageid": "int-sr01g",
+    "pagename": "Search by trader number",
+    "pageurl": "internal-search-trader-number",
+    "pagedesc": "Search for a business by trader number."
+  }
+  ,
+  {
+    "pageid": "int-sr01h",
+    "pagename": "Search by vendor registration number",
+    "pageurl": "internal-search-vendor-registration-number",
+    "pagedesc": "Search for a business by vendor registration number."
+  }
+  ,
+  {
+    "pageid": "int-sr02",
+    "pagename": "Search criteria",
+    "pageurl": "internal-search-change-search-criteria",
+    "pagedesc": "Select the criteria you want to search by to find a customer or business."
   }
   ,
   {
@@ -577,15 +619,15 @@ module.exports = [
   },
   {
     "pageid": "int-bd15a",
-    "pagename": "Legal status charity commission registration number - business details",
-    "pageurl": "internal-legal-status-charity-reg",
-    "pagedesc": "Update the charity commission registration number of this business"
+    "pagename": "Legal status (charity) - business details ",
+    "pageurl": "internal-legal-status-charity",
+    "pagedesc": "Update the charity commission registration number of this business."
   },
   {
     "pageid": "int-bd15b",
-    "pagename": "Legal status company registration number - business details",
-    "pageurl": "internal-legal-status-company-reg",
-    "pagedesc": "Update the company registration number of this business"
+    "pagename": "Legal status (company) - business details ",
+    "pageurl": "internal-legal-status-company",
+    "pagedesc": "Update the company registration number of this business."
   },
   {
     "pageid": "int-bd16",

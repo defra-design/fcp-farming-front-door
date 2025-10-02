@@ -1,21 +1,15 @@
 {% extends "layouts/main.html" %}
 
-{% if myData.searchapplied and myData.searchTerm == "andrew" %}
-{% set pageName = "Search results for a customer or business" %}
-{% elif myData.searchapplied and myData.searchTerm == "zeroresults" %}
-{% set pageName = "No search results for a customer or business" %}
-{% else %}
-{% set pageName = "Search for a customer or business" %}
-{% endif %}
-
 {% set serviceName = "Land and farm service" %}
 
 {% set _showDesignSpec = true %}
 
+{% if data['searchCriteria'] == "int-sr-SBI" %}
+{% set pageName = "Search by single business identifier (SBI)" %}
 {% set _designSpecData = {
 
-  "name": "Search for a customer or business",
-  "id": "int-sr01",
+  "name": "Search by single business identifier (SBI)",
+  "id": "int-sr01a",
   "url": "internal-search?r=t&view=int",
   "release": "Buffalo 1.1 MVP",
   "variants": [
@@ -24,7 +18,7 @@
       "url": "internal-search?view=int&internal-search?q=221097732"
     },
     {
-      "name": "int-sr01b. No results found",
+      "name": "int-sr01. No results found",
       "url": "internal-search?view=int&internal-search&q=zeroresults"
     }
   ],
@@ -32,38 +26,463 @@
   "pagetitle": pageName,
   "pagedesc": "",
   "pageurl": "",
+  "errormessages": [
+    {
+        "field": "Search by single business identifier (SBI)",
+        "scenario": "User enters SBI that is shorter than than 9 digits",
+        "content": "Enter the full SBI"
+      }
+  ],
   "notes": [
 
     "Once a user is authenticated (signed in), default them to the SBI search criteria page. They can use the 'change search criteria' link to go to int-sr02",
 
     "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard or selecting 'Search' (in addition to the 'clear search' link)",
 
-    "The search results mimic results being returned based on the following terms (i.e. it is a mock up, and not a working
-    search) and having the correct search criteria selected from int-sr-02:",
-
-    "To view search results for <strong>SBI</strong>, enter the search term '221097732'",
-
-    "To view search results for <strong>CRN</strong>, enter the search term '1101996862'",
-
-    "To view search results for <strong>Business name</strong>, enter the search term 'Fo'",
-   
-    "To view search results for <strong>Business postcode</strong>, enter the search term 'CH7 9EW'",  
-
-    "To view search results for <strong>Customer name</strong>, enter the search term 'Wal' for last name, and 'Al' for first name",
-    
-    "To view search results for <strong>Customer postcode</strong>, enter the search term 'CM1 1QG'",   
-    
-    "To view search results for <strong>Trader number</strong>, enter the search term '789012'",  
-
-    "To view search results for <strong>Vendor number</strong>, enter the search term '789012'",  
+    "The search results mimic results being returned based on the following terms (i.e. it is a mock up, and not a working search) and having the correct search criteria selected from int-sr-02: 
+    <ul>
+      <li>
+        To view search results for <strong>SBI</strong>, enter the search term '221097732'</li>
+      <li>
+        To view search results for <strong>CRN</strong>, enter the search term '1101996862'
+      </li>
+      <li>
+        To view search results for <strong>Business name</strong>, enter the search term 'Fo'
+      </li>
+      <li>
+        To view search results for <strong>Business postcode</strong>, enter the search term 'CH7 9EW'
+      </li>
+      <li>
+        To view search results for <strong>Customer name</strong>, enter the search term 'Wal' for last name, and 'Al' for first name
+      </li>
+      <li>
+        To view search results for <strong>Customer postcode</strong>, enter the search term 'CM1 1QG'
+      </li>
+      <li>
+        To view search results for <strong>Trader number</strong>, enter the search term '789014'
+      </li>
+      <li>
+        To view search results for <strong>Vendor number</strong>, enter the search term '789012'
+      </li>
+    </ul>",
 
     "Pagination should appear on anytime there are more than 10 results found. Search by business name (see above) for an example of this variation.",
 
-    "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The
-    prototype demonstrates businesses that have both, those that only have either number, or neither."
-    ]
+    "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither."
+  ]
   }
 %}
+
+{% elif data['searchCriteria'] == "int-sr-CRN" %}
+{% set pageName = "Search by customer reference number (CRN)" %}
+{% set _designSpecData = {
+
+  "name": "Search by customer reference number (CRN)",
+  "id": "int-sr01b",
+  "url": "internal-search?r=t&view=int",
+  "release": "Buffalo 1.1 MVP",
+  "variants": [
+    {
+      "name": "int-sr01a. With results - example with SBI (see design spec for further variations depending on search criteria)",
+      "url": "internal-search?view=int&internal-search?q=221097732"
+    },
+    {
+      "name": "int-sr01. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+        "field": "Search by customer reference number (CRN)",
+        "scenario": "User enters CRN that is shorter than than 10 digits",
+        "content": "Enter the full CRN"
+      }
+  ],
+  "notes": [
+
+    "Once a user is authenticated (signed in), default them to the SBI search criteria page. They can use the 'change search criteria' link to go to int-sr02",
+
+    "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard or selecting 'Search' (in addition to the 'clear search' link)",
+
+    "The search results mimic results being returned based on the following terms (i.e. it is a mock up, and not a working search) and having the correct search criteria selected from int-sr-02: 
+    <ul>
+      <li>
+        To view search results for <strong>SBI</strong>, enter the search term '221097732'</li>
+      <li>
+        To view search results for <strong>CRN</strong>, enter the search term '1101996862'
+      </li>
+      <li>
+        To view search results for <strong>Business name</strong>, enter the search term 'Fo'
+      </li>
+      <li>
+        To view search results for <strong>Business postcode</strong>, enter the search term 'CH7 9EW'
+      </li>
+      <li>
+        To view search results for <strong>Customer name</strong>, enter the search term 'Wal' for last name, and 'Al' for first name
+      </li>
+      <li>
+        To view search results for <strong>Customer postcode</strong>, enter the search term 'CM1 1QG'
+      </li>
+      <li>
+        To view search results for <strong>Trader number</strong>, enter the search term '789014'
+      </li>
+      <li>
+        To view search results for <strong>Vendor number</strong>, enter the search term '789012'
+      </li>
+    </ul>",
+
+    "Pagination should appear on anytime there are more than 10 results found. Search by business name (see above) for an example of this variation.",
+
+    "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither."
+  ]
+  }
+%}
+{% elif data['searchCriteria'] == "int-sr-busName" %}
+{% set pageName = "Search by business name" %}
+{% set _designSpecData = {
+
+  "name": "Search by business name",
+  "id": "int-sr01c",
+  "url": "internal-search?r=t&view=int",
+  "release": "Buffalo 1.1 MVP",
+  "variants": [
+    {
+      "name": "int-sr01a. With results - example with SBI (see design spec for further variations depending on search criteria)",
+      "url": "internal-search?view=int&internal-search?q=221097732"
+    },
+    {
+      "name": "int-sr01. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+        "field": "Search by business name",
+        "scenario": "User enters less than 2 characters",
+        "content": "Business name must be 2 characters or more"
+      }
+  ],
+  "notes": [
+
+    "Once a user is authenticated (signed in), default them to the SBI search criteria page. They can use the 'change search criteria' link to go to int-sr02",
+
+    "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard or selecting 'Search' (in addition to the 'clear search' link)",
+
+    "The search results mimic results being returned based on the following terms (i.e. it is a mock up, and not a working search) and having the correct search criteria selected from int-sr-02: 
+    <ul>
+      <li>
+        To view search results for <strong>SBI</strong>, enter the search term '221097732'</li>
+      <li>
+        To view search results for <strong>CRN</strong>, enter the search term '1101996862'
+      </li>
+      <li>
+        To view search results for <strong>Business name</strong>, enter the search term 'Fo'
+      </li>
+      <li>
+        To view search results for <strong>Business postcode</strong>, enter the search term 'CH7 9EW'
+      </li>
+      <li>
+        To view search results for <strong>Customer name</strong>, enter the search term 'Wal' for last name, and 'Al' for first name
+      </li>
+      <li>
+        To view search results for <strong>Customer postcode</strong>, enter the search term 'CM1 1QG'
+      </li>
+      <li>
+        To view search results for <strong>Trader number</strong>, enter the search term '789014'
+      </li>
+      <li>
+        To view search results for <strong>Vendor number</strong>, enter the search term '789012'
+      </li>
+    </ul>",
+
+    "Pagination should appear on anytime there are more than 10 results found. Search by business name (see above) for an example of this variation.",
+
+    "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither."
+  ]
+  }
+%}
+{% elif data['searchCriteria'] == "int-sr-busPostcode" %}
+{% set pageName = "Search by business postcode" %}
+{% set _designSpecData = {
+
+  "name": "Search by business postcode",
+  "id": "int-sr01d",
+  "url": "internal-search?r=t&view=int",
+  "release": "Buffalo 1.1 MVP",
+  "variants": [
+    {
+      "name": "int-sr01a. With results - example with SBI (see design spec for further variations depending on search criteria)",
+      "url": "internal-search?view=int&internal-search?q=221097732"
+    },
+    {
+      "name": "int-sr01. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+        "field": "Search by business postcode",
+        "scenario": "Postcode doesn’t pass formatting checks",
+        "content": "Enter a full postcode, like AA3 1AB"
+      }
+  ],
+  "notes": [
+
+    "Once a user is authenticated (signed in), default them to the SBI search criteria page. They can use the 'change search criteria' link to go to int-sr02",
+
+    "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard or selecting 'Search' (in addition to the 'clear search' link)",
+
+    "The search results mimic results being returned based on the following terms (i.e. it is a mock up, and not a working search) and having the correct search criteria selected from int-sr-02: 
+    <ul>
+      <li>
+        To view search results for <strong>SBI</strong>, enter the search term '221097732'</li>
+      <li>
+        To view search results for <strong>CRN</strong>, enter the search term '1101996862'
+      </li>
+      <li>
+        To view search results for <strong>Business name</strong>, enter the search term 'Fo'
+      </li>
+      <li>
+        To view search results for <strong>Business postcode</strong>, enter the search term 'CH7 9EW'
+      </li>
+      <li>
+        To view search results for <strong>Customer name</strong>, enter the search term 'Wal' for last name, and 'Al' for first name
+      </li>
+      <li>
+        To view search results for <strong>Customer postcode</strong>, enter the search term 'CM1 1QG'
+      </li>
+      <li>
+        To view search results for <strong>Trader number</strong>, enter the search term '789014'
+      </li>
+      <li>
+        To view search results for <strong>Vendor number</strong>, enter the search term '789012'
+      </li>
+    </ul>",
+
+    "Pagination should appear on anytime there are more than 10 results found. Search by business name (see above) for an example of this variation.",
+
+    "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither."
+  ]
+  }
+%}
+{% elif data['searchCriteria'] == "int-sr-cusPostcode" %}
+{% set pageName = "Search by customer postcode" %}
+{% set _designSpecData = {
+
+  "name": "Search by customer postcode",
+  "id": "int-sr01f",
+  "url": "internal-search?r=t&view=int",
+  "release": "Buffalo 1.1 MVP",
+  "variants": [
+    {
+      "name": "int-sr01a. With results - example with SBI (see design spec for further variations depending on search criteria)",
+      "url": "internal-search?view=int&internal-search?q=221097732"
+    },
+    {
+      "name": "int-sr01. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+        "field": "Search by customer postcode",
+        "scenario": "Postcode doesn’t pass formatting checks",
+        "content": "Enter a full postcode, like AA3 1AB"
+      }
+  ],
+  "notes": [
+
+    "Once a user is authenticated (signed in), default them to the SBI search criteria page. They can use the 'change search criteria' link to go to int-sr02",
+
+    "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard or selecting 'Search' (in addition to the 'clear search' link)",
+
+    "The search results mimic results being returned based on the following terms (i.e. it is a mock up, and not a working search) and having the correct search criteria selected from int-sr-02: 
+    <ul>
+      <li>
+        To view search results for <strong>SBI</strong>, enter the search term '221097732'</li>
+      <li>
+        To view search results for <strong>CRN</strong>, enter the search term '1101996862'
+      </li>
+      <li>
+        To view search results for <strong>Business name</strong>, enter the search term 'Fo'
+      </li>
+      <li>
+        To view search results for <strong>Business postcode</strong>, enter the search term 'CH7 9EW'
+      </li>
+      <li>
+        To view search results for <strong>Customer name</strong>, enter the search term 'Wal' for last name, and 'Al' for first name
+      </li>
+      <li>
+        To view search results for <strong>Customer postcode</strong>, enter the search term 'CM1 1QG'
+      </li>
+      <li>
+        To view search results for <strong>Trader number</strong>, enter the search term '789014'
+      </li>
+      <li>
+        To view search results for <strong>Vendor number</strong>, enter the search term '789012'
+      </li>
+    </ul>",
+
+    "Pagination should appear on anytime there are more than 10 results found. Search by business name (see above) for an example of this variation.",
+
+    "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither."
+  ]
+  }
+%}
+{% elif data['searchCriteria'] == "int-sr-traderNo" %}
+{% set pageName = "Search by trader number" %}
+{% set _designSpecData = {
+
+  "name": "Search by trader number",
+  "id": "int-sr01g",
+  "url": "internal-search?r=t&view=int",
+  "release": "Buffalo 1.1 MVP",
+  "variants": [
+    {
+      "name": "int-sr01a. With results - example with SBI (see design spec for further variations depending on search criteria)",
+      "url": "internal-search?view=int&internal-search?q=221097732"
+    },
+    {
+      "name": "int-sr01. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+        "field": "Search by trader number",
+        "scenario": "User enters less than 6 digits",
+        "content": "Trader number must be 6 characters or more"
+      }
+  ],
+  "notes": [
+
+    "Once a user is authenticated (signed in), default them to the SBI search criteria page. They can use the 'change search criteria' link to go to int-sr02",
+
+    "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard or selecting 'Search' (in addition to the 'clear search' link)",
+
+    "The search results mimic results being returned based on the following terms (i.e. it is a mock up, and not a working search) and having the correct search criteria selected from int-sr-02: 
+    <ul>
+      <li>
+        To view search results for <strong>SBI</strong>, enter the search term '221097732'</li>
+      <li>
+        To view search results for <strong>CRN</strong>, enter the search term '1101996862'
+      </li>
+      <li>
+        To view search results for <strong>Business name</strong>, enter the search term 'Fo'
+      </li>
+      <li>
+        To view search results for <strong>Business postcode</strong>, enter the search term 'CH7 9EW'
+      </li>
+      <li>
+        To view search results for <strong>Customer name</strong>, enter the search term 'Wal' for last name, and 'Al' for first name
+      </li>
+      <li>
+        To view search results for <strong>Customer postcode</strong>, enter the search term 'CM1 1QG'
+      </li>
+      <li>
+        To view search results for <strong>Trader number</strong>, enter the search term '789014'
+      </li>
+      <li>
+        To view search results for <strong>Vendor number</strong>, enter the search term '789012'
+      </li>
+    </ul>",
+
+    "Pagination should appear on anytime there are more than 10 results found. Search by business name (see above) for an example of this variation.",
+
+    "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither."
+  ]
+  }
+%}
+{% elif data['searchCriteria'] == "int-sr-vendorNo" %}
+{% set pageName = "Search by vendor registration number" %}
+{% set _designSpecData = {
+
+  "name": "Search by vendor registration number",
+  "id": "int-sr01h",
+  "url": "internal-search?r=t&view=int",
+  "release": "Buffalo 1.1 MVP",
+  "variants": [
+    {
+      "name": "int-sr01a. With results - example with SBI (see design spec for further variations depending on search criteria)",
+      "url": "internal-search?view=int&internal-search?q=221097732"
+    },
+    {
+      "name": "int-sr01. No results found",
+      "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    {
+        "field": "Search by vendor registration number",
+        "scenario": "User enters less than 6 digits",
+        "content": "Vendor registration number must be 6 characters or more"
+      }
+  ],
+  "notes": [
+
+    "Once a user is authenticated (signed in), default them to the SBI search criteria page. They can use the 'change search criteria' link to go to int-sr02",
+
+    "Allow users to 'clear' a search by leaving the input field blank and then pressing enter on their keyboard or selecting 'Search' (in addition to the 'clear search' link)",
+
+    "The search results mimic results being returned based on the following terms (i.e. it is a mock up, and not a working search) and having the correct search criteria selected from int-sr-02: 
+    <ul>
+      <li>
+        To view search results for <strong>SBI</strong>, enter the search term '221097732'</li>
+      <li>
+        To view search results for <strong>CRN</strong>, enter the search term '1101996862'
+      </li>
+      <li>
+        To view search results for <strong>Business name</strong>, enter the search term 'Fo'
+      </li>
+      <li>
+        To view search results for <strong>Business postcode</strong>, enter the search term 'CH7 9EW'
+      </li>
+      <li>
+        To view search results for <strong>Customer name</strong>, enter the search term 'Wal' for last name, and 'Al' for first name
+      </li>
+      <li>
+        To view search results for <strong>Customer postcode</strong>, enter the search term 'CM1 1QG'
+      </li>
+      <li>
+        To view search results for <strong>Trader number</strong>, enter the search term '789014'
+      </li>
+      <li>
+        To view search results for <strong>Vendor number</strong>, enter the search term '789012'
+      </li>
+    </ul>",
+
+    "Pagination should appear on anytime there are more than 10 results found. Search by business name (see above) for an example of this variation.",
+
+    "Not all businesses may have a trader and/or vendor number. Hide this in the business result if not available. The prototype demonstrates businesses that have both, those that only have either number, or neither."
+  ]
+  }
+%}
+
+{% endif %}
 
 
 {% block beforeContent %}
@@ -612,7 +1031,7 @@
         <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
           <dt class="sfd-definition-list__title">Trader number</dt>
           <dd class="sfd-definition-list__definition">
-            789012
+            789014
           </dd>
         </dl>
       </li>
