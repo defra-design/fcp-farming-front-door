@@ -1,36 +1,41 @@
 {% extends "layouts/main.html" %}
 
-{% set _showDefraIDFooterLinks = true %}
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
 {% set _showReleaseLinks = false %}
 
-{% set pageName="Your businesses" %}
+{% set _showIntExtLinks = true %}
+
+{% set pageTitle = "Upload files" %}
+{% set pageName = pageTitle %}
 
 {% set serviceName = "Land and farm service" %}
 
-{% if data.view == "ext" and data.release != "concept" %}
+{% if data.view == "ext" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": '',
+    "name": "TO DO",
+    "id": "xx",
+    "url": "doc-upload-upload-success?view=ext",
+    "release": "",
+    "variants": [],
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-"status": 'In design',
-"name": "Doc upload",
-"id": "xx",
-"url": "xx",
-"release": "Buffalo 1.1 MVP",
-"variants": [
-],
-
-"pagetitle": pageName,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
-
-],
-"notes": [
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
 
 ]
 
 }
 %}
+
+
 
 {% else %}
 
