@@ -10,73 +10,36 @@
 
 {% set _showIntExtLinks = true %}
 
-{% set _inError = myData.validationError == "true" %}
-
 {% set pageTitle = "Check your documents can be sent using this service" %}
 {% set pageName = pageTitle %}
-<!--{% if _inError %}
-{% set pageName = "Error: " + pageTitle %}
-{% endif %}
 
 {% set serviceName = "Land and farm service" %}
 
-{% if data.view == "ext" and data.release != "concept" %}
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-"status": 'In development',
-"name": "VAT registration number (add/change) - business details",
-"id": "bd12",
-"url": "business-details-vat-change?r=t&view=ext&release=b1&newChange=true",
-"release": "Buffalo 1.0 MVP",
-"variants": [],
+{% if data.view == "ext" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": '',
+    "name": "TO DO",
+    "id": "xx",
+    "url": "doc-upload-valid-docs?view=ext",
+    "release": "",
+    "variants": [],
 
-"pagetitle": pageTitle,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter a VAT registration number"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter a VAT registration number in the format GB123456789 or 123456789"
-}
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
 ]
 
 }
 %}
 
-{% elif data.view == "int" %}
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-"status": 'In development',
-"name": "VAT registration number (add/change) - business details",
-"id": "int-bd12",
-"url": "business-details-vat-change?r=t&view=int&release=b2&newChange=true",
-"release": "Buffalo 1.1 MVP",
-"variants": [],
 
-"pagetitle": pageTitle,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter a VAT registration number"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter a VAT registration number in the format GB123456789 or 123456789"
-}
-]
-
-}
-%}
 
 {% else %}
 
-{% endif %}-->
+{% endif %}
 
 {% block beforeContent %}
 
