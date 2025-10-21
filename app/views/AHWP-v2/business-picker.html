@@ -8,7 +8,7 @@
 
 {% set pageName="Your businesses" %}
 
-{% set serviceName = "Animal Health and Welfare Pathway" %}
+{% set serviceName = "Land and farm service" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
 
@@ -77,7 +77,7 @@ business, redirect them to bp02 (home/business page) for that single business up
     <div id="signIn-hint" class="govuk-hint">
       These are businesses registered to your rural payments account including their single business identifier (SBI).
     </div>
-    <form action="AHWP-sign-in-check-your-details">
+    <form action="business-home">
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
@@ -85,7 +85,6 @@ business, redirect them to bp02 (home/business page) for that single business up
         <label class="govuk-label govuk-radios__label" for="signIn">
           Agile Farm Ltd - SBI 123456789
         </label>
-
       </div>
 
          <!--<div class="govuk-radios__item">

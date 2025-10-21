@@ -1,0 +1,319 @@
+{% extends "layouts/AHWP-gov-brand.html" %}
+
+{% block header %}
+{{ govukHeader({
+  classes: "govuk-header--full-width-border",
+  rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+  serviceName: serviceName,
+  serviceUrl: "/"
+}) }}
+
+{% endblock %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set _dynamicPageTitle = "Change your legal status" %}
+{% if data.release != "b1" %}
+  {% set _dynamicPageTitle = "What is your legal status?" %}
+{% endif %}
+{% if data.view == "int" %}
+  {% set _dynamicPageTitle = "Change legal status" %}
+{% endif %}
+
+{% set pageTitle = _dynamicPageTitle %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Land and farm service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Legal status (change) - business details (Buffalo 1.0 MVP)",
+    "id": "bd15",
+    "url": "business-details-legal-change?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "Concept (edit legal status online)",
+        "url": "personal-details-legal-change?r=t&release=concept&newChange=true"
+      }
+    ],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": ""
+    
+  }
+  %}
+
+  {% elif data.view == "int" %}
+    {% set _showDesignSpec = true %}
+    {% set _designSpecData = {
+      "status": 'In development',
+      "name": "Legal status (change) - business details (Buffalo 1.1)",
+      "id": "int-bd15",
+      "url": "business-details-legal-change?r=t&release=b2&view=int",
+      "release": "Buffalo 1.1 MVP",
+
+      "pagetitle": pageName,
+      "pagedesc": "",
+      "pageurl": "",
+      "errormessages": [
+      {
+        "field": "Charity commission registration number",
+        "scenario": "Radio option ‘Charitable incorporated organisation (CIO)’ is selected AND Empty field / nothing entered",
+        "content": "Enter a charity commission registration number"
+      },
+      
+      {
+        "field": "Charity commission registration number",
+        "scenario": "Radio option ‘Charitable incorporated organisation (CIO)’ is selected AND Wrong format",
+        "content": "Enter a charity commission registration number, like 12345678"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Community Interest Company (CIC)’ is selected AND Empty field / nothing entered",
+        "content": "Enter a company registration number"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Community Interest Company (CIC)’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Empty field / nothing entered",
+        "content": "Enter a company registration number"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Public limited company (PLC)’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Limited Liability Partnership (LLP)’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Limited Liability Partnership (LLP)’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Limited partnership’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Limited partnership’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option 'Non-UK company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Non-UK company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option 'Private limited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Private limited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option 'Public limited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Public limited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option 'Unlimited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      },
+      
+      {
+        "field": "Company registration number",
+        "scenario": "Radio option ‘Unlimited company’ is selected AND Wrong format",
+        "content": "Enter a company registration number, like 01234567 or SC123456"
+      }
+
+
+    ]
+      
+    }
+    %}
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if 
+      data.release == "b1" and data.view != "int"
+    %}
+    <h1 class="govuk-heading-l">
+      {{_dynamicPageTitle}}
+    </h1>
+
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">Legal status</span><br>
+        {{myData.legalBus}}
+    </p>
+
+    <p class="govuk-body">If your legal status is incorrect, contact the Rural Payments Agency to update it.</p>
+
+    <h2 class="govuk-heading-m">Contact the Rural Payments Agency</h2>
+
+    <p class="govuk-body">Phone: 03000 200 301</p>
+
+    <p class="govuk-body">Monday to Friday, 8.30am to 5pm (except bank holidays)</p>
+
+    <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="http://www.gov.uk/call-charges" rel="noreferrer noopener" target="_blank">Find out about call charges (opens in new tab)</a>.</p>
+
+    <p class="govuk-body">Email: <a class="govuk-link govuk-link--no-visited-state" href="mailto:ruralpayments@defra.gov.uk">ruralpayments@defra.gov.uk</a></p>
+
+    <p class="govuk-body">We aim to respond to emails within 10 working days.</p>
+
+
+    <p class="govuk-body govuk-!-margin-top-6"><a class="govuk-button" href="details-business-details">Return to business details</a></p>
+
+    {% else %}
+    <form action="/legal-answer" method="POST" novalidate>
+
+      <div class="govuk-form-group {% if myData.validationErrors.legalBus %}govuk-form-group--error{% endif %}">
+        <fieldset class="govuk-fieldset" {% if myData.validationErrors.legalBus %}aria-describedby="legalBus-error"{% endif %}>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              {{_dynamicPageTitle}}
+            </h1>
+          </legend>
+          {% if myData.validationErrors.legalBus %}
+          <p id="legalBus-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.legalBus.message}}
+          </p>
+          {% endif %}
+          <div class="govuk-radios" data-module="govuk-radios">
+            
+
+            {% set _valueNewLegalBus = myData.newLegalBus or myData.legalBus %}
+            {% if myData.validationErrors.legalBus %}
+                {% set _valueNewLegalBus = myData.newLegalBus %}
+            {% endif %}
+
+            {% for _legal in data.legalStatuses %}
+
+              <!-- Radio button -->
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="legalBus-{{loop.index}}" name="legalBus" type="radio" value="{{_legal.name}}" >
+                <label class="govuk-label govuk-radios__label" for="legalBus-{{loop.index}}">
+                  {{_legal.name}}
+                </label>
+              </div>
+
+            {% endfor %}
+
+          </div>
+        </fieldset>
+      </div>
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    </form>
+    {% endif %}
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends "layouts/AHWP-gov-brand.html" %}
+
+{% block header %}
+{{ govukHeader({
+classes: "govuk-header--full-width-border",
+rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+serviceName: "Apply for funding to improve animal health and welfare",
+serviceUrl: "/"
+}) }}
+
+
+{% endblock %}
+
+{% block pageTitle %}
+  Manage your claims – {{ serviceName }} – Prototype  
+{% endblock %}
+
+ 
+
+{% block beforeContent %}
+<div class="govuk-phase-banner">
+  <p class="govuk-phase-banner__content">
+    <strong class="govuk-tag govuk-phase-banner__content__tag">
+      beta
+    </strong>
+    <span class="govuk-phase-banner__text">
+      This is a new service. Your <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+    </span>
+  </p>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row govuk-!-padding-top-1">
+  <div class="govuk-grid-column-full">
+
+      {# // Login information #}
+      <div class="govuk-grid-row govuk-!-padding-bottom-3 govuk-!-border-bottom-2">
+        <div class="govuk-grid-column-two-thirds">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Arthington Farm Ltd</h2>
+          <p class="govuk-body govuk-!-margin-bottom-0">Single Business Identifier (SBI): 234567890</p>
+        </div>
+        <div class="govuk-grid-column-one-third govuk-!-display-flex govuk-!-justify-content-flex-end govuk-!-align-items-center govuk-!-flex-wrap-wrap">
+          <div class="govuk-!-text-align-right">
+            <p class="govuk-heading-m govuk-!-margin-bottom-0">Jane Doe</p>
+            <a class="govuk-body govuk-link" href="#">Claim for a different business</a>
+          </div>
+        </div>
+      </div>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Important
+          </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-notification-banner__heading">
+            You can now claim for multiple species.<br>
+            {# <a class="govuk-notification-banner__link" href="#">Contact the RPA to opt out</a>. #}
+          </p>
+        </div>
+      </div>
+
+
+      <div>
+        <h1 class="govuk-heading-xl">
+          Manage your claims
+        </h1>
+
+        <p>Start a new claim or view and manage your current claims. We recommend you claim in order of the visits.<br>
+            Download your <a href="agreement-summary">agreement summary</a>.
+        </p>
+
+        <p>Agreement number: <strong>IAHW-91254-88277</strong><br>
+        </p>
+        {# <p>You can claim for <strong>Single species</strong> <a href="#">aceept multi-species agreement</a>
+        </p> #}
+        {# <p>You can claim for <strong>multiple species</strong><a href="#"> contact us to discuss</a>
+        </p> #}
+
+        {{ govukButton({
+          text: "Start a new claim",
+          href: "AHWP-animal-type",
+          isStartButton: false
+        }) }}
+        </div>
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break">
+
+        <div>
+
+        <!-- MoJ Sortable Table -->
+        {# <div class="moj-scrollable-pane"> #}
+        <table class="govuk-table" data-module="moj-sortable-table">
+          <caption class="govuk-table__caption govuk-table__caption--m">View your claims</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header" aria-sort="none">Visit date</th>
+              <th scope="col" class="govuk-table__header" aria-sort="none">Species</th>
+              <th scope="col" class="govuk-table__header" aria-sort="none">Type</th>
+              <th scope="col" class="govuk-table__header" aria-sort="none">Claim number</th>
+              <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell" data-sort-value="20241017">4 September 2024</td>
+              <td class="govuk-table__cell">Beef cattle</td>
+              <td class="govuk-table__cell">Review</td>
+              <td class="govuk-table__cell">REBC-6844-3031</td>
+              <td class="govuk-table__cell">
+                <strong class="govuk-tag govuk-tag--turquoise">
+                  Submitted
+                </strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        {# </div> #}
+        </div>
+
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break">
+
+        <h2 class="govuk-heading-m">
+          More information
+        </h2>
+
+        <ul class="govuk-list">
+          <li>
+            <a class="govuk-link" href="https://www.gov.uk/government/collections/funding-to-improve-animal-health-and-welfare-guidance-for-farmers-and-vets">Guidance for funding to improve animal health and welfare</a>
+          </li>
+          <li>
+            <a class="govuk-link" href="https://www.gov.uk/government/publications/get-funding-to-improve-animal-health-and-welfare-terms-and-conditions">Terms and conditions</a>
+          </li>
+        </ul>
+
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
