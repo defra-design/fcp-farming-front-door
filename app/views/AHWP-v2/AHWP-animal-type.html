@@ -1,0 +1,75 @@
+{% extends "layouts/AHWP-gov-brand.html" %}
+
+{% block header %}
+{{ govukHeader({
+classes: "govuk-header--full-width-border",
+rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+serviceName: "Apply for funding to improve animal health and welfare",
+serviceUrl: "/"
+}) }}
+{% endblock %}
+
+{% block pageTitle %}
+  Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        name: "animal-type",
+        fieldset: {
+          legend: {
+            text: "Which species are you claiming for?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "review",
+            text: "Beef cattle"
+          },
+          {
+            value: "followup",
+            text: "Dairy cattle"
+          },
+          {
+            value: "review",
+            text: "Pigs"
+          },
+          {
+            value: "review",
+            text: "Sheep"
+          }
+        ]
+      }) }}
+
+      <input type="hidden" name="nextPage" value="/new-user/check-your-answers">
+
+
+            {{ govukButton({
+              text: "Continue",
+              href: "#",
+              isStartButton: false
+            }) }}
+
+
+    </div>
+
+  </div>
+
+{% endblock %}
