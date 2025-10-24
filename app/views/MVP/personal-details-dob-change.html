@@ -92,8 +92,14 @@
       {
         "scenario": "Date is in the future",
         "content": "Date of birth must be in the past"
+      },
+      {
+        "scenario": "Date cannot be more than 120 years ago",
+        "content": "Date of birth must be on or after [today's date - day and month] [current year - 120]"
       }
-
+    ], 
+    "notes": [
+      "Our data schema cannot accept dates that are more than 120 years from the current date. Therefore, we have decided to accept DOBs that are the same day or before (today's day and month) (the current year - 120). See error message details in the above section."
     ]
     
   }
@@ -159,13 +165,13 @@
         "scenario": "Day and month have valid entries but the year entered is not 4 digits",
         "content": "Enter a year with 4 numbers, like 1975"
       },
-      
-
       {
-        "scenario": "Date is in the future",
-        "content": "Date of birth must be in the past"
+        "scenario": "Date cannot be more than 120 years ago",
+        "content": "Date of birth must be on or after [today's date - day and month] [current year - 120]"
       }
-
+    ], 
+    "notes": [
+      "Our data schema cannot accept dates that are more than 120 years from the current date. Therefore, we have decided to accept DOBs that are the same day or before (today's day and month) (the current year - 120). See error message details in the above section."
     ]
     
   }
