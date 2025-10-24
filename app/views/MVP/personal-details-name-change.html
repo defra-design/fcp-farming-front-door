@@ -32,12 +32,6 @@
     "id": "pd02",
     "url": "personal-details-name-change?r=t&view=ext&release=b1&newChange=true",
     "release": "Buffalo 1.0 MVP",
-    "variants": [
-      {
-        "name": "Concept (one input)",
-        "url": "personal-details-name-change?r=t&view=ext&release=concept&newChange=true"
-      }
-    ],
 
     "pagetitle": pageTitle,
     "pagedesc": "",
@@ -67,16 +61,6 @@
         "field": "Last name",
         "scenario": "Entry is too long",
         "content": "Last name must be 100 characters or less"
-      },
-      {
-        "field": "Full name (concept)",
-        "scenario": "Empty field / nothing entered",
-        "content": "Enter full name"
-      },
-      {
-        "field": "Full name (concept)",
-        "scenario": "Entry is too long",
-        "content": "Full name must be [max number] characters or less"
       }
     ]
     
@@ -250,28 +234,6 @@
         </div>
 
       </fieldset>
-      {% else %}
-      <!-- 1 FIELD FOR NAME -->
-      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
-        <h1 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--l" for="namePers">
-            What is your full name?
-          </label>
-        </h1>
-
-        {% if _inError %}
-        <p id="namePers-error" class="govuk-error-message">
-          <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.namePers.message}}
-        </p>
-        {% endif %}
-
-        {% set _valueNewNamePers = myData.newNamePers or myData.namePers %}
-        {% if myData.validationErrors.namePers %}
-            {% set _valueNewNamePers = myData.newNamePers %}
-        {% endif %}
-
-        <input class="govuk-input {% if _inError %}govuk-input--error{% endif %}" id="namePers" name="namePers" type="text"  value="{{_valueNewNamePers}}" {% if _inError %}aria-describedby="namePers-error"{% endif %} spellcheck="false" autocomplete="name">
-      </div>
 
       {% endif %}
 
