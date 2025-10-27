@@ -1,0 +1,465 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">V10</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-l">Design history</span>
+      Permissions version 1.1
+    </h1>
+
+    <p class="govuk-body">
+      Following the completion of version 1.0, which was tested with users, we made the following changes to our
+      permissions user journeys:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        prototyped new journeys for users to remove themselves or others from a business, and for users without full
+        permission to view other users' relationships and permission levels
+      </li>
+      <li>
+        descoped adding a batch of users from a firm from our initial permissions designs, as we do not yet have
+        evidence for it being a user or business need
+      </li>
+      <li>
+        put the journey for requesting and approving changes to a permission level on hold until we have more time to
+        explore this - we have now confirmed there is a user need for it
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      In addition to the iterations in relation to our v1.0 hypotheses mentioned in the <a class="govuk-link"
+        href="../../v9/_design-history/design-history_permissions-v1-0">previous post on permissions</a>, we also made
+      substantial changes in response to user testing, including:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        complete redesign of the pages for setting permissions levels to make them simpler
+      </li>
+      <li>
+        refinement of content throughout to make it clear and consistent, for example moving information contextual to
+        the page from sidebars into the main part of the page using the details pattern
+      </li>
+      <li>
+        clarifying the ‘owner or sole trader’ relationship - this has no special powers, except that an owner or sole
+        trader cannot be removed from a business without their consent or power of attorney. (‘Full permission’ is
+        needed to control others' permissions, and this can be held by anyone with any relationship)
+      </li>
+      <li>
+        prototyped success messages and confirmation pages
+      </li>
+      <li>
+        amended the search option for requesting access to being able to search by SBI only (removing the ability to
+        search by business name, to avoid the risk of users being able to use this to gather data on businesses)
+      </li>
+      <li>
+        prototyped changes to requesting access to make it clearer to requesters what the process involves and what to
+        expect, and allow them to suggest their level of access
+      </li>
+      <li>
+        prototyped changes to granting access to help granters assess the requester’s suggestions, while allowing
+        granter to review and decide specific permission levels for their security
+      </li>
+      <li>
+        removing the ‘legal’ wording having clarified with RPA that it’s not necessary, but instead we have clarified to
+        users that giving someone full permission means the business will be liable for all information provided by
+        them, which can include financial penalties
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Permissions table design pattern
+    </h2>
+
+    <p class="govuk-body">
+      The first iteration of permissions designs used a list of radio buttons to present the different permission
+      levels, alongside a list of what is and isn’t possible to do for each level. In testing, users found this approach
+      confusing, as they had to scroll up and down cross-referencing information before they could select a permission
+      level.
+    </p>
+
+    <p class="govuk-body">
+      For the v1-1 iteration of designs, we’ve explored presenting the permission levels horizontally, making it more
+      intuitive for users to check what is and isn’t possible. At the same time, we’ve been conscious that focussing too
+      much on the visual presentation could be a risk to our accessible audience, so we needed to take this into account
+      when exploring designs.
+    </p>
+
+    <p class="govuk-body">
+      The decision was made to develop a table pattern to present the different permission levels. Horizontally we would
+      display the radio button levels at the top of each column, and down the left-hand column we would list out the
+      potential actions available. Within the individual cells for each level, we would include either a green ‘Yes’, or
+      red ‘No’ tag, to indicate what actions would be possible if a permission level was selected.
+    </p>
+
+    <p class="govuk-body">
+      Including radio buttons within a table wouldn’t be an accessible solution, so the page has been developed to cater
+      for all audiences, by including both radio buttons and the table as distinct elements within the mark-up. By
+      default, the radio buttons have been coded to appear as if they are part of the table header, using CSS styling.
+      The table itself has column headers, but these have been set to ‘visually hidden’ by default to avoid duplication
+      of content, however these would be displayed should a screen reader user need to review the page.
+    </p>
+
+    <p class="govuk-body">
+      To give confidence that the approach will work, we've presented the pattern to the Defra Accessibility team and
+      had positive feedback, making some minor tweaks to the styling to increase contrast. As this is a non-standard GDS
+      pattern we'll be sharing the approach with the wider X-Gov Design Community.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Design hypotheses, outcomes and decisions
+    </h2>
+
+    <h3 class="govuk-heading-s">
+      Statement 1:
+    </h3>
+
+    <p class="govuk-body">
+      <strong>
+        Users can clearly understand the process of setting permissions, and select appropriate permissions using the
+        table
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--yellow">
+        Inconclusive
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      The focus of this statement was organically selecting permissions for a user (as opposed to using the new
+      request/approve access feature).
+    </p>
+    <p class="govuk-body">
+      Generally the process was well received with all farmers able to navigate to give access, and 3 farmers able to
+      set permissions, saying the process was very clear. The table was generally intuitive, the A-Z cards and ordering
+      of users with permissions made sense, and users understood the term ‘permissions’.
+    </p>
+    <p class="govuk-body">
+      But some users did not notice the pagination and thought they had set all permissions early in the process, not
+      realising they would go on to set more permissions. Two users wanted everything on one page.
+    </p>
+    <p class="govuk-body">
+      A bigger problem was confusion with the underlying permissions process. 2 of 5 farmers were still unsure which
+      permission level to select even though they understood the content and the table. Generally the amount of
+      information seemed too complex for users to process.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design conclusion
+    </h4>
+
+    <p class="govuk-body">
+      Explore using a tasklist to make the order of steps clearer and set out on a single page.
+    </p>
+
+    <p class="govuk-body">
+      Longer term, to resolve the confusing nature of selecting permissions, we would like to explore a completely
+      different way of setting permissions to make it simpler for users, such as asking questions rather than using a
+      table. However this is likely out of scope for the initial release.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Statement 2:
+    </h3>
+
+    <p class="govuk-body">
+      <strong>
+        Users understand and can avoid the risks of assigning high business permissions
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--red">
+        Disproven
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      All farmers strongly felt more prominence or explanation could be given to the warning about full permissions for
+      business details.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design conclusion
+    </h4>
+
+    <p class="govuk-body">
+      Make the risks more prominent.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Statement 3:
+    </h3>
+
+    <p class="govuk-body">
+      <strong>
+        Users are able to add or remove themselves or others, or request access, including accessibility/assisted
+        digital users
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--yellow">
+        Inconclusive
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      The focus of this statement was the usability of requesting or granting access through our new feature.
+    </p>
+
+    <p class="govuk-body">
+      There was mixed success for both farmers and agents. There was positive assisted digital feedback.
+    </p>
+
+    <p class="govuk-body">
+      The free text in which an agent would explain why they wanted access was not felt necessary by agents (there was
+      no feedback on this from farmers).
+    </p>
+
+    <p class="govuk-body">
+      2 of 5 farmers did not notice the permission levels suggested by the agent, and 2 of 5 did not see the ‘Your
+      tasks’ link to review the request and assumed they needed to click the green button.
+    </p>
+
+    <p class="govuk-body">
+      There was confusion over where the process of setting access would end - some users did not realise more pages
+      would follow making or granting a request for access. This was explained in the guidance page, but some users did
+      not read this as it seemed like a distraction from taking action.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design conclusion
+    </h4>
+
+    <p class="govuk-body">
+      Consider removing the free text part of requesting access.
+    </p>
+
+    <p class="govuk-body">
+      Make suggested permission levels more prominent.
+    </p>
+
+    <p class="govuk-body">
+      Review the ‘Your tasks’ section.
+    </p>
+
+    <p class="govuk-body">
+      Move guidance to a place where it’s more contextual (all in one place with action), so it is likelier to be
+      noticed rather than seeming a distraction. Make guidance clearer that more actions will follow. Using a tasklist
+      could help users understand the steps needed.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Statement 4:
+    </h3>
+
+    <p class="govuk-body">
+      <strong>
+        Giving and requesting access is helpful, a clear process and feels safe
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--green">
+        Proven
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      This statement was testing whether users approved of the idea of giving and requesting access in principle. Agents
+      and farmers seemed to generally like the idea. Agents thought it would be easier when working with assisted
+      digital farmers. Farmers welcome the opportunity to review requests and understood they could change the suggested
+      permission levels.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design conclusion
+    </h4>
+
+    <p class="govuk-body">
+      Continue developing this feature.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Statement 5:
+    </h3>
+
+    <p class="govuk-body">
+      <strong>
+        Search and results pages are helpful for users
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--yellow">
+        Inconclusive
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      There was mixed feedback from farmers, with two saying they didn’t find the search process intuitive. Agents found
+      searching by SBI straightforward as they would have the SBI to hand.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design conclusion
+    </h4>
+
+    <p class="govuk-body">
+      Add wording to spell out what action to take after searching - select the business you want to give access to.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Statement 6:
+    </h3>
+
+    <p class="govuk-body">
+      <strong>
+        The format and content of all permissions notifications are helpful for users and go to the expected people
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--green">
+        Proven
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      3 of 5 farmers said a confirmation notification that the agent had been added would be useful and users continued
+      to express a preference for email as a format for notifications.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design conclusion
+    </h4>
+
+    <p class="govuk-body">
+      Continue developing email notifications as a minimum.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Statement 7:
+    </h3>
+
+    <p class="govuk-body">
+      <strong>
+        View only users understand why they cannot change others' permissions
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--yellow">
+        Inconclusive
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      This was not tested in this round.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design conclusion
+    </h4>
+
+    <p class="govuk-body">
+      This is an approach we have used in doc upload as well and needs testing.
+    </p>
+
+    <h3 class="govuk-heading-s">
+      Statement 8:
+    </h3>
+
+    <p class="govuk-body">
+      <strong>
+        Users can remove their own business access
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      <strong class="govuk-tag govuk-tag--green">
+        Proven
+      </strong>
+    </p>
+
+    <p class="govuk-body">
+      All farmers removed themselves easily. Agents struggled but this was discounted due to awkwardness with the testing scenario.
+    </p>
+
+    <h4 class="govuk-heading-s">
+      Design conclusion
+    </h4>
+
+    <p class="govuk-body">
+      Continue the approach for removing oneself. Removing others needs testing.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Areas for exploration in future
+    </h2>
+
+    <p class="govuk-body">
+      There are already some loose ends from design for this round listed in this ticket - <a target="_blank" href="https://eaflood.atlassian.net/jira/software/projects/SFDE/boards/2551?selectedIssue=SFDE-362">SFDE-362</a> - we will review those and add next steps from this round to that ticket, after PM review.
+    </p>
+
+    <p class="govuk-body">
+      Permission setting is likely to be an occasional thing for people to need to do, yet the underlying structure is so complex - it’s a design challenge to make it simple for users who will not be familiar with it, especially given many of our users are not digitally confident.  The underlying structure of setting permissions needs long term rethinking to explore question based approach.
+    </p>
+
+    <p class="govuk-body">
+      To bear in mind for all designs - our users want everything all in one place where possible - for example to see an overview of all steps on one page could help.
+    </p>
+
+    <p class="govuk-body">
+      Future UR testing could explore:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        removing others' permissions
+      </li>
+      <li>
+        how useful a tasklist is for setting permissions
+      </li>
+      <li>
+        setting permissions through questions 
+      </li>
+      <li>
+        how much information view-only users need on why they cannot do certain actions (in general)
+      </li>
+      <li>
+        whether users want letters (in general)
+      </li>
+    </ul>
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
