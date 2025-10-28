@@ -35,11 +35,11 @@ href: "javascript:window.history.back()"
         <h1 class="govuk-heading-xl">
             Check your details
         </h1>
-<h2 class="govuk-heading-m"> Business details</h2>
+        <h2 class="govuk-heading-m"> Business details</h2>
         {{ govukSummaryList({
         rows: [
         {
-        
+
         key: {
         text: "Business name"
         },
@@ -49,7 +49,7 @@ href: "javascript:window.history.back()"
         }
         ,
         {
-        
+
         key: {
         text: "Single business identifier (SBI)"
         },
@@ -62,15 +62,15 @@ href: "javascript:window.history.back()"
         key: {
         text: "Business address"
         },
-       value: {
-              
-       html: "10 Skirbeck way<br>Maidstone<br>SK22 1DL<br>United Kingdom"
-        
+        value: {
+
+        html: "10 Skirbeck way<br>Maidstone<br>SK22 1DL<br>United Kingdom"
+
         }
         }
         ,
         {
-        
+
         key: {
         text: "Business email address"
         },
@@ -83,11 +83,11 @@ href: "javascript:window.history.back()"
 
 
 
-<h2 class="govuk-heading-m"> Personal details</h2>
+        <h2 class="govuk-heading-m"> Personal details</h2>
         {{ govukSummaryList({
         rows: [
         {
-        
+
         key: {
         text: "Full name"
         },
@@ -97,7 +97,7 @@ href: "javascript:window.history.back()"
         }
         ,
         {
-        
+
         key: {
         text: "Date of birth"
         },
@@ -110,15 +110,15 @@ href: "javascript:window.history.back()"
         key: {
         text: "Customer reference number (CRN)"
         },
-       value: {
-              
-       text: "1101996862"
-        
+        value: {
+
+        text: "1101996862"
+
         }
         }
         ,
         {
-       
+
         key: {
         text: "Personal email address"
         },
@@ -134,68 +134,35 @@ href: "javascript:window.history.back()"
 
         <div class="govuk-width-container">
             <form action="/detailsroutev2" method="post">
-                <fieldset class="govuk-fieldset" aria-describedby="detailsquestion">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend">
-                        <h3>
-                            Are these details correct?</h3>
-                    </legend>
-
-
-                    <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="correctdetailsv2" name="correctdetailsv2" type="radio"
-                                value="value1">
-                            <label class="govuk-label govuk-radios__label" for="correctdetailsv2">
-                                Yes
-                            </label>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h3 class="govuk-fieldset__heading">
+                                Are these details correct?
+                            </h3>
+                        </legend>
+                        <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="correctDetails" name="correctDetails" type="radio"
+                                    value="yes">
+                                <label class="govuk-label govuk-radios__label" for="correctDetails">
+                                    Yes
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="correctDetails-2" name="correctDetails" type="radio"
+                                    value="no">
+                                <label class="govuk-label govuk-radios__label" for="correctDetails-2">
+                                    No
+                                </label>
+                            </div>
                         </div>
-                        <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="correctdetails-2v2" name="correctdetails-2v2" type="radio"
-                                value="value2">
-                            <label class="govuk-label govuk-radios__label" for="correctdetails-2v2">
-                                No
-                            </label>
-                        </div>
-                    </div>
+                    </fieldset>
+                </div>
 
-
-                    <div> <br>
-                        <button type="submit" class="govuk-button" data-module="govuk-button">
-                            Continue
-                        </button>
-                    </div>
-
-                    <!--{% from "govuk/components/radios/macro.njk" import govukRadios %}
-      {{ govukRadios({
-        classes: "govuk-radios--inline",
-        name: "correctDetails",
-        fieldset: {
-          legend: {
-            text: "Are these details correct?",
-            isPageHeading: false,
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        items: [
-          {
-            value: "yes",
-            text: "Yes"
-          },
-          {
-            value: "no",
-            text: "No"
-          }
-        ]
-    }) }}-->
-
-
-                    <!--{{ govukButton({
-        text: "Continue",
-        href: "you-can-claim-multiple",
-        isStartButton: false
-                }) }}-->
-
-
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
 
 
 

@@ -1662,10 +1662,10 @@ module.exports = function (router,_myData) {
 router.post('/detailsroutev2', function (req, res) {
 
   // Make a variable and give it the value from 'correctdetailsv2' question
-  var variabledetailsv2 = req.session.data['correctdetailsv2']
+  var correctDetails = req.session.data['correctDetails']
 
   // Check whether the variable matches a condition
-  if (variabledetailsv2 == "value1"){
+  if (correctDetails == "yes"){
     // Send user to next page
     res.redirect('AHWP-v2/AHWP-what-you-can-claim')
    
