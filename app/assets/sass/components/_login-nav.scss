@@ -50,6 +50,17 @@ a.login-nav__link:hover {
   color: rgba(11, 12, 12, 0.99);
 }
 
+//IAHW blue links
+a.login-nav-iahw__link:link {
+  color:  $govuk-link-colour;
+}
+a.login-nav-iahw__link:visited {
+  color: $govuk-link-colour;
+}
+a.login-nav-iahw__link:hover {
+  color: $govuk-link-colour;
+}
+
 /*** Small viewports ***/
 @media all and (max-width: 40.0625em) {
 

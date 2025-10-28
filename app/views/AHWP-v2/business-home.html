@@ -75,17 +75,23 @@ permission level. See variants. Note that full and amend permissions have the sa
     {% if data.release == "b1" %}
     {% set _hideAccountLink = true %}
     {% endif %}
-    {% include "_common/login-nav-2.html" %}
+  {% include "_common/login-nav-2a.html" %}
 
     <a class="govuk-back-link" href="business-picker">Back to your businesses</a>
 
-  </div>
-</div>
-{% endblock %}
+    <!--replacement for nav 2 breadcrumb and sign out link so as not to affect global nav
+    <div>
+      <a class="breadcrumb-left govuk-back-link" href="business-picker">Back to your businesses</a>
+      <a class="link-right govuk-link govuk-link--no-visited-state govuk" href="AHWP-LFS-start.html">Sign out</a>
+      <br>
+      <br>
+      <br>
+    </div>-->
+    {% endblock %}
 
-{% block content %}
+    {% block content %}
 
-<!--new service notification banner
+    <!--new service notification banner
 <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
   <div class="govuk-notification-banner__header">
     <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
@@ -99,48 +105,49 @@ permission level. See variants. Note that full and amend permissions have the sa
     </p>
   </div>
 </div>-->
+    <div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+          {% set _selectedBusiness = myData.selectedBusiness %}
 
-    {% set _selectedBusiness = myData.selectedBusiness %}
+          {% if data.access == "view" %}
+          <span class="govuk-caption-xl">Tom Smyth<br></span>
+          {% else %}
+          <span class="govuk-caption-xl">{{data.user.name}}<br></span>
+          {% endif %}
 
-    {% if data.access == "view" %}
-    <span class="govuk-caption-xl">Tom Smyth<br></span>
-    {% else %}
-    <span class="govuk-caption-xl">{{data.user.name}}<br></span>
-    {% endif %}
+          <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+            {{_selectedBusiness.name}}
+          </h1>
+          <p class="govuk-caption-m govuk-!-margin-bottom-7">Single business identifier (SBI):
+            {{_selectedBusiness.sbiNumber}}
+            <!-- <br>Customer reference number (CRN): {{data.user.crn}} -->
+          </p>
 
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-      {{_selectedBusiness.name}}
-    </h1>
-    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}
-      <!-- <br>Customer reference number (CRN): {{data.user.crn}} -->
-    </p>
-
-  </div>
-</div>
-
-<h2 class="govuk-heading-m">Your schemes and grants</h2>
-<!--card-->
-<div class="gem-c-cards card-page" style="margin-left: -15px;">
-  <div class="govuk-grid-column-two-thirds">
-    <ul class="gem-c-cards__list gem-c-cards__list-cards">
-      <li class="gem-c-cards__list-item-variant" style="font-size: larger;">
-
-        <div class="gem-c-cards__list-item-wrapper-variant">
-
-          <a class="govuk-link govuk-link--no-visited-state link-style"
-            href="AHWP-sign-in-check-your-details-email">Get funding to improve animal health and welfare</a>
         </div>
-        </a>
-      </li>
+      </div>
 
-    </ul>
-  </div>
-</div>
+      <h2 class="govuk-heading-m">Schemes and grants</h2>
+      <!--card-->
+      <div class="gem-c-cards card-page" style="margin-left: -15px;">
+        <div class="govuk-grid-column-two-thirds">
+          <ul class="gem-c-cards__list gem-c-cards__list-cards">
+            <li class="gem-c-cards__list-item-variant" style="font-size: larger;">
 
-<!--{% set _schemesCards = [
+              <div class="gem-c-cards__list-item-wrapper-variant">
+
+                <a class="govuk-link govuk-link--no-visited-state link-style"
+                  href="AHWP-sign-in-check-your-details-email">Funding to improve animal health and welfare</a>
+              </div>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!--{% set _schemesCards = [
       {
         "name": "Get funding to improve animal health and welfare",
         "link": "vets-manage-your-claims",
@@ -163,7 +170,7 @@ permission level. See variants. Note that full and amend permissions have the sa
       }
     ] %}-->
 
-<!--<h2 class="govuk-heading-m">Your schemes and grants</h2>
+      <!--<h2 class="govuk-heading-m">Your schemes and grants</h2>
 
     <div class="gem-c-cards card-page">
       <ul class="gem-c-cards__list gem-c-cards__list-cards">
@@ -184,36 +191,36 @@ permission level. See variants. Note that full and amend permissions have the sa
 
 
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h3 class="govuk-heading-m">
-      Business details
-    </h3>
-    {% if data.permissionsMVP == "view" %}
-    <p><a class="govuk-link--no-visited-state" href="details-business-details">View your business details</a></p>
-    {% elif data.permissionsMVP == "amend" %}
-    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business
-        details</a></p>
-    {% else %}
-    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business
-        details</a></p>
-    {% endif %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m">
+            Business details
+          </h3>
+          {% if data.permissionsMVP == "view" %}
+          <p><a class="govuk-link--no-visited-state" href="details-business-details">View your business details</a></p>
+          {% elif data.permissionsMVP == "amend" %}
+          <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business
+              details</a></p>
+          {% else %}
+          <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business
+              details</a></p>
+          {% endif %}
 
-    <h3 class="govuk-heading-m">
-      Personal details
-    </h3>
-    <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal
-        details</a></p>
-
-
-
-    {% if data.release != "b1" and myData.emmaserrors == "true" %}
-    <p class="govuk-link"><a href="test-page" class="govuk-link">Route to test page</a></p>
-    {% endif %}
+          <h3 class="govuk-heading-m">
+            Personal details
+          </h3>
+          <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal
+              details</a></p>
 
 
-  </div>
 
-</div>
+          {% if data.release != "b1" and myData.emmaserrors == "true" %}
+          <p class="govuk-link"><a href="test-page" class="govuk-link">Route to test page</a></p>
+          {% endif %}
 
-{% endblock %}
+
+        </div>
+
+      </div>
+
+      {% endblock %}
