@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-rebrand.html" %}
 
 {% if data.view == "int" %}
   {% set _showFooterMVPLinks = false %}
@@ -98,9 +98,9 @@
   {% include "_common/sub-header.html" %}
 
   {% set _hideAccountLink = true %}
-  {% include "_common/login-nav-3.html" %}
+  {% include "_common/login-nav-3a.html" %}
   {% else %}
-  {% include "_common/login-nav-internal.html" %}
+  {% include "_common/login-nav-internal-a.html" %}
 {% endif %}
 
   <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>

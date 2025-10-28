@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-rebrand.html" %}
 
 {% set _showFooterMVPLinks = true %}
 {% set _showReleaseLinks = false %}
@@ -60,7 +60,7 @@
       {% if data.release == "b1" %}
         {% set _hideAccountLink = true %}
       {% endif %}
-      {% include "_common/login-nav-2.html" %}
+      {% include "_common/login-nav-2a.html" %}
 
       <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
 
