@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-rebrand.html" %}
 
 {% if data.view == "int" %}
   {% set _showFooterMVPLinks = false %}
@@ -115,7 +115,7 @@
     <div class="govuk-grid-column-full">
 
       {% set _hideAccountLink = true %}
-      {% include "_common/login-nav-3.html" %}
+      {% include "_common/login-nav-3a.html" %}
 
       <div class="govuk-breadcrumbs" style="display: inline-block">
         <ol class="govuk-breadcrumbs__list">
@@ -133,7 +133,7 @@
     </div>
   </div>
   {% else %}
-  {% include "_common/login-nav-internal.html" %}
+  {% include "_common/login-nav-internal-a.html" %}
   <div class="govuk-breadcrumbs" style="display: inline-block">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
