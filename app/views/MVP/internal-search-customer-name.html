@@ -14,11 +14,43 @@
   "variants": [
     {
       "name": "int-sr01a. With results - example with SBI (see design spec for further variations depending on search criteria)",
-      "url": "internal-search?view=int&internal-search?q=221097732"
+      "url": "internal-search?view=int&internal-search&q=221097732"
     },
     {
       "name": "int-sr01. No results found",
       "url": "internal-search?view=int&internal-search&q=zeroresults"
+    }, 
+    {
+      "name": "Search results for SBI and the search term '221097732'",
+      "url": "internal-search?view=int&internal-search&q=221097732&searchCriteria=int-sr-SBI"
+    },
+    {
+      "name": "Search results for CRN and the search term '1101996862'",
+      "url": "internal-search?view=int&internal-search&q=1101996862&searchCriteria=int-sr-CRN"
+    },
+    {
+      "name": "Search results for Business name and the search term 'Fo'",
+      "url": "internal-search?view=int&internal-search&q=Fo&searchCriteria=int-sr-busName"
+    },
+    {
+      "name": "Search results for Business postcode and the search term 'CH7 9EW'",
+      "url": "internal-search?view=int&internal-search&q=CH7 9EW&searchCriteria=int-sr-busPostcode"
+    },
+    {
+      "name": "Search results for Customer name and the search term 'Wal' for last name, and 'Al' for first name",
+      "url": "internal-search-customer-name?view=int&internal-search&custNameSearchApplied=yes&searchCriteria=int-sr-cusName"
+    },
+    {
+      "name": "Search results for Customer postcode and the search term 'CM1 1QG'",
+      "url": "internal-search?view=int&internal-search&q=CH7 9EW&searchCriteria=int-sr-cusPostcode"
+    },
+    {
+      "name": "Search results for Trader number and the search term '789014'",
+      "url": "internal-search?view=int&internal-search&q=789014&searchCriteria=int-sr-traderNo"
+    },
+    {
+      "name": "Search results for Vendor number and the search term '789012'",
+      "url": "internal-search?view=int&internal-search&q=789012&searchCriteria=int-sr-vendorNo"
     }
   ],
 
@@ -96,6 +128,8 @@
         Search by customer name
       </h1>
 
+      {% if data['custNameSearchApplied'] == "yes" %}
+
       <div class="govuk-form-group">
         <label class="govuk-label govuk-label--m" for="passport-number">
           Last name
@@ -103,8 +137,7 @@
         <div id="passport-number-hint" class="govuk-hint">
           Enter at least the first 3 characters
         </div>
-        <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}"
-          id="search-internal" name="q" title="Search" class="govuk-input">
+        <input type="search" id="search-internal-last-name" value="Wal" name="search-internal-last-name" title="Search" class="govuk-input">
       </div>
 
 
@@ -112,7 +145,7 @@
         <label class="govuk-label govuk-label--m" for="c-number">
           First name (optional)
         </label>
-        <input type="x" value="" id="search-extra" name="q" title="a" class="govuk-input">
+        <input type="x" value="Al" id="search-extra-first-name" name="search-extra-first-name" title="a" class="govuk-input">
       </div>
 
       <div class="govuk-button-group">
@@ -121,8 +154,6 @@
         </button>
         <a class="govuk-link govuk-link--no-visited-state" href="internal-search-criteria">Change search criteria</a>
       </div>
-
-      {% if data['custNameSearchApplied'] == "yes" %}
 
       <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="internal-search-customer-name?custNameSearchApplied=no">Clear search</a></p>
 
@@ -208,6 +239,34 @@
           </div>
         </li>
       </ol>
+
+      {% else %}
+
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--m" for="passport-number">
+          Last name
+        </label>
+        <div id="passport-number-hint" class="govuk-hint">
+          Enter at least the first 3 characters
+        </div>
+        <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}"
+          id="search-internal" name="q" title="Search" class="govuk-input">
+      </div>
+
+
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--m" for="c-number">
+          First name (optional)
+        </label>
+        <input type="x" value="" id="search-extra" name="q" title="a" class="govuk-input">
+      </div>
+
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Search
+        </button>
+        <a class="govuk-link govuk-link--no-visited-state" href="internal-search-criteria">Change search criteria</a>
+      </div>
 
       {% endif %}
 
