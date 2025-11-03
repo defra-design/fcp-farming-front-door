@@ -45,7 +45,8 @@
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Email</dt>
         <dd class="govuk-summary-list__value" style="overflow-wrap: break-word">
-          agilefarmsrus25@email.com
+          {% if
+          data['businessEmail'] %} {{ data['businessEmail'] }} {% else %} agilefarmsrus@gmail.com {% endif %}
         </dd>
       </div>
     </dl>
