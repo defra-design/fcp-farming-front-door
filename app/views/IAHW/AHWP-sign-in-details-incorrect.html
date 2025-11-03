@@ -1,0 +1,70 @@
+{% extends "layouts/AHWP-gov-brand.html" %}
+
+{% block header %}
+{{ govukHeader({
+classes: "govuk-header--full-width-border",
+rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+serviceName: "Apply for funding to improve animal health and welfare",
+serviceUrl: "/"
+}) }}
+{% endblock %}
+
+{% block pageTitle %}
+Sign in {{ serviceName }} Prototype
+{% endblock %}
+{% block beforeContent %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            Details are not correct 
+        </h1>
+        <p class="govuk-body">
+            <a  class="govuk-link govuk-link--no-visited-state" href="rural-payments-guidance">Sign in to the Rural Payments service </a>to add or update the businesses registered to your account.
+        </p>
+
+        <p class="govuk-body">
+            If you need help, contact the Rural Payments Agency by email or phone.
+        </p>
+
+        
+        <p class="govuk-body">Email: <a class="govuk-link govuk-link--no-visited-state"href="#">ruralpayments@defra.gov.uk</a></p>
+
+        <p class="govuk-body">
+            Telephone: 03000 200 301
+            <br>
+            Monday to Friday, 8.30am to 5pm, except bank holidays
+        </p>
+
+        <p class="govuk-body">
+            <a class="govuk-link govuk-link--no-visited-state"href="">Find out about call charges (opens in new tab)</a>
+        </p>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+</div>
+
+</div>
+</form>
+</div>
+
+{% endblock %}
