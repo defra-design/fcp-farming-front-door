@@ -1,0 +1,70 @@
+{% extends "layouts/rps.html" %}
+
+{% set pageName="Sign in" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+          
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+  
+
+  </div>
+</div>
+
+    <form action="rps-business-messages" method="get">
+      <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-6 govuk-!-margin-top-4">
+          Sign in
+        </h1>
+      </legend>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="event-name">
+          Customer reference number (CRN)
+        </label>
+        <div id="signIn-hint" class="govuk-hint">
+          This is the 10 digit number emailed to you when you created your account
+        </div>
+        <input class="govuk-input govuk-!-width-one-half" id="two-thirds" name="twoThirds" type="text">
+      </div>
+      <div class="govuk-form-group govuk-!-margin-bottom-5">
+        <label class="govuk-label" for="event-name">
+          Password
+        </label>
+        <input class="govuk-input govuk-!-width-one-half" id="two-thirds" name="twoThirds" type="password">
+      </div>
+    </fieldset>
+  </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Sign in
+      </button>
+    </form>
+
+  </div>
+</div>
+
+
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+
+    <p>Forgotten your password - <a class="govuk-link govuk-link--no-visited-state" href="">create a new one here</a>.</p>
+
+    <p>Started creating a new password and received the security code by email - <a class="govuk-link govuk-link--no-visited-state" href="">enter it here</a></p>
+
+    <p>Lost your customer reference number (CRN), call 03000 200 301.</p>
+
+  </div>
+</div>
+
+
+{% endblock %}
