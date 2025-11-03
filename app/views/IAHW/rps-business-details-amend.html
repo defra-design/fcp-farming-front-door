@@ -57,7 +57,7 @@
           Email
         </label>
         <input class="govuk-input govuk-input--width-30" id="business-email" name="businessEmail" type="text" {% if
-          data['business-email'] %} {% else %}value="agilefarmsrus@gmail.com" {% endif %}>
+          data['businessEmail'] %} value="{{ data['businessEmail'] }}" {% else %}value="agilefarmsrus@gmail.com" {% endif %}>
       </div>
 
       <p class="govuk-body">

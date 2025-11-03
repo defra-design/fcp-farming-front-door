@@ -36,52 +36,49 @@ href: "javascript:window.history.back()"
             Check your details
         </h1>
         <h2 class="govuk-heading-m"> Business details</h2>
-        {{ govukSummaryList({
-        rows: [
-        {
-
-        key: {
-        text: "Business name"
-        },
-        value: {
-        text: "Agile Farm Ltd"
-        }
-        }
-        ,
-        {
-
-        key: {
-        text: "Single business identifier (SBI)"
-        },
-        value: {
-        text: "123456789"
-        }
-        }
-        ,
-        {
-        key: {
-        text: "Business address"
-        },
-        value: {
-
-        html: "10 Skirbeck way<br>Maidstone<br>SK22 1DL<br>United Kingdom"
-
-        }
-        }
-        ,
-        {
-
-        key: {
-        text: "Business email address"
-        },
-        value: {
-        text: "agilefarmsrus25@gmail.com"
-        }
-        }
-        ]
-        }) }}
 
 
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Business name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Agile Farm Ltd
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Single business identifier (SBI)
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    123456789
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Business address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    10 Skirbeck way<br>
+                    Maidstone<br>
+                    SK22 1DL<br>
+                    United Kingdom
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Business email address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if data['businessEmail'] %} 
+                    {{ data['businessEmail'] }} 
+                    {% else %}
+                    agilefarmsrus@gmail.com
+                    {% endif %}
+                </dd>
+            </div>
+        </dl>
 
         <h2 class="govuk-heading-m"> Personal details</h2>
         {{ govukSummaryList({
@@ -123,7 +120,7 @@ href: "javascript:window.history.back()"
         text: "Personal email address"
         },
         value: {
-        text: "agilefarmsrus@gmail.com"
+        text: "alfredwaldron@email.com"
         }
         }
         ]
@@ -143,15 +140,15 @@ href: "javascript:window.history.back()"
                         </legend>
                         <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="correctDetails" name="correctDetails" type="radio"
-                                    value="yes">
+                                <input class="govuk-radios__input" id="correctDetails" name="correctDetails"
+                                    type="radio" value="yes">
                                 <label class="govuk-label govuk-radios__label" for="correctDetails">
                                     Yes
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="correctDetails-2" name="correctDetails" type="radio"
-                                    value="no">
+                                <input class="govuk-radios__input" id="correctDetails-2" name="correctDetails"
+                                    type="radio" value="no">
                                 <label class="govuk-label govuk-radios__label" for="correctDetails-2">
                                     No
                                 </label>
@@ -161,7 +158,7 @@ href: "javascript:window.history.back()"
                 </div>
 
                 {{ govukButton({
-                    text: "Continue"
+                text: "Continue"
                 }) }}
 
 
