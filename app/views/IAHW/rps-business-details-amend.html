@@ -1,0 +1,76 @@
+{% extends "layouts/rps-logged-in.html" %}
+
+{% set pageName="Home" %}
+
+{% set htmlClasses = 'app-width-wide' %}
+
+{%- block beforeContent -%}
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to Business overview</a>
+{% endblock beforeContent%}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-9">
+      Amend business details
+      <span class="govuk-caption-l">Agile Farms Ltd</span>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m">Business name and address</h2>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="business-name">
+        Business Name
+      </label>
+      <input class="govuk-input govuk-input--width-20" id="business-name" name="businessName" type="text">
+    </div>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="business-postcode">
+        Postcode
+      </label>
+      <input class="govuk-input govuk-input--width-20" id="business-postcode" name="businessName" type="text">
+    </div>
+    <p class="govuk-body">
+      <a href="">Enter address manually</a>
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Business contact details
+    </h2>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="business-email">
+        Email
+      </label>
+      <input class="govuk-input govuk-input--width-30" id="business-email" name="businessEmail" type="text">
+    </div>
+
+    <p class="govuk-body">
+      Enter either a landline or mobile number
+    </p>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="business-landline">
+        Landline
+      </label>
+      <input class="govuk-input govuk-input--width-20" id="business-landline" name="buisinessLandline" type="text" value="">
+    </div>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="business-mobile">
+        Mobile
+      </label>
+      <input class="govuk-input govuk-input--width-20" id="business-mobile" name="businessMobile" type="text">
+    </div>
+
+
+  </div>
+</div>
+
+{% endblock %}
