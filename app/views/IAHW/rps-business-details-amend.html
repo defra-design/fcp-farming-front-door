@@ -5,7 +5,7 @@
 {% set htmlClasses = 'app-width-wide' %}
 
 {%- block beforeContent -%}
-<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to Business overview</a>
+<a href="#" class="govuk-back-link" onclick="javascript:history.back()">Back to Business details</a>
 {% endblock beforeContent%}
 
 {% block content %}
@@ -27,7 +27,7 @@
       <label class="govuk-label" for="business-name">
         Business Name
       </label>
-      <input class="govuk-input govuk-input--width-20" id="business-name" name="businessName" type="text">
+      <input class="govuk-input govuk-input--width-20" id="business-name" name="businessName" type="text" value="Agile Farm Ltd">
     </div>
 
     <div class="govuk-form-group">
@@ -48,7 +48,7 @@
       <label class="govuk-label" for="business-email">
         Email
       </label>
-      <input class="govuk-input govuk-input--width-30" id="business-email" name="businessEmail" type="text">
+      <input class="govuk-input govuk-input--width-30" id="business-email" name="businessEmail" type="text" value="">
     </div>
 
     <p class="govuk-body">
@@ -59,14 +59,14 @@
       <label class="govuk-label" for="business-landline">
         Landline
       </label>
-      <input class="govuk-input govuk-input--width-20" id="business-landline" name="buisinessLandline" type="text" value="">
+      <input class="govuk-input govuk-input--width-20" id="business-landline" name="buisinessLandline" type="text" value="01632 960000 ">
     </div>
 
     <div class="govuk-form-group">
       <label class="govuk-label" for="business-mobile">
         Mobile
       </label>
-      <input class="govuk-input govuk-input--width-20" id="business-mobile" name="businessMobile" type="text">
+      <input class="govuk-input govuk-input--width-20" id="business-mobile" name="businessMobile" type="text" value="07700 900 967">
     </div>
 
 
