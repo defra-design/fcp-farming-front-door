@@ -6,11 +6,14 @@ classes: "govuk-header--full-width-border",
 rebrand: true
 }) }}
 
+
 {{ govukServiceNavigation({
 serviceName: "Get funding to improve animal health and welfare",
 serviceUrl: "/"
 }) }}
 {% endblock %}
+
+{% set pageName = "Get funding to improve animal health and welfare" %}
 
 {% block beforeContent %}
 {% include "_common/phase-banner-2.html" %}
@@ -49,7 +52,7 @@ href: "javascript:window.history.back()"
                     Business name
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    Agile Farms Ltd
+                    Agile Farm Ltd
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
