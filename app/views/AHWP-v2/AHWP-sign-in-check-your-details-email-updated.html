@@ -132,7 +132,7 @@ href: "javascript:window.history.back()"
         <!-- radios -->
 
         <div class="govuk-width-container">
-            <form action="/detailsroutev2" method="post">
+            <form action="/updated-email-answer" method="post">
                 <fieldset class="govuk-fieldset" aria-describedby="detailsquestion">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend">
                         <h3>
@@ -142,16 +142,16 @@ href: "javascript:window.history.back()"
 
                     <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="correctDetails" name="correctDetails" type="radio"
-                                value="value1">
-                            <label class="govuk-label govuk-radios__label" for="correctDetails">
+                            <input class="govuk-radios__input" id="updated-email-answer" name="updated-email-answer" type="radio"
+                                value="yes">
+                            <label class="govuk-label govuk-radios__label" for="updated-email-answer">
                                 Yes
                             </label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="correctDetails2" name="correctDetails" type="radio"
-                                value="value2">
-                            <label class="govuk-label govuk-radios__label" for="correctDetails2">
+                            <input class="govuk-radios__input" id="updated-email-answer2" name="updated-email-answer" type="radio"
+                                value="no">
+                            <label class="govuk-label govuk-radios__label" for="updated-email-answer2">
                                 No
                             </label>
                         </div>
@@ -167,7 +167,7 @@ href: "javascript:window.history.back()"
                     <!--{% from "govuk/components/radios/macro.njk" import govukRadios %}
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        name: "correctDetails",
+        name: "updated-email-answer",
         fieldset: {
           legend: {
             text: "Are these details correct?",
