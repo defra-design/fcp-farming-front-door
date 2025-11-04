@@ -1667,15 +1667,36 @@ router.post('/detailsroutev2', function (req, res) {
   // Check whether the variable matches a condition
   if (correctDetails == "yes"){
     // Send user to next page
-    res.redirect('AHWP-v2/AHWP-what-you-can-claim')
+  res.redirect('AHWP-v2/AHWP-what-you-can-claim')
+   
    
   } else {
     // Send user to ineligible page
     // ADD PAGE TO GO TO
-    res.redirect('AHWP-v2/AHWP-sign-in-details-incorrect')
+        res.redirect('AHWP-v2/AHWP-sign-in-details-incorrect')
+
   }
 });
 
+//routing for when details are correct/incorrect second time of seeing the page after updates- prototype 13
+// Run this code when a form is submitted to 'detailsroutev3'
+//router.post('/detailsroutev3', function (req, res) {
+
+  // Make a variable and give it the value from 'correctdetailsv3' question
+//  var correctDetails3 = req.session.data['correctDetails']
+ 
+  // Check whether the variable matches a condition
+  //if (correctDetails3 == "yes"){
+    // Send user to next page
+    //res.redirect('AHWP-v2/AHWP-what-you-can-claim')
+    
+  //  res.redirect('AHWP-v2/AHWP-apply-guidance-start') 
+//  } else {
+    // Send user to ineligible page
+    // ADD PAGE TO GO TO
+  //  res.redirect('AHWP-v2/AHWP-sign-in-details-incorrect')
+//  }
+//});
 
 
 }
