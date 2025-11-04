@@ -1,20 +1,8 @@
 {% extends "layouts/main.html" %}
 
-{% block header %}
-{{ govukHeader({
-classes: "govuk-header--full-width-border",
-rebrand: true
-}) }}
+{% set pageName = "Get funding to improve animal health and welfare" %}
+{% set serviceName = "Get funding to improve animal health and welfare" %}
 
-{{ govukServiceNavigation({
-serviceName: "Get funding to improve animal health and welfare",
-serviceUrl: "/"
-}) }}
-{% endblock %}
-
-{% block pageTitle %}
-Get funding to improve animal health and welfare
-{% endblock %}
 {% block beforeContent %}
 {% include "_common/phase-banner-2.html" %}
 
