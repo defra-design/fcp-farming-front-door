@@ -1678,6 +1678,27 @@ router.post('/detailsroutev2', function (req, res) {
   }
 });
 
+//routing for when details are correct/incorrect - prototype 13
+// Run this code when a form is submitted to 'detailsroutev2'
+router.post('/updated-email-answer', function (req, res) {
+
+  // Make a variable and give it the value from 'correctdetailsv2' question
+  var updateEmail = req.session.data['updated-email-answer']
+
+  // Check whether the variable matches a condition
+  if (updateEmail == "yes"){
+    // Send user to next page
+  res.redirect('AHWP-v2/AHWP-what-you-can-claim')
+   
+   
+  } else {
+    // Send user to ineligible page
+    // ADD PAGE TO GO TO
+        res.redirect('AHWP-v2/AHWP-sign-in-details-incorrect')
+
+  }
+});
+
 //routing for when details are correct/incorrect second time of seeing the page after updates- prototype 13
 // Run this code when a form is submitted to 'detailsroutev3'
 //router.post('/detailsroutev3', function (req, res) {
