@@ -1,7 +1,16 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/AHWP-gov-brand.html" %}
 
-{% set pageName = "Get funding to improve animal health and welfare" %}
-{% set serviceName = "Get funding to improve animal health and welfare" %}
+{% block header %}
+{{ govukHeader({
+classes: "govuk-header--full-width-border",
+rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+serviceName: "Get funding to improve animal health and welfare",
+serviceUrl: "/"
+}) }}
+{% endblock %}
 
 {% block beforeContent %}
 {% include "_common/phase-banner-2.html" %}

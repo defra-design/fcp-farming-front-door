@@ -1,7 +1,16 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/AHWP-gov-brand.html" %}
 
-{% set pageName = "Get funding to improve animal health and welfare" %}
-{% set serviceName = "Get funding to improve animal health and welfare" %}
+{% block header %}
+{{ govukHeader({
+classes: "govuk-header--full-width-border",
+rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+serviceName: "Get funding to improve animal health and welfare",
+serviceUrl: "/"
+}) }}
+{% endblock %}
 
 {% block beforeContent %}
 {% include "_common/phase-banner-2.html" %}
@@ -29,18 +38,54 @@ href: "javascript:window.history.back()"
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Business name
+                    Farmer name
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    Agile Farm Ltd
+                    Alfred Waldron
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Single business identifier (SBI)
+                    Business name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Agile Farms Ltd
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    SBI
                 </dt>
                 <dd class="govuk-summary-list__value">
                     123456789
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    CRN
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    1101996862
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Organisation email address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {% if data['businessEmail'] %} 
+                    {{ data['businessEmail'] }} 
+                    {% else %}
+                    agilefarmsrus@gmail.com
+                    {% endif %}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    User email address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    alfredwaldron@gmail.com
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -54,65 +99,7 @@ href: "javascript:window.history.back()"
                     United Kingdom
                 </dd>
             </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Business email address
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    {% if data['businessEmail'] %} 
-                    {{ data['businessEmail'] }} 
-                    {% else %}
-                    agilefarmsrus@gmail.com
-                    {% endif %}
-                </dd>
-            </div>
         </dl>
-
-        <h2 class="govuk-heading-m"> Personal details</h2>
-        {{ govukSummaryList({
-        rows: [
-        {
-
-        key: {
-        text: "Full name"
-        },
-        value: {
-        text: "Alfred Waldron"
-        }
-        }
-        ,
-        {
-
-        key: {
-        text: "Date of birth"
-        },
-        value: {
-        text: "2 November 1970"
-        }
-        }
-        ,
-        {
-        key: {
-        text: "Customer reference number (CRN)"
-        },
-        value: {
-
-        text: "1101996862"
-
-        }
-        }
-        ,
-        {
-
-        key: {
-        text: "Personal email address"
-        },
-        value: {
-        text: "alfredwaldron@email.com"
-        }
-        }
-        ]
-        }) }}
 
 
         <!-- radios -->
