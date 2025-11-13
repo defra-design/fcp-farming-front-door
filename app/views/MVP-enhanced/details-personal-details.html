@@ -1,0 +1,325 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+{% set _showIntExtLinks = true %}
+
+{% set pageName="View and update your personal details" %}
+{% set serviceName="Land and farm service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "pd01",
+    "url": "details-personal-details?r=t&view=ext&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "no existing DOB - add",
+        "url": "details-personal-details?r=t&release=b1&addDOBPers=empty&view=ext"
+      },    
+      {
+        "name": "no existing phone numbers - add",
+        "url": "details-personal-details?r=t&release=b1&addNumberPers=empty&view=ext"
+      },    
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ], 
+    "notes": [
+      "The 'back to (selected business)' dynamically presents the business name the user has selected.",
+      "Where the business name is over 50 characters long, truncate the business name by using ellipses (...) after the 50th character"
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "int-pd01",
+    "url": "details-personal-details?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      {
+        "name": "no existing DOB - add",
+        "url": "details-personal-details?r=t&release=b1&addDOBPers=empty&view=int"
+      },    
+      {
+        "name": "no existing phone numbers - add",
+        "url": "details-personal-details?r=t&release=b1&addNumberPers=empty&view=int"
+      },    
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ], 
+    "notes": [
+      "The 'back to (selected business name)' dynamically presents the business name the user has selected.",
+      "Where the business name is over 50 characters long, truncate the business name by using ellipses (...) after the 50th character"
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3a.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a href="business-home" class="govuk-back-link govuk-breadcrumbs__link govuk-!-margin-top-0">Back to {{_selectedBusiness.name}}</a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+  {% else %}
+  {% include "_common/login-nav-internal-a.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
+      </li>
+    </ol>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if myData.showNotification == "true" %}
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          {{myData.notifications.message}}
+        </h3>
+      </div>
+    </div>
+    {% endif %}
+
+    <span class="govuk-caption-l">{{_selectedUser.name}}</span>
+    <h1 class="govuk-heading-l">
+     View and update your personal details
+    </h1>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Full name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data.release == "b1" %}
+            {{myData.nameTitlePers}} {{myData.nameFirstPers}} {{myData.nameMiddlePers}} {{myData.nameLastPers}}
+          {% else %}
+            {{myData.namePers}}
+          {% endif %}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> name</span></a>
+        </dd>
+      </div>
+      {% if data.addDOBPers == "empty" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Date of birth
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <span style="color:#505a5f">Not added</span>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-dob-change?newChange=true">Add<span class="govuk-visually-hidden"> date of birth</span></a>
+        </dd>
+      </div>
+      {% else %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Date of birth
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.dobDayPers}} {{myData.dobMonthPers | toMonth}} {{myData.dobYearPers}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-dob-change?newChange=true">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+        </dd>
+      </div>
+      {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Customer reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.selectedUser.crn}}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Personal address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.address1Pers}}<br>
+          {% if myData.address2Pers != "" %}{{myData.address2Pers}}<br>{% endif %}
+          {% if data['address3Pers'] %}{{data['address3Pers']}}<br>{% endif %}
+          {{myData.addressCityPers}}<br>
+          {% if myData.addressCountyPers != "" %}{{myData.addressCountyPers}}<br>{% endif %}
+          {% if myData.addressPostcodePers != "" %}{{myData.addressPostcodePers}}<br>{% endif %}
+          {{myData.addressCountryPers}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> personal address</span></a>
+        </dd>
+      </div>
+      {% if data.addNumberPers == "empty"  %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Personal phone numbers
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Telephone: 
+            <span style="color:#505a5f">Not added</span>
+          <br>
+          Mobile: 
+            <span style="color:#505a5f">Not added</span>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-phone-change?addNumberPers=empty">Add<span class="govuk-visually-hidden"> personal phone numbers</span></a>
+        </dd>
+      </div>
+      {% else %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Personal phone numbers
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Telephone: 
+          {% if myData.telNumberPers == "" %}
+            <span style="color:#505a5f">Not added</span>
+          {% else %}
+            {{myData.telNumberPers}}
+          {% endif %}
+          <br>
+          Mobile: 
+          {% if myData.mobNumberPers == "" %}
+            <span style="color:#505a5f">Not added</span>
+          {% else %}
+            {{myData.mobNumberPers}}
+          {% endif %}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> personal phone numbers</span></a>
+        </dd>
+      </div>
+      {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Personal email address
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{myData.emailPers}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="personal-details-email-change?newChange=true">Change<span class="govuk-visually-hidden"> personal email address</span></a>
+        </dd>
+      </div>
+    </dl>
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
