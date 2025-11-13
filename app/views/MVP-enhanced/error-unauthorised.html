@@ -1,0 +1,52 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "You do not have permission to access this page" %}
+{% set serviceName = "Land and farm service" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "Unauthorised (401)",
+  "id": "se05",
+  "url": "error-unauthorised?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        You do not have permission to access this page
+      </h1>
+
+      <p class="govuk-body">
+        If you think you need to access this page, you can ask the business to raise your permission level.
+      </p>
+
+  </div>
+</div>
+
+
+{% endblock %}
