@@ -1,24 +1,13 @@
-{% extends "layouts/AHWP-gov-brand.html" %}
+{% extends "layouts/main-rebrand.html" %}
 
-{% block header %}
-{{ govukHeader({
-classes: "govuk-header--full-width-border",
-rebrand: true
-}) }}
 
-{{ govukServiceNavigation({
-serviceName: serviceName,
-serviceUrl: "/"
-}) }}
-
-{% endblock %}
 
 
 {% set _showFooterMVPLinks = true %}
 {% set _showReleaseLinks = false %}
 
 {% set pageName = "Your business" %}
-{% set serviceName = "Land and farm service" %}
+{% set serviceName = "Land and Farm Service" %}
 
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -42,6 +31,10 @@ serviceUrl: "/"
 {
 "name": "SFD Home/Business Page (view permissions)",
 "url": "business-home?r=t&release=b1&permissionsMVP=view"
+},
+{
+"name": "SFD Home/Business Page (single SBI)",
+"url": "business-home-single-SBI?r=t&release=b1&permissionsMVP=view"
 }
 
 ],

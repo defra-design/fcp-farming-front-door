@@ -177,6 +177,13 @@ module.exports = function (router,_myData) {
         });
     });
 
+    //business home - single SBI
+    router.get('/' + version + '/business-home-single-SBI', function (req, res) {
+        res.render(version + '/business-home-single-SBI', {
+            myData: req.session.myData
+        });
+    });
+
     // emma's test page
     router.get('/' + version + '/test-page', function (req, res) {
         req.session.myData.emmaserrors = req.query.emmaserrors
