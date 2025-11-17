@@ -1,17 +1,4 @@
-{% extends "layouts/AHWP-gov-brand.html" %}
-
-{% block header %}
-{{ govukHeader({
-  classes: "govuk-header--full-width-border",
-  rebrand: true
-}) }}
-
-{{ govukServiceNavigation({
-  serviceName: serviceName,
-  serviceUrl: "/"
-}) }}
-
-{% endblock %}
+{% extends "layouts/main-rebrand.html" %}
 
 {% block pageTitle %}Funding to improve animal health and welfare - claim VV-5053-A696 approved{% endblock %}
 

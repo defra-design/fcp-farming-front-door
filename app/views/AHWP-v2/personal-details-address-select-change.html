@@ -1,17 +1,4 @@
-ww{% extends "layouts/AHWP-gov-brand.html" %}
-
-{% block header %}
-{{ govukHeader({
-  classes: "govuk-header--full-width-border",
-  rebrand: true
-}) }}
-
-{{ govukServiceNavigation({
-  serviceName: serviceName,
-  serviceUrl: "/"
-}) }}
-
-{% endblock %}
+ww{% extends "layouts/main-rebrand.html" %}
 
 
 {% if data.view == "int" %}
