@@ -44,12 +44,15 @@
         You have signed out 
       </h1>
 
-      {% set _url = "start-sfd-sign-in" %}
+      {% set _url = "LFS-start" %}
       {% if data.view == "int" %}
         {% set _url = "internal-sign-in" %}
       {% endif %}
-      <p class="govuk-body" >If this is not what you wanted, you can <a href="{{_url}}" class="govuk-link govuk-link--no-visited-state">sign back into the Land and Farm Service</a>.</p>
+      <p class="govuk-body" >If this is not what you wanted, you can <a href="{{_url}}" class="govuk-link govuk-link--no-visited-state">sign back in</a>.</p>
 
+      <p class="govuk-body">
+        Or find <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/guidance/funding-for-farmers">grants and funding for your land or farm</a>.
+      </p>
   </div>
 </div>
 
