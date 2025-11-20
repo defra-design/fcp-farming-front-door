@@ -1,0 +1,121 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageTitle = "Upload files" %}
+{% set pageName = pageTitle %}
+
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": '',
+    "name": "TO DO",
+    "id": "xx",
+    "url": "doc-upload-upload-select?view=ext",
+    "release": "",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+]
+
+}
+%}
+
+
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+    {% if data.view != "int" %}
+
+        {% include "_common/phase-banner-2.html" %}
+        {% include "_common/sub-header.html" %}
+
+        {% set _hideAccountLink = true %}
+        {% include "_common/login-nav-3.html" %}
+    {% else %}
+        {% include "_common/login-nav-internal.html" %}
+    {% endif %}
+
+    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+            Add documents
+        </h1>
+
+        <p class="govuk-body">
+            You can upload up to 10 files in one batch.
+        </p>
+        <p class="govuk-body">
+            The size of each file must be less than 10MB, and files must be in one of these formats: doc, docx, docm,
+            gif, jfif, jpeg, jpg, odt, pdf, pptx, tiff, txt, xls, xlsx, xlsm.
+        </p>
+        <p class="govuk-body">
+            If you’ve used standard settings and programmes on a phone, tablet, digital camera or computer, files will
+            likely meet these requirements.
+        </p>
+        <p class="govuk-body">
+            Each file name must be unique, 20 characters or less, contain only letters and numbers, and contain no gaps.
+        </p>
+        <p class="govuk-body">
+            If you're sending files in relation to a grant or funding claim, <a
+                class="govuk-link govuk-link--no-visited-state" target="_blank"
+                href="https://www.gov.uk/guidance/funding-for-farmers">check if there is any other guidance to follow,
+                depending on the scheme</a> (opens in new tab).
+        </p>
+
+        <p class="govuk-body">
+            If documents do not meet the required standards, we may need to request further evidence from you, which
+            could cause delays.
+        </p>
+
+        {% if data['what-to-send'] == "Complaint evidence" %}
+
+        <a href="doc-upload-upload-added#doc-upload-anchor">
+            <img src="/public/images/doc-upload-file-select-complaint.png" alt="" id="doc-upload-anchor">
+        </a>
+
+        {% else %}
+
+        <a href="doc-upload-upload-added#doc-upload-anchor">
+            <img src="/public/images/doc-upload-file-select.png" alt="" id="doc-upload-anchor">
+        </a>
+
+        {% endif %}
+
+    </div>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+{% endblock %}

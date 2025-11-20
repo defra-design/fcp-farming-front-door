@@ -1,0 +1,94 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageTitle = "Enter your payment year" %}
+{% set pageName = pageTitle %}
+
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": '',
+    "name": "TO DO",
+    "id": "xx",
+    "url": "doc-upload-ref-payment?view=ext",
+    "release": "",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+]
+
+}
+%}
+
+
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+    {% if data.view != "int" %}
+
+        {% include "_common/phase-banner-2.html" %}
+        {% include "_common/sub-header.html" %}
+
+        {% set _hideAccountLink = true %}
+        {% include "_common/login-nav-3.html" %}
+    {% else %}
+        {% include "_common/login-nav-internal.html" %}
+    {% endif %}
+
+    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="doc-upload-check-your-upload" method="POST" novalidate>
+
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="ref-payment-year">
+            Enter your payment year
+          </label>
+        </h1>
+        <div id="ref-payment-year-hint" class="govuk-hint">
+          You can find this in emails about your delinked payments from the Rural Payments Agency.
+        </div>
+        <input class="govuk-input govuk-input--width-4" id="ref-payment-year" name="ref-payment-year" type="text" aria-describedby="ref-payment-year-hint" value="{{data['ref-payment-year']}}">
+      </div>
+
+      {{govukButton({
+      text: "Continue"
+      })}}
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

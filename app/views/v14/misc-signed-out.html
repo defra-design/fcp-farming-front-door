@@ -1,0 +1,57 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view != "int" %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "You have signed out" %}
+{% set serviceName = "Land and Farm Service" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+  "status": 'In development',
+  "name": "Signed out page",
+  "id": "mp06",
+  "url": "misc-signed-out?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% if data.view != "int" %}
+    {% include "_common/phase-banner-2.html" %}
+  {% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        You have signed out 
+      </h1>
+
+      {% set _url = "start-sfd-sign-in" %}
+      {% if data.view == "int" %}
+        {% set _url = "internal-sign-in" %}
+      {% endif %}
+      <p class="govuk-body" >If this is not what you wanted, you can <a href="{{_url}}" class="govuk-link govuk-link--no-visited-state">sign back into the Land and Farm Service</a>.</p>
+
+  </div>
+</div>
+
+
+{% endblock %}

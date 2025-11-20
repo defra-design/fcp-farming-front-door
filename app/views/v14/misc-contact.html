@@ -1,0 +1,61 @@
+{% extends "layouts/main.html" %}
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "Contact us for help" %}
+{% set serviceName = "Land and Farm Service" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+  "status": 'In development',
+  "name": "Contact us/help",
+  "id": "mp03",
+  "url": "misc-contact?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        Contact Rural Payments Agency for help
+      </h1>
+
+      <p class="govuk-body">Phone: 03000 200 301</p>
+
+      <p class="govuk-body">Monday to Friday, 8.30am to 5pm (except bank holidays)</p>
+
+      <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="http://www.gov.uk/call-charges" rel="noreferrer noopener" target="_blank">Find out about call charges (opens in new tab)</a>.</p>
+
+      <p class="govuk-body">Email: <a class="govuk-link govuk-link--no-visited-state" href="mailto:ruralpayments@defra.gov.uk">ruralpayments@defra.gov.uk</a></p>
+
+      <p class="govuk-body">We aim to respond to emails within 10 working days.</p>
+
+  </div>
+</div>
+
+
+{% endblock %}

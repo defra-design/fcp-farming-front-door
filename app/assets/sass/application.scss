@@ -1473,6 +1473,7 @@ margin-bottom: 15px;}
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 
   button {
     margin-bottom: 0px;
@@ -1484,8 +1485,9 @@ margin-bottom: 15px;}
   }
 }
 
-// doc upload container 
 
+
+// doc upload container 
 .govuk-button-group--doc-upload {
   outline: 3px dashed #0b0c0c;
   padding: 60px 15px;
@@ -1511,3 +1513,9 @@ margin-bottom: 15px;}
   display: inline;
   margin-top: 20px;
 }
+
+// MOJ guidance panel - 'highlighted inset text'
+.guidance-panel {
+        border-left-color: govuk-colour('blue');
+        background-color: #eaf4f9;
+    }

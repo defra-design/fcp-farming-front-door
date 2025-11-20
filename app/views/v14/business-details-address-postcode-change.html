@@ -1,0 +1,207 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "What is your business address?" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+    {% set _designSpecData = {
+      "status": 'In development',
+      "name": "Address - postcode (change) - business details",
+      "id": "bd23",
+      "url": "business-details-address-postcode-change?r=t&release=b1&newChange=true",
+      "release": "Buffalo 1.0 MVP",
+      "variants": [],
+
+      "pagetitle": pageTitle,
+      "pagedesc": "",
+      "pageurl": "",
+      "errormessages": [
+
+        {
+          "scenario": "Empty field / nothing entered",
+          "content": "Enter a postcode"
+        },
+        {
+          "scenario": "Postcode doesn’t pass formatting checks",
+          "content": "Enter a full UK postcode, like AA3 1AB"
+        },
+        {
+          "scenario": "Postcode passes formatting checks but is not a full, valid postcode in the database look up",
+          "content": "No addresses found for this postcode"
+        }
+
+      ],
+
+      "notes": [
+        "If returning from 'select address page (bd24)', THEN pre populate with previously entered postcode ELSE leave the field blank",
+
+        "If entering from 'business details page (bd01)' or returning from 'check address page (bd05)' page AND have known UK postcode on saved address THEN pre populate with current postcode ELSE leave the field blank",
+        
+        "You should let users enter postcodes that contain:<ul class='govuk-list govuk-list--bullet govuk-body-s'><li>upper and lower case letters</li><li>no spaces</li><li>additional spaces at the beginning, middle or end</li><li>punctuation like hyphens, brackets, dashes and full stops</li></ul>"
+        
+      ]
+      
+    }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+    {% set _designSpecData = {
+      "status": 'In development',
+      "name": "Address - postcode (change) - business details",
+      "id": "int-bd23",
+      "url": "business-details-address-postcode-change?r=t&view=int&release=b2&newChange=true",
+      "release": "Buffalo 1.1 MVP",
+      "variants": [],
+
+      "pagetitle": pageTitle,
+      "pagedesc": "",
+      "pageurl": "",
+      "errormessages": [
+
+        {
+          "scenario": "Empty field / nothing entered",
+          "content": "Enter a postcode"
+        },
+        {
+          "scenario": "Postcode doesn’t pass formatting checks",
+          "content": "Enter a full UK postcode, like AA3 1AB"
+        },
+        {
+          "scenario": "Postcode passes formatting checks but is not a full, valid postcode in the database look up",
+          "content": "No addresses found for this postcode"
+        }
+
+      ],
+
+      "notes": [
+        "If returning from 'select address page (bd24)', THEN pre populate with previously entered postcode ELSE leave the field blank",
+
+        "If entering from 'business details page (bd01)' or returning from 'check address page (bd05)' page AND have known UK postcode on saved address THEN pre populate with current postcode ELSE leave the field blank",
+        
+        "You should let users enter postcodes that contain:<ul class='govuk-list govuk-list--bullet govuk-body-s'><li>upper and lower case letters</li><li>no spaces</li><li>additional spaces at the beginning, middle or end</li><li>punctuation like hyphens, brackets, dashes and full stops</li></ul>"
+        
+      ]
+      
+    }
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        What is your business address?
+      </h1>
+
+      <div class="govuk-form-group">
+        <p class="govuk-body">
+            If you do not have a UK postcode, enter the address manually.
+        </p>
+      </div>
+
+      <!-- ADDRESS POSTCODE -->
+      <div class="govuk-form-group {% if myData.validationErrors.addressPostcodeBus %}govuk-form-group--error{% endif %}">
+        <label class="govuk-label" for="addressPostcodeBus">
+          UK postcode
+        </label>
+        {% if myData.validationErrors.addressPostcodeBus %}
+        <p id="addressPostcodeBus-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressPostcodeBus.message}}
+        </p>
+        {% endif %}
+
+        {% set _valueNewAddressPostcodeBus = myData.newAddressPostcodeBus %}
+        {% if _valueNewAddressPostcodeBus == null %}
+          {% set _valueNewAddressPostcodeBus = myData.addressPostcodeBus %}
+        {% endif %}
+
+        <input class="govuk-input govuk-input--width-10 {% if myData.validationErrors.addressPostcodeBus %}govuk-input--error{% endif %}" id="addressPostcodeBus" name="addressPostcodeBus" type="text" value="{{_valueNewAddressPostcodeBus}}" {% if myData.validationErrors.addressPostcodeBus %}aria-describedby="addressPostcodeBus-error"{% endif %} autocomplete="postal-code">
+      </div>
+
+      <p class="govuk-body govuk-!-margin-bottom-6">
+        <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-change">
+            Enter address manually
+        </a>
+      </p>
+
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

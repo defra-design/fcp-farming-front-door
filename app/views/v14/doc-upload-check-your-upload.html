@@ -1,0 +1,447 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageTitle = "Check your upload" %}
+{% set pageName = pageTitle %}
+
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": '',
+    "name": "TO DO",
+    "id": "xx",
+    "url": "doc-upload-check-your-upload?view=ext",
+    "release": "",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+]
+
+}
+%}
+
+
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+    {% if data.view != "int" %}
+
+        {% include "_common/phase-banner-2.html" %}
+        {% include "_common/sub-header.html" %}
+
+        {% set _hideAccountLink = true %}
+        {% include "_common/login-nav-3.html" %}
+    {% else %}
+        {% include "_common/login-nav-internal.html" %}
+    {% endif %}
+
+    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">
+      Check what you've told us before you add documents
+    </h1>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Subject
+        </dt>
+        <dd class="govuk-summary-list__value">
+           {% if data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
+          Business, complaints and appeals
+          {% else %}
+          {{ data['doc-upload-subject'] or 'Business, complaints and appeals' }}
+          {% endif %}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-relates-to">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% if data['doc-upload-subject'] == "Countryside Stewardship (CS)" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this relates to
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-cs-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      {% if data['doc-upload-cs-tag'] == "Agreement" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-tag-agreement">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS agreement reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-cs-agreement'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-cs-tag'] == "Capital claim" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS agreement reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-cs-agreement'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+
+      {% elif data['doc-upload-cs-tag'] == "Capital grant application" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-tag-agreement">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS application reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-cs-agreement'] or "90765122" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-cs-tag'] == "Facilitation fund" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-tag-agreement">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS facilitation fund reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-csff'] or "22309876" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-cs-tag'] == "Revenue claim" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-cs-tag-ff">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          CS agreement reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-cs-agreement'] or "90765122" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-cs-agreement">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% else %}
+
+      {% endif %}
+
+      {% elif data['doc-upload-subject'] == "Delinked payments" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+
+          What this is
+
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag']}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-payment-tag">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Payment year
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-payment-year'] or "2025" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-payment">Change<span
+              class="govuk-visually-hidden">
+              Payment year</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-subject'] == "Environmental Stewardship" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+
+          What this is
+
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['doc-upload-tag-es'] or 'A claim' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-es-tag">Change<span
+              class="govuk-visually-hidden"> what this relates to</span></a>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          ES agreement reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-es'] or "126678349" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-es">Change<span
+              class="govuk-visually-hidden">
+              reference number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-subject'] == "Grants" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Project code
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-grants-project'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-grants-project">Change<span
+              class="govuk-visually-hidden">
+              project code</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-subject'] == "Sustainable Farming Incentive (SFI)" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is for
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['sfi-relates-to'] or "SFI pilot offer" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-sfi">Change<span
+              class="govuk-visually-hidden">
+              what this is for</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          SFI application reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-sfi-app'] or "1457317" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-sfi-app">Change<span
+              class="govuk-visually-hidden"> CS
+              application number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['what-to-send'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
+              class="govuk-visually-hidden">complaint reference number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+
+      {% if data['what-to-send'] == "Complaint evidence" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Complaint reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['complaint-ref'] or "COM-3326" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-complaint">Change<span
+              class="govuk-visually-hidden">complaint reference number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% elif data['what-to-send'] == "General appeal evidence" %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Appeal reference number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['ref-appeal'] or "APP-1246" }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-ref-complaint">Change<span
+              class="govuk-visually-hidden">complaint reference number</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% else %}
+
+      {% endif %}
+
+      {% else %}
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          What this is for
+        </dt>
+        <dd class="govuk-summary-list__value">
+          Business change evidence
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="doc-upload-what-do-you-want-to-send">Change<span
+              class="govuk-visually-hidden">
+              what this is for</span></a>
+        </dd>
+        </dt>
+      </div>
+
+      {% endif %}
+
+
+
+    </dl>
+
+    <form action="doc-upload-upload-files">
+      <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+        Continue to upload documents
+      </button>
+    </form>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
