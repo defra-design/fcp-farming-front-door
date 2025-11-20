@@ -1,0 +1,129 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageTitle = "Upload files" %}
+{% set pageName = pageTitle %}
+
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": '',
+    "name": "TO DO",
+    "id": "xx",
+    "url": "doc-upload-scanning-not-complete?view=ext",
+    "release": "",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+]
+
+}
+%}
+
+
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+    {% if data.view != "int" %}
+
+        {% include "_common/phase-banner-2.html" %}
+        {% include "_common/sub-header.html" %}
+
+        {% set _hideAccountLink = true %}
+        {% include "_common/login-nav-3.html" %}
+    {% else %}
+        {% include "_common/login-nav-internal.html" %}
+    {% endif %}
+
+    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+            Uploading and scanning files
+        </h1>
+
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-visually-hidden">Warning</span>
+                Keep your own copies of anything you send us.
+            </strong>
+        </div>
+
+        {% if data['what-to-send'] == "Complaint evidence" %}
+        <div id="doc-upload-anchor"class="moj-multi-file__uploaded-files">
+            <h2 class="govuk-heading-m" id="doc-upload-anchor">Files selected</h2>
+            <div class="govuk-summary-list moj-multi-file-upload__list">
+                <div class="govuk-summary-list__row moj-multi-file-upload__row">
+                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
+                        file.jpeg
+                    </div>
+                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
+                        Uploading...
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="moj-multi-file__uploaded-files">
+            <h2 class="govuk-heading-m" id="doc-upload-anchor">Files selected</h2>
+            <div class="govuk-summary-list moj-multi-file-upload__list">
+                <div class="govuk-summary-list__row moj-multi-file-upload__row">
+                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
+                        fencepic1.jpeg
+                    </div>
+                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
+                        Uploading...
+                    </div>
+                </div>
+                <div class="govuk-summary-list__row moj-multi-file-upload__row">
+                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
+                        fencereceipt1.pdf
+                    </div>
+                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
+                        Uploading...
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <p><strong>If this page doesn't automatically show the documents as uploaded, <a class="govuk-link govuk-link--no-visited-state" href="#">you will need to refresh the page</a></strong></p>
+
+    </div>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+{% endblock %}

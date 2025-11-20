@@ -1,0 +1,136 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageTitle = "What do you want to send us?" %}
+{% set pageName = pageTitle %}
+
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": '',
+    "name": "TO DO",
+    "id": "xx",
+    "url": "doc-upload-what-do-you-want-to-send?view=ext",
+    "release": "",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+]
+
+}
+%}
+
+
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+    {% if data.view != "int" %}
+
+        {% include "_common/phase-banner-2.html" %}
+        {% include "_common/sub-header.html" %}
+
+        {% set _hideAccountLink = true %}
+        {% include "_common/login-nav-3.html" %}
+    {% else %}
+        {% include "_common/login-nav-internal.html" %}
+    {% endif %}
+
+    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <form action="/send-answer-v14" method="POST" novalidate>
+
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="vatBus">
+            What do you want to send us?
+          </label>
+        </h1>
+
+        <div class="govuk-hint">
+          Select the option that fits best.
+
+        </div>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="what-to-send" name="what-to-send" type="radio"
+                  value="Business change evidence" {{ checked('what-to-send','Business change evidence') }}>
+                <label class="govuk-label govuk-radios__label" for="what-to-send">
+                  Business change evidence
+                </label>
+              </div>
+              <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                  <div class="govuk-radios" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="what-to-send-1" name="what-to-send" type="radio"
+                        value="Complaint evidence" {{ checked('what-to-send','Complaint evidence') }}>
+                      <label class="govuk-label govuk-radios__label" for="what-to-send-1">
+                        Complaint evidence
+                      </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="what-to-send-3" name="what-to-send" type="radio"
+                        value="General appeal evidence" {{ checked('what-to-send','General appeal evidence') }}>
+                      <label class="govuk-label govuk-radios__label" for="what-to-send-3">
+                        General appeal evidence
+                      </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" id="what-to-send-4" name="what-to-send" type="radio"
+                        value="Probate evidence" {{ checked('what-to-send','Probate evidence') }}>
+                      <label class="govuk-label govuk-radios__label" for="what-to-send-4">
+                        Probate evidence
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <br><br>
+            </div>
+            {{govukButton({
+            text: "Continue"
+            })}}
+
+    </form>
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

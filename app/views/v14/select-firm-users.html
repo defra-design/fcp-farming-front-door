@@ -1,0 +1,239 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+{% set _showIntExtLinks = false %}
+
+{% set pageName="Which agents from The Agency do you want to give access to Agile Farms Ltd?" %}
+{% set serviceName="Land and Farm Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = false %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "fa03",
+    "url": "details-personal-details?r=t&view=ext&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "int-pd01",
+    "url": "details-personal-details?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+          {% if data.release != "b1" %}
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="account-home">Your account</a>
+          </li>
+          {% endif %}
+        </ol>
+      </div>
+
+    </div>
+  </div>
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+  <div class="govuk-breadcrumbs" style="display: inline-block">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
+      </li>
+    </ol>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+   <form action="permissions-manage-business-fa" method="POST">
+
+
+   <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          <!-- <span class="govuk-caption-l">These agents' access to Agile Farm Ltd</span> -->
+          Which agents from The Agency do you want to give access to Agile Farms Ltd?
+        </h1>
+      </legend>
+
+      <div id="contact-hint" class="govuk-hint">
+        Select all that apply
+      </div>
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="organisation" name="organisation" type="checkbox" value="hmrc">
+        <label class="govuk-label govuk-checkboxes__label" for="organisation">
+          Susan Cooper
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="organisation-2" name="organisation" type="checkbox" value="employment-tribunal">
+        <label class="govuk-label govuk-checkboxes__label" for="organisation-2">
+          Phillip Coulson
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="organisation-3" name="organisation" type="checkbox" value="MOD">
+        <label class="govuk-label govuk-checkboxes__label" for="organisation-3">
+          Olivia Dunham
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="organisation-4" name="organisation" type="checkbox" value="DfT">
+        <label class="govuk-label govuk-checkboxes__label" for="organisation-4">
+          Hugo Smith
+        </label>
+      </div>
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="organisation-4" name="organisation" type="checkbox" value="DfT">
+        <label class="govuk-label govuk-checkboxes__label" for="organisation-4">
+          Clare Starling
+        </label>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+    </fieldset>
+  </div>
+
+
+  {{govukButton({
+    text: "Continue"
+  })}}
+
+  <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+  </form>
+
+  <p class="govuk-body">If you cannot see the name you are looking for, ask them to check they have an account linked to this firm.</p>
+
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Setting group permissions</h4>
+    <p class="govuk-body-s">You can set a group permission level that will apply to all the agents from this firm you select. If you want unique permissions for any agent, you can do this later by finding them in <a href="business-access" class="govuk-link govuk-link--no-visited-state">the list of people who have access to this business</a> and changing  individual permissions.</p>
+  </div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageTitle = "Upload files" %}
+{% set pageName = pageTitle %}
+
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": '',
+    "name": "TO DO",
+    "id": "xx",
+    "url": "doc-upload-upload-added?view=ext",
+    "release": "",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+]
+
+}
+%}
+
+
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+    {% if data.view != "int" %}
+
+        {% include "_common/phase-banner-2.html" %}
+        {% include "_common/sub-header.html" %}
+
+        {% set _hideAccountLink = true %}
+        {% include "_common/login-nav-3.html" %}
+    {% else %}
+        {% include "_common/login-nav-internal.html" %}
+    {% endif %}
+
+    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+            Add documents
+        </h1>
+
+        <p class="govuk-body">
+            You can upload up to 10 files in one batch.
+        </p>
+        <p class="govuk-body">
+            The size of each file must be less than 10MB, and files must be in one of these formats: doc, docx, docm,
+            gif, jfif, jpeg, jpg, odt, pdf, pptx, tiff, txt, xls, xlsx, xlsm.
+        </p>
+        <p class="govuk-body">
+            If you’ve used standard settings and programmes on a phone, tablet, digital camera or computer, files will
+            likely meet these requirements.
+        </p>
+        <p class="govuk-body">
+            Each file name must be unique, 20 characters or less, contain only letters and numbers, and contain no gaps.
+        </p>
+        <p class="govuk-body">
+            If you're sending files in relation to a grant or funding claim, <a
+                class="govuk-link govuk-link--no-visited-state" target="_blank"
+                href="https://www.gov.uk/guidance/funding-for-farmers">check if there is any other guidance to follow,
+                depending on the scheme</a> (opens in new tab).
+        </p>
+
+        <p class="govuk-body">
+            If documents do not meet the required standards, we may need to request further evidence from you, which
+            could cause delays.
+        </p>
+
+        {% if data['what-to-send'] == "Complaint evidence" %}
+        <div id="doc-upload-anchor"class="moj-multi-file__uploaded-files">
+            <h2 class="govuk-heading-m" id="doc-upload-anchor">Documents ready to submit</h2>
+            <div class="govuk-summary-list moj-multi-file-upload__list">
+                <div class="govuk-summary-list__row moj-multi-file-upload__row">
+                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
+                        file.jpeg
+                    </div>
+                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
+                        <button
+                            class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
+                            type="button" name="delete" value="progress-tracker.png">
+                            Remove <span class="govuk-visually-hidden">progress-tracker.png</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="moj-multi-file__uploaded-files">
+            <h2 class="govuk-heading-m" id="doc-upload-anchor">Documents ready to submit</h2>
+            <div class="govuk-summary-list moj-multi-file-upload__list">
+                <div class="govuk-summary-list__row moj-multi-file-upload__row">
+                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
+                        fencepic1.jpeg
+                    </div>
+                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
+                        <button
+                            class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
+                            type="button" name="delete" value="progress-tracker.png">
+                            Remove <span class="govuk-visually-hidden">progress-tracker.png</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="govuk-summary-list__row moj-multi-file-upload__row">
+                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
+                        fencereceipt1.pdf
+                    </div>
+                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
+                        <button
+                            class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
+                            type="button" name="delete" value="upscalemedia-transformed.jpeg">
+                            Remove <span class="govuk-visually-hidden">upscalemedia-transformed.jpeg</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="container--doc-upload">
+            <h2 class="govuk-heading-m govuk-!-margin-top-7">
+                Choose a document
+            </h2>
+
+            <div class="govuk-button-group govuk-button-group--doc-upload">
+                <p class="govuk-body">Drag and drop files here or</p>
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                    Upload files
+                </button>
+            </div>
+        </div>
+
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-visually-hidden">Warning</span>
+                Check you are submitting the right documents. If you want to remove them after you submit them, you will need to contact the Rural Payments Agency. Keep your own copies of anything you send us.
+            </strong>
+        </div>
+
+    <form method="POST">
+      <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+    </form>
+
+    </div>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+{% endblock %}
