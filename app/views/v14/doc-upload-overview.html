@@ -16,19 +16,19 @@
 {% set serviceName = "Land and Farm Service" %}
 
 {% if data.view == "ext" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
-    "status": '',
-    "name": "TO DO",
-    "id": "xx",
-    "url": "doc-upload-overview?view=ext",
-    "release": "",
-    "variants": [],
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": '',
+"name": "TO DO",
+"id": "xx",
+"url": "doc-upload-overview?view=ext",
+"release": "",
+"variants": [],
 
-    "pagetitle": pageTitle,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
 
 ]
 
@@ -43,18 +43,18 @@
 
 {% block beforeContent %}
 
-    {% if data.view != "int" %}
+{% if data.view != "int" %}
 
-        {% include "_common/phase-banner-2.html" %}
+{% include "_common/phase-banner-2.html" %}
 
 
-        {% set _hideAccountLink = true %}
-        {% include "_common/login-nav-3.html" %}
-    {% else %}
-        {% include "_common/login-nav-internal.html" %}
-    {% endif %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
 
-    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
@@ -79,25 +79,13 @@
         <h3 class="govuk-notification-banner__heading">
           You have successfully submitted the following documents:
         </h3>
-        {% if data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
-        <ul class="govuk-list govuk-list--bullet">
-          <li>file.jpeg</li>
-        </ul>
-        {% else %}
         <ul class="govuk-list govuk-list--bullet">
           <li>fencepic1.jpeg</li>
           <li>fencereceipt1.pdf</li>
         </ul>
-        {% endif %}
-        {% if data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
-        <p class="govuk-body govuk-!-font-weight-bold">
-          Submission reference number: 1743259315
-        </p>
-        {% else %}
         <p class="govuk-body govuk-!-font-weight-bold">
           Submission reference number: 1733826312
         </p>
-        {% endif %}
         <p class="govuk-body">
           We have emailed confirmation of this to you and all authorised users at the business.
         </p>
@@ -113,16 +101,16 @@
     {% if data.permissionsMVP != "view" and data.view == "ext" %}
     <div class="govuk-inset-text guidance-panel">
       <p class="govuk-body">
-        You can now submit documents like evidence to Rural Payments using this online service. 
+        You can now submit documents like evidence to Rural Payments using this online service.
       </p>
       <p class="govuk-body">
-        This helps us process your documents faster. 
+        This helps us process your documents faster.
       </p>
       <p class="govuk-body">
-        You can see all the documents you've submitted on this page. 
+        You can see all the documents you've submitted on this page.
       </p>
       <p class="govuk-body">
-        You will not see documents you've sent by post or email. 
+        You will not see documents you've sent by post or email.
       </p>
       <p class="govuk-body">
         Keep your own copies of anything you send us.
@@ -163,44 +151,26 @@
   <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m">Find submitted documents</h2>
 
-    <div class="doc-upload--container">
-
-      <div class="doc-upload-container--filters">
-        <div class="govuk-form-group govuk-!-display-inline-block">
-          <div class="govuk-date-input__item">
-            <label class="govuk-label" for="width-30">
-              Search for subject, file name or submission reference 
-            </label>
-            <input class="govuk-input govuk-input--width-30" id="width-30" name="width20" type="text">
-          </div>
-        </div>
-        <div class="govuk-form-group govuk-!-display-inline-block">
-          <label class="govuk-label" for="sort">
-            Filter by subject
+    <div class="container--doc-upload">
+      <div class="container--doc-upload-search">
+        <div class="govuk-date-input__item govuk-!-display-inline-block">
+          <label class="govuk-label" for="width-30">
+            Search for subject, file name or submission reference
           </label>
-          <select class="govuk-select" id="filtersubject" name="filtersubject" style="width: 10px">
-            <option value="Agreement" selected="selected"> </option>
-            <option value="published">Business, complaints and appeals</option>
-            <option value="updated">Countryside Stewardship</option>
-            <option value="comments">Delinked payments</option>
-            <option value="views">Environmental Stewardship</option>
-            <option value="comments">Grants</option>
-            <option value="comments">Sustainable Farming Incentive</option>
-          </select>
-          <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-            Search
-          </button>
+          <input class="govuk-input govuk-input--width-30" id="width-30" name="width20" type="text">
         </div>
+        <button type="submit" class="govuk-button govuk-button--secondary govuk-!-display-inline-block"
+          data-module="govuk-button">
+          Search
+        </button>
       </div>
 
-      <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Clear filters</a></p>
-
-
+      <p class="govuk-body">
+        <a href="#" class="govuk-link govuk-link--no-visited-state">Clear filters</a>
+      </p>
     </div>
 
-
-
-    <table class="govuk-table">
+    <table class="govuk-table govuk-!-margin-top-6">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header" style="width:20%">Date</th>
@@ -215,44 +185,16 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        {% if data['doc-upload-subject'] == "Your business changes, complaints, general appeals or probate" %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Business, complaints and appeals</td>
-          <td class="govuk-table__cell">file.jpg</td>
-          <td class="govuk-table__cell">1743259315</td>
-          {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="doc-upload-view-file">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
-          {% else %}
-          {% endif %}
-        </tr>
+        {% if data.filesUploaded == "yes" %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">17 September 2025</td>
           <td class="govuk-table__cell">Countryside Stewardship</td>
           <td class="govuk-table__cell">fencepic1.jpg</td>
           <td class="govuk-table__cell">1733826312</td>
+          {% if data.permissionsMVP != "view" and data.view == "ext" %}
           <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state"
-              href="doc-upload-view-fence.html">View</a> | <a class="govuk-link govuk-link--no-visited-state"
+              href="doc-upload-view-fence">View</a> | <a class="govuk-link govuk-link--no-visited-state"
               href="#">Download</a></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Countryside Stewardship</td>
-          <td class="govuk-table__cell">fenccereceipt.pdf</td>
-          <td class="govuk-table__cell">1733826312</td>
-          {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="doc-upload-view-receipt">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
-          {% else %}
-          {% endif %}
-        </tr>
-        {% elif data['doc-upload-cs-tag'] == "Capital claim" %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">17 September 2025</td>
-          <td class="govuk-table__cell">Countryside Stewardship</td>
-          <td class="govuk-table__cell">fencepic1.jpg</td>
-          <td class="govuk-table__cell">1733826312</td>
-          {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="doc-upload-view-fence">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -262,7 +204,9 @@
           <td class="govuk-table__cell">fenccereceipt.pdf</td>
           <td class="govuk-table__cell">1733826312</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="doc-upload-view-receipt">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state"
+              href="doc-upload-view-receipt">View</a> | <a class="govuk-link govuk-link--no-visited-state"
+              href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -283,7 +227,8 @@
           <td class="govuk-table__cell">complaintdetails.pdf</td>
           <td class="govuk-table__cell">1234567893</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -293,7 +238,8 @@
           <td class="govuk-table__cell">application.pdf</td>
           <td class="govuk-table__cell">1235468942</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -303,7 +249,8 @@
           <td class="govuk-table__cell">bizchange.jpg</td>
           <td class="govuk-table__cell">3694567897</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -313,7 +260,8 @@
           <td class="govuk-table__cell">amendment.pdf</td>
           <td class="govuk-table__cell">4268678971</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -323,7 +271,8 @@
           <td class="govuk-table__cell">funding.jpg</td>
           <td class="govuk-table__cell">9652467834</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -333,7 +282,8 @@
           <td class="govuk-table__cell">pilot.pdf</td>
           <td class="govuk-table__cell">4598326651</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -344,7 +294,8 @@
           <td class="govuk-table__cell">CGA.pdf</td>
           <td class="govuk-table__cell">5478963258</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -356,7 +307,8 @@
           <td class="govuk-table__cell">evidence-doc-final-v1.jpg</td>
           <td class="govuk-table__cell">5478963258</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
@@ -366,7 +318,8 @@
           <td class="govuk-table__cell">amendment.jpg</td>
           <td class="govuk-table__cell">5478963258</td>
           {% if data.permissionsMVP != "view" and data.view == "ext" %}
-          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link govuk-link--no-visited-state" href="#">View</a> | <a
+              class="govuk-link govuk-link--no-visited-state" href="#">Download</a></td>
           {% else %}
           {% endif %}
         </tr>
