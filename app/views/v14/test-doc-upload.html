@@ -61,28 +61,34 @@
     <p class="govuk-body">
       You can upload up to 10 files in one batch.
     </p>
-
     <p class="govuk-body">
-      The size of each file must be less than 10MB, and files must be in one of these formats: doc, docx, docm, gif, jfif, jpeg, jpg, odt, pdf, pptx, tiff, txt, xls, xlsx, xlsm. If you’ve used standard settings and programmes on a phone, tablet, digital camera or computer, files will likely meet these requirements.
+      The size of each file must be less than 10MB, and files must be in one of these formats: doc, docx, docm,
+      gif, jfif, jpeg, jpg, odt, pdf, pptx, tiff, txt, xls, xlsx, xlsm.
     </p>
-
+    <p class="govuk-body">
+      If you’ve used standard settings and programmes on a phone, tablet, digital camera or computer, files will
+      likely meet these requirements.
+    </p>
     <p class="govuk-body">
       Each file name must be unique, 20 characters or less, contain only letters and numbers, and contain no gaps.
     </p>
-
     <p class="govuk-body">
-      If you're sending files in relation to a grant or funding claim (Funding for farmers, growers and land managers).
+      If you're sending files in relation to a grant or funding claim, <a
+        class="govuk-link govuk-link--no-visited-state" target="_blank"
+        href="https://www.gov.uk/guidance/funding-for-farmers">check if there is any other guidance to follow,
+        depending on the scheme</a> (opens in new tab).
     </p>
 
     <p class="govuk-body">
-      If documents do not meet the required standards, we may need to request further evidence from you, which could cause delays.
+      If documents do not meet the required standards, we may need to request further evidence from you, which
+      could cause delays.
     </p>
 
     <form action="/components/multi-file-upload/examples/default" method="post" enctype="multipart/form-data">
 
       <div class="moj-multi-file-upload" data-module="moj-multi-file-upload">
         <div class="moj-multi-file__uploaded-files ">
-          <h2 class="govuk-heading-m">Files added</h2>
+
           <div class="govuk-summary-list moj-multi-file-upload__list">
 
           </div>
@@ -92,7 +98,7 @@
 
           <div class="govuk-form-group">
             <label class="govuk-label govuk-label--m" for="documents">
-              Upload a file
+              Choose a document
             </label>
 
             <input class="govuk-file-upload moj-multi-file-upload__input" id="documents" name="documents" type="file"
@@ -108,12 +114,21 @@
         </div>
       </div>
 
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          Check you are submitting the right documents. If you want to remove them after you submit them, you will need
+          to contact the Rural Payments Agency. Keep your own copies of anything you send us.
+        </strong>
+      </div>
+
       <button type="submit" class="govuk-button" data-module="govuk-button">
-        Continue
+        Submit
       </button>
 
     </form>
-    
+
   </div>
 </div>
 
