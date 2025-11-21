@@ -9,7 +9,7 @@
       <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
     </li>
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="../index">MVP</a>
+      <a class="govuk-breadcrumbs__link" href="../index">Version 12 - IAHW</a>
     </li>
   </ol>
 </nav>
@@ -22,25 +22,15 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl">Design history</span>
-      MVP prototype
+      Version 12 prototype
     </h1>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
 
-    <h2 class="govuk-heading-l">
-      Design changes
-    </h2>
+    <h2 class="govuk-heading-l">Why we explored entries into Buffalo/IAHW integration</h2>
 
-    <p class="govuk-body">
-      This is the version being developed for Buffalo MVP, based on version 8 and some of version 9 of the prototype.
-    </p>
-
-    <h2 class="govuk-heading-m">
-      What’s unique for this version:
-    </h2>
-
-    <ul class="govuk-list govuk-list--bullet">
+    <!--<ul class="govuk-list govuk-list--bullet">
       <li>
         updated the service name across the prototype to 'Land and Farm Service'
       </li>
@@ -147,10 +137,281 @@
         </li>
         <li>because of our integration with Defra ID for signing in users, bp01 will be built by their team and used by other services. This means that we cannot customise this page, and we have therefore removed the link to 'View personal details'</li>
       </ul>
+    </ul>-->
+
+<p>The launch of Buffalo MVP will see us integrate our service with Improve Animal Health and Welfare (IAHW) to enable users to update their details as part of an IAHW application or claim. </p>
+<p>The earliest work on entry points into the Land and farm service (LFS) via the IAHW journey was undertaken in early 2025. This stage of exploration focused on what would be the most seamless journey for users to update either their business or personal details using LFS.</p>
+<p>Design flows and detailed screen designs for the journeys were initially developed by the SFD team to start the conversations. This was followed by a series of workshops with the IAHW team to get their feedback on the design concepts and iterate as needed. </p>
+<p>The core design principle for this approach was to include a ‘change’ link next to specific data items that a user can amend. Should a user need to amend a data item, they would navigate directly into the ‘change’ and ‘check’ screens within LFS, before returning to IAHW’s ‘Check your details’ screen to continue their apply or claim journey.</p>
+<p>Our assumption is that this would be the preferred experience for users linking into LFS capabilities, and is a repeatable pattern that could be used for other scheme journeys. However, due to IAHW team commitments and resource, work on this first approach was paused around March 2025 being deemed out of scope for Buffalo MVP due to the significant development requirements on both teams.</p>
+<p>All work is mapped on a x-team collaboration board: <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1738831676466/380eba35c98aebffa56a87cd2db67c6bd91eae9e?wid=0-1738835538521">SFD x AHWP entry-points collaboration – 07/02/2025 (Mural link)</a></p>
+
+  <h2 class="govuk-heading-l">Constraints</h2>
+<p>With our preferred approach for closer integration out of scope for MVP, our 2 teams needed to explore alternative entries into LFS that are both technologically feasible and offer a cohesive and improved journey. </p>
+<p>When we launch Buffalo MVP we will also inherit 2 pages from Defra ID, as the authentication provider. In our prototype these pages equate to ‘si01 SFD sign in’, and ‘bp01 your businesses list’. Post-Buffalo MVP launch we will look to work with Defra ID to implement our own design for ‘bp01 your businesses list’, which has been extensively tested in previous rounds of user research.</p>
+
+<h2 class="govuk-heading-l">Pain points and user needs</h2>
+<p>Integrating LFS with IAHW will support the identified user need:</p>
+<p>“As a farmer or land manager,</p>
+<p>I need one place where I can get and manage funding,</p>
+<p>So that I do not waste time going to different places.”</p>
+<p>While there are enormous benefits in users eventually having all their land and farming needs served in one place, integrating our services is only a small step towards this, and brings its own risks. </p></p>
+<p>When we launch Buffalo MVP we will also inherit 2 pages from Defra ID, as the authentication provider. In our prototype these pages equate to ‘si01 SFD sign in’, and ‘bp01 your businesses list’. Post-Buffalo MVP launch we will look to work with Defra ID to implement our own design for ‘bp01 your businesses list’, which has been extensively tested in previous rounds of user research.</p>
+<p>We are particularly mindful that:</p>
+<p>
+  <ul class="govuk-list govuk-list--bullet">
+      <li>users are able to seamlessly navigate into and out of LFS to IAHW</li>
+      <li>users do not get confused as they move between services </li>
+      <li>users understand that LFS is replacing the Rural Payments service (RPS)</li>
+      <li>users understand what they can use LFS for now, and what they’ll be able to use it for in future </li>
+      <li>by integrating with LFS there is no degradation to the IAHW apply or claim journeys</li>
+   </ul>
+</p>
+
+<h2 class="govuk-heading-l">
+      Design approach
+    </h2>
+
+<p>Working closely with IAHW colleagues, the SFD team mapped out 2 routes into LFS.
+<img src="/public/images/design-history/v12/design_approach.png" alt="sdrwer" class="design-history">
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->   
+</p>
+
+<h3 class="govuk-heading-m">Route 1</h3>
+<p>In route 1 we signpost users to LFS to check and update their details before they start an IAHW apply or claim journey.</p>
+<p>As a team we were keen to understand if updating details is something a user would consider of their own volition before they’d started on their IAHW journey.</p>
+<p>Route 1 also has limitations in that IAHW eligibility checks only happen once the user has entered the IAHW service. There is a risk that a user who wants to apply for an IAHW agreement first goes to LFS to update their details, and only when they enter IAHW finds out they are not eligible to do so.</p>
+
+
+<h3 class="govuk-heading-m">Route 2</h3>
+<p>In route 2 we signpost users to LFS to check and update their details within the IAHW apply or claim journey, at the point of need.</p>
+<p>A user who selects the no radio option on IAHW’s ‘Check your details’ page is presented with IAHW’s ‘Update your details’ page. The user is prompted to update their details on LFS by clicking a link that will take them to the new service. There is information on what LFS is for users who want to find out more. </p></p>
+
+<h3 class="govuk-heading-m">Research scenarios</h3>
+<p>Within the SFD team we debated how much to lead users in testing to update their details. When we consider a user who wants to apply for an IAHW agreement, this will be their primary task, and anything they need to do to complete this task (such as updating incorrect details) will be secondary. If in our scenario setting we were to foreground the need to update details, we would be misrepresenting the natural behaviour of users. However, we also felt that we could not test a user on an account that wasn’t their own without giving them some indication that the details may be in correct. </p>
+<p>We settled on 2 scenarios.
+<ol class="govuk-list govuk-list--number">
+      <li>You are Alfred Waldron, a dairy farmer. You want to apply for an improve animal health and welfare review for one of your businesses, Agile Farm Ltd, for a herd of cows. You are already registered to use the service, but you’ve not logged in for a while, and you suspect that some of your information might be out of date.</li>
+      <li>You now want to apply for an endemic disease follow up. You’ve recently changed your business email to <a href="mailto:agilefarmsltd@gmail.com">agilefarmsltd@gmail.com</a> and know that you’ll need to update it.</li></p>
+</ol>
+</p>
+
+<h2 class="govuk-heading-l">What we designed</h2>
+<p>With the route 1 journey we are supporting users who actively want to check and update their details before starting an IAHW apply or claim journey. It is only those users who suspect their details may be incorrect that will take this route.</p>
+<p>Following the standard pattern for <a href="http://gov.uk/">GOV.UK</a>start pages, we added a prompt to check and update details on LFS as an action under subheading, 'Before you start'. This was styled as a link, as is standard in this pattern, with only one start button per page, for the main task of that page (apply for IAHW). </p>
+<img src="/public/images/design-history/v12/IAHW-start.png" alt="sdrwer" class="design-history">
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->
+</p>
+
+<p>Clicking on the LFS link takes users to the LFS start page. The LFS start page is where users can find more information about what LFS is, how it is replacing RPS and what they can use it for. This is as should be expected, with detailed information about a service at the point of using that service. This page also contains our the LFS service start button.
+<img src="/public/images/design-history/v12/LFS-start.png" alt="sdrwer" class="design-history">
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->
+</p>
+
+
+<p>With route 2, we’ve looked to support integration between the services by designing the pages with consistent headings and terminology, in particular, bringing naming in line with LFS standards and separating out business and personal details.</p>
+<p>On IAHW’s ‘Check your details' page, the user is presented with their details and asked to confirm if they are correct.
+<img src="/public/images/design-history/v12/check-your-details.png" alt="sdrwer" class="design-history">
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->
+</p>
+
+<p>Selecting the ‘yes’ radio button continues their IAHW journey. Selecting the ‘no’ journey takes the user to IAHW’s ‘Update your details’. The page title has been rewritten to include a verb.</p>
+<p>The ‘Update your details’ page prompts users to update their details in LFS. Should the user require more information on LFS before clicking through, they are able to expand the details component where they can find this. We did consider whether to display information about LFS on the page. We eventually settled on the details component because the user may or may not choose to learn more about LFS information before they continue their journey. The details component gives them this opportunity. However, we’re mindful this is a new service and users may need more hand holding, so we’re keen to explore in testing if this approach is sufficient. 
+<p>We also included a signpost to contact RPA should the user require an offline route to update their details. </p>
+<img src="/public/images/design-history/v12/update-you-details.png" alt="sdrwer" class="design-history">
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->
+</p>
+<br>
+
+<p>Once a user is in LFS and has updated their details, it is vital that the journey also supports them to navigate back to IAHW. We added a ‘Back to [business name]’ link to ‘bd01 Manage business details’ and ‘pd01 Manage personal details’ to support users to return to ‘bp02 SFD home/business page’.
+<img src="/public/images/design-history/v12/business-details.png" alt="sdrwer" class="design-history">
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->
+
+<img src="/public/images/design-history/v12/personal-details.png" alt="sdrwer" class="design-history">
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->
+</p>
+
+<p>From ‘bp02 SFD home/business page’, we then explored how best to signpost users into IAHW to complete their journey. We discussed and discounted a number of options in our early design ideations, including using banners and right hand navigation. We ultimately settled on using a card component as the signpost. We have previously done some testing with cards, with some users preferring the card component for organising and signposting content. More testing will be needed to confirm this approach works for multiple schemes and task.
+<img src="/public/images/design-history/v12/business-homepage.png" alt="sdrwer" class="design-history">
+<!--ADD DESCRIPTIVE ALT TEXT-->
+<!--ADD DESCRIPTIVE ALT TEXT-->
+</p>
+
+<p>Both routes are available in our prototype v12: <a href="https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/AHWP/AHWP-apply-guidance-start">Apply for funding to improve animal health and welfare - Single front door - GOV.UK</a></p>
+
+
+<h2 class="govuk-heading-l">What we tested, outcomes and decisions</h2>
+<h3 class="govuk-heading-m">How might we provide a route for IAHW users to update their business or personal details?</h3>
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 1: If we provide a link for users to check and update their business and personal details at the start of the IAHW journeys</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then they will follow the link to check and update their details, so that their details are accurate, before they move onto starting an application or claim</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when we see users naturally using the check details ('sign into the Land and farm service') link, instead of the 'Start now' button, when beginning their IAHW application</p>
+<p class="govuk-body govuk-!-font-weight-bold">Inconclusive</p>
+<p>While 4 out of 5 users clicked on the LFS link to update their details via route 1, we question the validity of this result.</p>
+<p>Route 1 is not relevant for all IAHW users, only those who need to update their details. Our scenario prompted the user, both by suggesting that details may be out of date and providing details to check against. We had to emphasise the need to check details to one user with low digital skills in particular. We suspect that users were led to click on the link in a way that they would not have done naturalistically.</p></p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>Drop route 1. Retest route 2 to provide further evidence that the journey works.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 2: If we provide a route into LFS for users to update their business or personal details when their details are displayed in IAHW</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then they'll navigate to LFS and update their details, before continuing their journey in IAHW</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when we see users answering 'no' to the question 'are these details correct?' and follow the link into LFS on the next page to update their details</p>
+<p class="govuk-body govuk-!-font-weight-bold">Proven</p>
+<p>All users identified that their details were incorrect and selected ‘no’.</p>
+<p>3 users quickly selected ‘no’ to continue their journey. The remaining 2 users both initially looked to change their details on the page. Once they understood that the details elements were not editable, they correctly selected the ‘no’ radio button.</p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>No design changes needed.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 3: If we provide a link to LFS for users to update their business or personal details</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then they'll follow the link and update their details in LFS, before continuing their journey in IAHW</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users comment their preference for updating details is via an online service and are positive about the online experience</p>
+<p class="govuk-body govuk-!-font-weight-bold">Proven</p>
+<p>4 users expressed a preference for updating details online, with most stating it would be quicker than calling. One user with partial hearing commented on struggling on the phone.</p>
+
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>No design changes needed.</p>
+<br>
+
+<h3 class="govuk-heading-m">How might we help users to understand what the Land and farm service is and give them confidence to use the new service?</h3>
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 4: If we foreground the task to check and update details and provide only minimal information on the means of doing so (LFS) on the IAHW start page</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then users will get the context of LFS on the LFS start page, before they continue their journey to update their details by signing into the LFS</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users continue into LFS without hesitation and understand what they will be doing on that service</p>
+<p class="govuk-body govuk-!-font-weight-bold">Inconclusive</p>
+<p>No users sought verbal explanation of what LFS was before clicking on the link to take them to the LFS start page. However, as this hypothesis relates to route 1, which we have queried, we cannot mark it as proven.</p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>No design changes as dropping route 1.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 5: If we provide a prompt on the start page to update their details before starting their IAHW journey</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then users will read the information and navigate to LFS to update their details </p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users continue to the LFS start page via the 'sign into LFS' link and articulate that they understand they need to check and update their details before continuing their IAHW journey</p>
+<p class="govuk-body govuk-!-font-weight-bold">Inconclusive</p>
+<p>The majority of users (4 out of 5) spotted and clicked the LFS link to update their details. 1 user did not see the the LFS link and went straight into IAHW. </p>
+<p>Again, as hypothesis 5 is part of route 1, we cannot mark it as proven when we are unconvinced that users would have followed this route without having been led.</p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>No design changes as dropping route 1.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 6: If we provide information on the start page about what can and can't be done in the Land and farm service</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then users will understand what is possible in the service at that time</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users are able to articulate what they are able to do in the service and what they are not able to do at this point</p>
+<p class="govuk-body govuk-!-font-weight-bold">Proven</p>
+<p>2 users did not read the LFS start page during the task.</p>
+<p>We asked users about their understanding of LFS after completing the task. After reading the page, 4 users indicated that the information provided about LFS was clear and sufficient, being described as “straightforward” and said to “make sense”.</p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>No design changes needed.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 7: If we provide information on the start page about LFS replacing RPS</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then users will understand LFS is replacing RPS</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users are able to articulate that LFS is replacing RPS</p>
+<p class="govuk-body govuk-!-font-weight-bold">Inconclusive</p>
+<p>3 users initially thought they had been taken into RPS, not LFS. While this did not prevent the users from completing the task, we should look again at how we position LFS in this context. </p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>Iterate content to strengthen message that LFS will replace RPS.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 8: If we provide more information on the LFS within an expandable component</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then users who require more context about LFS in order to continue their journey will reveal the content</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when we observe users expanding the details component to find out what LFS is or commenting on needing more information</p>
+<p class="govuk-body govuk-!-font-weight-bold">Inconclusive</p>
+<p>No users expanded the details component. This may have been driven by 4 users already being familiar with LFS, having gone down route 1 in the first scenario.  </p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>Bring content out of details component and retest.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 9: If we provide succinct information about what LFS is within an expandable component on the 'update your details' page</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then users will have enough context to continue their journey of updating details before returning to IAHW</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when we observe users who expand the details component continue to LFS by following the 'update your details on LFS' link without hesitation or they comment they have enough information to continue</p>
+<p class="govuk-body govuk-!-font-weight-bold">Inconclusive</p>
+<p>No users expanded the details component, as per hypothesis 8. We are unable to comment with authority whether the level of information on this page is sufficient as a first interaction with LFS.</p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>Bring content out of details component and retest.</p>
+
+<h3 class="govuk-heading-m">How might we help users to move seamlessly between the 2 services?</h3>
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 10: If we show the user their details in LFS after they have changed their details, and again when they re-enter the IAHW service</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then the user will not be confused or frustrated by seeing it in both services</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when the user does not comment negatively about seeing their details in both services or does not stray from their IAHW journey</p>
+<p class="govuk-body govuk-!-font-weight-bold">Proven</p>
+<p>2 users commented on being presented with IAHW’s Check your details screen again on re-entering the service but were neutral in their observations. </p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>No design changes needed.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 11: If the different headers on IAHW, LFS and Defra ID are shown during a single journey</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then the user does not become disoriented or comment negatively and is able to continue their journey without losing trust</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users complete the tasks without negative comments or distraction from their task</p>
+<p class="govuk-body govuk-!-font-weight-bold">Proven</p>
+<p>Only 1 user commented on the change of headers after completing the task. They articulated that they understood that the different screens related to different services and that this had no negative impact on their experience.</p>
+<p>The remaining users did not notice any changes.</p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>No design changes needed.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 12: If we signpost to IAHW on the LFS business home page</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then the user will notice the signposting, understand where it will take them and use it to return to the IAHW service</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users find the signposting and follow it without hesitation, with the expectation this would return them to IAHW</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users do not comment negatively about the signposting</p>
+<p class="govuk-body govuk-!-font-weight-bold">Proven</p>
+<p>3 users navigated back to IAHW without issue.</p>
+<p>1 user went back to the business picker, understood they’d gone too far, selected Agile Farm Ltd again, and then found the signpost.</p>
+<p>While all users were able to navigate via the signpost, we feel this would benefit from a content review and retesting.</p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>Review signpost for wording and prominence and retest.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 13: If we provide a 'Back to [business name]' link on the view and update your business and personal details pages</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then users will follow this link expecting it to be part of the route back to IAHW</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when users successfully navigate back to the IAHW service by following the 'Back to [business name]' link and view this as part of the journey back to IAHW</p>
+<p class="govuk-body govuk-!-font-weight-bold">Proven</p>
+<p>3 users navigated back to IAHW without issue.</p>
+<p>1 user paused to consider where to go next before correctly identifying the ‘Back to Agile Farm Ltd’ link.</p>
+<p>There are technical considerations we will need to address if we opt to insert the business name in the back link, for example, how to display names of up to 50 characters, and above. </p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>Further discussion with developers to scope out edge cases and if there’s a need for an alternative design.</p>
+<br>
+
+<p class="govuk-body govuk-!-font-weight-bold">Hypothesis 14: If we provide a journey through LFS to check and update their business or personal details</p>
+<p class="govuk-body govuk-!-font-weight-bold">Then users will be able to check and update their details on LFS, then return to the IAHW service without any issues, concerns or hesitation</p>
+<p class="govuk-body govuk-!-font-weight-bold">We’ll know this when we observe users are able to successfully complete their checking and updating tasks and return to the IAHW service without friction</p>
+<p class="govuk-body govuk-!-font-weight-bold">Inconclusive</p>
+<p>This hypothesis relates to the overall journey of updating details set in the research scenario. While all users were able to update their details and navigate back to IAHW, we noted some points of friction:</p>
+  <p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>2 users attempting to overwrite personal email address on IAHW’s ‘Check your details’ page, before correctly selecting the no radio button</li>
+      <li>4 users going to business details, when tasked with updating the personal email address</li>
+      <li>1 user navigating a further step back to go to the business picker, before correcting to continue their IAHW apply journey</li>
     </ul>
+  </p>
+    <p>We’re also keen to test again to get a better understanding of users interactions with route 2. We need to understand if this journey works without the user having the context of LFS first.</p>
+
+<h4 class="govuk-heading-s">Design conclusion</h4>
+<p>Retest to get more feedback and build confidence that the journey works.</p>
 
 
-  </div>
+
+</div>
 
   <!-- right third of page to link to relevant mural boards and UR findings -->
   <div class="govuk-grid-column-one-third">
