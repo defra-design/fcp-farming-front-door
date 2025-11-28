@@ -10,7 +10,7 @@
 
 {% set _showIntExtLinks = true %}
 
-{% set pageTitle = "Documents for Agile Farm Ltd" %}
+{% set pageTitle = "Documents for your business" %}
 {% set pageName = pageTitle %}
 
 {% set serviceName = "Land and Farm Service" %}
@@ -18,21 +18,31 @@
 {% if data.view == "ext" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": '',
-"name": "TO DO",
-"id": "xx",
-"url": "doc-upload-overview?view=ext",
-"release": "",
-"variants": [],
+  "status": '',
+  "name": "View business documents - Document upload",
+  "id": "du01",
+  "url": "doc-upload-overview?view=ext",
+  "release": "MVP - Buffalo enhancement",
+  "variants": [
+    {
+        "name": "No files uploaded",
+        "url": "doc-upload-overview?filesUploaded=no&newToFileUpload=yes"
+    }
+  ],
 
-"pagetitle": pageTitle,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
+  "pagetitle": pageTitle,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
 
-]
+  ],
+  "notes": [
+    "Display up to 10 submitted documents in the table overview. After 10 items, introduce pagination for every set of 10
+    documents.",
+    "View links should only appear for those file types we can allow users to preview within the service, without downloading the file as this is covered by the Download functionality. For example, we have descoped the ability to preview xls files."
+  ]
 
-}
+  }
 %}
 
 
@@ -148,6 +158,15 @@
     {% endif %}
   </div>
 
+  {% if data.newToFileUpload == "yes" %}
+
+  <div class="govuk-grid-column-full">
+    <p class="govuk-body">
+      You have not submitted any documents online.
+    </p>
+  </div>
+
+  {% else %}
   <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-m">Find submitted documents</h2>
 
@@ -326,7 +345,44 @@
         {% endif %}
       </tbody>
     </table>
+
+    <nav class="govuk-pagination" aria-label="Pagination">
+      <ul class="govuk-pagination__list">
+        <li class="govuk-pagination__item govuk-pagination__item--current">
+          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1" aria-current="page">
+            1
+          </a>
+        </li>
+        <li class="govuk-pagination__item">
+          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2">
+            2
+          </a>
+        </li>
+        <li class="govuk-pagination__item">
+          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 3">
+            3
+          </a>
+        </li>
+      </ul>
+      <div class="govuk-pagination__next">
+        <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+          <span class="govuk-pagination__link-title">
+            Next<span class="govuk-visually-hidden"> page</span>
+          </span>
+          <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg"
+            height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+            <path
+              d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z">
+            </path>
+          </svg>
+        </a>
+      </div>
+    </nav>
+  {% endif %}
+
+
   </div>
+
 
 </div>
 

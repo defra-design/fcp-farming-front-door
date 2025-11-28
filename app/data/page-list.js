@@ -307,6 +307,30 @@ module.exports = [
     "pagedesc": "How we use cookies to store information about how you use this service."
   },
   {
+    "pageid": "du01",
+    "pagename": "View business documents - Document upload",
+    "pageurl": "business-documents-view",
+    "pagedesc": "Submit documents and view a list of documents submitted for this business."
+  },
+  {
+    "pageid": "du02",
+    "pagename": "Tell us what this relates to - Document upload",
+    "pageurl": "business-documents-subject",
+    "pagedesc": "Submit documents and view a list of documents submitted for this business."
+  },
+  {
+    "pageid": "du03",
+    "pagename": "What do you want to send us?  - Document upload",
+    "pageurl": "business-documents-change-appeal-complaint-probate",
+    "pagedesc": "Submit documents and view a list of documents submitted for this business."
+  },
+  {
+    "pageid": "du04",
+    "pagename": "Check what you've told us before you add documents - Document upload",
+    "pageurl": "business-documents-check-before",
+    "pagedesc": "Submit documents and view a list of documents submitted for this business."
+  },
+  {
     "pageid": "mp02",
     "pagename": "Accessibility statement",
     "pageurl": "accessibility-statement",

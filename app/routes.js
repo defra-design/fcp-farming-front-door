@@ -67,6 +67,7 @@ var _myData = {
     "addNumberPers" : "full",
     "addDOBPers" : "full",
     "filesUploaded" : "empty",
+    "newToFileUpload" : "no",
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }

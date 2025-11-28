@@ -1915,10 +1915,10 @@ module.exports = function (router, _myData) {
             response.redirect("v14/doc-upload-ref-appeal")
         }
         if (sendAnswer == "Business change evidence") {
-            response.redirect("v14/doc-upload-upload-files")
+            response.redirect("v14/doc-upload-check-your-upload")
         }
         if (sendAnswer == "Probate evidence") {
-            response.redirect("v14/doc-upload-upload-files")
+            response.redirect("v14/doc-upload-check-your-upload")
         }
         else {
             response.redirect("_common/not-testing")
