@@ -316,19 +316,133 @@ module.exports = [
     "pageid": "du02",
     "pagename": "Tell us what this relates to - Document upload",
     "pageurl": "business-documents-subject",
-    "pagedesc": "Submit documents and view a list of documents submitted for this business."
+    "pagedesc": "Select the subject of your document submission."
   },
   {
     "pageid": "du03",
     "pagename": "What do you want to send us?  - Document upload",
     "pageurl": "business-documents-change-appeal-complaint-probate",
-    "pagedesc": "Submit documents and view a list of documents submitted for this business."
+    "pagedesc": "Tell us if you’re  sending business change, appeal, complaint or probate evidence."
   },
   {
     "pageid": "du04",
     "pagename": "Check what you've told us before you add documents - Document upload",
     "pageurl": "business-documents-check-before",
-    "pagedesc": "Submit documents and view a list of documents submitted for this business."
+    "pagedesc": "Check what you’ve told us before you add documents."
+  },
+  {
+    "pageid": "du05",
+    "pagename": "Add documents - Document upload",
+    "pageurl": "business-documents-add-submit",
+    "pagedesc": "Add and submit documents. "
+  },
+  {
+    "pageid": "du06",
+    "pagename": "Enter appeal reference number - Document upload",
+    "pageurl": "business-documents-appeal-reference",
+    "pagedesc": "Enter your appeal reference number."
+  },
+  {
+    "pageid": "du07",
+    "pagename": "Enter complaint reference number - Document upload",
+    "pageurl": "business-documents-complaint-reference",
+    "pagedesc": "Enter your complaint reference number."
+  },
+  {
+    "pageid": "du08",
+    "pagename": "Which aspect of Countryside Stewardship does this relate to? - Document upload",
+    "pageurl": "business-documents-countryside-stewardship",
+    "pagedesc": "Tell us which aspect of Countryside Stewardship this relates to."
+  },
+  {
+    "pageid": "du09",
+    "pagename": "Enter complaint reference number - Document upload",
+    "pageurl": "business-documents-facilitation-fund",
+    "pagedesc": "Tell us if this is an amendment or evidence for your Facilitation Fund claim."
+  },
+  {
+    "pageid": "du10",
+    "pagename": "Enter CSFF Reference number",
+    "pageurl": "business-documents-facilitation-fund-reference",
+    "pagedesc": "Tell us your  Facilitation Fund reference number. "
+  },
+  {
+    "pageid": "du11",
+    "pagename": "What is this - Is this for your application - Document upload",
+    "pageurl": "business-documents-capital-grant",
+    "pagedesc": "Tell us if this is a declaration or evidence for your capital grant."
+  },
+  {
+    "pageid": "du12",
+    "pagename": "Enter Application Reference number - Document upload",
+    "pageurl": "business-documents-countryside-stewardship-application-reference",
+    "pagedesc": "Tell us your Countryside Stewardship  application reference number."
+  },
+  {
+    "pageid": "du13",
+    "pagename": "What is this - Is this for your agreement... - Document upload",
+    "pageurl": "business-documents-countryside-stewardship-agreement",
+    "pagedesc": "Tell us if this is an amendment or evidence for your Countryside Stewardship agreement."
+  },
+  {
+    "pageid": "du14",
+    "pagename": "What is this - Is this for your revenue claim ... - Document upload",
+    "pageurl": "business-documents-countryside-stewardship-revenue-claim",
+    "pagedesc": "Tell us if this is an amendment or evidence for your Countryside Stewardship revenue claim."
+  },
+  {
+    "pageid": "du15",
+    "pagename": "Enter your agreement reference - Document upload",
+    "pageurl": "business-documents-countryside-stewardship-agreement-reference",
+    "pagedesc": "Tell us your Countryside Stewardship  agreement reference number."
+  },
+  {
+    "pageid": "du16",
+    "pagename": "Is this for your Delinked Payment; - Document upload",
+    "pageurl": "business-documents-delinked-payments",
+    "pagedesc": "Tell us if this is an amendment or evidence for your delinked payments claim."
+  },
+  {
+    "pageid": "du17",
+    "pagename": "Enter payment year - Document upload",
+    "pageurl": "business-documents-delinked-payments-year",
+    "pagedesc": "Tell us the payment year for your delinked payments claim."
+  },
+  {
+    "pageid": "du18",
+    "pagename": "Is this for your Environmental Stewardship; - Document upload",
+    "pageurl": "business-documents-environmental-stewardship",
+    "pagedesc": "Tell us if this is an agreement amendment, claim or claim or evidence for your Environmental Stewardship claim."
+  },
+  {
+    "pageid": "du19",
+    "pagename": "Enter your Agreement Number - Document upload",
+    "pageurl": "business-documents-environmental-stewardship-agreement-reference",
+    "pagedesc": "Tell us your Environmental Stewardship  agreement reference number. "
+  },
+  {
+    "pageid": "du20",
+    "pagename": "Is this for your SFI; - Document upload",
+    "pageurl": "business-documents-SFI",
+    "pagedesc": "Tell us if this is evidence for SFI expanded offer, pilot or 23."
+  },
+  {
+    "pageid": "du21",
+    "pagename": "Enter your Application reference - Document upload",
+    "pageurl": "business-documents-SFI-application-reference",
+    "pagedesc": "Tell us your Sustainable Farming Incentive application reference number. "
+  },
+  {
+    "pageid": "du22",
+    "pagename": "Enter project code - Document upload",
+    "pageurl": "business-documents-grant-project-code",
+    "pagedesc": "Tell us your grant project code."
+  },
+  {
+    "pageid": "du23",
+    "pagename": "View uploaded file  - Document upload",
+    "pageurl": "business-documents-file-detail-view",
+    "pagedesc": "View file details."
   },
   {
     "pageid": "mp02",

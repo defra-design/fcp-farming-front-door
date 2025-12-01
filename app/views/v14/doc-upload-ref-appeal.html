@@ -16,21 +16,28 @@
 {% set serviceName = "Land and Farm Service" %}
 
 {% if data.view == "ext" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
-    "status": '',
-    "name": "TO DO",
-    "id": "xx",
-    "url": "doc-upload-ref-appeal?view=ext",
-    "release": "",
-    "variants": [],
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+  "status": '',
+  "name": "Enter appeal reference number - document upload",
+  "id": "du06",
+  "url": "doc-upload-ref-appeal?view=ext",
+  "release": "Buffalo MVP enhancement",
+  "variants": [],
 
-    "pagetitle": pageTitle,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
-
-]
+  "pagetitle": pageTitle,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  {
+    "scenario": "Empty field / nothing entered",
+    "content": "Tell us your appeal reference number."
+  },
+  {
+    "scenario": "Incorrect format",
+    "content": "Enter a valid appeal reference number, like [BAs to provide example not in use]."
+  }    
+  ]
 
 }
 %}

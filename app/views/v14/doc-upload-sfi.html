@@ -10,7 +10,7 @@
 
 {% set _showIntExtLinks = true %}
 
-{% set pageTitle = "What is this evidence for?" %}
+{% set pageTitle = "Is this evidence for SFI expanded offer, pilot or 23?" %}
 {% set pageName = pageTitle %}
 
 {% set serviceName = "Land and Farm Service" %}
@@ -19,23 +19,24 @@
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": '',
-    "name": "TO DO",
-    "id": "xx",
+    "name": "Is this for your SFI - Document upload",
+    "id": "du20",
     "url": "doc-upload-sfi?view=ext",
-    "release": "",
+    "release": "Buffalo MVP 2.0",
     "variants": [],
 
     "pagetitle": pageTitle,
     "pagedesc": "",
     "pageurl": "",
     "errormessages": [
+      {
+        "scenario": "No option selected",
+        "content": "Tell us if this is evidence for SFI expanded offer, pilot or 23."
+      } 
+    ]
 
-]
-
-}
-%}
-
-
+    }
+  %}
 
 {% else %}
 

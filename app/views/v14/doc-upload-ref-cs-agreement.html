@@ -19,18 +19,25 @@
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": '',
-    "name": "TO DO",
-    "id": "xx",
+    "name": "Enter your agreement reference - Document upload",
+    "id": "du15",
     "url": "doc-upload-ref-cs-agreement?view=ext",
-    "release": "",
+    "release": "Buffalo MVP 2.0",
     "variants": [],
 
     "pagetitle": pageTitle,
     "pagedesc": "",
     "pageurl": "",
     "errormessages": [
-
-]
+  {
+    "scenario": "Empty field / nothing entered",
+    "content": "Tell us your Countryside Stewardship agreement reference number."
+  },
+  {
+    "scenario": "Incorrect format",
+    "content": "Enter a valid Countryside Stewardship agreement reference number, like [BAs to provide example not in use]."
+  }    
+  ]
 
 }
 %}

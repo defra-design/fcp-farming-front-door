@@ -19,23 +19,28 @@
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": '',
-    "name": "TO DO",
-    "id": "xx",
+    "name": "Enter your Application reference - Document upload",
+    "id": "du21",
     "url": "doc-upload-ref-sfi-app?view=ext",
-    "release": "",
+    "release": "Buffalo MVP 2.0",
     "variants": [],
 
     "pagetitle": pageTitle,
     "pagedesc": "",
     "pageurl": "",
     "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Tell us your Sustainable Farming Incentive application reference number."
+      },
+      {
+        "scenario": "Incorrect format",
+        "content": "Enter a valid Sustainable Farming Incentive application reference number, like [BAs to provide example not in use]."
+      }    
+    ]
 
-]
-
-}
-%}
-
-
+    }
+  %}
 
 {% else %}
 
