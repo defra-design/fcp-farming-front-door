@@ -16,19 +16,19 @@
 {% set serviceName = "Land and Farm Service" %}
 
 {% if data.view == "ext" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
-    "status": '',
-    "name": "TO DO",
-    "id": "xx",
-    "url": "doc-upload-upload-added?view=ext",
-    "release": "",
-    "variants": [],
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": '',
+"name": "TO DO",
+"id": "xx",
+"url": "doc-upload-upload-added?view=ext",
+"release": "",
+"variants": [],
 
-    "pagetitle": pageTitle,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
 
 ]
 
@@ -43,26 +43,42 @@
 
 {% block beforeContent %}
 
-    {% if data.view != "int" %}
+{% if data.view != "int" %}
 
-        {% include "_common/phase-banner-2.html" %}
-        {% include "_common/sub-header.html" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
 
-        {% set _hideAccountLink = true %}
-        {% include "_common/login-nav-3.html" %}
-    {% else %}
-        {% include "_common/login-nav-internal.html" %}
-    {% endif %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
 
-    <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 
 
 {% block content %}
 
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+            <div role="alert">
+                <h2 class="govuk-error-summary__title">
+                    There is a problem
+                </h2>
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                        <li>
+                            <a href="#doc-upload-anchor">fencereceipt1.pdf must be less than 10MB</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
             Add documents
         </h1>
@@ -93,31 +109,45 @@
             could cause delays.
         </p>
 
-    
+
         <div class="moj-multi-file__uploaded-files">
             <h2 class="govuk-heading-m" id="doc-upload-anchor">Documents ready to submit</h2>
             <div class="govuk-summary-list moj-multi-file-upload__list">
                 <div class="govuk-summary-list__row moj-multi-file-upload__row">
                     <div class="govuk-summary-list__value moj-multi-file-upload__message">
-                        fencepic1.jpeg
+                        <span class="moj-multi-file-upload__success">
+                            <svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+                                <path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"></path>
+                            </svg>
+                            fencepic1.jpeg uploaded successfully
+                        </span>
                     </div>
                     <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
                         <button
                             class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
                             type="button" name="delete" value="progress-tracker.png">
-                            Remove <span class="govuk-visually-hidden">progress-tracker.png</span>
+                            Delete <span class="govuk-visually-hidden">progress-tracker.png</span>
                         </button>
                     </div>
                 </div>
                 <div class="govuk-summary-list__row moj-multi-file-upload__row">
                     <div class="govuk-summary-list__value moj-multi-file-upload__message">
-                        fencereceipt1.pdf
+                        <span class="moj-multi-file-upload__error">
+                            <svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+                                <path
+                                    d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z">
+                                </path>
+                            </svg>
+                            fencereceipt1.pdf upload failed
+                        </span>
                     </div>
                     <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
                         <button
                             class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
-                            type="button" name="delete" value="upscalemedia-transformed.jpeg">
-                            Remove <span class="govuk-visually-hidden">upscalemedia-transformed.jpeg</span>
+                            type="button" name="delete" value="pay-offer-faqs-2025-2026.docx">
+                            Delete <span class="govuk-visually-hidden">pay-offer-faqs-2025-2026.docx</span>
                         </button>
                     </div>
                 </div>
@@ -141,15 +171,16 @@
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
             <strong class="govuk-warning-text__text">
                 <span class="govuk-visually-hidden">Warning</span>
-                Check you are submitting the right documents. If you want to remove them after you submit them, you will need to contact the Rural Payments Agency. Keep your own copies of anything you send us.
+                Check you are submitting the right documents. If you want to remove them after you submit them, you will
+                need to contact the Rural Payments Agency. Keep your own copies of anything you send us.
             </strong>
         </div>
 
-    <form method="POST">
-      <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
-        Submit
-      </button>
-    </form>
+        <form method="POST">
+            <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+                Submit
+            </button>
+        </form>
 
     </div>
 </div>

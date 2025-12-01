@@ -19,23 +19,28 @@
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": '',
-    "name": "TO DO",
-    "id": "xx",
-    "url": "doc-upload-ref-payment?view=ext",
-    "release": "",
+    "name": "Enter payment year - Document upload",
+    "id": "du17",
+    "url": "doc-upload-payment-tag?view=ext",
+    "release": "Buffalo MVP 2.0",
     "variants": [],
 
     "pagetitle": pageTitle,
     "pagedesc": "",
     "pageurl": "",
     "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Tell us the payment year this relates to."
+      },
+      {
+        "scenario": "Incorrect format",
+        "content": "Year must be recent and have 4 digits, like 2025."
+      }    
+    ]
 
-]
-
-}
-%}
-
-
+    }
+  %}
 
 {% else %}
 

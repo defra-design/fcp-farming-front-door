@@ -19,18 +19,25 @@
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": '',
-    "name": "TO DO",
-    "id": "xx",
+    "name": "Enter Application Reference number - Document upload",
+    "id": "du12",
     "url": "doc-upload-ref-cs-app?view=ext",
-    "release": "",
+    "release": "Buffalo MVP 2.0",
     "variants": [],
 
     "pagetitle": pageTitle,
     "pagedesc": "",
     "pageurl": "",
     "errormessages": [
-
-]
+  {
+    "scenario": "Empty field / nothing entered",
+    "content": "Tell us your Countryside Stewardship application reference number."
+  },
+  {
+    "scenario": "Incorrect format",
+    "content": "Enter a valid Countryside Stewardship application reference number, like [BAs to provide example not in use]."
+  }    
+  ]
 
 }
 %}
