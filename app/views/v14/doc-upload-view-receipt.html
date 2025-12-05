@@ -17,40 +17,15 @@
 {% set pageName = "fencereceipt1" %}
 {% set serviceName = "Land and Farm Service" %}
 
-<!--{% if data.view == "ext" and data.release != "concept" %}
+{% set pageName = "[file name]" %}
+{% set serviceName = "Land and Farm Service" %}
+
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In development',
-"name": "Address (check) - personal details",
-"id": "pd07",
-"url": "personal-details-address-check?r=t&view=ext&release=b1&newChange=true",
-"release": "Buffalo 1.0 MVP",
-"variants": [],
-
-"pagetitle": pageName,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
-],
-
-"notes": [
-'The <strong>back</strong> link should take the user to their previous page, as described in - <a
-  href="https://design-system.service.gov.uk/components/back-link/" class="govuk-link govuk-link--no-visited-state"
-  rel="noreferrer noopener" target="_blank">GOV.UK Design System: Back link</a> as on the other pages within Buffalo.',
-'The <strong>change</strong> link should take the user to the corresponding page that matches how they entered the
-address. So, if the user entered the address with manual entry, take them to pd06. If they used the postcode lookup,
-take them to pd16.'
-]
-
-}
-%}
-{% elif data.view == "int" %}
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-"status": 'In development',
-"name": "Address (check) - personal details",
-"id": "int-pd07",
-"url": "personal-details-address-check?r=t&view=int&release=b2&newChange=true",
+"name": "View uploaded file  - document upload",
+"id": "du23",
+"url": "doc-upload-view-file?view=ext",
 "release": "Buffalo 1.1 MVP",
 "variants": [],
 
@@ -61,19 +36,10 @@ take them to pd16.'
 ],
 
 "notes": [
-'The <strong>back</strong> link should take the user to their previous page, as described in - <a
-  href="https://design-system.service.gov.uk/components/back-link/" class="govuk-link govuk-link--no-visited-state"
-  rel="noreferrer noopener" target="_blank">GOV.UK Design System: Back link</a> as on the other pages within Buffalo.',
-'The <strong>change</strong> link should take the user to the corresponding page that matches how they entered the
-address. So, if the user entered the address with manual entry, take them to int-pd06. If they used the postcode lookup,
-take them to int-pd16.'
 ]
 
 }
 %}
-{% else %}
-
-{% endif %}-->
 
 
 {% block beforeContent %}

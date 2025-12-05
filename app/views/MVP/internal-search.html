@@ -262,8 +262,8 @@
   "errormessages": [
     {
         "field": "Search by business name",
-        "scenario": "User enters less than 2 characters",
-        "content": "Business name must be 2 characters or more"
+        "scenario": "User enters less than 3 characters",
+        "content": "Business name must be 3 characters or more"
       }
   ],
   "notes": [
@@ -848,7 +848,7 @@
           </label>
         </h1>
 
-        <div class="govuk-hint">Enter at least the first 2 characters of the business name</div>
+        <div class="govuk-hint">Enter at least the first 3 characters of the business name</div>
 
         <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}"
           id="search-internal" name="q" title="Search" class="govuk-input">
