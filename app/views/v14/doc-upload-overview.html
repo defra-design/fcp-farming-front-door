@@ -21,12 +21,20 @@
   "status": '',
   "name": "View business documents - Document upload",
   "id": "du01",
-  "url": "doc-upload-overview?view=ext",
+  "url": "doc-upload-overview?view=ext&filesUploaded=no&newToFileUpload=no",
   "release": "MVP - Buffalo enhancement",
   "variants": [
+      {
+        "name": "With files uploaded (default)",
+        "url": "doc-upload-overview?view=ext&filesUploaded=no&newToFileUpload=no"
+    },
     {
         "name": "No files uploaded",
         "url": "doc-upload-overview?filesUploaded=no&newToFileUpload=yes"
+    },
+    {
+        "name": "Success banner - files have been submitted",
+        "url": "doc-upload-overview?filesUploaded=yes&newToFileUpload=no"
     }
   ],
 
