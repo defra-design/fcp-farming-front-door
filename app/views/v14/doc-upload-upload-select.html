@@ -16,22 +16,61 @@
 {% set serviceName = "Land and Farm Service" %}
 
 {% if data.view == "ext" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
     "status": '',
-    "name": "TO DO",
-    "id": "xx",
-    "url": "doc-upload-upload-select?view=ext",
-    "release": "",
-    "variants": [],
+    "name": "Add documents - document upload",
+    "id": "du05",
+    "url": "doc-upload-upload-files?view=ext",
+    "release": "Buffalo MVP enhancement",
+    "variants": [
+      {
+      "name": "Files added for upload (but not yet uploaded to LFS (or virus-scanned))",
+      "url": "doc-upload-upload-added"
+      },
+      {
+      "name": "Files added for upload, but one (or more) files have failed - example",
+      "url": "doc-upload-upload-fail"
+      }
+    ],
 
     "pagetitle": pageTitle,
     "pagedesc": "",
     "pageurl": "",
     "errormessages": [
-
+  {
+    "scenario": "No document selected",
+    "content": "Select a document"
+  },
+  {
+    "scenario": "Wrong file type",
+    "content": "The selected file must be a doc, docx, docm, gif, jfif, jpeg, jpg, odt, pdf, pptx, tiff, txt, xls, xlsx or xlsm."
+  },
+  {
+    "scenario": "File size too big",
+    "content": "The selected file must be smaller than 10MB."
+  },
+  {
+    "scenario": "File is empty",
+    "content": "The selected file is empty."
+  },
+  {
+    "scenario": "File contains virus",
+    "content": "The selected file contains a virus."
+  },
+  {
+    "scenario": "There was a problem and the file was not uploaded",
+    "content": "The selected file could not be uploaded – try again."
+  },
+  {
+    "scenario": "More than 10 files chosen",
+    "content": "You can only select up to 10 files at the same time."
+  },
+  {
+    "scenario": "File name is not unique, has more than 20 characters, contains characters other than letters and numbers, or contains a gap",
+    "content": "Each file name must be unique, 20 characters or less, contain only letters and numbers, and contain no gaps."
+  }        
 ]
-
 }
 %}
 

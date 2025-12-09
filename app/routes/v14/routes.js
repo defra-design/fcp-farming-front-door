@@ -1991,7 +1991,7 @@ module.exports = function (router, _myData) {
 
         router.post('/' + version + '/doc-upload-upload-added', function (req, res) {
 
-        res.redirect(301, '/' + version + '/doc-upload-overview?filesUploaded=yes');
+        res.redirect(301, '/' + version + '/doc-upload-overview?filesUploaded=yes&newToFileUpload=no');
 
     });
 
