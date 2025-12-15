@@ -1660,25 +1660,26 @@ module.exports = function (router,_myData) {
     });
 
 
-// Run this code when a form is submitted to 'are these details correct' page'
-router.post('/detailsroute', function (req, res) {
+// Run this code when a form is submitted to 'are these details correct' page
+router.post('/detailsroutev15', function (req, res) {
 
-  // Make a variable and give it the value from 'how-many-balls'
-  var variabledetails = req.session.data['correctdetails']
+  // Make a variable and give it the value from the radio button
+  var variabledetailscorrect = req.session.data['correctDetailsv15']
  
   // Check whether the variable matches a condition
-  if (variabledetails == "value1"){
+  if (variabledetailscorrect == "yes"){
     // Send user to next page
-    res.redirect('AHWP/AHWP-what-you-can-claim')
+    res.redirect('/v15/AHWP-what-you-can-claim')
+    
   } else {
-    // Send user to ineligible page
-    // ADD PAGE TO GO TO
-    res.redirect('AHWP/AHWP-sign-in-details-incorrect')
+    // Send user to details incorrect page
+    res.redirect('/v15/AHWP-sign-in-details-incorrect')
+   
   }
 });
 
 // Run this code when user has chosen a start page from the index page
-router.post('/startRoute', function (req, res) {
+router.post('/startuser', function (req, res) {
 
   // Make a variable and give it the value from 'how-many-balls'
   var variabledetails = req.session.data['whereToStart']
@@ -1686,15 +1687,38 @@ router.post('/startRoute', function (req, res) {
   // Check whether the variable matches a condition
   if (variabledetails == "IAHWStartPage"){
     // Send user to IAHW start page
-    res.redirect('AHWP/AHWP-apply-guidance-start')
+    res.redirect('/v15/AHWP-apply-guidance-start')
   }
 
-  else (variabledetails == "LFSStartPage")
+  else 
   {
     // Send user to LFS start page
-    res.redirect('AHWP/AHWP-LFS-start')
+    res.redirect('/v15/AHWP-apply-guidance-start-uplift')
   }
 
 });
+
+
+
+// Run this code when a form is submitted to 'are these details correct' uplift page
+router.post('/detailsrouteuplift', function (req, res) {
+
+  // Make a variable and give it the value from radio button
+  var variabledetailsuplift = req.session.data['correctDetailsuplift']
+ 
+  // Check whether the variable matches a condition
+  if (variabledetailsuplift == "yes"){
+    // Send user to update your details page
+    res.redirect('/v15/AHWP-what-you-can-claim-uplift')
+   
+  } 
+  else {
+    // Send user to next IAHW page
+    res.redirect('/v15/AHWP-sign-in-details-incorrect-uplift')
+  }
+
+});
+
+
 
 }

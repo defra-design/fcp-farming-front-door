@@ -1,0 +1,129 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+
+{% set _showFooterMVPLinks = false %}
+
+{% else %}
+
+{% set _showFooterMVPLinks = true %}
+
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageName = "Check your business name is correct before submitting" %}
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Business name (check) - business details",
+    "id": "bd03",
+    "url": "business-details-name-check?r=t&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Business name (check) - business details",
+    "id": "int-bd03",
+    "url": "business-details-name-check?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    ]
+    
+  }
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your business name is correct before submitting     
+      </h1>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Business name"
+            },
+            value: {
+              text: myData.newNameBus or myData.nameBus
+
+            },
+            actions: {
+              items: [
+                {
+                  href: "business-details-name-change",
+                  text: "Change",
+                  visuallyHiddenText: "business name"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

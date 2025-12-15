@@ -1,0 +1,100 @@
+{% extends "layouts/AHWP-gov-brand.html" %}
+
+{% block header %}
+{{ govukHeader({
+classes: "govuk-header--full-width-border",
+rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+serviceName: "Apply for funding to improve animal health and welfare",
+serviceUrl: "/"
+}) }}
+{% endblock %}
+
+{% block pageTitle %}
+Sign in {{ serviceName }} Prototype
+{% endblock %}
+{% block beforeContent %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            Update your details
+        </h1>
+        <p class="govuk-body">
+            If your details are not correct you need to update them before you can get funding to improve animal health and welfare (IAHW). The fastest way to do this is to use the Land and Farm Service.
+        </p>
+
+        <p class="govuk-body-m"><a class="govuk-link govuk-link--no-visited-state" href="business-home">Update your details on the Land and Farm Service</a>.
+            </p>
+
+        <h2 class="govuk-heading-l">What the Land and Farm Service is</h2>
+        </h2>
+
+        <p class="govuk-body-m">We are developing the Land and Farm Service to:
+        <ul class="govuk-list govuk-list--bullet">
+            <li>
+                replace the Rural Payments service
+            </li>
+            <li>provide farmers and land owners with a single account where they can access a range of services to manage
+                their land </li>
+        </ul>
+
+        <p class="govuk-body-m">You can use the Land and Farm Service if you:
+        <ul class="govuk-list govuk-list--bullet">
+            <li>want to apply for and claim funding to improve animal health and welfare</li>
+            <li>need to update your business and personal details because they are incorrect</li>
+        </ul>
+        </p>
+        <p>
+            In future more people will be able to use the service to manage a range of tasks related to their land or
+            farm. This includes:
+        </p>
+
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>applying for or managing schemes such as Countryside Stewardship and Sustainable Farming Incentive
+            </li>
+            <li>managing who has permission to act on behalf of your business </li>
+            <li>viewing payment details</li>
+            <li>finding new grants and funding opportunities</li>
+            <li>managing your land and maps</li>
+        </ul>
+      <br>
+
+        <div>
+            <h2 class="govuk-heading-l">Contact the Rural Payments Agency for help</h2>
+            <p class="govuk-body-m">Phone: 03000 200 301</p>
+            <p class="govuk-body-m">Monday to Friday, 8.30am to 5pm (except bank holidays)</p>
+            <p class="govuk-body-m"><a class="govuk-link govuk-link--no-visited-state" href="#">Find out about call
+                    charges (opens in new tab)</a>.</p>
+            <p class="govuk-body-m">Email: <a class="govuk-link govuk-link--no-visited-state"
+                    href="#">ruralpayments@defra.gov.uk</a></p>
+            <p class="govuk-body-m">We aim to respond to emails within 10 working days.</p>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+</div>
+
+</div>
+</form>
+</div>
+
+{% endblock %}

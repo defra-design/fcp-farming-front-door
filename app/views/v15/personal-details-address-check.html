@@ -1,0 +1,151 @@
+w{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageName = "Check your personal address is correct before submitting" %}
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Address (check) - personal details",
+    "id": "pd07",
+    "url": "personal-details-address-check?r=t&view=ext&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    ],
+
+    "notes": [
+      'The <strong>back</strong> link should take the user to their previous page, as described in - <a href="https://design-system.service.gov.uk/components/back-link/" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">GOV.UK Design System: Back link</a> as on the other pages within Buffalo.',
+      'The <strong>change</strong> link should take the user to the corresponding page that matches how they entered the address. So, if the user entered the address with manual entry, take them to pd06. If they used the postcode lookup, take them to pd16.'      
+    ]    
+    
+  }
+%}
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Address (check) - personal details",
+    "id": "int-pd07",
+    "url": "personal-details-address-check?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    ],
+
+    "notes": [
+      'The <strong>back</strong> link should take the user to their previous page, as described in - <a href="https://design-system.service.gov.uk/components/back-link/" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">GOV.UK Design System: Back link</a> as on the other pages within Buffalo.',
+      'The <strong>change</strong> link should take the user to the corresponding page that matches how they entered the address. So, if the user entered the address with manual entry, take them to int-pd06. If they used the postcode lookup, take them to int-pd16.'      
+    ]    
+    
+  }
+%}
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header-2.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your personal address is correct before submitting     
+      </h1>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Personal address
+          </dt>
+          <dd class="govuk-summary-list__value">
+
+            {% set _addressPostcodeValue = myData.newAddressPostcodePers %}
+            {% if _addressPostcodeValue == null %}
+              {% set _addressPostcodeValue = myData.addressPostcodePers %}
+            {% endif %}
+
+            {% set _address2Value = myData.newAddress2Pers or myData.address2Pers %}
+            {% set _addressCountyValue = myData.newAddressCountyPers or myData.addressCountyPers %}
+
+
+            <!-- Address line 1 -->
+            {{myData.newAddress1Pers or myData.address1Pers}}<br>
+            <!-- Address line 1 -->
+            {% if _address2Value != "" %}{{_address2Value}}<br>{% endif %}
+            <!-- Town or city -->
+            {{myData.newAddressCityPers or myData.addressCityPers}}<br>
+            <!-- County -->
+            {% if _addressCountyValue != "" %}{{_addressCountyValue}}<br>{% endif %}
+            <!-- Postcode -->
+            {% if not _addressPostcodeValue %}{% else %}{{_addressPostcodeValue}}<br>{% endif %}
+            <!-- Country -->
+            {{myData.newAddressCountryPers or myData.addressCountryPers}}
+
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="personal-details-address-postcode-change">Change<span class="govuk-visually-hidden"> personal address</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-personal-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

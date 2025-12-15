@@ -1,0 +1,294 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "What is your full name?" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Land and Farm Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Full name (change) - personal details (Buffalo 1.0 MVP)",
+    "id": "pd02",
+    "url": "personal-details-name-change?r=t&view=ext&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "Concept (one input)",
+        "url": "personal-details-name-change?r=t&view=ext&release=concept&newChange=true"
+      }
+    ],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "field": "First name",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter first name"
+      },
+      {
+        "field": "First name",
+        "scenario": "Entry is too long",
+        "content": "First name must be 100 characters or less"
+      },
+      {
+        "field": "Middle names",
+        "scenario": "Entry is too long",
+        "content": "Middle names must be 100 characters or less"
+      },
+      {
+        "field": "Last name",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter last name"
+      },
+      {
+        "field": "Last name",
+        "scenario": "Entry is too long",
+        "content": "Last name must be 100 characters or less"
+      },
+      {
+        "field": "Full name (concept)",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter full name"
+      },
+      {
+        "field": "Full name (concept)",
+        "scenario": "Entry is too long",
+        "content": "Full name must be [max number] characters or less"
+      }
+    ]
+    
+  }
+  %}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Full name (change) - personal details (Buffalo 1.1 MVP)",
+    "id": "int-pd02",
+    "url": "personal-details-name-change?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "field": "First name",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter first name"
+      },
+      {
+        "field": "First name",
+        "scenario": "Entry is too long",
+        "content": "First name must be 100 characters or less"
+      },
+      {
+        "field": "Middle names",
+        "scenario": "Entry is too long",
+        "content": "Middle names must be 100 characters or less"
+      },
+      {
+        "field": "Last name",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter last name"
+      },
+      {
+        "field": "Last name",
+        "scenario": "Entry is too long",
+        "content": "Last name must be 100 characters or less"
+      }
+    ]
+    
+  }
+%}
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header-2.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      {% if data.release == "b1" %}
+      <!-- 4 FIELDS FOR NAME - MVP -->
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            What is your full name?
+          </h1>
+        </legend>
+
+        <!-- TITLE 
+        <div class="govuk-form-group {% if myData.validationErrors.nameTitlePers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="nameTitlePers">
+            Title (optional)
+          </label>
+          {% if myData.validationErrors.nameTitlePers %}
+          <p id="nameTitlePers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.nameTitlePers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewNameTitlePers = myData.newNameTitlePers or myData.nameTitlePers %}
+          {% if myData.validationErrors.nameTitlePers %}
+              {% set _valueNewNameTitlePers = myData.newNameTitlePers %}
+          {% endif %}
+          <input class="govuk-input govuk-!-width-one-quarter {% if myData.validationErrors.nameTitlePers %}govuk-input--error{% endif %}" id="nameTitlePers" name="nameTitlePers" type="text" value="{{_valueNewNameTitlePers}}" {% if myData.validationErrors.nameTitlePers %}aria-describedby="nameTitlePers-error"{% endif %}>
+        </div> -->
+
+        <!-- FIRST NAME -->
+        <div class="govuk-form-group {% if myData.validationErrors.nameFirstPers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="nameFirstPers">
+            First name
+          </label>
+          {% if myData.validationErrors.nameFirstPers %}
+          <p id="nameFirstPers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.nameFirstPers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewNameFirstPers = myData.newNameFirstPers or myData.nameFirstPers %}
+          {% if myData.validationErrors.nameFirstPers %}
+              {% set _valueNewNameFirstPers = myData.newNameFirstPers %}
+          {% endif %}
+          <input class="govuk-input {% if myData.validationErrors.nameFirstPers %}govuk-input--error{% endif %}" id="nameFirstPers" name="nameFirstPers" type="text" value="{{_valueNewNameFirstPers}}" {% if myData.validationErrors.nameFirstPers %}aria-describedby="nameFirstPers-error"{% endif %}>
+        </div>
+
+        <!-- MIDDLE NAME -->
+        <div class="govuk-form-group {% if myData.validationErrors.nameMiddlePers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="nameMiddlePers">
+            Middle names
+          </label>
+          {% if myData.validationErrors.nameMiddlePers %}
+          <p id="nameMiddlePers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.nameMiddlePers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewNameMiddlePers = myData.newNameMiddlePers or myData.nameMiddlePers %}
+          {% if myData.validationErrors.nameMiddlePers %}
+              {% set _valueNewNameMiddlePers = myData.newNameMiddlePers %}
+          {% endif %}
+          <input class="govuk-input {% if myData.validationErrors.nameMiddlePers %}govuk-input--error{% endif %}" id="nameMiddlePers" name="nameMiddlePers" type="text" value="{{_valueNewNameMiddlePers}}" {% if myData.validationErrors.nameMiddlePers %}aria-describedby="nameMiddlePers-error"{% endif %}>
+        </div>
+
+        <!-- LAST NAME -->
+        <div class="govuk-form-group {% if myData.validationErrors.nameLastPers %}govuk-form-group--error{% endif %}">
+          <label class="govuk-label" for="nameLastPers">
+            Last name
+          </label>
+          {% if myData.validationErrors.nameLastPers %}
+          <p id="nameLastPers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.nameLastPers.message}}
+          </p>
+          {% endif %}
+          {% set _valueNewNameLastPers = myData.newNameLastPers or myData.nameLastPers %}
+          {% if myData.validationErrors.nameLastPers %}
+              {% set _valueNewNameLastPers = myData.newNameLastPers %}
+          {% endif %}
+          <input class="govuk-input {% if myData.validationErrors.nameLastPers %}govuk-input--error{% endif %}" id="nameLastPers" name="nameLastPers" type="text" value="{{_valueNewNameLastPers}}" {% if myData.validationErrors.nameLastPers %}aria-describedby="nameLastPers-error"{% endif %}>
+        </div>
+
+      </fieldset>
+      {% else %}
+      <!-- 1 FIELD FOR NAME -->
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="namePers">
+            What is your full name?
+          </label>
+        </h1>
+
+        {% if _inError %}
+        <p id="namePers-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.namePers.message}}
+        </p>
+        {% endif %}
+
+        {% set _valueNewNamePers = myData.newNamePers or myData.namePers %}
+        {% if myData.validationErrors.namePers %}
+            {% set _valueNewNamePers = myData.newNamePers %}
+        {% endif %}
+
+        <input class="govuk-input {% if _inError %}govuk-input--error{% endif %}" id="namePers" name="namePers" type="text"  value="{{_valueNewNamePers}}" {% if _inError %}aria-describedby="namePers-error"{% endif %} spellcheck="false" autocomplete="name">
+      </div>
+
+      {% endif %}
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-personal-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
