@@ -1,0 +1,167 @@
+w{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageName = "Check your personal phone numbers are correct before submitting" %}
+{% set serviceName = "Manage your land and farm Persinesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Phone numbers (check) - personal details",
+    "id": "pd15",
+    "url": "personal-details-phone-check?r=t&view=ext&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "no telephone number provided",
+        "url": "personal-details-phone-check?r=t&release=b2&view=ext&telNumberPers=empty&mobNumberPers=filled"
+      },
+      {
+        "name": "no mobile number provided",
+        "url": "personal-details-phone-check?r=t&release=b2&view=ext&mobNumberPers=empty&telNumberPers=filled"
+      }],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+    ]
+    
+  }
+%}
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Phone numbers (check) - personal details",
+    "id": "int-pd15",
+    "url": "personal-details-phone-check?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      {
+        "name": "no telephone number provided",
+        "url": "personal-details-phone-check?r=t&release=b2&view=int&telNumberPers=empty&mobNumberPers=filled"
+      },
+      {
+        "name": "no mobile number provided",
+        "url": "personal-details-phone-check?r=t&release=b2&view=int&mobNumberPers=empty&telNumberPers=filled"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+    ]
+    
+  }
+%}
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header-2.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate>
+
+      <h1 class="govuk-heading-l">
+        Check your personal phone numbers are correct before submitting
+      </h1>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Personal phone numbers
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Telephone: 
+            {% if data.telNumberPers == "empty" %}
+              <span style="color:#505a5f">Not added</span>
+            {% else %}
+              {% set _telValue = myData.newTelNumberPers %}
+              {% if _telValue == null %}
+                {% set _telValue = myData.telNumberPers %}
+              {% endif %}
+
+              {% if not _telValue %}
+                <span style="color:#505a5f">Not added</span>
+              {% else %}
+                {{_telValue}}
+              {% endif %}
+            {% endif %}
+            <br>
+            Mobile: 
+            {% if data.mobNumberPers == "empty" %}
+              <span style="color:#505a5f">Not added</span>
+            {% else %}
+              {% set _mobValue = myData.newMobNumberPers %}
+              {% if _mobValue == null %}
+                {% set _mobValue = myData.mobNumberPers %}
+              {% endif %}
+
+              {% if not _mobValue %}
+                <span style="color:#505a5f">Not added</span>
+              {% else %}
+                {{_mobValue}}
+              {% endif %}
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="personal-details-phone-change">Change<span class="govuk-visually-hidden"> personal phone numbers</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      {{govukButton({
+        text: "Submit"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-personal-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,368 @@
+{% extends "layouts/main.html" %}
+
+
+
+
+{% set _showDefraIDFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName="Your businesses" %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Businesses list",
+"id": "bp01",
+"url": "businesses-list?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "page 2 of list",
+"url": "businesses-list-p2?r=t&release=b1",
+
+"name": "No registered businesses - empty list",
+"url": "businesses-list?r=t&release=b1&view=ext&iv=undefined&regBus=false"
+}
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+],
+"notes": [
+"This page should be served to all external users upon sign-in who have more than one business. If they only have one
+business, redirect them to bp02 (home/business page) for that single business upon sign-in.",
+"Assumption is that this will be DefraID owned. This has been prototyped for demos and user research. ",
+"The footer links shown on this page are specific to Defra ID."
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    {% set _hideAccountLink = true %}
+    {% include "_common/login-nav-3.html" %}
+
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+        Choose a business
+      </h1>
+    </legend>
+    <div id="signIn-hint" class="govuk-hint">
+      These are businesses registered to your rural payments account including their single business identifier (SBI).
+    </div>
+    <form action="business-home">
+    <div class="govuk-radios" data-module="govuk-radios">
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+          aria-describedby="signIn-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn">
+          Agile Farm Ltd - SBI 123456789
+        </label>
+      </div>
+
+         <!--<div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          AJ COTTEY - SBI 369888333
+        </label>
+      </div>
+
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Avery Farms - SBI 74456600
+        </label>
+      </div>
+
+         <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Croft Industries - SBI 755211109
+        </label>
+      </div>-->
+
+         <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          D M Jones & Partners - SBI 202736410
+        </label>
+      </div>
+
+         <!--<div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          FOSTER & SON - SBI 221097732
+        </label>
+      </div>
+         <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Gray's Poultry Ltd - SBI 107756778
+        </label>
+      </div>
+         <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Hollybush Holdings - SBI 122109876
+        </label>
+      </div>-->
+
+         <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Home Farm - SBI 64432221
+        </label>
+      </div>
+   <!--<div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Inroad Developments Ltd - SBI 2001421786
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+          aria-describedby="signIn-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn">
+          Jehan and Wearn Ltd - SBI 344211567
+        </label>
+
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          J E MALYON - SBI 106348538
+        </label>
+      </div>-->
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+          aria-describedby="signIn-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn">
+          MEADOW FARM LTD - SBI 107297345
+        </label>
+
+      </div>
+      <!--<div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Merryfield Farmers Ltd - SBI 122500731
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+          aria-describedby="signIn-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn">
+          NEWMAN & PARTNERS, BG - SBI 106222310
+        </label>
+
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          NUNTON FARM - SBI 106865250
+        </label>
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+          aria-describedby="signIn-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn">
+          Pilgrims Farm - SBI 106229909
+        </label>
+
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          R.J.DAVIES T/A R.J.DAVIES & SON - SBI 200371913
+        </label>
+      </div>-->
+
+         <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Ronnie's Farm - SBI 761132198
+        </label>
+      </div>
+      <!-- <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+          aria-describedby="signIn-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn">
+          RW AND PM BUSH - SBI 107260796
+        </label>
+
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Ryan House - SBI 200008600
+        </label>
+      </div>
+     <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+          aria-describedby="signIn-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn">
+          SIMON MARTIN FARMS - SBI 106385022
+        </label>
+
+      </div>
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+          aria-describedby="signIn-2-item-hint">
+        <label class="govuk-label govuk-radios__label" for="signIn-2">
+          Tiller Farm Consultancy Ltd
+        </label>
+      </div>-->
+
+
+
+    </div>
+  </fieldset>
+</div>
+
+
+
+<button type="submit" class="govuk-button" data-module="govuk-button">
+  Continue
+</button>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Need more help?
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+  </div>
+</details>
+</form>
+<!--OG
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+      <span class="govuk-caption-l">{{data.user.name}}</span>
+      Choose a business
+    </h1>
+  </div>
+</div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <!-- NON MVP 
+      {% if data.regBus == "false" %}
+
+      <p class="govuk-body">
+        You have no registered businesses. 
+      </p>
+      
+      {% else %}
+      <!-- MVP 
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m"></caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Business name</th>
+            <th scope="col" class="govuk-table__header">Single business identifier (SBI)</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+
+          {% for _business in data.businesses %}
+          {% if loop.index < 21 %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><a class="govuk-link--no-visited-state" href="business-home?business={{_business.id}}">{{_business.name}}</a></th>
+            <td class="govuk-table__cell">{{_business.sbiNumber}}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+            <nav class="govuk-pagination"  aria-label="Pagination">
+        <ul class="govuk-pagination__list">
+          <li class="govuk-pagination__item govuk-pagination__item--current">
+            <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list" aria-label="Page 1" aria-current="page">
+              1
+            </a>
+          </li>
+          <li class="govuk-pagination__item">
+            <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list-p2" aria-label="Page 2">
+              2
+            </a>
+          </li>
+        </ul>
+        <div class="govuk-pagination__next">
+          <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="businesses-list-p2" rel="next">
+            <span class="govuk-pagination__link-title">
+              Next<span class="govuk-visually-hidden"> page</span>
+            </span>
+            <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+              <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+            </svg>
+          </a>
+        </div>
+
+      </nav>
+
+      <p class="">Showing <b>1</b> to <b>20</b> of <b>{{data.businesses.length}}</b> businesses</p>
+
+      {% endif %}-->
+
+
+</div>
+
+<!--<div class="govuk-grid-column-one-third">
+      <h3 class="govuk-heading-m">
+        Personal details
+      </h3>
+      <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a></p> 
+    </div>-->
+
+</div>
+
+
+
+
+{% endblock %}
