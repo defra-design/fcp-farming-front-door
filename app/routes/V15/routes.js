@@ -1,7 +1,7 @@
 
 module.exports = function (router,_myData) {
 
-    var version = "AHWP";
+    var version = "v15";
 
     //coverts a number to a month
     function toMonth(_monthNumber){
