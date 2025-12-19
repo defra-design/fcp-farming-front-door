@@ -1,7 +1,7 @@
 
 module.exports = function (router,_myData) {
 
-    var version = "v15";
+    var version = "v15-DAL";
 
     //coverts a number to a month
     function toMonth(_monthNumber){
@@ -186,7 +186,6 @@ module.exports = function (router,_myData) {
 
     // emma's test page
     router.get('/' + version + '/test-page', function (req, res) {
-        req.session.myData.emmaserrors = req.query.emmaserrors
         res.render(version + '/test-page', {
             myData: req.session.myData
         });
@@ -531,7 +530,7 @@ module.exports = function (router,_myData) {
             req.session.myData.newNamePers = req.session.myData.newNamePers || req.session.myData.namePers
         }
 
-        // v15
+        // v15-DAL
         if(req.session.data.release == "b1"){
             if(!req.session.myData.newNameFirstPers){
                 req.session.myData.validationError = "true"
@@ -1438,28 +1437,28 @@ module.exports = function (router,_myData) {
 
         var legalBus = request.session.data['legalBus']
         if (legalBus == "Charitable incorporated organisation (CIO)") {
-            response.redirect("v15/business-details-legal-charity")
+            response.redirect("v15-DAL/business-details-legal-charity")
         }
         else if (legalBus == "Charitable trust") {
-            response.redirect("v15/business-details-legal-check")
+            response.redirect("v15-DAL/business-details-legal-check")
         }
         else if (legalBus == "Government (central)") {
-            response.redirect("v15/business-details-legal-check")
+            response.redirect("v15-DAL/business-details-legal-check")
         }
         else if (legalBus == "Government (local)") {
-            response.redirect("v15/business-details-legal-check")
+            response.redirect("v15-DAL/business-details-legal-check")
         }
         else if (legalBus == "Partnership") {
-            response.redirect("v15/business-details-legal-check")
+            response.redirect("v15-DAL/business-details-legal-check")
         }
         else if (legalBus == "Sole proprietorship") {
-            response.redirect("v15/business-details-legal-check")
+            response.redirect("v15-DAL/business-details-legal-check")
         }
         else if (legalBus == "The Crown") {
-            response.redirect("v15/business-details-legal-check")
+            response.redirect("v15-DAL/business-details-legal-check")
         }
         else {
-            response.redirect("v15/business-details-legal-company")
+            response.redirect("v15-DAL/business-details-legal-company")
         }
     })
 
@@ -1674,13 +1673,13 @@ router.post('/detailsroutev2', function (req, res) {
   // Check whether the variable matches a condition
   if (correctDetails == "yes"){
     // Send user to next page
-  res.redirect('v15/AHWP-what-you-can-claim')
+  res.redirect('v15-DAL/AHWP-what-you-can-claim')
    
    
   } else {
     // Send user to ineligible page
     // ADD PAGE TO GO TO
-        res.redirect('v15/AHWP-sign-in-details-incorrect')
+        res.redirect('v15-DAL/AHWP-sign-in-details-incorrect')
 
   }
 });
@@ -1695,13 +1694,13 @@ router.post('/updated-email-answer', function (req, res) {
   // Check whether the variable matches a condition
   if (updateEmail == "yes"){
     // Send user to next page
-  res.redirect('v15/AHWP-what-you-can-claim')
+  res.redirect('v15-DAL/AHWP-what-you-can-claim')
    
    
   } else {
     // Send user to ineligible page
     // ADD PAGE TO GO TO
-        res.redirect('v15/AHWP-sign-in-details-incorrect')
+        res.redirect('v15-DAL/AHWP-sign-in-details-incorrect')
 
   }
 });
@@ -1716,13 +1715,13 @@ router.post('/updated-email-answer', function (req, res) {
   // Check whether the variable matches a condition
   //if (correctDetails3 == "yes"){
     // Send user to next page
-    //res.redirect('v15/AHWP-what-you-can-claim')
+    //res.redirect('v15-DAL/AHWP-what-you-can-claim')
     
-  //  res.redirect('v15/AHWP-apply-guidance-start') 
+  //  res.redirect('v15-DAL/AHWP-apply-guidance-start') 
 //  } else {
     // Send user to ineligible page
     // ADD PAGE TO GO TO
-  //  res.redirect('v15/AHWP-sign-in-details-incorrect')
+  //  res.redirect('v15-DAL/AHWP-sign-in-details-incorrect')
 //  }
 //});
 
