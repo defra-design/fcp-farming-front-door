@@ -1,0 +1,500 @@
+{% extends "layouts/main-rebrand.html" %}
+
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+{% set _showReleaseLinks = false %}
+{% else %}
+{% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Enter your personal address" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Address (change) - personal details",
+"id": "pd06",
+"url": "personal-details-address-change?r=t&view=ext&release=b1&newChange=true",
+"release": "Buffalo 1.0 MVP",
+"variants": [],
+
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"field": "Address line 1",
+"scenario": "Empty field / nothing entered",
+"content": "Enter address line 1, typically the building and street"
+},
+{
+"field": "Address line 1",
+"scenario": "Entry is too long",
+"content": "Address line 1 must be 100 characters or less"
+},
+
+{
+"field": "Address line 2",
+"scenario": "Entry is too long",
+"content": "Address line 2 must be 100 characters or less"
+},
+
+{
+"field": "Town or city",
+"scenario": "Empty field / nothing entered",
+"content": "Enter town or city"
+},
+{
+"field": "Town or city",
+"scenario": "Entry is too long",
+"content": "Town or city must be 100 characters or less"
+},
+
+{
+"field": "County",
+"scenario": "Entry is too long",
+"content": "County must be 100 characters or less"
+},
+
+{
+"field": "Postal code or zip code",
+"scenario": "Entry is too long",
+"content": "Postal code or zip code must be 10 characters or less"
+},
+
+{
+"field": "Country",
+"scenario": "Empty field / nothing entered",
+"content": "Enter a country"
+},
+{
+"field": "Country",
+"scenario": "Entry is too long",
+"content": "Country must be 60 characters or less"
+}
+
+],
+
+"notes": [
+"Pre populate fields with previously selected/entered address AND also pre-populate fields with known values if an
+address has been selected from the postcode lookup"
+]
+
+}
+%}
+{% elif data.view == "int"%}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Address (change) - personal details",
+"id": "int-pd06",
+"url": "personal-details-address-change?r=t&view=int&release=b2&newChange=true",
+"release": "Buffalo 1.1 MVP",
+"variants": [],
+
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"field": "Address line 1",
+"scenario": "Empty field / nothing entered",
+"content": "Enter address line 1, typically the building and street"
+},
+{
+"field": "Address line 1",
+"scenario": "Entry is too long",
+"content": "Address line 1 must be 100 characters or less"
+},
+
+{
+"field": "Address line 2",
+"scenario": "Entry is too long",
+"content": "Address line 2 must be 100 characters or less"
+},
+
+{
+"field": "Town or city",
+"scenario": "Empty field / nothing entered",
+"content": "Enter town or city"
+},
+{
+"field": "Town or city",
+"scenario": "Entry is too long",
+"content": "Town or city must be 100 characters or less"
+},
+
+{
+"field": "County",
+"scenario": "Entry is too long",
+"content": "County must be 100 characters or less"
+},
+
+{
+"field": "Postal code or zip code",
+"scenario": "Entry is too long",
+"content": "Postal code or zip code must be 10 characters or less"
+},
+
+{
+"field": "Country",
+"scenario": "Empty field / nothing entered",
+"content": "Enter a country"
+},
+{
+"field": "Country",
+"scenario": "Entry is too long",
+"content": "Country must be 60 characters or less"
+}
+
+],
+
+"notes": [
+"Pre populate fields with previously selected/entered address AND also pre-populate fields with known values if an
+address has been selected from the postcode lookup"
+]
+
+}
+%}
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header-2.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          Your personal details to update
+        </h1> 
+      </legend>
+
+      <form action="personal-details-email-uplift-check">
+
+        <!-- Personal email address -->
+        <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--m" for="personal-email">
+          Personal email address
+        </label>
+        <input class="govuk-input govuk-input--width-20" id="personal-email" name="personal-email"
+          type="text" value="alfredoldemail@gmail.com">
+      </div>
+
+        <!--dob-->
+        {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+        {{ govukDateInput({
+        id: "dob",
+        namePrefix: "dob",
+        fieldset: {
+        legend: {
+        text: "Date of birth",
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--m"
+        }
+        },
+        hint: {
+        text: "For example, 27 3 2007"
+        }
+        }) }}
+
+
+        <!-- ADDRESS LINE 1 -->
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h1 class="govuk-fieldset__heading">
+              Personal address
+            </h1>
+          </legend>
+
+          <div class="govuk-form-group {% if myData.validationErrors.address1Pers %}govuk-form-group--error{% endif %}">
+            <label class="govuk-label" for="address1Pers">
+              Address line 1
+            </label>
+            <div id="address1Pers-hint" class="govuk-hint">
+              Include flat and floor numbers, where appropriate
+            </div>
+            {% if myData.validationErrors.address1Pers %}
+            <p id="address1Pers-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.address1Pers.message}}
+            </p>
+            {% endif %}
+            {% set _valueNewAddress1Pers = myData.newAddress1Pers or myData.address1Pers %}
+            {% if myData.validationErrors.address1Pers %}
+            {% set _valueNewAddress1Pers = myData.newAddress1Pers %}
+            {% endif %}
+            <input class="govuk-input {% if myData.validationErrors.address1Pers %}govuk-input--error{% endif %}"
+              id="address1Pers" name="address1Pers" type="text" value="{{_valueNewAddress1Pers}}"
+              aria-describedby="address1Pers-hint {% if myData.validationErrors.address1Pers %}address1Pers-error{% endif %}"
+              autocomplete="address-line1">
+          </div>
+
+          <!-- ADDRESS LINE 2 -->
+          <div class="govuk-form-group {% if myData.validationErrors.address2Pers %}govuk-form-group--error{% endif %}">
+            <label class="govuk-label" for="address2Pers">
+              Address line 2 (optional)
+            </label>
+            {% if myData.validationErrors.address2Pers %}
+            <p id="address2Pers-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.address2Pers.message}}
+            </p>
+            {% endif %}
+            {% set _valueNewAddress2Pers = myData.newAddress2Pers or myData.address2Pers %}
+            {% if myData.validationErrors.address2Pers %}
+            {% set _valueNewAddress2Pers = myData.newAddress2Pers %}
+            {% endif %}
+            <input class="govuk-input {% if myData.validationErrors.address2Pers %}govuk-input--error{% endif %}"
+              id="address2Pers" name="address2Pers" type="text" value="{{_valueNewAddress2Pers}}" {% if
+              myData.validationErrors.address2Pers %}aria-describedby="address2Pers-error" {% endif %}
+              autocomplete="address-line2">
+          </div>
+
+          <!-- ADDRESS CITY -->
+          <div
+            class="govuk-form-group {% if myData.validationErrors.addressCityPers %}govuk-form-group--error{% endif %}">
+            <label class="govuk-label" for="addressCityPers">
+              Town or city
+            </label>
+            {% if myData.validationErrors.addressCityPers %}
+            <p id="addressCityPers-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressCityPers.message}}
+            </p>
+            {% endif %}
+            {% set _valueNewAddressCityPers = myData.newAddressCityPers or myData.addressCityPers %}
+            {% if myData.validationErrors.addressCityPers %}
+            {% set _valueNewAddressCityPers = myData.newAddressCityPers %}
+            {% endif %}
+            <input
+              class="govuk-input govuk-!-width-two-thirds {% if myData.validationErrors.addressCityPers %}govuk-input--error{% endif %}"
+              id="addressCityPers" name="addressCityPers" type="text" value="{{_valueNewAddressCityPers}}" {% if
+              myData.validationErrors.addressCityPers %}aria-describedby="addressCityPers-error" {% endif %}
+              autocomplete="address-level2">
+          </div>
+
+          <!-- ADDRESS COUNTY -->
+          <div
+            class="govuk-form-group {% if myData.validationErrors.addressCountyPers %}govuk-form-group--error{% endif %}">
+            <label class="govuk-label" for="addressCountyPers">
+              County (optional)
+            </label>
+            {% if myData.validationErrors.addressCountyPers %}
+            <p id="addressCountyPers-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressCountyPers.message}}
+            </p>
+            {% endif %}
+            {% set _valueNewAddressCountyPers = myData.newAddressCountyPers or myData.addressCountyPers %}
+            {% if myData.validationErrors.addressCountyPers %}
+            {% set _valueNewAddressCountyPers = myData.newAddressCountyPers %}
+            {% endif %}
+            <input
+              class="govuk-input govuk-!-width-two-thirds {% if myData.validationErrors.addressCountyPers %}govuk-input--error{% endif %}"
+              id="addressCountyPers" name="addressCountyPers" type="text" value="{{_valueNewAddressCountyPers}}" {% if
+              myData.validationErrors.addressCountyPers %}aria-describedby="addressCountyPers-error" {% endif %}>
+          </div>
+
+          <!-- ADDRESS POSTCODE -->
+
+          <div
+            class="govuk-form-group {% if myData.validationErrors.addressPostcodePers %}govuk-form-group--error{% endif %}">
+            <label class="govuk-label" for="addressPostcodePers">
+              Postal code or zip code (if you have one)
+            </label>
+            {% if myData.validationErrors.addressPostcodePers %}
+            <p id="addressPostcodePers-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressPostcodePers.message}}
+            </p>
+            {% endif %}
+
+            {% set _valueNewAddressPostcodePers = myData.newAddressPostcodePers %}
+            {% if _valueNewAddressPostcodePers == null %}
+            {% set _valueNewAddressPostcodePers = myData.addressPostcodePers %}
+            {% endif %}
+
+            <input
+              class="govuk-input govuk-input--width-10 {% if myData.validationErrors.addressPostcodePers %}govuk-input--error{% endif %}"
+              id="addressPostcodePers" name="addressPostcodePers" type="text" value="{{_valueNewAddressPostcodePers}}"
+              {% if myData.validationErrors.addressPostcodePers %}aria-describedby="addressPostcodePers-error" {% endif
+              %} autocomplete="postal-code">
+          </div>
+
+          <!-- ADDRESS COUNTRY -->
+          <div
+            class="govuk-form-group {% if myData.validationErrors.addressCountryPers %}govuk-form-group--error{% endif %}">
+            <label class="govuk-label" for="addressCountryPers">
+              Country
+            </label>
+            {% if myData.validationErrors.addressCountryPers %}
+            <p id="addressCountryPers-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressCountryPers.message}}
+            </p>
+            {% endif %}
+            {% set _valueNewAddressCountryPers = myData.newAddressCountryPers or myData.addressCountryPers %}
+            {% if myData.validationErrors.addressCountryPers %}
+            {% set _valueNewAddressCountryPers = myData.newAddressCountryPers %}
+            {% endif %}
+            <input
+              class="govuk-input govuk-!-width-two-thirds {% if myData.validationErrors.addressCountryPers %}govuk-input--error{% endif %}"
+              id="addressCountryPers" name="addressCountryPers" type="text" value="{{_valueNewAddressCountryPers}}" {%
+              if myData.validationErrors.addressCountryPers %}aria-describedby="addressCountryPers-error" {% endif %}
+              autocomplete="country-name">
+          </div>
+        </fieldset>
+        <!--phone numbers-->
+      
+<div class="govuk-form-group {% if myData.validationErrors.phoneNumbersPers %}govuk-form-group--error{% endif %}">
+
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h1 class="govuk-fieldset__heading">
+            What are your personal phone numbers?
+          </h1>
+        </legend>
+
+        <div id="nationality-hint" class="govuk-hint">
+          Enter at least one phone number
+        </div>
+
+        {% if myData.validationErrors.phoneNumbersPers %}
+          <p id="phoneNumbersPers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.phoneNumbersPers.message}}
+          </p>
+        {% endif %}
+
+        <div class="govuk-form-group {% if myData.validationErrors.telNumberPers %}govuk-form-group--error{% endif %}">
+
+          <label class="govuk-label" for="telNumberPers">
+            Personal telephone number
+          </label>
+  
+          {% if myData.validationErrors.telNumberPers %}
+          <p id="telNumberPers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.telNumberPers.message}}
+          </p>
+          {% endif %}
+  
+          {% set _valueNewTelNumberPers = myData.newTelNumberPers %}
+          {% if _valueNewTelNumberPers == null %}
+            {% set _valueNewTelNumberPers = myData.telNumberPers %}
+          {% endif %}
+
+         {% if data.addNumberPers == "empty"  %}
+
+           <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.telNumberPers or myData.validationErrors.phoneNumbersPers %}govuk-input--error{% endif %}" id="telNumberPers" name="telNumberPers" type="tel" autocomplete="tel" value="" {% if myData.validationErrors.telNumberPers %}aria-describedby="telNumberPers-error"{% endif %} {% if myData.validationErrors.phoneNumbersPers %}aria-describedby="phoneNumbersPers-error"{% endif %}>
+
+          {% else %}
+  
+          <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.telNumberPers or myData.validationErrors.phoneNumbersPers %}govuk-input--error{% endif %}" id="telNumberPers" name="telNumberPers" type="tel" autocomplete="tel" value="{{_valueNewTelNumberPers}}" {% if myData.validationErrors.telNumberPers %}aria-describedby="telNumberPers-error"{% endif %} {% if myData.validationErrors.phoneNumbersPers %}aria-describedby="phoneNumbersPers-error"{% endif %}>
+
+          {% endif %}
+        </div>
+
+        <div class="govuk-form-group {% if myData.validationErrors.mobNumberPers %}govuk-form-group--error{% endif %}">
+
+          <label class="govuk-label" for="mobNumberPers">
+            Personal mobile phone number
+          </label>
+
+          {% if myData.validationErrors.mobNumberPers %}
+          <p id="mobNumberPers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.mobNumberPers.message}}
+          </p>
+          {% endif %}
+
+          {% set _valueNewMobNumberPers = myData.newMobNumberPers %}
+          {% if _valueNewMobNumberPers == null %}
+            {% set _valueNewMobNumberPers = myData.mobNumberPers %}
+          {% endif %}
+
+          {% if data.addNumberPers == "empty"  %}
+
+          <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.mobNumberPers or myData.validationErrors.phoneNumbersPers %}govuk-input--error{% endif %}" id="mobNumberPers" name="mobNumberPers" type="tel" autocomplete="tel" value="" {% if myData.validationErrors.mobNumberPers %}aria-describedby="mobNumberPers-error"{% endif %} {% if myData.validationErrors.phoneNumbersPers %}aria-describedby="phoneNumbersPers-error"{% endif %}>
+
+          {% else %}
+  
+          <input class="govuk-input govuk-input--width-20 {% if myData.validationErrors.mobNumberPers or myData.validationErrors.phoneNumbersPers %}govuk-input--error{% endif %}" id="mobNumberPers" name="mobNumberPers" type="tel" autocomplete="tel" value="{{_valueNewMobNumberPers}}" {% if myData.validationErrors.mobNumberPers %}aria-describedby="mobNumberPers-error"{% endif %} {% if myData.validationErrors.phoneNumbersPers %}aria-describedby="phoneNumbersPers-error"{% endif %}>
+
+          {% endif %}
+
+        </div>
+
+      </fieldset>
+
+      </div>
+
+    
+
+        {{govukButton({
+        text: "Continue"
+        })}}
+
+        <!--- <p class="govuk-body"><a href="details-personal-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+      </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
