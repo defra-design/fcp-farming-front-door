@@ -228,19 +228,62 @@ address has been selected from the postcode lookup"
         </h1> 
       </legend>
 
-      <form action="personal-details-email-uplift-check">
+      <form action="xpersonal-details-uplift-email-check">
 
         <!-- Personal email address -->
         <div class="govuk-form-group">
-        <label class="govuk-label govuk-label--m" for="personal-email">
+        <label class="govuk-label govuk-label--m" for="personal-email-address">
           Personal email address
         </label>
-        <input class="govuk-input govuk-input--width-20" id="personal-email" name="personal-email"
+        <input class="govuk-input govuk-input--width-20" id="personal-email" name="personal-email-address"
           type="text" value="alfredoldemail@gmail.com">
       </div>
 
         <!--dob-->
-        {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+        
+        
+
+      <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        Date of birth
+      </h1>
+    </legend>
+    <div id="passport-issued-hint" class="govuk-hint">
+      For example, 27 3 2007
+    </div>
+    <div class="govuk-date-input" id="dob-day">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="dob-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="text" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+       <!--{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 
         {{ govukDateInput({
         id: "dob",
@@ -255,149 +298,64 @@ address has been selected from the postcode lookup"
         hint: {
         text: "For example, 27 3 2007"
         }
-        }) }}
+        }) }}--> 
 
-
-        <!-- ADDRESS LINE 1 -->
+<div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">
-              Personal address
-            </h1>
+            <h2 class="govuk-fieldset__heading">
+              What is your address?
+            </h2>
           </legend>
-
-          <div class="govuk-form-group {% if myData.validationErrors.address1Pers %}govuk-form-group--error{% endif %}">
-            <label class="govuk-label" for="address1Pers">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="personal-address-line-1">
               Address line 1
             </label>
-            <div id="address1Pers-hint" class="govuk-hint">
-              Include flat and floor numbers, where appropriate
+            <div id="personal-address-line1-hint" class="govuk-hint">
+            Include flat and floor numbers, where appropriate
             </div>
-            {% if myData.validationErrors.address1Pers %}
-            <p id="address1Pers-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.address1Pers.message}}
-            </p>
-            {% endif %}
-            {% set _valueNewAddress1Pers = myData.newAddress1Pers or myData.address1Pers %}
-            {% if myData.validationErrors.address1Pers %}
-            {% set _valueNewAddress1Pers = myData.newAddress1Pers %}
-            {% endif %}
-            <input class="govuk-input {% if myData.validationErrors.address1Pers %}govuk-input--error{% endif %}"
-              id="address1Pers" name="address1Pers" type="text" value="{{_valueNewAddress1Pers}}"
-              aria-describedby="address1Pers-hint {% if myData.validationErrors.address1Pers %}address1Pers-error{% endif %}"
-              autocomplete="address-line1">
+            <input class="govuk-input" id="personal-address-line-1" name="personal-address-line1" type="text"
+              autocomplete="personal-address-line1" value="{{data['personal-address-line1']}}">
           </div>
-
-          <!-- ADDRESS LINE 2 -->
-          <div class="govuk-form-group {% if myData.validationErrors.address2Pers %}govuk-form-group--error{% endif %}">
-            <label class="govuk-label" for="address2Pers">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="personal-address-line-2">
               Address line 2 (optional)
             </label>
-            {% if myData.validationErrors.address2Pers %}
-            <p id="address2Pers-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.address2Pers.message}}
-            </p>
-            {% endif %}
-            {% set _valueNewAddress2Pers = myData.newAddress2Pers or myData.address2Pers %}
-            {% if myData.validationErrors.address2Pers %}
-            {% set _valueNewAddress2Pers = myData.newAddress2Pers %}
-            {% endif %}
-            <input class="govuk-input {% if myData.validationErrors.address2Pers %}govuk-input--error{% endif %}"
-              id="address2Pers" name="address2Pers" type="text" value="{{_valueNewAddress2Pers}}" {% if
-              myData.validationErrors.address2Pers %}aria-describedby="address2Pers-error" {% endif %}
-              autocomplete="address-line2">
+            <input class="govuk-input" id="personal-address-line-2" name="personal-address-line2" type="text"
+              autocomplete="personal-address-line2" value="{{data['personal-address-line2']}}">
           </div>
-
-          <!-- ADDRESS CITY -->
-          <div
-            class="govuk-form-group {% if myData.validationErrors.addressCityPers %}govuk-form-group--error{% endif %}">
-            <label class="govuk-label" for="addressCityPers">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="personal-address-town">
               Town or city
             </label>
-            {% if myData.validationErrors.addressCityPers %}
-            <p id="addressCityPers-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressCityPers.message}}
-            </p>
-            {% endif %}
-            {% set _valueNewAddressCityPers = myData.newAddressCityPers or myData.addressCityPers %}
-            {% if myData.validationErrors.addressCityPers %}
-            {% set _valueNewAddressCityPers = myData.newAddressCityPers %}
-            {% endif %}
-            <input
-              class="govuk-input govuk-!-width-two-thirds {% if myData.validationErrors.addressCityPers %}govuk-input--error{% endif %}"
-              id="addressCityPers" name="addressCityPers" type="text" value="{{_valueNewAddressCityPers}}" {% if
-              myData.validationErrors.addressCityPers %}aria-describedby="addressCityPers-error" {% endif %}
-              autocomplete="address-level2">
+            <input class="govuk-input govuk-!-width-two-thirds" id="personal-address-town" name="personal-address-town"
+              type="text" autocomplete="personal-address-level2" value="{{data['personal-address-town']}}">
           </div>
-
-          <!-- ADDRESS COUNTY -->
-          <div
-            class="govuk-form-group {% if myData.validationErrors.addressCountyPers %}govuk-form-group--error{% endif %}">
-            <label class="govuk-label" for="addressCountyPers">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="personal-address-county">
               County (optional)
             </label>
-            {% if myData.validationErrors.addressCountyPers %}
-            <p id="addressCountyPers-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressCountyPers.message}}
-            </p>
-            {% endif %}
-            {% set _valueNewAddressCountyPers = myData.newAddressCountyPers or myData.addressCountyPers %}
-            {% if myData.validationErrors.addressCountyPers %}
-            {% set _valueNewAddressCountyPers = myData.newAddressCountyPers %}
-            {% endif %}
-            <input
-              class="govuk-input govuk-!-width-two-thirds {% if myData.validationErrors.addressCountyPers %}govuk-input--error{% endif %}"
-              id="addressCountyPers" name="addressCountyPers" type="text" value="{{_valueNewAddressCountyPers}}" {% if
-              myData.validationErrors.addressCountyPers %}aria-describedby="addressCountyPers-error" {% endif %}>
+            <input class="govuk-input govuk-!-width-two-thirds" id="personal-address-county"
+              name="personal-address-county" type="text" value="{{data['personal-address-county']}}">
           </div>
-
-          <!-- ADDRESS POSTCODE -->
-
-          <div
-            class="govuk-form-group {% if myData.validationErrors.addressPostcodePers %}govuk-form-group--error{% endif %}">
-            <label class="govuk-label" for="addressPostcodePers">
-              Postal code or zip code (if you have one)
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="personal-address-postcode">
+               Postal code or zip code (if you have one) 
             </label>
-            {% if myData.validationErrors.addressPostcodePers %}
-            <p id="addressPostcodePers-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressPostcodePers.message}}
-            </p>
-            {% endif %}
-
-            {% set _valueNewAddressPostcodePers = myData.newAddressPostcodePers %}
-            {% if _valueNewAddressPostcodePers == null %}
-            {% set _valueNewAddressPostcodePers = myData.addressPostcodePers %}
-            {% endif %}
-
-            <input
-              class="govuk-input govuk-input--width-10 {% if myData.validationErrors.addressPostcodePers %}govuk-input--error{% endif %}"
-              id="addressPostcodePers" name="addressPostcodePers" type="text" value="{{_valueNewAddressPostcodePers}}"
-              {% if myData.validationErrors.addressPostcodePers %}aria-describedby="addressPostcodePers-error" {% endif
-              %} autocomplete="postal-code">
+            <input class="govuk-input govuk-input--width-10" id="personal-address-postcode"
+              name="personal-address-postcode" type="text" autocomplete="postal-code" value="{{data['personal-address-postcode']}}">
           </div>
-
-          <!-- ADDRESS COUNTRY -->
-          <div
-            class="govuk-form-group {% if myData.validationErrors.addressCountryPers %}govuk-form-group--error{% endif %}">
-            <label class="govuk-label" for="addressCountryPers">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="personal-address-country">
               Country
             </label>
-            {% if myData.validationErrors.addressCountryPers %}
-            <p id="addressCountryPers-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.addressCountryPers.message}}
-            </p>
-            {% endif %}
-            {% set _valueNewAddressCountryPers = myData.newAddressCountryPers or myData.addressCountryPers %}
-            {% if myData.validationErrors.addressCountryPers %}
-            {% set _valueNewAddressCountryPers = myData.newAddressCountryPers %}
-            {% endif %}
-            <input
-              class="govuk-input govuk-!-width-two-thirds {% if myData.validationErrors.addressCountryPers %}govuk-input--error{% endif %}"
-              id="addressCountryPers" name="addressCountryPers" type="text" value="{{_valueNewAddressCountryPers}}" {%
-              if myData.validationErrors.addressCountryPers %}aria-describedby="addressCountryPers-error" {% endif %}
-              autocomplete="country-name">
+            <input class="govuk-input govuk-!-width-two-thirds" id="personal-address-country"
+              name="personal-address-country" type="text" value="{{data['personal-address-country']}}">
           </div>
         </fieldset>
+      </div>
+
+
         <!--phone numbers-->
       
 <div class="govuk-form-group {% if myData.validationErrors.phoneNumbersPers %}govuk-form-group--error{% endif %}">

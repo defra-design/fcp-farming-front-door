@@ -1,0 +1,153 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "What is your business email address?" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Email address (change) - business details",
+"id": "bd10",
+"url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
+"release": "Buffalo 1.0 MVP",
+"variants": [],
+
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "Empty field / nothing entered",
+"content": "Enter business email address"
+},
+{
+"scenario": "Entry is too long",
+"content": "Business email address must be 254 characters or less"
+},
+{
+"scenario": "Wrong format",
+"content": "Enter an email address, like name@example.com"
+}
+
+]
+
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Email address (change) - business details",
+"id": "int-bd10",
+"url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
+"release": "Buffalo 1.1 MVP",
+"variants": [],
+
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "Empty field / nothing entered",
+"content": "Enter business email address"
+},
+{
+"scenario": "Entry is too long",
+"content": "Business email address must be 254 characters or less"
+},
+{
+"scenario": "Wrong format",
+"content": "Enter an email address, like name@example.com"
+}
+
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3a.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="personal-details-uplift-email-change">
+      <h1 class="govuk-heading-l">Update your personal details</h1>
+
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          Some of your details seem to be missing or incorrect. We need these details to contact you, or to verify your
+          identity if you phone us.
+        </strong>
+      </div>
+
+      <p>
+        We will ask you to update these details as well as your personal email address:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        
+        <li>date of birth</li>
+        <li>personal address</li>
+        <li>personal phone numbers</li>
+      </ul>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
