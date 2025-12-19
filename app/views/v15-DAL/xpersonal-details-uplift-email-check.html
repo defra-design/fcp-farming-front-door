@@ -1,0 +1,200 @@
+w{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageName = "Check your name is correct before submitting" %}
+{% set serviceName = "Farm and Land Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Full name (check) - personal details",
+    "id": "pd03",
+    "url": "personal-details-name-check?r=t&view=ext&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    
+    ]
+    
+  }
+  %}
+
+  {% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Full name (check) - personal details (Buffalo 1.1 MVP)",
+    "id": "int-pd03",
+    "url": "personal-details-name-check?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+    ]
+    
+  }
+%}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header-2.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<form method="POST">
+      <h1 class="govuk-heading-l">
+        Check your details are correct before submitting
+      </h1>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Personal email address
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['personal-email-address']}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="personal-details-uplift-email-change">Change<span class="govuk-visually-hidden">
+                personal email address</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Personal address
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['personal-address-line1']}}<br>
+            {% if data['personal-address-line2'] %}
+            {{data['personal-address-line2']}}<br>
+            {% endif %}
+            {{data['personal-address-town']}}<br>
+            {% if data['personal-address-county'] %}
+            {{data['personal-address-county']}}<br>
+            {% endif %}
+            {{data['personal-address-postcode']}}<br>
+            {{data['personal-address-country']}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="xpersonal-details-uplift-email-change">Change<span class="govuk-visually-hidden">
+                personal address</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Personal phone number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data['personal-telephone-number'] %}
+            Telephone: {{data['personal-telephone-number']}}
+            {% else %}
+            Telephone: <span style="color:#505a5f">Not added</span>
+            {% endif %}
+            <br>
+            {% if data['personal-mobile-number'] %}
+            Mobile: {{data['personal-mobile-number']}}
+            {% else %}
+            Mobile: <span style="color:#505a5f">Not added</span>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> contact details</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Submit
+      </button>
+
+    </form>
+
+<!--<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="details-personal-details-uplift">
+
+      <h1 class="govuk-heading-l">
+       Your personal details to update
+      </h1>-->
+
+<!--personal email-->
+      <!--{% set _fullName = "" %}-->
+<!--<dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Personal email address
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['personal-email-address']}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="personal-details-uplift-email-change.html">Change<span class="govuk-visually-hidden">
+                personal email address</span></a>
+          </dd>
+        </div> -->
+
+        <!--test-->
+        <!--<div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Test
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{data['date-of-birth']}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="personal-details-uplift-email-change.html">Change<span class="govuk-visually-hidden">
+                test</span></a>
+          </dd>
+        </div>
+
+
+
+      
+      {{govukButton({
+        text: "Submit"
+      })}}-->
+
+      <!--- <p class="govuk-body"><a href="details-personal-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    <!--</form>-->
+
+  </div>
+</div>
+
+
+{% endblock %}

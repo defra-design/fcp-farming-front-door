@@ -69,6 +69,7 @@ var _myData = {
     "filesUploaded" : "empty",
     "newToFileUpload" : "no",
     "upliftSucessBus" : "no",
+    "upliftSucessPers" : "no",
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }

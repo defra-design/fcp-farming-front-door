@@ -166,7 +166,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% if myData.showNotification == "true" %}
+    <!--{% if myData.showNotification == "true" %}
     <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
       <div class="govuk-notification-banner__header">
         <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
@@ -179,9 +179,30 @@
         </h3>
       </div>
     </div>
-    {% endif %}
+    {% endif %}-->
 
-    <span class="govuk-caption-l">{{_selectedUser.name}}</span>
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+     View and update your personal details
+    </h3>
+    <p class="govuk-body">
+      <ul>
+        <li>personal email address</li>
+        <li>date of birth</li>
+        <li>personal address</li>
+        <li>personal phone numbers</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+    <span class="govuk-caption-l">Alfred Waldron</span>
     <h1 class="govuk-heading-l">
      View and update your personal details
     </h1>
@@ -192,47 +213,31 @@
           Full name
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data.release == "b1" %}
-            {{myData.nameTitlePers}} {{myData.nameFirstPers}} {{myData.nameMiddlePers}} {{myData.nameLastPers}}
-          {% else %}
-            {{myData.namePers}}
-          {% endif %}
+          Alfred Waldron
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> name</span></a>
         </dd>
       </div>
-      {% if data.addDOBPers == "empty" %}
+     
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Date of birth
         </dt>
         <dd class="govuk-summary-list__value">
-          <span style="color:#505a5f">Not added</span>
+          2 November 1980
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="#">Add<span class="govuk-visually-hidden"> date of birth</span></a>
         </dd>
       </div>
-      {% else %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Date of birth
-        </dt>
-        <dd class="govuk-summary-list__value">
-          {{myData.dobDayPers}} {{myData.dobMonthPers | toMonth}} {{myData.dobYearPers}}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a>
-        </dd>
-      </div>
-      {% endif %}
+    
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Customer reference number
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.selectedUser.crn}}
+          1101996862
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -240,25 +245,22 @@
           Personal address
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.address1Pers}}<br>
-          {% if myData.address2Pers != "" %}{{myData.address2Pers}}<br>{% endif %}
-          {{myData.addressCityPers}}<br>
-          {% if myData.addressCountyPers != "" %}{{myData.addressCountyPers}}<br>{% endif %}
-          {% if myData.addressPostcodePers != "" %}{{myData.addressPostcodePers}}<br>{% endif %}
-          {{myData.addressCountryPers}}
+         10 Skirbeck Way<br>
+         Maidstone<br>
+         SK22 1DL<br>
+          United Kingdom
         </dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> personal address</span></a>
         </dd>
       </div>
-      {% if data.addNumberPers == "empty"  %}
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Personal phone numbers
         </dt>
         <dd class="govuk-summary-list__value">
-          Telephone: 
-            <span style="color:#505a5f">Not added</span>
+          Telephone: 01632 960000
           <br>
           Mobile: 
             <span style="color:#505a5f">Not added</span>
@@ -267,42 +269,18 @@
           <a class="govuk-link govuk-link--no-visited-state" href="#">Add<span class="govuk-visually-hidden"> personal phone numbers</span></a>
         </dd>
       </div>
-      {% else %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Personal phone numbers
-        </dt>
-        <dd class="govuk-summary-list__value">
-          Telephone: 
-          {% if myData.telNumberPers == "" %}
-            <span style="color:#505a5f">Not added</span>
-          {% else %}
-            {{myData.telNumberPers}}
-          {% endif %}
-          <br>
-          Mobile: 
-          {% if myData.mobNumberPers == "" %}
-            <span style="color:#505a5f">Not added</span>
-          {% else %}
-            {{myData.mobNumberPers}}
-          {% endif %}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> personal phone numbers</span></a>
-        </dd>
-      </div>
-      {% endif %}
+      
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Personal email address
         </dt>
         <dd class="govuk-summary-list__value">
-          {{myData.emailPers}}
-          <!--alfredwaldron@email.com-->
+          
+          alfredwaldron@email.com
         </dd>
         <dd class="govuk-summary-list__actions">
           <!--<a class="govuk-link govuk-link--no-visited-state" href="personal-details-email-uplift-change?newChange=true">Change<span class="govuk-visually-hidden"> personal email address</span></a>-->
-<a class="govuk-link govuk-link--no-visited-state" href="personal-details-uplift-guidance.html"> Change</span></a>
+<a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> personal email address</span></a>
 
 
         </dd>
