@@ -1,0 +1,118 @@
+{% extends "layouts/main-rebrand.html" %}
+
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "Your business" %}
+{% set serviceName = "Farm and Land Service" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "SFD Home/Business Page",
+"id": "bp02",
+"url": "business-home?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "SFD Home/Business Page (full permissions - default)",
+"url": "business-home?r=t&release=b1&permissionsMVP=full"
+},
+{
+"name": "SFD Home/Business Page (amend permissions)",
+"url": "business-home?r=t&release=b1&permissionsMVP=amend"
+},
+{
+"name": "SFD Home/Business Page (view permissions)",
+"url": "business-home?r=t&release=b1&permissionsMVP=view"
+},
+{
+"name": "SFD Home/Business Page (single SBI)",
+"url": "business-home-single-SBI?r=t&release=b1&permissionsMVP=view"
+}
+
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+],
+"notes": [
+"Conditional link text: the visible link text for 'View and update your business details' should change according to the
+permission level. See variants. Note that full and amend permissions have the same link text."
+
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    {% if data.release == "b1" %}
+    {% set _hideAccountLink = true %}
+    {% endif %}
+    {% include "_common/login-nav-2a.html" %}
+
+    <a class="govuk-back-link" href="details-personal-details.html">Back</a>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+        <form action="personal-details-email-uplift-change">
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+      Update your personal details
+    </h1>
+    <div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    Some of your details seem to be missing or incorrect. We need these details to contact you, or to verify your identity if you phone us.
+  </strong>
+</div>
+
+<p class="govuk-body">We will ask you to update these details as well as your personal email address:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>date of birth</li>
+  <li>personal address</li>
+  <li>at least one personal phone number</li>
+</ul>
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{{ govukButton({
+  text: "Continue"
+}) }}
+<!--<button type="submit" class="govuk-button" data-module="govuk-button">
+  Continue
+</button>-->
+</form>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
