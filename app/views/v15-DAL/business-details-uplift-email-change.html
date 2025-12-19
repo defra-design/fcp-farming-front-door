@@ -1,0 +1,226 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "What is your business email address?" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Email address (change) - business details",
+"id": "bd10",
+"url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
+"release": "Buffalo 1.0 MVP",
+"variants": [],
+
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "Empty field / nothing entered",
+"content": "Enter business email address"
+},
+{
+"scenario": "Entry is too long",
+"content": "Business email address must be 254 characters or less"
+},
+{
+"scenario": "Wrong format",
+"content": "Enter an email address, like name@example.com"
+}
+
+]
+
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Email address (change) - business details",
+"id": "int-bd10",
+"url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
+"release": "Buffalo 1.1 MVP",
+"variants": [],
+
+"pagetitle": pageTitle,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+{
+"scenario": "Empty field / nothing entered",
+"content": "Enter business email address"
+},
+{
+"scenario": "Entry is too long",
+"content": "Business email address must be 254 characters or less"
+},
+{
+"scenario": "Wrong format",
+"content": "Enter an email address, like name@example.com"
+}
+
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3a.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="business-details-uplift-email-check">
+
+      <h1 class="govuk-heading-l">
+        Your business details to update
+      </h1>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--m" for="business-email-address">
+          Business email address
+        </label>
+        <input class="govuk-input govuk-input--width-20" id="business-email-address" name="business-email-address"
+          type="text" value="agilefarmsrus25@gmail.com">
+      </div>
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              What is your address?
+            </h2>
+          </legend>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="business-address-line-1">
+              Address line 1
+            </label>
+            <div id="business-address-line1-hint" class="govuk-hint">
+            Include flat and floor numbers, where appropriate
+            </div>
+            <input class="govuk-input" id="business-address-line-1" name="business-address-line1" type="text"
+              autocomplete="business-address-line1" value="{{data['business-address-line1']}}">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="business-address-line-2">
+              Address line 2 (optional)
+            </label>
+            <input class="govuk-input" id="business-address-line-2" name="business-address-line2" type="text"
+              autocomplete="business-address-line2" value="{{data['business-address-line2']}}">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="business-address-town">
+              Town or city
+            </label>
+            <input class="govuk-input govuk-!-width-two-thirds" id="business-address-town" name="business-address-town"
+              type="text" autocomplete="business-address-level2" value="{{data['business-address-town']}}">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="business-address-county">
+              County (optional)
+            </label>
+            <input class="govuk-input govuk-!-width-two-thirds" id="business-address-county"
+              name="business-address-county" type="text" value="{{data['business-address-county']}}">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="business-address-postcode">
+               Postal code or zip code (if you have one) 
+            </label>
+            <input class="govuk-input govuk-input--width-10" id="business-address-postcode"
+              name="business-address-postcode" type="text" autocomplete="postal-code" value="{{data['business-address-postcode']}}">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="business-address-country">
+              Country
+            </label>
+            <input class="govuk-input govuk-!-width-two-thirds" id="business-address-country"
+              name="business-address-country" type="text" value="{{data['business-address-country']}}">
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="business-phone-number-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Business phone numbers
+          </legend>
+          <div id="business-phone-number-hint" class="govuk-hint">
+            Enter at least one phone number
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="business-telephone-number">
+              Business telephone number
+            </label>
+            <input class="govuk-input govuk-input--width-20" id="business-telephone-number" name="business-telephone-number"
+              type="text" value="{{data['business-telephone-number']}}">
+          </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="business-mobile-number">
+              Business mobile number
+            </label>
+            <input class="govuk-input govuk-input--width-20" id="business-mobile-number" name="business-mobile-number"
+              type="text" value="{{data['business-mobile-number']}}">
+          </div>
+        </fieldset>
+      </div>
+
+
+
+
+      {{govukButton({
+      text: "Continue"
+      })}}
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

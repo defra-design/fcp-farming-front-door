@@ -1705,6 +1705,12 @@ router.post('/updated-email-answer', function (req, res) {
   }
 });
 
+// routing for v15 - uplift business details
+
+    router.post('/' + version + '/business-details-uplift-email-check', function (req, res) {
+        res.redirect(301, '/' + version + '/details-business-details?upliftSucessBus=true');
+    });
+
 //routing for when details are correct/incorrect second time of seeing the page after updates- prototype 13
 // Run this code when a form is submitted to 'detailsroutev3'
 //router.post('/detailsroutev3', function (req, res) {

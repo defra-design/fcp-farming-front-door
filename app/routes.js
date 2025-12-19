@@ -68,6 +68,7 @@ var _myData = {
     "addDOBPers" : "full",
     "filesUploaded" : "empty",
     "newToFileUpload" : "no",
+    "upliftSucessBus" : "no",
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }
