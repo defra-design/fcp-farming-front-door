@@ -531,7 +531,7 @@ module.exports = function (router,_myData) {
             req.session.myData.newNamePers = req.session.myData.newNamePers || req.session.myData.namePers
         }
 
-        // AHWP-v2
+        // v15
         if(req.session.data.release == "b1"){
             if(!req.session.myData.newNameFirstPers){
                 req.session.myData.validationError = "true"
@@ -1438,28 +1438,28 @@ module.exports = function (router,_myData) {
 
         var legalBus = request.session.data['legalBus']
         if (legalBus == "Charitable incorporated organisation (CIO)") {
-            response.redirect("AHWP-v2/business-details-legal-charity")
+            response.redirect("v15/business-details-legal-charity")
         }
         else if (legalBus == "Charitable trust") {
-            response.redirect("AHWP-v2/business-details-legal-check")
+            response.redirect("v15/business-details-legal-check")
         }
         else if (legalBus == "Government (central)") {
-            response.redirect("AHWP-v2/business-details-legal-check")
+            response.redirect("v15/business-details-legal-check")
         }
         else if (legalBus == "Government (local)") {
-            response.redirect("AHWP-v2/business-details-legal-check")
+            response.redirect("v15/business-details-legal-check")
         }
         else if (legalBus == "Partnership") {
-            response.redirect("AHWP-v2/business-details-legal-check")
+            response.redirect("v15/business-details-legal-check")
         }
         else if (legalBus == "Sole proprietorship") {
-            response.redirect("AHWP-v2/business-details-legal-check")
+            response.redirect("v15/business-details-legal-check")
         }
         else if (legalBus == "The Crown") {
-            response.redirect("AHWP-v2/business-details-legal-check")
+            response.redirect("v15/business-details-legal-check")
         }
         else {
-            response.redirect("AHWP-v2/business-details-legal-company")
+            response.redirect("v15/business-details-legal-company")
         }
     })
 
@@ -1674,13 +1674,13 @@ router.post('/detailsroutev2', function (req, res) {
   // Check whether the variable matches a condition
   if (correctDetails == "yes"){
     // Send user to next page
-  res.redirect('AHWP-v2/AHWP-what-you-can-claim')
+  res.redirect('v15/AHWP-what-you-can-claim')
    
    
   } else {
     // Send user to ineligible page
     // ADD PAGE TO GO TO
-        res.redirect('AHWP-v2/AHWP-sign-in-details-incorrect')
+        res.redirect('v15/AHWP-sign-in-details-incorrect')
 
   }
 });
@@ -1695,13 +1695,13 @@ router.post('/updated-email-answer', function (req, res) {
   // Check whether the variable matches a condition
   if (updateEmail == "yes"){
     // Send user to next page
-  res.redirect('AHWP-v2/AHWP-what-you-can-claim')
+  res.redirect('v15/AHWP-what-you-can-claim')
    
    
   } else {
     // Send user to ineligible page
     // ADD PAGE TO GO TO
-        res.redirect('AHWP-v2/AHWP-sign-in-details-incorrect')
+        res.redirect('v15/AHWP-sign-in-details-incorrect')
 
   }
 });
@@ -1716,13 +1716,13 @@ router.post('/updated-email-answer', function (req, res) {
   // Check whether the variable matches a condition
   //if (correctDetails3 == "yes"){
     // Send user to next page
-    //res.redirect('AHWP-v2/AHWP-what-you-can-claim')
+    //res.redirect('v15/AHWP-what-you-can-claim')
     
-  //  res.redirect('AHWP-v2/AHWP-apply-guidance-start') 
+  //  res.redirect('v15/AHWP-apply-guidance-start') 
 //  } else {
     // Send user to ineligible page
     // ADD PAGE TO GO TO
-  //  res.redirect('AHWP-v2/AHWP-sign-in-details-incorrect')
+  //  res.redirect('v15/AHWP-sign-in-details-incorrect')
 //  }
 //});
 
