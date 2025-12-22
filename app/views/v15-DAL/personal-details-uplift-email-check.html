@@ -131,6 +131,23 @@
                 personal email address</span></a>
           </dd>
         </div>
+
+         <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Date of birth
+          </dt>
+          <dd class="govuk-summary-list__value">
+            02 November 1980
+            <!--{% set _monthValue = myData.newDobMonthPers or myData.dobMonthPers %}
+            {{myData.newDobDayPers1 or myData.dobDayPers1}} {{_monthValue | toMonth }} {{myData.newDobYearPers1 or myData.dobYearPers1}}
+          -->
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="personal-details--uplift-email-change">Change<span class="govuk-visually-hidden"> your date of birth</span></a>
+          </dd>
+        </div>
+
+
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Personal address
@@ -170,7 +187,8 @@
             {% endif %}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="personal-details-uplift-email-change">Change<span class="govuk-visually-hidden"> contact details</span></a>
+            <a class="govuk-link" href="personal-details-uplift-email-change">Change<span class="govuk-visually-hidden">
+                contact details</span></a>
           </dd>
         </div>
       </dl>
