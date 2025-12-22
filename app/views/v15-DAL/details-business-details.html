@@ -299,10 +299,14 @@
           You have updated your: 
         </h3>
         <ul class="govuk-list govuk-list--bullet">
-            <li>
+       
+          <li>
               business email address
             </li>
-            <li>
+               <li>
+              business name
+          </li>
+          <li>
               business address
             </li>
             <li>
@@ -340,7 +344,25 @@
      </h2>
 
     <dl class="govuk-summary-list">
+
       <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Business name
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if data['business-name'] %}
+            {{data['business-name']}}
+          {% else %}
+                 Agile Farm Ltd
+          {% endif %}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> business email address</span></a>
+        </dd>
+      </div>
+
+
+      <!--<div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Business name
         </dt>
@@ -358,7 +380,8 @@
           <a class="govuk-link govuk-link--no-visited-state" href="business-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> business name</span></a>
         </dd>
         {% endif %}
-      </div>
+      </div>-->
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Business address
