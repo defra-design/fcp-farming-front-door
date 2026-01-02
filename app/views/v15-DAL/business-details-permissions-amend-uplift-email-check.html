@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What is your personal email address?" %}
+{% set pageTitle = "What is your business email address?" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -25,9 +25,9 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In development',
-"name": "Email address (change) - personal details",
+"name": "Email address (change) - business details",
 "id": "bd10",
-"url": "personal-details-email-check?r=t&view=ext&release=b1&newChange=true",
+"url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
@@ -37,11 +37,11 @@
 "errormessages": [
 {
 "scenario": "Empty field / nothing entered",
-"content": "Enter personal email address"
+"content": "Enter business email address"
 },
 {
 "scenario": "Entry is too long",
-"content": "Personal email address must be 254 characters or less"
+"content": "Business email address must be 254 characters or less"
 },
 {
 "scenario": "Wrong format",
@@ -57,9 +57,9 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In development',
-"name": "Email address (change) - personal details",
+"name": "Email address (change) - business details",
 "id": "int-bd10",
-"url": "personal-details-email-check?r=t&view=int&release=b2&newChange=true",
+"url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
 "release": "Buffalo 1.1 MVP",
 "variants": [],
 
@@ -69,11 +69,11 @@
 "errormessages": [
 {
 "scenario": "Empty field / nothing entered",
-"content": "Enter personal email address"
+"content": "Enter business email address"
 },
 {
 "scenario": "Entry is too long",
-"content": "Personal email address must be 254 characters or less"
+"content": "Business email address must be 254 characters or less"
 },
 {
 "scenario": "Wrong format",
@@ -113,7 +113,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <form action="details-personal-details-uplift-success.html">
+    <form method="POST">
       <h1 class="govuk-heading-l">
         Check your details are correct before submitting
       </h1>
@@ -121,74 +121,57 @@
       <dl class="govuk-summary-list govuk-!-margin-bottom-9">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Personal email address
+            Business email address
           </dt>
           <dd class="govuk-summary-list__value">
-            {{data['personal-email-address']}}
+            {{data['business-email-address']}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="personal-details-uplift-email-change">Change<span class="govuk-visually-hidden">
-                personal email address</span></a>
+            <a class="govuk-link" href="business-details-uplift-email-change">Change<span class="govuk-visually-hidden">
+                business email address</span></a>
           </dd>
         </div>
-
-         <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Date of birth
-          </dt>
-          <dd class="govuk-summary-list__value">
-            02 November 1970
-            <!--{% set _monthValue = myData.newDobMonthPers or myData.dobMonthPers %}
-            {{myData.newDobDayPers1 or myData.dobDayPers1}} {{_monthValue | toMonth }} {{myData.newDobYearPers1 or myData.dobYearPers1}}
-          -->
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="personal-details-uplift-email-change">Change<span class="govuk-visually-hidden"> your date of birth</span></a>
-          </dd>
-        </div>
-
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Personal address
+            Business address
           </dt>
           <dd class="govuk-summary-list__value">
-            {{data['personal-address-line1']}}<br>
-            {% if data['personal-address-line2'] %}
-            {{data['personal-address-line2']}}<br>
+            {{data['business-address-line1']}}<br>
+            {% if data['business-address-line2'] %}
+            {{data['business-address-line2']}}<br>
             {% endif %}
-            {{data['personal-address-town']}}<br>
-            {% if data['personal-address-county'] %}
-            {{data['personal-address-county']}}<br>
+            {{data['business-address-town']}}<br>
+            {% if data['business-address-county'] %}
+            {{data['business-address-county']}}<br>
             {% endif %}
-            {{data['personal-address-postcode']}}<br>
-            {{data['personal-address-country']}}
+            {{data['business-address-postcode']}}<br>
+            {{data['business-address-country']}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="personal-details-uplift-email-change">Change<span class="govuk-visually-hidden">
-                personal address</span></a>
+            <a class="govuk-link" href="business-details-uplift-email-change">Change<span class="govuk-visually-hidden">
+                business address</span></a>
           </dd>
         </div>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Personal phone number
+            Business phone number
           </dt>
           <dd class="govuk-summary-list__value">
-            {% if data['personal-telephone-number'] %}
-            Telephone: {{data['personal-telephone-number']}}
+            {% if data['business-telephone-number'] %}
+            Telephone: {{data['business-telephone-number']}}
             {% else %}
             Telephone: <span style="color:#505a5f">Not added</span>
             {% endif %}
             <br>
-            {% if data['personal-mobile-number'] %}
-            Mobile: {{data['personal-mobile-number']}}
+            {% if data['business-mobile-number'] %}
+            Mobile: {{data['business-mobile-number']}}
             {% else %}
             Mobile: <span style="color:#505a5f">Not added</span>
             {% endif %}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="personal-details-uplift-email-change">Change<span class="govuk-visually-hidden">
-                contact details</span></a>
+            <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> contact details</span></a>
           </dd>
         </div>
       </dl>
