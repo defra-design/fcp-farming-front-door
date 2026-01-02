@@ -202,10 +202,10 @@
           <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> name</span></a>
         </dd>
       </div>
-      {% if data.addDOBPers == "empty" %}
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Date of birth
+          Date of birth 
         </dt>
         <dd class="govuk-summary-list__value">
           <span style="color:#505a5f">Not added</span>
@@ -214,19 +214,7 @@
           <a class="govuk-link govuk-link--no-visited-state" href="#">Add<span class="govuk-visually-hidden"> date of birth</span></a>
         </dd>
       </div>
-      {% else %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Date of birth
-        </dt>
-        <dd class="govuk-summary-list__value">
-          {{myData.dobDayPers}} {{myData.dobMonthPers | toMonth}} {{myData.dobYearPers}}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a>
-        </dd>
-      </div>
-      {% endif %}
+    
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Customer reference number
@@ -251,7 +239,7 @@
           <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> personal address</span></a>
         </dd>
       </div>
-      {% if data.addNumberPers == "empty"  %}
+    
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Personal phone numbers
@@ -267,37 +255,13 @@
           <a class="govuk-link govuk-link--no-visited-state" href="#">Add<span class="govuk-visually-hidden"> personal phone numbers</span></a>
         </dd>
       </div>
-      {% else %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Personal phone numbers
-        </dt>
-        <dd class="govuk-summary-list__value">
-          Telephone: 
-          {% if myData.telNumberPers == "" %}
-            <span style="color:#505a5f">Not added</span>
-          {% else %}
-            {{myData.telNumberPers}}
-          {% endif %}
-          <br>
-          Mobile: 
-          {% if myData.mobNumberPers == "" %}
-            <span style="color:#505a5f">Not added</span>
-          {% else %}
-            {{myData.mobNumberPers}}
-          {% endif %}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> personal phone numbers</span></a>
-        </dd>
-      </div>
-      {% endif %}
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Personal email address
         </dt>
         <dd class="govuk-summary-list__value">
-          Alfredoldemail@gmail.com 
+          alfredoldemail@gmail.com 
           <!--{{myData.emailPers}}-->
           <!--alfredwaldron@email.com-->
         </dd>

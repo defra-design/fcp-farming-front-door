@@ -228,7 +228,7 @@
 
   {% if data.view != "int" %}
   {% include "_common/phase-banner-2.html" %}
-  {% include "_common/sub-header.html" %}
+  {% include "_common/sub-header-DAL.html" %}
 
 
 
@@ -353,7 +353,8 @@
           {% if data['business-name'] %}
             {{data['business-name']}}
           {% else %}
-                 Agile Farm Ltd 
+                  Alfred Christopher William Waldron and Bartholomew Robinson Waldron and Sons Agile Farm and Lands Limited Enterprises
+                 <!--Agile Farm Ltd--> 
           {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
@@ -417,6 +418,7 @@
         </dd>
         {% endif %}
       </div>
+
       {% if data.addNumberBus == "empty"  %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key govuk-!-width-two-thirds">
@@ -424,7 +426,7 @@
         </dt>
         <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
           Telephone: 
-            <span style="color:#505a5f">Not added</span>
+          <span style="color:#505a5f">Not added</span>
           <br>
           Mobile: 
             <span style="color:#505a5f">Not added</span>
@@ -440,9 +442,11 @@
         </dt>
         <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
           {% if data['business-telephone-number'] %}
-            Telephone: {{data['business-telephone-number']}}
+          Telephone: 
+          <span>01624</span>  
+          <!--Telephone: {{data['business-telephone-number']}}-->
             {% else %}
-            Telephone: <span style="color:#505a5f">Not added</span>
+            Telephone: <span style="color:#505a5f">01624</span>
             {% endif %}
             <br>
             {% if data['business-mobile-number'] %}
