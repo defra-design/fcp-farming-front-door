@@ -1,0 +1,31 @@
+
+{% set _selectedBusiness = data.selectedBusiness %}
+
+<div class="govuk-grid-row sub-header-container" >
+
+  <div class="govuk-grid-column-two-thirds">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1" >{{_selectedBusiness.name}}</h3>
+      <p class="govuk-body-s govuk-!-margin-bottom-2" >Single business identifier (SBI): {{_selectedBusiness.sbiNumber}}</p>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1 sub-header-user-name" >
+        {% if data.access == "view" %}
+          Tom Draper
+        {% elif data.access == "amend" %}
+          Clara Olivera
+        {% else %}
+          {{data.user.name}}
+        {% endif %}
+      </h3>
+      {% if _subHeaderShowApplyLink %}
+        <p class="govuk-body-s govuk-!-margin-bottom-2 sub-header-dif-business"><a href="#" class="govuk-link govuk-link--no-visited-state">Apply for a different business</a></p>
+      {% endif %}
+      {% if _subHeaderShowClaimLink %}
+        <p class="govuk-body-s govuk-!-margin-bottom-2 sub-header-dif-business"><a href="#" class="govuk-link govuk-link--no-visited-state">Claim for a different business</a></p>
+      {% endif %}
+  </div>
+
+</div>
+
+<hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-0 govuk-!-margin-top-2">

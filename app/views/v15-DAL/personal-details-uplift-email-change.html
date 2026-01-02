@@ -130,54 +130,64 @@
 
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" role="group" aria-describedby="dob-hint">
-
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <label class="govuk-label govuk-date-input__label" for="dobDayPers1">
-                Day
-              </label>
-              {% set _valueNewDobDayPers = myData.newDobDayPers or myData.dobDayPers %}
-              <!--{% if myData.validationErrors.dobDayPers %}
+          <div class="govuk-date-input" id="dob">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                  <h2 class="govuk-fieldset__heading">
+                    Date of birth
+                  </h2>
+                </legend>
+                <div id="personal-address-line1-hint" class="govuk-hint">
+                  For example, 31 3 1980
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="dobDayPers1">
+                      Day
+                    </label>
+                    {% set _valueNewDobDayPers = myData.newDobDayPers or myData.dobDayPers %}
+                    <!--{% if myData.validationErrors.dobDayPers %}
               {% set _valueNewDobDayPers = myData.newDobDayPers %}
               {% endif %}-->
-              <input
-                class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobDayPers1 %}govuk-input--error{% endif %}"
-                id="dobDayPers1" name="dobDayPers1" type="text" autocomplete="bday-day" inputmode="numeric"
-                value="{{_valueNewDobDayPers}}">
-            </div>
-          </div>
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobDayPers1 %}govuk-input--error{% endif %}"
+                      id="dobDayPers1" name="dobDayPers1" type="text" autocomplete="bday-day" inputmode="numeric"
+                      value="{{_valueNewDobDayPers}}">
+                  </div>
+                </div>
 
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <label class="govuk-label govuk-date-input__label" for="dobMonthPers">
-                Month
-              </label>
-              {% set _valueNewDobMonthPers1 = myData.newDobMonthPers1 or myData.dobMonthPers1 %}
-              {% if myData.validationErrors.dobMonthPers1 %}
-              {% set _valueNewDobMonthPers1 = myData.newDobMonthPers1 %}
-              {% endif %}
-              <input
-                class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobMonthPers1 %}govuk-input--error{% endif %}"
-                id="dobMonthPers1" name="dobMonthPers1" type="text" autocomplete="bday-month" inputmode="numeric"
-                value="{{_valueNewDobMonthPers1}}">
-            </div>
-          </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="dobMonthPers">
+                      Month
+                    </label>
+                    {% set _valueNewDobMonthPers1 = myData.newDobMonthPers1 or myData.dobMonthPers1 %}
+                    {% if myData.validationErrors.dobMonthPers1 %}
+                    {% set _valueNewDobMonthPers1 = myData.newDobMonthPers1 %}
+                    {% endif %}
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobMonthPers1 %}govuk-input--error{% endif %}"
+                      id="dobMonthPers1" name="dobMonthPers1" type="text" autocomplete="bday-month" inputmode="numeric"
+                      value="{{_valueNewDobMonthPers1}}">
+                  </div>
+                </div>
 
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <label class="govuk-label govuk-date-input__label" for="dobYearPers1">
-                Year
-              </label>
-              {% set _valueNewDobYearPers1 = myData.newDobYearPers1 or myData.dobYearPers1 %}
-              {% if myData.validationErrors.dobYearPers1 %}
-              {% set _valueNewDobYearPers1 = myData.newDobYearPers1 %}
-              {% endif %}
-              <input
-                class="govuk-input govuk-date-input__input govuk-input--width-4 {% if myData.validationErrors.dobYearPers1 %}govuk-input--error{% endif %}"
-                id="dobYearPers1" name="dobYearPers1" type="text" autocomplete="bday-year" inputmode="numeric"
-                value="{{_valueNewDobYearPers1}}">
-            </div>
-          </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="dobYearPers1">
+                      Year
+                    </label>
+                    {% set _valueNewDobYearPers1 = myData.newDobYearPers1 or myData.dobYearPers1 %}
+                    {% if myData.validationErrors.dobYearPers1 %}
+                    {% set _valueNewDobYearPers1 = myData.newDobYearPers1 %}
+                    {% endif %}
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-4 {% if myData.validationErrors.dobYearPers1 %}govuk-input--error{% endif %}"
+                      id="dobYearPers1" name="dobYearPers1" type="text" autocomplete="bday-year" inputmode="numeric"
+                      value="{{_valueNewDobYearPers1}}">
+                  </div>
+                </div>
         </fieldset>
 
       </div>
@@ -261,11 +271,11 @@
             </label>
             <input class="govuk-input govuk-input--width-20" id="personal-mobile-number" name="personal-mobile-number"
               type="text" value="{{data['personal-mobile-number']}}">
-          </div> 
-        </div>
-        </fieldset>
-     
-    
+          </div>
+      </div>
+      </fieldset>
+
+
 
 
 
