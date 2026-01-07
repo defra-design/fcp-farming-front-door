@@ -20,10 +20,10 @@
 {% if data.view == "ext" and data.release != "concept" %}
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
-    "status": 'In development',
+    "status": 'In design',
     "name": "Manage personal details",
-    "id": "pd01",
-    "url": "details-personal-details?r=t&view=ext&release=b1",
+    "id": "pd01-DAL",
+    "url": "details-personal-details-uplift-success?view=ext",
     "release": "Buffalo 1.0 MVP",
     "variants": [
       {
@@ -61,7 +61,14 @@
     "pageurl": "",
     "errormessages": [
       
-    ]
+    ],
+"notes": [
+"Success message - display user's selected field for update as first bullet point, then any fields for uplift in the same order they appear in pd01.", 
+
+"Fields for uplift could also include: full name and personal email address"
+
+
+]
     
   }
 %}
@@ -69,11 +76,11 @@
 {% elif data.view == "int" %}
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
-    "status": 'In development',
+    "status": 'In design',
     "name": "Manage personal details",
-    "id": "int-pd01",
-    "url": "details-personal-details?r=t&view=int&release=b2",
-    "release": "Buffalo 1.1 MVP",
+    "id": "int-pd01-DAL",
+    "url": "details-personal-details-uplift-success?view=int",
+    "release": "Buffalo 1.0 MVP",
     "variants": [
       {
         "name": "no existing DOB - add",
@@ -110,7 +117,14 @@
     "pageurl": "",
     "errormessages": [
       
-    ]
+    ],
+"notes": [
+"Success message - display user's selected field for update as first bullet point, then any fields for uplift in the same order they appear in pd01.", 
+
+"Fields for uplift could also include: full name and personal email address"
+
+
+]
     
   }
   %}
@@ -147,16 +161,7 @@
   </div>
   {% else %}
   {% include "_common/login-nav-internal.html" %}
-  <div class="govuk-breadcrumbs" style="display: inline-block">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
-      </li>
-    </ol>
-  </div>
+
   {% endif %}
 {% endblock %}
 
