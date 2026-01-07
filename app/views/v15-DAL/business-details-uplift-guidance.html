@@ -24,12 +24,21 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
-"id": "bd10",
+"status": 'In design',
+"name": "Update your business details",
+"id": "bd26-DAL",
 "url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
 "release": "Buffalo 1.0 MVP",
-"variants": [],
+"variants": [
+  {
+      "name": "amend permissions",
+      "url": "details-business-details-permissions-amend?view=ext"
+    },
+      {
+      "name": "view permissions",
+      "url": "details-business-details-permissions-view?view=ext"
+    }
+    ],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
@@ -48,6 +57,11 @@
 "content": "Enter an email address, like name@example.com"
 }
 
+],
+"notes": [
+"dynamically play back user's selected field for update in the intro line, followed by bullet pointed field(s) for uplift. Display the fields for uplift in the same order they display on bd01.",
+"Fields for uplift could also include: business email address"
+
 ]
 
 }
@@ -56,11 +70,11 @@
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
+"status": 'In design',
 "name": "Email address (change) - business details",
-"id": "int-bd10",
+"id": "int-bd26-DAL",
 "url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
-"release": "Buffalo 1.1 MVP",
+"release": "Buffalo 1.0 MVP",
 "variants": [],
 
 "pagetitle": pageTitle,
