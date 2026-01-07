@@ -228,7 +228,7 @@
 
   {% if data.view != "int" %}
   {% include "_common/phase-banner-2.html" %}
-  {% include "_common/sub-header-DAL.html" %}
+  {% include "_common/sub-header.html" %}
 
 
 
@@ -272,51 +272,27 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% if myData.showNotification == "true" %}
+   
     <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-      <div class="govuk-notification-banner__header">
-        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-          Success
-        </h2>
-      </div>
-      <div class="govuk-notification-banner__content">
-        <h3 class="govuk-notification-banner__heading">
-          {{myData.notifications.message}}
-        </h3>
-      </div>
-    </div>
-    {% endif %}
-
-    {% if data.upliftSucessBus == "true" %}
-    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-      <div class="govuk-notification-banner__header">
-        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-          Success
-        </h2>
-      </div>
-      <div class="govuk-notification-banner__content">
-        <h3 class="govuk-notification-banner__heading">
-          You have updated your: 
-        </h3>
-        <ul class="govuk-list govuk-list--bullet">
-       
-          <li>
-              business email address
-            </li>
-               <li>
-              business name
-          </li>
-          <li>
-              business address
-            </li>
-            <li>
-              business phone
-            </li>
-          </ul>
-      </div>
-    </div>
-    {% endif %}
-
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+     View and update your personal details
+    </h3>
+    <p class="govuk-body">
+      <ul>
+        <li>personal email address</li>
+        <li>date of birth</li>
+        <li>personal address</li>
+        <li>personal phone numbers</li>
+      </ul>
+    </p>
+  </div>
+</div>
     {% if data.permissionsMVP == "view" and data.view == "ext" %}
     <h1 class="govuk-heading-l">
      View business details
@@ -350,7 +326,7 @@
         </dt>
         <dd class="govuk-summary-list__value">
           <!--{{myData.nameBus}}-->
-          Alfred Christopher William Waldron and Bartholomew Robinson Waldron and Sons Agile Farm and Lands Limited Enterprises
+          Agile Farm Ltd
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
           
@@ -390,7 +366,16 @@
         <dt class="govuk-summary-list__key">
           Business address
         </dt>
+
         <dd class="govuk-summary-list__value">
+10 Skirbeck Way<br>
+Maidstone<br>
+SK22 1DL<br>
+United Kingdom
+
+        </dd>
+
+        <!--<dd class="govuk-summary-list__value">
           {% if data.upliftSucessBus == "true" %}
             {{data['business-address-line1']}}<br>
             {% if data['business-address-line2'] %}
@@ -408,7 +393,7 @@
           {% if myData.addressCountyBus != "" %}{{myData.addressCountyBus}}<br>{% endif %}
           {{myData.addressCountryBus}}
             {% endif %}
-        </dd>
+        </dd>-->
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
           
         {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
@@ -446,7 +431,7 @@
         <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
           {% if data['business-telephone-number'] %}
           Telephone: 
-          <span>01632</span>  
+          <span>01632 960000</span>  
           <!--Telephone: {{data['business-telephone-number']}}-->
             {% else %}
             Telephone: <span style="color:#505a5f">01624</span>
@@ -476,26 +461,16 @@
           Business email address
         </dt>
         <dd class="govuk-summary-list__value">
-         {% if data['business-email-address'] %}
+          {% if data['business-email-address'] %}
             {{data['business-email-address']}}
           {% else %}
-               agilefarms@email.com 
+                 agilefarmsrus25@email.com 
           {% endif %}
-          	
- <!--agilefarmsrus25@gmail.com-->
         </dd>
-         {% if data.permissionsMVP == "view" and data.view == "ext" %}
-<dd>ASasas </dd>
-        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> business address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-uplift-guidance">Change<span class="govuk-visually-hidden"> business email address</span></a>
         </dd>
-        {% else %}
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-uplift-guidance.html">Change<span class="govuk-visually-hidden"> business address</span></a>
-        </dd>
-        {% endif %}
-        </div>
+      </div>
     </dl>
 
     <h2 class="govuk-heading-m">

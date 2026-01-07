@@ -1708,7 +1708,8 @@ router.post('/updated-email-answer', function (req, res) {
 // routing for v15 - uplift business details
 
     router.post('/' + version + '/business-details-uplift-email-check', function (req, res) {
-        res.redirect(301, '/' + version + '/details-business-details?upliftSucessBus=true');
+        //res.redirect(301, '/' + version + '/details-business-details?upliftSucessBus=true');
+         res.redirect(301, '/' + version + '/details-business-details-uplift-success');
     });
 
 
