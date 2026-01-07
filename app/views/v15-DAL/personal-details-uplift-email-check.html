@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What is your personal email address?" %}
+{% set pageTitle = "Check your details are correct before submitting" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -24,10 +24,10 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - personal details",
-"id": "bd10",
-"url": "personal-details-email-check?r=t&view=ext&release=b1&newChange=true",
+"status": 'In design',
+"name": "Check your details correct before submitting (personal)",
+"id": "pd20-DAL",
+"url": "personal-details-uplift-email-check?view=ext",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
@@ -48,7 +48,13 @@
 "content": "Enter an email address, like name@example.com"
 }
 
+],
+"notes": [
+"Display user's selected field for update first, then any fields for uplift in the same order the appear in pd01.", 
+
+"Fields for uplift could also include: full name and personal email address"
 ]
+
 
 }
 %}
@@ -56,11 +62,11 @@
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - personal details",
-"id": "int-bd10",
-"url": "personal-details-email-check?r=t&view=int&release=b2&newChange=true",
-"release": "Buffalo 1.1 MVP",
+"status": 'In design',
+"name": "Check your details correct before submitting (personal)",
+"id": "int-pd20-DAL",
+"url": "personal-details-uplift-email-check?view=int",
+"release": "Buffalo 1.0 MVP",
 "variants": [],
 
 "pagetitle": pageTitle,
@@ -80,6 +86,11 @@
 "content": "Enter an email address, like name@example.com"
 }
 
+],
+"notes": [
+"Display user's selected field for update first, then any fields for uplift in the same order the appear in pd01.", 
+
+"Fields for uplift could also include: full name and personal email address"
 ]
 
 }

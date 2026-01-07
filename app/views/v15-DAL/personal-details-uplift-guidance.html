@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What is your business email address?" %}
+{% set pageTitle = "Update your personal details" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -24,10 +24,10 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
-"id": "bd10",
-"url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
+"status": 'In design',
+"name": "Update your personal details",
+"id": "pd-18-DAL",
+"url": "personal-details-uplift-guidance?view=ext",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
@@ -35,18 +35,13 @@
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter business email address"
-},
-{
-"scenario": "Entry is too long",
-"content": "Business email address must be 254 characters or less"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter an email address, like name@example.com"
-}
+
+],
+"notes": [
+"dynamically play back user's selected field for update in the intro line, followed by bullet pointed field(s) for uplift. Display the fields for uplift in the same order they display on pd01. Fields for uplift could also include:",
+
+"full name",
+"personal email address"
 
 ]
 
@@ -56,29 +51,24 @@
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
-"id": "int-bd10",
-"url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
-"release": "Buffalo 1.1 MVP",
+"status": 'In design',
+"name": "Update your personal details",
+"id": "int-pd-18-DAL",
+"url": "personal-details-uplift-guidance?view=int",
+"release": "Buffalo 1.0 MVP",
 "variants": [],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter business email address"
-},
-{
-"scenario": "Entry is too long",
-"content": "Business email address must be 254 characters or less"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter an email address, like name@example.com"
-}
+
+],
+"notes": [
+"dynamically play back user's selected field for update in the intro line, followed by bullet pointed field(s) for uplift. Display the fields for uplift in the same order they display on pd01. Fields for uplift could also include:",
+
+"full name",
+"personal email address"
 
 ]
 

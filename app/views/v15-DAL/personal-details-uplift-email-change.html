@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What is your business email address?" %}
+{% set pageTitle = "Your personal details to update" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -24,10 +24,10 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
-"id": "bd10",
-"url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
+"status": 'In design',
+"name": "Your personal details to update",
+"id": "pd19-DAL",
+"url": "personal-details-uplift-email-change?view=ext",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
@@ -48,6 +48,22 @@
 "content": "Enter an email address, like name@example.com"
 }
 
+],
+"notes": [
+"Display user's selected field for update first, then any fields for uplift in the same order the appear in pd01.", 
+
+"Fields for uplift could also include: full name and personal email address",
+
+
+"Address has to be manual",
+
+"Anything that they want to update (not uplift) is pre-populated",
+
+"for uplift, address and dob are not pre-populated (will be blank)",
+"for uplift phone number and email are pre-populated",
+
+"should be able to use existing error messages. They won't be able to continue if anything is missing or invalid"
+
 ]
 
 }
@@ -56,11 +72,11 @@
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
-"id": "int-bd10",
-"url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
-"release": "Buffalo 1.1 MVP",
+"status": 'In design',
+"name": "Your personal details to update",
+"id": "int-pd19-DAL",
+"url": "personal-details-uplift-email-change?view=int",
+"release": "Buffalo 1.0 MVP",
 "variants": [],
 
 "pagetitle": pageTitle,
@@ -80,7 +96,23 @@
 "content": "Enter an email address, like name@example.com"
 }
 
+],
+"notes": [
+"Display user's selected field for update first, then any fields for uplift in the same order the appear in pd01.", 
+
+"Fields for uplift could also include: full name and personal email address",
+
+
+"Address has to be manual",
+
+"Anything that they want to update (not uplift) is pre-populated",
+
+"for uplift, address and dob are not pre-populated (will be blank)",
+"for uplift phone number and email are pre-populated",
+"should be able to use existing error messages. They won't be able to continue if anything is missing or invalid"
 ]
+
+
 
 }
 %}
@@ -262,8 +294,12 @@
             <label class="govuk-label" for="personal-telephone-number">
               Personal telephone number
             </label>
-            <input class="govuk-input govuk-input--width-20" id="personal-telephone-number"
-              name="personal-telephone-number" type="text" value="{{data['personal-telephone-number']}}">
+            <!--<input class="govuk-input govuk-input--width-20" id="personal-telephone-number"
+              name="personal-telephone-number" type="text" value="{{data['personal-telephone-number']}}">-->
+                          <input class="govuk-input govuk-input--width-20" id="personal-telephone-number"
+              name="personal-telephone-number" type="text" value="01624">
+
+              
           </div>
           <div class="govuk-form-group">
             <label class="govuk-label" for="personal-mobile-number">

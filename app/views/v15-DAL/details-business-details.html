@@ -344,22 +344,24 @@
      </h2>
 
     <dl class="govuk-summary-list">
-
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Business name
         </dt>
         <dd class="govuk-summary-list__value">
-          {% if data['business-name'] %}
-            {{data['business-name']}}
-          {% else %}
-                  Alfred Christopher William Waldron and Bartholomew Robinson Waldron and Sons Agile Farm and Lands Limited Enterprises
-                 <!--Agile Farm Ltd--> 
-          {% endif %}
+          {{myData.nameBus}}
         </dd>
+        {% if data.permissionsMVP == "view" and data.view == "ext" %}
+          
+        {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> business email address</span></a>
+          
         </dd>
+        {% else %}
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> business name</span></a>
+        </dd>
+        {% endif %}
       </div>
 
 

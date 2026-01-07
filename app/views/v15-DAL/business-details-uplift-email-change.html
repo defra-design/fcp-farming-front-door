@@ -26,7 +26,7 @@
 {% set _designSpecData = {
 "status": 'In development',
 "name": "Email address (change) - business details",
-"id": "bd10",
+"id": "bd27-DAL",
 "url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
@@ -48,6 +48,24 @@
 "content": "Enter an email address, like name@example.com"
 }
 
+],
+
+"notes": [
+"There cannot be a missing business name -
+the uplift scenario for business name is that it's too long - over 160 characters.",
+"Display user's selected field for update first, then any fields for uplift in the same order the appear in bd01.", 
+
+"Fields for uplift could also include: business email address",
+
+
+"Address has to be manual",
+
+"Anything that they want to update (not uplift) is pre-populated",
+
+"For uplift, address will not pre-populated (will be blank)",
+"For uplift, business name, phone number and email are pre-populated",
+"should be able to use existing error messages. they won't be able to continue if anything is missing or invalid"
+
 ]
 
 }
@@ -58,7 +76,7 @@
 {% set _designSpecData = {
 "status": 'In development',
 "name": "Email address (change) - business details",
-"id": "int-bd10",
+"id": "int-bd27-DAL",
 "url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
 "release": "Buffalo 1.1 MVP",
 "variants": [],
@@ -79,6 +97,24 @@
 "scenario": "Wrong format",
 "content": "Enter an email address, like name@example.com"
 }
+
+],
+
+"notes": [
+"There cannot be a missing business name -
+the uplift scenario for business name is that it's too long - over 160 characters.",
+"Display user's selected field for update first, then any fields for uplift in the same order the appear in bd01.", 
+
+"Fields for uplift could also include: business email address",
+
+
+"Address has to be manual",
+
+"Anything that they want to update (not uplift) is pre-populated",
+
+"For uplift, address will not pre-populated (will be blank)",
+"For uplift, business name, phone number and email are pre-populated",
+"should be able to use existing error messages. they won't be able to continue if anything is missing or invalid"
 
 ]
 
@@ -211,6 +247,9 @@
             </label>
             <input class="govuk-input govuk-input--width-20" id="business-mobile-number" name="business-mobile-number"
               type="text" value="{{data['business-mobile-number']}}">
+
+
+              
           </div>
         </fieldset>
       </div>
