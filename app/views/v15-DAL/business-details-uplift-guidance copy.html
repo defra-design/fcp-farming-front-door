@@ -24,25 +24,21 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-  "status": 'In design',
-  "name": "Update your business details",
-  "id": "bd26-DAL",
-  "url": "business-details-uplift-guidance",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
-    {
-      "name": "External user with full permissions",
-      "url": "business-details-uplift-guidance"
-    },
-    {
-      "name": "External user with amend permissions",
-      "url": "business-details-uplift-guidance"
-    }
-  
-
-    
-  ],
-
+"status": 'In design',
+"name": "Update your business details",
+"id": "bd26-DAL",
+  "url": "business-details-uplift-guidance?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "External user with full permissions",
+"url": "business-details-uplift-guidance?view=ext"
+},
+{
+"name": "External user with amend permissions",
+"url": "business-details-uplift-guidance-permissions-amend?view=ext"
+}
+],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
