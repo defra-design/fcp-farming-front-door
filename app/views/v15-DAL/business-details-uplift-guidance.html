@@ -27,18 +27,22 @@
 "status": 'In design',
 "name": "Update your business details",
 "id": "bd26-DAL",
-"url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
+  "url": "details-business-details?r=t&release=b1",
 "release": "Buffalo 1.0 MVP",
 "variants": [
-  {
-      "name": "amend permissions",
-      "url": "details-business-details-permissions-amend?view=ext"
-    },
-      {
-      "name": "view permissions",
-      "url": "details-business-details-permissions-view?view=ext"
-    }
-    ],
+{
+"name": "External user with full permissions",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=full"
+},
+{
+"name": "External user with amend permissions",
+"url": "details-business-details-permissions-amend?view=ext"
+},
+{
+"name": "External user with view permissions",
+"url": "details-business-details-permissions-view?view=ext"
+}
+],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
@@ -59,7 +63,8 @@
 
 ],
 "notes": [
-"dynamically play back user's selected field for update in the intro line, followed by bullet pointed field(s) for uplift. Display the fields for uplift in the same order they display on bd01.",
+"dynamically play back user's selected field for update in the intro line, followed by bullet pointed field(s) for
+uplift. Display the fields for uplift in the same order they display on bd01.",
 "Fields for uplift could also include: business email address"
 
 ]
@@ -144,7 +149,7 @@
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        
+
         <li>business name</li>
         <li>
           business address
