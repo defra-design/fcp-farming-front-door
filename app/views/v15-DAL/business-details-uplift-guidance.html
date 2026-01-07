@@ -6,19 +6,20 @@
 {% set _showFooterMVPLinks = true %}
 {% endif %}
 
-{% set _showReleaseLinks = false %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
 
 {% set _showIntExtLinks = true %}
 
-{% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "Update your business details" %}
-{% set pageName = pageTitle %}
-{% if _inError %}
-{% set pageName = "Error: " + pageTitle %}
-{% endif %}
-
+{% set pageName = "Update your business details" %}
 {% set serviceName = "Farm and Land Service" %}
+
+
 
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -27,16 +28,16 @@
 "status": 'In design',
 "name": "Update your business details",
 "id": "bd26-DAL",
-  "url": "business-details-uplift-guidance",
+  "url": "business-details-uplift-guidance?r=t&release=b1",
 "release": "Buffalo 1.0 MVP",
 "variants": [
 {
 "name": "External user with full permissions",
-"url": "business-details-uplift-guidance"
+"url": "business-details-uplift-guidance?view=ext"
 },
 {
 "name": "External user with amend permissions",
-"url": "business-details-uplift-guidance-permissions-amend"
+"url": "business-details-uplift-guidance-permissions-amend?view=ext"
 }
 ],
 
@@ -78,7 +79,7 @@ uplift. Display the fields for uplift in the same order they display on bd01.",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
-"pagetitle": pageTitle,
+"pagetitle": pageName,
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
@@ -112,14 +113,11 @@ uplift. Display the fields for uplift in the same order they display on bd01.",
 {% include "_common/phase-banner-2.html" %}
 {% include "_common/sub-header-DAL.html" %}
 
-{% set _hideAccountLink = true %}
 {% include "_common/login-nav-3a.html" %}
-{% else %}
-{% include "_common/login-nav-internal.html" %}
-{% endif %}
+
 
 <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
-
+ {% endif %}
 {% endblock %}
 
 
