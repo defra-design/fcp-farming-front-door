@@ -12,11 +12,9 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What is your business email address?" %}
+{% set pageTitle = "Check your details are correct before submitting" %}
 {% set pageName = pageTitle %}
-{% if _inError %}
-{% set pageName = "Error: " + pageTitle %}
-{% endif %}
+
 
 {% set serviceName = "Farm and Land Service" %}
 
@@ -24,10 +22,10 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
-"id": "bd10",
-"url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
+"status": 'In design',
+"name": "Details (check) - business details",
+"id": "bd28-DAL",
+"url": "business-details-uplift-email-check?view=ext",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
@@ -35,18 +33,14 @@
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter business email address"
-},
-{
-"scenario": "Entry is too long",
-"content": "Business email address must be 254 characters or less"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter an email address, like name@example.com"
-}
+
+],
+
+"notes": [
+"Success message - display user's selected field for update first, then any fields for uplift in the same order they appear in bd01.", 
+
+"Fields for uplift could also include: business email address"
+
 
 ]
 
@@ -56,31 +50,27 @@
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
-"id": "int-bd10",
-"url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
-"release": "Buffalo 1.1 MVP",
+"status": 'In design',
+"name": "Details (check) - business details",
+"id": "int-bd28-DAL",
+"url": "business-details-uplift-email-check?view=int",
+"release": "Buffalo 1.0 MVP",
 "variants": [],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter business email address"
-},
-{
-"scenario": "Entry is too long",
-"content": "Business email address must be 254 characters or less"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter an email address, like name@example.com"
-}
+],
+
+"notes": [
+"Success message - display user's selected field for update first, then any fields for uplift in the same order they appear in bd01.", 
+
+"Fields for uplift could also include: business email address"
+
 
 ]
+
 
 }
 %}

@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What is your business email address?" %}
+{% set pageTitle = "Your business details to update" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -24,10 +24,10 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
+"status": 'In design',
+"name": "Details (change) - business details",
 "id": "bd27-DAL",
-"url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
+"url": "business-details-uplift-email-change?view=ext",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
@@ -35,22 +35,11 @@
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter business email address"
-},
-{
-"scenario": "Entry is too long",
-"content": "Business email address must be 254 characters or less"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter an email address, like name@example.com"
-}
 
 ],
 
 "notes": [
+"All validation messages are listed here: https://eaflood.atlassian.net/wiki/spaces/SFD/pages/5461442697/Buffalo+1.0+MVP+-+validation+scenarios+and+messages",
 "There cannot be a missing business name -
 the uplift scenario for business name is that it's too long - over 160 characters.",
 "Display user's selected field for update first, then any fields for uplift in the same order the appear in bd01.", 
@@ -74,33 +63,23 @@ the uplift scenario for business name is that it's too long - over 160 character
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Email address (change) - business details",
+"status": 'In design',
+"name": "Details (change) - business details",
 "id": "int-bd27-DAL",
-"url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
-"release": "Buffalo 1.1 MVP",
+"url": "business-details-uplift-email-change?view=int",
+"release": "Buffalo 1.0 MVP",
 "variants": [],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter business email address"
-},
-{
-"scenario": "Entry is too long",
-"content": "Business email address must be 254 characters or less"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter an email address, like name@example.com"
-}
 
 ],
 
 "notes": [
+"All validation messages are listed here: https://eaflood.atlassian.net/wiki/spaces/SFD/pages/5461442697/Buffalo+1.0+MVP+-+validation+scenarios+and+messages",
+
 "There cannot be a missing business name -
 the uplift scenario for business name is that it's too long - over 160 characters.",
 "Display user's selected field for update first, then any fields for uplift in the same order the appear in bd01.", 
