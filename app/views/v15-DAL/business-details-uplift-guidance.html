@@ -12,7 +12,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "What is your business email address?" %}
+{% set pageTitle = "Update your business details" %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -27,20 +27,16 @@
 "status": 'In design',
 "name": "Update your business details",
 "id": "bd26-DAL",
-  "url": "details-business-details?r=t&release=b1",
+  "url": "business-details-uplift-guidance",
 "release": "Buffalo 1.0 MVP",
 "variants": [
 {
 "name": "External user with full permissions",
-"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=full"
+"url": "business-details-uplift-guidance?view=ext"
 },
 {
 "name": "External user with amend permissions",
-"url": "details-business-details-permissions-amend?view=ext"
-},
-{
-"name": "External user with view permissions",
-"url": "details-business-details-permissions-view?view=ext"
+"url": "business-details-uplift-guidance-permissions-amend?view=ext"
 }
 ],
 
