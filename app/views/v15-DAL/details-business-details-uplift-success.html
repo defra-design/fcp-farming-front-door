@@ -22,16 +22,13 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-  "status": 'In design',
+  "status": 'In development',
   "name": "Manage business details",
-  "id": "bd01-DAL",
+  "id": "bd01",
   "url": "details-business-details?r=t&release=b1",
   "release": "Buffalo 1.0 MVP",
   "variants": [
-    {
-      "name": "External user with full permissions",
-      "url": "details-business-details-uplift-success?view=ext"
-    },
+    
     {
       "name": "External user with amend permissions",
       "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=amend"
@@ -127,10 +124,10 @@
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-  "status": 'In design',
+  "status": 'In development',
   "name": "Manage business details",
-  "id": "int-bd01-DAL",
-  "url": "details-business-details-uplift-success?view=int",
+  "id": "int-bd01",
+  "url": "details-business-details?r=t&view=int&release=b2",
   "release": "Buffalo 1.1 MVP",
   "variants": [
     {
