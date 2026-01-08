@@ -5,6 +5,7 @@ module.exports = [
     "pageurl": "your-businesses",
     "pagedesc": "A list of all your businesses with the single business identifier (SBI) for each business."
   },
+
   {
     "pageid": "bp02",
     "pagename": "SFD Home/Business Page",
@@ -140,6 +141,12 @@ module.exports = [
   {
     "pageid": "bd01",
     "pagename": "Manage business details",
+    "pageurl": "business-details",
+    "pagedesc": "View and update your business details."
+  },
+    {
+    "pageid": "bd01-DAL",
+    "pagename": "Maage business details success",
     "pageurl": "business-details",
     "pagedesc": "View and update your business details."
   },
@@ -717,6 +724,12 @@ module.exports = [
   {
     "pageid": "int-bd01",
     "pagename": "Manage business details",
+    "pageurl": "business-details",
+    "pagedesc": "View and update your business details."
+  },
+    {
+    "pageid": "int-bd01-DAL",
+    "pagename": "Maage business details success",
     "pageurl": "business-details",
     "pagedesc": "View and update your business details."
   },

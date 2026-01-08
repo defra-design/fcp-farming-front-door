@@ -25,11 +25,16 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In design',
-"name": "Details (change) - business details",
+"name": "Your business details to update",
 "id": "bd27-DAL",
 "url": "business-details-uplift-email-change?view=ext",
 "release": "Buffalo 1.0 MVP",
-"variants": [],
+"variants": [
+{
+"name": "External user with amend permissions",
+"url": "business-details-permissions-amend-uplift-email-change?view=ext"
+}
+],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
@@ -64,7 +69,7 @@ the uplift scenario for business name is that it's too long - over 160 character
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In design',
-"name": "Details (change) - business details",
+"name": "Your business details to update",
 "id": "int-bd27-DAL",
 "url": "business-details-uplift-email-change?view=int",
 "release": "Buffalo 1.0 MVP",
