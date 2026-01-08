@@ -6,15 +6,17 @@
 {% set _showFooterMVPLinks = true %}
 {% endif %}
 
-{% if data.view == "int" %}
-  {% set _showReleaseLinks = false %}
-{% else %}
-  {% set _showReleaseLinks = false %}
-{% endif %}
+{% set _showReleaseLinks = false %}
+
 {% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true" %}
 
 {% set pageTitle = "Update your personal details" %}
 {% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
 
 {% set serviceName = "Farm and Land Service" %}
 
@@ -49,7 +51,7 @@
 {% set _designSpecData = {
 "status": 'In design',
 "name": "Update your personal details",
-"id": "int-pd18-DAL",
+"id": "int-pd-18-DAL",
 "url": "personal-details-uplift-guidance?view=int",
 "release": "Buffalo 1.0 MVP",
 "variants": [],
@@ -81,37 +83,16 @@
 {% if data.view != "int" %}
 
 {% include "_common/phase-banner-2.html" %}
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+{% include "_common/sub-header.html" %}
 
 {% set _hideAccountLink = true %}
-
 {% include "_common/login-nav-3a.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
 
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
-      <div class="govuk-breadcrumbs" style="display: inline-block">
-        <ol class="govuk-breadcrumbs__list">
-          <li class="govuk-breadcrumbs__list-item">
-            <a href="business-home" class="govuk-back-link govuk-breadcrumbs__link govuk-!-margin-top-0">Back to business overview</a>
-          </li>
-        </ol>
-      </div>
-
-    </div>
-  </div>
-  {% else %}
-  {% include "_common/login-nav-internal.html" %}
-  <div class="govuk-breadcrumbs" style="display: inline-block">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-customer">{{_selectedUser.name}} (CRN: {{_selectedUser.crn}})</a>
-      </li>
-    </ol>
-  </div>
 {% endblock %}
 
 
