@@ -119,6 +119,24 @@ module.exports = [
     "pageurl": "account-phone-numbers-check",
     "pagedesc": "Check the phone numbers for your personal account are correct."
   },
+   {
+    "pageid": "pd18-DAL",
+    "pagename": "Update your personal details",
+    "pageurl": "personal-fix",
+    "pagedesc": "You need to update your personal details"
+  },
+ {
+    "pageid": "pd19-DAL",
+    "pagename": "Your personal details to update",
+    "pageurl": "personal-fix-list",
+    "pagedesc": "These personal details need updating"
+  },
+   {
+    "pageid": "pd20-DAL",
+    "pagename": "Check your details are correct before submitting (personal)",
+    "pageurl": "personal-fix-check",
+    "pagedesc": "Check the details for your personal account are correct"
+  },
   {
     "pageid": "bd01",
     "pagename": "Manage business details",
@@ -155,6 +173,25 @@ module.exports = [
     "pageurl": "business-VAT-registration-remove",
     "pagedesc": "Remove the VAT registration number for your business."
   },
+{
+    "pageid": "bd26-DAL",
+    "pagename": "Update your business details",
+    "pageurl": "business-fix",
+    "pagedesc": "You need to update your business details"
+  },
+  {
+    "pageid": "bd27-DAL",
+    "pagename": "Your business details to update",
+    "pageurl": "business-fix-list",
+    "pagedesc": "These business details need updating"
+  },
+  {
+    "pageid": "bd28-DAL",
+    "pagename": "Check your details are correct before submitting (business)",
+    "pageurl": "business-fix-check",
+    "pagedesc": "Check the details for your business are correct"
+  },
+ 
 
   {
     "pageid": "bd04",
@@ -624,6 +661,24 @@ module.exports = [
     "pagedesc": "Choose the address for your personal account."
   },
   {
+    "pageid": "int-pd18-DAL",
+    "pagename": "Update your personal details",
+    "pageurl": "personal-fix",
+    "pagedesc": "You need to update your personal details."
+  },
+ {
+    "pageid": "int-pd19-DAL",
+    "pagename": "Your personal details to update",
+    "pageurl": "personal-fix-list",
+    "pagedesc": "These personal details need updating."
+  },
+   {
+    "pageid": "int-pd20-DAL",
+    "pagename": "Check your details are correct before submitting (personal)",
+    "pageurl": "personal-fix-check",
+    "pagedesc": "Check the details for your personal account are correct."
+  },
+  {
     "pageid": "int-pd06",
     "pagename": "Address (enter) - personal details",
     "pageurl": "account-address-enter",
@@ -750,11 +805,30 @@ module.exports = [
     "pagedesc": "Remove the VAT registration number for your business."
   },
   {
+    "pageid": "int-bd26-DAL",
+    "pagename": "Update your business details",
+    "pageurl": "business-fix",
+    "pagedesc": "You need to update your business details."
+  },
+  {
+    "pageid": "int-bd27-DAL",
+    "pagename": "Your business details to update",
+    "pageurl": "business-fix-list",
+    "pagedesc": "These business details need updating."
+  },
+  {
+    "pageid": "int-bd28-DAL",
+    "pagename": "Check your details are correct before submitting (business)",
+    "pageurl": "business-fix-check",
+    "pagedesc": "Check the details for your business are correct."
+  },
+  {
     "pageid": "int-bd15",
     "pagename": "Legal status (change) - business details",
     "pageurl": "internal-legal-status-change",
     "pagedesc": "Update the legal status of this business."
   },
+  
   {
     "pageid": "int-bd15a",
     "pagename": "Legal status (charity) - business details ",
