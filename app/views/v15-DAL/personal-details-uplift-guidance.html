@@ -13,8 +13,11 @@
 {% endif %}
 {% set _showIntExtLinks = true %}
 
-{% set pageName="Update your personal details" %}
+{% set pageTitle = "Update your personal details" %}
+{% set pageName = pageTitle %}
+
 {% set serviceName = "Farm and Land Service" %}
+
 
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
@@ -26,7 +29,7 @@
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
-"pagetitle": pageName,
+"pagetitle": pageTitle,
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
@@ -51,7 +54,7 @@
 "release": "Buffalo 1.0 MVP",
 "variants": [],
 
-"pagetitle": pageName,
+"pagetitle": pageTitle,
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
@@ -72,11 +75,11 @@
 
 {% endif %}
 
-{% set _selectedUser = myData.selectedUser %}
 
 {% block beforeContent %}
 
 {% if data.view != "int" %}
+
 {% include "_common/phase-banner-2.html" %}
 
   <div class="govuk-grid-row">
@@ -86,7 +89,8 @@
 
 {% include "_common/login-nav-3a.html" %}
 
-     <div class="govuk-breadcrumbs" style="display: inline-block">
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
         <ol class="govuk-breadcrumbs__list">
           <li class="govuk-breadcrumbs__list-item">
             <a href="business-home" class="govuk-back-link govuk-breadcrumbs__link govuk-!-margin-top-0">Back to business overview</a>
@@ -108,7 +112,6 @@
       </li>
     </ol>
   </div>
-  {% endif %}
 {% endblock %}
 
 
