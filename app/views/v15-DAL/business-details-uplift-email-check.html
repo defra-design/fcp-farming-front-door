@@ -23,11 +23,16 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In design',
-"name": "Details (check) - business details",
+"name": "Check your details are correct before submitting (business)",
 "id": "bd28-DAL",
 "url": "business-details-uplift-email-check?view=ext",
 "release": "Buffalo 1.0 MVP",
-"variants": [],
+"variants": [
+{
+"name": "External user with amend permissions",
+"url": "business-details-permissions-amend-uplift-email-check?view=ext"
+}
+],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
@@ -51,7 +56,7 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In design',
-"name": "Details (check) - business details",
+"name": "Check your details are correct before submitting (business)",
 "id": "int-bd28-DAL",
 "url": "business-details-uplift-email-check?view=int",
 "release": "Buffalo 1.0 MVP",
