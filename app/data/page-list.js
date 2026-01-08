@@ -25,6 +25,12 @@ module.exports = [
     "pagedesc": "View and update your personal account details."
   },
   {
+    "pageid": "pd01-DAL",
+    "pagename": "Manage personal details",
+    "pageurl": "personal-details",
+    "pagedesc": "View and update your personal account details."
+  },
+  {
     "pageid": "pd02",
     "pagename": "Full name (change) - personal details",
     "pageurl": "account-name-change",
@@ -627,6 +633,12 @@ module.exports = [
   },
   {
     "pageid": "int-pd01",
+    "pagename": "Manage personal details",
+    "pageurl": "personal-details",
+    "pagedesc": "View and update your personal account details."
+  },
+    {
+    "pageid": "int-pd01-DAL",
     "pagename": "Manage personal details",
     "pageurl": "personal-details",
     "pagedesc": "View and update your personal account details."
