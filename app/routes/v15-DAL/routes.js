@@ -1724,6 +1724,11 @@ router.post('/updated-email-answer', function (req, res) {
         });
     });  
 
+     router.get('/' + version + '/business-details-uplift-email-change', function (req, res) {
+        res.render(version + '/business-details-uplift-email-change', {
+            myData: req.session.myData
+        });
+    });  
      router.get('/' + version + '/business-details-uplift-email-check', function (req, res) {
         res.render(version + '/business-details-uplift-email-check', {
             myData: req.session.myData
@@ -1745,7 +1750,11 @@ router.post('/updated-email-answer', function (req, res) {
             myData: req.session.myData
         });
     });  
-
+   router.get('/' + version + '/personal-details-uplift-email-change', function (req, res) {
+        res.render(version + '/personal-details-uplift-email-change', {
+            myData: req.session.myData
+        });
+    });  
      router.get('/' + version + '/personal-details-uplift-email-check', function (req, res) {
         res.render(version + '/personal-details-uplift-email-check', {
             myData: req.session.myData
