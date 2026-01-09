@@ -1718,7 +1718,11 @@ router.post('/updated-email-answer', function (req, res) {
         res.redirect(301, '/' + version + '/details-business-details-permissions-amend-uplift-success?upliftSucessBus=true');
     });
 
-    
+  router.get('/' + version + '/business-details-uplift-guidance', function (req, res) {
+        res.render(version + '/business-details-uplift-guidance', {
+            myData: req.session.myData
+        });
+    });  
 
 //routing for when details are correct/incorrect second time of seeing the page after updates- prototype 13
 // Run this code when a form is submitted to 'detailsroutev3'
