@@ -14,85 +14,41 @@
 
 {% set pageTitle = "Update your business details" %}
 {% set pageName = pageTitle %}
-{% if _inError %}
-{% set pageName = "Error: " + pageTitle %}
-{% endif %}
 
+{% if data.view == "ext" and data.release != "concept" %}
 {% set serviceName = "Farm and Land Service" %}
 
 
-{% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In design',
 "name": "Update your business details",
-"id": "bd26-amend-DAL",
-  "url": "business-details-uplift-guidance-permissions-amend",
+"id": "bd26-DAL",
+"url": "business-details-uplift-guidance",
 "release": "Buffalo 1.0 MVP",
 "variants": [
-{
-"name": "External user with full permissions",
-"url": "business-details-uplift-guidance?view=ext"
-},
-{
-"name": "External user with amend permissions",
-"url": "business-details-uplift-guidance-permissions-amend?view=ext"
-}
-],
-
-"pagetitle": pageTitle,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
-
-
+    {
+      "name": "External user with full permissions",
+      "url": "business-details-uplift-guidance"
+    }
+  
 ],
 "notes": [
 "dynamically play back user's selected field for update in the intro line, followed by bullet pointed field(s) for
 uplift. Display the fields for uplift in the same order they display on bd01.",
 "Fields for uplift could also include: business email address"
-
 ]
-
-}
-%}
-
-{% elif data.view == "int" %}
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-"status": 'In design',
-"name": "Email address (change) - business details",
-"id": "int-bd26-DAL",
-"url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
-"release": "Buffalo 1.0 MVP",
-"variants": [],
 
 "pagetitle": pageTitle,
 "pagedesc": "",
 "pageurl": "",
-"errormessages": [
-{
-"scenario": "Empty field / nothing entered",
-"content": "Enter business email address"
-},
-{
-"scenario": "Entry is too long",
-"content": "Business email address must be 254 characters or less"
-},
-{
-"scenario": "Wrong format",
-"content": "Enter an email address, like name@example.com"
-}
-
-]
-
+"errormessages": []
 }
 %}
 
 {% else %}
 
 {% endif %}
-
 
 {% block beforeContent %}
 
@@ -117,8 +73,8 @@ uplift. Display the fields for uplift in the same order they display on bd01.",
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <form action="business-details-uplift-email-change">
-     <h1 class="govuk-heading-l">Update your business details</h1>
+    <!--<form action="business-details-permissions-amend-uplift-email-change">-->
+      <h1 class="govuk-heading-l">Update your business details</h1>
 <p>
         Your business name needs to be 160 characters or less. 
       </p>
@@ -133,6 +89,9 @@ uplift. Display the fields for uplift in the same order they display on bd01.",
 
       <p>Ask a user with full permission for the business (for example, this could be the business owner) to log in to this online service to update the business name.</p>
 
+      <!--<button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>-->
 
     </form>
 

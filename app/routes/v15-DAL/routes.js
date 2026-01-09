@@ -1723,6 +1723,11 @@ router.post('/updated-email-answer', function (req, res) {
             myData: req.session.myData
         });
     });  
+    router.get('/' + version + '/business-details-uplift-email-change', function (req, res) {
+        res.render(version + '/business-details-uplift-email-change', {
+            myData: req.session.myData
+        });
+    });  
 
 //routing for when details are correct/incorrect second time of seeing the page after updates- prototype 13
 // Run this code when a form is submitted to 'detailsroutev3'
