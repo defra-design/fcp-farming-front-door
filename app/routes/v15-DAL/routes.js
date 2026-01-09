@@ -1705,29 +1705,60 @@ router.post('/updated-email-answer', function (req, res) {
   }
 });
 
-// routing for v15 - uplift business details
+// routing for v15 to details-business-details with uplift success message
 
     router.post('/' + version + '/business-details-uplift-email-check', function (req, res) {
         //res.redirect(301, '/' + version + '/details-business-details?upliftSucessBus=true');
          res.redirect(301, '/' + version + '/details-business-details-uplift-success');
     });
 
-
     //routing for v15 - amend permissions - uplift business details
  router.post('/' + version + '/business-details-permissions-amend-uplift-email-check', function (req, res) {
         res.redirect(301, '/' + version + '/details-business-details-permissions-amend-uplift-success?upliftSucessBus=true');
     });
 
+//pointing to v15- uplift business details- get global 'mydata' object and use in the page - business details
   router.get('/' + version + '/business-details-uplift-guidance', function (req, res) {
         res.render(version + '/business-details-uplift-guidance', {
             myData: req.session.myData
         });
     });  
-    router.get('/' + version + '/business-details-uplift-email-change', function (req, res) {
-        res.render(version + '/business-details-uplift-email-change', {
+
+     router.get('/' + version + '/business-details-uplift-email-check', function (req, res) {
+        res.render(version + '/business-details-uplift-email-check', {
             myData: req.session.myData
         });
     });  
+
+    router.get('/' + version + '/details-business-details-uplift-success', function (req, res) {
+        res.render(version + '/details-business-details-uplift-success', {
+            myData: req.session.myData
+        });
+    });  
+
+
+
+
+    //pointing to v15 - get global 'mydata' object and use in the page - personal details
+  router.get('/' + version + '/personal-details-uplift-guidance', function (req, res) {
+        res.render(version + '/personal-details-uplift-guidance', {
+            myData: req.session.myData
+        });
+    });  
+
+     router.get('/' + version + '/personal-details-uplift-email-check', function (req, res) {
+        res.render(version + '/personal-details-uplift-email-check', {
+            myData: req.session.myData
+        });
+    });  
+
+    router.get('/' + version + '/details-personal-details-uplift-success', function (req, res) {
+        res.render(version + '/details-personal-details-uplift-success', {
+            myData: req.session.myData
+        });
+    });  
+
+  
 
 //routing for when details are correct/incorrect second time of seeing the page after updates- prototype 13
 // Run this code when a form is submitted to 'detailsroutev3'
