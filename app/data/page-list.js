@@ -200,7 +200,7 @@ module.exports = [
     "pagedesc": "You need to update your business details"
   },
   {
-    "pageid": "bd26-DAL-amend",
+    "pageid": "bd26-amend-DAL",
     "pagename": "Update your business details",
     "pageurl": "business-fix-name-no-permission",
     "pagedesc": "The business name needs updating before you can update your business details."
