@@ -1747,7 +1747,17 @@ router.post('/updated-email-answer', function (req, res) {
     });  
 
 
+   router.get('/' + version + '/details-business-details-permissions-amend', function (req, res) {
+        res.render(version + '/details-business-details-permissions-amend', {
+            myData: req.session.myData
+        });
+    });  
 
+       router.get('/' + version + '/details-business-details-permissions-view', function (req, res) {
+        res.render(version + '/details-business-details-permissions-view', {
+            myData: req.session.myData
+        });
+    });  
 
     //pointing to v15 - get global 'mydata' object and use in the page - personal details
   router.get('/' + version + '/personal-details-uplift-guidance', function (req, res) {
