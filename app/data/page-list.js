@@ -152,10 +152,23 @@ module.exports = [
   },
     {
     "pageid": "bd01-DAL",
-    "pagename": "Maage business details success",
+    "pagename": "Manage business details success",
     "pageurl": "business-details",
     "pagedesc": "View and update your business details."
   },
+    {
+    "pageid": "bd01-amend-DAL",
+    "pagename": "Manage business details success",
+    "pageurl": "business-details",
+    "pagedesc": "View and update your business details."
+  },
+    {
+    "pageid": "bd01-view-DAL",
+    "pagename": "Manage business details success",
+    "pageurl": "business-details",
+    "pagedesc": "View your business details."
+  },
+
   {
     "pageid": "bd02",
     "pagename": "Business name (change) - business details",
