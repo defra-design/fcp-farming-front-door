@@ -192,6 +192,19 @@ module.exports = [
     "pageurl": "business-fix",
     "pagedesc": "You need to update your business details"
   },
+
+  {
+    "pageid": "bd26-DAL",
+    "pagename": "Update your business details",
+    "pageurl": "business-fix",
+    "pagedesc": "You need to update your business details"
+  },
+  {
+    "pageid": "bd26-DAL-amend",
+    "pagename": "Update your business details",
+    "pageurl": "business-fix-name-no-permission",
+    "pagedesc": "The business name needs updating before you can update your business details."
+  },
   {
     "pageid": "bd27-DAL",
     "pagename": "Your business details to update",
