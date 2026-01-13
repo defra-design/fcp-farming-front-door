@@ -178,10 +178,7 @@
                     <label class="govuk-label govuk-date-input__label" for="dobDayPers1">
                       Day
                     </label>
-                    {% set _valueNewDobDayPers = myData.newDobDayPers or myData.dobDayPers %}
-                    <!--{% if myData.validationErrors.dobDayPers %}
-              {% set _valueNewDobDayPers = myData.newDobDayPers %}
-              {% endif %}-->
+              
                     <input
                       class="govuk-input govuk-date-input__input govuk-input--width-2 {% if myData.validationErrors.dobDayPers1 %}govuk-input--error{% endif %}"
                       id="dobDayPers1" name="dobDayPers1" type="text" autocomplete="bday-day" inputmode="numeric"
