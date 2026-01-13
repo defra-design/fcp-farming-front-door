@@ -38,7 +38,7 @@
     },
     {
       "name": "External user with view permissions",
-      "url": "details-business-details-permissions-view"
+      "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=view"
     },        
     {
       "name": "no existing phone numbers - add",
@@ -103,6 +103,14 @@
     {
       "name": "vat number removed banner",
       "url": "details-business-details?r=t&release=b1&vatremoved=true&changed=true&view=ext"
+    },
+    {
+      "name": "details changed banner (DAL)",
+      "url": "details-business-details-uplift-success?r=t&release=b1&vatremoved=true&changed=true&view=ext"
+    },
+    {
+      "name": "details changed banner -amend (DAL)",
+      "url": "details-business-details-permissions-amend-uplift-success?r=t&release=b1&vatremoved=true&changed=true&view=ext"
     }
   ],
 
@@ -113,14 +121,21 @@
     
   ],
   "notes": [
-    "<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding (CPH) number' row. View example with the query string &cphCount=0",
+       "Success message - display user's selected field for update as first bullet, then any fields for uplift in the same order they appear in bd01.",
+
+"Fields for uplift could also include: business email address",
+
+"<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding (CPH) number' row. View example with the query string &cphCount=0",
 
     "<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH) numbers' label plural and separate each CPH number with a break line tag. View example with the query string &cphCount=2",
 
     "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
 
     "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0"
-  ]
+ 
+   
+
+    ]
 }
 %}
 
@@ -196,6 +211,10 @@
     {
       "name": "vat number removed banner",
       "url": "details-business-details?r=t&release=b2&vatremoved=true&changed=true&view=int"
+    },
+       {
+      "name": "details changed banner (DAL)",
+      "url": "details-business-details-uplift-success?r=t&release=b1&vatremoved=true&changed=true&view=ext"
     }
   ],
 
@@ -206,6 +225,10 @@
     
   ],
   "notes": [
+  "Success message - display user's selected field for update as first bullet, then any fields for uplift in the same order they appear in bd01.",
+
+"Fields for uplift could also include: business email address",
+
     "<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding (CPH) number' row. View example with the query string &cphCount=0",
 
     "<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH) numbers' label plural and separate each CPH number with a break line tag. View example with the query string &cphCount=2",
