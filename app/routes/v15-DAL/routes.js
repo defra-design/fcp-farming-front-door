@@ -1723,7 +1723,12 @@ router.post('/updated-email-answer', function (req, res) {
             myData: req.session.myData
         });
     });  
-
+  router.get('/' + version + '/business-details-uplift-guidance-permissions-amend', function (req, res) {
+        res.render(version + '/business-details-uplift-guidance-permissions-amend', {
+            myData: req.session.myData
+        });
+    });  
+   
      router.get('/' + version + '/business-details-uplift-email-change', function (req, res) {
         res.render(version + '/business-details-uplift-email-change', {
             myData: req.session.myData
