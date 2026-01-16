@@ -1,0 +1,347 @@
+
+
+{% set _version = _designSpecData.version %}
+{% set heroku = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + _version + "/" %}
+
+{% if status != "" %}
+
+<div class="status-outer">
+
+	<div class="statusbox">
+
+		<h1 class="govuk-heading-m">Design spec</h1>
+
+        <dl class="govuk-summary-list">
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Status
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+                    {% if _designSpecData.status != "In development" %}
+                        In design
+                    {% else %}
+                        {{ _designSpecData.status }}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Service name
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+                    <span id="service-name">{{serviceName}}</span>
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Page ID
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+                    <strong>{{ _designSpecData.id }}</strong>. {{ _designSpecData.name }}
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Release
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+                    {{ _designSpecData.release }}
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    &#60;title&#62; tag
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+                    {% if _designSpecData.pagetitle == "" %}
+                        <p class="" style="color: #d4351c"><span>TO DO</span></p>
+                    {% else %}
+                        <p class="govuk-body-s">{{ _designSpecData.pagetitle }} - <span id="service-name">{{serviceName}}</span> - GOV.UK</p>
+                        {% if _designSpecData.errormessages and _designSpecData.errormessages|length > 0 %}
+                            <p class="govuk-body-s"><span style="color:#d4351c">If error validation is visible...<br></span>
+                        Error: {{ _designSpecData.pagetitle }} - <span id="service-name">{{serviceName}}</span> - GOV.UK</p>
+                        {% endif %}
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Meta "description"
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+
+                    {% if not _designSpecData.pagedesc %}
+
+                        {% set foundDesc = false %}
+                        {% for item in data.pageList %}
+                            {% if item.pageid == _designSpecData.id %}
+                                {% set foundDesc = true %}
+                                <p class="govuk-body-s">{{ item.pagedesc }}</p>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if not foundDesc %}
+                        <p class="govuk-body-s" style="color: #d4351c"><span>TO DO</span></p>
+                        {% endif %}
+
+                    {% else %}
+                        <p class="govuk-body-s">{{ _designSpecData.pagedesc }}</p>
+                    {% endif %}
+
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    URL slug
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+                    {% if not _designSpecData.pageurl %}
+
+                        {% set foundDesc = false %}
+                        {% for item in data.pageList %}
+                            {% if item.pageid == _designSpecData.id %}
+                                {% set foundDesc = true %}
+                                <p class="govuk-body-s">/{{ item.pageurl }}</p>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if not foundDesc %}
+                        <p class="govuk-body-s" style="color: #d4351c"><span>TO DO</span></p>
+                        {% endif %}
+
+                    {% else %}
+                        <p class="govuk-body-s">/{{ _designSpecData.pageurl }}</p>
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Prototype version
+                </dt>
+                <dd class="govuk-summary-list__value govuk-body-s">
+                    {{ _designSpecData.version }}
+                </dd>
+            </div>
+
+            {% if _designSpecData.errormessages and _designSpecData.errormessages|length > 0 %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Error messages
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <!-- <details class="govuk-details ">
+                        <summary class="govuk-details__summary govuk-body-s">
+                            <span class="govuk-details__summary-text">
+                            Error messages
+                            </span>
+                        </summary>
+                        <div class="govuk-details__text"> -->
+                            <ul class="govuk-list govuk-list--bullet govuk-body-s">
+                                {% for item in _designSpecData.errormessages %}
+                                <li>{% if item.field %}<strong>{{ item.field }} - </strong><br>{% endif %}{{ item.scenario }}: <br><span style="color: #d4351c">{{item.content}}</span></li>
+                                {% endfor %}
+                            </ul>
+                            <p class="govuk-body-s"><a href="https://eaflood.atlassian.net/wiki/spaces/SFD/pages/5461442697/Buffalo+1.0+MVP+-+validation+scenarios+and+messages" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">All validation messages are listed here (opens in new tab)</a></p>
+                        <!-- </div>
+                    </details> -->
+                </dd>
+            </div>
+            {% endif %}
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Links
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body-s"><a href="{{ heroku }}{{ _designSpecData.url }}" class="govuk-link govuk-link--no-visited-state" >{{ heroku }}{{ _designSpecData.prototypeurl }}</a></p>
+
+                    {% if _designSpecData.variants and _designSpecData.variants|length > 0 %}
+                    <details class="govuk-details govuk-!-margin-top-4">
+                        <summary class="govuk-details__summary govuk-body-s">
+                            <span class="govuk-details__summary-text">
+                            Variations
+                            </span>
+                        </summary>
+                        <div class="govuk-details__text">
+                            <ul class="govuk-list govuk-list--bullet govuk-body-s" >
+                                {% for item in _designSpecData.variants %}
+                                <li>{{ item.name }}: <br><a href="{{ heroku }}{{ item.url }}" class="govuk-link govuk-link--no-visited-state" >{{ heroku }}{{ item.url }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </details>
+                    {% endif %}
+
+                </dd>
+            </div>
+
+            {% if _designSpecData.notes and _designSpecData.notes|length > 0 %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-body-s">
+                    Notes
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet govuk-body-s" >
+                        {% for item in _designSpecData.notes %}
+                        <li>{{ item | safe }}</li>
+                        {% endfor %}
+                    </ul>
+                </dd>
+            </div>
+            {% endif %}
+
+		</dl>
+
+	</div>
+	
+	<button class="spec-close">
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<circle cx="12" cy="12" r="8.48529" transform="rotate(-45 12 12)" fill="#B3B1B1"/>
+		<path fill-rule="evenodd" clip-rule="evenodd" d="M8.81801 8.11091L8.11091 8.81802L11.2929 12L8.11091 15.182L8.81801 15.8891L12 12.7071L15.182 15.8891L15.8891 15.182L12.7071 12L15.8891 8.81802L15.182 8.11091L12 11.2929L8.81801 8.11091Z" fill="white"/>
+		</svg>
+	</button>
+
+</div>
+
+<style>
+	
+.status-outer {
+	position:fixed;
+	width: 100%;
+	max-width:580px;
+	height:100%;
+	top:0;
+	right:-580px;
+	display:flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	background:#fff;
+	border-left:1px solid #ddd;
+	z-index:100;
+	resize: horizontal;
+	overflow: auto;
+	transition: right .3s;
+}
+
+.status-outer * {
+	box-sizing: border-box;
+}
+	
+.statusbox {
+	width:100%;
+	padding:1rem;
+}
+
+
+/* .statusbox dl {
+	margin:1rem 0;
+	padding:0;
+	display:grid;
+	grid-template-columns: 110px 1fr;
+}
+
+.statusbox dt {
+	font-weight: 600;
+	border-bottom:1px solid #ccc;
+	padding: 1rem 0;
+	display: block;
+	word-break: break-word;
+}
+
+.statusbox dd {
+	border-bottom:1px solid #ccc;
+	padding:1rem 0;
+	display: block;
+	margin: 0;
+	word-break: break-word;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+.statusbox dd * {
+	font-size: 1rem;
+} */
+
+.govuk-main-wrapper:hover > .statusbox {
+	display:block;
+}
+
+.spec-close {
+	appearance: none;
+	-webkit-appearance: none;
+	margin:0;
+	padding:0.5rem;
+	background: transparent;
+	border:0;
+	cursor:pointer;
+	display: block;
+	transition: opacity .3s;
+}
+
+.spec-close:hover {
+	opacity: 0.7;
+}
+/* 
+.govuk-error-message {
+	display:none;
+}
+
+.displayerrors .govuk-error-message {
+	display:block;
+} */
+
+.status-outer.draweropen {
+	right:0;
+}
+	
+</style>
+
+<script>
+	
+	document.addEventListener("DOMContentLoaded", function() {
+		var closeButton = document.querySelector(".spec-close");
+		var statusOuter = document.querySelector(".status-outer");
+	
+		// Event listener for closing the status
+		closeButton.addEventListener("click", function() {
+			toggleDrawer()
+		});
+	});
+	
+	function showSpec() {
+		var statusOuter = document.querySelector(".status-outer");
+		if (statusOuter.style.display === 'none' || statusOuter.style.display === '') {
+			statusOuter.style.display = 'flex';
+		} else {
+			statusOuter.style.display = 'none';
+		}
+	}
+	
+	function toggleDrawer() {
+		var statusOuter = document.querySelector(".status-outer");
+		if (statusOuter.classList.contains("draweropen")) {
+			statusOuter.classList.remove("draweropen");
+		} else {
+			statusOuter.classList.add("draweropen");
+		}
+	}
+	
+	document.addEventListener("keydown", function(event) {
+		// Check if Ctrl + Shift + S are pressed
+		if (event.ctrlKey && event.shiftKey && event.key === 'S') {
+			toggleDrawer();
+		}
+	});
+
+	
+</script>
+
+{% endif %}
