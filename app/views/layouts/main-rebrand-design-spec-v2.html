@@ -1,0 +1,261 @@
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+{% set govukRebrand = true %}
+
+{% block bodyStart %}
+
+  {% if _showCookieBanner1 == "true" %}
+  <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on [name of service]">
+    <div class="govuk-cookie-banner__message govuk-width-container">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+            Cookies on [name of service]
+          </h2>
+          <div class="govuk-cookie-banner__content">
+            <p class="govuk-body">We use some essential cookies to make this service work.</p>
+            <p class="govuk-body">We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+          </div>
+        </div>
+      </div>
+      <div class="govuk-button-group">
+        <a class="govuk-button" href="misc-cookies?cookiesVariant1=true&showCookieBanner3=true">Accept analytics cookies</a>
+        <a class="govuk-button" href="misc-cookies?cookiesVariant1=true&showCookieBanner2=true">Reject analytics cookies</a>
+        <a class="govuk-link govuk-link--no-visited-state" href="misc-cookies?cookiesVariant1=true&showCookieBanner1=true">View cookies</a>
+      </div>
+    </div>
+  </div>
+  {% elif _showCookieBanner2 == "true" %}
+  <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on [name of service]">
+    <div class="govuk-cookie-banner__message govuk-width-container" role="alert">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-cookie-banner__content">
+            <p class="govuk-body">You’ve rejected analytics cookies. You can <a class="govuk-link" href="misc-cookies?cookiesVariant1=true">change your cookie settings</a> at any time.</p>
+          </div>
+        </div>
+      </div>
+      <div class="govuk-button-group">
+        <a class="govuk-button" href="misc-cookies?cookiesVariant1=true">Hide cookie message</a>
+      </div>
+    </div>
+  </div>
+  {% elif _showCookieBanner3 == "true" %}
+  <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on [name of service]">
+    <div class="govuk-cookie-banner__message govuk-width-container" role="alert">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-cookie-banner__content">
+            <p class="govuk-body">You’ve accepted analytics cookies. You can <a class="govuk-link" href="misc-cookies?cookiesVariant1=true">change your cookie settings</a> at any time.</p>
+          </div>
+        </div>
+      </div>
+      <div class="govuk-button-group">
+        <a class="govuk-button" href="misc-cookies?cookiesVariant1=true">Hide cookie message</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+{% endblock %}
+
+{% block header %}
+
+  {% if _showDesignSpec %}
+    {% include "_common/design-spec-2.html" %}
+  {% endif %}
+
+  {% if _showEmailMeta %}
+  <div class="govuk-width-container" style="padding-top:20px">
+    <div class="govuk-grid-row" >
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
+          Subject: {{_emailSubject}}
+        </p>
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-1">
+          From: {{_serviceName}} (support@defra.gov.uk)
+        </p>
+        <p class="govuk-body govuk-!-font-size-14 govuk-!-margin-bottom-4">
+          To: You ({{data.user.email}})
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {{ govukHeader({
+    classes: 
+  "govuk-header--full-width-border",
+    rebrand: true
+  })}}
+
+  {{ govukServiceNavigation({
+    serviceName: serviceName,
+    serviceUrl: "/"
+  })}}
+
+{% endblock %}
+
+
+<!-- FOOTER -->
+{% block footer %}
+
+  {% set _customFooterContent %}
+
+    {% if _showFooterLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-bottom-8">
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-contact">Contact us</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-privacy">Privacy</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-cookies">Cookies</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-accessibility">Accessibility statement</a>
+      </li>
+      <!-- <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-terms">Terms and conditions</a>
+      </li> -->
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://www.gov.uk/government/organisations/rural-payments-agency/about/personal-information-charter" rel="noreferrer noopener" target="_blank">Personal information charter</a>
+      </li>
+    </ul>
+    {% endif %}
+
+    {% if _showFooterMVPLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-bottom-8">
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-contact">Contact us</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-cookies">Cookies</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="misc-accessibility">Accessibility statement</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://www.gov.uk/government/organisations/rural-payments-agency/about/personal-information-charter" rel="noreferrer noopener" target="_blank">Personal information charter</a>
+      </li>
+    </ul>
+    {% endif %}
+
+    {% if _showDefraIDFooterLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-bottom-8">
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/help" rel="noreferrer noopener" target="_blank">Help</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/privacy-notice" rel="noreferrer noopener" target="_blank">Privacy notice</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/terms-and-conditions" rel="noreferrer noopener" target="_blank">Terms and conditions</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/cookies" rel="noreferrer noopener" target="_blank">Cookies</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="https://your-account.defra.gov.uk/content/accessibility" rel="noreferrer noopener" target="_blank">Accessibility</a>
+      </li>
+    </ul>
+    {% endif %}
+
+    {% if _viewToggleLinks %}
+      {{_viewToggleLinks|safe}}
+    {% endif %}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    {% if _showIntExtLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
+      <li class="govuk-footer__inline-list-item">Internal/external:</li>
+      <li class="govuk-footer__inline-list-item">
+          {% if data.view == "ext" %}
+          External
+          {% else %}
+          <a class="govuk-footer__link" href="?view=ext">External</a>
+          {% endif %}
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        {% if data.view == "int" %}
+        Internal
+          {% else %}
+          <a class="govuk-footer__link" href="?view=int">Internal</a>
+          {% endif %}
+      </li>
+    </ul>
+    {% endif %}
+
+    {% if _showReleaseLinks %}
+    <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
+      <li class="govuk-footer__inline-list-item">Release:</li>
+      <li class="govuk-footer__inline-list-item">
+          {% if data.release == "concept" %}
+          Concept
+          {% else %}
+          <a class="govuk-footer__link" href="?release=concept">Concept</a>
+          {% endif %}
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        {% if data.release == "b1" %}
+        Buffalo 1.0 MVP
+        {% else %}
+        <a class="govuk-footer__link" href="?release=b1">Buffalo 1.0 MVP</a>
+        {% endif %}
+      </li>
+    </ul>
+    {% endif %}
+
+    <ul class="govuk-footer__inline-list govuk-!-margin-top-4">
+      {% if _designSpecData.id %}
+      <li class="govuk-footer__inline-list-item">
+        {{_designSpecData.id}}
+      </li>
+      {% endif %}
+      {% if _showDesignSpec %}
+      <li class="govuk-footer__inline-list-item">
+          <a class="govuk-footer__link" href="javascript:toggleDrawer()" id="speclink">Design spec</a>
+      </li>
+      {% endif %}
+      <li class="govuk-footer__inline-list-item">
+          <a class="govuk-footer__link" href="/manage-prototype">Manage your prototype</a>
+      </li>
+      <li class="govuk-footer__inline-list-item">
+        <a class="govuk-footer__link" href="/manage-prototype/clear-data?r=t">Clear data</a>
+      </li>
+    </ul>
+    
+    <!-- items: [
+      {
+        href: "/manage-prototype",
+        text: "Manage your prototype"
+      },
+      {
+        href: "/manage-prototype/clear-data",
+        text: "Clear data"
+      }
+    ], -->
+      
+  {% endset %}
+
+  {{ govukFooter({
+   rebrand: true,    
+    meta: {
+      items: [
+      ],
+      html: [
+        _customFooterContent
+      ],
+      visuallyHiddenTitle: "Footer links"
+    }
+  }) }}
+  
+{% endblock %}
+<!-- FOOTER END -->
+
+{% block scripts %}
+  {{ super() }}
+  <script src="/public/javascripts/jquery-3.7.1.js"></script>
+  {% block pageScriptsAfter %}{% endblock %}
+{% endblock %}
