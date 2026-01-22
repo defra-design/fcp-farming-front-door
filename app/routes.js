@@ -92,6 +92,7 @@ require('./routes/v10/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v11/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v14/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v15-DAL/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
+require('./routes/v16/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/MVP/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/MVP-enhanced/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/AHWP/routes.js')(router,JSON.parse(JSON.stringify(_myData)));

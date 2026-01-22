@@ -1,0 +1,413 @@
+{% extends "layouts/main.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterLinks = false %}
+{% else %}
+{% set _showFooterLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+{% set _showReleaseLinks = false %}
+{% else %}
+{% set _showReleaseLinks = false %}
+{% endif %}
+{% set _showIntExtLinks = false %}
+
+{% set pageName="Business details" %}
+{% set serviceName="Manage your land and farm businesses" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = false %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Business details",
+"id": "ma05",
+"url": "details-personal-details?r=t&view=ext&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "name changed banner",
+"url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+},
+{
+"name": "date of birth changed banner",
+"url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+},
+{
+"name": "address changed banner",
+"url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+},
+{
+"name": "phone numbers changed banner",
+"url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+},
+{
+"name": "email changed banner",
+"url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+}
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+]
+
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Manage personal details",
+"id": "int-pd01",
+"url": "details-personal-details?r=t&view=int&release=b2",
+"release": "Buffalo 1.1 MVP",
+"variants": [
+{
+"name": "name changed banner",
+"url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+},
+{
+"name": "date of birth changed banner",
+"url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+},
+{
+"name": "address changed banner",
+"url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+},
+{
+"name": "phone numbers changed banner",
+"url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+},
+{
+"name": "email changed banner",
+"url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+}
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3a.html" %}
+{% else %}
+{% include "_common/login-nav-internal-a.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <form action="/add-person-permissions-answer" method="POST">
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <span class="govuk-caption-l">Richard Clarke's permissions</span>
+            <h1 class="govuk-fieldset__heading">
+              Business details
+            </h1>
+          </legend>
+
+          <div class="govuk-warning-text app-warning-text--long govuk-!-margin-bottom-0">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-visually-hidden">Warning</span>
+              If you give someone full permission, they will have complete access to act for this business, including being able to:
+              <ul class="govuk-list govuk-list--bullet govuk-warning-text govuk-!-margin-left-4 govuk-!-margin-bottom-0">
+                <li>
+                  apply for and transfer any land
+                </li>
+                <li>
+                  submit and manage all grant and funding applications and agreements 
+                </li>
+                <li>
+                  receive all correspondence
+                </li>
+              </ul>
+            </strong>
+          </div>
+
+          <!-- Radio Buttons block START -->
+
+          <div class="permission-level-radios-block">
+            <div class="permission-level-radios-block_left">
+              <div id="contact-hint" class="govuk-hint">
+                Select a permission level
+              </div>
+            </div>
+
+            <div class="permission-level-radios-block_right">
+              <div class="govuk-radios" data-module="govuk-radios">
+
+                <div class="permission-input-outer_one-fourth grey-column-bg">
+                  <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="permissions-business-details" name="permissions-business-details" type="radio"
+                      value="View only"  {{ checked('permissions-business-details','View only') }}>
+                    <label class="govuk-label govuk-radios__label" for="permissions-business-details">
+                      <span class="govuk-body-s"><strong>View only<br>&nbsp;</strong></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="permission-input-outer_one-fourth">
+                  <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="permissions-business-details-2" name="permissions-business-details" type="radio"
+                      value="Amend"  {{ checked('permissions-business-details','Amend') }}>
+                    <label class="govuk-label govuk-radios__label" for="permissions-business-details-2">
+                      <span class="govuk-body-s"><strong>Amend</strong></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="permission-input-outer_one-fourth grey-column-bg">
+                  <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="permissions-business-details-3" name="permissions-business-details" type="radio"
+                      value="Make legal changes"  {{ checked('permissions-business-details','Make legal changes') }}>
+                    <label class="govuk-label govuk-radios__label" for="permissions-business-details-3">
+                      <span class="govuk-body-s"><strong>Make legal changes</strong></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="permission-input-outer_one-fourth">
+                  <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="permissions-business-details-4" name="permissions-business-details" type="radio"
+                      value="Full permission"  {{ checked('permissions-business-details','Full permission') }}>
+                    <label class="govuk-label govuk-radios__label" for="permissions-business-details-4">
+                      <span class="govuk-body-s"><strong>Full permission</strong></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Radio Buttons block END -->
+
+
+          <table class="govuk-table permission-level-table">
+            <thead class="govuk-table__head perms-visually-hidden">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header permission-level-table_width-two-sixths"><span
+                    style="font-weight: normal;">Do you want this person to?</span></th>
+                <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">View only
+                </th>
+                <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">Amend</th>
+                <th scope="col" class="govuk-table__header permission-table-cell_one-fourth grey-column-bg">Make legal
+                  changes</th>
+                <th scope="col" class="govuk-table__header permission-table-cell_one-fourth">Full permission</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">View business details and people</th>
+                <td class="govuk-table__cell grey-column-bg permission-table-cell_one-fourth">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+                <td class="govuk-table__cell permission-table-cell_one-fourth">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+                <td class="govuk-table__cell grey-column-bg permission-table-cell_one-fourth">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+                <td class="govuk-table__cell permission-table-cell_one-fourth">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Amend business contact details</th>
+                <td class="govuk-table__cell grey-column-bg">
+                  <strong class="govuk-tag govuk-tag--red">
+                    No
+                  </strong>
+                </td>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+                <td class="govuk-table__cell grey-column-bg">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Amend all business details including bank details</th>
+                <td class="govuk-table__cell grey-column-bg">
+                  <strong class="govuk-tag govuk-tag--red">
+                    No
+                  </strong>
+                </td>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--red">
+                    No
+                  </strong>
+                </td>
+                <td class="govuk-table__cell grey-column-bg">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Change business access and permissions</th>
+                <td class="govuk-table__cell grey-column-bg">
+                  <strong class="govuk-tag govuk-tag--red">
+                    No
+                  </strong>
+                </td>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--red">
+                    No
+                  </strong>
+                </td>
+                <td class="govuk-table__cell grey-column-bg">
+                  <strong class="govuk-tag govuk-tag--red">
+                    No
+                  </strong>
+                </td>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--green">
+                    Yes
+                  </strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
+          <!-- Radio Buttons block START -->
+          <!-- 
+  <div class="permission-level-radios-block">
+    <div class="permission-level-radios-block_left">
+      <div id="contact-hint" class="govuk-hint">
+        Select option
+      </div>
+    </div>
+
+    <div class="permission-level-radios-block_right">
+      <div class="govuk-radios" data-module="govuk-radios">
+
+        <div class="permission-input-outer_one-fourth grey-column-bg">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="businessAccount" name="businessAccount" type="radio" value="view" aria-describedby="businessAccount-item-hint">
+          <label class="govuk-label govuk-radios__label" for="businessAccount">
+            <span class="govuk-body-s"><strong>View</strong></span>
+          </label>
+        </div>
+        </div>
+
+        <div class="permission-input-outer_one-fourth">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="businessAccount-2" name="businessAccount" type="radio" value="amend" aria-describedby="businessAccount-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="businessAccount-2">
+            <span class="govuk-body-s"><strong>Amend</strong></span>
+          </label>
+        </div>
+        </div>
+
+        <div class="permission-input-outer_one-fourth grey-column-bg">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="businessAccount-3" name="businessAccount" type="radio" value="delegate" aria-describedby="businessAccount-3-item-hint">
+          <label class="govuk-label govuk-radios__label" for="businessAccount-3">
+            <span class="govuk-body-s"><strong>Delegated permission</strong></span>
+          </label>
+        </div>
+        </div>
+
+        <div class="permission-input-outer_one-fourth">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="businessAccount-4" name="businessAccount" type="radio" value="full" aria-describedby="businessAccount-4-item-hint">
+          <label class="govuk-label govuk-radios__label" for="businessAccount-4">
+            <span class="govuk-body-s"><strong>Full permission</strong></span>
+          </label>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+ -->
+          <!-- Radio Buttons block END -->
+
+
+
+        </fieldset>
+
+
+      </div>
+
+      {{govukButton({
+      text: "Continue"
+      })}}
+
+      <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+  </div>
+
+  <!-- <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Setting permissions</h4>
+    <p class="govuk-body-s">You can choose whatever permission levels you want. There is <a href="#" class="govuk-link">guidance</a> on recommended permission levels depending on the person’s role.</p>
+  </div> -->
+
+</div>
+
+
+
+
+
+{% endblock %}

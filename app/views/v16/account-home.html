@@ -1,0 +1,119 @@
+{% extends "layouts/main-rebrand.html" %}
+
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName="Your account" %}
+{% set serviceName="Farm and Land Service" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+  "status": '',
+  "name": "Account Home",
+  "id": "ma01",
+  "url": "account-home?r=t&release=b1",
+  "release": "N/A",
+  "variants": [
+    {
+      "name": "Account Home (concept)",
+      "url": "account-home?r=t&release=concept"
+    }
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ], 
+  "notes": [
+      "Removed from Buffalo 1.0 MVP"
+    ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% set _hideAccountLink = true %}
+      {% include "_common/login-nav-3a.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      <span class="govuk-caption-l">{{data.user.name}}</span>
+      Your account
+    </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Customer reference number (CRN): {{data.user.crn}}</p>
+
+
+    <div class="gem-c-cards card-page">
+      <ul class="gem-c-cards__list">
+
+        
+
+        <li class="gem-c-cards__list-item-variant">
+          <a class="govuk-link govuk-link--no-visited-state" href="details-personal-details">
+            <div class="gem-c-cards__list-item-wrapper-variant">
+              <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Your personal details</h2> 
+              <p class="govuk-body-s gem-c-cards__description p-link-style">View and update your personal details</p>          
+            </div>
+          </a> 
+        </li>
+
+
+        <li class="gem-c-cards__list-item-variant">
+          <a class="govuk-link govuk-link--no-visited-state" href="businesses-list">
+            <div class="gem-c-cards__list-item-wrapper-variant">
+              <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Your businesses</h2> 
+              <p class="govuk-body-s gem-c-cards__description p-link-style">View a list of your businesses</p>          
+            </div>
+          </a> 
+        </li>
+
+        {% if data.release != "b1" %}
+        <li class="gem-c-cards__list-item-variant">
+          <a class="govuk-link govuk-link--no-visited-state" href="/_common/not-testing">
+            <div class="gem-c-cards__list-item-wrapper-variant">
+              <h2 class="gem-c-cards__sub-heading govuk-heading-s link-style govuk-link">Register a business</h2>
+              <p class="govuk-body-s gem-c-cards__description p-link-style">Enter details for a new business</p>          
+            </div>
+          </a>  
+        </li>
+        {% endif %}
+      
+      </ul>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
