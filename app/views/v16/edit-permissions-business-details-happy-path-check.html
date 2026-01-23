@@ -88,7 +88,7 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="edit-permissions-business-details-happy-path-success" method="POST">
+   <form action="business-access?scenario=reduceBusinessDetails" method="POST">
 
     <h1 class="govuk-heading-l">
         Check your permission level for business details
@@ -103,16 +103,16 @@
             {{data['permissions-business-details--own'] or "Make legal changes" }}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change">Change<span class="govuk-visually-hidden"> business phone numbers</span></a>
+            <a class="govuk-link govuk-link--no-visited-state" href="edit-permissions-business-details-happy-path">Change<span class="govuk-visually-hidden"> business phone numbers</span></a>
           </dd>
         </div>
       </dl>
 
-      <div class="govuk-warning-text">
+      <div class="govuk-warning-text ">
         <span class="govuk-warning-text__icon govuk-!-margin-top-1" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
           <span class="govuk-visually-hidden">Warning</span>
-          You are reducing your permission level and will no longer have full control of this business. 
+          You are reducing your permission level and will no longer have full control of this business. You will not be able to change your permission level again without the authority of someone at the business who has full permission.
         </strong>
       </div>
 

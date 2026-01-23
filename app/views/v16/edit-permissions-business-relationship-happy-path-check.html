@@ -129,7 +129,7 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="edit-permissions-business-relationship-happy-path-success" method="POST">
+   <form action="business-access?scenario=editBusinessRelationship" method="POST">
 
     <h1 class="govuk-heading-l">
         Check your relationship to this business
@@ -144,7 +144,7 @@
             {{data['permissions-business-relationship--own'] or "Agent or advisor" }}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change">Change<span class="govuk-visually-hidden"> business phone numbers</span></a>
+            <a class="govuk-link govuk-link--no-visited-state" href="edit-permissions-business-relationship-happy-path">Change<span class="govuk-visually-hidden"> business phone numbers</span></a>
           </dd>
         </div>
       </dl>
