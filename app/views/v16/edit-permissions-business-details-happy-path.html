@@ -129,35 +129,19 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
-    <form action="/add-person-permissions-answer" method="POST">
+    <form action="edit-permissions-business-details-happy-path-check"POST">
 
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-            <span class="govuk-caption-l">Richard Clarke's permissions</span>
             <h1 class="govuk-fieldset__heading">
               Business details
             </h1>
           </legend>
 
-          <div class="govuk-warning-text app-warning-text--long govuk-!-margin-bottom-0">
-            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-            <strong class="govuk-warning-text__text">
-              <span class="govuk-visually-hidden">Warning</span>
-              If you give someone full permission, they will have complete access to act for this business, including being able to:
-              <ul class="govuk-list govuk-list--bullet govuk-warning-text govuk-!-margin-left-4 govuk-!-margin-bottom-0">
-                <li>
-                  apply for and transfer any land
-                </li>
-                <li>
-                  submit and manage all grant and funding applications and agreements 
-                </li>
-                <li>
-                  receive all correspondence
-                </li>
-              </ul>
-            </strong>
-          </div>
+          <p class="govuk-body">
+            You currently have full permission. This means you automatically have the highest permission levels possible for managing this business, including all its correspondence, land, funding schemes and grants.
+          </p>
 
           <!-- Radio Buttons block START -->
 
@@ -173,9 +157,9 @@
 
                 <div class="permission-input-outer_one-fourth grey-column-bg">
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="permissions-business-details" name="permissions-business-details" type="radio"
-                      value="View only"  {{ checked('permissions-business-details','View only') }}>
-                    <label class="govuk-label govuk-radios__label" for="permissions-business-details">
+                    <input class="govuk-radios__input" id="permissions-business-details--own" name="permissions-business-details--own" type="radio"
+                      value="View only"  {{ checked('permissions-business-details--own','View only') }}>
+                    <label class="govuk-label govuk-radios__label" for="permissions-business-details--own">
                       <span class="govuk-body-s"><strong>View only<br>&nbsp;</strong></span>
                     </label>
                   </div>
@@ -183,9 +167,9 @@
 
                 <div class="permission-input-outer_one-fourth">
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="permissions-business-details-2" name="permissions-business-details" type="radio"
-                      value="Amend"  {{ checked('permissions-business-details','Amend') }}>
-                    <label class="govuk-label govuk-radios__label" for="permissions-business-details-2">
+                    <input class="govuk-radios__input" id="permissions-business-details--own-2" name="permissions-business-details--own" type="radio"
+                      value="Amend"  {{ checked('permissions-business-details--own','Amend') }}>
+                    <label class="govuk-label govuk-radios__label" for="permissions-business-details--own-2">
                       <span class="govuk-body-s"><strong>Amend</strong></span>
                     </label>
                   </div>
@@ -193,9 +177,9 @@
 
                 <div class="permission-input-outer_one-fourth grey-column-bg">
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="permissions-business-details-3" name="permissions-business-details" type="radio"
-                      value="Make legal changes"  {{ checked('permissions-business-details','Make legal changes') }}>
-                    <label class="govuk-label govuk-radios__label" for="permissions-business-details-3">
+                    <input class="govuk-radios__input" id="permissions-business-details--own-3" name="permissions-business-details--own" type="radio"
+                      value="Make legal changes"  {{ checked('permissions-business-details--own','Make legal changes') }}>
+                    <label class="govuk-label govuk-radios__label" for="permissions-business-details--own-3">
                       <span class="govuk-body-s"><strong>Make legal changes</strong></span>
                     </label>
                   </div>
@@ -203,9 +187,9 @@
 
                 <div class="permission-input-outer_one-fourth">
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="permissions-business-details-4" name="permissions-business-details" type="radio"
-                      value="Full permission"  {{ checked('permissions-business-details','Full permission') }}>
-                    <label class="govuk-label govuk-radios__label" for="permissions-business-details-4">
+                    <input class="govuk-radios__input" id="permissions-business-details--own-4" name="permissions-business-details--own" type="radio"
+                      value="Full permission"  {{ checked('permissions-business-details--own','Full permission') }}>
+                    <label class="govuk-label govuk-radios__label" for="permissions-business-details--own-4">
                       <span class="govuk-body-s"><strong>Full permission</strong></span>
                     </label>
                   </div>

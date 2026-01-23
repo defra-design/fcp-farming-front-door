@@ -129,14 +129,14 @@
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
 
-   <form action="add-person-permissions-business-details" method="POST">
+   <form action="edit-permissions-business-relationship-happy-path-check" method="POST">
 
 
    <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
         <h1 class="govuk-fieldset__heading">
-          What is Richard Clarke’s relationship with Agile Farm Ltd?
+          What is your relationship to this business?
         </h1>
       </legend>
 
@@ -163,83 +163,83 @@
 
       <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship" name="permissions-business-relationship" type="radio" value="Agent or advisor"  {{ checked('permissions-business-relationship','Agent or advisor') }}" aria-describedby="permissions-business-relationship-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own" name="permissions-business-relationship--own" type="radio" value="Agent or advisor"  {{ checked('permissions-business-relationship--own','Agent or advisor') }}" aria-describedby="permissions-business-relationship--own-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own">
             Agent or adviser
           </label>
-          <div id="permissions-business-relationship-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-item-hint" class="govuk-hint govuk-radios__hint">
             Any professional adviser to the business
           </div>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship-2" name="permissions-business-relationship" type="radio" value="Business partner"  {{ checked('permissions-business-relationship','Business partner') }} aria-describedby="permissions-business-relationship-2-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship-2">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own-2" name="permissions-business-relationship--own" type="radio" value="Business partner"  {{ checked('permissions-business-relationship--own','Business partner') }} aria-describedby="permissions-business-relationship--own-2-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own-2">
             Business partner
           </label>
-          <div id="permissions-business-relationship-2-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-2-item-hint" class="govuk-hint govuk-radios__hint">
             A business partner of the owner or sole trader
           </div>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship-3" name="permissions-business-relationship" type="radio" value="Company secretary"  {{ checked('permissions-business-relationship','Company secretary') }} aria-describedby="permissions-business-relationship-3-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship-3">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own-3" name="permissions-business-relationship--own" type="radio" value="Company secretary"  {{ checked('permissions-business-relationship--own','Company secretary') }} aria-describedby="permissions-business-relationship--own-3-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own-3">
             Company secretary
           </label>
-          <div id="permissions-business-relationship-3-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-3-item-hint" class="govuk-hint govuk-radios__hint">
             The business’s company secretary
           </div>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship-4" name="permissions-business-relationship" type="radio" value="Director"  {{ checked('permissions-business-relationship','Director') }} aria-describedby="permissions-business-relationship-4-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship-4">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own-4" name="permissions-business-relationship--own" type="radio" value="Director"  {{ checked('permissions-business-relationship--own','Director') }} aria-describedby="permissions-business-relationship--own-4-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own-4">
             Director
           </label>
-          <div id="permissions-business-relationship-4-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-4-item-hint" class="govuk-hint govuk-radios__hint">
             A director of the business
           </div>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship-5" name="permissions-business-relationship" type="radio" value="Employee"  {{ checked('permissions-business-relationship','Employee') }} aria-describedby="permissions-business-relationship-5-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship-5">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own-5" name="permissions-business-relationship--own" type="radio" value="Employee"  {{ checked('permissions-business-relationship--own','Employee') }} aria-describedby="permissions-business-relationship--own-5-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own-5">
             Employee
           </label>
-          <div id="permissions-business-relationship-5-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-5-item-hint" class="govuk-hint govuk-radios__hint">
             Anyone employed by the business who does not have any legal responsibility for it
           </div>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship-6" name="permissions-business-relationship" type="radio" value="Executor"  {{ checked('permissions-business-relationship','Executor') }} aria-describedby="permissions-business-relationship-6-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship-6">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own-6" name="permissions-business-relationship--own" type="radio" value="Executor"  {{ checked('permissions-business-relationship--own','Executor') }} aria-describedby="permissions-business-relationship--own-6-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own-6">
             Executor
           </label>
-          <div id="permissions-business-relationship-6-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-6-item-hint" class="govuk-hint govuk-radios__hint">
             A legal executor for the business
           </div>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship-7" name="permissions-business-relationship" type="radio" value="Helper"  {{ checked('permissions-business-relationship','Helper') }} aria-describedby="permissions-business-relationship-7-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship-7">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own-7" name="permissions-business-relationship--own" type="radio" value="Helper"  {{ checked('permissions-business-relationship--own','Helper') }} aria-describedby="permissions-business-relationship--own-7-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own-7">
             Helper
           </label>
-          <div id="permissions-business-relationship-7-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-7-item-hint" class="govuk-hint govuk-radios__hint">
             Anyone who helps the business but is not part of the business and not a professional adviser
           </div>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship-8" name="permissions-business-relationship" type="radio" value="Owner or sole trader"  {{ checked('permissions-business-relationship','Owner or sole trader') }} aria-describedby="permissions-business-relationship-8-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship-8">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own-8" name="permissions-business-relationship--own" type="radio" value="Owner or sole trader"  {{ checked('permissions-business-relationship--own','Owner or sole trader') }} aria-describedby="permissions-business-relationship--own-8-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own-8">
             Owner or sole trader
           </label>
-          <div id="permissions-business-relationship-8-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-8-item-hint" class="govuk-hint govuk-radios__hint">
             An owner or sole trader of the business, and the only type of user who can remove another owner or sole trader from this business
           </div>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="permissions-business-relationship-9" name="permissions-business-relationship" type="radio" value="Trustee"  {{ checked('permissions-business-relationship','Trustee') }} aria-describedby="permissions-business-relationship-9-item-hint">
-          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship-9">
+          <input class="govuk-radios__input" id="permissions-business-relationship--own-9" name="permissions-business-relationship--own" type="radio" value="Trustee"  {{ checked('permissions-business-relationship--own','Trustee') }} aria-describedby="permissions-business-relationship--own-9-item-hint">
+          <label class="govuk-label govuk-radios__label" for="permissions-business-relationship--own-9">
             Trustee
           </label>
-          <div id="permissions-business-relationship-9-item-hint" class="govuk-hint govuk-radios__hint">
+          <div id="permissions-business-relationship--own-9-item-hint" class="govuk-hint govuk-radios__hint">
             A trustee for the business
           </div>
         </div>

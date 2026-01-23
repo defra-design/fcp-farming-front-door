@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
 
 {% if data.view == "int" %}
   {% set _showFooterLinks = false %}
@@ -14,7 +14,7 @@
 {% set _showIntExtLinks = false %}
 
 {% set pageName="Manage access to Agile Farm Ltd" %}
-{% set serviceName="Manage your land and farm businesses" %}
+{% set serviceName="Farm and Land Service" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
   {% set _showDesignSpec = false %}
@@ -287,16 +287,24 @@
             <tr class="govuk-table__row user-permissions__list-item_table-row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Business relationship</th>
               <td class="govuk-table__cell govuk-body-s">Owner or sole trader</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
+              {% if data.permissionsPath == "unhappy" %}
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="edit-permissions-business-relationship-unhappy-path">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
+              {% else %}
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="edit-permissions-business-relationship-happy-path">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
+              {% endif %}
             </tr>
             <tr class="govuk-table__row user-permissions__list-item_table-row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Business details</th>
               <td class="govuk-table__cell govuk-body-s">Full permission</td>
-              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+              {% if data.permissionsPath == "unhappy" %}
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="edit-permissions-business-details-unhappy-path">Change<span class="govuk-visually-hidden"> permissions for business details</span></a></td>
+              {% else %}
+              <td class="govuk-table__cell govuk-body govuk-table__cell_actions govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="edit-permissions-business-details-happy-path">Change<span class="govuk-visually-hidden"> permissions for business details</span></a></td>
+              {% endif %}
             </tr>
           </tbody>
       </table>
-      <p>
+      <p class="govuk-body-s">
         You have full permission. This means means you automatically have the highest permission levels possible for managing this business, including all its correspondence, land, funding schemes and grants.
       </p>
       <table class="govuk-table">
@@ -323,7 +331,11 @@
             </tr>
           </tbody>
         </table>
-         <p class="govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="remove-yourself-question">Remove your access to this business</a></p>
+        {% if data.permissionsPath == "unhappy" %}
+        <p class="govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="remove-yourself-unhappy-path">Remove your access to this business</a></p>
+        {% else %}
+        <p class="govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="remove-yourself-question">Remove your access to this business</a></p>
+        {% endif %}
 <!-- ACTIVE USER SECTION - FULL PERMISSIONS - END -->
 {% endif %}
 
@@ -777,6 +789,13 @@
               <td class="govuk-table__cell govuk-body-s">Full permission</td>
               <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Details<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
             </tr>
+            </tbody>
+        </table>
+        <p class="govuk-body-s">
+          They have full permission. This means means they automatically have the highest permission levels possible for managing this business, including all its correspondence, land, funding schemes and grants.
+        </p>
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Land details</th>
               <td class="govuk-table__cell govuk-body-s">Amend</td>

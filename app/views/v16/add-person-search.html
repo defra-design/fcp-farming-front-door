@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
 
 {% if data.view == "int" %}
   {% set _showFooterLinks = false %}
@@ -14,7 +14,7 @@
 {% set _showIntExtLinks = false %}
 
 {% set pageName="Search for a person to give access to Agile Farm Ltd" %}
-{% set serviceName="Manage your land and farm businesses" %}
+{% set serviceName="Farm and Land Service" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
   {% set _showDesignSpec = false %}
