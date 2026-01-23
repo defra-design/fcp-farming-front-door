@@ -1,0 +1,194 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterLinks = false %}
+{% else %}
+  {% set _showFooterLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+  {% set _showReleaseLinks = false %}
+{% else %}
+  {% set _showReleaseLinks = false %}
+{% endif %}
+{% set _showIntExtLinks = false %}
+
+{% set pageName="Search for a person to give access to Agile Farm Ltd" %}
+{% set serviceName="Farm and Land Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = false %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Search for a person to give access to business",
+    "id": "ma01",
+    "url": "details-personal-details?r=t&view=ext&release=b1",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Manage personal details",
+    "id": "int-pd01",
+    "url": "details-personal-details?r=t&view=int&release=b2",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [
+      {
+        "name": "name changed banner",
+        "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "date of birth changed banner",
+        "url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+      },
+      {
+        "name": "address changed banner",
+        "url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+      },
+      {
+        "name": "phone numbers changed banner",
+        "url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+      },
+      {
+        "name": "email changed banner",
+        "url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+      }
+    ],
+
+    "pagetitle": pageName,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3a.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal-a.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+
+
+  <form action="add-person-search-results" method="POST">
+
+    <div class="govuk-form-group" data-list-search-filter >
+      <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="search-internal">
+          Search for a person to give access to Agile Farm Ltd
+        </label>
+      </h1>
+
+      <div class="govuk-hint">Enter their customer reference number (CRN)</div>
+
+      <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-internal" name="q" title="Search" class="govuk-input" >
+
+    </div>
+
+    <button type="submit" class="govuk-button" >Search</button>
+
+  </form>
+
+  
+  <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="add-person-search">Clear search</a></p>
+
+  <!-- <p class="govuk-body-s">If you do not know the person's CRN, ask them for it. They can find it in their personal details in their account.</p>
+     -->
+  <!-- <details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Finding a customer reference number (CRN)
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    If you do not know the person's CRN, ask them for it. They can find it in their personal details in their account.
+  </div>
+</details>  -->
+
+  <hr style="margin: 40px 0;" id="search-results">
+
+  <h2 class="govuk-heading-m">Search results for "1107685652"</h2>
+
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-2">
+    <a class="govuk-link govuk-link--no-visited-state" href="add-person-question">Richard Clarke</a>
+  </h3>
+  <p class="govuk-body govuk-!-margin-bottom-2">Business name: The Agency</p>
+  <p class="govuk-body govuk-!-margin-bottom-2">Business address: 9 Fossil Way, Gottingley, GY7 8RS</p>
+  <p class="govuk-body govuk-!-margin-bottom-2">CRN: 1107685652</p>
+
+<div>
+
+  </div>
+
+
+</div>
+
+
+  <!-- <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-s">Adding new users</h4>
+    <p class="govuk-body-s">To add someone who is not already registered with this service, they need to <a href="../_common/not-testing.html">register first</a>.</p>
+  </div> -->
+
+
+
+{% endblock %}

@@ -70,6 +70,7 @@ var _myData = {
     "newToFileUpload" : "no",
     "upliftSucessBus" : "no",
     "upliftSucessPers" : "no",
+    "permissionsPath" : "happy", // used to show unhappy paths were set
 
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }
@@ -92,6 +93,7 @@ require('./routes/v10/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v11/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v14/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v15-DAL/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
+require('./routes/v16/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/MVP/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/MVP-enhanced/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/AHWP/routes.js')(router,JSON.parse(JSON.stringify(_myData)));

@@ -1,0 +1,105 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% set pageName = "Sign in to the Farm and Land Service" %}
+{% set serviceName = "Farm and Land Service" %}
+
+{% set _showDefraIDFooterLinks = true %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+  "name": "SFD sign in",
+  "id": "si01",
+  "url": "start-sfd-sign-in?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "notes": [
+  "Assumption is that this will be DefraID owned. This has been prototyped for demos and user research. ", 
+  "The footer links shown on this page are specific to Defra ID."
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% set _link = data.deeplink or "businesses-list" %}
+
+    <form action="{{_link}}" method="post">
+
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+          Sign in to Farm and Land Service
+        </h1>
+      </legend>
+
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="crn">
+          Customer reference number (CRN)
+        </label>
+        <div id="event-name-hint" class="govuk-hint">
+          This is the 10-digit number emailed to you when you registered with the Rural Payments service.
+        </div>
+        <input class="govuk-input" id="crn" name="crn" type="text" autocomplete="crn">
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="password">
+          Password
+        </label>
+        <div id="event-name-hint" class="govuk-hint">
+          This is your Rural Payments service password.
+        </div>
+        <input class="govuk-input" id="password" name="password" type="password" >
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Sign in
+      </button>
+    </fieldset>
+
+    </form>
+
+    <p class="govuk-body"><a class="govuk-link--no-visited-state" href="start-sfd-reset-password">I have forgotten my password</a></p>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Help signing in
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+
+        <p class="govuk-body">Contact the Rural Payments Agency by email or phone if:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>you have forgotten your CRN</li>
+          <li>you have lost your CRN</li>
+          <li>your CRN is not recognised</li>
+        </ul>  
+
+        <p class="govuk-body">Email: <br><a href="mailto:ruralpayments@defra.gov.uk" class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a></p>
+
+        <p class="govuk-body">Telephone: <br>03000 200 301</p>
+
+        <p class="govuk-body">Service opening times: <br>Monday to Friday, 8:30am to 5pm, except bank holidays</p>
+        
+        <p class="govuk-body"><a href="https://www.gov.uk/call-charges" class="govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Find out about call charges (opens in new tab)</a></p>
+
+        <p class="govuk-body"><a href="/_common/not-testing" class="govuk-link--no-visited-state">Register with the Rural Payments service</a> if you do not have an account.</p>
+        
+      </div>
+
+    </details>
+  </div>
+</div>
+
+{% endblock %}

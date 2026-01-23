@@ -1,0 +1,271 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterLinks = false %}
+{% else %}
+{% set _showFooterLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+{% set _showReleaseLinks = false %}
+{% else %}
+{% set _showReleaseLinks = false %}
+{% endif %}
+{% set _showIntExtLinks = false %}
+
+{% set pageName="Check Richard Clarke's permissions before giving access to Agile Farm Ltd" %}
+{% set serviceName="Farm and Land Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = false %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Check persons permissions before giving access to business",
+"id": "ma10",
+"url": "details-personal-details?r=t&view=ext&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "name changed banner",
+"url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+},
+{
+"name": "date of birth changed banner",
+"url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
+},
+{
+"name": "address changed banner",
+"url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+},
+{
+"name": "phone numbers changed banner",
+"url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+},
+{
+"name": "email changed banner",
+"url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+}
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+]
+
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Manage personal details",
+"id": "int-pd01",
+"url": "details-personal-details?r=t&view=int&release=b2",
+"release": "Buffalo 1.1 MVP",
+"variants": [
+{
+"name": "name changed banner",
+"url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+},
+{
+"name": "date of birth changed banner",
+"url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
+},
+{
+"name": "address changed banner",
+"url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+},
+{
+"name": "phone numbers changed banner",
+"url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+},
+{
+"name": "email changed banner",
+"url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+}
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+{% set _selectedUser = myData.selectedUser %}
+
+{% block beforeContent %}
+
+
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% endif %}
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="add-person-confirmation" method="POST">
+
+
+      <div class="govuk-form-group">
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Richard Clarke permissions</span>
+          Check Richard Clarke's permissions before giving access to Agile Farm Ltd
+        </h1>
+
+        {% if data['permissions-business-details'] == "Full permission" %}
+
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Business relationship</th>
+              <td class="govuk-table__cell">{{data['permissions-business-relationship'] or "Agent or advisor" }}</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state"
+                  href="add-person-business-relationship">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Business details</th>
+              <td class="govuk-table__cell">Full permission</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state"
+                  href="add-person-permissions-business-details">Change<span class="govuk-visually-hidden"> manage business permissions</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="govuk-body">
+          Giving full permission means this person will automatically have the highest permission levels possible for managing this business, including all its correspondence, land, funding schemes and grants.
+        </p>
+
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Land details</th>
+              <td class="govuk-table__cell">Amend</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Countryside stewardship applications
+              </th>
+              <td class="govuk-table__cell">Submit</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Countryside stewardship agreements and
+                claims</th>
+              <td class="govuk-table__cell">Submit</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Sustainable Farming Incentive and Basic
+                Payment Scheme</th>
+              <td class="govuk-table__cell">Submit</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="govuk-warning-text app-warning-text--long govuk-!-margin-bottom-0">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-visually-hidden">Warning</span>
+              You will need to contact the Rural Payments Agency to reduce or remove this person's permission in future.
+              <br>
+              <br>
+              The business will be liable for all information they provide on its behalf, which can include financial penalties.
+            </strong>
+          </div>
+
+        {% else %}
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Business relationship</th>
+              <td class="govuk-table__cell">{{data['permissions-business-relationship'] or "Agent or advisor" }}</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state"
+                  href="#">Change<span class="govuk-visually-hidden"> business relationship</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Business details</th>
+              <td class="govuk-table__cell">{{data['permissions-business-details']}}</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state"
+                  href="add-person-permissions-business-details">Change<span class="govuk-visually-hidden"> manage business details</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Land details</th>
+              <td class="govuk-table__cell">{{data['permissions-land-details'] or "View only" }}</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state"
+                  href="add-person-permissions-land-details">Change<span class="govuk-visually-hidden"> land details permissions</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Countryside stewardship applications
+              </th>
+              <td class="govuk-table__cell">{{data['permissions-cs-application'] or 'No access'}}</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state"
+                  href="add-person-permissions-cs-application">Change<span class="govuk-visually-hidden"> countryside stewardship application
+                    permissions</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Countryside stewardship agreements and
+                claims</th>
+              <td class="govuk-table__cell">{{data['permissions-cs-agreement'] or 'No access'}}</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state"
+                  href="add-person-permissions-cs-agreement">Change<span class="govuk-visually-hidden"> countryside stewardship agreement
+                    permissions</span></a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-width-one-half">Sustainable Farming Incentive and Basic
+                Payment Scheme</th>
+              <td class="govuk-table__cell">{{data['permissions-sfi-bps'] or 'Submit'}}</td>
+              <td class="govuk-table__cell govuk-table__cell_actions"><a class="govuk-link govuk-link--no-visited-state"
+                  href="add-person-permissions-sfi-bps">Change<span class="govuk-visually-hidden"> countryside stewardship agreement
+                    permissions</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        {% endif %}
+
+      </div>
+
+      <!-- <p class="govuk-body">By giving this person access, you’re responsible for all information provided to us in any applications, either by you or someone acting for you, including its accuracy.</p>
+  <p class="govuk-body">You are liable for any reductions or financial penalties if these occur when the application is processed.</p> -->
+
+      {{govukButton({
+      text: "Confirm"
+      })}}
+
+      <p class="govuk-body"><a href="business-access" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
+
+    </form>
+
+
+
+  </div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}
