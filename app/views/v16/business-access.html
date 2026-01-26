@@ -810,7 +810,7 @@
 
     {% else %}<!-- FULL PERMISSION USER CARDS START -->
 
-    {% if data['permissions-business-details--own'] == 'Amend' %}
+    {% if data['permissions-business-details--own'] == 'Amend' or data['permissions-business-details--own'] == 'Make legal changes' or data['permissions-business-details--own'] == 'View only' %}
     <!-- BUSINESS USER 1 PERMISSIONS CARD START-->
     <ul class="user-permissions__list">
       <li class="user-permissions__list-item">
@@ -1229,7 +1229,7 @@
 
 
     {% else %} <!--- Cards for Alfred when he has the default FULL PERMISSION -->
-
+    
 
     {% if (data['scenario'] == "removekim") %}
     {% else %}
@@ -1472,19 +1472,28 @@
             <tbody class="govuk-table__body">
               <tr class="govuk-table__row user-permissions__list-item_table-row">
                 <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Business details</th>
-                <td class="govuk-table__cell govuk-body-s">Full permission</td>
+                <td class="govuk-table__cell govuk-body-s">
+                  {% if data.permissionsPath == 'unhappy' %}
+                  Amend
+                {% else %}
+                  Full permission
+                {% endif %}
+                </td>
                 <td class="govuk-table__cell govuk-body-s govuk-table__cell_actions"><a
                     class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">Details<span
                       class="govuk-visually-hidden"> manage business permissions</span></a></td>
               </tr>
-            </tbody>
-          </table>
-          <p class="govuk-body-s">
-            They have full permission. This means means they automatically have the highest permission levels possible
-            for managing this business, including all its correspondence, land, funding schemes and grants.
-          </p>
-          <table class="govuk-table">
-            <tbody class="govuk-table__body">
+              {% if data.permissionsPath == 'unhappy' %}
+                {% else %}
+                  </tbody>
+                  </table>
+                  <p class="govuk-body-s">
+                    They have full permission. This means means they automatically have the highest permission levels possible
+                    for managing this business, including all its correspondence, land, funding schemes and grants.
+                  </p>
+                  <table class="govuk-table">
+                    <tbody class="govuk-table__body">
+              {% endif %}
               <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header govuk-body-s govuk-!-width-one-half">Land details</th>
                 <td class="govuk-table__cell govuk-body-s">Amend</td>
@@ -1518,8 +1527,16 @@
               </tr>
             </tbody>
           </table>
-          <p class="govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="misc-contact">Contact Rural
-              Payments to discuss reducing or removing this person's access</a></p>
+          <p class="govuk-body-s">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">
+            {% if data.permissionsPath == 'unhappy' %}
+                  Remove this person's access
+                {% else %}
+                  Contact Rural
+              Payments to discuss reducing or removing this person's access
+                {% endif %}
+            </a>
+          </p>
         </div>
       </li>
     </ul>
@@ -1536,7 +1553,11 @@
                 <td class="govuk-table__cell govuk-!-width-one-half">
                   <h3 class="govuk-heading-m">Clara Olivera</h3>
                 </td>
-                <td class="govuk-table__cell govuk-body">Owner</td>
+                <td class="govuk-table__cell govuk-body">{% if data.permissionsPath == 'unhappy' %}
+                  Trustee
+                {% else %}
+                  Owner
+                {% endif %}</td>
                 <td class="govuk-table__cell govuk-body govuk-table__cell_actions"><a
                     class="govuk-link govuk-link--no-visited-state" href="../_common/not-testing.html">{% if data.access
                     == "view" %}Details{% else %}Change{% endif %}<span class="govuk-visually-hidden"> business
@@ -1588,8 +1609,16 @@
               </tr>
             </tbody>
           </table>
-          <p class="govuk-body-s"><a class="govuk-link govuk-link--no-visited-state" href="misc-contact">Contact Rural
-              Payments to discuss reducing or removing this person's access</a></p>
+          <p class="govuk-body-s">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">
+            {% if data.permissionsPath == 'unhappy' %}
+                  Remove this person's access
+                {% else %}
+                  Contact Rural
+              Payments to discuss reducing or removing this person's access
+                {% endif %}
+            </a>
+          </p>
         </div>
       </li>
     </ul>
