@@ -20,7 +20,7 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-xl">
-      Buffalo MVP
+      Version 16
       <!-- <span class="govuk-caption-xl">Private Beta. Round 1: 16 to 20 December 2024</span> -->
     </h1>
 
@@ -33,16 +33,16 @@
     <!-- Internal/external -->
     <div class="govuk-form-group">
       <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">External vs internal user</legend>
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">View as:</legend>
           <div class="govuk-radios">
               <div class="govuk-radios__item">
                   <input {% if myData.view == 'ext' %}checked{% endif %} class="govuk-radios__input" data-option="ext" id="ext" name="view" type="radio" value="ext">
                   <label class="govuk-label govuk-radios__label" for="ext" selected><strong>External user</strong></label>
               </div>
-              <div class="govuk-radios__item">
+              <!--<div class="govuk-radios__item">
                 <input {% if myData.view == 'int' %}checked{% endif %} class="govuk-radios__input" data-option="int" id="int" name="view" type="radio" value="int">
                 <label class="govuk-label govuk-radios__label" for="int"><strong>Internal user</strong></label>
-              </div>
+              </div>-->
           </div>
       </fieldset>
     </div>
@@ -129,7 +129,7 @@
     </h2>
 
     <p class="govuk-body">
-      This is the version being developed for Buffalo MVP, based on version 8 and some of version 9 of the prototype.
+      This version documents some of our iterations for setting permissions as an external user, and develops the various scenarios involved. 
     </p>
 
     <h3 class="govuk-heading-s">
@@ -137,7 +137,7 @@
     </h3>    
 
     <p class="govuk-body">
-      <a href="_design-history/design-history">View design history</a>.
+      Design history coming soon. 
     </p>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
