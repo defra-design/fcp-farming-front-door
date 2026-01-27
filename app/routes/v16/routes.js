@@ -1686,7 +1686,7 @@ module.exports = function (router, _myData) {
 
         var removePerson = request.session.data['remove-person']
         if (removePerson == "yes"){
-            response.redirect("/v16/business-access?scenario=removekim")
+            response.redirect("/v16/business-access?scenario=removeKim")
         } else {
             response.redirect("/v16/business-access")
         }

@@ -17,81 +17,35 @@
 {% set serviceName="Farm and Land Service" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = false %}
-  {% set _designSpecData = {
-    "status": 'In development',
-    "name": "You no longer have access to business",
-    "id": "rv04",
-    "url": "details-personal-details?r=t&view=ext&release=b1",
-    "release": "Buffalo 1.0 MVP",
-    "variants": [
-      {
-        "name": "name changed banner",
-        "url": "details-personal-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
-      },
-      {
-        "name": "date of birth changed banner",
-        "url": "details-personal-details?r=t&release=b1&dobchanged=true&changed=true&view=ext"
-      },
-      {
-        "name": "address changed banner",
-        "url": "details-personal-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
-      },
-      {
-        "name": "phone numbers changed banner",
-        "url": "details-personal-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
-      },
-      {
-        "name": "email changed banner",
-        "url": "details-personal-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
-      }
-    ],
 
-    "pagetitle": pageName,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
-      
-    ]
-    
-  }
-%}
-
-{% elif data.view == "int" %}
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
-    "status": 'In development',
-    "name": "Manage personal details",
-    "id": "int-pd01",
-    "url": "details-personal-details?r=t&view=int&release=b2",
-    "release": "Buffalo 1.1 MVP",
+    "status": 'In design',
+    "name": "TO DO",
+    "id": "xx",
+    "release": "Buffalo MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "TO DO",
+    "pageurl": "TO DO",
+    "version" : "v16",
+    "prototypeurl" : "remove-yourself-unhappy-path?view=ext",
+
     "variants": [
       {
-        "name": "name changed banner",
-        "url": "details-personal-details?r=t&release=b2&namechanged=true&changed=true&view=int"
-      },
+        "name": "User tries to remove themselves, but they are the sole owner",
+        "url": "remove-yourself-unhappy-path?view=ext&release=b1&scenario=remove-yourself-sole-owner"
+      }
+      
+    ],
+    "errormessages": [
       {
-        "name": "date of birth changed banner",
-        "url": "details-personal-details?r=t&release=b2&dobchanged=true&changed=true&view=int"
-      },
-      {
-        "name": "address changed banner",
-        "url": "details-personal-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
-      },
-      {
-        "name": "phone numbers changed banner",
-        "url": "details-personal-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
-      },
-      {
-        "name": "email changed banner",
-        "url": "details-personal-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+        "field": "fieldname",
+        "scenario": "describe error scenario",
+        "content": "Error message content"
       }
     ],
-
-    "pagetitle": pageName,
-    "pagedesc": "",
-    "pageurl": "",
-    "errormessages": [
+    "notes": [
+      "To remove yourself, there must be ONE other user with full permissions assigned to the business AND there must be ONE other user assigned as the business owner. They do not need to be assigned to the same user."
       
     ]
     
@@ -129,6 +83,22 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+    {% if data.scenario == "remove-yourself-sole-owner" %}
+
+    <h1 class="govuk-heading-l">
+      Remove your access to this business
+    </h1>
+
+    <p class="govuk-body">
+      The business must have at least one person with the relationship of owner or sole trader, and you are the only owner or sole trader for this business. 
+    </p>
+
+    <p class="govuk-body">
+      You will need to <a href="business-access?scenario=clear" class="govuk-link govuk-link--no-visited-state">make someone else an owner or sole trader</a> before you can remove your own access. 
+    </p>
+
+    {% else %}
+
     <h1 class="govuk-heading-l">
       Remove your access to this business
     </h1>
@@ -140,6 +110,8 @@
     <p class="govuk-body">
       You will need to <a href="business-access?scenario=clear" class="govuk-link govuk-link--no-visited-state">give someone else full permission</a> before you can remove your own access. 
     </p>
+
+    {% endif %}
 
   </div>
 </div>
