@@ -20,38 +20,62 @@
 
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In design',
-"name": "TO DO",
-"id": "ma00",
-"release": "Buffalo MVP 1.0",
-"pagetitle": pageName,
-"pagedesc": "TO DO",
-"pageurl": "TO DO",
-"version" : "v16",
-"prototypeurl" : "business-access?view=ext",
+  "status": 'In design',
+  "name": "TO DO",
+  "id": "ma00",
+  "release": "Buffalo MVP 1.0",
+  "pagetitle": pageName,
+  "pagedesc": "TO DO",
+  "pageurl": "TO DO",
+  "version" : "v16",
+  "prototypeurl" : "business-access?view=ext",
 
-"variants": [
-{
-"name": "User (Tom Draper) with View permissions for Business details",
-"url": "business-access?view=ext&release=b1&access=view"
-}
+  "variants": [
+    {
+      "name": "User (Tom Draper) with View permissions for Business details",
+      "url": "business-access?view=ext&release=b1&access=view"
+    },
+    {
+      "name": "User (Richard Clarke) successfully updated banner",
+      "url": "business-access?view=ext&release=b1&access=view&scenario=richardUpdated&access=full"
+    },
+    {
+      "name": "User (Alfred Owner) updates own permissions success banner",
+      "url": "business-access?view=ext&release=b1&access=reducedBusinessDetails&permissions-business-details--own=Amend"
+    },
+    {
+      "name": "User (Kim Canterbury) removed from business success banner",
+      "url": "business-access?view=ext&release=b1&scenario=removeKim&access=full"
+    },
+    {
+      "name": "Unhappy path - User (Alfred Waldron) cannot edit his business permissions",
+      "url": "business-access?view=ext&release=b1&permissionsPath=unhappy&access=full"
+    },
+    {
+      "name": "Unhappy path - User (Alfred Waldron) cannot edit his business relationship",
+      "url": "business-access?view=ext&release=b1&permissionsPath=unhappy&access=full"
+    },
+    {
+      "name": "Unhappy path - User (Alfred Waldron) cannot remove his access",
+      "url": "business-access?view=ext&release=b1&permissionsPath=unhappy&access=full"
+    }
+  ],
+  "errormessages": [
+    {
+    "field": "fieldname",
+    "scenario": "describe error scenario",
+    "content": "Error message content"
+    }
+  ],
+  "notes": [
+    "Any user who does not have Full Permission for Business Details will not be able to amend their own permissions, or for
+    other users. For an example, see the <strong>User (Tom Draper) with View permissions for Business details</strong>
+    example under Variants above.",
+    "Display cards under 'Permissions for other people associated with this business' 5 results at a time. If a business has more than 5 associated users, use the GOV.UK pagination component.",
+    "A business MUST have <strong>at least one</strong> user with Full permissions for Business Details AND <strong>at least one</strong> user who has Owner or sole trader for the business relationship. A user who wishes to change either of these, but is the only user within the business with that level, must first reassign (or have someone else reassign) that permission level/role to someone else. See <strong>Unhappy paths</strong> under Variants above."
+  ]
 
-],
-"errormessages": [
-{
-"field": "fieldname",
-"scenario": "describe error scenario",
-"content": "Error message content"
-}
-],
-"notes": [
-"Any user who does not have Full Permission for Business Details will not be able to amend their own permissions, or for
-other users. For an example, see the <strong>User (Tom Draper) with View permissions for Business details</strong>
-example under Variants above."
-
-]
-
-}
+  }
 %}
 
 {% else %}
@@ -165,7 +189,7 @@ example under Variants above."
       </div>
     </div>
 
-    {% elif (data['scenario'] == "reduceBusinessDetails") %}
+    {% elif (data['scenario'] == "reducedBusinessDetails") %}
 
     <div class="govuk-notification-banner govuk-notification-banner--success" role="alert"
       aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
