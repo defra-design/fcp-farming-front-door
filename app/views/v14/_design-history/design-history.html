@@ -1,0 +1,190 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">V14</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Design history</span>
+      Version 14: Doc upload permissions
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-l">
+      Why we explored document upload permissions
+    </h2>
+
+    <p class="govuk-body">
+      This post is about the UCD work so far in January 2026 to clarify the different permissions journeys for doc upload, based on the user’s permission level.
+    </p>
+
+    <p class="govuk-body">
+        In <a href="../../v11/index">version 11 of the prototype</a> we designed an initial doc upload journey. As usual for our first exploration of a feature, we focused on a journey for a user with permission to do everything (the highest possible level of permission).
+    </p>
+
+    <p class="govuk-body">
+        We now needed to work out what any journeys might look like for users with lower permission. 
+    </p>
+
+    <p class="govuk-body">
+        This has been challenging because once we started looking closely at the document upload permissions rules provided by RPA, they seemed to conflict with the overall permissions rules we have followed for our permissions designs. 
+    </p>
+
+    <h2 class="govuk-heading-l">
+        The contradictions we noticed
+    </h2>
+
+    <p class="govuk-body">
+        The doc upload permissions rules suggest that business permission should dictate scheme and land doc upload permissions. We agree that this makes sense for a user who has full business permission, but we do not think it should be the case for users with any other level of business permission. That would conflict with the as-is wider permissions model, and what we have prototyped, which is that if someone has less than full business permission, they can have entirely customised land and scheme permissions. Adding in the doc upload permission rules implies that a user could have seemingly contradictory permissions.  For example it would mean:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>
+            I have ‘make legal changes’ business permission and have no land or scheme permissions. But I have permission to submit documents for land and most schemes.
+        </li>
+        <li>
+            I have ‘view only’ business permission and have ‘submit’ scheme permissions. But I have no permission to view or submit any documents for schemes. 
+        </li>
+    </ul>
+    <p class="govuk-body">
+        This conflict would be unfeasibly complicated and confusing for both external and internal users, in our strong opinion.
+    </p>
+    <p class="govuk-body">
+        We also queried RPA’s doc upload rule that view=submit - we questioned whether sometimes it may be logical for lower permission users to be able to view documents, even if they should not be able to submit them. 
+    </p>
+    <p class="govuk-body">
+        We also noticed that the doc upload categories and queues specified by RPA do not include land, and wondered why. It seems to us land should be included for completeness and consistency. 
+    </p>
+    <p class="govuk-body">
+        We have shared all this thinking with RPA colleagues for their feedback. 
+    </p>
+
+    <h2 class="govuk-heading-l">
+        Journey mapping
+    </h2>
+
+    <p class="govuk-body">
+        While we await clarification, the SFD team decided to proceed for now on the basis of our best assumption of what seems logical, which essentially means continuing with the wider permissions approach where lower permission users have customisable, mix and match permissions for land and schemes.
+    </p>
+
+    <p class="govuk-body">
+        UCD and BAs <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1745315080514/6a5f32166575f8d5cb97a794361e6ccd31f87d69?wid=0-1769169512682" target="_blank">thought this out in Mural (opens in new tab)</a>. Our assumption is that as a rule, it would seem logical for a:
+    </p>
+    
+    <ul class="govuk-list govuk-list--bullet">
+        <li>
+            full permission user to be able to submit all documents
+        </li>
+        <li>
+            ‘submit’ scheme permission user to be able to submit and view documents for that scheme
+        </li>
+        <li>
+            ‘amend’ scheme permission user to be able to view and perhaps also submit documents for that scheme (TBC on the submit part)
+        </li>
+        <li>
+            ‘view only’ scheme permission user to only be able to view documents for that scheme
+        </li>
+    </ul>
+
+    <p class="govuk-body">
+        We made similar assumptions about general ‘land’ permissions being reflected in the doc upload land permissions. (Though because ‘land’ is, for unclear reasons, not currently part of RPA’s doc upload categories, this needs some joining the dots).
+    </p>
+    <p class="govuk-body">
+        ‘ES’ permissions are also provisionally mapped out as these may vary from other schemes.
+    </p>
+    <p class="govuk-body">
+        Based on these underlying rules, we mapped out design journeys. 
+    </p>
+    <p class="govuk-body">
+        Journey A is what we have already prototyped <a href="../../v11/doc-upload-overview">in version 11</a> - it represents the journey of a user with the highest possible permission levels who can view and submit all documents. This can only be a user with full business permission, because only a user with full business permission can submit documents for business structure changes.
+    </p>
+
+    <p class="govuk-body">
+        <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1745315080514/6a5f32166575f8d5cb97a794361e6ccd31f87d69?wid=0-1764940825721" target="_blank" rel="noopener noreferrer" class="govuk-link">Journey B (opens in new tab)</a> represents the journey of a user with the lowest possible permission levels - the minimum for any user means they cannot view or submit any documents except documents for complaints, probate and appeals. This must be a user with less than full business permission, who also has all low scheme and land permissions.
+    </p>
+    <p class="govuk-body">
+        <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1745315080514/6a5f32166575f8d5cb97a794361e6ccd31f87d69?wid=0-1764940978252" target="_blank" rel="noopener noreferrer">Journey C (opens in new tab)</a> represents the journey of a user with medium or mixed permission levels. They can view and/or submit more documents than a Journey B user, but not all documents. This must be a user who does not fall into A or B - this means they must have less than full business permission, and they must have anything other than all low scheme and land permissions. For example, a user who can only view/submit for 1 scheme (eg CS) and complaint/probate/appeals. There are <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1745315080514/6a5f32166575f8d5cb97a794361e6ccd31f87d69?wid=0-1768995496222" target="_blank" rel="noopener noreferrer">more examples of journey C in Mural (opens in new tab)</a> but they need BA checking.
+    </p>
+
+    <h2 class="govuk-heading-l">
+       Design notes on journeys B and C 
+    </h2>
+
+    <p class="govuk-body">
+        The design approach so far is that:
+    </p>
+    
+    <ul class="govuk-list govuk-list--bullet">
+        <li>
+            users will only see the documents they are allowed to see listed on the documents page for the business (for example user B will only see complaint, probate or appeal documents, while user C will only see complaint, probate or appeal documents, and CS documents)
+        </li>
+        <li>
+            pages presenting options which are no longer possible can be removed (for example user B does not need to see the ‘Tell us what this relates to’ page as they can no longer choose anything other than 1 option on that page)
+        </li>
+        <li>
+            users will only see options they are allowed to choose (for example user B and user C will not see any option to submit business change evidence, while user C will only see radio buttons for schemes/land they have permission for on ‘Tell us what this relates to’)
+        </li>
+        <li>
+            on check and file view pages, we will still play back the ‘subject’ even if a user has not had to actively select it earlier in the journey (due to them not having any other choice)
+        </li>
+    </ul>
+
+    <h2 class="govuk-heading-l">
+        Next steps
+    </h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>
+            Confirm the rules with RPA, including on view=submit, and whether a user with ‘amend’ for schemes should be able to submit documents
+        </li>
+        <li>
+            Make any changes needed to our proposals
+        </li>
+        <li>
+            Add ‘land’ into the doc upload categories if we can for completeness and check if this requires any amendments to B and C
+        </li>
+        <li>
+            Consider if we want to add a row into the wider permissions selection journey tables to explain what doc upload permissions are given by ‘Submit’, ‘Amend’ and ‘View only’ - though this may not be needed 
+        </li>
+        <li>
+            Design, product and BA review of the journeys and examples in Mural and prototype them
+        </li>
+        <li>
+            ALAN and metadata to be done for finalised journeys for initial release
+        </li>
+        <li>
+            User testing should be done on these newest iterations as well as the previous set of iterations from version 14 as all of this is completely untested
+        </li>
+        <li>
+            The <a href="../../v11/_design-history/design-history">design history post for version 11</a> outlines those previous changes (November 2025) and also at the end contains UR and general recommendations for next steps on doc upload which are still outstanding
+        </li>
+    </ul>
+
+    
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
