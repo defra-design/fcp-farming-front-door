@@ -22,140 +22,353 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl">Design history</span>
-      MVP prototype
+      Prototype v13 - Entries into Buffalo/integration with another service (IAHW)
     </h1>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
 
-    <h2 class="govuk-heading-l">
-      Design changes
-    </h2>
 
     <p class="govuk-body">
-      This is the version being developed for Buffalo MVP, based on version 8 and some of version 9 of the prototype.
+      This is the version which further explores the integration points between FLS and IAHW.
     </p>
 
-    <h2 class="govuk-heading-m">
-      What’s unique for this version:
-    </h2>
+    <p class="govuk-body">
+      The first round of testing for the integration between the Farm and Land Service (FLS) and another service,
+      Improve Animal Health and Welfare (IAHW), gave us confidence that users were able to transition into our service
+      and update their business and personal details. Where we wanted further validation was in the navigation out of
+      FLS and back to the originating service.
+    </p>
 
+    <p class="govuk-body">
+      In version 1 of our design, the route back after updating details was in 2 steps:
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        updated the service name across the prototype to 'Land and Farm Service'
-      </li>
-      <li>removed bank details from internal and external journeys as this is not in scope for Buffalo MVP</li>
-      <li>
-        removed bd13 VAT registration number (add) - business details. We will keep the ‘Change’ link for businesses
-        that have a VAT registration number and ‘Add’ for businesses that do not, on bd01 - but they will both go to
-        bd12.
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          this is to minimise tech debt in maintaining similar question pages. We believe that we can ask the same
-          question, ‘What is your VAT registration number’ to both users that need to add and change their VAT
-          registration numbers.
-        </li>
-      </ul>
-      <li>
-        in keeping with the approach to VAT registration number, on pd01 we added an ‘Add’ link for users that do not
-        have a date of birth on the service, and kept the ‘Change’ link for those that do. Both links will go to pd04
-        Date of birth (add/change)
+        back link, ‘Back to [business name]’, on ‘bd01 Manage business details’ and ‘pd01 Manage personal details’,
+        going to 'bp02 SFD home/business page'
       </li>
       <li>
-        added variant examples for business telephone numbers, e.g. where the user has added a telephone number, but not
-        a mobile number, to document how this should be displayed on the check page (and when submitted to bd01).
+        card component signpost on ‘bp02 SFD home/business page', going to IAHW’s 'Check your details’ page
       </li>
-      <li>
-        added variant examples for personal telephone numbers, e.g. where the user has added a telephone number, but not
-        a mobile number, to document how this should be displayed on the check page (and when submitted to pd01).
-      </li>
-      <li>
-        there is no managing of permissions as that is out of scope for Buffalo MVP, but users can see pages according
-        to the permission level they have
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          this applies to bp02 (business home) and bd01 (view and update your business details) in terms of what the
-          user can see / have access to from that page
-        </li>
-      </ul>
-      <li>
-        updated mp01 Cookies with results of Cookies audit. Cookie banner content still TBC
-      </li>
-      <li>
-        created 2 new error pages:
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          se05 401 Unauthorised, returned to the user if they need to provide or correct authentication details. For
-          example, a user tries to open a link they have favourited after their session has expired, or they provide
-          incorrect or invalid authentication credentials (eg, their password has expired). The user can correct the
-          error by signing in
-        </li>
-        <li>
-          se04 403 Forbidden, returned to the user if they do not have permission to access the requested resource. For
-          example, a user who may have ‘View’ permissions in the service is sent a link to update bank details. The user
-          cannot correct the error. They can ask the business to raise their permissions
-        </li>
-      </ul>
-      <li>
-        reviewed existing error pages within our MVP and updated for consistency:
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          contact details on error pages use the Contact RPA pattern. Updated for se01. Service unavailable (503/shutter
-          page), se02. Service unavailable (500/service error page) and se03. Page not found (404)
-        </li>
-        <li>
-          call to action to sign in to service use a hyperlink to direct users to the sign in page. Updated for se05 401
-          Unauthorised, mp06 Auto signed out and mp07 Signed out
-        </li>
-      </ul>
-      <li>
-        reviewed the misc pages for our MVP (mp00), where we have:
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          removed mp08 terms and conditions - confirmed as not needed for our initial launch
-        </li>
-        <li>
-          removed mp04 privacy policy - confirmed that we will launch linking to the Personal information charter for
-          our initial launch
-        </li>
-        <li>
-          no action for now on the accessibility statement
-        </li>
-        <li>
-          prototyped an auto-sign out warning page (mp07)
-        </li>
-      </ul>
-      <li>reviewed the navigation within our MVP, where we have: </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          removed ‘cancel’ links from any change and check pages within the view and update your business or personal
-          details journeys. ‘Change’ and ‘back’ links remain as in previous versions of the prototype.
-        </li>
-        <li>
-          removed the ‘home’ breadcrumb from bd01 and pd01, and replaced it with ‘back’ links to take the user to the
-          relevant previous page they came from (e.g. for pd01, they could come from bp01 or bp02)
-        </li>
-        <li>
-          updated the heading for pd01 by adding a heading caption to display the user’s full name, and removed the sub
-          header banner that was displaying the selected business information (this is because the user would not
-          necessarily have come to this page from a selected business)
-        </li>
-        <li>because of our integration with Defra ID for signing in users, bp01 will be built by their team and used by other services. This means that we cannot customise this page, and we have therefore removed the link to 'View personal details'</li>
-      </ul>
     </ul>
+    </p>
 
+    <p class="govuk-body">
+      As discussed in the <a
+        href="https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/AHWP/_design-history/design-history"> design
+        history</a>, in testing we found that while all users successfully selected the back link, there was some
+      hesitation in doing so. We also questioned the design after meeting with developers to discuss the technical
+      feasibility of inserting the business name into the back link. While this was confirmed to be possible, it would
+      present some challenges for businesses with long names. A small percentage of businesses registered on the Rural
+      Payment service (RPS) have names in excess of 50 characters, with several over 100, although it should be said
+      that the majority are less than 50.
+    </p>
+    <p class="govuk-body">
+      With our technical team we agreed that we would introduce criteria to truncate business name with ellipses after
+      50 characters. This will be carried over to where the business name appears in the header. For the link back to
+      ‘bp02 SFD home/business page’, we felt there was enough indecision from users in testing to merit us exploring
+      alternatives. Our latest design version 1.1 has the back link as ‘Back to business overview’. This is in keeping
+      with RPS as-is. Testing will show whether this offers an improvement.
+    </p>
+    <p class="govuk-body">
+      On the signpost link back to the originating service, all 5 users clicked the link, but one did first go a step
+      further back to the business picker. They recognised their misstep immediately and went on to correctly select the
+      same business and continue their journey. In ideation for version 1.1, we considered other options for signposting
+      in a
+      <a
+        href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1738831676466/380eba35c98aebffa56a87cd2db67c6bd91eae9e?wid=0-1762183188084">Mural
+        board</a>.
+    </p>
+    <p class="govuk-body">
+      This included:
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        looking again at the use of a success banner and righthand side navigation - we found the previous reasons for
+        discounting these designs to still be valid
+      </li>
+      <li>
+        adding an additional back link to IAHW - we discounted this for being too confusing and flouting best practice,
+        while also being short termist, with the need to roll back the design as other services onboard
+      </li>
+      <li>
+        creating a separate success confirmation page with navigation - any changes here would need significant design
+        and development resource, so not one for MVP when the existing design has tested well
+      </li>
+      <li>
+        making the card signpost more prominent - our chosen option, given this design tested well with users in version
+        1, but could be further enhanced
+      </li>
+    </ul>
+    <img src="/public/images/design-history/v13/business-home-with-card.png"
+      alt="screenshot of the business homepage with a more prominent card to return to IAHW" class="design-history">
+
+    </p>
+    <p class="govuk-body">
+      We also looked again at the start point. Version 1 of the design had 2 journeys:
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        route 1, in which we signposted users to FLS to check and update their details before they start an IAHW apply
+        or claim journey
+      </li>
+      <li>
+        route 2, in which we signposted users to FLS to update their details within the IAHW apply or claim journey
+      </li>
+    </ul>
+    </p>
+    For version 1.1, we made the decision to drop route 1. While users did navigate through this route when prompted, we
+    were unconvinced that they would naturally consider updating details before starting their IAHW journey. There are
+    also certain risks that would become inherent were we to pursue route 1, in particular:
+    <p class="govuk-body">
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        the findability of FLS from the IAHW start page, when not self-contained within the IAHW journey
+      </li>
+      <li>
+        the risk that a person may check and update their details before they start their IAHW journey who may later
+        find out they are not eligible
+      </li>
+    </ul>
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Research approach
+    </h2>
+    <p class="govuk-body">
+      While we would not typically test a to-be design against the as-is, under these circumstances where navigation was
+      known to be a concern it felt prudent to do so.
+    </p>
+    <p class="govuk-body">
+      We also chose to implement the Likert scale in testing version 1.1, inviting users to rate the ease of use of the
+      service. Our understanding of how users move between services will be integral as we look to integrate with
+      another service and what benefits or friction they might encounter.
+    </p>
+    <p class="govuk-body">
+      Our user researchers worked with their counterpart from IAHW to replicate that team’s research approach. As per
+      standard IAHW testing, testing was conducted with 10 users recruited from IAHW’s own research panel.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      What we tested, outcomes and decisions
+    </h2>
+    <h3 class="govuk-heading-m">
+      How might we provide a route for IAHW users to update their business or personal details?
+    </h3>
+    <h4 class="govuk-heading-s">Hypothesis 1: </h4>
+
+
+    <p class="govuk-body">
+      <strong>If </strong>we provide a route into FLS for users to update their business or personal details when their
+      details are displayed in IAHW
+      <br> <br>
+      <strong>Then </strong>they'll navigate to FLS and update their details, before continuing their journey in IAHW
+      <br> <br>
+      <strong>We’ll know this</strong> when we see users answering 'no' to the question 'are these details correct?' and
+      follow the link into FLS on the next page to update their details
+      <br> <br>
+      <strong>RAG rating - green</strong>
+    </p>
+    <p class="govuk-body">
+      All users were able to correctly navigate into FLS.
+    </p>
+
+    <h4 class="govuk-heading-s">Hypothesis 2: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>we provide a link to FLS for users to update their business or personal details
+      <br> <br>
+      <strong>Then </strong>they'll follow the link and update their details in FLS, before continuing their journey in
+      IAHW
+      <br> <br>
+      <strong>We’ll know this</strong> when users comment their preference for updating details is via an online service
+      and are positive about the online experience
+      <br> <br>
+      <strong>RAG rating - amber</strong>
+    </p>
+    <p class="govuk-body">
+      With this hypothesis we wanted to understand if users would choose to call the RPA to update their details instead
+      of doing so via an online service. Responses were mixed. 4 users stated a reluctance to call the RPA, citing long
+      wait times and the various different options to reach an operative as deterrents. 3 users said they would call the
+      RPA rather than email, however, this doesn’t quite reflect the aim of the hypothesis - emailing RPA is different
+      to using the online service.
+      <br><br>
+      We'll take an action to look at online and offline preferences in a future round of testing.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      How might we help users to understand what the Farm and Land Service is and give them confidence to use the new
+      service?
+    </h3>
+
+    <h4 class="govuk-heading-s">Hypothesis 3: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>we provide succinct information about what FLS is
+      <br> <br>
+      <strong>Then </strong>users will have enough context to continue their journey of updating details before
+      returning to IAHW
+      <br> <br>
+      <strong>We’ll know this</strong> when users follow the link to update their details on FLS without hesitation
+      <br> <br>
+      <strong>RAG rating - amber </strong>
+    </p>
+    <p class="govuk-body">
+      All 10 users correctly navigated into FLS. Of that number, 6 did not read the page contents and continued their
+      journey without engaging with FLS context.
+    </p>
+    <p>
+      There’s a balance to be struck between providing users enough information about FLS to support their understanding
+      and onwards journey and not unnecessarily interrupting those who want to get on with the task. As we look ahead to
+      integrating FLS with another service, our team will need to consider the level of information we can and should
+      provide about FLS as the point of integration, and how this is influenced by and complements other comms.
+    </p>
+    <p>
+      There’s an action for BAs, product and delivery function to consider the results of this hypothesis as part of
+      comms launch planning. Design should consider and feed in to comms as appropriate.
+    </p>
+
+
+    <h4 class="govuk-heading-s">Hypothesis 4: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>we provide information about what can and can't be done in the Farm and Land service
+      <br> <br>
+      <strong>Then </strong>users will understand what is possible in the service at that time
+      <br> <br>
+      <strong>We’ll know this</strong> when users are able to articulate what they are able to do in the service and
+      what they are not able to do at this point
+      <br> <br>
+      <strong>RAG rating - amber</strong>
+    </p>
+    <p class="govuk-body">
+      This builds on hypothesis 3, with a focus on what users understand that they’re able to do in FLS at launch, and
+      how this will change over time. 5 users correctly understood the messaging. The same number needed the messaging
+      to be clearer.
+      <br><br>
+      There’s a design action for us to consider how we position future capabilities of the service, particularly where
+      these go above and beyond RPS functionality.
+    </p>
+
+
+    <h4 class="govuk-heading-s">Hypothesis 5: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>we provide information about FLS replacing RPS
+      <br> <br>
+      <strong>Then </strong>users will understand FLS is replacing RPS
+      <br> <br>
+      <strong>We’ll know this</strong> when users are able to articulate that FLS is replacing the RPS
+      <br> <br>
+      <strong>RAG rating - amber</strong>
+    </p>
+    <p class="govuk-body">
+      Users were again divided in their understanding. While the majority understood that FLS would be replacing RPS,
+      there was confusion over what this actually meant. One user called it “the same thing but a rebrand”. 2 users
+      misunderstood RPS and RPA to be the same thing. We will need to carefully consider how we position RPS in any
+      content that discusses the retirement of the service.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      How might we help users move seamlessly between 2 services?
+    </h3>
+
+    <h4 class="govuk-heading-s">Hypothesis 6: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>we show the user their details in FLS after they have changed their details, and again when
+      they re-enter the IAHW service
+      <br> <br>
+      <strong>Then </strong>the user will not be confused or frustrated by seeing it in both services
+      <br> <br>
+      <strong>We’ll know this</strong> when the user does not comment negatively about seeing their details in both
+      services and/or does not stray from their IAHW journey
+      <br> <br>
+      <strong>RAG rating - green</strong>
+    </p>
+    <p class="govuk-body">
+      2 users commented on seeing their details again, but did not comment negatively. 1 user was initially confused by
+      the screen but understood the rationale to double check their information had changed as expected. We can be
+      confident that users will not be negatively impacted if we need to show their details again when we do integrate
+      with another service.
+    </p>
+
+
+    <h4 class="govuk-heading-s">Hypothesis 7: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>the different headers on IAHW, FLS and Defra ID are shown during a single journey
+      <br> <br>
+      <strong>Then </strong>the user does not become disoriented or comment negatively and is able to continue their
+      journey without losing trust
+      <br> <br>
+      <strong>We’ll know this</strong> when users complete the tasks without negative comments or distraction from their
+      task
+      <br> <br>
+      <strong>RAG rating - green</strong>
+    </p>
+    <p class="govuk-body">
+      When asked if they’d noticed if they were moving between services, 8 users responded that they did not, or they
+      did not mind the transition. Most users commented positively about not having to sign in again.
+    </p>
+
+
+    <h4 class="govuk-heading-s">Hypothesis 8: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>we signpost to IAHW on the FLS business home page
+      <br> <br>
+      <strong>Then </strong>the user will notice the signposting, understand where it will take them and use it to
+      return to the IAHW service
+      <br> <br>
+      <strong>We’ll know this</strong> when users find the signposting and follow it without hesitation, with the
+      expectation this would return them to IAHW amd users do not comment negatively about the signposting
+      <br> <br>
+      <strong>RAG rating - amber</strong>
+    </p>
+    <p class="govuk-body">
+      While all users clicked the signpost card, there was hesitation of between 6 and 16 seconds for half, which we
+      note is more than other pages in the to-be journey, where selection was almost instantaneous. We are cautious in
+      rating this hypothesis as green. We will need to consider in future designs how the card component works when part
+      of a page featuring multiple service capabilities.
+    </p>
+
+
+    <h4 class="govuk-heading-s">Hypothesis 9: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>we provide a 'back to [business name]' link on the view and update your business / personal
+      details pages
+      <br> <br>
+      <strong>Then </strong>users will follow this link expecting it to be part of the route back to IAHW
+      <br> <br>
+      <strong>We’ll know this</strong> when users successfully navigate back to the IAHW service by following the 'back
+      to [business name]' link and view this as part of the journey back to IAHW
+      <br> <br>
+      <strong>RAG rating - amber</strong>
+    </p>
+    <p class="govuk-body">
+      All users found their way out via the back link, but hesitated before doing so. 5 verbalised they were unsure
+      where to go next. We found no improvement on the previous design of the back link (Back to [business name]). As we
+      iterate we may want to consider using the back link in addition to another button or feature, as suggested by
+      several users, although we are mindful of not adding unnecessary code to the site.
+    </p>
+
+    <h4 class="govuk-heading-s">Hypothesis 10: </h4>
+    <p class="govuk-body">
+      <strong>If </strong>we provide a journey through FLS to check and update their business or personal details
+      <br> <br>
+      <strong>Then </strong>users will be able to check and update their details on FLS, then return to the IAHW service
+      without any issues, concerns or hesitation
+      <br> <br>
+      <strong>We’ll know this</strong> when we observe users are able to successfully complete their checking and
+      updating tasks and return to the IAHW service without friction
+      <br> <br>
+      <strong>RAG rating - green</strong>
+    </p>
+    <p class="govuk-body">
+      While there were elements of the to-be design that caused users to pause, as a whole the journey held up. All
+      users were able to complete the task without intervention. 6 of these took the direct, expected path, with the
+      remaining 4 succeeding with some missteps. Further, the to-be journey was given an average score of 6 out of 7 on
+      the Likert scale for ease of use. We consider this to be a success, and will take these learnings forward as we
+      look to integrate with another service in the new year.
+    </p>
+    <p class="govuk-body">
+    </p>
 
   </div>
 
-  <!-- right third of page to link to relevant mural boards and UR findings -->
-  <div class="govuk-grid-column-one-third">
 
-  </div>
 </div>
 
 {% endblock %}
