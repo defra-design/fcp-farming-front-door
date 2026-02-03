@@ -70,6 +70,7 @@
           <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">Start journey from</legend>
           <div class="govuk-radios" data-module="govuk-radios">
 
+<!--remove these options as they are not going to the DAL pages when you continue on the journey-->
             <div class="govuk-radios__item">
               <input {% if data.startFrom == 'si' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-2" id="startFrom-2" name="startFrom" type="radio" value="si" >
               <label class="govuk-label govuk-radios__label" for="startFrom-2">Sign in (SFD)</label>
@@ -82,6 +83,8 @@
               <input {% if data.startFrom == 'bl' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-3" id="startFrom-3" name="startFrom" type="radio" value="bl" >
               <label class="govuk-label govuk-radios__label" for="startFrom-3">Businesses list</label>
             </div>
+
+            
             <div class="govuk-radios__item">
               <input {% if data.startFrom == 'home' %}checked{% endif %} class="govuk-radios__input" data-option="startFrom-4" id="startFrom-4" name="startFrom" type="radio" value="home" >
               <label class="govuk-label govuk-radios__label" for="startFrom-4">Home - business page</label>
