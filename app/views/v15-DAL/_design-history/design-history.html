@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-rebrand.html" %}
 
 {% set pageName="Design history" %}
 
@@ -9,7 +9,7 @@
       <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
     </li>
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="../index">MVP</a>
+      <a class="govuk-breadcrumbs__link" href="../index">V15-DAL</a>
     </li>
   </ol>
 </nav>
@@ -22,140 +22,261 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl">Design history</span>
-      MVP prototype
+      Version 15 - DAL
     </h1>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
 
     <h2 class="govuk-heading-l">
-      Design changes
+      Why did we do this iteration?
     </h2>
 
     <p class="govuk-body">
-      This is the version being developed for Buffalo MVP, based on version 8 and some of version 9 of the prototype.
-    </p>
-
-    <h2 class="govuk-heading-m">
-      What’s unique for this version:
-    </h2>
+      The original designs showed the happy path for editing data where individual pieces of data were updated
+      separately. The aim of this was to improve the user experience so updating details took: </p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        updated the service name across the prototype to 'Farm and Land Service'
-      </li>
-      <li>removed bank details from internal and external journeys as this is not in scope for Buffalo MVP</li>
-      <li>
-        removed bd13 VAT registration number (add) - business details. We will keep the ‘Change’ link for businesses
-        that have a VAT registration number and ‘Add’ for businesses that do not, on bd01 - but they will both go to
-        bd12.
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          this is to minimise tech debt in maintaining similar question pages. We believe that we can ask the same
-          question, ‘What is your VAT registration number’ to both users that need to add and change their VAT
-          registration numbers.
-        </li>
-      </ul>
-      <li>
-        in keeping with the approach to VAT registration number, on pd01 we added an ‘Add’ link for users that do not
-        have a date of birth on the service, and kept the ‘Change’ link for those that do. Both links will go to pd04
-        Date of birth (add/change)
+        less effort to navigate the fields and submit changes
       </li>
       <li>
-        added variant examples for business telephone numbers, e.g. where the user has added a telephone number, but not
-        a mobile number, to document how this should be displayed on the check page (and when submitted to bd01).
+        less time scan, find and update details
       </li>
       <li>
-        added variant examples for personal telephone numbers, e.g. where the user has added a telephone number, but not
-        a mobile number, to document how this should be displayed on the check page (and when submitted to pd01).
+        less overwhelming for users (currently users are presented with all fields)
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      On starting development for this journey, it was discovered that the system is unable to submit only a singular
+      updated piece of data to the DAL/API. It has to submit ALL the data, including those that have not been updated.
+      This is not an issue for users whose data is all present and valid and they are able to continue with the original
+      happy path.  But for users with any missing or invalid data this causes issues downstream as invalid data is
+      submitted to DAL/API along with the singular updated data. It’s not possible to update the DAL/API at this stage
+      so we needed to redesign the journey itself to accommodate this constraint.
+    </p>
+    <p class="govuk-body">
+      The API/DAL journey is essentially an unhappy path when a user is updating personal or business details and there
+      is some data which is missing or in an incorrect format they also need to fix.
+    </p>
+
+
+    <h2 class="govuk-heading-l">
+      Design approach
+    </h2>
+
+    <h3 class="govuk-heading-m">
+      Mapping journeys
+    </h3>
+
+    <p class="govuk-body">
+      After determining the scale of the issue and understanding  the scenarios at a high level, the SFD design and
+      development teams mapped potential business and personal details journeys to accommodate the DAL/API issue on a <a
+        href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1765188385049/52966f8ac42c31e942ea6d8cb3e4aa57599bb19d?wid=0-1768901582444">Mural
+        board</a>. We looked at when to inform users of needing to ‘uplift’ details i.e. needing to update missing or
+      invalid data, when to uplift and how it happens. These were reviewed together from both a design and dev
+      perspective and formed a solution which aligned with design standards and patterns as much as possible while being
+      technically feasible.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      Prototyping
+    </h3>
+    <p class="govuk-body">
+      Once the journeys for updating and uplifting business and personal details were agreed, we created a <a
+        href="https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/v15-DAL/business-home"> prototype</a> to show
+      these journeys, the contents and the variations. The scenario we prototyped shows what happens when a user has:
+
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        full permissions
       </li>
       <li>
-        there is no managing of permissions as that is out of scope for Buffalo MVP, but users can see pages according
-        to the permission level they have
-      </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          this applies to bp02 (business home) and bd01 (view and update your business details) in terms of what the
-          user can see / have access to from that page
-        </li>
-      </ul>
-      <li>
-        updated mp01 Cookies with results of Cookies audit. Cookie banner content still TBC
+        signed in
       </li>
       <li>
-        created 2 new error pages:
+        selected the business to be updated
       </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          se05 401 Unauthorised, returned to the user if they need to provide or correct authentication details. For
-          example, a user tries to open a link they have favourited after their session has expired, or they provide
-          incorrect or invalid authentication credentials (eg, their password has expired). The user can correct the
-          error by signing in
-        </li>
-        <li>
-          se04 403 Forbidden, returned to the user if they do not have permission to access the requested resource. For
-          example, a user who may have ‘View’ permissions in the service is sent a link to update bank details. The user
-          cannot correct the error. They can ask the business to raise their permissions
-        </li>
-      </ul>
       <li>
-        reviewed existing error pages within our MVP and updated for consistency:
+        wants to update their personal email address
       </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          contact details on error pages use the Contact RPA pattern. Updated for se01. Service unavailable (503/shutter
-          page), se02. Service unavailable (500/service error page) and se03. Page not found (404)
-        </li>
-        <li>
-          call to action to sign in to service use a hyperlink to direct users to the sign in page. Updated for se05 401
-          Unauthorised, mp06 Auto signed out and mp07 Signed out
-        </li>
-      </ul>
       <li>
-        reviewed the misc pages for our MVP (mp00), where we have:
+        and has missing or invalid data to 'uplift' (unknown to the user)
       </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          removed mp08 terms and conditions - confirmed as not needed for our initial launch
-        </li>
-        <li>
-          removed mp04 privacy policy - confirmed that we will launch linking to the Personal information charter for
-          our initial launch
-        </li>
-        <li>
-          no action for now on the accessibility statement
-        </li>
-        <li>
-          prototyped an auto-sign out warning page (mp07)
-        </li>
-      </ul>
-      <li>reviewed the navigation within our MVP, where we have: </li>
-      <ul class="govuk-list--bullet govuk-list">
-        <li>
-          removed ‘cancel’ links from any change and check pages within the view and update your business or personal
-          details journeys. ‘Change’ and ‘back’ links remain as in previous versions of the prototype.
-        </li>
-        <li>
-          removed the ‘home’ breadcrumb from bd01 and pd01, and replaced it with ‘back’ links to take the user to the
-          relevant previous page they came from (e.g. for pd01, they could come from bp01 or bp02)
-        </li>
-        <li>
-          updated the heading for pd01 by adding a heading caption to display the user’s full name, and removed the sub
-          header banner that was displaying the selected business information (this is because the user would not
-          necessarily have come to this page from a selected business)
-        </li>
-        <li>because of our integration with Defra ID for signing in users, bp01 will be built by their team and used by other services. This means that we cannot customise this page, and we have therefore removed the link to 'View personal details'</li>
-      </ul>
+    </ul>
+
+    <p class="govuk-body">
+      Variations for the business details pages include when a user has:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        amend permissions
+      </li>
+      <li>
+        view permissions
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      With details of content variations for the interruption page contained within the design spec.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Design constraints
+    </h2>
+
+    <p class="govuk-body">
+      During the design phase, we uncovered several constraints due to technical complexity or time which could be
+      iterated on in the future. These include:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        not showing individual fields to update sequentially on separate pages
+      </li>
+      <li>
+        not pulling through the stored address on the edit page
+      </li>
+      <li>
+        not using the postcode look up feature
+
+      </li>
     </ul>
 
 
+
+    <h2 class="govuk-heading-l">
+      What we designed
+    </h2>
+
+    <h3 class="govuk-heading-m">
+      Update personal details journey
+    </h3>
+
+    <p class="govuk-body">
+      The ‘update personal details’ journey covers all user permission levels since every user has permission to edit
+      their own details.
+    </p>
+
+
+    <p class="govuk-body">
+      We designed an ‘interruption’ page the user sees if they are trying to update any of their details, but any
+      details need fixing due to being missing or incorrect. This advises them that ‘Some of your details seem to be
+      missing or incorrect. We need these details to contact you, or to verify your identity if you phone us.’ The user
+      is then asked to fix any missing details at the same time as they update the detail they initially chose.
+    </p>
+    
+
+
+    <p class="govuk-body">
+      If the user chooses to update the only thing that needs an uplift, they follow the existing MVP (the happy path).
+    </p>
+    <p class="govuk-body">
+      If there is only one thing to uplift (in addition to the thing the user wants to update), we have a single
+      sentence, like ‘We will ask you to update [your date of birth / your personal address / at least one personal
+      phone number] as well as [your personal email address].’
+    </p>
+    <p class="govuk-body">
+      If there are 2 or more things to uplift (in addition to the thing the user wants to update), we dynamically play
+      back the user's selected field for update in the intro line, followed by bullet pointed field(s) for the things
+      they need to uplift. For example:
+    </p>
+    <p class="govuk-body">
+      We will ask you to update these details as well as your personal email address:
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        date of birth
+      </li>
+      <li>
+        personal address
+      </li>
+      <li>
+        at least one personal phone number
+      </li>
+    </ul>
+     <p class="govuk-body">
+      We display the fields for uplift in the same order they display on pd01.
+   </p>
+    <img src="/public/images/design-history/v15-DAL/personal-interrupter.png" alt="screenshot of the personal details interrupter page"  class="design-history">
+
+    </p>
+
+    <p class="govuk-body">
+           The user then fills in a form containing all update and uplift details in the same order as on pd01.
+      Anything that they want to update (not uplift) is pre-populated.
+    </p>
+    <p class="govuk-body">
+      For uplift, address and date of birth are not pre-populated (will be blank), while phone number and email are
+      pre-populated.
+
+        <img src="/public/images/design-history/v15-DAL/personal-edit.png" alt="screenshot of the personal details edit page"  class="design-history">
+
+    </p>
+    <p class="govuk-body">
+      We use existing validation error messages.
+    </p>
+    <p class="govuk-body">
+        <img src="/public/images/design-history/v15-DAL/personal-check.png" alt="screenshot of the personal details check your details page"  class="design-history">
+
+      Once the user submits the changes, they see a success banner that displays the user's selected field for update as
+      the first bullet point, then any fields for uplift as following bullets in the same order they appear in pd01.
+     <img src="/public/images/design-history/v15-DAL/personal-success.png" alt="screenshot of the personal details page with a success confirmation banner"  class="design-history">
+
+    </p>
+    <p class="govuk-body">
+
+    </p>
+    <h3 class="govuk-heading-m">
+      Update business details journey, including lower permission variants
+    </h3>
+
+    <p class="govuk-body">
+      The ‘update business details’ journey works in the same way, but the default covers only the highest 2 permission
+      levels: users with full or legal permission.
+     <img src="/public/images/design-history/v15-DAL/biz-interrupter.png" alt="screenshot of the business interrupter page for a user with full permissions"  class="design-history">
+
+    </p>
+
+    <p class="govuk-body">
+      For a user with ‘amend’ permission, there is a slight variation because they cannot uplift a business name. If the
+      business name needs uplifting (which is unlikely but technically possible), these users will see a unique
+      interrupter page explaining the business name needs fixing as it’s too long, but they do not have permission to
+      change it, and need to get this changed by someone with permission, before they can update any details.
+    <img src="/public/images/design-history/v15-DAL/biz-interrupter-amend.png" alt="screenshot of the business interrupter page for a user with amend permissions"  class="design-history">
+
+    </p>
+    <p class="govuk-body">
+      If an ‘amend’ user does not need to uplift the business name, they would see the same journey as the higher
+      permissions users, but with no 'change' link next to ‘business name’ and this would not be editable as they cannot update or uplift business name.
+<img src="/public/images/design-history/v15-DAL/biz-details-amend.png" alt="screenshot of the business details page for a user with amend permissions"  class="design-history">
+<img src="/public/images/design-history/v15-DAL/biz-edit-amend.png" alt="screenshot of the business edit details page for a user with amend permissions"  class="design-history">
+<img src="/public/images/design-history/v15-DAL/biz-check-amend.png" alt="screenshot of the business check changes page for a user with amend permissions"  class="design-history">
+
+    </p>
+    <p class="govuk-body">
+      A ‘view only’ user sees the ‘view’ only variant of the business details page we already designed for MVP, as they
+      cannot update or uplift anything.
+   <img src="/public/images/design-history/v15-DAL/biz-details-view.png" alt="screenshot of the business interrupter page for a user with view-only permissions"  class="design-history">
+
+    </p>
+
+
+    <h3 class="govuk-heading-m">
+      Internal user journey
+    </h3>
+
+    <p class="govuk-body">
+      We currently think the internal highest permission user views should mirror the external views and won't need any
+      variations - as a high permission internal user will be able to update any details.
+    </p>
+    <p class="govuk-body">
+      Lower internal permission screens would need to be explored in due course once we design for lower internal
+      permissions in future - this is not currently in scope.
+    </p>
+
   </div>
 
-  <!-- right third of page to link to relevant mural boards and UR findings -->
-  <div class="govuk-grid-column-one-third">
-
-  </div>
-</div>
-
-{% endblock %}
+  {% endblock %}
