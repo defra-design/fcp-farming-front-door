@@ -1692,7 +1692,7 @@ router.post('/startRoute', function (req, res) {
   else (variabledetails == "LFSStartPage")
   {
     // Send user to LFS start page
-    res.redirect('AHWP/AHWP-LFS-start')
+    res.redirect('AHWP-v2/AHWP-apply-guidance-start')
   }
 
 });
