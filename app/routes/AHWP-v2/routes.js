@@ -1727,4 +1727,25 @@ router.post('/updated-email-answer', function (req, res) {
 //});
 
 
+// Run this code when user has chosen a start page from the index page
+router.post('/startRoute-v2', function (req, res) {
+
+  // Make a variable and give it the value from 'how-many-balls'
+  var variabledetails = req.session.data['whereToStart-v2']
+ 
+  // Check whether the variable matches a condition
+  if (variabledetails == "IAHWStartPage"){
+    // Send user to IAHW start page
+    res.redirect('AHWP-v2/AHWP-apply-guidance-start')
+  }
+
+  else 
+  {
+
+    res.redirect('AHWP-v2/AHWP-apply-guidance-start')
+  }
+
+});
+
+
 }
