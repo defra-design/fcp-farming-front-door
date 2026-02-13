@@ -1,0 +1,161 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">MVP</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Design history</span>
+      MVP prototype
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <h2 class="govuk-heading-l">
+      Design changes
+    </h2>
+
+    <p class="govuk-body">
+      This is the version being developed for Buffalo MVP, based on version 8 and some of version 9 of the prototype.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      What’s unique for this version:
+    </h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        updated the service name across the prototype to 'Farm and Land Service'
+      </li>
+      <li>removed bank details from internal and external journeys as this is not in scope for Buffalo MVP</li>
+      <li>
+        removed bd13 VAT registration number (add) - business details. We will keep the ‘Change’ link for businesses
+        that have a VAT registration number and ‘Add’ for businesses that do not, on bd01 - but they will both go to
+        bd12.
+      </li>
+      <ul class="govuk-list--bullet govuk-list">
+        <li>
+          this is to minimise tech debt in maintaining similar question pages. We believe that we can ask the same
+          question, ‘What is your VAT registration number’ to both users that need to add and change their VAT
+          registration numbers.
+        </li>
+      </ul>
+      <li>
+        in keeping with the approach to VAT registration number, on pd01 we added an ‘Add’ link for users that do not
+        have a date of birth on the service, and kept the ‘Change’ link for those that do. Both links will go to pd04
+        Date of birth (add/change)
+      </li>
+      <li>
+        added variant examples for business telephone numbers, e.g. where the user has added a telephone number, but not
+        a mobile number, to document how this should be displayed on the check page (and when submitted to bd01).
+      </li>
+      <li>
+        added variant examples for personal telephone numbers, e.g. where the user has added a telephone number, but not
+        a mobile number, to document how this should be displayed on the check page (and when submitted to pd01).
+      </li>
+      <li>
+        there is no managing of permissions as that is out of scope for Buffalo MVP, but users can see pages according
+        to the permission level they have
+      </li>
+      <ul class="govuk-list--bullet govuk-list">
+        <li>
+          this applies to bp02 (business home) and bd01 (view and update your business details) in terms of what the
+          user can see / have access to from that page
+        </li>
+      </ul>
+      <li>
+        updated mp01 Cookies with results of Cookies audit. Cookie banner content still TBC
+      </li>
+      <li>
+        created 2 new error pages:
+      </li>
+      <ul class="govuk-list--bullet govuk-list">
+        <li>
+          se05 401 Unauthorised, returned to the user if they need to provide or correct authentication details. For
+          example, a user tries to open a link they have favourited after their session has expired, or they provide
+          incorrect or invalid authentication credentials (eg, their password has expired). The user can correct the
+          error by signing in
+        </li>
+        <li>
+          se04 403 Forbidden, returned to the user if they do not have permission to access the requested resource. For
+          example, a user who may have ‘View’ permissions in the service is sent a link to update bank details. The user
+          cannot correct the error. They can ask the business to raise their permissions
+        </li>
+      </ul>
+      <li>
+        reviewed existing error pages within our MVP and updated for consistency:
+      </li>
+      <ul class="govuk-list--bullet govuk-list">
+        <li>
+          contact details on error pages use the Contact RPA pattern. Updated for se01. Service unavailable (503/shutter
+          page), se02. Service unavailable (500/service error page) and se03. Page not found (404)
+        </li>
+        <li>
+          call to action to sign in to service use a hyperlink to direct users to the sign in page. Updated for se05 401
+          Unauthorised, mp06 Auto signed out and mp07 Signed out
+        </li>
+      </ul>
+      <li>
+        reviewed the misc pages for our MVP (mp00), where we have:
+      </li>
+      <ul class="govuk-list--bullet govuk-list">
+        <li>
+          removed mp08 terms and conditions - confirmed as not needed for our initial launch
+        </li>
+        <li>
+          removed mp04 privacy policy - confirmed that we will launch linking to the Personal information charter for
+          our initial launch
+        </li>
+        <li>
+          no action for now on the accessibility statement
+        </li>
+        <li>
+          prototyped an auto-sign out warning page (mp07)
+        </li>
+      </ul>
+      <li>reviewed the navigation within our MVP, where we have: </li>
+      <ul class="govuk-list--bullet govuk-list">
+        <li>
+          removed ‘cancel’ links from any change and check pages within the view and update your business or personal
+          details journeys. ‘Change’ and ‘back’ links remain as in previous versions of the prototype.
+        </li>
+        <li>
+          removed the ‘home’ breadcrumb from bd01 and pd01, and replaced it with ‘back’ links to take the user to the
+          relevant previous page they came from (e.g. for pd01, they could come from bp01 or bp02)
+        </li>
+        <li>
+          updated the heading for pd01 by adding a heading caption to display the user’s full name, and removed the sub
+          header banner that was displaying the selected business information (this is because the user would not
+          necessarily have come to this page from a selected business)
+        </li>
+        <li>because of our integration with Defra ID for signing in users, bp01 will be built by their team and used by other services. This means that we cannot customise this page, and we have therefore removed the link to 'View personal details'</li>
+      </ul>
+    </ul>
+
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
