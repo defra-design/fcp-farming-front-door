@@ -1,0 +1,163 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% set _showDefraIDFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName="Confirm your details" %}
+
+{% set serviceName = "Farm Payments" %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3a.html" %}
+{% else %}
+{% include "_common/login-nav-internal-a.html" %}
+{% endif %}
+
+{% endblock %}
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">
+            Confirm your details
+        </h1>
+
+        <p class="govuk-body">
+            If your details are not correct you need to update them before you apply.
+        </p>
+
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Full name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{myData.namePers}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Business name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{myData.nameBus}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{myData.address1Bus}}<br>
+                    {% if myData.address2Bus != "" %}{{myData.address2Bus}}<br>{% endif %}
+                    {% if data['address3Bus'] %}{{data['address3Bus']}}<br>
+                    {% else %}
+                    {% endif %}
+                    {{myData.addressCityBus}}<br>
+                    {% if myData.addressCountyBus != "" %}{{myData.addressCountyBus}}<br>{% endif %}
+                    {% if myData.addressPostcodeBus != "" %}{{myData.addressPostcodeBus}}<br>{% endif %}
+                    {{myData.addressCountryBus}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Business phone numbers
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Telephone:
+                    {% if myData.telNumberBus == "" %}
+                    <span style="color:#505a5f">Not added</span>
+                    {% else %}
+                    {{myData.telNumberBus}}
+                    {% endif %}
+                    <br>
+                    Mobile:
+                    {% if myData.mobNumberBus == "" %}
+                    <span style="color:#505a5f">Not added</span>
+                    {% else %}
+                    {{myData.mobNumberBus}}
+                    {% endif %}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Business email address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{myData.emailBus}}
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Single business identifier (SBI)
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{_selectedBusiness.sbiNumber}}
+                </dd>
+            </div>
+        </dl>
+
+
+
+        <!-- radios -->
+
+        <div class="govuk-width-container">
+            <form action="/fp-check-your-details-answer" method="post">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h3 class="govuk-fieldset__heading">
+                                Are these details correct?
+                            </h3>
+                        </legend>
+                        <div class="govuk-radios " data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="fp-correct-details" name="fp-correct-details"
+                                    type="radio" value="yes">
+                                <label class="govuk-label govuk-radios__label" for="fp-correct-details">
+                                    Yes
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="fp-correct-details-2" name="fp-correct-details"
+                                    type="radio" value="no">
+                                <label class="govuk-label govuk-radios__label" for="fp-correct-details-2">
+                                    No, update my details on the Farm and Land Service
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                {{ govukButton({
+                text: "Continue"
+                }) }}
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            If you need help
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                    </div>
+                </details>
+
+
+
+        </div>
+
+    </div>
+
+    {% endblock %}

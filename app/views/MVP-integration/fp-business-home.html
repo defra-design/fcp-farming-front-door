@@ -1,0 +1,155 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "Your business" %}
+{% set serviceName = "Farm and Land Service" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "SFD Home/Business Page",
+"id": "bp02",
+"url": "business-home?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "SFD Home/Business Page (full and legal permissions - default)",
+"url": "business-home?r=t&release=b1&permissionsMVP=full"
+},
+{
+"name": "SFD Home/Business Page (amend permissions)",
+"url": "business-home?r=t&release=b1&permissionsMVP=amend"
+},
+{
+"name": "SFD Home/Business Page (view permissions)",
+"url": "business-home?r=t&release=b1&permissionsMVP=view"
+}
+
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+],
+"notes": [
+"Conditional link text: the visible link text for 'View and update your business details' should change according to the
+permission level. See variants. Note that full, legal and amend permissions have the same link text."
+
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    {% if data.release == "b1" %}
+    {% set _hideAccountLink = true %}
+    {% endif %}
+    {% include "_common/login-nav-2.html" %}
+
+    <a class="govuk-back-link" href="fp-business-picker">Choose another business</a>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">Alfred Waldron<br></span>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+      Agile Farm Ltd
+    </h1>
+    <p class="govuk-caption-m govuk-!-margin-bottom-7">Single business identifier (SBI): 123456789
+    </p>
+
+  </div>
+</div>
+
+<h2 class="govuk-heading-m">
+  Apply for schemes and grants
+</h2>
+
+<!--card-->
+<div class="gem-c-cards" style="margin-left: -15px;">
+  <div class="govuk-grid-column-two-thirds">
+    <ul class="gem-c-cards__list gem-c-cards__list-cards">
+      <li class="gem-c-cards__list-item-variant">
+
+        <div class="gem-c-cards__list-item-wrapper-variant">
+
+          <h3 class="govuk-heading-s">
+            Farm Payments Technical Test
+          </h3>
+          <p class="govuk-body">
+            <strong class="govuk-tag">
+            In progress
+          </strong> 
+          </p>         
+          <a href="fp-check-your-details" class="govuk-link govuk-link--no-visited-state">
+              Continue application
+          </a>
+        </div>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+<!---->
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+
+
+    <h3 class="govuk-heading-m">
+      Business details
+    </h3>
+    {% if data.permissionsMVP == "view" %}
+    <p><a class="govuk-link--no-visited-state" href="details-business-details">View your business details</a></p>
+    {% elif data.permissionsMVP == "amend" %}
+    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a>
+    </p>
+    {% else %}
+    <p><a class="govuk-link--no-visited-state" href="details-business-details">View and update your business details</a>
+    </p>
+    {% endif %}
+
+    <h3 class="govuk-heading-m">
+      Personal details
+    </h3>
+    <p><a class="govuk-link--no-visited-state" href="details-personal-details">View and update your personal details</a>
+    </p>
+
+
+
+    {% if data.release != "b1" and myData.emmaserrors == "true" %}
+    <p class="govuk-link"><a href="test-page" class="govuk-link">Route to test page</a></p>
+    {% endif %}
+
+
+  </div>
+
+</div>
+
+{% endblock %}

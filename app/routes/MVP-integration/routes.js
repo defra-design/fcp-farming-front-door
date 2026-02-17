@@ -1585,85 +1585,24 @@ module.exports = function (router, _myData) {
 
     });
 
-
-
-
-    //business details - change bank details - CONCEPT VERSIONS // outdated
-    router.get('/' + version + '/business-details-bank-change', function (req, res) {
-        if (req.query.newChange) {
-            req.session.myData.newAddress1Bus = ""
-            req.session.myData.newAddress2Bus = ""
-            req.session.myData.newAddressCityBus = ""
-            req.session.myData.newAddressCountyBus = ""
-            req.session.myData.newAddressPostcodeBus = ""
-        }
-        res.render(version + '/business-details-bank-change', {
+    //MVP-integration - check-your-details
+    router.get('/' + version + '/fp-check-your-details', function (req, res) {
+        res.render(version + '/fp-check-your-details', {
             myData: req.session.myData
         });
     });
-    router.post('/' + version + '/business-details-bank-change', function (req, res) {
 
-        req.session.myData.newBankNameBus = req.body.bankNameBus.trim()
-        req.session.myData.newBankSortBus = req.body.bankSortBus.trim()
-        req.session.myData.newBankAccountBus = req.body.bankAccountBus.trim()
-        req.session.myData.newBankRollBus = req.body.bankRollBus.trim()
+    //MVP-integration - check-your-details-answer
 
-        if (req.session.myData.includeValidation == "false") {
-            req.session.myData.newBankNameBus = req.session.myData.newBankNameBus || req.session.myData.bankNameBus
-            req.session.myData.newBankSortBus = req.session.myData.newBankSortBus || req.session.myData.bankSortBus
-            req.session.myData.newBankAccountBus = req.session.myData.newBankAccountBus || req.session.myData.bankAccountBus
-        }
+    router.post('/fp-check-your-details-answer', function(request, response) {
 
-        if (!req.session.myData.newBankNameBus) {
-            req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.bankNameBus = {
-                "anchor": "bankNameBus",
-                "message": "[error message - blank - bank account name]"
-            }
-        }
-        if (!req.session.myData.newBankSortBus) {
-            req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.bankSortBus = {
-                "anchor": "bankSortBus",
-                "message": "[error message - blank - sort code]"
-            }
-        }
-        if (!req.session.myData.newBankAccountBus) {
-            req.session.myData.validationError = "true"
-            req.session.myData.validationErrors.bankAccountBus = {
-                "anchor": "bankAccountBus",
-                "message": "[error message - blank - account number]"
-            }
-        }
-
-
-        if (req.session.myData.validationError == "true") {
-            res.render(version + '/business-details-bank-change', {
-                myData: req.session.myData
-            });
+        var fpCorrectDetails = request.session.data['fp-correct-details']
+        if (fpCorrectDetails == "no"){
+            response.redirect("/MVP-integration/fp-business-home")
         } else {
-            res.redirect(301, '/' + version + '/business-details-bank-check');
+            response.redirect("/MVP-integration/fp-confirm-eligible")
         }
+    })
 
-    });
-    //business details - check bank details
-    router.get('/' + version + '/business-details-bank-check', function (req, res) {
-        res.render(version + '/business-details-bank-check', {
-            myData: req.session.myData
-        });
-    });
-    router.post('/' + version + '/business-details-bank-check', function (req, res) {
-        req.session.myData.bankNameBus = req.session.myData.newBankNameBus || req.session.myData.bankNameBus
-        req.session.myData.bankSortBus = req.session.myData.newBankSortBus || req.session.myData.bankSortBus
-        req.session.myData.bankAccountBus = req.session.myData.newBankAccountBus || req.session.myData.bankAccountBus
-        req.session.myData.bankRollBus = req.session.myData.newBankRollBus || req.session.myData.bankRollBus
-
-        req.session.myData.newBankNameBus = ""
-        req.session.myData.newBankSortBus = ""
-        req.session.myData.newBankAccountBus = ""
-        req.session.myData.newBankRollBus = ""
-
-        res.redirect(301, '/' + version + '/details-business-details?changed=true&bankchanged=true');
-    });
 
 }
