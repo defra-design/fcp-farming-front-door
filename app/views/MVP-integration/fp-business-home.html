@@ -1,4 +1,4 @@
-{% extends "layouts/main-rebrand.html" %}
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
 
 {% set _showFooterMVPLinks = true %}
 {% set _showReleaseLinks = false %}
@@ -7,45 +7,42 @@
 {% set serviceName = "Farm and Land Service" %}
 
 
-{% if data.view == "ext" and data.release != "concept" %}
+{% if data.view == "ext" %}
 
-{% set _showDesignSpec = true %}
-{% set _designSpecData = {
-"status": 'In development',
-"name": "SFD Home/Business Page",
-"id": "bp02",
-"url": "business-home?r=t&release=b1",
-"release": "Buffalo 1.0 MVP",
-"variants": [
-{
-"name": "SFD Home/Business Page (full and legal permissions - default)",
-"url": "business-home?r=t&release=b1&permissionsMVP=full"
-},
-{
-"name": "SFD Home/Business Page (amend permissions)",
-"url": "business-home?r=t&release=b1&permissionsMVP=amend"
-},
-{
-"name": "SFD Home/Business Page (view permissions)",
-"url": "business-home?r=t&release=b1&permissionsMVP=view"
-}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In design',
+    "name": "SFD Home/Business Page ",
+    "id": "bp02",
+    "release": "Buffalo MVP 1.1 - SFI integration",
+    "pagetitle": pageName,
+    "pagedesc": "Home page for your business’s schemes and details.",
+    "pageurl": "/business-home-page",
+    "version" : "MVP-integration",
+    "prototypeurl" : "business-design-spec-blank",
 
-],
-
-"pagetitle": pageName,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
-
-],
-"notes": [
-"Conditional link text: the visible link text for 'View and update your business details' should change according to the
-permission level. See variants. Note that full, legal and amend permissions have the same link text."
-
-]
-
-}
-%}
+    "variants": [
+      {
+        "name": "SFI application - in progress (default)",
+        "url": "fp-business-home?r=t&release=b1&permissionsMVP=full",
+        "name": "SFI application - not started",
+        "url": "fp-business-home?r=t&release=b1&permissionsMVP=full&integrationPath=notstarted"
+      }
+      
+    ],
+    "errormessages": [
+      {
+        
+      }
+    ],
+    "notes": [
+      "Conditional link text: the visible link text for 'View and update your business details' should change according to the permission level. See variants. Note that full, legal and amend permissions have the same link text.",
+      "The variant (SFI application - not started) has a link 'Start application. Our current assumption is that this would like off to a start page for Farm Payments Technical Test."
+      
+    ]
+    
+  }
+  %}
 
 {% else %}
 
@@ -98,14 +95,25 @@ permission level. See variants. Note that full, legal and amend permissions have
           <h3 class="govuk-heading-s">
             Farm Payments Technical Test
           </h3>
+          {% if data.integrationPath == "notstarted" %}
+          <p class="govuk-body">
+            <strong class="govuk-tag govuk-tag--grey">
+            Not started
+          </strong> 
+          </p>
+          <a href="#" class="govuk-link govuk-link--no-visited-state">
+              Start application
+          </a>
+          {% else %}
           <p class="govuk-body">
             <strong class="govuk-tag">
             In progress
           </strong> 
-          </p>         
+          </p>
           <a href="fp-check-your-details" class="govuk-link govuk-link--no-visited-state">
               Continue application
           </a>
+          {% endif %}         
         </div>
         </a>
       </li>
