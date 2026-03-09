@@ -6,6 +6,8 @@
 {% set pageName = "Your business" %}
 {% set serviceName = "Farm and Land Service" %}
 
+{% set _selectedBusiness = myData.selectedBusiness %}
+
 
 {% if data.view == "ext" %}
 
@@ -71,7 +73,7 @@
   <div class="govuk-grid-column-two-thirds">
     <span class="govuk-caption-xl">Alfred Waldron<br></span>
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-      Agile Farm Ltd
+      {{myData.nameBus}}
     </h1>
     <p class="govuk-caption-m govuk-!-margin-bottom-7">Single business identifier (SBI): 123456789
     </p>
@@ -100,7 +102,7 @@
             Not started
           </strong> 
           </p>
-          <a href="#" class="govuk-link govuk-link--no-visited-state">
+          <a href="fp-check-your-details" class="govuk-link govuk-link--no-visited-state">
               Start application
           </a>
           {% else %}

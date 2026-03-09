@@ -1604,5 +1604,12 @@ module.exports = function (router, _myData) {
         }
     })
 
+    //MVP-integration - fp-business-home
+    router.get('/' + version + '/fp-business-home', function (req, res) {
+        res.render(version + '/fp-business-home', {
+            myData: req.session.myData
+        });
+    });
+
 
 }
