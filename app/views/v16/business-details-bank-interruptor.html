@@ -1,0 +1,114 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterLinks = false %}
+{% else %}
+{% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Bank declarations" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+{% set _showDesignSpec = true %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Bank declaration (accept) - business details",
+"id": "ba01",
+"url": "business-details-bank-declaration?r=t&view=ext&release=b2",
+"release": "Buffalo 1.1 MVP",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": ""
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Bank declaration (accept) - business details",
+"id": "int-ba01",
+"url": "business-details-bank-declaration?r=t&view=int&release=b2",
+"release": "Buffalo 1.1 MVP",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": ""
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+{% if data.view != "int" %}
+{% include "_common/sub-header.html" %}
+{% endif %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <form action="business-details-bank-country">
+
+      <div class="moj-interruption-card">
+      <div class="moj-interruption-card__content">
+        <h1 class="moj-interruption-card__heading">
+          Payment to an existing bank account
+        </h1>
+        <div class="moj-interruption-card__body">
+          <p>
+            Some schemes by the Rural Payments Agency (RPA) may schedule payments up to 30 days in advance. You may be paid to the bank account details previously held for this business if you update your details after a payment has been scheduled.
+          </p>
+          <p>
+            RPA is not responsible for any payments made a bank account details previously registered to your business. If payment is made to an old account, it is your responsibility, or that of any other named person on the account, to recover the money.
+          </p>
+        </div>
+        <div class="govuk-button-group moj-interruption-card__actions">
+          <button type="submit" class="govuk-button govuk-button--inverse" data-module="govuk-button">
+            Update bank details
+          </button>
+          <a class="govuk-link govuk-link--inverse" href="details-business-details" style="color: #ffffff ">
+            Cancel and return to business details
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
