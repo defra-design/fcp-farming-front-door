@@ -105,47 +105,53 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    
 
-    {% if _inError %}
-    <div class="govuk-error-summary" data-module="govuk-error-summary">
-      <div role="alert">
-        <h2 class="govuk-error-summary__title">
-          There is a problem
-        </h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            {% for name, item in myData.validationErrors %}
-            <li>
-              <a href="#{{item.anchor}}">{{item.message}}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
+    <form method="POST" novalidate action="/v16-validation-return-to-check-2">
+
+      <h1 class="govuk-heading-l">We could not validate your bank account</h1>
+
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          You have 1 attempt left to enter the correct details
+        </strong>
       </div>
-    </div>
-    {% endif %}
 
-    <form method="POST" novalidate action="/validation-return-to-check-2">
-        
-        <h1 class="govuk-heading-l">We could not validate your bank account</h1>
+      <p class="govuk-body">
+        If you enter the wrong details 3 times you will not be able to change your bank account details for 24 hours.
+      </p>
 
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-visually-hidden">Warning</span>
-            You have 1 attempts left to enter the correct details.
-          </strong>
-        </div>
-        {{govukButton({
-          text: "Enter details again"
-        })}}
-        <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
-
-        </div>
+      {{govukButton({
+      text: "Enter details again"
+      })}}
+      <p class="govuk-body"><a href="details-business-details"
+          class="govuk-link govuk-link--no-visited-state">Cancel</a></p>
 
 
     </form>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          If you need help
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>Phone: 03000 200 301
+          <br>
+          <br>Monday to Friday, 8.30am to 5pm, except bank holidays
+        </p>
+        <p><a href="#" class="govuk-link">Find out about call charges (opens in new tab)</a></p>
+
+        <p>Email: <a href="#" class="govuk-link">ruralpayments@defra.gov.uk</a></p>
+
+
+        <p>We aim to respond to emails within 10 working days.</p>
+      </div>
+    </details>
+
+
 
   </div>
 </div>
