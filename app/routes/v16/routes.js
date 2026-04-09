@@ -1799,7 +1799,7 @@ module.exports = function (router, _myData) {
         });
     });
 
-    router.post('/validation-return-to-check-1', function(request, response) {
+    router.post('/v16-validation-return-to-check-1', function(request, response) {
 
         var bankType = request.session.data['bankAccountTypebus']
         var bankCountry = request.session.data['bankCountrybus']
@@ -1826,7 +1826,7 @@ module.exports = function (router, _myData) {
         });
     });
 
-    router.post('/validation-return-to-check-2', function(request, response) {
+    router.post('/v16-validation-return-to-check-2', function(request, response) {
 
         var bankType = request.session.data['bankAccountTypebus']
         var bankCountry = request.session.data['bankCountrybus']
@@ -1856,7 +1856,7 @@ module.exports = function (router, _myData) {
 
     // business details - partial match routing based on radios 
 
-    router.post('/validation-answer', function(request, response) {
+    router.post('/v16-validation-answer', function(request, response) {
         var bankType = request.session.data['bankAccountTypebus']
         var bankCountry = request.session.data['bankCountrybus']
         var validationAnswer = request.session.data['bankAccountPartialMatch']

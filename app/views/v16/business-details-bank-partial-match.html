@@ -114,7 +114,7 @@
     </div>
     {% endif %}
 
-    <form method="POST" novalidate action="/validation-answer">
+    <form method="POST" novalidate action="/v16-validation-answer">
         <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
           <div class="govuk-notification-banner__header">
             <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
@@ -125,13 +125,20 @@
             <p class="govuk-notification-banner__heading">
               The name on the account does not match
             </p>
-            <p>The account details you entered are successfully validated, but the account name you have entered is only a partial match with the name on the account. For example, there may be a slight difference in spelling.</p>
           </div>
         </div>
 
-        <h1 class="govuk-heading-l">Review the account details you entered</h1>
+        <h1 class="govuk-heading-l">
+          Partial match
+        </h1>
 
-        <h2 class="govuk-heading-m">Your bank account or building society details</h2>
+        <p class="govuk-body">
+          The name you entered is only a partial match with the name on the account. For example, there may be a difference in spelling.
+        </p>
+
+        <h2 class="govuk-heading-m">
+          Check the account name you entered is correct
+        </h2>
         <dl class="govuk-summary-list">
           {% if (data['bankCountrybus'] == "European bank account") %}
           <div class="govuk-summary-list__row">
