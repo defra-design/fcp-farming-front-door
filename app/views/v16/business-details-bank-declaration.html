@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
 
 {% if data.view == "int" %}
   {% set _showFooterLinks = false %}
@@ -9,7 +9,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Bank declarations" %}
+{% set pageTitle = "Declaration" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -18,35 +18,59 @@
 
 {% set _showIntExtLinks = true %}
 
-{% set serviceName = "Manage your land and farm businesses" %}
+{% set serviceName = "Farm and Land Service" %}
 
 {% set _showDesignSpec = true %}
 
 {% if data.view == "ext" and data.release != "concept" %}
-  {% set _showDesignSpec = true %}
-  {% set _designSpecData = {
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
     "status": 'In development',
-    "name": "Bank declaration (accept) - business details",
-    "id": "ba01",
-    "url": "business-details-bank-declaration?r=t&view=ext&release=b2",
-    "release": "Buffalo 1.1 MVP",
+    "name": "Declaration - bank details",
+    "id": "ba08",
+    "release": "MVP 1.0",
     "pagetitle": pageName,
-    "pagedesc": "",
-    "pageurl": ""
-  }
+    "pagedesc": "Read the declaration before updating bank details.",
+    "pageurl": "business-bank-declarations",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-declaration",
+
+    "variants": [
+      
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      ""
+      
+    ]
+}
 %}
 
 {% elif data.view == "int" %}
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Bank declaration (accept) - business details",
-    "id": "int-ba01",
-    "url": "business-details-bank-declaration?r=t&view=int&release=b2",
-    "release": "Buffalo 1.1 MVP",
+    "name": "Declaration - bank details",
+    "id": "ba08",
+    "release": "MVP 1.0",
     "pagetitle": pageName,
-    "pagedesc": "",
-    "pageurl": ""
+    "pagedesc": "Read the declaration before updating bank details.",
+    "pageurl": "business-bank-declarations",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-declaration",
+
+    "variants": [
+      
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      ""
+      
+    ]
   }
 %}
 
