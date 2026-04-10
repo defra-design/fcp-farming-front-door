@@ -1,4 +1,4 @@
-{% extends "layouts/main-rebrand.html" %}
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
 
 {% if data.view == "int" %}
 {% set _showFooterLinks = false %}
@@ -9,7 +9,7 @@
 
 {% set _inError = myData.validationError == "true" %}
 
-{% set pageTitle = "Bank declarations" %}
+{% set pageTitle = "Payment to an existing bank account " %}
 {% set pageName = pageTitle %}
 {% if _inError %}
 {% set pageName = "Error: " + pageTitle %}
@@ -25,14 +25,26 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "Bank declaration (accept) - business details",
-"id": "ba01",
-"url": "business-details-bank-declaration?r=t&view=ext&release=b2",
-"release": "Buffalo 1.1 MVP",
-"pagetitle": pageName,
-"pagedesc": "",
-"pageurl": ""
+    "status": 'In development',
+    "name": "Payment to an existing bank account (interruptor) - bank details",
+    "id": "ba01",
+    "release": "MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "TO DO",
+    "pageurl": "TO DO",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-interruptor",
+
+    "variants": [
+      
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      ""
+      
+    ]
 }
 %}
 
@@ -40,13 +52,25 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": 'In development',
-"name": "Bank declaration (accept) - business details",
-"id": "int-ba01",
-"url": "business-details-bank-declaration?r=t&view=int&release=b2",
-"release": "Buffalo 1.1 MVP",
-"pagetitle": pageName,
-"pagedesc": "",
-"pageurl": ""
+    "name": "Payment to an existing bank account (interruptor) - bank details",
+    "id": "int-ba01",
+    "release": "MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "TO DO",
+    "pageurl": "TO DO",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-interruptor",
+
+    "variants": [
+      
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      ""
+      
+    ]
 }
 %}
 

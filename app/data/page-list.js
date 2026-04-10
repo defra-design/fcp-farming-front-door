@@ -336,9 +336,9 @@ module.exports = [
   },
   {
     "pageid": "ba01",
-    "pagename": "Bank declaration (accept) - business details",
-    "pageurl": "business-bank-declarations",
-    "pagedesc": "Read declarations before updating bank details."
+    "pagename": " Payment to an existing bank account (interruptor) - business details",
+    "pageurl": "business-details-bank-interruptor",
+    "pagedesc": "TO DO"
   },
   {
     "pageid": "ba02",
@@ -913,9 +913,9 @@ module.exports = [
   },
   {
     "pageid": "int-ba01",
-    "pagename": "Bank declaration (accept) - business details",
-    "pageurl": "business-bank-declarations",
-    "pagedesc": "Read declarations before updating bank details."
+    "pagename": " Payment to an existing bank account (interruptor) - business details",
+    "pageurl": "business-bank-bank-interruptor",
+    "pagedesc": "TO DO"
   },
   {
     "pageid": "int-ba02",
