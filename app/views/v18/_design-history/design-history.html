@@ -1,0 +1,306 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">V17</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Design history</span>
+      Integrating with Farm Payments Technical Test
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <p class="govuk-body">
+      For our private beta we plan to trial the first capabilities in the Farm and Land Service (FLS) (update business
+      and personal details) with users of Farm Payments Technical Test (FPTT), also in private beta.
+    </p>
+
+    <p class="govuk-body">
+      Conversations between the 2 service teams identified 3 potential integration points:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        check your details before you apply
+      </li>
+      <li>agreement offer</li>
+      <li>
+        change of circumstance during an agreement
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      Of the 3, we were able to confirm the first route as an immediate priority.
+    </p>
+    <p class="govuk-body">
+      There’s more work to be done to scope out the other 2 integration points. For agreement offer, to understand if
+      there’s a genuine user need with the expediency at which an offer is made, and for change of circumstance, to
+      scope out the implications of updating details on a user’s compliance with their agreement.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Constraints
+    </h2>
+    <p class="govuk-body">
+      Integration at the point of need is the holy grail and what we will aspire to in future. For the initial release,
+      the 2 teams agreed it wouldn’t be possible in the timeframe. We will instead revisit the journeys we designed and
+      tested with another service, where we looked at how users might move between FLS and get funding to improve animal
+      health and welfare (documented in <a href="../../AHWP/_design-history/design-history">design history v1</a> and <a
+        href="../../AHWP-v2/_design-history/design-history">design history v1.1</a> ).
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Pain points and user needs
+    </h2>
+
+    <p class="govuk-body">As with previous integration work, we’re looking to meet the following user need:</p>
+    <p class="govuk-body">“As a farmer or land manager,<br>I need one place where I can get and manage funding,<br>So
+      that I do not waste time going to different places.”</p>
+
+    <h2 class="govuk-heading-l">
+      Design approach
+    </h2>
+
+    <p class="govuk-body">
+      There are 2 scenarios where we envisage users will need to check and update their details.
+    </p>
+    <p class="govuk-body">
+      Scenario 1 is prior to the application journey. The user receives an email with the actions they need to take
+      before starting an application. Checking and updating details in FLS is one step in the task list.
+    </p>
+
+    <img src="/public/images/design-history/v17/scenario-1.webp"
+      alt="Diagram showing the journeys within Scenario 1: a user updates details before starting application" class="design-history">
+
+    <p class="govuk-body">
+      Scenario 2 is part of the SFI application. The user starts an application and is prompted to check and confirm
+      their details within the FPTT journey. The user is pointed to FLS if any details are incorrect.
+    </p>
+
+    <img src="/public/images/design-history/v17/scenario-2.webp"
+      alt="Diagram showing the journeys within Scenario 2: a user updates details as part of their application" class="design-history">
+
+    <p class="govuk-body">There are no plans currently to test the integration journeys. We will look to test again as
+      the cohort of users expands.</p>
+
+    <h2 class="govuk-heading-l">
+      What we designed
+    </h2>
+
+    <p class="govuk-body">
+      The 2 scenarios share some pages, with some differences in flows and page content.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      Scenario 1
+    </h3>
+
+    <p class="govuk-body">
+      We have <a
+        href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1765188385049/52966f8ac42c31e942ea6d8cb3e4aa57599bb19d?wid=0-1772620828753"
+        target="_blank">captured the scenario 1 journey in Mural</a> (opens in new tab).
+    </p>
+
+    <p class="govuk-body">
+      Using email as the invitation mechanism, the user is prompted to check their details before starting an FPTT
+      application. Clicking on the link, ‘Update details in the Farm and Land Service’, takes the user to the FLS start
+      page.
+    </p>
+
+    <p class="govuk-body">
+      A couple of things to note about our start page that have evolved from earlier designs. First, that it only very
+      briefly sets the context of what people can use the service for before the green start button. We’ve kept this
+      intentionally short – we know from previous research that some users want only minimal information and are keen to
+      get on with the task.
+    </p>
+
+    <p class="govuk-body">
+      Second, is that beneath the green button we have an expanded narrative of FLS’s ambition. We’ve done this to
+      address confusion from some users in the last round of integration testing, with one commenting that they
+      understood FLS to be a rebrand of the Rural Payments service (RPs). The new guidance confirms that FLS will
+      replace RPs, but above and beyond this it will create a single place for any interactions with the government
+      about the user’s farm or land.
+    </p>
+
+    <img class="design-history" src="/public/images/design-history/v17/fls-start-page.webp"
+      alt="Screenshot of the prototyped Farm and Land Service start page">
+
+    <p class="govuk-body">
+      From the FLS start page, the user signs in to FLS and chooses their business through the Defra ID screens. They
+      will then come to bp02 SFD business home page, which features a number of enhancements:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        made headings active and more targeted – ‘Apply for schemes and grants’ to differentiate between applications
+        and active funding and agreements
+      </li>
+      <li>
+        implemented the <a href="https://design-system.service.gov.uk/components/tag/" target="_blank">Tag – GOV.UK
+          Design System</a> (opens in new tab) component to mark the status progress of the application as ‘Not started’
+      </li>
+      <li>
+        added a hyperlink with descriptive text, ‘Start application, within the FPTT signpost
+      </li>
+      <li>
+        improved the link text to bp01 your businesses list – ‘Choose another business’ – to more accurately describe
+        the link location, with some users in earlier integration testing incorrectly thinking this link would return
+        them to the other service
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      The user then checks and updates their details before navigating back to bp02 SFD business home page via the back
+      link, ‘Back to [business name]’.
+    </p>
+
+    <p class="govuk-body">
+      We tested 2 iterations of this return journey in our 2 rounds of IAHW user research:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        Back to Agile Farm Ltd
+      </li>
+      <li>
+        Back to business overview
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      In the first iteration, all users selected the correct link, with only one showing some hesitation before doing
+      so. There was more hesitation and vocalised confusion when we tested again with the second iteration. As we now
+      have the feasibility of the first link confirmed with our technical team, in these designs we’ve reverted to ‘Back
+      to [business name]’.
+    </p>
+
+    <p class="govuk-body">
+      Returning to bp02 SFD business home page, the user will then click within the FPTT signpost to ‘Start application,
+      to start the FPTT journey. They do not need to sign in again.
+    </p>
+
+    <h3 class="govuk-heading-m">
+      Scenario 2
+    </h3>
+
+    <p class="govuk-body">
+     We have also <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1765188385049/52966f8ac42c31e942ea6d8cb3e4aa57599bb19d?wid=15-1770735032675" class="govuk-link" rel="noreferrer noopener" target="_blank" >mapped the scenario 2 journey in Mural (opens in new tab)</a>.
+    </p>
+
+    <p class="govuk-body">
+      The user has already signed in and started their FPTT application. The first screen they encounter asks them to
+      confirm their details to continue their application.
+    </p>
+
+    <p class="govuk-body">
+      We’ve looked to improve this page by:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        adding introductory text beneath the H1, ‘If your details are not correct you need to update them before you
+        apply’
+      </li>
+      <li>
+        making naming consistent with FLS
+      </li>
+      <li>
+        reordering information to align with FLS
+      </li>
+      <li>
+        adding a H2 as a call to action, ‘Are these details correct?’
+      </li>
+      <li>
+        using stacked radio buttons to invite the user to actively confirm that their details are correct
+      </li>
+      <li>
+        explicitly stating where the ‘no’ radio button will take the user – to FLS to start the journey of updating
+        details
+      </li>
+      <li>
+        retaining the assisted digital route for those who would prefer to update details offline, with contact details
+        provided in the <a href="https://design-system.service.gov.uk/components/details/" target="_blank">Details –
+          GOV.UK Design System</a> (opens in new tab) component
+      </li>
+    </ul>
+
+    <img class="design-history" src="/public/images/design-history/v17/check-details.webp"
+      alt="Screenshot of the prototyped FPTT check your details page">
+
+    <p class="govuk-body">
+      Selecting ‘no’ in this journey takes the user directly to FLS bp02 SFD business home page (they do not need to
+      sign in). In this scenario, the page has:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        headings that are active and targeted – ‘Apply for schemes and grants’
+      </li>
+      <li>
+        the <a href="https://design-system.service.gov.uk/components/tag/" target="_blank">Tag – GOV.UK Design
+          System</a> component, which marks the status progress of the application as ‘In progress’
+      </li>
+      <li>
+        a hyperlink with descriptive text, ‘Continue application, within the FPTT signpost
+      </li>
+      <li>
+        the link text to bp01 your businesses list as ‘Choose another business’
+      </li>
+    </ul>
+
+    <img class="design-history" src="/public/images/design-history/v17/business-home.webp"
+      alt="Screenshot of the prototyped FLS business home page">
+
+    <p class="govuk-body">
+      The user selects and updates the details that are incorrect. Once completed, they navigate back to bp02 SFD business home page via ‘Back to [business name]’.
+    </p>
+
+    <p class="govuk-body">
+      This time on bp02 SFD business home page, as the user has started their application, they select ‘Continue application’. They are then returned to the FPTT page to confirm their details. The updated details will pull through to FPTT, with the user able to select ‘yes’ and resume their application.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      Next steps
+    </h2>
+
+    <p class="govuk-body">
+      Delivering the integration is dependent on close alignment between FPTT and SFD teams. As a priority we will identify: 
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        all the work needed to deliver the integration
+      </li>
+      <li>
+        any unknowns and dependencies
+      </li>
+    </ul>
+
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}

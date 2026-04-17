@@ -1,0 +1,263 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set _pageID = "" %}
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set _includeServiceNavigation = "false" %}
+{% set _paymentsServiceNavigationActive = true %}
+
+{% set pageName = "Your business's payments" %}
+{% set serviceName="Farm and Land Service" %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  {% include "_common/sub-header.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% include "_common/login-nav-3a.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        Your business's payments
+      </h1>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-tabs" >
+        <ul class="govuk-tabs__list--payments" role="tablist">
+          <li class="govuk-tabs__list-item--payments govuk-tabs__list-item--payments-selected">
+            <a class="govuk-tabs__tab--payments govuk-link--no-visited-state" href="business-payments" role="tab" aria-selected="true">Upcoming <span class="govuk-visually-hidden">payments</span></a>
+          </li>
+          <li class="govuk-tabs__list-item--payments">
+            <a class="govuk-tabs__tab--payments govuk-link--no-visited-state" href="business-payments-prev?selectedPaymentYear={{data.defaultSelectedPaymentYear}}" role="tab" aria-selected="false">Past <span class="govuk-visually-hidden">payments</span></a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- UPCOMING PAYMENTS CONTENT -->
+      <div class="callout-box " >
+        <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
+          Next monthly payment
+        </p>
+        <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-2">
+          <strong>{{data.paymentsUpcoming[0].date}}</strong>
+        </p>
+        <p class="govuk-body callout-box-l-content govuk-!-margin-bottom-3">
+          <strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong>
+        </p>
+
+        <p class="govuk-body govuk-!-margin-bottom-2">
+          This is your total Defra funding for {{data.paymentsUpcoming[0].period}}. 
+        </p>
+        <p class="govuk-body govuk-!-margin-bottom-2">
+          The payment will be in your bank account ending 9276 within 2 working days of {{data.paymentsUpcoming[0].date}}. 
+        </p>
+        <p class="govuk-body"> 
+          Payment reference: {{data.paymentsUpcoming[0].reference}}.
+        </p>
+
+        <p class="govuk-body">
+          {% if data.paymentsUpcoming[0].status == "action" %}
+            <strong class="govuk-tag govuk-tag--red">
+              Action needed
+            </strong>
+            {% elif data.paymentsUpcoming[0].status == "expected" %}
+            <strong class="govuk-tag govuk-tag--blue">
+              Planned
+            </strong>
+            {% elif data.paymentsUpcoming[0].status == "confirmed" %}
+            <strong class="govuk-tag govuk-tag--green">
+              Confirmed
+            </strong>
+          {% endif %}
+        </p>
+
+        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-payments-detail?payment={{data.paymentsUpcoming[0].id}}">View details<span class="govuk-visually-hidden"> for payment on {{data.paymentsUpcoming[0].date}}</span></a></p>
+        
+      </div>
+
+      <table class="govuk-table govuk-!-margin-bottom-8">
+        <!-- <caption class="govuk-table__caption govuk-table__caption--s">Breakdown of payment</caption> -->
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Next payment overview</th>
+            <th scope="col" class="govuk-table__header govuk-table__cell--numeric">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+
+          {% for _itemGroup in data.paymentsUpcoming[0].itemGroups %}
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__cell">{{_itemGroup.name}}{% if _itemGroup.count > 1 %} ({{_itemGroup.count}} items){% endif %}</th>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+                {{_itemGroup.amount | currency(trailingZeros=false) }}
+              </td>
+            </tr>
+          {% endfor %}
+
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">Total</th>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <!-- <table class="govuk-table govuk-!-margin-bottom-8">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Next payment overview</th>
+            <th scope="col" class="govuk-table__header govuk-table__cell--numeric">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+
+          {% for _item in data.paymentsUpcoming[0].items %}
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__cell">{{_item.description}} ({{_item.scheme}})</th>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+                {{_item.amount | currency(trailingZeros=false) }}
+              </td>
+            </tr>
+          {% endfor %}
+
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">Total</th>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{data.paymentsUpcoming[0].total | currency(trailingZeros=false) }}</strong></td>
+          </tr>
+
+        </tbody>
+      </table> -->
+
+      <h3 class="govuk-heading-l govuk-!-margin-bottom-">Other upcoming payments</h3>
+
+      {% for _payment in data.paymentsUpcoming %}
+
+      {% set _status %}
+        {% if _payment.status == "action" %}
+        <strong class="govuk-tag govuk-tag--red">
+          Action needed
+        </strong>
+        {% elif _payment.status == "expected" %}
+        <strong class="govuk-tag govuk-tag--blue">
+          Planned
+        </strong>
+        {% elif _payment.status == "confirmed" %}
+        <strong class="govuk-tag govuk-tag--green">
+          Confirmed
+        </strong>
+        {% endif %}
+      {% endset %}
+
+      {% if loop.index != 1 %}
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-3">{{_payment.date}} <br>{{_payment.total | currency(trailingZeros=false) }}</h3>
+      <p class="govuk-body govuk-!-margin-bottom-2">
+        For {{_payment.period}}. Payment reference: {{_payment.reference}}. 
+      <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            
+            <p class="govuk-body govuk-!-margin-bottom-3">{{_status|safe}}</p>
+            
+          </dt>
+          <dd class="govuk-summary-list__actions">
+            <p class="govuk-body govuk-!-margin-bottom-0"><a class="govuk-link govuk-link--no-visited-state" href="business-payments-detail?payment={{_payment.id}}">View details<span class="govuk-visually-hidden"> for payment {{_payment.date}}, {{_payment.amount}}</span></a></p>
+            
+          </dd>
+        </div>
+      </dl>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-4">
+
+
+
+      <table class="govuk-table govuk-!-margin-bottom-8">
+        <!-- <caption class="govuk-table__caption govuk-table__caption--s">Breakdown of payment</caption> -->
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Next payment overview</th>
+            <th scope="col" class="govuk-table__header govuk-table__cell--numeric">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+
+          {% for _itemGroup in _payment.itemGroups %}
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__cell">{{_itemGroup.name}}{% if _itemGroup.count > 1 %} ({{_itemGroup.count}} items){% endif %}</th>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+                {{_itemGroup.amount | currency(trailingZeros=false) }}
+              </td>
+            </tr>
+          {% endfor %}
+
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">Total</th>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.total | currency(trailingZeros=false) }}</strong></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <!-- <table class="govuk-table govuk-!-margin-bottom-8">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Next payment overview</th>
+            <th scope="col" class="govuk-table__header govuk-table__cell--numeric">Amount</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+
+          {% for _item in _payment.items %}
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__cell">{{_item.description}} ({{_item.scheme}})</th>
+              <td class="govuk-table__cell govuk-table__cell--numeric">
+                {{_item.amount | currency(trailingZeros=false) }}
+              </td>
+            </tr>
+          {% endfor %}
+
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">Total</th>
+            <td class="govuk-table__cell govuk-table__cell--numeric"><strong>{{_payment.total | currency(trailingZeros=false) }}</strong></td>
+          </tr>
+
+        </tbody>
+      </table> -->
+
+      {% endif %}
+
+      {% endfor %}
+
+    </div>
+  </div>
+
+  
+
+
+
+{% endblock %}
