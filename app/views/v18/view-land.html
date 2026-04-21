@@ -7,32 +7,28 @@
     rebrand: true
   }) }}
 {{ govukServiceNavigation({
-  serviceName: "Land and farm",
+  serviceName: "Farm and Land Service",
   serviceUrl: "#",
   navigation: [
     {
-      href: "",
+      href: "#",
       text: "View land",
       active: true
     },
     {
       href: "#",
-      text: "Transfer land"
+      text: "Register land"
     },
     {
       href: "#",
-      text: "Update land use"
-    },
-    {
-      href: "#",
-      text: "Request rural land changes"
+      text: "Get maps of your land"
     }
   ]
 }) }}
 {% endblock %}
 
 {% block pageTitle %}
-  Land summary – GOV.UK Prototype Kit
+  View land – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block head %}
@@ -123,11 +119,9 @@
     height: 100% !important;
   }
 
-  /* DEFRA's "Map view" button (shown on mobile with behaviour: 'hybrid') is
-     inserted as a sibling of #map. Stop the flex row from stretching it. */
-  .app-map-fullscreen > .im-c-open-map-button {
-    align-self: flex-start;
-    margin: 15px;
+  /* DEFRA's "Map view" button — relocated into sidebar via JS */
+  .im-c-open-map-button {
+    margin: 0 0 15px;
   }
 
   /* On mobile, the sidebar takes the full viewport width and the inline
@@ -147,13 +141,6 @@
       overflow: hidden;
     }
 
-    .app-map-fullscreen > .im-c-open-map-button {
-      position: absolute;
-      bottom: 15px;
-      left: 15px;
-      z-index: 5;
-      margin: 0;
-    }
   }
 
   #parcel-table-body tr {
@@ -223,6 +210,8 @@
       </tbody>
     </table>
 
+    <div id="map-button-slot"></div>
+
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Land parcels</h2>
     <table class="govuk-table govuk-table--small-text-until-tablet">
       <thead class="govuk-table__head">
@@ -253,7 +242,7 @@
   <script>
     const interact = defra.interactPlugin({
       interactionModes: ['selectFeature'],
-      multiSelect: true,
+      multiSelect: false,
       deselectOnClickOutside: true
     })
 
@@ -339,7 +328,7 @@
         type: 'line',
         source: 'parcels',
         paint: {
-          'line-color': '#B550B5',
+          'line-color': '#1d70b8',
           'line-width': 2
         }
       })
@@ -347,96 +336,99 @@
       interact.enable({
         layers: [{ layerId: 'parcels-fill', idProperty: 'ngc' }]
       })
+
+      // Fit map to parcel bounds
+      let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
+      data.features.forEach(f => {
+        const coords = f.geometry.type === 'MultiPolygon'
+          ? f.geometry.coordinates.flat(2)
+          : f.geometry.coordinates.flat(1)
+        coords.forEach(([lng, lat]) => {
+          if (lng < minLng) minLng = lng
+          if (lat < minLat) minLat = lat
+          if (lng > maxLng) maxLng = lng
+          if (lat > maxLat) maxLat = lat
+        })
+      })
+      map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 50 })
     }
 
-    interactiveMap.on('map:ready', async (e) => {
-      mapInstance = e.map
-      if (!mapInstance) return
+    // Fetch data immediately on page load
+    const sbi = '106332870'
+    const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}&srsname=EPSG:4326&outputFormat=application/json`
+    const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=SBI=${sbi}&srsname=EPSG:4326&outputFormat=application/json`
 
-      // Fetch land parcels and land covers in parallel
-      const sbi = '106332870'
-      const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}&srsname=EPSG:4326&outputFormat=application/json`
-      const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=SBI=${sbi}&srsname=EPSG:4326&outputFormat=application/json`
+    Promise.all([
+      fetch(parcelsUrl).then(r => r.json()),
+      fetch(coversUrl).then(r => r.json())
+    ]).then(([parcelsData, landCoversData]) => {
 
-      try {
-        const [parcelsResponse, coversResponse] = await Promise.all([
-          fetch(parcelsUrl),
-          fetch(coversUrl)
-        ])
+      landParcelsData = parcelsData
 
-        landParcelsData = await parcelsResponse.json()
-        const landCoversData = await coversResponse.json()
+      // Compute ngc (SHEET_ID + PARCEL_ID) for each feature
+      landParcelsData.features.forEach(f => {
+        f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID
+      })
 
-        // Compute ngc (SHEET_ID + PARCEL_ID) for each feature
-        landParcelsData.features.forEach(f => {
-          f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID
+      // Build a lookup of dominant land cover per parcel (largest area)
+      const parcelCovers = {}
+      if (landCoversData && landCoversData.features) {
+        landCoversData.features.forEach(f => {
+          const key = f.properties.SHEET_ID + f.properties.PARCEL_ID
+          const area = parseFloat(f.properties.AREA_HA || 0)
+          if (!parcelCovers[key] || area > parcelCovers[key].area) {
+            parcelCovers[key] = { description: f.properties.DESCRIPTION, area }
+          }
         })
-
-        // Add parcel layers
-        addParcelsToMap(mapInstance, landParcelsData)
-
-        // Fit map to parcel bounds
-        let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
-        landParcelsData.features.forEach(f => {
-          const coords = f.geometry.type === 'MultiPolygon'
-            ? f.geometry.coordinates.flat(2)
-            : f.geometry.coordinates.flat(1)
-          coords.forEach(([lng, lat]) => {
-            if (lng < minLng) minLng = lng
-            if (lat < minLat) minLat = lat
-            if (lng > maxLng) maxLng = lng
-            if (lat > maxLat) maxLat = lat
-          })
-        })
-        mapInstance.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 50 })
-
-        // Build a lookup of dominant land cover per parcel (largest area)
-        const parcelCovers = {}
-        if (landCoversData && landCoversData.features) {
-          landCoversData.features.forEach(f => {
-            const key = f.properties.SHEET_ID + f.properties.PARCEL_ID
-            const area = parseFloat(f.properties.AREA_HA || 0)
-            if (!parcelCovers[key] || area > parcelCovers[key].area) {
-              parcelCovers[key] = { description: f.properties.DESCRIPTION, area }
-            }
-          })
-        }
-
-        // Populate summary table
-        const totalArea = landParcelsData.features.reduce((sum, f) => sum + parseFloat(f.properties.AREA_HA || 0), 0)
-        document.getElementById('summary-parcel-count').textContent = landParcelsData.features.length
-        document.getElementById('summary-total-area').textContent = totalArea.toFixed(2)
-
-        // Build sidebar parcel table
-        const tableBody = document.getElementById('parcel-table-body')
-
-        landParcelsData.features.forEach(f => {
-          const { SHEET_ID, PARCEL_ID, ngc, AREA_HA } = f.properties
-          const dominant = parcelCovers[ngc]
-          const tr = document.createElement('tr')
-          tr.className = 'govuk-table__row'
-          tr.dataset.ngc = ngc
-          tr.innerHTML = `
-            <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
-            <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${parseFloat(AREA_HA).toFixed(4)}</td>
-          `
-          tableBody.appendChild(tr)
-        })
-
-        // Map -> Sidebar: highlight selected parcel row
-        interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
-          const selectedIds = new Set(selectedFeatures.map(f => f.featureId))
-          document.querySelectorAll('#parcel-table-body tr').forEach(tr => {
-            tr.classList.toggle('app-parcel--selected', selectedIds.has(tr.dataset.ngc))
-          })
-        })
-
-      } catch (err) {
-        console.error('Failed to load land parcels:', err)
-        document.getElementById('summary-parcel-count').textContent = '–'
-        document.getElementById('summary-total-area').textContent = '–'
       }
+
+      // Populate summary table
+      const totalArea = landParcelsData.features.reduce((sum, f) => sum + parseFloat(f.properties.AREA_HA || 0), 0)
+      document.getElementById('summary-parcel-count').textContent = landParcelsData.features.length
+      document.getElementById('summary-total-area').textContent = totalArea.toFixed(2)
+
+      // Build sidebar parcel table
+      const tableBody = document.getElementById('parcel-table-body')
+
+      landParcelsData.features.forEach(f => {
+        const { SHEET_ID, PARCEL_ID, ngc, AREA_HA } = f.properties
+        const dominant = parcelCovers[ngc]
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row'
+        tr.dataset.ngc = ngc
+        tr.innerHTML = `
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${parseFloat(AREA_HA).toFixed(4)}</td>
+        `
+        tableBody.appendChild(tr)
+      })
+
+      // If map is already ready, add layers now
+      if (mapInstance) {
+        addParcelsToMap(mapInstance, landParcelsData)
+      }
+
+    }).catch(err => {
+      console.error('Failed to load land parcels:', err)
+      document.getElementById('summary-parcel-count').textContent = '–'
+      document.getElementById('summary-total-area').textContent = '–'
+    })
+
+    // When map becomes ready, add layers if data is already loaded
+    interactiveMap.on('map:ready', (e) => {
+      mapInstance = e.map
+      if (mapInstance && landParcelsData) {
+        addParcelsToMap(mapInstance, landParcelsData)
+      }
+    })
+
+    // Map -> Sidebar: highlight selected parcel row
+    interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
+      const selectedIds = new Set(selectedFeatures.map(f => f.featureId))
+      document.querySelectorAll('#parcel-table-body tr').forEach(tr => {
+        tr.classList.toggle('app-parcel--selected', selectedIds.has(tr.dataset.ngc))
+      })
     })
 
     // Re-add parcel layers after a map style change
@@ -447,6 +439,25 @@
         }
       }, 100)
     })
+
+    // Move the "Map view" button into the sidebar on mobile
+    function moveMapButton() {
+      const btn = document.querySelector('.im-c-open-map-button')
+      const slot = document.getElementById('map-button-slot')
+      if (btn && slot && !slot.contains(btn)) {
+        slot.appendChild(btn)
+        return true
+      }
+      return false
+    }
+
+    // Try immediately, then observe for late insertion
+    if (!moveMapButton()) {
+      const observer = new MutationObserver(() => {
+        if (moveMapButton()) observer.disconnect()
+      })
+      observer.observe(document.getElementById('main-content'), { childList: true, subtree: true })
+    }
 
     // Keep the map sized correctly when the viewport resizes
     window.addEventListener('resize', () => {
