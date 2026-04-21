@@ -26,9 +26,9 @@
     "variants": [
       {
         "name": "SFI application - in progress (default)",
-        "url": "fp-business-home?r=t&release=b1&permissionsMVP=full",
-        "name": "SFI application - not started (not yet confirmed for March private beta)",
-        "url": "fp-business-home?r=t&release=b1&permissionsMVP=full&integrationPath=notstarted"
+        "url": "fp-business-home?r=t&release=b1&permissionsMVP=full&integrationPath=null",
+        "name": "Multiple grant tiles",
+        "url": "fp-business-home?r=t&release=b1&permissionsMVP=full&integrationPath=multiple"
       }
       
     ],
@@ -102,7 +102,34 @@
         </div>
         </a>
       </li>
+      {% if data.integrationPath == "multiple" %}
+      <li class="gem-c-cards__list-item-variant">
 
+        <div class="gem-c-cards__list-item-wrapper-variant">
+
+          <h3 class="govuk-heading-s">
+            Further Farm Payments Technical Test 2
+          </h3>
+          <a href="fp-check-your-details" class="govuk-link govuk-link--no-visited-state">
+              Go to application
+          </a>
+        </div>
+        </a>
+      </li>
+      <li class="gem-c-cards__list-item-variant">
+
+        <div class="gem-c-cards__list-item-wrapper-variant">
+
+          <h3 class="govuk-heading-s">
+            Woodland Management Grant Plan
+          </h3>
+          <a href="fp-check-your-details" class="govuk-link govuk-link--no-visited-state">
+              Go to application
+          </a>
+        </div>
+        </a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 </div>
