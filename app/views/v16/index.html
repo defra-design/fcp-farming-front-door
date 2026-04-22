@@ -152,7 +152,120 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
 
-    
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--xl">What's new</caption>
+
+      <p>The below list documents the new or amended pages prototyped as part of this journey. The list does not include the entirety of pages held within Business and Personal details, as already documented as part of <a href="../MVP/index">MVP</a>.</p>
+
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">ID</th>
+          <th scope="col" class="govuk-table__header">Name</th>
+          <th scope="col" class="govuk-table__header">Prototype link</th>
+          <th scope="col" class="govuk-table__header">Release</th>
+        </tr>
+      </thead>
+      {% set _pages = [
+
+        {
+          "type": "HEADING",
+          "name": "Bank details"
+        },
+        {
+          "name": "Interruptor page",
+          "id": "ba01",
+          "url": "business-details-bank-interruptor",
+          "release": ""
+        }, 
+
+        {
+          "name": "Bank details - Unable to validate - business details",
+          "id": "ba07a",
+          "url": "business-details-bank-unable-to-validate-01?r=t&release=b2&newChange=true",
+          "release": "",
+          "variants": [
+            {
+              "name": "ba07b. Bank details - Unable to validate - 2nd attempt - business details",
+              "url": "business-details-bank-unable-to-validate-02?r=t&release=b2&newChange=true"
+            },
+            {
+              "name": "ba07c. Bank details - Unable to validate - 3nd attempt - business details",
+              "url": "business-details-bank-unable-to-validate-03?r=t&release=b2&newChange=true"
+            }
+            
+          ]
+          
+        }, 
+
+        {
+          "name": "Declaration",
+          "id": "ba08",
+          "url": "business-details-bank-declaration",
+          "release": ""
+        }, 
+
+        {
+          "name": "Unhappy path - error scenario: Business registered in the last 24 hours",
+          "id": "ba09",
+          "url": "business-details-bank-unable-to-amend-new-business",
+          "release": "",
+          "variants": [
+            {
+              "name": "ba09. 2nd preference - combined error message with scenario: Bank details updated in the last 14 days",
+              "url": "business-details-bank-unable-to-amend-combined"
+            }
+          ]
+          
+        }, 
+
+        {
+          "name": "Unhappy path - error scenario: Bank details updated in the last 14 days",
+          "id": "ba09",
+          "url": "business-details-bank-unable-to-amend-updated",
+          "release": "",
+          "variants": [
+            {
+              "name": "ba09. 2nd preference - combined error message with scenario: Business registered in the last 24 hours",
+              "url": "business-details-bank-unable-to-amend-combined"
+            }
+          ]
+          
+        }, 
+
+        {
+          "type": "HEADING",
+          "name": "Business details"
+        },
+
+        {
+          "name": "Manage business details",
+          "id": "bd01",
+          "url": "details-business-details?r=t&release=b1",
+          "release": "Buffalo 1.0 MVP",
+          "variants": [
+            {
+              "name": "External user with full permissions to update bank details",
+              "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=full"
+            },
+            {
+              "name": "External user with full permissions to add bank details",
+              "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=full&bankchanged=false&bank=empty"
+            },
+            {
+              "name": "External user with amend permissions",
+              "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=amend"
+            },
+            {
+              "name": "External user with view permissions",
+              "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=view"
+            }
+          ]
+        }
+
+        
+        
+
+      ] %}
       <tbody class="govuk-table__body">
         {% for _page in _pages %}
           {% if _page.type == "HEADING" %}

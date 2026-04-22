@@ -1,0 +1,133 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterLinks = false %}
+{% else %}
+{% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Unable to update bank account details" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - unable to update - business details",
+    "id": "ba09a",
+    "release": "MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "You cannot update bank account details that have been updated by the business in the last 14 days.",
+    "pageurl": "business-bank-unable-update",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-unable-to-amend-updated",
+
+    "variants": [
+      
+    ],
+    "variants": [
+    {
+        "name": "1st preference: companion error page for 'Business registered in the last 24 hours' (see design spec notes below)",
+        "url": "business-details-bank-unable-to-amend-new-business"
+      },
+      {
+        "name": "2nd preference - combined error message with 'Business registered in the last 24 hours' (see design spec notes below)",
+        "url": "business-details-bank-unable-to-amend-combined"
+      }
+    ],
+    "notes": [
+      "Our preference is to display the unhappy paths for unable to amend bank details separately for: a business being less than 24 hours from registration, and bank details have been updated in the last 14 days. This is the error page to display for bank details having been updated in the last 14 days."
+      
+    ]
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - unable to update - business details",
+    "id": int-ba09a",
+    "release": "MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "You cannot update bank account details that have been updated by the business in the last 14 days.",
+    "pageurl": "internal-business-bank-unable-update",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-unable-to-amend-updated",
+
+    "variants": [
+    {
+        "name": "1st preference: companion error page for 'Business registered in the last 24 hours' (see design spec notes below)",
+        "url": "business-details-bank-unable-to-amend-new-business"
+      },
+      {
+        "name": "2nd preference - combined error message with 'Business registered in the last 24 hours' (see design spec notes below)",
+        "url": "business-details-bank-unable-to-amend-combined"
+      }
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      "Our preference is to display the unhappy paths for unable to amend bank details separately for: a business being less than 24 hours from registration, and bank details have been updated in the last 14 days. This is the error page to display for bank details having been updated in the last 14 days."
+    ]
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+{% if data.view != "int" %}
+{% include "_common/sub-header.html" %}
+{% endif %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">Unable to update bank account details</h1>
+
+      <p class="govuk-body">
+        You cannot update bank account details for this business. This is because the bank account details have been updated in the last 14 days by a person with 'full permissions' or 'make legal changes'. 
+      </p>
+
+      <p class="govuk-body"><a href="details-business-details"
+          class="govuk-link govuk-link--no-visited-state">Return to business details</a></p>
+
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

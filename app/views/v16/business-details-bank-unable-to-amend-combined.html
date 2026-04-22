@@ -1,0 +1,129 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterLinks = false %}
+{% else %}
+{% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Unable to add or update bank account details" %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - unable to add or update - business details",
+    "id": "ba09c",
+    "release": "MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "You cannot add or update bank account details either because the business is new or the details have recently been updated.",
+    "pageurl": "business-bank-unable-add-update",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-unable-to-amend-combined",
+
+    "variants": [
+      
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      "Our preference is to display the unhappy paths for unable to amend bank details separately for: a business being less than 24 hours from registration, and bank details have been updated in the last 14 days. However, this page documents our approach where we cannot accomodate this preference. Therefore, this content covers both scenarios."
+      
+    ]
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - unable to add or update - business details",
+    "id": "int-ba09c",
+    "release": "MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "You cannot add or update bank account details either because the business is new or the details have recently been updated.",
+    "pageurl": "internal-business-bank-unable-add-update",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-unable-to-amend-combined",
+
+    "variants": [
+      
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      "Our preference is to display the unhappy paths for unable to amend bank details separately for: a business being less than 24 hours from registration, and bank details have been updated in the last 14 days. However, this page documents our approach where we cannot accomodate this preference. Therefore, this content covers both scenarios."
+    ]
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+{% if data.view != "int" %}
+{% include "_common/sub-header.html" %}
+{% endif %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+      <h1 class="govuk-heading-l">Unable to add or update bank account details</h1>
+
+      <p class="govuk-body">
+        You cannot update the bank account details for this business. This is because either: 
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          the business account is new - you cannot add bank account details until 24 hours after registering a business with the Rural Payments Agency (RPA)
+        </li>
+        <li>
+          the bank account details have been updated in the last 14 days by a person with 'full permissions' or 'make legal changes' 
+        </li>
+      </ul>
+
+      <p class="govuk-body"><a href="details-business-details"
+          class="govuk-link govuk-link--no-visited-state">Return to business details</a></p>
+
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

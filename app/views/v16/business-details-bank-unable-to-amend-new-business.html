@@ -1,0 +1,135 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterLinks = false %}
+{% else %}
+{% set _showFooterLinks = true %}
+{% endif %}
+{% set _showReleaseLinks = false %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Unable to add bank account details " %}
+{% set pageName = pageTitle %}
+{% if _inError %}
+{% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - unable to add - business details",
+    "id": "ba09b",
+    "release": "MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "You cannot add bank account details for 24 hours after registering a business.",
+    "pageurl": "business-bank-unable-add",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-unable-to-amend-new-business",
+    "variants": [
+    {
+        "name": "1st preference: companion error page for 'Bank details being updated in the last 14 days' (see design spec notes below)",
+        "url": "business-details-bank-unable-to-amend-updated"
+      },
+      {
+        "name": "2nd preference - combined error message with 'Bank details updated in the last 14 days' (see design spec notes below)",
+        "url": "business-details-bank-unable-to-amend-combined"
+      }
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      "Our preference is to display the unhappy paths for unable to amend bank details separately for: a business being less than 24 hours from registration, and bank details have been updated in the last 14 days. This is the error page to display for the business being less than 24 hours old."
+      
+    ]
+}
+%}
+
+{% elif data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+    "status": 'In development',
+    "name": "Bank details - unable to add - business details",
+    "id": "int-ba09b",
+    "release": "MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "You cannot add bank account details for 24 hours after registering a business.",
+    "pageurl": "internal-business-bank-unable-add",
+    "version" : "v16",
+    "prototypeurl" : "business-details-bank-unable-to-amend-new-business",
+    "variants": [
+    {
+        "name": "1st preference: companion error page for 'Bank details being updated in the last 14 days' (see design spec notes below)",
+        "url": "business-details-bank-unable-to-amend-updated"
+      },
+      {
+        "name": "2nd preference - combined error message with 'Bank details updated in the last 14 days' (see design spec notes below)",
+        "url": "business-details-bank-unable-to-amend-combined"
+      }
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      "Our preference is to display the unhappy paths for unable to amend bank details separately for: a business being less than 24 hours from registration, and bank details have been updated in the last 14 days. This is the error page to display for the business being less than 24 hours old."
+    ]
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+{% if data.view != "int" %}
+{% include "_common/sub-header.html" %}
+{% endif %}
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3.html" %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST" novalidate action="/v16-validation-return-to-check-1">
+
+      <h1 class="govuk-heading-l">Unable to add bank account details</h1>
+
+      <p class="govuk-body">
+        The business account is new. You cannot add bank account details until 24 hours after registering a business with the Rural Payments Agency.
+      </p>
+
+      <p class="govuk-body"><a href="details-business-details"
+          class="govuk-link govuk-link--no-visited-state">Return to business details</a></p>
+
+
+    </form>
+
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

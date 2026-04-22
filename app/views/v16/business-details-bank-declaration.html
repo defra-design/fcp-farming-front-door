@@ -9,7 +9,7 @@
 
 {% set _inError = myData.validationError == "true"  %}
 
-{% set pageTitle = "Declaration" %}
+{% set pageTitle = "Bank declarations" %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
@@ -26,11 +26,11 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
     "status": 'In development',
-    "name": "Declaration - bank details",
+    "name": "Bank details - declaration  (accept) - business details",
     "id": "ba08",
     "release": "MVP 1.0",
     "pagetitle": pageName,
-    "pagedesc": "Read the declaration before updating bank details.",
+    "pagedesc": "Read and accept the declarations to update bank details.",
     "pageurl": "business-bank-declarations",
     "version" : "v16",
     "prototypeurl" : "business-details-bank-declaration",
@@ -52,11 +52,11 @@
   {% set _showDesignSpec = true %}
   {% set _designSpecData = {
     "status": 'In development',
-    "name": "Declaration - bank details",
-    "id": "ba08",
+    "name": "Bank details - declaration  (accept) - business details",
+    "id": "int-ba08",
     "release": "MVP 1.0",
     "pagetitle": pageName,
-    "pagedesc": "Read the declaration before updating bank details.",
+    "pagedesc": "Read and accept the declarations to update bank details.",
     "pageurl": "business-bank-declarations",
     "version" : "v16",
     "prototypeurl" : "business-details-bank-declaration",

@@ -689,6 +689,7 @@
       </div>
     </dl>
 
+    {% if data.permissionsMVP == "full" %}
           <h2 class="govuk-heading-m">
         Bank account details
      </h2>
@@ -700,7 +701,7 @@
      </p>
 
      <p class="govuk-body">
-      <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-interruptor">
+      <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-country">
         Add bank account details
        </a>
      </p>
@@ -887,6 +888,28 @@
       <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-interruptor">Update bank account details</a>
      </p>
      {% endif %}
+
+     {% elif data.permissionsMVP == "amend" %}
+
+     <h2 class="govuk-heading-m">
+       Bank account details 
+     </h2>
+
+     <p class="govuk-body">
+      You do not have permission to view or update bank account details for this business.
+     </p>
+
+     {% elif data.permissionsMVP == "view" %}
+
+     <h2 class="govuk-heading-m">
+       Bank account details 
+     </h2>
+
+     <p class="govuk-body">
+      You do not have permission to view or update bank account details for this business.
+     </p>
+
+   {% endif %}
 
       
 
