@@ -1618,6 +1618,13 @@ module.exports = function (router, _myData) {
         });
     });
 
+        //view land alt layout
+    router.get('/' + version + '/view-land-alt', function (req, res) {
+        res.render(version + '/view-land-alt', {
+            myData: req.session.myData
+        });
+    });
+
     //view land parcel
     router.get('/' + version + '/view-land-parcel', function (req, res) {
         res.render(version + '/view-land-parcel', {

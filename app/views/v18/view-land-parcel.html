@@ -39,7 +39,6 @@
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
 
-
   <style>
   html, body {
     height: 100%;
@@ -200,10 +199,8 @@
   <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
-
 
   <script>
     const interact = defra.interactPlugin({
@@ -228,7 +225,6 @@
         defra.scaleBarPlugin({
           units: 'metric'
         }),
-        // defra.searchPlugin(),
         defra.mapStylesPlugin({
           mapStyles: [
             {
@@ -272,7 +268,7 @@
     let landParcelsData = null
     let landCoversGeoJson = null
 
-    // Land cover colour mapping (from rpa-mapping-improvements)
+    // Land cover colour mapping
     const landCoverColors = {
       'Permanent Grassland': '#DEFADE',
       'Temporary Grassland': '#85994B',
@@ -316,7 +312,7 @@
           ],
           'fill-opacity': 0.5
         }
-      }, 'parcels-outline')
+      })
 
       map.addLayer({
         id: 'landcovers-outline',
@@ -327,7 +323,7 @@
           'line-width': 1,
           'line-opacity': 0.4
         }
-      }, 'parcels-outline')
+      })
     }
 
     function addParcelsToMap(map, data) {
@@ -380,12 +376,15 @@
       map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 40 })
     }
 
+    function addAllLayers(map) {
+      addLandCoversToMap(map, landCoversGeoJson)
+      addParcelsToMap(map, landParcelsData)
+    }
+
     if (selectedNgc) {
-      // Parse SHEET_ID (first 6 chars) and PARCEL_ID (last 4 chars) from ngc
       const parcelId = selectedNgc.substring(6)
       const sbi = '106332870'
 
-      // Fetch parcel, land covers, and hedgerows in parallel with filtered queries
       const parcelUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}+AND+PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
       const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=SBI=${sbi}+AND+PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
       const hedgeUrl = `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
@@ -397,85 +396,82 @@
       ]).then(([parcelData, landCoversData, hedgeData]) => {
 
         const selectedFeature = parcelData.features[0]
+        if (!selectedFeature) return
 
-        if (selectedFeature) {
-          selectedFeature.properties.ngc = selectedFeature.properties.SHEET_ID + selectedFeature.properties.PARCEL_ID
+        selectedFeature.properties.ngc = selectedFeature.properties.SHEET_ID + selectedFeature.properties.PARCEL_ID
 
-          landParcelsData = {
-            type: 'FeatureCollection',
-            features: [selectedFeature]
-          }
+        landParcelsData = {
+          type: 'FeatureCollection',
+          features: [selectedFeature]
+        }
 
-          // Set the heading
-          document.getElementById('parcel-heading').textContent =
-            'Parcel details: ' + selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID
+        landCoversGeoJson = {
+          type: 'FeatureCollection',
+          features: landCoversData.features || []
+        }
 
-          // Populate total area
-          document.getElementById('parcel-total-area').textContent =
-            parseFloat(selectedFeature.properties.AREA_HA).toFixed(4)
+        // Set the heading
+        document.getElementById('parcel-heading').textContent =
+          'Parcel details: ' + selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID
 
-          // Populate land covers
-          const parcelCovers = landCoversData.features || []
-          document.getElementById('parcel-land-covers').textContent = parcelCovers.length
+        // Populate total area
+        document.getElementById('parcel-total-area').textContent =
+          parseFloat(selectedFeature.properties.AREA_HA).toFixed(4)
 
-          // Store for map rendering
-          landCoversGeoJson = {
-            type: 'FeatureCollection',
-            features: parcelCovers
-          }
+        // Populate land covers
+        const parcelCovers = landCoversData.features || []
+        document.getElementById('parcel-land-covers').textContent = parcelCovers.length
 
-          const lcTableBody = document.getElementById('land-covers-table-body')
-          let lcTotalArea = 0
-          parcelCovers.forEach(f => {
-            const area = parseFloat(f.properties.AREA_HA)
-            lcTotalArea += area
-            const color = landCoverColors[f.properties.DESCRIPTION] || '#CCCCCC'
-            const tr = document.createElement('tr')
-            tr.className = 'govuk-table__row'
-            tr.innerHTML = `
-              <td class="govuk-table__cell"><span style="display:inline-block;width:16px;height:16px;background:${color};border:1px solid #505a5f;vertical-align:middle;margin-right:8px"></span>${f.properties.DESCRIPTION}</td>
-              <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${area.toFixed(4)}</td>
-            `
-            lcTableBody.appendChild(tr)
-          })
-          const lcTotalRow = document.createElement('tr')
-          lcTotalRow.className = 'govuk-table__row'
-          lcTotalRow.innerHTML = `
-            <td class="govuk-table__cell" style="font-weight:700">Total</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${lcTotalArea.toFixed(4)}</td>
+        const lcTableBody = document.getElementById('land-covers-table-body')
+        let lcTotalArea = 0
+        parcelCovers.forEach(f => {
+          const area = parseFloat(f.properties.AREA_HA)
+          lcTotalArea += area
+          const color = landCoverColors[f.properties.DESCRIPTION] || '#CCCCCC'
+          const tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          tr.innerHTML = `
+            <td class="govuk-table__cell"><span style="display:inline-block;width:16px;height:16px;background:${color};border:1px solid #505a5f;vertical-align:middle;margin-right:8px"></span>${f.properties.DESCRIPTION}</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${area.toFixed(4)}</td>
           `
-          lcTableBody.appendChild(lcTotalRow)
+          lcTableBody.appendChild(tr)
+        })
+        const lcTotalRow = document.createElement('tr')
+        lcTotalRow.className = 'govuk-table__row'
+        lcTotalRow.innerHTML = `
+          <td class="govuk-table__cell" style="font-weight:700">Total</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${lcTotalArea.toFixed(4)}</td>
+        `
+        lcTableBody.appendChild(lcTotalRow)
 
-          // Populate hedgerows
-          const parcelHedges = hedgeData.features || []
-          document.getElementById('parcel-hedgerows').textContent = parcelHedges.length
+        // Populate hedgerows
+        const parcelHedges = hedgeData.features || []
+        document.getElementById('parcel-hedgerows').textContent = parcelHedges.length
 
-          const hTableBody = document.getElementById('hedgerows-table-body')
-          let hTotalLength = 0
-          parcelHedges.forEach((f, i) => {
-            const length = parseFloat(f.properties.LENGTH)
-            hTotalLength += length
-            const tr = document.createElement('tr')
-            tr.className = 'govuk-table__row'
-            tr.innerHTML = `
-              <td class="govuk-table__cell">${i + 1}</td>
-              <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${Math.round(length)}</td>
-            `
-            hTableBody.appendChild(tr)
-          })
-          const hTotalRow = document.createElement('tr')
-          hTotalRow.className = 'govuk-table__row'
-          hTotalRow.innerHTML = `
-            <td class="govuk-table__cell" style="font-weight:700">Total</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${Math.round(hTotalLength)}</td>
+        const hTableBody = document.getElementById('hedgerows-table-body')
+        let hTotalLength = 0
+        parcelHedges.forEach((f, i) => {
+          const length = parseFloat(f.properties.LENGTH)
+          hTotalLength += length
+          const tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          tr.innerHTML = `
+            <td class="govuk-table__cell">${i + 1}</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${Math.round(length)}</td>
           `
-          hTableBody.appendChild(hTotalRow)
+          hTableBody.appendChild(tr)
+        })
+        const hTotalRow = document.createElement('tr')
+        hTotalRow.className = 'govuk-table__row'
+        hTotalRow.innerHTML = `
+          <td class="govuk-table__cell" style="font-weight:700">Total</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${Math.round(hTotalLength)}</td>
+        `
+        hTableBody.appendChild(hTotalRow)
 
-          // If map is already ready, add layers now
-          if (mapInstance) {
-            addParcelsToMap(mapInstance, landParcelsData)
-            addLandCoversToMap(mapInstance, landCoversGeoJson)
-          }
+        // If map is already ready, add layers now
+        if (mapInstance) {
+          addAllLayers(mapInstance)
         }
 
       }).catch(err => {
@@ -484,21 +480,19 @@
       })
     }
 
-    // When map becomes ready, add layers if data is already loaded
+    // When map becomes ready, add layers if data loaded
     interactiveMap.on('map:ready', (e) => {
       mapInstance = e.map
-      if (mapInstance && landParcelsData) {
-        addParcelsToMap(mapInstance, landParcelsData)
-        addLandCoversToMap(mapInstance, landCoversGeoJson)
+      if (landParcelsData) {
+        addAllLayers(mapInstance)
       }
     })
 
     // Re-add layers after a map style change
     interactiveMap.on('map:stylechange', () => {
       setTimeout(() => {
-        if (mapInstance && landParcelsData) {
-          addParcelsToMap(mapInstance, landParcelsData)
-          addLandCoversToMap(mapInstance, landCoversGeoJson)
+        if (mapInstance) {
+          addAllLayers(mapInstance)
         }
       }, 100)
     })

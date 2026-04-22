@@ -5,7 +5,7 @@
     "start": "govuk-prototype-kit start"
   },
   "dependencies": {
-    "@defra/interactive-map": "^0.0.18-alpha",
+    "@defra/interactive-map": "^0.0.21-alpha",
     "@govuk-prototype-kit/common-templates": "2.0.1",
     "@ministryofjustice/frontend": "^5.1.5",
     "@x-govuk/govuk-prototype-filters": "^1.4.3",

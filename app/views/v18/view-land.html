@@ -213,12 +213,12 @@
     <div id="map-button-slot"></div>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Land parcels</h2>
-    <table class="govuk-table govuk-table--small-text-until-tablet">
+    <table class="govuk-table govuk-table--small-text-until-tablet" data-module="moj-sortable-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap">ID</th>
-          <th scope="col" class="govuk-table__header" style="width:55%">Land cover</th>
-          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap">Area (ha)</th>
+          <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap" aria-sort="ascending">ID</th>
+          <th scope="col" class="govuk-table__header" style="width:55%" aria-sort="none">Land cover</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap" aria-sort="none">Area (ha)</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body" id="parcel-table-body"></tbody>
@@ -393,13 +393,14 @@
       landParcelsData.features.forEach(f => {
         const { SHEET_ID, PARCEL_ID, ngc, AREA_HA } = f.properties
         const dominant = parcelCovers[ngc]
+        const area = parseFloat(AREA_HA)
         const tr = document.createElement('tr')
         tr.className = 'govuk-table__row'
         tr.dataset.ngc = ngc
         tr.innerHTML = `
           <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
           <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${parseFloat(AREA_HA).toFixed(4)}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
         `
         tableBody.appendChild(tr)
       })
