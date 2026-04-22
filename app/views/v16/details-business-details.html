@@ -1,15 +1,15 @@
 {% extends "layouts/main-rebrand.html" %}
 
 {% if data.view == "int" %}
-  {% set _showFooterMVPLinks = false %}
+{% set _showFooterMVPLinks = false %}
 {% else %}
-  {% set _showFooterMVPLinks = true %}
+{% set _showFooterMVPLinks = true %}
 {% endif %}
 
 {% if data.view == "int" %}
-  {% set _showReleaseLinks = false %}
+{% set _showReleaseLinks = false %}
 {% else %}
-  {% set _showReleaseLinks = false %}
+{% set _showReleaseLinks = false %}
 {% endif %}
 
 {% set _showIntExtLinks = true %}
@@ -21,206 +21,218 @@
 {% if data.view == "ext" and data.release != "concept" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-  "status": 'In development',
-  "name": "Manage business details",
-  "id": "bd01",
-  "url": "details-business-details?r=t&release=b1",
-  "release": "Buffalo 1.0 MVP",
-  "variants": [
-    {
-      "name": "External user with full permissions",
-      "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=full"
-    },
-    {
-      "name": "External user with amend permissions",
-      "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=amend"
-    },
-    {
-      "name": "External user with view permissions",
-      "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=view"
-    },        
-    {
-      "name": "no existing phone numbers - add",
-      "url": "details-business-details?r=t&release=b1&addNumberBus=empty&view=ext"
-    },
-    {
-      "name": "Vendor registration number	- hidden",
-      "url": "details-business-details?r=t&release=b1&vendorCount=0&view=ext"
-    },
-    {
-      "name": "Vendor registration number	- one number",
-      "url": "details-business-details?r=t&release=b1&vendorCount=1&view=ext"
-    },
-    {
-      "name": "Trader number	- hidden",
-      "url": "details-business-details?r=t&release=b1&traderCount=0&view=ext"
-    },
-    {
-      "name": "Trader number	- one number",
-      "url": "details-business-details?r=t&release=b1&traderCount=1&view=ext"
-    },
-    {
-      "name": "County Parish Holding (CPH) number	- hidden",
-      "url": "details-business-details?r=t&release=b1&cphCount=0&view=ext"
-    },
-    {
-      "name": "County Parish Holding (CPH) number	- one number",
-      "url": "details-business-details?r=t&release=b1&cphCount=1&view=ext"
-    },
-    {
-      "name": "County Parish Holding (CPH) number	- multiple numbers",
-      "url": "details-business-details?r=t&release=b1&cphCount=2&view=ext"
-    },
-    {
-      "name": "name changed banner",
-      "url": "details-business-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "address changed banner",
-      "url": "details-business-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "phone numbers changed banner",
-      "url": "details-business-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "email changed banner",
-      "url": "details-business-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "business type changed banner",
-      "url": "details-business-details?r=t&release=b1&typechanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "legal status changed banner",
-      "url": "details-business-details?r=t&release=b1&legalchanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "vat number changed banner",
-      "url": "details-business-details?r=t&release=b1&vatchanged=true&changed=true&view=ext"
-    },
-    {
-      "name": "vat number removed banner",
-      "url": "details-business-details?r=t&release=b1&vatremoved=true&changed=true&view=ext"
-    }, 
-    {
-      "name": "adding bank details for the first time",
-      "url": "details-business-details?r=t&release=b2&view=ext&bank=empty&bankchanged=false"
-    }
-  ],
+"status": 'In development',
+"name": "Manage business details",
+"id": "bd01",
+"url": "details-business-details?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "External user with full permissions",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=full"
+},
+{
+"name": "External user with amend permissions",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=amend"
+},
+{
+"name": "External user with view permissions",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=view"
+},
+{
+"name": "no existing phone numbers - add",
+"url": "details-business-details?r=t&release=b1&addNumberBus=empty&view=ext"
+},
+{
+"name": "Vendor registration number - hidden",
+"url": "details-business-details?r=t&release=b1&vendorCount=0&view=ext"
+},
+{
+"name": "Vendor registration number - one number",
+"url": "details-business-details?r=t&release=b1&vendorCount=1&view=ext"
+},
+{
+"name": "Trader number - hidden",
+"url": "details-business-details?r=t&release=b1&traderCount=0&view=ext"
+},
+{
+"name": "Trader number - one number",
+"url": "details-business-details?r=t&release=b1&traderCount=1&view=ext"
+},
+{
+"name": "County Parish Holding (CPH) number - hidden",
+"url": "details-business-details?r=t&release=b1&cphCount=0&view=ext"
+},
+{
+"name": "County Parish Holding (CPH) number - one number",
+"url": "details-business-details?r=t&release=b1&cphCount=1&view=ext"
+},
+{
+"name": "County Parish Holding (CPH) number - multiple numbers",
+"url": "details-business-details?r=t&release=b1&cphCount=2&view=ext"
+},
+{
+"name": "name changed banner",
+"url": "details-business-details?r=t&release=b1&namechanged=true&changed=true&view=ext"
+},
+{
+"name": "address changed banner",
+"url": "details-business-details?r=t&release=b1&addresschanged=true&changed=true&view=ext"
+},
+{
+"name": "phone numbers changed banner",
+"url": "details-business-details?r=t&release=b1&phonechanged=true&changed=true&view=ext"
+},
+{
+"name": "email changed banner",
+"url": "details-business-details?r=t&release=b1&emailchanged=true&changed=true&view=ext"
+},
+{
+"name": "business type changed banner",
+"url": "details-business-details?r=t&release=b1&typechanged=true&changed=true&view=ext"
+},
+{
+"name": "legal status changed banner",
+"url": "details-business-details?r=t&release=b1&legalchanged=true&changed=true&view=ext"
+},
+{
+"name": "vat number changed banner",
+"url": "details-business-details?r=t&release=b1&vatchanged=true&changed=true&view=ext"
+},
+{
+"name": "vat number removed banner",
+"url": "details-business-details?r=t&release=b1&vatremoved=true&changed=true&view=ext"
+},
+{
+"name": "adding bank details for the first time",
+"url": "details-business-details?r=t&release=b2&view=ext&bank=empty&bankchanged=false"
+}
+],
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    
-  ],
-  "notes": [
-    "The 'back to (selected business name)' dynamically presents the business name the user has selected.",
-    "Where the business name is over 50 characters long, truncate the business name by using ellipses (...) after the 50th character",  
-    "<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding (CPH) number' row. View example with the query string &cphCount=0",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
 
-    "<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH) numbers' label plural and separate each CPH number with a break line tag. View example with the query string &cphCount=2",
+],
+"notes": [
+"The 'back to (selected business name)' dynamically presents the business name the user has selected.",
+"Where the business name is over 50 characters long, truncate the business name by using ellipses (...) after the 50th
+character",
+"<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding
+(CPH) number' row. View example with the query string &cphCount=0",
 
-    "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
+"<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH)
+numbers' label plural and separate each CPH number with a break line tag. View example with the query string
+&cphCount=2",
 
-    "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0"
-  ]
+"<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not
+render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
+
+"<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number'
+row. View example with the query string &traderCount=0"
+]
 }
 %}
 
 {% elif data.view == "int" %}
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-  "status": 'In development',
-  "name": "Manage business details",
-  "id": "int-bd01",
-  "url": "details-business-details?r=t&view=int&release=b2",
-  "release": "Buffalo 1.1 MVP",
-  "variants": [
-    {
-      "name": "no existing phone numbers - add",
-      "url": "details-business-details?r=t&release=b1&addNumberBus=empty&view=int"
-    },
-    {
-      "name": "Vendor registration number	- hidden",
-      "url": "details-business-details?r=t&release=b2&vendorCount=0&view=int"
-    },
-    {
-      "name": "Vendor registration number	- one number",
-      "url": "details-business-details?r=t&release=b2&vendorCount=1&view=int"
-    },
-    {
-      "name": "Trader number	- hidden",
-      "url": "details-business-details?r=t&release=b2&traderCount=0&view=int"
-    },
-    {
-      "name": "Trader number	- one number",
-      "url": "details-business-details?r=t&release=b2&traderCount=1&view=int"
-    },
-    {
-      "name": "County Parish Holding (CPH) number	- hidden",
-      "url": "details-business-details?r=t&release=b2&cphCount=0&view=int"
-    },
-    {
-      "name": "County Parish Holding (CPH) number	- one number",
-      "url": "details-business-details?r=t&release=b2&cphCount=1&view=int"
-    },
-    {
-      "name": "County Parish Holding (CPH) number	- multiple numbers",
-      "url": "details-business-details?r=t&release=b2&cphCount=2&view=int"
-    },
-    {
-      "name": "name changed banner",
-      "url": "details-business-details?r=t&release=b2&namechanged=true&changed=true&view=int"
-    },
-    {
-      "name": "address changed banner",
-      "url": "details-business-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
-    },
-    {
-      "name": "phone numbers changed banner",
-      "url": "details-business-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
-    },
-    {
-      "name": "email changed banner",
-      "url": "details-business-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
-    },
-    {
-      "name": "business type changed banner",
-      "url": "details-business-details?r=t&release=b2&typechanged=true&changed=true&view=int"
-    },
-    {
-      "name": "legal status changed banner",
-      "url": "details-business-details?r=t&release=b2&legalchanged=true&changed=true&view=int"
-    },
-    {
-      "name": "vat number changed banner",
-      "url": "details-business-details?r=t&release=b2&vatchanged=true&changed=true&view=int"
-    },
-    {
-      "name": "vat number removed banner",
-      "url": "details-business-details?r=t&release=b2&vatremoved=true&changed=true&view=int"
-    }
-  ],
+"status": 'In development',
+"name": "Manage business details",
+"id": "int-bd01",
+"url": "details-business-details?r=t&view=int&release=b2",
+"release": "Buffalo 1.1 MVP",
+"variants": [
+{
+"name": "no existing phone numbers - add",
+"url": "details-business-details?r=t&release=b1&addNumberBus=empty&view=int"
+},
+{
+"name": "Vendor registration number - hidden",
+"url": "details-business-details?r=t&release=b2&vendorCount=0&view=int"
+},
+{
+"name": "Vendor registration number - one number",
+"url": "details-business-details?r=t&release=b2&vendorCount=1&view=int"
+},
+{
+"name": "Trader number - hidden",
+"url": "details-business-details?r=t&release=b2&traderCount=0&view=int"
+},
+{
+"name": "Trader number - one number",
+"url": "details-business-details?r=t&release=b2&traderCount=1&view=int"
+},
+{
+"name": "County Parish Holding (CPH) number - hidden",
+"url": "details-business-details?r=t&release=b2&cphCount=0&view=int"
+},
+{
+"name": "County Parish Holding (CPH) number - one number",
+"url": "details-business-details?r=t&release=b2&cphCount=1&view=int"
+},
+{
+"name": "County Parish Holding (CPH) number - multiple numbers",
+"url": "details-business-details?r=t&release=b2&cphCount=2&view=int"
+},
+{
+"name": "name changed banner",
+"url": "details-business-details?r=t&release=b2&namechanged=true&changed=true&view=int"
+},
+{
+"name": "address changed banner",
+"url": "details-business-details?r=t&release=b2&addresschanged=true&changed=true&view=int"
+},
+{
+"name": "phone numbers changed banner",
+"url": "details-business-details?r=t&release=b2&phonechanged=true&changed=true&view=int"
+},
+{
+"name": "email changed banner",
+"url": "details-business-details?r=t&release=b2&emailchanged=true&changed=true&view=int"
+},
+{
+"name": "business type changed banner",
+"url": "details-business-details?r=t&release=b2&typechanged=true&changed=true&view=int"
+},
+{
+"name": "legal status changed banner",
+"url": "details-business-details?r=t&release=b2&legalchanged=true&changed=true&view=int"
+},
+{
+"name": "vat number changed banner",
+"url": "details-business-details?r=t&release=b2&vatchanged=true&changed=true&view=int"
+},
+{
+"name": "vat number removed banner",
+"url": "details-business-details?r=t&release=b2&vatremoved=true&changed=true&view=int"
+}
+],
 
-  "pagetitle": pageName,
-  "pagedesc": "",
-  "pageurl": "",
-  "errormessages": [
-    
-  ],
-  "notes": [
-    "The 'back to (selected business name)' dynamically presents the business name the user has selected.",
-    "Where the business name is over 50 characters long, truncate the business name by using ellipses (...) after the 50th character",  
-    "<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding (CPH) number' row. View example with the query string &cphCount=0",
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
 
-    "<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH) numbers' label plural and separate each CPH number with a break line tag. View example with the query string &cphCount=2",
+],
+"notes": [
+"The 'back to (selected business name)' dynamically presents the business name the user has selected.",
+"Where the business name is over 50 characters long, truncate the business name by using ellipses (...) after the 50th
+character",
+"<strong>CPH number</strong> - if the business does not have a CPH number - do not render the 'County Parish Holding
+(CPH) number' row. View example with the query string &cphCount=0",
 
-    "<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
+"<strong>CPH number</strong> - if the business has more than one CPH number - make the 'County Parish Holding (CPH)
+numbers' label plural and separate each CPH number with a break line tag. View example with the query string
+&cphCount=2",
 
-    "<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number' row. View example with the query string &traderCount=0"
-  ]
+"<strong> Vendor registration number</strong> - if the business does not have a Vendor registration number - do not
+render the 'Vendor registration number' row. View example with the query string &vendorCount=0",
+
+"<strong> Trader number</strong> - if the business does not have a Trader number - do not render the 'Trader number'
+row. View example with the query string &traderCount=0"
+]
 }
 %}
 
@@ -233,32 +245,34 @@
 
 {% block beforeContent %}
 
-  {% if data.view != "int" %}
-  {% include "_common/phase-banner-2.html" %}
-  {% include "_common/sub-header.html" %}
+{% if data.view != "int" %}
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
 
-  {% include "_common/login-nav-3.html" %}
+{% include "_common/login-nav-3.html" %}
 
-  <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-       <a href="business-home" class="govuk-back-link govuk-breadcrumbs__link govuk-!-margin-top-0">Back to {{_selectedBusiness.name}}</a>
-      </li>
-    </ol>
-  </nav>
-  {% else %}
-  {% include "_common/login-nav-internal-a.html" %}
-  <div class="govuk-breadcrumbs" style="display: inline-block">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-business">{{_selectedBusiness.name}} (SBI: {{_selectedBusiness.sbiNumber}})</a>
-      </li>
-    </ol>
-  </div>
-  {% endif %}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a href="business-home" class="govuk-back-link govuk-breadcrumbs__link govuk-!-margin-top-0">Back to
+        {{_selectedBusiness.name}}</a>
+    </li>
+  </ol>
+</nav>
+{% else %}
+{% include "_common/login-nav-internal-a.html" %}
+<div class="govuk-breadcrumbs" style="display: inline-block">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search results</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="internal-business">{{_selectedBusiness.name}} (SBI:
+        {{_selectedBusiness.sbiNumber}})</a>
+    </li>
+  </ol>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -267,7 +281,8 @@
   <div class="govuk-grid-column-two-thirds">
 
     {% if myData.showNotification == "true" %}
-    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert"
+      aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
       <div class="govuk-notification-banner__header">
         <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
           Success
@@ -279,7 +294,8 @@
         </h3>
         {% if data.bankchanged == "true" %}
         <p>
-          It may take up to 30 working days for payments to be made to this account. This could take longer during busy periods or if queries are raised. We'll be in touch if we need more information.
+          It may take up to 30 working days for payments to be made to this account. This could take longer during busy
+          periods or if queries are raised. We'll be in touch if we need more information.
         </p>
         {% endif %}
       </div>
@@ -288,29 +304,31 @@
 
     {% if data.permissionsMVP == "view" and data.view == "ext" %}
     <h1 class="govuk-heading-l">
-     View business details
-    </h1>
-    
-    <p class="govuk-body">
-      You do not have permission to update details for this business. You can ask the business to raise your permission level.
-    </p>
-    {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
-    <h1 class="govuk-heading-l">
-     View and update your business details
+      View business details
     </h1>
 
     <p class="govuk-body">
-      You only have permission to update contact details for this business. You can ask the business to raise your permission level.
+      You do not have permission to update details for this business. You can ask the business to raise your permission
+      level.
+    </p>
+    {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
+    <h1 class="govuk-heading-l">
+      View and update your business details
+    </h1>
+
+    <p class="govuk-body">
+      You only have permission to update contact details for this business. You can ask the business to raise your
+      permission level.
     </p>
     {% else %}
     <h1 class="govuk-heading-l">
-     View and update your business details
+      View and update your business details
     </h1>
     {% endif %}
 
     <h2 class="govuk-heading-m">
       Business contact details
-     </h2>
+    </h2>
 
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
@@ -321,14 +339,16 @@
           {{myData.nameBus}}
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
-          
+
         {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
-          
+
         </dd>
         {% else %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> business name</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-name-change?newChange=true">Change<span class="govuk-visually-hidden"> business
+              name</span></a>
         </dd>
         {% endif %}
       </div>
@@ -348,31 +368,37 @@
           {{myData.addressCountryBus}}
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
-          
+
         {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden">
+              business address</span></a>
         </dd>
         {% else %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-address-postcode-change?newChange=true">Change<span class="govuk-visually-hidden">
+              business address</span></a>
         </dd>
         {% endif %}
       </div>
-      {% if data.addNumberBus == "empty"  %}
+      {% if data.addNumberBus == "empty" %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key govuk-!-width-two-thirds">
           Business phone numbers
         </dt>
         <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
-          Telephone: 
-            <span style="color:#505a5f">Not added</span>
+          Telephone:
+          <span style="color:#505a5f">Not added</span>
           <br>
-          Mobile: 
-            <span style="color:#505a5f">Not added</span>
+          Mobile:
+          <span style="color:#505a5f">Not added</span>
         </dd>
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change?newChange=true&addNumberBus=empty">Add<span class="govuk-visually-hidden"> business address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-phone-change?newChange=true&addNumberBus=empty">Add<span
+              class="govuk-visually-hidden"> business address</span></a>
         </dd>
       </div>
       {% else %}
@@ -381,29 +407,33 @@
           Business phone numbers
         </dt>
         <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
-          Telephone: 
+          Telephone:
           {% if myData.telNumberBus == "" %}
-            <span style="color:#505a5f">Not added</span>
+          <span style="color:#505a5f">Not added</span>
           {% else %}
-            {{myData.telNumberBus}}
+          {{myData.telNumberBus}}
           {% endif %}
           <br>
-          Mobile: 
+          Mobile:
           {% if myData.mobNumberBus == "" %}
-            <span style="color:#505a5f">Not added</span>
+          <span style="color:#505a5f">Not added</span>
           {% else %}
-            {{myData.mobNumberBus}}
+          {{myData.mobNumberBus}}
           {% endif %}
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
 
         {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> business
+              address</span></a>
         </dd>
         {% else %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> business address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-phone-change?newChange=true">Change<span class="govuk-visually-hidden"> business
+              address</span></a>
         </dd>
         {% endif %}
       </div>
@@ -416,14 +446,18 @@
           {{myData.emailBus}}
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
-        
+
         {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-email-change?newChange=true">Change<span class="govuk-visually-hidden"> business email address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-email-change?newChange=true">Change<span class="govuk-visually-hidden"> business
+              email address</span></a>
         </dd>
         {% else %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-email-change?newChange=true">Change<span class="govuk-visually-hidden"> business email address</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-email-change?newChange=true">Change<span class="govuk-visually-hidden"> business
+              email address</span></a>
         </dd>
         {% endif %}
       </div>
@@ -431,17 +465,17 @@
 
     <h2 class="govuk-heading-m">
       Reference numbers
-     </h2>
+    </h2>
 
 
 
-     <dl class="govuk-summary-list">
+    <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Single business identifier (SBI)
         </dt>
         <dd class="govuk-summary-list__value">
-          {{_selectedBusiness.sbiNumber}} 
+          {{_selectedBusiness.sbiNumber}}
         </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -450,76 +484,81 @@
         </dt>
         <dd class="govuk-summary-list__value">
           {% if myData.vatBus == "" %}
-            <span style="color:#505a5f">No number added</span>
+          <span style="color:#505a5f">No number added</span>
           {% else %}
-            {{myData.vatBus}}
+          {{myData.vatBus}}
           {% endif %}
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
-        
+
         {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
 
         {% else %}
         <dd class="govuk-summary-list__actions">
           {% if myData.vatBus == "" %}
-            <a class="govuk-link govuk-link--no-visited-state" href="business-details-vat-change?newChange=true">Add<span class="govuk-visually-hidden"> VAT registration number</span></a>
+          <a class="govuk-link govuk-link--no-visited-state" href="business-details-vat-change?newChange=true">Add<span
+              class="govuk-visually-hidden"> VAT registration number</span></a>
           {% else %}
-            <ul class="govuk-summary-list__actions-list">
-              <li class="govuk-summary-list__actions-list-item">
-                <a class="govuk-link govuk-link--no-visited-state" href="business-details-vat-remove?newChange=true">Remove<span class="govuk-visually-hidden"> VAT registration number</span></a>
-              </li>
-              <li class="govuk-summary-list__actions-list-item">
-                <a class="govuk-link govuk-link--no-visited-state" href="business-details-vat-change?newChange=true">Change<span class="govuk-visually-hidden"> VAT registration number</span></a>
-              </li>
-            </ul>
+          <ul class="govuk-summary-list__actions-list">
+            <li class="govuk-summary-list__actions-list-item">
+              <a class="govuk-link govuk-link--no-visited-state"
+                href="business-details-vat-remove?newChange=true">Remove<span class="govuk-visually-hidden"> VAT
+                  registration number</span></a>
+            </li>
+            <li class="govuk-summary-list__actions-list-item">
+              <a class="govuk-link govuk-link--no-visited-state"
+                href="business-details-vat-change?newChange=true">Change<span class="govuk-visually-hidden"> VAT
+                  registration number</span></a>
+            </li>
+          </ul>
           {% endif %}
         </dd>
         {% endif %}
       </div>
 
       {% if myData.traderCount == "0" %}
-        <!-- Do not render row -->
+      <!-- Do not render row -->
       {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Trader number
         </dt>
         <dd class="govuk-summary-list__value">
-          {{_selectedBusiness.traderNumber or "987654"}} 
+          {{_selectedBusiness.traderNumber or "987654"}}
         </dd>
       </div>
       {% endif %}
 
       {% if myData.vendorCount == "0" %}
-        <!-- Do not render row -->
+      <!-- Do not render row -->
       {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Vendor registration number
         </dt>
         <dd class="govuk-summary-list__value">
-          {{_selectedBusiness.vrnNumber or "123456"}} 
+          {{_selectedBusiness.vrnNumber or "123456"}}
         </dd>
       </div>
       {% endif %}
 
       {% if myData.cphCount == "0" %}
-        <!-- Do not render row -->
+      <!-- Do not render row -->
       {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           {% if myData.cphCount == "2" %}
-            County Parish Holding (CPH) numbers
+          County Parish Holding (CPH) numbers
           {% else %}
-            County Parish Holding (CPH) number
+          County Parish Holding (CPH) number
           {% endif %}
         </dt>
         <dd class="govuk-summary-list__value">
           {% if myData.cphCount == "2" %}
-            {{_selectedBusiness.cphNumber or "12/563/0998"}}
-            <br>12/563/8301
+          {{_selectedBusiness.cphNumber or "12/563/0998"}}
+          <br>12/563/8301
           {% else %}
-            {{_selectedBusiness.cphNumber or "12/563/0998"}}
+          {{_selectedBusiness.cphNumber or "12/563/0998"}}
           {% endif %}
         </dd>
       </div>
@@ -530,9 +569,9 @@
 
     <h2 class="govuk-heading-m">
       Additional details
-     </h2>
+    </h2>
 
-     <dl class="govuk-summary-list">
+    <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           Business legal status
@@ -541,134 +580,136 @@
           {{ data['legalBus'] or "Sole proprietorship"}}
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
-          
+
         {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
-        
+
         {% else %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-legal-change?newChange=true">Change<span class="govuk-visually-hidden"> business legal status</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-legal-change?newChange=true">Change<span class="govuk-visually-hidden"> business
+              legal status</span></a>
         </dd>
         {% endif %}
       </div>
       {% if data['legalBus'] == "Community interest company (CIC)" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Company registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{data['legalCCRNBus'] or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
-                company registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['legalCCRNBus'] or "0123456"}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
 
-        {% if data['legalBus'] == "Limited liability partnership (LLP)" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Company registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{data['legalCCRNBus'] or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
-                company registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+      {% if data['legalBus'] == "Limited liability partnership (LLP)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['legalCCRNBus'] or "0123456"}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
 
-        {% if data['legalBus'] == "Limited partnership" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Company registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{data['legalCCRNBus'] or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
-                company registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+      {% if data['legalBus'] == "Limited partnership" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['legalCCRNBus'] or "0123456"}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
 
-        {% if data['legalBus'] == "Non-UK company" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Company registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{data['legalCCRNBus'] or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
-                company registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+      {% if data['legalBus'] == "Non-UK company" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['legalCCRNBus'] or "0123456"}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
 
-        {% if data['legalBus'] == "Private limited company (Ltd)" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Company registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{data['legalCCRNBus'] or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
-                company registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+      {% if data['legalBus'] == "Private limited company (Ltd)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['legalCCRNBus'] or "0123456"}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
 
-        {% if data['legalBus'] == "Public limited company (PLC)" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Company registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{data['legalCCRNBus'] or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
-                company registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+      {% if data['legalBus'] == "Public limited company (PLC)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['legalCCRNBus'] or "0123456"}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
 
-        {% if data['legalBus'] == "Unlimited company (Ultd)" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Company registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{data['legalCCRNBus'] or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
-                company registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+      {% if data['legalBus'] == "Unlimited company (Ultd)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Company registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['legalCCRNBus'] or "0123456"}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-legal-company">Change<span class="govuk-visually-hidden">
+              company registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
 
-        {% if data['legalBus'] == "Charitable incorporated organisation (CIO)" %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Charity commission registration number
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{data['legalCHRNBus'] or "0123456"}}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="business-details-legal-charity">Change<span class="govuk-visually-hidden">
-                charity commission registration number</span></a>
-          </dd>
-        </div>
-        {% endif %}
+      {% if data['legalBus'] == "Charitable incorporated organisation (CIO)" %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Charity commission registration number
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{data['legalCHRNBus'] or "0123456"}}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="business-details-legal-charity">Change<span class="govuk-visually-hidden">
+              charity commission registration number</span></a>
+        </dd>
+      </div>
+      {% endif %}
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -678,49 +719,72 @@
           {{myData.typeBus}}
         </dd>
         {% if data.permissionsMVP == "view" and data.view == "ext" %}
-          
+
         {% elif data.permissionsMVP == "amend" and data.view == "ext" %}
-        
+
         {% else %}
         <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="business-details-type-change?newChange=true">Change<span class="govuk-visually-hidden"> business type</span></a>
+          <a class="govuk-link govuk-link--no-visited-state"
+            href="business-details-type-change?newChange=true">Change<span class="govuk-visually-hidden"> business
+              type</span></a>
         </dd>
         {% endif %}
       </div>
     </dl>
 
-    {% if data.permissionsMVP == "full" %}
-          <h2 class="govuk-heading-m">
-        Bank account details
-     </h2>
+    {% if data.permissionsMVP == "amend" %}
 
-     {% if data.bank == "empty" and data.bankchanged == "false" %}
+    <h2 class="govuk-heading-m">
+      Bank account details
+    </h2>
 
-     <p class="govuk-body">
+    <p class="govuk-body">
+      You do not have permission to view or update bank account details for this business.
+    </p>
+
+    {% elif data.permissionsMVP == "view" %}
+
+    <h2 class="govuk-heading-m">
+      Bank account details
+    </h2>
+
+    <p class="govuk-body">
+      You do not have permission to view or update bank account details for this business.
+    </p>
+
+    {% else %}
+
+    <h2 class="govuk-heading-m">
+      Bank account details
+    </h2>
+
+    {% if data.bank == "empty" and data.bankchanged == "false" %}
+
+    <p class="govuk-body">
       This business has no bank details yet.
-     </p>
+    </p>
 
-     <p class="govuk-body">
+    <p class="govuk-body">
       <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-country">
         Add bank account details
-       </a>
-     </p>
+      </a>
+    </p>
 
-     {% else %}
-     <dl class="govuk-summary-list">
+    {% else %}
+    <dl class="govuk-summary-list">
       {% if data.bankchanged == "true" %}
       {% if (data['bankCountrybus'] == "European bank account") %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Country code where the account is held 
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{ data['bankCountryCodebus'] }}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-          </dd>
-        </div>
-        {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Country code where the account is held
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ data['bankCountryCodebus'] }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        </dd>
+      </div>
+      {% endif %}
       <div class="govuk-summary-list__row">
         {% if (data['bankAccountTypebus'] == "Business") %}
         <dt class="govuk-summary-list__key">
@@ -772,30 +836,30 @@
         </dd>
       </div>
       {% if (data['bankCountrybus'] == "UK bank or building society account") %}
-      
-        {% if data['bankBuildbus'] %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Building society roll number (if you have one) 
-          </dt>
-          <dd class="govuk-summary-list__value">
-            *******89
-          </dd>
-          <dd class="govuk-summary-list__actions">
-          </dd>
-        </div>
-        {% else %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Building society roll number (if you have one) 
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <span style="color:#505a5f">No number added</span>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-          </dd>
-        </div>
-        {% endif %}
+
+      {% if data['bankBuildbus'] %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Building society roll number (if you have one)
+        </dt>
+        <dd class="govuk-summary-list__value">
+          *******89
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        </dd>
+      </div>
+      {% else %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Building society roll number (if you have one)
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <span style="color:#505a5f">No number added</span>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        </dd>
+      </div>
+      {% endif %}
       {% elseif (data['bankCountrybus'] == "European bank account") %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -807,31 +871,31 @@
         <dd class="govuk-summary-list__actions">
         </dd>
       </div>
-        {% if data['bankSwiftCodebus'] %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            SWIFT code (optional)
-          </dt>
-          <dd class="govuk-summary-list__value">
-            ********34
-          </dd>
-          <dd class="govuk-summary-list__actions">
-          </dd>
-        </div>
-        {% else %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            SWIFT code (optional)
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <span style="color:#505a5f">No number added</span>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-          </dd>
-        </div>
-        {% endif %}
+      {% if data['bankSwiftCodebus'] %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          SWIFT code (optional)
+        </dt>
+        <dd class="govuk-summary-list__value">
+          ********34
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        </dd>
+      </div>
       {% else %}
-      {% endif %} 
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          SWIFT code (optional)
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <span style="color:#505a5f">No number added</span>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        </dd>
+      </div>
+      {% endif %}
+      {% else %}
+      {% endif %}
       {% else %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -874,9 +938,9 @@
         <dd class="govuk-summary-list__value">
           {% set _bankRollValue = myData.bankRollBus %}
           {% if _bankRollValue and _bankRollValue != "" %}
-            ****{{_bankRollValue.slice(_bankRollValue|length - 2)}}
+          ****{{_bankRollValue.slice(_bankRollValue|length - 2)}}
           {% else %}
-            <span style="color:#505a5f">No number added</span>
+          <span style="color:#505a5f">No number added</span>
           {% endif %}
         </dd>
         <dd class="govuk-summary-list__actions">
@@ -885,33 +949,14 @@
       {% endif %}
     </dl>
     <p>
-      <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-interruptor">Update bank account details</a>
-     </p>
-     {% endif %}
+      <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-interruptor">Update bank account
+        details</a>
+    </p>
+    {% endif %}
 
-     {% elif data.permissionsMVP == "amend" %}
+    {% endif %}
 
-     <h2 class="govuk-heading-m">
-       Bank account details 
-     </h2>
 
-     <p class="govuk-body">
-      You do not have permission to view or update bank account details for this business.
-     </p>
-
-     {% elif data.permissionsMVP == "view" %}
-
-     <h2 class="govuk-heading-m">
-       Bank account details 
-     </h2>
-
-     <p class="govuk-body">
-      You do not have permission to view or update bank account details for this business.
-     </p>
-
-   {% endif %}
-
-      
 
 
   </div>
