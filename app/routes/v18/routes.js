@@ -1632,4 +1632,11 @@ module.exports = function (router, _myData) {
         });
     });
 
+    //view land parcel alt
+    router.get('/' + version + '/view-land-parcel-alt', function (req, res) {
+        res.render(version + '/view-land-parcel-alt', {
+            myData: req.session.myData
+        });
+    });
+
 }

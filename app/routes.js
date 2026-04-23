@@ -86,6 +86,28 @@ router.post('/which-service-answer', function(request, response) {
     }
 })
 
+router.get('/satellite-style.json', function (req, res) {
+    res.setHeader('Content-Type', 'application/json')
+    res.send(JSON.stringify({
+        "version": 8,
+        "name": "Satellite",
+        "sources": {
+            "satellite": {
+                "type": "raster",
+                "tiles": [
+                    "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                ],
+                "tileSize": 256,
+                "attribution": "Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+                "scheme": "xyz"
+            }
+        },
+        "layers": [
+            { "id": "satellite-layer", "type": "raster", "source": "satellite", "minzoom": 0, "maxzoom": 22 }
+        ]
+    }))
+})
+
 require('./routes/v6/routes.js')(router);
 require('./routes/v7/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v8/routes.js')(router,JSON.parse(JSON.stringify(_myData)));

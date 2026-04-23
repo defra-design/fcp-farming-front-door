@@ -11,7 +11,7 @@
   serviceUrl: "#",
   navigation: [
     {
-      href: "/v18/view-land",
+      href: "/v18/view-land-alt",
       text: "View land",
       active: true
     },
@@ -141,8 +141,10 @@
 {% block main %}
 <main class="app-map-fullscreen" id="main-content">
 
+  <div id="map" class="app-map-fullscreen__map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
+
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Parcel details">
-    <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land">Back to land summary</a>
+    <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land-alt">Back to land summary</a>
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h2>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
@@ -189,8 +191,6 @@
 
   </div>
 
-  <div id="map" class="app-map-fullscreen__map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
-
 </main>
 {% endblock main %}
 
@@ -222,18 +222,6 @@
       'Road': '#787878',
       'Metalled track': '#505A5F',
       'Track - Natural Surface': '#B58840'
-    }
-
-    // Land covers rendered with a fillPattern to visually distinguish them.
-    const landCoverPatterns = {
-      'Farm Building': 'diagonal-cross-hatch',
-      'Farmyards': 'diagonal-cross-hatch',
-      'Hard Standings': 'diagonal-cross-hatch',
-      'Residential dwelling, House': 'diagonal-cross-hatch',
-      'Scrub - Ungrazeable': 'dot',
-      'Arable Land': 'horizontal-hatch',
-      'Permanent Grassland': 'vertical-hatch',
-      'Woodland': 'diagonal-cross-hatch'
     }
 
     // Get selected parcel from query string
@@ -330,22 +318,15 @@
 
         // Land cover datasets
         Object.entries(coversByType).forEach(([type, features]) => {
-          const color = landCoverColors[type] || '#CCCCCC'
-          const style = {
-            fill: color,
-            stroke: color,
-            strokeWidth: 1
-          }
-          if (landCoverPatterns[type]) {
-            style.fillPattern = landCoverPatterns[type]
-            style.fillPatternBackgroundColor = color
-            style.fillPatternForegroundColor = '#0b0c0c'
-          }
           datasets.push({
             id: 'lc-' + type.replace(/\s+/g, '-').toLowerCase(),
             label: type,
             geojson: { type: 'FeatureCollection', features },
-            style,
+            style: {
+              fill: landCoverColors[type] || '#CCCCCC',
+              stroke: landCoverColors[type] || '#CCCCCC',
+              strokeWidth: 1
+            },
             showInKey: true,
             showInLayers: false
           })

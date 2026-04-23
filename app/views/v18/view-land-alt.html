@@ -35,7 +35,6 @@
   <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
 
@@ -235,7 +234,6 @@
   <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
 
@@ -262,7 +260,6 @@
         defra.scaleBarPlugin({
           units: 'metric'
         }),
-        // defra.searchPlugin(),
         defra.mapStylesPlugin({
           mapStyles: [
             {
@@ -291,6 +288,16 @@
               appColorScheme: 'light',
               mapColorScheme: 'light',
               backgroundColor: '#f5f5f0'
+            },
+            {
+              id: 'satellite',
+              label: 'Satellite',
+              url: '/satellite-style.json',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              attribution: '© Esri, Maxar, Earthstar Geographics',
+              backgroundColor: '#1a1a1a',
+              mapColorScheme: 'dark',
+              appColorScheme: 'dark'
             }
           ]
         }),
@@ -398,7 +405,7 @@
         tr.className = 'govuk-table__row'
         tr.dataset.ngc = ngc
         tr.innerHTML = `
-          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel-alt?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
           <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
         `
