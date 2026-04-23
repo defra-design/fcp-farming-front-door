@@ -1043,7 +1043,7 @@ module.exports = function (router, _myData) {
             req.session.myData.notifications.message = "You have updated your business legal status"
         }
         if (req.query.bankchanged == "true") {
-            req.session.myData.notifications.message = "You have updated your business bank details"
+            req.session.myData.notifications.message = "You have updated your business bank account details"
         }
 
         res.render(version + '/details-business-details', {
