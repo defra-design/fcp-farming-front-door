@@ -215,8 +215,8 @@ module.exports = [
   {
     "pageid": "bd26-amend-DAL",
     "pagename": "Update your business details",
-    "pageurl": "business-fix-name-no-permission",
-    "pagedesc": "The business name needs updating before you can update your business details."
+    "pageurl": "business-fix-no-permission",
+    "pagedesc": "The [business name [AND/OR] VAT registration number needs updating before you can update your business details."
   },
   {
     "pageid": "bd27-DAL",
