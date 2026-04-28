@@ -1,9 +1,9 @@
-{% extends "layouts/main-rebrand.html" %}
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
 
 {% set _showFooterMVPLinks = true %}
 {% set _showReleaseLinks = false %}
 
-{% set pageName = "Your business" %}
+{% set pageName = "Start using the Farm and Land Service " %}
 {% set serviceName = "Farm and Land Service" %}
 
 
@@ -11,41 +11,18 @@
 
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
-"status": 'In development',
-"name": "SFD Home/Business Page",
-"id": "bp02",
-"url": "business-home?r=t&release=b1",
-"release": "Buffalo 1.0 MVP",
-"variants": [
-{
-"name": "SFD Home/Business Page (full and legal permissions - default)",
-"url": "business-home?r=t&release=b1&permissionsMVP=full"
-},
-{
-"name": "SFD Home/Business Page (amend permissions)",
-"url": "business-home?r=t&release=b1&permissionsMVP=amend"
-},
-{
-"name": "SFD Home/Business Page (view permissions)",
-"url": "business-home?r=t&release=b1&permissionsMVP=view"
-}
-
-],
-
-"pagetitle": pageName,
-"pagedesc": "",
-"pageurl": "",
-"errormessages": [
-
-],
-"notes": [
-"Conditional link text: the visible link text for 'View and update your business details' should change according to the
-permission level. See variants. Note that full, legal and amend permissions have the same link text."
-
-]
-
-}
-%}
+    "status": 'In development',
+    "name": "TO DO",
+    "id": "st01",
+    "release": "Buffalo MVP 1.1",
+    "pagetitle": pageName,
+    "pagedesc": "The starting point to sign in and start using the service.",
+    "pageurl": "start-farm-and-land",
+    "version" : "MVP-integration",
+    "prototypeurl" : "start-sfd-start"
+    
+  }
+  %}
 
 {% else %}
 
