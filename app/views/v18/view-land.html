@@ -185,7 +185,7 @@
         }
       },
       hint: {
-        text: "Enter a date to display an historical land summary. For example, 27 3 2007"
+        text: "Enter a date you want to see the information and map for. For example, 27 3 2007"
       }
     }) }}
 
@@ -275,24 +275,6 @@
               backgroundColor: '#f5f5f0'
             },
             {
-              id: 'positron',
-              label: 'Light',
-              url: 'https://tiles.openfreemap.org/styles/positron',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
-              appColorScheme: 'light',
-              mapColorScheme: 'light',
-              backgroundColor: '#ffffff'
-            },
-            {
-              id: 'bright',
-              label: 'Bright',
-              url: 'https://tiles.openfreemap.org/styles/bright',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-              appColorScheme: 'light',
-              mapColorScheme: 'light',
-              backgroundColor: '#f5f5f0'
-            },
-            {
               id: 'satellite',
               label: 'Satellite',
               url: '/satellite-style.json',
@@ -301,7 +283,26 @@
               backgroundColor: '#1a1a1a',
               mapColorScheme: 'dark',
               appColorScheme: 'dark'
-            }
+            },
+            {
+              id: 'positron',
+              label: 'Light',
+              url: 'https://tiles.openfreemap.org/styles/positron',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#ffffff'
+            },
+            // {
+            //   id: 'bright',
+            //   label: 'Bright',
+            //   url: 'https://tiles.openfreemap.org/styles/bright',
+            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+            //   appColorScheme: 'light',
+            //   mapColorScheme: 'light',
+            //   backgroundColor: '#f5f5f0'
+            // },
+
           ]
         }),
         interact

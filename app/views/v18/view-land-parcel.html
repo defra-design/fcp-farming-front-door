@@ -145,6 +145,16 @@
     <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land">Back to land summary</a>
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h2>
 
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2>
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Last updated</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">1 January 2010</td>
+        </tr>
+      </tbody>
+    </table>
+
     <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
     <table class="govuk-table govuk-!-margin-bottom-4">
       <tbody class="govuk-table__body">
@@ -375,6 +385,7 @@
           minZoom: 6,
           maxZoom: 18,
           enableZoomControls: true,
+          hasExitButton: true,
           mapStyle: {
             url: 'https://tiles.openfreemap.org/styles/liberty',
             attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
@@ -386,44 +397,45 @@
             }),
             defra.mapStylesPlugin({
               mapStyles: [
-                {
-                  id: 'liberty',
-                  label: 'Default',
-                  url: 'https://tiles.openfreemap.org/styles/liberty',
-                  thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-                  appColorScheme: 'light',
-                  mapColorScheme: 'light',
-                  backgroundColor: '#f5f5f0'
-                },
-                {
-                  id: 'positron',
-                  label: 'Light',
-                  url: 'https://tiles.openfreemap.org/styles/positron',
-                  thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
-                  appColorScheme: 'light',
-                  mapColorScheme: 'light',
-                  backgroundColor: '#ffffff'
-                },
-                {
-                  id: 'bright',
-                  label: 'Bright',
-                  url: 'https://tiles.openfreemap.org/styles/bright',
-                  thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-                  appColorScheme: 'light',
-                  mapColorScheme: 'light',
-                  backgroundColor: '#f5f5f0'
-                },
-                {
-                  id: 'satellite',
-                  label: 'Satellite',
-                  url: '/satellite-style.json',
-                  thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
-                  attribution: '© Esri, Maxar, Earthstar Geographics',
-                  backgroundColor: '#1a1a1a',
-                  mapColorScheme: 'dark',
-                  appColorScheme: 'dark'
-                }
-              ]
+            {
+              id: 'liberty',
+              label: 'Default',
+              url: 'https://tiles.openfreemap.org/styles/liberty',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#f5f5f0'
+            },
+            {
+              id: 'satellite',
+              label: 'Satellite',
+              url: '/satellite-style.json',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              attribution: '© Esri, Maxar, Earthstar Geographics',
+              backgroundColor: '#1a1a1a',
+              mapColorScheme: 'dark',
+              appColorScheme: 'dark'
+            },
+            {
+              id: 'positron',
+              label: 'Light',
+              url: 'https://tiles.openfreemap.org/styles/positron',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#ffffff'
+            },
+            // {
+            //   id: 'bright',
+            //   label: 'Bright',
+            //   url: 'https://tiles.openfreemap.org/styles/bright',
+            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+            //   appColorScheme: 'light',
+            //   mapColorScheme: 'light',
+            //   backgroundColor: '#f5f5f0'
+            // },
+
+          ]
             }),
             datasetsPlugin
           ]

@@ -147,6 +147,16 @@
     <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land-alt">Back to land summary</a>
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h2>
 
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2>
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Last updated</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">1 January 2010</td>
+        </tr>
+      </tbody>
+    </table>
+
     <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
     <table class="govuk-table govuk-!-margin-bottom-4">
       <tbody class="govuk-table__body">
@@ -222,6 +232,18 @@
       'Road': '#787878',
       'Metalled track': '#505A5F',
       'Track - Natural Surface': '#B58840'
+    }
+
+    // Land covers rendered with a fillPattern to visually distinguish them.
+    const landCoverPatterns = {
+      'Farm Building': 'diagonal-cross-hatch',
+      'Farmyards': 'diagonal-cross-hatch',
+      'Hard Standings': 'diagonal-cross-hatch',
+      'Residential dwelling, House': 'diagonal-cross-hatch',
+      'Scrub - Ungrazeable': 'dot',
+      'Arable Land': 'horizontal-hatch',
+      'Permanent Grassland': 'vertical-hatch',
+      'Woodland': 'diagonal-cross-hatch'
     }
 
     // Get selected parcel from query string
@@ -318,15 +340,22 @@
 
         // Land cover datasets
         Object.entries(coversByType).forEach(([type, features]) => {
+          const color = landCoverColors[type] || '#CCCCCC'
+          const style = {
+            fill: color,
+            stroke: color,
+            strokeWidth: 1
+          }
+          if (landCoverPatterns[type]) {
+            style.fillPattern = landCoverPatterns[type]
+            style.fillPatternBackgroundColor = color
+            style.fillPatternForegroundColor = '#0b0c0c'
+          }
           datasets.push({
             id: 'lc-' + type.replace(/\s+/g, '-').toLowerCase(),
             label: type,
             geojson: { type: 'FeatureCollection', features },
-            style: {
-              fill: landCoverColors[type] || '#CCCCCC',
-              stroke: landCoverColors[type] || '#CCCCCC',
-              strokeWidth: 1
-            },
+            style,
             showInKey: true,
             showInLayers: false
           })
@@ -356,6 +385,7 @@
           minZoom: 6,
           maxZoom: 18,
           enableZoomControls: true,
+          hasExitButton: true,
           mapStyle: {
             url: 'https://tiles.openfreemap.org/styles/liberty',
             attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
@@ -367,44 +397,45 @@
             }),
             defra.mapStylesPlugin({
               mapStyles: [
-                {
-                  id: 'liberty',
-                  label: 'Default',
-                  url: 'https://tiles.openfreemap.org/styles/liberty',
-                  thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-                  appColorScheme: 'light',
-                  mapColorScheme: 'light',
-                  backgroundColor: '#f5f5f0'
-                },
-                {
-                  id: 'positron',
-                  label: 'Light',
-                  url: 'https://tiles.openfreemap.org/styles/positron',
-                  thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
-                  appColorScheme: 'light',
-                  mapColorScheme: 'light',
-                  backgroundColor: '#ffffff'
-                },
-                {
-                  id: 'bright',
-                  label: 'Bright',
-                  url: 'https://tiles.openfreemap.org/styles/bright',
-                  thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-                  appColorScheme: 'light',
-                  mapColorScheme: 'light',
-                  backgroundColor: '#f5f5f0'
-                },
-                {
-                  id: 'satellite',
-                  label: 'Satellite',
-                  url: '/satellite-style.json',
-                  thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
-                  attribution: '© Esri, Maxar, Earthstar Geographics',
-                  backgroundColor: '#1a1a1a',
-                  mapColorScheme: 'dark',
-                  appColorScheme: 'dark'
-                }
-              ]
+            {
+              id: 'liberty',
+              label: 'Default',
+              url: 'https://tiles.openfreemap.org/styles/liberty',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#f5f5f0'
+            },
+            {
+              id: 'satellite',
+              label: 'Satellite',
+              url: '/satellite-style.json',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              attribution: '© Esri, Maxar, Earthstar Geographics',
+              backgroundColor: '#1a1a1a',
+              mapColorScheme: 'dark',
+              appColorScheme: 'dark'
+            },
+            {
+              id: 'positron',
+              label: 'Light',
+              url: 'https://tiles.openfreemap.org/styles/positron',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#ffffff'
+            },
+            // {
+            //   id: 'bright',
+            //   label: 'Bright',
+            //   url: 'https://tiles.openfreemap.org/styles/bright',
+            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+            //   appColorScheme: 'light',
+            //   mapColorScheme: 'light',
+            //   backgroundColor: '#f5f5f0'
+            // },
+
+          ]
             }),
             datasetsPlugin
           ]
