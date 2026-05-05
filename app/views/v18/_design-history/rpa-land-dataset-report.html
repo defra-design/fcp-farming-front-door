@@ -1,0 +1,548 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set pageName="RPA Land data — dataset report" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">V18</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="design-history">Design history</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Design history</span>
+      RPA Land data — what we can and can't do
+    </h1>
+
+    <p class="govuk-body">
+      A pragmatic reference for product, design and engineering conversations
+      about the <strong>RPA Land</strong> open data feeds. Based on direct
+      probing of the live API in April 2026 against three real SBIs
+      (<code>106332870</code>, <code>111089693</code>, <code>113319980</code>).
+    </p>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body">
+        The RPA Land WFS is a <strong>read-only, current-state snapshot</strong>
+        of every land parcel, land cover and hedgerow registered against an SBI.
+        There is <strong>no version history exposed</strong> — historical
+        and superseded rows are filtered out at source. We can show farmers
+        what their land <em>is</em> today, and which parcels were updated
+        since a given date, but we cannot show them what their land
+        <em>used to be</em> or what specifically changed within a parcel.
+      </p>
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        Changes are atomic at the parcel level: when RPA edits a parcel,
+        every land cover on it gets a new timestamp simultaneously. So
+        "show me which covers were added in 2024" is, in practice, the same
+        query as "show me which parcels were touched in 2024".
+      </p>
+    </div>
+
+
+    <h2 class="govuk-heading-l">1. The dataset</h2>
+
+    <h3 class="govuk-heading-m">What it is</h3>
+
+    <p class="govuk-body">
+      The RPA (Rural Payments Agency) Land Reference data, served via the
+      <a class="govuk-link" href="https://environment.data.gov.uk/rpa/api-doc/" rel="noreferrer noopener" target="_blank">RPA API documentation page (opens in new tab)</a>
+      as three OGC Web Feature Service (WFS) endpoints.
+    </p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Endpoints and feature shape</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Dataset</th>
+          <th scope="col" class="govuk-table__header">Endpoint suffix</th>
+          <th scope="col" class="govuk-table__header">One row represents</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><strong>LandParcels</strong></td>
+          <td class="govuk-table__cell"><code>/RPA/LandParcels/wfs/</code></td>
+          <td class="govuk-table__cell">A registered land parcel (MultiPolygon)</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><strong>LandCovers</strong></td>
+          <td class="govuk-table__cell"><code>/RPA/LandCovers/wfs/</code></td>
+          <td class="govuk-table__cell">A specific cover (Arable Land, Permanent Grassland, Farm Building, etc.) on a parcel</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><strong>HedgeControl</strong></td>
+          <td class="govuk-table__cell"><code>/RPA/HedgeControl/wfs/</code></td>
+          <td class="govuk-table__cell">A hedgerow segment associated with a parcel (Linestring)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="govuk-body">
+      Base URL: <code>https://environment.data.gov.uk/data-services/</code>.
+    </p>
+
+
+    <h3 class="govuk-heading-m">Update cadence</h3>
+
+    <p class="govuk-body">
+      The documentation states the three datasets are updated twice a week,
+      with loads applied within 24 hours of submission.
+    </p>
+
+    <p class="govuk-body">
+      There is <strong>no documented "modified since" endpoint</strong>, so
+      any "what's new" feature has to derive that signal from the temporal
+      fields below.
+    </p>
+
+
+    <h3 class="govuk-heading-m">Authentication and access model</h3>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>No API key.</strong> Access is gated by SBI (Single Business Identifier).</li>
+      <li>Every request <strong>must</strong> include <code>cql_filter=SBI=&lt;sbi&gt;</code>; the server short-circuits with <code>"Missing SBI"</code> or <code>"Invalid SBI"</code> before parsing anything else.</li>
+      <li>CORS is open (<code>Access-Control-Allow-Origin: *</code>), so browser-side <code>fetch()</code> works directly. No backend proxy is required for SBI-scoped queries.</li>
+      <li>The <code>/wfs</code> path 308-redirects to <code>/wfs/</code> (trailing slash) — fine in browsers, a gotcha for <code>curl</code> without <code>-L</code>.</li>
+    </ul>
+
+
+    <h3 class="govuk-heading-m">Schema — the fields that matter</h3>
+
+    <p class="govuk-body">
+      All three datasets share these temporal fields with identical names and
+      identical descriptions.
+    </p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Temporal fields (verbatim from docs)</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Field</th>
+          <th scope="col" class="govuk-table__header">Description</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>VALID_FROM</code></td>
+          <td class="govuk-table__cell">Date on which the feature became valid</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>VALID_TO</code></td>
+          <td class="govuk-table__cell">Date on which the feature ceased to be valid</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>CREATED_ON</code></td>
+          <td class="govuk-table__cell">Date on which the feature was created</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="govuk-body">
+      <strong>Date format:</strong> all three are stored as 14-character strings
+      <code>YYYYMMDDhhmmss</code> — for example <code>20230102094250</code>.
+      They sort lexicographically. The CQL parser accepts ISO literals
+      (<code>'2024-01-01'</code>) for comparisons against these fields and does
+      the right thing.
+    </p>
+
+    <p class="govuk-body">
+      <strong>The "still valid" sentinel:</strong> <code>VALID_TO = '99991231000000'</code>
+      (year 9999) means "currently valid". It is never NULL on returned rows. To
+      find "active features" you compare against the sentinel, not check for NULL.
+    </p>
+
+    <p class="govuk-body">Per-dataset identifying fields:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>LandParcels:</strong> <code>SBI</code>, <code>SHEET_ID</code>, <code>PARCEL_ID</code>, <code>AREA_HA</code>, <code>LFA_CODE</code>, <code>ID</code></li>
+      <li><strong>LandCovers:</strong> <code>SBI</code>, <code>SHEET_ID</code>, <code>PARCEL_ID</code>, <code>LAND_COVER_CLASS_CODE</code>, <code>DESCRIPTION</code>, <code>AREA_HA</code>, <code>REFERENCE_PARCELS_ID</code></li>
+      <li><strong>HedgeControl:</strong> <code>SBI</code>, <code>REF_PARCEL_SHEET_ID</code>, <code>REF_PARCEL_PARCEL_ID</code>, <code>LENGTH</code>, <code>ELIGIBLE_FOR_EFA</code>, plus <code>ADJACENT_PARCEL_*</code> fields</li>
+    </ul>
+
+
+    <h2 class="govuk-heading-l">2. What you can do (verified working)</h2>
+
+    <h3 class="govuk-heading-m">Filter by SBI</h3>
+    <p class="govuk-body">Mandatory baseline — <code>cql_filter=SBI=&lt;numeric-sbi&gt;</code>.</p>
+
+    <h3 class="govuk-heading-m">Filter by PARCEL_ID</h3>
+    <p class="govuk-body">
+      Verified working: <code>SBI=… AND PARCEL_ID=6743</code> returns the cover or parcel rows for that parcel.
+    </p>
+
+    <h3 class="govuk-heading-m">Spatial filtering via INTERSECTS</h3>
+    <p class="govuk-body">
+      Per the docs: <code>INTERSECTS(geom, POLYGON((…)))</code> is appended to the SBI clause to limit by area-of-interest.
+    </p>
+
+    <h3 class="govuk-heading-m">Temporal queries</h3>
+    <p class="govuk-body">
+      All three temporal fields are queryable with multiple CQL syntaxes. All return identical row counts (the parser normalises across forms).
+    </p>
+
+    <pre class="app-code-block"><code>AND CREATED_ON &gt; '2020-01-01'
+AND CREATED_ON AFTER 2020-01-01T00:00:00Z
+AND CREATED_ON BETWEEN '2020-01-01' AND '2026-04-29'
+AND VALID_FROM AFTER 2020-01-01T00:00:00Z</code></pre>
+
+    <h3 class="govuk-heading-m">Pagination</h3>
+    <p class="govuk-body">
+      <code>count=N&amp;startIndex=M</code> work as documented.
+    </p>
+
+    <h3 class="govuk-heading-m">GeoJSON output</h3>
+    <p class="govuk-body">
+      <code>outputFormat=application/json</code> returns a standard GeoJSON
+      <code>FeatureCollection</code> with EPSG:4326 (or 27700) coordinates
+      depending on <code>srsname</code>.
+    </p>
+
+
+    <h2 class="govuk-heading-l">3. What you can't do (or have to work around)</h2>
+
+    <h3 class="govuk-heading-m">No OR in cql_filter</h3>
+    <p class="govuk-body">
+      The docs note: "OR cannot be present anywhere in the <code>cql_filter</code>.
+      This will result in a 400 error." Verified — the server rejects compound
+      filters. Anything that would naturally be expressed as a union has to
+      be split into multiple parallel requests and merged client-side.
+    </p>
+
+
+    <h3 class="govuk-heading-m">No historical versions in the dataset</h3>
+
+    <p class="govuk-body">
+      This is the single most important constraint for product framing.
+    </p>
+
+    <p class="govuk-body">
+      I queried each of the three SBIs for "give me all rows where
+      <code>VALID_TO != '99991231000000'</code>" — i.e. anything superseded.
+    </p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Historical row counts across three SBIs</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">SBI</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Parcels</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Covers</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Historical rows</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>106332870</code></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">33</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">56</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><strong>0</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>111089693</code></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">104</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">173</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><strong>0</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>113319980</code></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">152</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">861</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><strong>0</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="govuk-body">
+      <strong>Across 289 physical parcels and 1,090 cover rows, zero
+      non-current rows were returned.</strong> This is consistent enough
+      across two orders of magnitude of farm size to be near-certainly a
+      deliberate filter at the publishing layer, not a coincidence of test
+      data.
+    </p>
+
+    <p class="govuk-body">Practical implications:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>We <strong>cannot</strong> show "this cover used to be Arable Land, now it's Permanent Grassland".</li>
+      <li>We <strong>cannot</strong> show pure deletions — a parcel that was removed simply isn't in the response.</li>
+      <li>We <strong>cannot</strong> reconstruct a parcel-level timeline of edits.</li>
+      <li>Any "what changed" view is constrained to <em>additions and replacements visible as new currently-valid rows</em> — it can't include "what was removed".</li>
+    </ul>
+
+
+    <h3 class="govuk-heading-m">No "modified since" delta endpoint</h3>
+    <p class="govuk-body">
+      The docs note that the data refreshes twice a week, but there is no
+      documented way to ask "what changed in the last load". The closest proxy
+      is <code>CREATED_ON &gt; &lt;last-poll-date&gt;</code>, which catches new
+      rows but misses pure removals.
+    </p>
+
+
+    <h3 class="govuk-heading-m">String-quoted CQL values are blocked by the Azure WAF</h3>
+
+    <p class="govuk-body">
+      The endpoint sits behind Microsoft Azure App Gateway, which 403s any
+      request whose URL contains an encoded single quote (<code>%27</code>)
+      around a non-numeric value.
+    </p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Filter syntax probe results</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Filter</th>
+          <th scope="col" class="govuk-table__header">Result</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>SHEET_ID=TQ1872</code> (no quotes)</td>
+          <td class="govuk-table__cell">400 — CQL parser interprets <code>TQ1872</code> as a property reference</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>SHEET_ID='TQ1872'</code> (single-quoted, encoded as <code>%27</code>)</td>
+          <td class="govuk-table__cell">403 — WAF blocks</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>SHEET_ID="TQ1872"</code> (double-quoted)</td>
+          <td class="govuk-table__cell">400 — CQL doesn't accept this form</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><code>CREATED_ON &gt; '2020-01-01'</code> (single-quoted <em>date</em>)</td>
+          <td class="govuk-table__cell">200 — works</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="govuk-body">
+      So <strong>string-typed fields can't be filtered server-side at all</strong>
+      through this gateway. Date literals slip through because the WAF apparently
+      allows quote+digit patterns but not quote+letter ones.
+    </p>
+
+    <p class="govuk-body">
+      <strong>Workaround:</strong> filter on numeric/date fields server-side,
+      then disambiguate by string fields client-side once the (smaller) result
+      set is in hand.
+    </p>
+
+
+    <h3 class="govuk-heading-m">PARCEL_ID is not unique within an SBI</h3>
+
+    <p class="govuk-body">
+      Within a single SBI, two physical parcels on different OS map sheets can
+      share the same numeric <code>PARCEL_ID</code>. Confirmed in SBI
+      <code>113319980</code>: <code>PARCEL_ID=9420</code> exists on both
+      <code>SHEET_ID=TQ1872</code> (3 covers, last touched 2026-03) and
+      <code>SHEET_ID=TQ1470</code> (1 cover, last touched 2018-11) — two
+      genuinely different parcels.
+    </p>
+
+    <p class="govuk-body">
+      True identity is <strong>(SHEET_ID + PARCEL_ID)</strong>. Combined with
+      the WAF constraint above, this means production code must filter
+      <code>PARCEL_ID</code> server-side and <code>SHEET_ID</code> client-side
+      — the natural single-query form is unavailable.
+    </p>
+
+
+    <h3 class="govuk-heading-m">Updates are atomic at the parcel level</h3>
+    <p class="govuk-body">
+      Within a single (SHEET_ID, PARCEL_ID) physical parcel, <strong>every land
+      cover row shares the same <code>VALID_FROM</code> and <code>CREATED_ON</code></strong>
+      — across all 289 parcels we tested, zero exceptions. This means:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>"Show me which individual covers changed on this parcel" doesn't exist as a meaningful query — they all change together.</li>
+      <li>The "last updated" date is one timestamp per parcel, not per cover.</li>
+      <li>"Date added" per cover is uniform within a parcel — not useful at parcel-detail granularity.</li>
+      <li>"Changes since X" at the SBI level is meaningful (different parcels have different timestamps); at the single-parcel level it's binary (touched or not touched).</li>
+    </ul>
+
+
+    <h3 class="govuk-heading-m">No who/why metadata</h3>
+    <p class="govuk-body">
+      The schema exposes timestamps but not actor or reason. There is no audit
+      trail — we can't tell a farmer who edited their parcel or what the change
+      was for.
+    </p>
+
+
+    <h2 class="govuk-heading-l">4. How this maps to farmer-facing user stories</h2>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">User-story matrix</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">User story</th>
+          <th scope="col" class="govuk-table__header">Possible?</th>
+          <th scope="col" class="govuk-table__header">Notes</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Show me my current land — parcels, covers, hedges"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Yes</strong></td>
+          <td class="govuk-table__cell">The dataset is current-state. Three fetches, GeoJSON, render.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Show me my land as it was on 1 January 2020"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">No</strong></td>
+          <td class="govuk-table__cell">No historical rows. The current snapshot is the only snapshot.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Which of my parcels were updated since [date]?"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Yes</strong></td>
+          <td class="govuk-table__cell"><code>CREATED_ON BETWEEN &lt;date&gt; AND &lt;today&gt;</code>. Each result represents a touched parcel.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"What changed within my parcel TQ1872 9420?"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partial</strong></td>
+          <td class="govuk-table__cell">Can answer "yes, it was touched on [date]" but not "X was added, Y was removed".</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"When was this parcel last updated?"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Yes</strong></td>
+          <td class="govuk-table__cell"><code>MAX(VALID_FROM)</code> on the parcel's covers — they're all uniform.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Was a parcel removed from my farm at some point?"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">No</strong></td>
+          <td class="govuk-table__cell">Removed parcels simply aren't in the response.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Show me the previous version of this cover before it was changed"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">No</strong></td>
+          <td class="govuk-table__cell">No version history exposed.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Audit trail: who edited this and why?"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">No</strong></td>
+          <td class="govuk-table__cell">No actor/reason fields.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Find all my parcels in a specific area"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Yes</strong></td>
+          <td class="govuk-table__cell"><code>INTERSECTS(geom, POLYGON(…))</code>.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Real-time updates when RPA changes something"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">No</strong></td>
+          <td class="govuk-table__cell">Twice-weekly refresh, no push, no webhook, no delta endpoint. Polling is the only option.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Show me what's new on my farm in the last month"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partial</strong></td>
+          <td class="govuk-table__cell">Catches additions and edits-as-new-rows; misses pure deletions.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">"Total area of arable land on my farm"</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Yes</strong></td>
+          <td class="govuk-table__cell">Sum <code>AREA_HA</code> across covers where <code>DESCRIPTION = 'Arable Land'</code> (filtered client-side, see WAF note).</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <h2 class="govuk-heading-l">5. Operational notes</h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Coordinate systems:</strong> <code>srsname=EPSG:4326</code> (WGS84 lat/lon) for browser map use, <code>EPSG:27700</code> (British National Grid) for analytical work. Both supported.</li>
+      <li><strong>Pagination defaults:</strong> server returns up to a default page size; use <code>count=</code> to control, <code>startIndex=</code> to walk.</li>
+      <li><strong>Geometry size:</strong> <code>MultiPolygon</code> features for parcels and covers can be large (10–50 KB each for irregular parcels). For SBI <code>113319980</code>'s 861-cover dataset, the response is several MB. Filtering server-side wherever possible matters.</li>
+      <li><strong>Trailing slash on <code>/wfs</code>:</strong> 308-redirects to <code>/wfs/</code>. Browsers handle automatically; <code>curl</code> needs <code>-L</code>.</li>
+      <li><strong>Error format:</strong> missing/invalid SBI returns a JSON <code>{"error": "…"}</code> with HTTP 400. CQL syntax errors return XML <code>ows:ExceptionReport</code> with HTTP 400.</li>
+      <li><strong>Empirical date span</strong> observed across the three test SBIs: 2010 → February 2026. Dates are real and meaningful for "since when" queries on plausibly long horizons.</li>
+    </ul>
+
+
+    <h2 class="govuk-heading-l">6. Recommendations for product framing</h2>
+
+    <p class="govuk-body">
+      When briefing stakeholders or designing flows:
+    </p>
+
+    <ol class="govuk-list govuk-list--number">
+      <li><strong>Position this as a "current land record" service</strong>, not a "land history" service. Anything past-tense beyond "this parcel was last touched on X" is out of reach.</li>
+      <li><strong>Talk about changes at parcel granularity, not cover granularity.</strong> The dataset isn't structured to support cover-level diffs even if the UI suggests otherwise.</li>
+      <li><strong>Don't promise "what was removed" features.</strong> Removed parcels and covers vanish silently from the data. If that's a hard requirement, RPA would need to expose a separate audit feed — that's an upstream conversation, not something we can hack around.</li>
+      <li><strong>Plan for polling, not push.</strong> Twice-weekly refresh, no webhooks. Any "alert me when something changes" feature has to be built on a scheduled job.</li>
+      <li>
+        <strong>Two genuinely useful "change" patterns are accessible today:</strong>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>List-page filter:</strong> "Show me only the parcels updated since [date]" — meaningfully narrows large farms (104 parcels → 8 in our tests).</li>
+          <li><strong>Per-parcel last-updated stamp:</strong> "This parcel was last edited on [date]" — single, accurate, derived from <code>MAX(VALID_FROM)</code>.</li>
+        </ul>
+      </li>
+    </ol>
+
+    <p class="govuk-body">
+      Anything richer (timeline, diff, history) needs a different data source.
+    </p>
+
+
+    <h2 class="govuk-heading-l">Appendix — sample CQL queries that are known to work</h2>
+
+    <pre class="app-code-block"><code># Baseline
+cql_filter=SBI=106332870
+
+# Time-bound — covers added since 2024
+cql_filter=SBI=106332870 AND CREATED_ON BETWEEN '2024-01-01' AND '2026-04-29'
+
+# Specific parcel (server-side numeric, then client-side SHEET_ID filter)
+cql_filter=SBI=106332870 AND PARCEL_ID=6743
+
+# Hedge for parcel
+cql_filter=SBI=106332870 AND REF_PARCEL_PARCEL_ID=6743</code></pre>
+
+    <p class="govuk-body">
+      URL-encode the filter (<code>encodeURIComponent</code> in JS). Append
+      <code>&amp;srsname=EPSG:4326&amp;outputFormat=application/json</code>
+      for browser use.
+    </p>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+<style>
+  .app-code-block {
+    background: #f3f2f1;
+    border-left: 5px solid #b1b4b6;
+    padding: 15px;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+  .app-code-block code {
+    background: transparent;
+    padding: 0;
+    white-space: pre;
+  }
+</style>
+{% endblock %}

@@ -152,7 +152,7 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">Last updated</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">1 January 2010</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-last-updated"></td>
         </tr>
       </tbody>
     </table>
@@ -198,6 +198,14 @@
       </thead>
       <tbody class="govuk-table__body" id="hedgerows-table-body"></tbody>
     </table>
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    {{ govukButton({
+      text: "Download PDF of land parcel",
+      classes: "govuk-button--secondary",
+      href: "/public/pdf/example-land-parcel.pdf"
+    }) }}
 
   </div>
 
@@ -251,11 +259,41 @@
     const selectedNgc = urlParams.get('parcel')
 
     if (selectedNgc) {
+      // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
+      // We can't filter SHEET_ID server-side (the WAF rejects URL-encoded quotes
+      // around the alphanumeric value), so we keep PARCEL_ID on the wire and
+      // disambiguate by SHEET_ID client-side once features arrive.
+      const sheetId = selectedNgc.substring(0, 6)
       const parcelId = selectedNgc.substring(6)
       const sbi = '106332870'
 
+      // If the parent page passed a ?from-date-* window, scope the covers fetch
+      // to "covers that came into existence on/after that date" via CREATED_ON.
+      // (The WFS only exposes currently-valid rows, so this is the only "change"
+      // signal we have — VALID_FROM is then displayed per row.)
+      function buildDateClause () {
+        const d = urlParams.get('from-date-day')
+        const m = urlParams.get('from-date-month')
+        const y = urlParams.get('from-date-year')
+        if (!d || !m || !y) return ''
+        const iso = `${y.padStart(4, '0')}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
+        const dt = new Date(iso)
+        if (isNaN(dt.getTime()) || dt > new Date()) return ''
+        const today = new Date().toISOString().slice(0, 10)
+        return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
+      }
+      const coversCql = `SBI=${sbi} AND PARCEL_ID=${parcelId}${buildDateClause()}`
+
+      // Format YYYYMMDDhhmmss → 'DD MMM YYYY' for display.
+      function fmtValidFrom (v) {
+        if (!v || v.length < 8) return ''
+        const dt = new Date(`${v.slice(0,4)}-${v.slice(4,6)}-${v.slice(6,8)}`)
+        if (isNaN(dt.getTime())) return ''
+        return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+      }
+
       const parcelUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}+AND+PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
-      const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=SBI=${sbi}+AND+PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
+      const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(coversCql)}&srsname=EPSG:4326&outputFormat=application/json`
       const hedgeUrl = `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
 
       // Fetch data FIRST, then create the map with datasets in the initial config
@@ -265,7 +303,9 @@
         fetch(hedgeUrl).then(r => r.json())
       ]).then(([parcelData, landCoversData, hedgeData]) => {
 
-        const selectedFeature = parcelData.features[0]
+        // Disambiguate by SHEET_ID — the server-side filter only includes
+        // PARCEL_ID, which can collide across sheets within a single SBI.
+        const selectedFeature = (parcelData.features || []).find(f => f.properties.SHEET_ID === sheetId)
         if (!selectedFeature) return
 
         selectedFeature.properties.ngc = selectedFeature.properties.SHEET_ID + selectedFeature.properties.PARCEL_ID
@@ -278,15 +318,18 @@
         document.getElementById('parcel-total-area').textContent =
           parseFloat(selectedFeature.properties.AREA_HA).toFixed(4)
 
-        // Populate land covers sidebar
-        const parcelCovers = landCoversData.features || []
+        // Populate land covers sidebar (filter to this sheet — see SHEET_ID note above)
+        const parcelCovers = (landCoversData.features || []).filter(f => f.properties.SHEET_ID === sheetId)
         document.getElementById('parcel-land-covers').textContent = parcelCovers.length
 
         const lcTableBody = document.getElementById('land-covers-table-body')
         let lcTotalArea = 0
+        let lcMaxValidFrom = ''   // YYYYMMDDhhmmss strings sort lexicographically; drives "Last updated"
         parcelCovers.forEach(f => {
           const area = parseFloat(f.properties.AREA_HA)
           lcTotalArea += area
+          const vf = f.properties.VALID_FROM || ''
+          if (vf > lcMaxValidFrom) lcMaxValidFrom = vf
           const tr = document.createElement('tr')
           tr.className = 'govuk-table__row'
           tr.innerHTML = `
@@ -295,16 +338,27 @@
           `
           lcTableBody.appendChild(tr)
         })
-        const lcTotalRow = document.createElement('tr')
-        lcTotalRow.className = 'govuk-table__row'
-        lcTotalRow.innerHTML = `
-          <td class="govuk-table__cell" style="font-weight:700">Total</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${lcTotalArea.toFixed(4)}</td>
-        `
-        lcTableBody.appendChild(lcTotalRow)
 
-        // Populate hedgerows sidebar
-        const parcelHedges = hedgeData.features || []
+        if (parcelCovers.length === 0) {
+          const tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          tr.innerHTML = '<td class="govuk-table__cell" colspan="2">No changes to land covers in this period.</td>'
+          lcTableBody.appendChild(tr)
+        } else {
+          const lcTotalRow = document.createElement('tr')
+          lcTotalRow.className = 'govuk-table__row'
+          lcTotalRow.innerHTML = `
+            <td class="govuk-table__cell" style="font-weight:700">Total</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${lcTotalArea.toFixed(4)}</td>
+          `
+          lcTableBody.appendChild(lcTotalRow)
+        }
+
+        document.getElementById('parcel-last-updated').textContent =
+          lcMaxValidFrom ? fmtValidFrom(lcMaxValidFrom) : '–'
+
+        // Populate hedgerows sidebar (filter to this sheet — see SHEET_ID note above)
+        const parcelHedges = (hedgeData.features || []).filter(f => f.properties.REF_PARCEL_SHEET_ID === sheetId)
         document.getElementById('parcel-hedgerows').textContent = parcelHedges.length
 
         const hTableBody = document.getElementById('hedgerows-table-body')
@@ -361,7 +415,7 @@
           })
         })
 
-        // Parcel outline dataset (last = on top)
+        // Parcel outline dataset
         datasets.push({
           id: 'parcel-outline',
           label: selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID,
@@ -374,6 +428,22 @@
           showInKey: false,
           showInLayers: false
         })
+
+        // Hedgerow dataset (last = on top, so boundary hedges aren't hidden by the parcel outline)
+        if (parcelHedges.length > 0) {
+          datasets.push({
+            id: 'hedgerows',
+            label: 'Hedgerow',
+            geojson: { type: 'FeatureCollection', features: parcelHedges },
+            style: {
+              stroke: '#00703c',
+              strokeWidth: 6,
+              keySymbolShape: 'line'
+            },
+            showInKey: true,
+            showInLayers: false
+          })
+        }
 
         // Create the map with all datasets in the initial config
         const datasetsPlugin = defra.datasetsMaplibrePlugin({ datasets })

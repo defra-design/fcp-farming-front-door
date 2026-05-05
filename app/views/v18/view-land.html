@@ -39,6 +39,10 @@
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
 
+  <link rel="prefetch" href="/v18/view-land-parcel" as="document">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/index.js">
+
   <style>
   /* Fullscreen 2-column layout: GOV.UK header + service nav stack at the top,
      <main> fills the remaining viewport, sidebar + map sit side-by-side. */
@@ -173,28 +177,29 @@
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Map controls">
     <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">Land summary</h1>
     {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
-
-    {{ govukDateInput({
-      id: "passport-issued",
-      namePrefix: "passport-issued",
-      fieldset: {
-        legend: {
-          text: "Enter a date to view a land summary",
-          isPageHeading: true,
-          classes: "govuk-fieldset__legend--s"
-        }
-      },
-      hint: {
-        text: "Enter a date you want to see the information and map for. For example, 27 3 2007"
-      }
-    }) }}
-
     {% from "govuk/components/button/macro.njk" import govukButton %}
 
-    {{ govukButton({
-      classes: "govuk-!-margin-bottom-0",
-      text: "Search"
-    }) }}
+    <form method="get" action="" novalidate>
+      {{ govukDateInput({
+        id: "from-date",
+        namePrefix: "from-date",
+        fieldset: {
+          legend: {
+            text: "Enter a date",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        hint: {
+          text: "Enter a date to see the land details and map for a specific date in the past, for example, 27 3 2007. Leave blank for today’s date."
+        }
+      }) }}
+
+      {{ govukButton({
+        classes: "govuk-!-margin-bottom-0",
+        text: "Search"
+      }) }}
+    </form>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
     <table class="govuk-table govuk-!-margin-bottom-4">
@@ -364,10 +369,37 @@
       map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 50 })
     }
 
+    // Repopulate the date input from ?from-date-* on the URL after a search submit.
+    // Done client-side because this prototype uses myData rather than the kit's
+    // standard `data` binding, so GET params don't reach Nunjucks reliably.
+    const urlParams = new URLSearchParams(location.search)
+    ;['day', 'month', 'year'].forEach(part => {
+      const v = urlParams.get(`from-date-${part}`)
+      if (v != null) {
+        const el = document.getElementById(`from-date-${part}`)
+        if (el) el.value = v
+      }
+    })
+
+    // Build a CQL clause for "changes since the entered date" (between that date and today).
+    // Returns '' if no/invalid/future date is entered, so baseline behaviour is preserved.
+    function buildDateClause () {
+      const d = urlParams.get('from-date-day')
+      const m = urlParams.get('from-date-month')
+      const y = urlParams.get('from-date-year')
+      if (!d || !m || !y) return ''
+      const iso = `${y.padStart(4, '0')}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
+      const dt = new Date(iso)
+      if (isNaN(dt.getTime()) || dt > new Date()) return ''
+      const today = new Date().toISOString().slice(0, 10)
+      return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
+    }
+
     // Fetch data immediately on page load
     const sbi = '106332870'
-    const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}&srsname=EPSG:4326&outputFormat=application/json`
-    const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=SBI=${sbi}&srsname=EPSG:4326&outputFormat=application/json`
+    const cql = `SBI=${sbi}${buildDateClause()}`
+    const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+    const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
 
     Promise.all([
       fetch(parcelsUrl).then(r => r.json()),
@@ -401,6 +433,21 @@
       // Build sidebar parcel table
       const tableBody = document.getElementById('parcel-table-body')
 
+      if (landParcelsData.features.length === 0) {
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row'
+        tr.innerHTML = '<td class="govuk-table__cell" colspan="3">No changes found in this period.</td>'
+        tableBody.appendChild(tr)
+      }
+
+      // Forward the active date filter to parcel detail links so the parcel
+      // page can apply the same window to its land covers fetch.
+      const parcelLinkSuffix = ['day', 'month', 'year']
+        .map(k => [k, urlParams.get(`from-date-${k}`)])
+        .filter(([, v]) => v != null)
+        .map(([k, v]) => `&from-date-${k}=${encodeURIComponent(v)}`)
+        .join('')
+
       landParcelsData.features.forEach(f => {
         const { SHEET_ID, PARCEL_ID, ngc, AREA_HA } = f.properties
         const dominant = parcelCovers[ngc]
@@ -409,7 +456,7 @@
         tr.className = 'govuk-table__row'
         tr.dataset.ngc = ngc
         tr.innerHTML = `
-          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
           <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
         `
