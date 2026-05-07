@@ -1981,6 +1981,14 @@ module.exports = function (router, _myData) {
 
     });
 
+    // doc-upload-upload-files
+
+    router.get('/' + version + '/doc-upload-upload-files', function (req, res) {
+        res.render(version + '/doc-upload-upload-files', {
+            myData: req.session.myData
+        });
+    });
+
     // doc-upload-check-your-upload
 
     router.get('/' + version + '/doc-upload-check-your-upload', function (req, res) {
