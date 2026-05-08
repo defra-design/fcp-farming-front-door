@@ -1,0 +1,140 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">V17</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Design history</span>
+      Integrating with Farm Payments Technical Test v1.1
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <p class="govuk-body">
+      Design history correct as of 2 April 2026
+    </p>
+
+    <p class="govuk-body">
+      Our <a href="design-history-fptt-1">previous design history</a> about integrating with Farm Payments Technical Test (FPTT) documented 2 scenarios in which the user would check and update business and personal details.
+    </p>
+
+    <p class="govuk-body">
+      In the first scenario, the user was prompted to update their details in the Farm and Land Service (FLS) via email before starting an FPTT application. In the second, the user started their application in the FPTT service and was then routed into FLS if their details were incorrect. This approach had been agreed across project teams integrating with FLS.
+    </p>
+
+    <p class="govuk-body">
+      Conversations have evolved. Product managers for Single Front Door, FPTT and Woodland management plan have since agreed that FLS should be the only route in to these services at the point of integration. From that time, FPTT and WMP applicants will no longer be able to access these services directly.
+    </p>
+    <p class="govuk-body">
+      Instead, as per the new journey flow, the user will come to FLS via the integrating scheme or grants' initiating email. They will then navigate into that service through the card signpost.
+    </p>
+
+    <img class="design-history" src="/public/images/design-history/v17/dh-2-scenario.png"
+      alt="Diagram showing the journey for Check your details before you apply">
+
+    <p class="govuk-body">
+      This brings some benefits:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        allows us to soft launch FLS and set the context and broader strategy by sending users in via the FLS start page
+      </li>
+      <li>
+        provides a consistent route in to a scheme or grant, whether starting or continuing an application
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-l">
+      What we designed
+    </h2>
+
+    <p class="govuk-body">
+      Our mechanism for driving users into the beta has not changed. What has changed are the circumstances.
+    </p>
+
+    <p class="govuk-body">
+      It was suggested that SFD should look again at the email content to reflect the new journey flow. We were happy to undertake an initial review as a design team, on the understanding that FPTT hold ultimate responsibility for the content as the subject matter experts and owners of the end-to-end journey. 
+    </p>
+
+    <p class="govuk-body">
+      With the email improvements we looked to:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        reorder the instructions to follow the FPTT application and give it a logical order, for example, providing the FPTT information and terms and conditions before inviting the user to complete the consent form, consider that a user can only offer informed consent once they fully understand what the beta involves
+      </li>
+      <li>
+        use a numbered list to offer a step-by-step guide to get ready to apply for FPTT, in the order the user needs to complete them
+      </li>
+      <li>
+        remove the direct link to FPTT, as users will only be able to access the service through FLS
+      </li>
+      <li>remove a legacy section on organising a face-to-face visit by an RPA colleague, on the understanding that such visits have not been part of the private beta</li>
+      <li>
+        clarify the instructions for checking land details and maps and added a call to action to update details on the Rural Payments service if they are incorrect
+      </li>
+      <li>
+        add a final step about starting an application, with a call to action to contact FPTT (on the understanding they will continue to want to handhold users through the initial private beta)
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      It should be noted that the email has not yet been shared with FPTT colleagues. Collaboration has been blocked while FPTT concentrate on other priorities linked to their statement of work. We are keen to engage with them and get agreement on the design as and when this changes.
+    </p>
+    <p class="govuk-body">
+      We are also eager to discuss how the design may evolve as the private beta ramps up. At present, the email includes the user’s business and personal details from the service, enabling them to see upfront whether an update is necessary. While helpful to users, we suspect these details may be being entered manually. This approach is not sustainable as the intake grows. With FPTT we will need to confirm if an automated data pull is an option, for example, via Notify, and if it is desirable, for example, if there are any security concerns. If we decide not to display details within the email, we will need to explore what the alternative may be.
+    </p>
+    <p class="govuk-body">
+      There has been only one other change in the design due to a technical constraint. Through conversations with our technical team, it has been confirmed that we will not know the end points when we first integrate with FPTT. It means we are unable to distinguish:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        whether a user is starting or continuing an application
+      </li>
+      <li>
+        the status of the application, for example, not started or in progress
+      </li>
+    </ul>
+
+
+    <p class="govuk-body">
+      Until we have the end points, we have implemented a hyperlink on the card sign post, ‘Go to application’, as a generic catch all. We have also removed the status tag. 
+    </p>
+
+    <img class="design-history" src="/public/images/design-history/v17/dh-2-business-home.jpg"
+      alt="Screenshot of the prototyped FLS business home page">
+
+    <p class="govuk-body">
+      This design is intended to be temporary. We still see the benefit in communicating to users where in the application journey they are. Again, we will share this update and corroborate it with FPTT colleagues once we are able to collaborate with them again.
+    </p>
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
