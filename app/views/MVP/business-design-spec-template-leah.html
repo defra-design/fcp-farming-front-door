@@ -1,0 +1,102 @@
+
+<!-- this is calling in the layout file template. This one pulls in the new gov branding (rebrand) and the 2.0 version of the ALAN design spec (e.g. the one you can edit as plain text) -->
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+<!-- show / hide the footer links. set to false if you want to hide the footer links (e.g. for internal users) -->
+{% set _showFooterMVPLinks = true %}
+
+<!-- Sets the page name - e.g. if you hover over the tab, you'll see this displayed in the expected formatting -->
+{% set pageName = "A template file for creating a new page with the design spec" %}
+<!-- Set the service name that is displayed in teh header, the tab name, etc. Useful if you need to prototype another service's page -->
+{% set serviceName = "Farm and Land Service" %}
+
+<!-- START OF DESIGN SPEC -->
+<!-- lines xx to xx - you need to copy the whole IF / Else / END IF statement -->
+{% if data.view == "ext" %}
+
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In design',
+    "name": "This is different to the Page Name above - this is more like what we internally refer to the page as, and is referenced in JIRA tickets. Write in here as if its plain text",
+    "id": "Enter the page ID here",
+    "release": "Buffalo MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "Write the description here as if it's plain text. This will typically come from the confluence metadata page owned by content.",
+    "pageurl": "Write the page URL here as if it's plain text. This is different to the prototypeurl below - this specifically refers to what URL the devs should specify when creating the page. This will typically come from the confluence metadata page owned by content.",
+    "version" : "MVP",
+    "prototypeurl" : "business-design-spec-template-leah",
+
+    "variants": [
+      {
+        "name": "Name of the variant here (note that the stuff after the question mark shouldn't be removed unless you are specifically using another query string to display different variants on the same page)",
+        "url": "business-design-spec-template-leah?r=t&release=b1&view=ext"
+      }
+      
+    ],
+    "errormessages": [
+      {
+        "field": "The name of the entry field - e.g. Address line 1",
+        "scenario": "describe error scenario - e.g. Empty field / nothing entered",
+        "content": "Error message content - e.g. Enter address line 1, typically the building and street"
+      }
+    ],
+    "notes": [
+      "These are notes, each set of quotation marks makes a new bullet point - remember the comma before the next quotation mark", 
+      "This is the second bullet point - note that this line doesn't have a comma after it because its the last one in the list"
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+<!-- you can add a design spec for the internal user here in these lines between else and endif, if needed. to set this up, copy lines xx to xx and amend accordingly for the internal user pages -->
+{% endif %}
+
+<!-- block to control what appears BEFORE the main page content and AFTER the service name -->
+{% block beforeContent %}
+
+<!-- include that calls in the phase banner - remove this line if you want to hide the phase banner -->
+  {% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <!-- back link - delete this line if you don't need a back link, or copy in alternative nagivation methods, like breadcrumbs here instead. The first three lines hides a My Account link that was used in older versions of the prototype (e.g. to test this, set _hideAccountLink to false ) -->
+      {% if data.release == "b1" %}
+        {% set _hideAccountLink = true %}
+      {% endif %}
+      {% include "_common/login-nav-2.html" %}
+
+      <!-- back link - delete this line if you don't need a back link, or copy in alternative nagivation methods, like breadcrumbs here instead. You can also customise the text, the link destination etc. Below is an example for a generic back link, with javascript that takes the user in the prototype to the page they were on before -->
+      <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
+
+      <!-- 
+        <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+      -->
+
+    </div>
+  </div>
+<!-- closes the beforeContent block - do not delete  -->
+{% endblock %}
+
+<!-- anything inside this block is the main page content - e.g. your form content that isn't in the header, the banner or the footer - do not delete -->
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">
+      This is a page to test the design spec version 2. 
+    </h1>
+
+    <p>Take no notice of it. </p>
+
+
+  </div>
+  
+</div>
+
+<!-- closes the content block - do not delete  -->
+{% endblock %}
