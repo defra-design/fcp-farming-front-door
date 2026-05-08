@@ -1,4 +1,6 @@
 
+const csAgreements = require('../../data/countryside-stewardship-agreements.json');
+
 module.exports = function (router, _myData) {
 
     var version = "v18";
@@ -1637,6 +1639,25 @@ module.exports = function (router, _myData) {
         res.render(version + '/view-land-parcel-alt', {
             myData: req.session.myData
         });
+    });
+
+    //view land summary with Countryside Stewardship contract table
+    router.get('/' + version + '/view-land-cs', function (req, res) {
+        res.render(version + '/view-land-cs', {
+            myData: req.session.myData
+        });
+    });
+
+    //view land parcel with Countryside Stewardship sidebar section
+    router.get('/' + version + '/view-land-parcel-cs', function (req, res) {
+        res.render(version + '/view-land-parcel-cs', {
+            myData: req.session.myData
+        });
+    });
+
+    //Countryside Stewardship agreements data (used client-side by view-land-parcel-cs)
+    router.get('/' + version + '/data/cs-agreements', function (req, res) {
+        res.json(csAgreements);
     });
 
 }

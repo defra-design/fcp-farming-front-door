@@ -148,7 +148,7 @@
 <main class="app-map-fullscreen" id="main-content">
 
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Parcel details">
-    <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land">Back to land summary</a>
+    <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land-cs">Back to land summary</a>
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h2>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2>
@@ -176,6 +176,10 @@
           <td class="govuk-table__cell">Hedgerows</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-hedgerows"></td>
         </tr>
+        <tr class="govuk-table__row" id="parcel-cs-row" hidden>
+          <td class="govuk-table__cell">Countryside stewardship options</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-cs-count"></td>
+        </tr>
       </tbody>
     </table>
 
@@ -201,6 +205,18 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body" id="hedgerows-table-body"></tbody>
+    </table>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-4" id="cs-agreements-heading" hidden>Countryside stewardship</h2>
+    <table class="govuk-table" id="cs-agreements-table" hidden>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" style="white-space:nowrap">Code</th>
+          <th scope="col" class="govuk-table__header">Description</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Area (ha)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body" id="cs-agreements-table-body"></tbody>
     </table>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">Land parcel map</h2>
@@ -310,8 +326,9 @@
       Promise.all([
         fetch(parcelUrl).then(r => r.json()),
         fetch(coversUrl).then(r => r.json()),
-        fetch(hedgeUrl).then(r => r.json())
-      ]).then(([parcelData, landCoversData, hedgeData]) => {
+        fetch(hedgeUrl).then(r => r.json()),
+        fetch('/v18/data/cs-agreements').then(r => r.json())
+      ]).then(([parcelData, landCoversData, hedgeData, csAgreements]) => {
 
         // Disambiguate by SHEET_ID — the server-side filter only includes
         // PARCEL_ID, which can collide across sheets within a single SBI.
@@ -391,6 +408,38 @@
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${Math.round(hTotalLength)}</td>
         `
         hTableBody.appendChild(hTotalRow)
+
+        // Countryside Stewardship agreements: link by parcref = SHEET_ID + PARCEL_ID.
+        // Section + summary row stay hidden when there are no matches.
+        const parcelKey = sheetId + parcelId
+        const parcelAgreements = (csAgreements || []).filter(a => a.parcref === parcelKey)
+
+        if (parcelAgreements.length > 0) {
+          document.getElementById('parcel-cs-row').hidden = false
+          document.getElementById('parcel-cs-count').textContent = parcelAgreements.length
+          document.getElementById('cs-agreements-heading').hidden = false
+
+          const csTable = document.getElementById('cs-agreements-table')
+          csTable.hidden = false
+          const csTableBody = document.getElementById('cs-agreements-table-body')
+
+          const fmtUnit = u => (u || '').toLowerCase()
+
+          parcelAgreements.forEach(a => {
+            // Descriptions in the source data start with "<code> - " — strip that
+            // since the code now lives in its own column.
+            const description = a.option_description.replace(/^[A-Z0-9]+\s*-\s*/, '')
+            const qty = parseFloat(a.option_quantity)
+            const tr = document.createElement('tr')
+            tr.className = 'govuk-table__row'
+            tr.innerHTML = `
+              <td class="govuk-table__cell" style="white-space:nowrap">${a.option_code}</td>
+              <td class="govuk-table__cell">${description}</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${isNaN(qty) ? a.option_quantity : qty.toFixed(4)}</td>
+            `
+            csTableBody.appendChild(tr)
+          })
+        }
 
         // Build datasets array from fetched data
         const coversByType = {}
