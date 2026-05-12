@@ -47,6 +47,10 @@
   /* Fullscreen 2-column layout: GOV.UK header + service nav stack at the top,
      <main> fills the remaining viewport, sidebar + map sit side-by-side. */
 
+  /* govuk-frontend sets display: block on headings, which beats the UA
+     stylesheet's [hidden] { display: none } on cascade order. Force-hide. */
+  [hidden] { display: none !important; }
+
   html, body {
     height: 100%;
     margin: 0;

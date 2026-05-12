@@ -45,6 +45,10 @@
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js">
 
   <style>
+  /* govuk-frontend sets display: block on headings, which beats the UA
+     stylesheet's [hidden] { display: none } on cascade order. Force-hide. */
+  [hidden] { display: none !important; }
+
   html, body {
     height: 100%;
     margin: 0;
