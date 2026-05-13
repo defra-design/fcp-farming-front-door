@@ -143,6 +143,34 @@
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
+    <h2 class="govuk-heading-m">
+      Email validation
+    </h2>
+
+    <p class="govuk-body">
+      In sprints 19 and 20, we also looked at possible designs for re-introducing email validation into our service, and how this might work alongside the DAL interruptor journey. <a class="govuk-link" rel="noreferrer noopener" target="_blank" href="https://eaflood.atlassian.net/browse/SFD2-1077?focusedCommentId=867165&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel&sourceType=mention#comment-867165">See the JIRA design ticket for further explanation (opens in new tab)</a>. 
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <a href="personal-details-email-validation-uplift-not-needed">Personal email address - no uplift needed</a>
+      </li>
+      <li>
+        <a href="business-details-email-validation-uplift-not-needed">Business email address - no uplift needed</a>
+      </li>
+      <li>
+        <a href="business-details-email-validation-uplift-email-only">Business email address - uplift needed for one field (example: email)</a>
+      </li>
+      <li>
+        <a href="business-details-email-validation-uplift-email-and-VAT">Business email address - uplift needed for more than one field (example: email)</a>
+      </li>
+      <li>
+        <a href="business-details-email-validation-uplift-email-and-VAT-lower-permissions">Business email address - uplift needed where the user has lower permissions (example: VAT)</a>
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
   </div>
 </div>
   
@@ -160,39 +188,6 @@
         </tr>
       </thead>
       {% set _pages = [
-
-        
-        {
-          "name": "Business type (change) - business details",
-          "url": "business-details-type-change?r=t&view=int",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Business type (check) - business details ",
-          "url": "business-details-type-check?r=t&view=int",
-          "release": "Buffalo 1.0 MVP"
-        },
-        {
-          "name": "Legal status (change) - business details ",
-          "url": "business-details-legal-change?r=t&view=int",
-          "release": "Buffalo 1.0 MVP",
-          "variants": [
-            {
-              "name": "Legal status - charity registration number (add) - business details ",
-              "url": "business-details-legal-charity?r=t&view=int"
-            },
-            {
-              "name": "Legal status - company registration number (add) - business details ",
-              "url": "business-details-legal-company?r=t&view=int"
-            }
-          ]
-        },
-        {
-          "name": "Legal status (check) - business details ",
-          "url": "business-details-legal-check?r=t&view=int",
-          "release": "Buffalo 1.0 MVP"
-        },
-
 
         {
           "type": "HEADING",

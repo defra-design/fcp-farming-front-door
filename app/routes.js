@@ -72,7 +72,7 @@ var _myData = {
     "upliftSucessPers" : "no",
     "permissionsPath" : "happy", // used to show unhappy paths were set
     "integrationPath" : "default", // used to show unhappy paths were set
-
+    "emailValidationPath" : "false", // used to show unhappy paths were set
     "intSearchType": "all" //used to show default tab displayed on internal search results page
 }
 
