@@ -1,0 +1,130 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true" %}
+
+{% set pageTitle = "Change business email address" %}
+{% set pageName = pageTitle %}
+
+
+{% set serviceName = "Farm and Land Service" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+    "status": 'In design',
+    "name": "Change business address - email validation - email and VAT need DAL uplift - lower permissions",
+    "id": "xx",
+    "release": "TO DO",
+    "pagetitle": pageName,
+    "pagedesc": "TO DO",
+    "pageurl": "TO DO",
+    "version" : "v15-DAL",
+    "prototypeurl" : "business-details-email-validation-uplift-uplift-email-and-VAT",
+    "variants": [
+
+    ],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+
+    ],
+
+    "notes": [
+
+
+    ]
+
+    }
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header-DAL.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3a.html" %}
+{% else %}
+{% include "_common/login-nav-internal.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="POST">
+      <h1 class="govuk-heading-l">
+        Update your business details
+      </h1>
+
+      <p class="govuk-body">
+        Some of your details seem to be missing or incorrect. 
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          business email address
+        </li>
+        <li>
+          VAT registration number 
+        </li>
+      </ul>
+
+      <p class="govuk-body">
+        We need these details to contact you, or to verify your identify if you phone us. You need to update these details before you can update the business address.
+      </p>
+
+      <p class="govuk-body">
+        You need to update these details before you can update the business address, but you do not have permission to update the VAT registration number.
+      </p>
+
+      <h2 class="govuk-heading-m">
+        What to do
+      </h2>
+
+      <p class="govuk-body">
+        Ask a person with full or make legal changes permission for the business (for example, this could be the business owner) to contact the Rural Payments Agency to update the details. They can update the business address at the same time.
+      </p>
+
+
+      <a href="details-business-details?view=ext" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
+        Return to business details
+      </a>
+
+    </form>
+
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
