@@ -1,0 +1,615 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block header %}
+  {{ govukHeader({
+    rebrand: true
+  }) }}
+{{ govukServiceNavigation({
+  serviceName: "Farm and Land Service",
+  serviceUrl: "#",
+  navigation: [
+    {
+      href: "#",
+      text: "View land",
+      active: true
+    },
+    {
+      href: "#",
+      text: "Register land"
+    },
+    {
+      href: "#",
+      text: "Get maps of your land"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block pageTitle %}
+  View land – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+
+  <link rel="prefetch" href="/v18/view-land-parcel" as="document">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/index.js">
+
+  <style>
+  /* Fullscreen 2-column layout: GOV.UK header + service nav stack at the top,
+     <main> fills the remaining viewport, sidebar + map sit side-by-side. */
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body.govuk-template__body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Keep the service-nav dropdown above the map */
+  .govuk-service-navigation {
+    position: relative;
+    z-index: 100;
+  }
+
+  /* Hide GOV.UK chrome when DEFRA opens the map fullscreen */
+  html.im-is-fullscreen .govuk-header,
+  html.im-is-fullscreen .govuk-service-navigation {
+    display: none;
+  }
+
+  /* Full-width header (the map layout spans edge-to-edge) */
+  .govuk-header__container,
+  .govuk-width-container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+
+  .app-map-fullscreen {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: relative;
+  }
+
+  .app-map-fullscreen__sidebar {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+    background: #ffffff;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 15px 15px;
+  }
+
+  .app-map-fullscreen__sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .app-map-fullscreen__map {
+    flex: 1;
+    height: 100%;
+  }
+
+  /* DEFRA map container fills its column */
+  #map,
+  #map .im-o-app {
+    height: 100% !important;
+  }
+
+  /* DEFRA's "Map view" button — relocated into sidebar via JS */
+  .im-c-open-map-button {
+    margin: 0 0 15px;
+  }
+
+  /* On mobile, the sidebar takes the full viewport width and the inline
+     map column collapses to zero (DEFRA renders the "Map view" button
+     instead). The map element stays in the DOM and renderable so it can
+     go fullscreen when the button is clicked. */
+  @media (max-width: 640px) {
+    .app-map-fullscreen__sidebar {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .app-map-fullscreen__map {
+      flex: 0 0 0;
+      width: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+  }
+
+  #parcel-table-body tr {
+    cursor: pointer;
+  }
+
+  #parcel-table-body tr:hover {
+    background: #f3f2f1;
+  }
+
+  #parcel-table-body tr.app-parcel--selected {
+    background: #f4f8fb;
+  }
+
+  #parcel-table-body tr.app-parcel--selected td {
+    font-weight: 700;
+  }
+  </style>
+{% endblock %}
+
+{% block bodyStart %}
+  <script>document.body.classList.add('im-is-loading')</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block main %}
+<main class="app-map-fullscreen" id="main-content">
+
+  <div class="app-map-fullscreen__sidebar" role="region" aria-label="Map controls">
+    <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">Land summary</h1>
+    {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    <form method="get" action="" novalidate>
+      {{ govukDateInput({
+        id: "from-date",
+        namePrefix: "from-date",
+        fieldset: {
+          legend: {
+            text: "Enter a date",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        hint: {
+          text: "Enter a date to see the land details and map for a specific date in the past, for example, 27 3 2007. Leave blank for today’s date."
+        }
+      }) }}
+
+      {{ govukButton({
+        classes: "govuk-!-margin-bottom-0",
+        text: "Search"
+      }) }}
+    </form>
+
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Number of parcels</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-parcel-count"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Total area (ha)</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-total-area"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="map-button-slot"></div>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Land parcels</h2>
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+    {{ govukInput({
+      id: "parcel-filter",
+      name: "parcel-filter",
+      label: {
+        text: "Filter parcels"
+      },
+      hint: {
+        text: "Enter a parcel ID, for example SK1234 5678"
+      },
+      classes: "govuk-input--width-10",
+      attributes: {
+        autocomplete: "off",
+        autocapitalize: "characters",
+        spellcheck: "false"
+      }
+    }) }}
+    <p class="govuk-body govuk-!-margin-bottom-2" id="parcel-filter-status" aria-live="polite"></p>
+    <table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet" hidden aria-live="polite">
+      <caption class="govuk-table__caption govuk-table__caption--s">Selected parcel</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap">ID</th>
+          <th scope="col" class="govuk-table__header" style="width:55%">Land cover</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap">Area (ha)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" id="selected-parcel-link" href="#"></a></td>
+          <td class="govuk-table__cell" id="selected-parcel-cover"></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" id="selected-parcel-area"></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="govuk-table govuk-table--small-text-until-tablet" data-module="moj-sortable-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap" aria-sort="ascending">ID</th>
+          <th scope="col" class="govuk-table__header" style="width:55%" aria-sort="none">Land cover</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap" aria-sort="none">Area (ha)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body" id="parcel-table-body"></tbody>
+    </table>
+  </div>
+
+  <div id="map" class="app-map-fullscreen__map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
+
+</main>
+{% endblock main %}
+
+{% block pageScripts %}
+  <!-- Defra library scripts -->
+  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
+
+  <script>
+    const interact = defra.interactPlugin({
+      interactionModes: ['selectFeature'],
+      multiSelect: false,
+      deselectOnClickOutside: true
+    })
+
+    const interactiveMap = new defra.InteractiveMap('map', {
+      mapProvider: defra.maplibreProvider(),
+      behaviour: 'hybrid',
+      mapLabel: 'Ambleside',
+      minZoom: 6,
+      maxZoom: 18,
+      enableZoomControls: true,
+      mapStyle: {
+        url: 'https://tiles.openfreemap.org/styles/liberty',
+        attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
+        backgroundColor: '#f5f5f0'
+      },
+      plugins: [
+        defra.scaleBarPlugin({
+          units: 'metric'
+        }),
+        // defra.searchPlugin(),
+        defra.mapStylesPlugin({
+          mapStyles: [
+            {
+              id: 'liberty',
+              label: 'Default',
+              url: 'https://tiles.openfreemap.org/styles/liberty',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#f5f5f0'
+            },
+            {
+              id: 'satellite',
+              label: 'Satellite',
+              url: '/satellite-style.json',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              attribution: '© Esri, Maxar, Earthstar Geographics',
+              backgroundColor: '#1a1a1a',
+              mapColorScheme: 'dark',
+              appColorScheme: 'dark'
+            },
+            {
+              id: 'positron',
+              label: 'Light',
+              url: 'https://tiles.openfreemap.org/styles/positron',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#ffffff'
+            },
+            // {
+            //   id: 'bright',
+            //   label: 'Bright',
+            //   url: 'https://tiles.openfreemap.org/styles/bright',
+            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+            //   appColorScheme: 'light',
+            //   mapColorScheme: 'light',
+            //   backgroundColor: '#f5f5f0'
+            // },
+
+          ]
+        }),
+        interact
+      ]
+    })
+
+    // Shared state for parcel data and map instance
+    let mapInstance = null
+    let landParcelsData = null
+
+    // Add parcel source and layers to the map
+    function addParcelsToMap(map, data) {
+      if (!data || !data.features || data.features.length === 0) return
+      if (map.getSource('parcels')) return
+
+      map.addSource('parcels', {
+        type: 'geojson',
+        data: data,
+        promoteId: 'ngc'
+      })
+
+      map.addLayer({
+        id: 'parcels-fill',
+        type: 'fill',
+        source: 'parcels',
+        paint: {
+          'fill-color': '#1d70b8',
+          'fill-opacity': 0
+        }
+      })
+
+      map.addLayer({
+        id: 'parcels-outline',
+        type: 'line',
+        source: 'parcels',
+        paint: {
+          'line-color': '#1d70b8',
+          'line-width': 2
+        }
+      })
+
+      interact.enable({
+        layers: [{ layerId: 'parcels-fill', idProperty: 'ngc' }]
+      })
+
+      // Fit map to parcel bounds
+      let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
+      data.features.forEach(f => {
+        const coords = f.geometry.type === 'MultiPolygon'
+          ? f.geometry.coordinates.flat(2)
+          : f.geometry.coordinates.flat(1)
+        coords.forEach(([lng, lat]) => {
+          if (lng < minLng) minLng = lng
+          if (lat < minLat) minLat = lat
+          if (lng > maxLng) maxLng = lng
+          if (lat > maxLat) maxLat = lat
+        })
+      })
+      map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 50 })
+    }
+
+    // Repopulate the date input from ?from-date-* on the URL after a search submit.
+    // Done client-side because this prototype uses myData rather than the kit's
+    // standard `data` binding, so GET params don't reach Nunjucks reliably.
+    const urlParams = new URLSearchParams(location.search)
+    ;['day', 'month', 'year'].forEach(part => {
+      const v = urlParams.get(`from-date-${part}`)
+      if (v != null) {
+        const el = document.getElementById(`from-date-${part}`)
+        if (el) el.value = v
+      }
+    })
+
+    // Build a CQL clause for "changes since the entered date" (between that date and today).
+    // Returns '' if no/invalid/future date is entered, so baseline behaviour is preserved.
+    function buildDateClause () {
+      const d = urlParams.get('from-date-day')
+      const m = urlParams.get('from-date-month')
+      const y = urlParams.get('from-date-year')
+      if (!d || !m || !y) return ''
+      const iso = `${y.padStart(4, '0')}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
+      const dt = new Date(iso)
+      if (isNaN(dt.getTime()) || dt > new Date()) return ''
+      const today = new Date().toISOString().slice(0, 10)
+      return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
+    }
+
+    // Parcel filter — narrows the list (not the map) by parcel ID substring
+    const filterInput = document.getElementById('parcel-filter')
+    const filterStatus = document.getElementById('parcel-filter-status')
+
+    function normaliseTerm (s) {
+      return (s || '').toUpperCase().replace(/\s+/g, '')
+    }
+
+    function filterParcels (term) {
+      const needle = normaliseTerm(term)
+      const rows = document.querySelectorAll('#parcel-table-body tr')
+      let visible = 0
+      rows.forEach(tr => {
+        if (!tr.dataset.ngc) return
+        const match = needle === '' || tr.dataset.ngc.toUpperCase().includes(needle)
+        tr.hidden = !match
+        if (match) visible++
+      })
+      filterStatus.textContent = (rows.length && visible === 0)
+        ? `No parcels match "${term}"`
+        : ''
+    }
+
+    filterInput.addEventListener('input', e => filterParcels(e.target.value))
+
+    // Fetch data immediately on page load
+    const sbi = '106332870'
+    const cql = `SBI=${sbi}${buildDateClause()}`
+    const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+    const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+
+    Promise.all([
+      fetch(parcelsUrl).then(r => r.json()),
+      fetch(coversUrl).then(r => r.json())
+    ]).then(([parcelsData, landCoversData]) => {
+
+      landParcelsData = parcelsData
+
+      // Compute ngc (SHEET_ID + PARCEL_ID) for each feature
+      landParcelsData.features.forEach(f => {
+        f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID
+      })
+
+      // Build a lookup of dominant land cover per parcel (largest area)
+      const parcelCovers = {}
+      if (landCoversData && landCoversData.features) {
+        landCoversData.features.forEach(f => {
+          const key = f.properties.SHEET_ID + f.properties.PARCEL_ID
+          const area = parseFloat(f.properties.AREA_HA || 0)
+          if (!parcelCovers[key] || area > parcelCovers[key].area) {
+            parcelCovers[key] = { description: f.properties.DESCRIPTION, area }
+          }
+        })
+      }
+
+      // Populate summary table
+      const totalArea = landParcelsData.features.reduce((sum, f) => sum + parseFloat(f.properties.AREA_HA || 0), 0)
+      document.getElementById('summary-parcel-count').textContent = landParcelsData.features.length
+      document.getElementById('summary-total-area').textContent = totalArea.toFixed(2)
+
+      // Build sidebar parcel table
+      const tableBody = document.getElementById('parcel-table-body')
+
+      if (landParcelsData.features.length === 0) {
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row'
+        tr.innerHTML = '<td class="govuk-table__cell" colspan="3">No changes found in this period.</td>'
+        tableBody.appendChild(tr)
+      }
+
+      // Forward the active date filter to parcel detail links so the parcel
+      // page can apply the same window to its land covers fetch.
+      const parcelLinkSuffix = ['day', 'month', 'year']
+        .map(k => [k, urlParams.get(`from-date-${k}`)])
+        .filter(([, v]) => v != null)
+        .map(([k, v]) => `&from-date-${k}=${encodeURIComponent(v)}`)
+        .join('')
+
+      landParcelsData.features.forEach(f => {
+        const { SHEET_ID, PARCEL_ID, ngc, AREA_HA } = f.properties
+        const dominant = parcelCovers[ngc]
+        const area = parseFloat(AREA_HA)
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row'
+        tr.dataset.ngc = ngc
+        tr.innerHTML = `
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
+        `
+        tableBody.appendChild(tr)
+      })
+
+      // Initial filter pass populates the status line
+      filterParcels(filterInput.value)
+
+      // If map is already ready, add layers now
+      if (mapInstance) {
+        addParcelsToMap(mapInstance, landParcelsData)
+      }
+
+    }).catch(err => {
+      console.error('Failed to load land parcels:', err)
+      document.getElementById('summary-parcel-count').textContent = '–'
+      document.getElementById('summary-total-area').textContent = '–'
+    })
+
+    // When map becomes ready, add layers if data is already loaded
+    interactiveMap.on('map:ready', (e) => {
+      mapInstance = e.map
+      if (mapInstance && landParcelsData) {
+        addParcelsToMap(mapInstance, landParcelsData)
+      }
+    })
+
+    // Map -> Sidebar: highlight selected parcel row and surface its details
+    // in the "Selected parcel" panel above the table. If the selection is
+    // currently hidden by the filter, clear the filter first.
+    const selectedPanel = document.getElementById('selected-parcel-panel')
+    const selectedLink = document.getElementById('selected-parcel-link')
+    const selectedCover = document.getElementById('selected-parcel-cover')
+    const selectedArea = document.getElementById('selected-parcel-area')
+
+    interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
+      const selectedIds = new Set(selectedFeatures.map(f => f.featureId))
+      const rows = document.querySelectorAll('#parcel-table-body tr')
+      const hiddenSelection = Array.from(rows).some(tr => selectedIds.has(tr.dataset.ngc) && tr.hidden)
+      if (hiddenSelection && filterInput.value) {
+        filterInput.value = ''
+        filterParcels('')
+      }
+      rows.forEach(tr => {
+        tr.classList.toggle('app-parcel--selected', selectedIds.has(tr.dataset.ngc))
+      })
+
+      const selectedRow = Array.from(rows).find(tr => selectedIds.has(tr.dataset.ngc))
+      if (selectedRow) {
+        const anchor = selectedRow.querySelector('a')
+        const cells = selectedRow.querySelectorAll('td')
+        selectedLink.href = anchor ? anchor.getAttribute('href') : '#'
+        selectedLink.textContent = anchor ? anchor.textContent : ''
+        selectedCover.textContent = cells[1] ? cells[1].textContent.trim() : ''
+        selectedArea.textContent = cells[2] ? cells[2].textContent.trim() : ''
+        selectedPanel.hidden = false
+      } else {
+        selectedPanel.hidden = true
+      }
+    })
+
+    // Re-add parcel layers after a map style change
+    interactiveMap.on('map:stylechange', () => {
+      setTimeout(() => {
+        if (mapInstance && landParcelsData) {
+          addParcelsToMap(mapInstance, landParcelsData)
+        }
+      }, 100)
+    })
+
+    // Move the "Map view" button into the sidebar on mobile
+    function moveMapButton() {
+      const btn = document.querySelector('.im-c-open-map-button')
+      const slot = document.getElementById('map-button-slot')
+      if (btn && slot && !slot.contains(btn)) {
+        slot.appendChild(btn)
+        return true
+      }
+      return false
+    }
+
+    // Try immediately, then observe for late insertion
+    if (!moveMapButton()) {
+      const observer = new MutationObserver(() => {
+        if (moveMapButton()) observer.disconnect()
+      })
+      observer.observe(document.getElementById('main-content'), { childList: true, subtree: true })
+    }
+
+    // Keep the map sized correctly when the viewport resizes
+    window.addEventListener('resize', () => {
+      interactiveMap.api?.map?.resize()
+    })
+  </script>
+{% endblock %}

@@ -1620,6 +1620,13 @@ module.exports = function (router, _myData) {
         });
     });
 
+    //view land with filterable parcel list
+    router.get('/' + version + '/view-land-filter', function (req, res) {
+        res.render(version + '/view-land-filter', {
+            myData: req.session.myData
+        });
+    });
+
         //view land alt layout
     router.get('/' + version + '/view-land-alt', function (req, res) {
         res.render(version + '/view-land-alt', {
