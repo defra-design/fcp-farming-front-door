@@ -24,22 +24,28 @@
 "url": "doc-upload-upload-added?view=ext",
 "release": "",
 "variants": [
-      {
-      "name": "Files added for upload (but not yet uploaded to LFS (or virus-scanned))",
-      "url": "doc-upload-upload-added"
-      },
-      {
-      "name": "Files added for upload, but one (or more) files have failed - example",
-      "url": "doc-upload-upload-fail"
-      }
-    ],
+{
+"name": "Files added for upload (but not yet uploaded to LFS (or virus-scanned))",
+"url": "doc-upload-upload-added"
+},
+{
+"name": "Upload has failed (at least one file has been rejected) - one file rejected",
+"url": "doc-upload-upload-fail"
+},
+{
+"name": "Upload has failed (at least one file has been rejected) - user has selected new files for resubmission",
+"url": "doc-upload-upload-fail-resubmit"
+}
+],
 "pagetitle": pageTitle,
 "pagedesc": "",
 "pageurl": "",
 "errormessages": [
 
+], 
+"notes" : [
+    "See variants for documented error pattern where a submission has been rejected where at least one file has not been validated. We should show users which file(s) had the issue and why. On the same page, allow them to re-select and therefore re-submit the files."
 ]
-
 }
 %}
 
@@ -81,9 +87,17 @@
                 <div class="govuk-error-summary__body">
                     <ul class="govuk-list govuk-error-summary__list">
                         <li>
-                            <a href="#doc-upload-anchor">fencereceipt1.pdf must be less than 10MB</a>
+                            <a href="#file-error-example">fencereceipt1.pdf must be less than 10MB</a>
                         </li>
                     </ul>
+
+                    <p class="govuk-body">
+                        The selected file could not be submitted.
+                    </p>
+
+                    <p class="govuk-body">
+                        If you are submitting more than one file you need to add all files again.
+                    </p>
                 </div>
             </div>
         </div>
@@ -120,60 +134,30 @@
 
         <div class="moj-multi-file__uploaded-files">
             <h2 class="govuk-heading-m" id="doc-upload-anchor">Documents ready to submit</h2>
-            <div class="govuk-summary-list moj-multi-file-upload__list">
-                <div class="govuk-summary-list__row moj-multi-file-upload__row">
-                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
-                        <span class="moj-multi-file-upload__success">
-                            <svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
-                                <path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"></path>
-                            </svg>
-                            fencepic1.jpeg uploaded successfully
-                        </span>
-                    </div>
-                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
-                        <button
-                            class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
-                            type="button" name="delete" value="progress-tracker.png">
-                            Delete <span class="govuk-visually-hidden">progress-tracker.png</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="govuk-summary-list__row moj-multi-file-upload__row">
-                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
-                        <span class="moj-multi-file-upload__error">
-                            <svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
-                                <path
-                                    d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z">
-                                </path>
-                            </svg>
-                            fencereceipt1.pdf upload failed
-                        </span>
-                    </div>
-                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
-                        <button
-                            class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
-                            type="button" name="delete" value="pay-offer-faqs-2025-2026.docx">
-                            Delete <span class="govuk-visually-hidden">pay-offer-faqs-2025-2026.docx</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <p class="govuk-body">
+                No file selected.
+            </p>
         </div>
 
-        <div class="container--doc-upload">
+        <div class="container--doc-upload govuk-form-group--error">
             <h2 class="govuk-heading-m govuk-!-margin-top-7">
                 Choose a document
             </h2>
 
-            <div class="govuk-button-group govuk-button-group--doc-upload">
-                <p class="govuk-body">Drag and drop files here or</p>
-                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-                    Choose files
-                </button>
-            </div>
+            <p id="file-error-example" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> fencereceipt1.pdf must be smaller than 10MB
+            </p>
+
+            <form action="doc-upload-upload-fail-reselect#doc-upload-anchor">
+                <div class="govuk-button-group govuk-button-group--doc-upload ">
+                    <p class="govuk-body">Drag and drop files here or</p>
+
+                    <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                        Choose files
+                    </button>
+                </div>
         </div>
+        </form>
 
         <div class="govuk-warning-text">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
