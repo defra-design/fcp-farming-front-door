@@ -10,7 +10,7 @@
 
 {% set _showIntExtLinks = true %}
 
-{% set pageTitle = "Add documents" %}
+{% set pageTitle = "Upload files" %}
 {% set pageName = pageTitle %}
 
 {% set serviceName = "Farm and Land Service" %}
@@ -19,10 +19,10 @@
 {% set _showDesignSpec = true %}
 {% set _designSpecData = {
 "status": '',
-"name": "Add documents - document upload",
-"id": "du05",
-"url": "doc-upload-upload-files?view=ext",
-"release": "Buffalo MVP enhancement",
+"name": "TO DO",
+"id": "xx",
+"url": "doc-upload-upload-added?view=ext",
+"release": "",
 "variants": [
 {
 "name": "Files added for upload (but not yet uploaded to LFS (or virus-scanned))",
@@ -37,7 +37,6 @@
 "url": "doc-upload-upload-fail-resubmit"
 }
 ],
-
 "pagetitle": pageTitle,
 "pagedesc": "",
 "pageurl": "",
@@ -76,8 +75,32 @@
 
 {% block content %}
 
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+            <div role="alert">
+                <h2 class="govuk-error-summary__title">
+                    There is a problem
+                </h2>
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                        <li>
+                            <a href="#doc-upload-anchor">fencereceipt1.pdf must be less than 10MB</a>
+                        </li>
+                    </ul>
+
+                    <p class="govuk-body">
+                        The selected file could not be submitted.
+                    </p>
+
+                    <p class="govuk-body">
+                        If you are submitting more than one file you need to add all files again.
+                    </p>
+                </div>
+            </div>
+        </div>
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
             Add documents
         </h1>
@@ -108,27 +131,54 @@
             could cause delays.
         </p>
 
+
+
         <div class="moj-multi-file__uploaded-files">
             <h2 class="govuk-heading-m" id="doc-upload-anchor">Documents ready to submit</h2>
-            <p class="govuk-body">
-                No file selected.
-            </p>
-        </div>
-
-        <form action="doc-upload-upload-select#doc-upload-anchor">
-            <div class="container--doc-upload">
-                <h2 class="govuk-heading-m govuk-!-margin-top-7">
-                    Choose a document
-                </h2>
-
-                <div class="govuk-button-group govuk-button-group--doc-upload">
-                    <p class="govuk-body">Drag and drop files here or</p>
-                    <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-                        Choose files
-                    </button>
+            <div class="govuk-summary-list moj-multi-file-upload__list">
+                <div class="govuk-summary-list__row moj-multi-file-upload__row">
+                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
+                        fencepic1.jpeg
+                    </div>
+                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
+                        <button
+                            class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
+                            type="button" name="delete" value="progress-tracker.png">
+                            Remove <span class="govuk-visually-hidden">progress-tracker.png</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="govuk-summary-list__row moj-multi-file-upload__row">
+                    <div class="govuk-summary-list__value moj-multi-file-upload__message">
+                        fencereceipt2.jpeg
+                    </div>
+                    <div class="govuk-summary-list__actions moj-multi-file-upload__actions">
+                        <button
+                            class="moj-multi-file-upload__delete govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
+                            type="button" name="delete" value="upscalemedia-transformed.jpeg">
+                            Remove <span class="govuk-visually-hidden">upscalemedia-transformed.jpeg</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
+
+        <div class="container--doc-upload govuk-form-group--error">
+            <h2 class="govuk-heading-m govuk-!-margin-top-7">
+                Choose a document
+            </h2>
+
+            <p id="file-error-example" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> fencereceipt1.pdf must be smaller than 10MB
+            </p>
+
+            <div class="govuk-button-group govuk-button-group--doc-upload">
+                <p class="govuk-body">Drag and drop files here or</p>
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                    Choose files
+                </button>
+            </div>
+        </div>
 
         <div class="govuk-warning-text">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
@@ -139,9 +189,11 @@
             </strong>
         </div>
 
-        <button type="submit" class="govuk-button" data-module="govuk-button">
-            Submit
-        </button>
+        <form method="POST">
+            <button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+                Submit
+            </button>
+        </form>
 
     </div>
 </div>
