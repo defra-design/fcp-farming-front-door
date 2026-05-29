@@ -409,6 +409,8 @@
         // Land cover dataset — one dataset with a sublayer per cover type, so it
         // shows as a single "Land cover" toggle in the Layers panel while keeping
         // each type's colour/pattern on the map and its own entry in the Key.
+        // The parent must have showInKey:true for its sublayers to appear in the
+        // Key, and so the whole group is dropped from the Key when toggled off.
         const landCoverSublayers = Object.keys(coversByType).map(type => {
           const color = landCoverColors[type] || '#CCCCCC'
           const style = {
@@ -434,7 +436,7 @@
           id: 'land-cover',
           label: 'Land cover',
           geojson: { type: 'FeatureCollection', features: parcelCovers },
-          showInKey: false,
+          showInKey: true,
           showInMenu: true,
           sublayers: landCoverSublayers
         })
