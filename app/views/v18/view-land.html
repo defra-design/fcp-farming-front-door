@@ -175,7 +175,7 @@
 <main class="app-map-fullscreen" id="main-content">
 
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Map controls">
-    <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">Land summary</h1>
+    <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">{{ myData.farmName | default('Agile Farm Ltd') }}</h1>
     {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
     {% from "govuk/components/button/macro.njk" import govukButton %}
 
@@ -286,7 +286,11 @@
       deselectOnClickOutside: true
     })
 
-    const interactiveMap = new defra.InteractiveMap('map', {
+    // The map is built only after the WFS fetch resolves (see createMap below), so
+    // it can open already framed on the parcels with no pan/zoom. These are its
+    // static options; `bounds` is added at construction once the data is in.
+    let interactiveMap = null
+    const mapOptions = {
       mapProvider: defra.maplibreProvider(),
       behaviour: 'hybrid',
       mapLabel: 'Ambleside',
@@ -347,7 +351,7 @@
         }),
         interact
       ]
-    })
+    }
 
     // Shared state for parcel data and map instance
     let mapInstance = null
@@ -387,10 +391,12 @@
       interact.enable({
         layers: [{ layerId: 'parcels-fill', idProperty: 'ngc' }]
       })
+    }
 
-      // Fit map to parcel bounds
+    // Bounding box [west, south, east, north] spanning all parcel features.
+    function computeBounds(features) {
       let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
-      data.features.forEach(f => {
+      features.forEach(f => {
         const coords = f.geometry.type === 'MultiPolygon'
           ? f.geometry.coordinates.flat(2)
           : f.geometry.coordinates.flat(1)
@@ -401,7 +407,7 @@
           if (lat > maxLat) maxLat = lat
         })
       })
-      map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 50 })
+      return [minLng, minLat, maxLng, maxLat]
     }
 
     // Repopulate the date input from ?from-date-* on the URL after a search submit.
@@ -456,7 +462,7 @@
     filterInput.addEventListener('input', e => filterParcels(e.target.value))
 
     // Fetch data immediately on page load
-    const sbi = '106332870'
+    const sbi = '{{ myData.sbi | default("111089693") }}'
     const cql = `SBI=${sbi}${buildDateClause()}`
     const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
     const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
@@ -526,90 +532,99 @@
       // Initial filter pass populates the status line
       filterParcels(filterInput.value)
 
-      // If map is already ready, add layers now
-      if (mapInstance) {
-        addParcelsToMap(mapInstance, landParcelsData)
-      }
+      // Build the map now we know where the parcels are, so it opens already
+      // framed on them: bounds go to the constructor, which fits with duration:0
+      // inside the library — no visible pan/zoom on load.
+      const bounds = landParcelsData.features.length ? computeBounds(landParcelsData.features) : null
+      createMap(bounds)
 
     }).catch(err => {
       console.error('Failed to load land parcels:', err)
       document.getElementById('summary-parcel-count').textContent = '–'
       document.getElementById('summary-total-area').textContent = '–'
+      createMap(null)
     })
 
-    // When map becomes ready, add layers if data is already loaded
-    interactiveMap.on('map:ready', (e) => {
-      mapInstance = e.map
-      if (mapInstance && landParcelsData) {
-        addParcelsToMap(mapInstance, landParcelsData)
-      }
-    })
+    // Construct the map (reusing mapOptions) framed on `bounds`, then wire events.
+    // Passing `bounds` to the constructor fits with duration:0 inside the library,
+    // so the map opens on the parcels with no visible pan/zoom. A null bounds (no
+    // parcels / fetch error) falls back to the #map element's data-center/zoom.
+    function createMap(bounds) {
+      if (interactiveMap) return
+      interactiveMap = new defra.InteractiveMap('map', bounds ? { ...mapOptions, bounds } : mapOptions)
 
-    // Map -> Sidebar: highlight selected parcel row and surface its details
-    // in the "Selected parcel" panel above the table. If the selection is
-    // currently hidden by the filter, clear the filter first.
-    const selectedPanel = document.getElementById('selected-parcel-panel')
-    const selectedLink = document.getElementById('selected-parcel-link')
-    const selectedCover = document.getElementById('selected-parcel-cover')
-    const selectedArea = document.getElementById('selected-parcel-area')
-
-    interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
-      const selectedIds = new Set(selectedFeatures.map(f => f.featureId))
-      const rows = document.querySelectorAll('#parcel-table-body tr')
-      const hiddenSelection = Array.from(rows).some(tr => selectedIds.has(tr.dataset.ngc) && tr.hidden)
-      if (hiddenSelection && filterInput.value) {
-        filterInput.value = ''
-        filterParcels('')
-      }
-      rows.forEach(tr => {
-        tr.classList.toggle('app-parcel--selected', selectedIds.has(tr.dataset.ngc))
+      // When map becomes ready, add the parcel layers (data is already loaded)
+      interactiveMap.on('map:ready', (e) => {
+        mapInstance = e.map
+        if (landParcelsData) addParcelsToMap(mapInstance, landParcelsData)
       })
 
-      const selectedRow = Array.from(rows).find(tr => selectedIds.has(tr.dataset.ngc))
-      if (selectedRow) {
-        const anchor = selectedRow.querySelector('a')
-        const cells = selectedRow.querySelectorAll('td')
-        selectedLink.href = anchor ? anchor.getAttribute('href') : '#'
-        selectedLink.textContent = anchor ? anchor.textContent : ''
-        selectedCover.textContent = cells[1] ? cells[1].textContent.trim() : ''
-        selectedArea.textContent = cells[2] ? cells[2].textContent.trim() : ''
-        selectedPanel.hidden = false
-      } else {
-        selectedPanel.hidden = true
-      }
-    })
+      // Map -> Sidebar: highlight selected parcel row and surface its details
+      // in the "Selected parcel" panel above the table. If the selection is
+      // currently hidden by the filter, clear the filter first.
+      const selectedPanel = document.getElementById('selected-parcel-panel')
+      const selectedLink = document.getElementById('selected-parcel-link')
+      const selectedCover = document.getElementById('selected-parcel-cover')
+      const selectedArea = document.getElementById('selected-parcel-area')
 
-    // Re-add parcel layers after a map style change
-    interactiveMap.on('map:stylechange', () => {
-      setTimeout(() => {
-        if (mapInstance && landParcelsData) {
-          addParcelsToMap(mapInstance, landParcelsData)
+      interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
+        const selectedIds = new Set(selectedFeatures.map(f => f.featureId))
+        const rows = document.querySelectorAll('#parcel-table-body tr')
+        const hiddenSelection = Array.from(rows).some(tr => selectedIds.has(tr.dataset.ngc) && tr.hidden)
+        if (hiddenSelection && filterInput.value) {
+          filterInput.value = ''
+          filterParcels('')
         }
-      }, 100)
-    })
+        rows.forEach(tr => {
+          tr.classList.toggle('app-parcel--selected', selectedIds.has(tr.dataset.ngc))
+        })
 
-    // Move the "Map view" button into the sidebar on mobile
-    function moveMapButton() {
-      const btn = document.querySelector('.im-c-open-map-button')
-      const slot = document.getElementById('map-button-slot')
-      if (btn && slot && !slot.contains(btn)) {
-        slot.appendChild(btn)
-        return true
-      }
-      return false
-    }
-
-    // Try immediately, then observe for late insertion
-    if (!moveMapButton()) {
-      const observer = new MutationObserver(() => {
-        if (moveMapButton()) observer.disconnect()
+        const selectedRow = Array.from(rows).find(tr => selectedIds.has(tr.dataset.ngc))
+        if (selectedRow) {
+          const anchor = selectedRow.querySelector('a')
+          const cells = selectedRow.querySelectorAll('td')
+          selectedLink.href = anchor ? anchor.getAttribute('href') : '#'
+          selectedLink.textContent = anchor ? anchor.textContent : ''
+          selectedCover.textContent = cells[1] ? cells[1].textContent.trim() : ''
+          selectedArea.textContent = cells[2] ? cells[2].textContent.trim() : ''
+          selectedPanel.hidden = false
+        } else {
+          selectedPanel.hidden = true
+        }
       })
-      observer.observe(document.getElementById('main-content'), { childList: true, subtree: true })
-    }
 
-    // Keep the map sized correctly when the viewport resizes
-    window.addEventListener('resize', () => {
-      interactiveMap.api?.map?.resize()
-    })
+      // Re-add parcel layers after a map style change
+      interactiveMap.on('map:stylechange', () => {
+        setTimeout(() => {
+          if (mapInstance && landParcelsData) {
+            addParcelsToMap(mapInstance, landParcelsData)
+          }
+        }, 100)
+      })
+
+      // Move the "Map view" button into the sidebar on mobile
+      function moveMapButton() {
+        const btn = document.querySelector('.im-c-open-map-button')
+        const slot = document.getElementById('map-button-slot')
+        if (btn && slot && !slot.contains(btn)) {
+          slot.appendChild(btn)
+          return true
+        }
+        return false
+      }
+
+      // Try immediately, then observe for late insertion
+      if (!moveMapButton()) {
+        const observer = new MutationObserver(() => {
+          if (moveMapButton()) observer.disconnect()
+        })
+        observer.observe(document.getElementById('main-content'), { childList: true, subtree: true })
+      }
+
+      // Keep the map sized correctly when the viewport resizes
+      window.addEventListener('resize', () => {
+        interactiveMap.api?.map?.resize()
+      })
+    }
   </script>
 {% endblock %}

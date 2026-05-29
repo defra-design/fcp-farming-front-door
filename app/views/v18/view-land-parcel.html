@@ -149,7 +149,9 @@
 
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Parcel details">
     <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land">Back to land summary</a>
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h2>
+    <!-- <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-2">{{ myData.farmName | default('Agile Farm Ltd') }}</h1> -->
+    
+    <h1 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h1>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2>
     <table class="govuk-table govuk-!-margin-bottom-4">
@@ -217,7 +219,7 @@
 
   </div>
 
-  <div id="map" class="app-map-fullscreen__map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
+  <div id="map" class="app-map-fullscreen__map"></div>
 
 </main>
 {% endblock main %}
@@ -270,12 +272,13 @@
 
     if (selectedNgc) {
       // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
-      // We can't filter SHEET_ID server-side (the WAF rejects URL-encoded quotes
-      // around the alphanumeric value), so we keep PARCEL_ID on the wire and
-      // disambiguate by SHEET_ID client-side once features arrive.
+      // PARCEL_ID is quoted in the CQL below ('0469') so the WFS compares it as a
+      // string — unquoted, a leading-zero id like 0469 coerces to 469 and matches
+      // nothing. SHEET_ID can't be filtered server-side (the WAF rejects quotes
+      // around the alphanumeric value), so we disambiguate by SHEET_ID client-side.
       const sheetId = selectedNgc.substring(0, 6)
       const parcelId = selectedNgc.substring(6)
-      const sbi = '106332870'
+      const sbi = '{{ myData.sbi | default("111089693") }}'
 
       // If the parent page passed a ?from-date-* window, scope the covers fetch
       // to "covers that came into existence on/after that date" via CREATED_ON.
@@ -292,7 +295,7 @@
         const today = new Date().toISOString().slice(0, 10)
         return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
       }
-      const coversCql = `SBI=${sbi} AND PARCEL_ID=${parcelId}${buildDateClause()}`
+      const coversCql = `SBI=${sbi} AND PARCEL_ID='${parcelId}'${buildDateClause()}`
 
       // Format YYYYMMDDhhmmss → 'DD MMM YYYY' for display.
       function fmtValidFrom (v) {
@@ -302,9 +305,9 @@
         return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
       }
 
-      const parcelUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}+AND+PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
+      const parcelUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}+AND+PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
       const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(coversCql)}&srsname=EPSG:4326&outputFormat=application/json`
-      const hedgeUrl = `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
+      const hedgeUrl = `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
 
       // Fetch data FIRST, then create the map with datasets in the initial config
       Promise.all([
@@ -322,7 +325,8 @@
 
         // Set the heading
         document.getElementById('parcel-heading').textContent =
-          'Parcel details: ' + selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID
+          'Parcel: ' + selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID
+          //selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID
 
         // Populate total area
         document.getElementById('parcel-total-area').textContent =
@@ -402,8 +406,10 @@
 
         const datasets = []
 
-        // Land cover datasets
-        Object.entries(coversByType).forEach(([type, features]) => {
+        // Land cover dataset — one dataset with a sublayer per cover type, so it
+        // shows as a single "Land cover" toggle in the Layers panel while keeping
+        // each type's colour/pattern on the map and its own entry in the Key.
+        const landCoverSublayers = Object.keys(coversByType).map(type => {
           const color = landCoverColors[type] || '#CCCCCC'
           const style = {
             fill: color,
@@ -415,20 +421,28 @@
             style.fillPatternBackgroundColor = color
             style.fillPatternForegroundColor = '#0b0c0c'
           }
-          datasets.push({
+          return {
             id: 'lc-' + type.replace(/\s+/g, '-').toLowerCase(),
             label: type,
-            geojson: { type: 'FeatureCollection', features },
+            filter: ['==', ['get', 'DESCRIPTION'], type],
             style,
             showInKey: true,
-            showInLayers: false
-          })
+            showInMenu: false
+          }
+        })
+        datasets.push({
+          id: 'land-cover',
+          label: 'Land cover',
+          geojson: { type: 'FeatureCollection', features: parcelCovers },
+          showInKey: false,
+          showInMenu: true,
+          sublayers: landCoverSublayers
         })
 
         // Parcel outline dataset
         datasets.push({
           id: 'parcel-outline',
-          label: selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID,
+          label: 'Land parcel',
           geojson: { type: 'FeatureCollection', features: [selectedFeature] },
           style: {
             fill: 'transparent',
@@ -436,7 +450,7 @@
             strokeWidth: 3
           },
           showInKey: false,
-          showInLayers: false
+          showInMenu: true
         })
 
         // Hedgerow dataset (last = on top, so boundary hedges aren't hidden by the parcel outline)
@@ -451,9 +465,24 @@
               keySymbolShape: 'line'
             },
             showInKey: true,
-            showInLayers: false
+            showInMenu: true
           })
         }
+
+        // Frame the map on the parcel at construction time. Passing `bounds` to the
+        // constructor fits with duration:0 inside the library, so the map opens on
+        // the parcel with no visible pan/zoom (vs. an animated fitToBounds on ready).
+        let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
+        const fitCoords = selectedFeature.geometry.type === 'MultiPolygon'
+          ? selectedFeature.geometry.coordinates.flat(2)
+          : selectedFeature.geometry.coordinates.flat(1)
+        fitCoords.forEach(([lng, lat]) => {
+          if (lng < minLng) minLng = lng
+          if (lat < minLat) minLat = lat
+          if (lng > maxLng) maxLng = lng
+          if (lat > maxLat) maxLat = lat
+        })
+        const parcelBounds = [minLng, minLat, maxLng, maxLat]
 
         // Create the map with all datasets in the initial config
         const datasetsPlugin = defra.datasetsMaplibrePlugin({ datasets })
@@ -462,6 +491,7 @@
           mapProvider: defra.maplibreProvider(),
           behaviour: 'hybrid',
           mapLabel: 'Land parcel',
+          bounds: parcelBounds,
           minZoom: 6,
           maxZoom: 18,
           enableZoomControls: true,
@@ -519,12 +549,6 @@
             }),
             datasetsPlugin
           ]
-        })
-
-        // Fit once size & style have settled so zoom is computed against the
-        // final viewport, not an intermediate layout state.
-        interactiveMap.on('map:ready', () => {
-          interactiveMap.fitToBounds(selectedFeature)
         })
 
         // Move the "Map view" button into the sidebar on mobile

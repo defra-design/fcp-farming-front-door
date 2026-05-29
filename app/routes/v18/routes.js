@@ -1613,6 +1613,24 @@ module.exports = function (router, _myData) {
         });
     });
 
+    //demo-start - prototype configuration (farm name + SBI)
+    router.get('/' + version + '/demo-start', function (req, res) {
+        res.render(version + '/demo-start', {
+            myData: req.session.myData
+        });
+    });
+
+    //demo-start - apply defaults, store in myData, continue to view-land
+    router.post('/' + version + '/demo-start', function (req, res) {
+        var farmName = (req.session.data['farm-name'] || '').trim();
+        var sbi = (req.session.data['sbi'] || '').trim();
+
+        req.session.myData.farmName = farmName || 'Agile Farm Ltd';
+        req.session.myData.sbi = sbi || '111089693';
+
+        res.redirect('/' + version + '/view-land');
+    });
+
     //view land
     router.get('/' + version + '/view-land', function (req, res) {
         res.render(version + '/view-land', {
