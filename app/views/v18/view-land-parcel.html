@@ -135,6 +135,16 @@
       overflow: hidden;
     }
   }
+
+  /* Map -> sidebar: highlight a hedgerow's row when its line is clicked on the map
+     (mirrors view-land's .app-parcel--selected treatment) */
+  #hedgerows-table-body tr.app-hedge--selected {
+    background: #f4f8fb;
+  }
+
+  #hedgerows-table-body tr.app-hedge--selected td {
+    font-weight: 700;
+  }
   </style>
 {% endblock %}
 
@@ -150,7 +160,7 @@
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Parcel details">
     <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land">Back to land summary</a>
     <!-- <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-2">{{ myData.farmName | default('Agile Farm Ltd') }}</h1> -->
-    
+
     <h1 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h1>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2>
@@ -230,6 +240,7 @@
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
 
   <script>
     // Land cover colour mapping
@@ -271,19 +282,22 @@
     const selectedNgc = urlParams.get('parcel')
 
     if (selectedNgc) {
-      // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
-      // PARCEL_ID is quoted in the CQL below ('0469') so the WFS compares it as a
-      // string — unquoted, a leading-zero id like 0469 coerces to 469 and matches
-      // nothing. SHEET_ID can't be filtered server-side (the WAF rejects quotes
-      // around the alphanumeric value), so we disambiguate by SHEET_ID client-side.
-      const sheetId = selectedNgc.substring(0, 6)
-      const parcelId = selectedNgc.substring(6)
       const sbi = '{{ myData.sbi | default("111089693") }}'
 
-      // If the parent page passed a ?from-date-* window, scope the covers fetch
-      // to "covers that came into existence on/after that date" via CREATED_ON.
-      // (The WFS only exposes currently-valid rows, so this is the only "change"
-      // signal we have — VALID_FROM is then displayed per row.)
+      // --- Per-parcel state (the displayed parcel changes in place on map click) ---
+      let allParcels = []        // every parcel in the business — context outlines + click targets
+      let datasetsPlugin = null
+      let interact = null
+      let interactiveMap = null
+      let hedgeMap = null        // raw MapLibre map (from the map:ready payload; no public accessor)
+      let currentNgc = selectedNgc
+      let currentData = null     // last-loaded parcel data, re-applied after a base-map style change
+
+      // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
+
+      // If the page was opened with a ?from-date-* window, scope the covers fetch to
+      // "covers created on/after that date" via CREATED_ON (the WFS only exposes
+      // currently-valid rows, so this is the only "change" signal — VALID_FROM shown per row).
       function buildDateClause () {
         const d = urlParams.get('from-date-day')
         const m = urlParams.get('from-date-month')
@@ -295,9 +309,8 @@
         const today = new Date().toISOString().slice(0, 10)
         return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
       }
-      const coversCql = `SBI=${sbi} AND PARCEL_ID='${parcelId}'${buildDateClause()}`
 
-      // Format YYYYMMDDhhmmss → 'DD MMM YYYY' for display.
+      // Format YYYYMMDDhhmmss → 'DD Month YYYY' for display.
       function fmtValidFrom (v) {
         if (!v || v.length < 8) return ''
         const dt = new Date(`${v.slice(0,4)}-${v.slice(4,6)}-${v.slice(6,8)}`)
@@ -305,38 +318,71 @@
         return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
       }
 
-      const parcelUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}+AND+PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
-      const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(coversCql)}&srsname=EPSG:4326&outputFormat=application/json`
-      const hedgeUrl = `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
+      // --- WFS endpoints -------------------------------------------------------
+      // All parcels for the business — drawn as context outlines and used as click
+      // targets (no date clause, so the whole holding is always navigable).
+      const allParcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}&srsname=EPSG:4326&outputFormat=application/json`
 
-      // Fetch data FIRST, then create the map with datasets in the initial config
-      Promise.all([
-        fetch(parcelUrl).then(r => r.json()),
-        fetch(coversUrl).then(r => r.json()),
-        fetch(hedgeUrl).then(r => r.json())
-      ]).then(([parcelData, landCoversData, hedgeData]) => {
+      // PARCEL_ID is quoted so the WFS compares it as a string — unquoted, a leading-zero
+      // id like 0469 coerces to 469 and matches nothing. SHEET_ID can't be filtered
+      // server-side (the WAF rejects quotes around the alphanumeric value), so we
+      // disambiguate by SHEET_ID client-side after the fetch.
+      function coversUrlFor (parcelId) {
+        const cql = `SBI=${sbi} AND PARCEL_ID='${parcelId}'${buildDateClause()}`
+        return `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+      }
+      function hedgeUrlFor (parcelId) {
+        return `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
+      }
 
-        // Disambiguate by SHEET_ID — the server-side filter only includes
-        // PARCEL_ID, which can collide across sheets within a single SBI.
-        const selectedFeature = (parcelData.features || []).find(f => f.properties.SHEET_ID === sheetId)
-        if (!selectedFeature) return
+      // Bounding box [west, south, east, north] for a single parcel feature.
+      function computeBounds (feature) {
+        let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
+        const coords = feature.geometry.type === 'MultiPolygon'
+          ? feature.geometry.coordinates.flat(2)
+          : feature.geometry.coordinates.flat(1)
+        coords.forEach(([lng, lat]) => {
+          if (lng < minLng) minLng = lng
+          if (lat < minLat) minLat = lat
+          if (lng > maxLng) maxLng = lng
+          if (lat > maxLat) maxLat = lat
+        })
+        return [minLng, minLat, maxLng, maxLat]
+      }
 
-        selectedFeature.properties.ngc = selectedFeature.properties.SHEET_ID + selectedFeature.properties.PARCEL_ID
+      // Fetch a parcel's land covers + hedgerows and resolve its geometry from the
+      // already-loaded all-parcels set. Returns the data the sidebar + map need.
+      function loadParcelData (ngc) {
+        const sheetId = ngc.substring(0, 6)
+        const parcelId = ngc.substring(6)
+        const selectedFeature = allParcels.find(f => f.properties.ngc === ngc)
+        return Promise.all([
+          fetch(coversUrlFor(parcelId)).then(r => r.json()),
+          fetch(hedgeUrlFor(parcelId)).then(r => r.json())
+        ]).then(([landCoversData, hedgeData]) => ({
+          ngc,
+          sheetId,
+          selectedFeature,
+          // Filter to this sheet — the server-side filter only includes PARCEL_ID,
+          // which can collide across sheets within a single SBI.
+          parcelCovers: (landCoversData.features || []).filter(f => f.properties.SHEET_ID === sheetId),
+          parcelHedges: (hedgeData.features || []).filter(f => f.properties.REF_PARCEL_SHEET_ID === sheetId)
+        }))
+      }
 
-        // Set the heading
+      // --- Sidebar (re-run on every parcel change) -----------------------------
+      function updateSidebar (d) {
+        const { selectedFeature, parcelCovers, parcelHedges } = d
+
         document.getElementById('parcel-heading').textContent =
           'Parcel: ' + selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID
-          //selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID
-
-        // Populate total area
         document.getElementById('parcel-total-area').textContent =
           parseFloat(selectedFeature.properties.AREA_HA).toFixed(4)
 
-        // Populate land covers sidebar (filter to this sheet — see SHEET_ID note above)
-        const parcelCovers = (landCoversData.features || []).filter(f => f.properties.SHEET_ID === sheetId)
+        // Land covers
         document.getElementById('parcel-land-covers').textContent = parcelCovers.length
-
         const lcTableBody = document.getElementById('land-covers-table-body')
+        lcTableBody.innerHTML = ''
         let lcTotalArea = 0
         let lcMaxValidFrom = ''   // YYYYMMDDhhmmss strings sort lexicographically; drives "Last updated"
         parcelCovers.forEach(f => {
@@ -352,7 +398,6 @@
           `
           lcTableBody.appendChild(tr)
         })
-
         if (parcelCovers.length === 0) {
           const tr = document.createElement('tr')
           tr.className = 'govuk-table__row'
@@ -367,21 +412,23 @@
           `
           lcTableBody.appendChild(lcTotalRow)
         }
-
         document.getElementById('parcel-last-updated').textContent =
           lcMaxValidFrom ? fmtValidFrom(lcMaxValidFrom) : '–'
 
-        // Populate hedgerows sidebar (filter to this sheet — see SHEET_ID note above)
-        const parcelHedges = (hedgeData.features || []).filter(f => f.properties.REF_PARCEL_SHEET_ID === sheetId)
+        // Hedgerows
         document.getElementById('parcel-hedgerows').textContent = parcelHedges.length
-
         const hTableBody = document.getElementById('hedgerows-table-body')
+        hTableBody.innerHTML = ''
         let hTotalLength = 0
         parcelHedges.forEach((f, i) => {
+          // Stable id shared by the map feature and this row (the datasets source uses
+          // generateId, so we set an explicit property and target it via interact's idProperty).
+          f.properties.hedgeId = String(i)
           const length = parseFloat(f.properties.LENGTH)
           hTotalLength += length
           const tr = document.createElement('tr')
           tr.className = 'govuk-table__row'
+          tr.dataset.hedgeId = String(i)
           tr.innerHTML = `
             <td class="govuk-table__cell">${i + 1}</td>
             <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${Math.round(length)}</td>
@@ -395,29 +442,20 @@
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${Math.round(hTotalLength)}</td>
         `
         hTableBody.appendChild(hTotalRow)
+      }
 
-        // Build datasets array from fetched data
-        const coversByType = {}
-        parcelCovers.forEach(f => {
-          const desc = f.properties.DESCRIPTION
-          if (!coversByType[desc]) coversByType[desc] = []
-          coversByType[desc].push(f)
-        })
-
-        const datasets = []
-
-        // Land cover dataset — one dataset with a sublayer per cover type, so it
-        // shows as a single "Land cover" toggle in the Layers panel while keeping
-        // each type's colour/pattern on the map and its own entry in the Key.
-        // The parent must have showInKey:true for its sublayers to appear in the
-        // Key, and so the whole group is dropped from the Key when toggled off.
-        const landCoverSublayers = Object.keys(coversByType).map(type => {
-          const color = landCoverColors[type] || '#CCCCCC'
-          const style = {
-            fill: color,
-            stroke: color,
-            strokeWidth: 1
-          }
+      // --- Dataset builders ----------------------------------------------------
+      // Land cover — one dataset with a sublayer for EVERY cover type. Building all types
+      // (rather than only those present) means every colour/pattern is registered once at
+      // construction, so this can be a PERMANENT dataset whose data is swapped with setData
+      // instead of being rebuilt per parcel. Keeping it permanent preserves its position
+      // above Hedgerow in the Key (remove+add would re-append it last) and avoids the
+      // runtime-addDataset pattern-registration gap. Each sublayer filters the shared source
+      // by DESCRIPTION; syncLandCoverKey() hides the types absent from the current parcel.
+      function buildLandCoverDataset (parcelCovers) {
+        const sublayers = Object.keys(landCoverColors).map(type => {
+          const color = landCoverColors[type]
+          const style = { fill: color, stroke: color, strokeWidth: 1 }
           if (landCoverPatterns[type]) {
             style.fillPattern = landCoverPatterns[type]
             style.fillPatternBackgroundColor = color
@@ -432,64 +470,194 @@
             showInMenu: false
           }
         })
-        datasets.push({
+        return {
           id: 'land-cover',
           label: 'Land cover',
           geojson: { type: 'FeatureCollection', features: parcelCovers },
           showInKey: true,
           showInMenu: true,
-          sublayers: landCoverSublayers
-        })
+          sublayers
+        }
+      }
 
-        // Parcel outline dataset
-        datasets.push({
+      // Show only the cover types present on the current parcel in the Key/Layers by hiding
+      // the rest (their sublayers have no matching features so they draw nothing anyway —
+      // this is purely for the Key/Layers, whose UI omits sublayers marked hidden).
+      function syncLandCoverKey (parcelCovers) {
+        const present = new Set(parcelCovers.map(f => f.properties.DESCRIPTION))
+        Object.keys(landCoverColors).forEach(type => {
+          const sublayerId = 'lc-' + type.replace(/\s+/g, '-').toLowerCase()
+          datasetsPlugin.setDatasetVisibility(present.has(type), { datasetId: 'land-cover', sublayerId })
+        })
+      }
+
+      // The bold outline of the currently-selected parcel.
+      function buildParcelOutlineDataset (feature) {
+        return {
           id: 'parcel-outline',
           label: 'Land parcel',
-          geojson: { type: 'FeatureCollection', features: [selectedFeature] },
-          style: {
-            fill: 'transparent',
-            stroke: '#1d70b8',
-            strokeWidth: 3
-          },
+          geojson: { type: 'FeatureCollection', features: [feature] },
+          style: { fill: 'transparent', stroke: '#1d70b8', strokeWidth: 3 },
           showInKey: false,
           showInMenu: true
-        })
+        }
+      }
 
-        // Hedgerow dataset (last = on top, so boundary hedges aren't hidden by the parcel outline)
-        if (parcelHedges.length > 0) {
-          datasets.push({
-            id: 'hedgerows',
-            label: 'Hedgerow',
-            geojson: { type: 'FeatureCollection', features: parcelHedges },
-            style: {
-              stroke: '#00703c',
-              strokeWidth: 6,
-              keySymbolShape: 'line'
-            },
-            showInKey: true,
-            showInMenu: true
-          })
+      // The selected parcel's hedgerows. Built once at construction and thereafter swapped
+      // in place with setData (see swapParcelDatasets), so it is a permanent dataset — when
+      // a parcel has no hedges its data is emptied and the layer is hidden (which also drops
+      // it from the Key) rather than the dataset being removed.
+      function buildHedgerowDataset (parcelHedges) {
+        const hasHedges = parcelHedges.length > 0
+        return {
+          id: 'hedgerows',
+          label: 'Hedgerow',
+          geojson: { type: 'FeatureCollection', features: parcelHedges },
+          style: { stroke: '#00703c', strokeWidth: 6, keySymbolShape: 'line' },
+          showInKey: true,
+          showInMenu: true,
+          visibility: hasHedges ? 'visible' : 'hidden'
+        }
+      }
+
+      // Outline of every other parcel in the business — same blue as the selected
+      // parcel (the selected one also gets the bold parcel-outline on top).
+      function buildParcelsOutlineAllDataset () {
+        return {
+          id: 'parcels-outline-all',
+          label: 'Other parcels',
+          geojson: { type: 'FeatureCollection', features: allParcels },
+          style: { fill: 'transparent', stroke: '#1d70b8', strokeWidth: 1 },
+          showInKey: false,
+          showInMenu: true
+        }
+      }
+
+      // Near-invisible fill over every parcel so the whole interior is a click target.
+      // A true fill-opacity of 0 is unavailable here (the plugin's `opacity || 1` turns 0
+      // into 1), so 0.01 is used — imperceptible but still returned by feature queries.
+      function buildParcelsHitDataset () {
+        return {
+          id: 'parcels-hit',
+          geojson: { type: 'FeatureCollection', features: allParcels },
+          style: { fill: '#9b9b9b', opacity: 0.01 },
+          showInKey: false,
+          showInMenu: false
+        }
+      }
+
+      // A subtle blue fill shown on a just-clicked parcel while its data loads, then cleared.
+      // Empty to start; its data is swapped with setData (see showParcelLoading/clearParcelLoading).
+      function buildParcelLoadingDataset () {
+        return {
+          id: 'parcel-loading',
+          geojson: { type: 'FeatureCollection', features: [] },
+          style: { fill: '#1d70b8', opacity: 0.4 },
+          showInKey: false,
+          showInMenu: false
+        }
+      }
+
+      function showParcelLoading (ngc) {
+        const feature = allParcels.find(f => f.properties.ngc === ngc)
+        if (feature) {
+          datasetsPlugin.setData({ type: 'FeatureCollection', features: [feature] }, { datasetId: 'parcel-loading' })
+        }
+      }
+
+      function clearParcelLoading () {
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: [] }, { datasetId: 'parcel-loading' })
+      }
+
+      // --- Interaction ---------------------------------------------------------
+      // Make both the parcel hit-fill (click to switch parcel) and the hedgerow lines
+      // (click to highlight the row) interactive. enable() replaces the layer config, so
+      // this is re-run whenever the hedgerow layer is recreated or the style changes.
+      function enableInteract () {
+        if (!hedgeMap || !interact || !hedgeMap.getLayer('parcels-hit')) return false
+        const layers = [{ layerId: 'parcels-hit', idProperty: 'ngc', selectedStroke: 'transparent' }]
+        if (hedgeMap.getLayer('hedgerows')) layers.push({ layerId: 'hedgerows', idProperty: 'hedgeId' })
+        interact.enable({ layers })
+        return true
+      }
+
+      // Show the clicked parcel's data on the map. Land cover, the selected outline and
+      // hedgerows are all PERMANENT datasets: their data is swapped in place with setData,
+      // and Key/visibility toggled with setDatasetVisibility. Both act through the adapter's
+      // own datasetId→source map, NOT the plugin's React state, so they apply on every switch
+      // — unlike remove+add, whose removeDataset is a no-op whenever its commit-lagged state
+      // lacks the entry (which left a previous parcel's hedgerows stuck on the map). Because
+      // nothing is removed or re-added, the construction-time layer order — and the Key order
+      // (Land cover above Hedgerow) — is preserved.
+      function swapParcelDatasets (d) {
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: d.parcelCovers }, { datasetId: 'land-cover' })
+        syncLandCoverKey(d.parcelCovers)
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: [d.selectedFeature] }, { datasetId: 'parcel-outline' })
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: d.parcelHedges }, { datasetId: 'hedgerows' })
+        datasetsPlugin.setDatasetVisibility(d.parcelHedges.length > 0, { datasetId: 'hedgerows' })
+      }
+
+      // Load + show a different parcel in place (no page reload). The clicked parcel is
+      // filled with a subtle tint as immediate feedback while its data loads, then cleared.
+      function switchParcel (ngc) {
+        if (ngc === currentNgc) return
+        showParcelLoading(ngc)
+        loadParcelData(ngc).then(d => {
+          if (!d.selectedFeature) { clearParcelLoading(); return }
+          currentNgc = ngc
+          currentData = d
+          updateSidebar(d)
+          swapParcelDatasets(d)
+          const b = computeBounds(d.selectedFeature)
+          hedgeMap.fitBounds([[b[0], b[1]], [b[2], b[3]]], { padding: 40, duration: 600 })
+          enableInteract()
+          clearParcelLoading()
+          const p = new URLSearchParams(window.location.search)
+          p.set('parcel', ngc)
+          history.replaceState(null, '', '?' + p.toString())
+        }).catch(err => { clearParcelLoading(); console.error('Failed to switch parcel:', err) })
+      }
+
+      // --- Initial load --------------------------------------------------------
+      fetch(allParcelsUrl).then(r => r.json()).then(apData => {
+        allParcels = apData.features || []
+        allParcels.forEach(f => { f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID })
+        return loadParcelData(selectedNgc)
+      }).then(d => {
+        if (!d.selectedFeature) {
+          document.getElementById('parcel-heading').textContent = 'Could not load parcel'
+          return
         }
 
-        // Frame the map on the parcel at construction time. Passing `bounds` to the
-        // constructor fits with duration:0 inside the library, so the map opens on
-        // the parcel with no visible pan/zoom (vs. an animated fitToBounds on ready).
-        let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
-        const fitCoords = selectedFeature.geometry.type === 'MultiPolygon'
-          ? selectedFeature.geometry.coordinates.flat(2)
-          : selectedFeature.geometry.coordinates.flat(1)
-        fitCoords.forEach(([lng, lat]) => {
-          if (lng < minLng) minLng = lng
-          if (lat < minLat) minLat = lat
-          if (lng > maxLng) maxLng = lng
-          if (lat > maxLat) maxLat = lat
+        currentData = d
+        updateSidebar(d)
+
+        // Datasets, bottom → top: context outlines, click hit-fill, then the selected
+        // parcel's land cover / outline / loading-tint / hedgerows. All of the per-parcel
+        // datasets are permanent and swapped in place (see swapParcelDatasets), so this
+        // order — and the Key order (Land cover above Hedgerow) — is fixed for the life of
+        // the page.
+        const datasets = [
+          buildParcelsOutlineAllDataset(),
+          buildParcelsHitDataset(),
+          buildLandCoverDataset(d.parcelCovers),
+          buildParcelOutlineDataset(d.selectedFeature),
+          buildParcelLoadingDataset(),
+          buildHedgerowDataset(d.parcelHedges)
+        ]
+
+        // Frame the map on the selected parcel at construction time (fits with duration:0
+        // inside the library), so the map opens already framed with no visible pan/zoom.
+        const parcelBounds = computeBounds(d.selectedFeature)
+
+        datasetsPlugin = defra.datasetsMaplibrePlugin({ datasets })
+        interact = defra.interactPlugin({
+          interactionModes: ['selectFeature'],
+          multiSelect: false,
+          deselectOnClickOutside: true
         })
-        const parcelBounds = [minLng, minLat, maxLng, maxLat]
 
-        // Create the map with all datasets in the initial config
-        const datasetsPlugin = defra.datasetsMaplibrePlugin({ datasets })
-
-        const interactiveMap = new defra.InteractiveMap('map', {
+        interactiveMap = new defra.InteractiveMap('map', {
           mapProvider: defra.maplibreProvider(),
           behaviour: 'hybrid',
           mapLabel: 'Land parcel',
@@ -537,24 +705,64 @@
               mapColorScheme: 'light',
               backgroundColor: '#ffffff'
             },
-            // {
-            //   id: 'bright',
-            //   label: 'Bright',
-            //   url: 'https://tiles.openfreemap.org/styles/bright',
-            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-            //   appColorScheme: 'light',
-            //   mapColorScheme: 'light',
-            //   backgroundColor: '#f5f5f0'
-            // },
-
           ]
             }),
-            datasetsPlugin
+            datasetsPlugin,
+            interact
           ]
         })
 
+        // The MapLibre map instance comes from the map:ready payload — the InteractiveMap
+        // wrapper exposes no public accessor for it. The datasets plugin adds its layers
+        // asynchronously, so enabling is retried on datasets:ready and after a style change.
+        interactiveMap.on('map:ready', (e) => {
+          hedgeMap = e.map
+          enableInteract()
+        })
+        interactiveMap.on('datasets:ready', () => {
+          enableInteract()
+          // Hide the land-cover types not present on the initial parcel from the Key/Layers.
+          syncLandCoverKey(d.parcelCovers)
+        })
+        // A base-map style change wipes all sources/layers; the datasets plugin re-adds them
+        // from each dataset's STORED geojson — i.e. the initial parcel's data, because setData
+        // updates only the live source, not plugin state. So once the sources have been
+        // recreated (watched via 'idle'), re-apply the current parcel's data and re-enable
+        // interaction.
+        interactiveMap.on('map:stylechange', () => {
+          if (!hedgeMap) return
+          const reapply = () => {
+            if (!hedgeMap.getSource('geojson-land-cover') || !hedgeMap.getSource('geojson-hedgerows')) return
+            hedgeMap.off('idle', reapply)
+            if (currentData) swapParcelDatasets(currentData)
+            enableInteract()
+          }
+          hedgeMap.on('idle', reapply)
+        })
+
+        // Map -> sidebar. A click on another parcel's hit-fill switches the page to it;
+        // a click on a hedgerow line highlights its row.
+        interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
+          const parcelHit = selectedFeatures.find(f => f.layerId === 'parcels-hit')
+          if (parcelHit) {
+            // Selection is shown via the bold parcel-outline, not the interact highlight.
+            if (parcelHit.featureId !== currentNgc) switchParcel(parcelHit.featureId)
+            interact.clear()
+            return
+          }
+          const selectedIds = new Set(
+            selectedFeatures.filter(f => f.layerId === 'hedgerows').map(f => f.featureId)
+          )
+          document.querySelectorAll('#hedgerows-table-body tr').forEach(tr => {
+            tr.classList.toggle(
+              'app-hedge--selected',
+              tr.dataset.hedgeId != null && selectedIds.has(tr.dataset.hedgeId)
+            )
+          })
+        })
+
         // Move the "Map view" button into the sidebar on mobile
-        function moveMapButton() {
+        function moveMapButton () {
           const btn = document.querySelector('.im-c-open-map-button')
           const slot = document.getElementById('map-button-slot')
           if (btn && slot && !slot.contains(btn)) {
@@ -572,7 +780,7 @@
         }
 
         window.addEventListener('resize', () => {
-          interactiveMap.api?.map?.resize()
+          hedgeMap?.resize()
         })
 
       }).catch(err => {
