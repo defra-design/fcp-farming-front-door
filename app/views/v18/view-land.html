@@ -41,7 +41,7 @@
 
   <link rel="prefetch" href="/v18/view-land-parcel" as="document">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/index.js">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js">
 
   <style>
   /* Fullscreen 2-column layout: GOV.UK header + service nav stack at the top,
@@ -286,6 +286,172 @@
       deselectOnClickOutside: true
     })
 
+    // ── Map colours: live-tuneable palette + panel (open with ?colours) ──────────
+    // view-land draws parcels as raw MapLibre layers, so colours apply with
+    // setPaintProperty (instant, no churn). Only the parcel border and hover tint are
+    // tuneable here. Mirrors the view-land-parcel panel (separate localStorage key).
+    const DEFAULT_PALETTE = { parcelBorder: '#1d70b8', selectedBorder: '#0b0c0c', hoverFill: '#1d70b8', hoverOpacity: 0.15 }
+    const PRESETS = { Default: DEFAULT_PALETTE }
+    const PALETTE_STORAGE_KEY = 'land-map-palette'
+    const PANEL_OPEN_KEY = 'land-map-palette-open'
+    const clonePalette = (p) => JSON.parse(JSON.stringify(p))
+    const mergePalette = (base, o) => (o ? { ...base, ...o } : base)
+    function loadPaletteOverride () {
+      try {
+        const qs = new URLSearchParams(location.search)
+        const shared = qs.get('palette')
+        if (shared) return JSON.parse(decodeURIComponent(escape(atob(shared))))
+        const saved = localStorage.getItem(PALETTE_STORAGE_KEY)
+        if (saved) return JSON.parse(saved)
+      } catch (e) { /* ignore malformed overrides */ }
+      return null
+    }
+    const palette = mergePalette(clonePalette(DEFAULT_PALETTE), loadPaletteOverride())
+
+    // Enable parcel selection, colouring the interact plugin's selected-parcel highlight from
+    // the palette (selectedStroke). Re-callable to recolour live; preserves the current
+    // selection (the ENABLE payload carries no selectedFeatures).
+    function enableParcelInteract () {
+      interact.enable({ layers: [{ layerId: 'parcels-fill', idProperty: 'ngc', selectedStroke: palette.selectedBorder }] })
+    }
+
+    // Apply palette to the live map layers (read by addParcelsToMap on first add / restyle).
+    function applyColour (key) {
+      const m = mapInstance
+      if (!m) return
+      if (key === 'parcelBorder' && m.getLayer('parcels-outline')) {
+        m.setPaintProperty('parcels-outline', 'line-color', palette.parcelBorder)
+      } else if (key === 'selectedBorder') {
+        enableParcelInteract()   // recolours the selected-parcel highlight live
+      } else if (key === 'hoverFill' && m.getLayer('parcels-hover')) {
+        m.setPaintProperty('parcels-hover', 'fill-color', palette.hoverFill)
+      } else if (key === 'hoverOpacity' && m.getLayer('parcels-hover')) {
+        m.setPaintProperty('parcels-hover', 'fill-opacity', ['case', ['boolean', ['feature-state', 'hover'], false], palette.hoverOpacity, 0])
+      }
+    }
+    function applyAllColours () { ['parcelBorder', 'selectedBorder', 'hoverFill', 'hoverOpacity'].forEach(applyColour) }
+
+    function persistPalette () {
+      try { localStorage.setItem(PALETTE_STORAGE_KEY, JSON.stringify(palette)) } catch (e) { /* private mode */ }
+    }
+    function setPalette (next) {
+      ;['parcelBorder', 'selectedBorder', 'hoverFill', 'hoverOpacity'].forEach(k => { palette[k] = next[k] })
+      applyAllColours(); persistPalette()
+    }
+    function shareLink () {
+      const p = new URLSearchParams(location.search)
+      p.set('colours', '')
+      p.set('palette', btoa(unescape(encodeURIComponent(JSON.stringify(palette)))))
+      return location.origin + location.pathname + '?' + p.toString()
+    }
+    function copyText (text, btn) {
+      const done = () => { const t = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => { btn.textContent = t }, 1200) }
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => {})
+    }
+
+    function buildColourPanel () {
+      if (!new URLSearchParams(location.search).has('colours') || document.getElementById('colour-panel')) return
+
+      const panel = document.createElement('div')
+      panel.id = 'colour-panel'
+      panel.style.cssText = 'position:fixed;top:70px;right:12px;z-index:200;width:300px;max-height:82vh;overflow-y:auto;background:#fff;border:1px solid #b1b4b6;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,0.25);padding:12px 14px;font-family:"GDS Transport",arial,sans-serif;font-size:14px;color:#0b0c0c;'
+
+      const header = document.createElement('div')
+      header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;'
+      const title = document.createElement('strong'); title.textContent = 'Map colours'; title.style.fontSize = '16px'
+      const close = document.createElement('button'); close.type = 'button'; close.textContent = 'Hide'
+      close.className = 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0'
+      close.setAttribute('data-module', 'govuk-button')
+      close.onclick = () => setPanelOpen(false)
+      header.appendChild(title); header.appendChild(close)
+      panel.appendChild(header)
+
+      const heading = (text) => {
+        const h = document.createElement('div'); h.textContent = text
+        h.style.cssText = 'font-weight:700;margin:12px 0 4px;border-bottom:1px solid #f3f2f1;padding-bottom:2px;'
+        panel.appendChild(h)
+      }
+      const colourRow = (label, get, set) => {
+        const row = document.createElement('label')
+        row.style.cssText = 'display:flex;align-items:center;gap:8px;margin:3px 0;cursor:pointer;'
+        const span = document.createElement('span'); span.textContent = label; span.style.flex = '1'
+        const input = document.createElement('input'); input.type = 'color'; input.value = get()
+        input.style.cssText = 'width:38px;height:24px;padding:0;border:1px solid #b1b4b6;cursor:pointer;background:none;'
+        input.addEventListener('input', () => { set(input.value); persistPalette() })
+        row.appendChild(span); row.appendChild(input); panel.appendChild(row)
+      }
+      const opacityRow = (label, get, set) => {
+        const row = document.createElement('label')
+        row.style.cssText = 'display:flex;align-items:center;gap:8px;margin:3px 0 6px;'
+        const span = document.createElement('span'); span.textContent = label; span.style.flex = '1'
+        const input = document.createElement('input'); input.type = 'range'; input.min = '0'; input.max = '1'; input.step = '0.05'; input.value = get()
+        input.style.cssText = 'flex:1.2'
+        const val = document.createElement('span'); val.textContent = Number(get()).toFixed(2); val.style.cssText = 'width:30px;text-align:right;font-variant-numeric:tabular-nums;'
+        input.addEventListener('input', () => { const v = parseFloat(input.value); set(v); val.textContent = v.toFixed(2); persistPalette() })
+        row.appendChild(span); row.appendChild(input); row.appendChild(val); panel.appendChild(row)
+      }
+
+      heading('Map elements')
+      colourRow('Parcel border', () => palette.parcelBorder, (v) => { palette.parcelBorder = v; applyColour('parcelBorder') })
+      colourRow('Selected parcel border', () => palette.selectedBorder, (v) => { palette.selectedBorder = v; applyColour('selectedBorder') })
+      colourRow('Hover tint', () => palette.hoverFill, (v) => { palette.hoverFill = v; applyColour('hoverFill') })
+      opacityRow('Hover opacity', () => palette.hoverOpacity, (v) => { palette.hoverOpacity = v; applyColour('hoverOpacity') })
+
+      heading('Palette')
+      const presetRow = document.createElement('label')
+      presetRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin:4px 0;'
+      const presetLabel = document.createElement('span'); presetLabel.textContent = 'Preset'; presetLabel.style.flex = '1'
+      const presetSel = document.createElement('select'); presetSel.style.cssText = 'flex:1.2;padding:2px;'
+      Object.keys(PRESETS).forEach(name => { const o = document.createElement('option'); o.value = name; o.textContent = name; presetSel.appendChild(o) })
+      presetSel.addEventListener('change', () => { setPalette(clonePalette(PRESETS[presetSel.value])); refreshPanel() })
+      presetRow.appendChild(presetLabel); presetRow.appendChild(presetSel); panel.appendChild(presetRow)
+
+      const actions = document.createElement('div')
+      actions.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;'
+      const mkBtn = (label, onClick) => {
+        const b = document.createElement('button'); b.type = 'button'; b.textContent = label
+        b.className = 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0'
+        b.setAttribute('data-module', 'govuk-button')
+        b.addEventListener('click', () => onClick(b)); actions.appendChild(b)
+      }
+      mkBtn('Copy palette', (b) => copyText(JSON.stringify(palette, null, 2), b))
+      mkBtn('Copy share link', (b) => copyText(shareLink(), b))
+      mkBtn('Reset', () => {
+        setPalette(clonePalette(DEFAULT_PALETTE))
+        try { localStorage.removeItem(PALETTE_STORAGE_KEY) } catch (e) { /* ignore */ }
+        refreshPanel()
+      })
+      panel.appendChild(actions)
+      document.body.appendChild(panel)
+
+      const toggle = document.createElement('button')
+      toggle.id = 'colour-panel-toggle'
+      toggle.type = 'button'
+      toggle.textContent = 'Map colours'
+      toggle.className = 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0'
+      toggle.setAttribute('data-module', 'govuk-button')
+      toggle.style.cssText = 'position:fixed;top:70px;right:12px;z-index:201;'
+      toggle.onclick = () => setPanelOpen(true)
+      document.body.appendChild(toggle)
+
+      function setPanelOpen (open) {
+        panel.style.display = open ? '' : 'none'
+        toggle.style.display = open ? 'none' : ''
+        try { localStorage.setItem(PANEL_OPEN_KEY, open ? '1' : '0') } catch (e) { /* ignore */ }
+      }
+      // Default to closed so the compact "Map colours" button shows first (doesn't obscure
+      // the map); the panel opens on click, and the last open/closed choice is remembered.
+      let savedOpen = null
+      try { savedOpen = localStorage.getItem(PANEL_OPEN_KEY) } catch (e) { /* ignore */ }
+      setPanelOpen(savedOpen === '1')
+    }
+    function refreshPanel () {
+      ['colour-panel', 'colour-panel-toggle'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.remove()
+      })
+      buildColourPanel()
+    }
+
     // The map is built only after the WFS fetch resolves (see createMap below), so
     // it can open already framed on the parcels with no pan/zoom. These are its
     // static options; `bounds` is added at construction once the data is in.
@@ -356,6 +522,8 @@
     // Shared state for parcel data and map instance
     let mapInstance = null
     let landParcelsData = null
+    let hoveredNgc = null      // parcel currently tinted under the pointer
+    let hoverWired = false     // hover listeners attached once (layers persist across style re-adds)
 
     // Add parcel source and layers to the map
     function addParcelsToMap(map, data) {
@@ -378,18 +546,52 @@
         }
       })
 
+      // Hover affordance: a subtle fill on whichever parcel the pointer is over, toggled via
+      // feature-state (the source promotes `ngc`, so each feature's id is its ngc).
+      map.addLayer({
+        id: 'parcels-hover',
+        type: 'fill',
+        source: 'parcels',
+        paint: {
+          'fill-color': palette.hoverFill,
+          'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], palette.hoverOpacity, 0]
+        }
+      })
+
       map.addLayer({
         id: 'parcels-outline',
         type: 'line',
         source: 'parcels',
         paint: {
-          'line-color': '#1d70b8',
+          'line-color': palette.parcelBorder,
           'line-width': 2
         }
       })
 
-      interact.enable({
-        layers: [{ layerId: 'parcels-fill', idProperty: 'ngc' }]
+      enableParcelInteract()
+
+      wireParcelHover(map)
+    }
+
+    // Tint the hovered parcel via feature-state. Attached once; the delegated listeners
+    // survive parcel-layer re-adds (e.g. after a base-map style change).
+    function wireParcelHover(map) {
+      if (hoverWired) return
+      hoverWired = true
+      const setHover = (ngc, on) => {
+        if (ngc == null) return
+        map.setFeatureState({ source: 'parcels', id: ngc }, { hover: on })
+      }
+      map.on('mousemove', 'parcels-fill', (e) => {
+        const ngc = e.features && e.features[0] && e.features[0].id
+        if (ngc == null || ngc === hoveredNgc) return
+        setHover(hoveredNgc, false)
+        hoveredNgc = ngc
+        setHover(hoveredNgc, true)
+      })
+      map.on('mouseleave', 'parcels-fill', () => {
+        setHover(hoveredNgc, false)
+        hoveredNgc = null
       })
     }
 
@@ -556,7 +758,14 @@
       // When map becomes ready, add the parcel layers (data is already loaded)
       interactiveMap.on('map:ready', (e) => {
         mapInstance = e.map
-        if (landParcelsData) addParcelsToMap(mapInstance, landParcelsData)
+        // Build the colour panel first — it's independent of the parcel layers, so it must not
+        // be blocked if addParcelsToMap throws (only shown when ?colours is set).
+        buildColourPanel()
+        // map:ready can fire before the style has finished loading; addSource throws if so.
+        // Defer until the style is ready to avoid "Style is not done loading".
+        const addParcels = () => { if (landParcelsData) addParcelsToMap(mapInstance, landParcelsData) }
+        if (mapInstance.isStyleLoaded && mapInstance.isStyleLoaded()) addParcels()
+        else mapInstance.once('idle', addParcels)
       })
 
       // Map -> Sidebar: highlight selected parcel row and surface its details

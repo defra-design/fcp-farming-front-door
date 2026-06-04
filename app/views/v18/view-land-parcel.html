@@ -243,29 +243,8 @@
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
 
   <script>
-    // Land cover colour mapping
-    const landCoverColors = {
-      'Permanent Grassland': '#DEFADE',
-      'Temporary Grassland': '#85994B',
-      'Fallow Land': '#F3F2F1',
-      'Arable Land': '#FAF0B9',
-      'Permanent Crops': '#7B2D8E',
-      'Farm Building': '#D6CABD',
-      'Farmyards': '#C4B8A8',
-      'Hard Standings': '#F2E6D4',
-      'Residential dwelling, House': '#E8927C',
-      'Residential Gardens': '#90C87C',
-      'Woodland': '#E4EFDF',
-      'Scrub - Ungrazeable': '#F8CDBC',
-      'Drain/Ditch/Dyke': '#5CACEE',
-      'Rivers and streams type 2': '#4A7FB5',
-      'Pond': '#4A90D9',
-      'Road': '#787878',
-      'Metalled track': '#505A5F',
-      'Track - Natural Surface': '#B58840'
-    }
-
     // Land covers rendered with a fillPattern to visually distinguish them.
+    // (Pattern SHAPES are fixed; only colours are tuneable — see DEFAULT_PALETTE.)
     const landCoverPatterns = {
       'Farm Building': 'diagonal-cross-hatch',
       'Farmyards': 'diagonal-cross-hatch',
@@ -277,9 +256,70 @@
       'Woodland': 'diagonal-cross-hatch'
     }
 
+    // ───────────────────────────────────────────────────────────────────────────
+    // Single source of truth for every map colour. The team can tune these live via
+    // the colour panel (open any parcel with ?colours) — see the panel code below.
+    // Each dataset builder reads from `palette`; the panel calls the plugin's setStyle
+    // to apply edits to the live map without a reload.
+    // ───────────────────────────────────────────────────────────────────────────
+    const DEFAULT_PALETTE = {
+      landCover: {
+        'Permanent Grassland': '#DEFADE',
+        'Temporary Grassland': '#85994B',
+        'Fallow Land': '#F3F2F1',
+        'Arable Land': '#FAF0B9',
+        'Permanent Crops': '#7B2D8E',
+        'Farm Building': '#D6CABD',
+        'Farmyards': '#C4B8A8',
+        'Hard Standings': '#F2E6D4',
+        'Residential dwelling, House': '#E8927C',
+        'Residential Gardens': '#90C87C',
+        'Woodland': '#E4EFDF',
+        'Scrub - Ungrazeable': '#F8CDBC',
+        'Drain/Ditch/Dyke': '#5CACEE',
+        'Rivers and streams type 2': '#4A7FB5',
+        'Pond': '#4A90D9',
+        'Road': '#787878',
+        'Metalled track': '#505A5F',
+        'Track - Natural Surface': '#B58840'
+      },
+      patternLine: '#0b0c0c',     // fillPatternForegroundColor on patterned land covers
+      parcelBorder: '#1d70b8',    // selected outline + every-other-parcel outline stroke
+      hedgerow: '#00703c',        // hedgerow line
+      hoverFill: '#1d70b8',       // tint on the parcel under the pointer
+      hoverOpacity: 0.15,
+      loadingFill: '#1d70b8',     // tint on a just-clicked parcel while it loads
+      loadingOpacity: 0.4
+    }
+
+    // Named starter combinations. Grow this by pasting a "Copy palette" export.
+    const PRESETS = {
+      Default: DEFAULT_PALETTE
+    }
+
     // Get selected parcel from query string
     const urlParams = new URLSearchParams(window.location.search)
     const selectedNgc = urlParams.get('parcel')
+
+    // Working palette = defaults, with any shared (?palette=) or saved (localStorage)
+    // overrides merged in. ?palette= wins so share links are reproducible.
+    const PALETTE_STORAGE_KEY = 'parcel-map-palette'
+    const PANEL_OPEN_KEY = 'parcel-map-palette-open'
+    const clonePalette = (p) => JSON.parse(JSON.stringify(p))
+    function mergePalette (base, override) {
+      if (!override) return base
+      return { ...base, ...override, landCover: { ...base.landCover, ...(override.landCover || {}) } }
+    }
+    function loadPaletteOverride () {
+      try {
+        const shared = urlParams.get('palette')
+        if (shared) return JSON.parse(decodeURIComponent(escape(atob(shared))))
+        const saved = localStorage.getItem(PALETTE_STORAGE_KEY)
+        if (saved) return JSON.parse(saved)
+      } catch (e) { /* ignore malformed overrides */ }
+      return null
+    }
+    const palette = mergePalette(clonePalette(DEFAULT_PALETTE), loadPaletteOverride())
 
     if (selectedNgc) {
       const sbi = '{{ myData.sbi | default("111089693") }}'
@@ -292,6 +332,7 @@
       let hedgeMap = null        // raw MapLibre map (from the map:ready payload; no public accessor)
       let currentNgc = selectedNgc
       let currentData = null     // last-loaded parcel data, re-applied after a base-map style change
+      let hoverNgc = null        // parcel currently tinted under the pointer (hover affordance)
 
       // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
 
@@ -453,13 +494,13 @@
       // runtime-addDataset pattern-registration gap. Each sublayer filters the shared source
       // by DESCRIPTION; syncLandCoverKey() hides the types absent from the current parcel.
       function buildLandCoverDataset (parcelCovers) {
-        const sublayers = Object.keys(landCoverColors).map(type => {
-          const color = landCoverColors[type]
+        const sublayers = Object.keys(palette.landCover).map(type => {
+          const color = palette.landCover[type]
           const style = { fill: color, stroke: color, strokeWidth: 1 }
           if (landCoverPatterns[type]) {
             style.fillPattern = landCoverPatterns[type]
             style.fillPatternBackgroundColor = color
-            style.fillPatternForegroundColor = '#0b0c0c'
+            style.fillPatternForegroundColor = palette.patternLine
           }
           return {
             id: 'lc-' + type.replace(/\s+/g, '-').toLowerCase(),
@@ -485,10 +526,241 @@
       // this is purely for the Key/Layers, whose UI omits sublayers marked hidden).
       function syncLandCoverKey (parcelCovers) {
         const present = new Set(parcelCovers.map(f => f.properties.DESCRIPTION))
-        Object.keys(landCoverColors).forEach(type => {
-          const sublayerId = 'lc-' + type.replace(/\s+/g, '-').toLowerCase()
-          datasetsPlugin.setDatasetVisibility(present.has(type), { datasetId: 'land-cover', sublayerId })
+        Object.keys(palette.landCover).forEach(type => {
+          datasetsPlugin.setDatasetVisibility(present.has(type), { datasetId: 'land-cover', sublayerId: lcSublayerId(type) })
         })
+      }
+
+      // --- Live colour application (used by the ?colours panel) ----------------
+      const lcSublayerId = (type) => 'lc-' + type.replace(/\s+/g, '-').toLowerCase()
+
+      // Most colours are applied with hedgeMap.setPaintProperty: synchronous, and it does NOT
+      // remove/re-add layers — so it never disturbs the interactive layers (parcels-hit,
+      // hedgerows) the way the plugin's async setStyle does. (setStyle churning the hedgerow
+      // layer was intermittently breaking parcel selection.) setStyle is used ONLY for the
+      // pattern cases, which must regenerate the rasterised pattern image and only ever touch
+      // non-interactive land-cover sublayers.
+      const paintLine = (id, c) => { if (hedgeMap && hedgeMap.getLayer(id)) hedgeMap.setPaintProperty(id, 'line-color', c) }
+      const paintFill = (id, c) => { if (hedgeMap && hedgeMap.getLayer(id)) hedgeMap.setPaintProperty(id, 'fill-color', c) }
+      const paintFillOpacity = (id, o) => { if (hedgeMap && hedgeMap.getLayer(id)) hedgeMap.setPaintProperty(id, 'fill-opacity', o) }
+
+      // setStyle re-adds the recoloured sublayer's layers on top; restore the full bottom→top
+      // stacking once the async re-add has landed (next idle). moveLayer only reorders.
+      function restoreZOrder () {
+        if (!hedgeMap) return
+        const order = ['parcels-outline-all', 'parcels-hit']
+        Object.keys(palette.landCover).forEach(type => {
+          const id = 'land-cover-' + lcSublayerId(type)
+          order.push(id, id + '-stroke')
+        })
+        order.push('parcel-hover', 'parcel-outline', 'parcel-loading', 'hedgerows')
+        order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
+      }
+      // After a setStyle (which re-adds layers), once the map settles: re-assert z-order and
+      // re-enable interaction (in case the recoloured layer was an interactive one).
+      function scheduleRestore () { if (hedgeMap) hedgeMap.once('idle', () => { restoreZOrder(); enableInteract() }) }
+
+      // setStyle is async (removes+re-adds layers), so rapid colour-picker drags can race and
+      // leave a stale value applied. Debounce the setStyle-based (pattern) applies so only the
+      // final value lands; the function reads palette at fire time.
+      const _restyleTimers = {}
+      function debounceRestyle (key, fn) {
+        clearTimeout(_restyleTimers[key])
+        _restyleTimers[key] = setTimeout(fn, 120)
+      }
+
+      // Recolour one land-cover type from palette.landCover[type]. setPaintProperty updates the
+      // MAP instantly and safely; a debounced setStyle then syncs plugin state so the KEY swatch
+      // updates too (the Key reads from state, not the live paint). Patterned types must go
+      // through setStyle for the map as well (the colour is baked into the pattern image).
+      function applyLandCover (type) {
+        const fillId = 'land-cover-' + lcSublayerId(type)
+        if (!landCoverPatterns[type]) {
+          const c = palette.landCover[type]
+          paintFill(fillId, c)
+          paintLine(fillId + '-stroke', c)
+        }
+        debounceRestyle(type, () => {
+          const c = palette.landCover[type]
+          const style = landCoverPatterns[type]
+            ? { fill: c, stroke: c, fillPatternBackgroundColor: c, fillPatternForegroundColor: palette.patternLine }
+            : { fill: c, stroke: c }
+          if (datasetsPlugin) datasetsPlugin.setStyle(style, { datasetId: 'land-cover', sublayerId: lcSublayerId(type) })
+          scheduleRestore()
+        })
+      }
+
+      // Apply a single non-land-cover palette key to the live map.
+      function applyColour (key) {
+        switch (key) {
+          case 'parcelBorder':
+            paintLine('parcels-outline-all', palette.parcelBorder)
+            paintLine('parcel-outline', palette.parcelBorder)
+            break
+          case 'hedgerow':
+            paintLine('hedgerows', palette.hedgerow)               // instant map update
+            debounceRestyle('hedgerow', () => {                     // sync the Key symbol (state)
+              if (datasetsPlugin) datasetsPlugin.setStyle({ stroke: palette.hedgerow }, { datasetId: 'hedgerows' })
+              scheduleRestore()
+            })
+            break
+          case 'patternLine':
+            // Re-apply each patterned type — applyLandCover folds in palette.patternLine as the
+            // pattern foreground, so there's a single debounced setStyle per sublayer (no race).
+            Object.keys(landCoverPatterns).forEach(applyLandCover)
+            break
+          case 'hoverFill': paintFill('parcel-hover', palette.hoverFill); break
+          case 'hoverOpacity': paintFillOpacity('parcel-hover', palette.hoverOpacity); break
+          case 'loadingFill': paintFill('parcel-loading', palette.loadingFill); break
+          case 'loadingOpacity': paintFillOpacity('parcel-loading', palette.loadingOpacity); break
+        }
+      }
+
+      // Re-apply the entire palette (used after a preset/reset/share-link load).
+      function applyAllColours () {
+        Object.keys(palette.landCover).forEach(applyLandCover)
+        ;['parcelBorder', 'hedgerow', 'patternLine', 'hoverFill', 'hoverOpacity', 'loadingFill', 'loadingOpacity'].forEach(applyColour)
+      }
+
+      // --- Persistence / sharing ----------------------------------------------
+      function persistPalette () {
+        try { localStorage.setItem(PALETTE_STORAGE_KEY, JSON.stringify(palette)) } catch (e) { /* private mode */ }
+      }
+      // Replace the whole palette in place (keeps closures pointing at the same object), then
+      // re-apply to the live map and persist. Used by presets, reset and share-link loads.
+      function setPalette (next) {
+        Object.assign(palette.landCover, next.landCover)
+        ;['patternLine', 'parcelBorder', 'hedgerow', 'hoverFill', 'hoverOpacity', 'loadingFill', 'loadingOpacity']
+          .forEach(k => { palette[k] = next[k] })
+        applyAllColours()
+        persistPalette()
+      }
+      function shareLink () {
+        const p = new URLSearchParams(window.location.search)
+        p.set('colours', '')
+        p.set('palette', btoa(unescape(encodeURIComponent(JSON.stringify(palette)))))
+        return location.origin + location.pathname + '?' + p.toString()
+      }
+      function copyText (text, btn) {
+        const done = () => { const t = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => { btn.textContent = t }, 1200) }
+        if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, () => {}) }
+      }
+
+      // --- The colour panel (only when ?colours is in the URL) -----------------
+      function buildColourPanel () {
+        if (!urlParams.has('colours') || document.getElementById('colour-panel')) return
+
+        const panel = document.createElement('div')
+        panel.id = 'colour-panel'
+        panel.style.cssText = 'position:fixed;top:70px;right:12px;z-index:200;width:300px;max-height:82vh;overflow-y:auto;background:#fff;border:1px solid #b1b4b6;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,0.25);padding:12px 14px;font-family:"GDS Transport",arial,sans-serif;font-size:14px;color:#0b0c0c;'
+
+        const header = document.createElement('div')
+        header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;'
+        const title = document.createElement('strong'); title.textContent = 'Map colours'; title.style.fontSize = '16px'
+        const close = document.createElement('button'); close.type = 'button'; close.textContent = 'Hide'
+        close.className = 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0'
+        close.setAttribute('data-module', 'govuk-button')
+        close.onclick = () => setPanelOpen(false)
+        header.appendChild(title); header.appendChild(close)
+        panel.appendChild(header)
+
+        const heading = (text) => {
+          const h = document.createElement('div'); h.textContent = text
+          h.style.cssText = 'font-weight:700;margin:12px 0 4px;border-bottom:1px solid #f3f2f1;padding-bottom:2px;'
+          panel.appendChild(h)
+        }
+        const colourRow = (label, get, set) => {
+          const row = document.createElement('label')
+          row.style.cssText = 'display:flex;align-items:center;gap:8px;margin:3px 0;cursor:pointer;'
+          const span = document.createElement('span'); span.textContent = label; span.style.flex = '1'
+          const input = document.createElement('input'); input.type = 'color'; input.value = get()
+          input.style.cssText = 'width:38px;height:24px;padding:0;border:1px solid #b1b4b6;cursor:pointer;background:none;'
+          input.addEventListener('input', () => { set(input.value); persistPalette() })
+          row.appendChild(span); row.appendChild(input); panel.appendChild(row)
+        }
+        const opacityRow = (label, get, set) => {
+          const row = document.createElement('label')
+          row.style.cssText = 'display:flex;align-items:center;gap:8px;margin:3px 0 6px;'
+          const span = document.createElement('span'); span.textContent = label; span.style.flex = '1'
+          const input = document.createElement('input'); input.type = 'range'; input.min = '0'; input.max = '1'; input.step = '0.05'; input.value = get()
+          input.style.cssText = 'flex:1.2'
+          const val = document.createElement('span'); val.textContent = Number(get()).toFixed(2); val.style.cssText = 'width:30px;text-align:right;font-variant-numeric:tabular-nums;'
+          input.addEventListener('input', () => { const v = parseFloat(input.value); set(v); val.textContent = v.toFixed(2); persistPalette() })
+          row.appendChild(span); row.appendChild(input); row.appendChild(val); panel.appendChild(row)
+        }
+
+        heading('Map elements')
+        colourRow('Parcel border', () => palette.parcelBorder, (v) => { palette.parcelBorder = v; applyColour('parcelBorder') })
+        colourRow('Hedgerow', () => palette.hedgerow, (v) => { palette.hedgerow = v; applyColour('hedgerow') })
+        colourRow('Pattern line', () => palette.patternLine, (v) => { palette.patternLine = v; applyColour('patternLine') })
+        colourRow('Hover tint', () => palette.hoverFill, (v) => { palette.hoverFill = v; applyColour('hoverFill') })
+        opacityRow('Hover opacity', () => palette.hoverOpacity, (v) => { palette.hoverOpacity = v; applyColour('hoverOpacity') })
+        colourRow('Loading tint', () => palette.loadingFill, (v) => { palette.loadingFill = v; applyColour('loadingFill') })
+        opacityRow('Loading opacity', () => palette.loadingOpacity, (v) => { palette.loadingOpacity = v; applyColour('loadingOpacity') })
+
+        heading('Land cover')
+        Object.keys(palette.landCover).forEach(type => {
+          colourRow(type, () => palette.landCover[type], (v) => { palette.landCover[type] = v; applyLandCover(type) })
+        })
+
+        // Presets + actions
+        heading('Palette')
+        const presetRow = document.createElement('label')
+        presetRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin:4px 0;'
+        const presetLabel = document.createElement('span'); presetLabel.textContent = 'Preset'; presetLabel.style.flex = '1'
+        const presetSel = document.createElement('select'); presetSel.style.cssText = 'flex:1.2;padding:2px;'
+        Object.keys(PRESETS).forEach(name => { const o = document.createElement('option'); o.value = name; o.textContent = name; presetSel.appendChild(o) })
+        presetSel.addEventListener('change', () => { setPalette(clonePalette(PRESETS[presetSel.value])); refreshPanel() })
+        presetRow.appendChild(presetLabel); presetRow.appendChild(presetSel); panel.appendChild(presetRow)
+
+        const actions = document.createElement('div')
+        actions.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;'
+        const mkBtn = (label, onClick) => {
+          // GOV.UK Design System secondary button.
+          const b = document.createElement('button'); b.type = 'button'; b.textContent = label
+          b.className = 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0'
+          b.setAttribute('data-module', 'govuk-button')
+          b.addEventListener('click', () => onClick(b)); actions.appendChild(b)
+        }
+        mkBtn('Copy palette', (b) => copyText(JSON.stringify(palette, null, 2), b))
+        mkBtn('Copy share link', (b) => copyText(shareLink(), b))
+        mkBtn('Reset', () => {
+          setPalette(clonePalette(DEFAULT_PALETTE))
+          try { localStorage.removeItem(PALETTE_STORAGE_KEY) } catch (e) { /* ignore */ }
+          refreshPanel()
+        })
+        panel.appendChild(actions)
+        document.body.appendChild(panel)
+
+        // Show/hide: a compact button sits where the panel's top-right corner is and toggles
+        // it, so the panel can be collapsed out of the way and reopened without a reload.
+        const toggle = document.createElement('button')
+        toggle.id = 'colour-panel-toggle'
+        toggle.type = 'button'
+        toggle.textContent = 'Map colours'
+        // GOV.UK secondary button; only positioning is set inline so the design-system styling shows.
+        toggle.className = 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0'
+        toggle.setAttribute('data-module', 'govuk-button')
+        toggle.style.cssText = 'position:fixed;top:70px;right:12px;z-index:201;'
+        toggle.onclick = () => setPanelOpen(true)
+        document.body.appendChild(toggle)
+
+        function setPanelOpen (open) {
+          panel.style.display = open ? '' : 'none'
+          toggle.style.display = open ? 'none' : ''
+          try { localStorage.setItem(PANEL_OPEN_KEY, open ? '1' : '0') } catch (e) { /* ignore */ }
+        }
+        // Default to closed so the compact "Map colours" button shows first (doesn't obscure
+        // the map); the panel opens on click, and the last open/closed choice is remembered.
+        let savedOpen = null
+        try { savedOpen = localStorage.getItem(PANEL_OPEN_KEY) } catch (e) { /* ignore */ }
+        setPanelOpen(savedOpen === '1')
+      }
+      function refreshPanel () {
+        ['colour-panel', 'colour-panel-toggle'].forEach(id => {
+          const el = document.getElementById(id); if (el) el.remove()
+        })
+        buildColourPanel()
       }
 
       // The bold outline of the currently-selected parcel.
@@ -497,7 +769,7 @@
           id: 'parcel-outline',
           label: 'Land parcel',
           geojson: { type: 'FeatureCollection', features: [feature] },
-          style: { fill: 'transparent', stroke: '#1d70b8', strokeWidth: 3 },
+          style: { fill: 'transparent', stroke: palette.parcelBorder, strokeWidth: 3 },
           showInKey: false,
           showInMenu: true
         }
@@ -513,7 +785,7 @@
           id: 'hedgerows',
           label: 'Hedgerow',
           geojson: { type: 'FeatureCollection', features: parcelHedges },
-          style: { stroke: '#00703c', strokeWidth: 6, keySymbolShape: 'line' },
+          style: { stroke: palette.hedgerow, strokeWidth: 6, keySymbolShape: 'line' },
           showInKey: true,
           showInMenu: true,
           visibility: hasHedges ? 'visible' : 'hidden'
@@ -527,7 +799,7 @@
           id: 'parcels-outline-all',
           label: 'Other parcels',
           geojson: { type: 'FeatureCollection', features: allParcels },
-          style: { fill: 'transparent', stroke: '#1d70b8', strokeWidth: 1 },
+          style: { fill: 'transparent', stroke: palette.parcelBorder, strokeWidth: 1 },
           showInKey: false,
           showInMenu: true
         }
@@ -552,7 +824,9 @@
         return {
           id: 'parcel-loading',
           geojson: { type: 'FeatureCollection', features: [] },
-          style: { fill: '#1d70b8', opacity: 0.4 },
+          // stroke:'transparent' overrides the library's default red outline — the shared
+          // parcels-outline-all already provides the parcel border.
+          style: { fill: palette.loadingFill, stroke: 'transparent', opacity: palette.loadingOpacity },
           showInKey: false,
           showInMenu: false
         }
@@ -567,6 +841,31 @@
 
       function clearParcelLoading () {
         datasetsPlugin.setData({ type: 'FeatureCollection', features: [] }, { datasetId: 'parcel-loading' })
+      }
+
+      // A fainter blue fill shown on whichever OTHER parcel the pointer is over, as a hover
+      // affordance (lighter than the click/loading tint). Empty to start; swapped with setData.
+      function buildParcelHoverDataset () {
+        return {
+          id: 'parcel-hover',
+          geojson: { type: 'FeatureCollection', features: [] },
+          // stroke:'transparent' overrides the library's default red outline (see parcel-loading).
+          style: { fill: palette.hoverFill, stroke: 'transparent', opacity: palette.hoverOpacity },
+          showInKey: false,
+          showInMenu: false
+        }
+      }
+
+      function showParcelHover (ngc) {
+        const feature = allParcels.find(f => f.properties.ngc === ngc)
+        if (feature) {
+          datasetsPlugin.setData({ type: 'FeatureCollection', features: [feature] }, { datasetId: 'parcel-hover' })
+        }
+      }
+
+      function clearParcelHover () {
+        hoverNgc = null
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: [] }, { datasetId: 'parcel-hover' })
       }
 
       // --- Interaction ---------------------------------------------------------
@@ -601,6 +900,8 @@
       // filled with a subtle tint as immediate feedback while its data loads, then cleared.
       function switchParcel (ngc) {
         if (ngc === currentNgc) return
+        clearParcelHover()
+        hoverNgc = ngc          // suppress the hover tint on the parcel now being loaded
         showParcelLoading(ngc)
         loadParcelData(ngc).then(d => {
           if (!d.selectedFeature) { clearParcelLoading(); return }
@@ -641,6 +942,7 @@
           buildParcelsOutlineAllDataset(),
           buildParcelsHitDataset(),
           buildLandCoverDataset(d.parcelCovers),
+          buildParcelHoverDataset(),
           buildParcelOutlineDataset(d.selectedFeature),
           buildParcelLoadingDataset(),
           buildHedgerowDataset(d.parcelHedges)
@@ -718,11 +1020,31 @@
         interactiveMap.on('map:ready', (e) => {
           hedgeMap = e.map
           enableInteract()
+
+          // Hover affordance: tint whichever OTHER parcel the pointer is over. Keyed off the
+          // 'parcels-hit' fill (the whole-parcel click target). Tracks hoverNgc so we only
+          // setData when the hovered parcel actually changes, not on every mouse move.
+          hedgeMap.on('mousemove', 'parcels-hit', (ev) => {
+            const ngc = ev.features && ev.features[0] && ev.features[0].properties.ngc
+            if (ngc && ngc !== currentNgc) {
+              if (ngc !== hoverNgc) {
+                hoverNgc = ngc
+                showParcelHover(ngc)
+              }
+            } else if (hoverNgc) {
+              clearParcelHover()
+            }
+          })
+          hedgeMap.on('mouseleave', 'parcels-hit', () => {
+            if (hoverNgc) clearParcelHover()
+          })
         })
         interactiveMap.on('datasets:ready', () => {
           enableInteract()
           // Hide the land-cover types not present on the initial parcel from the Key/Layers.
           syncLandCoverKey(d.parcelCovers)
+          // Colour-tuning panel for the team (only when ?colours is in the URL).
+          buildColourPanel()
         })
         // A base-map style change wipes all sources/layers; the datasets plugin re-adds them
         // from each dataset's STORED geojson — i.e. the initial parcel's data, because setData
@@ -735,6 +1057,9 @@
             if (!hedgeMap.getSource('geojson-land-cover') || !hedgeMap.getSource('geojson-hedgerows')) return
             hedgeMap.off('idle', reapply)
             if (currentData) swapParcelDatasets(currentData)
+            // setPaintProperty colour edits aren't in plugin state, so the rebuilt layers carry
+            // the construction palette — re-apply the working palette over them.
+            applyAllColours()
             enableInteract()
           }
           hedgeMap.on('idle', reapply)
