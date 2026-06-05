@@ -110,11 +110,51 @@
   .app-map-fullscreen__map {
     flex: 1;
     height: 100%;
+    position: relative; /* anchor for the loading overlay */
   }
 
+  #map {
+    width: 100%;
+  }
   #map,
   #map .im-o-app {
     height: 100% !important;
+  }
+
+  /* Loading overlay — shown while the map frames + tiles load, then faded out.
+     Background matches the map's backgroundColor so the reveal is seamless. */
+  .app-map-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #f5f5f0;
+    color: #0b0c0c;
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 1.1875rem;
+    transition: opacity 0.3s ease;
+  }
+  .app-map-loading--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .app-map-loading__spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 4px solid #b1b4b6;
+    border-top-color: #1d70b8;
+    animation: app-map-spin 0.8s linear infinite;
+  }
+  @keyframes app-map-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app-map-loading__spinner { animation: none; }
   }
 
   /* DEFRA's "Map view" button — relocated into sidebar via JS */
@@ -229,7 +269,13 @@
 
   </div>
 
-  <div id="map" class="app-map-fullscreen__map"></div>
+  <div class="app-map-fullscreen__map">
+    <div id="map"></div>
+    <div id="map-loading" class="app-map-loading" role="status" aria-live="polite">
+      <span class="app-map-loading__text">Loading map</span>
+      <span class="app-map-loading__spinner" aria-hidden="true"></span>    
+    </div>
+  </div>
 
 </main>
 {% endblock main %}
@@ -243,6 +289,13 @@
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
 
   <script>
+    // Reveal the page immediately. The DEFRA library hides the whole <body> via
+    // `.im-is-loading { visibility:hidden }` (added in bodyStart) and only removes it when the
+    // map mounts — but this page builds the map AFTER its WFS fetch, which would blank the entire
+    // page (header + sidebar) for the whole fetch. Our #map-loading overlay already covers just
+    // the map area, so we drop the body-level hide now and let the sidebar render straight away.
+    document.body.classList.remove('im-is-loading')
+
     // Land covers rendered with a fillPattern to visually distinguish them.
     // (Pattern SHAPES are fixed; only colours are tuneable — see DEFAULT_PALETTE.)
     const landCoverPatterns = {
@@ -321,6 +374,15 @@
     }
     const palette = mergePalette(clonePalette(DEFAULT_PALETTE), loadPaletteOverride())
 
+    // Fade out the "Loading map…" overlay. Called once the map is ready and rendered, on any
+    // no-map / error path, and when the page is opened without a ?parcel — never left stuck.
+    function hideMapLoading () {
+      const el = document.getElementById('map-loading')
+      if (el) el.classList.add('app-map-loading--hidden')
+    }
+
+    if (!selectedNgc) hideMapLoading()
+
     if (selectedNgc) {
       const sbi = '{{ myData.sbi | default("111089693") }}'
 
@@ -391,24 +453,45 @@
         return [minLng, minLat, maxLng, maxLat]
       }
 
-      // Fetch a parcel's land covers + hedgerows and resolve its geometry from the
-      // already-loaded all-parcels set. Returns the data the sidebar + map need.
-      function loadParcelData (ngc) {
+      // Fetch JSON via a sessionStorage cache keyed on the full request URL (which already
+      // encodes the SBI + date filter), so repeat visits with the same query skip the network.
+      // Quota/parse failures fall back to a live fetch, so caching can never break a load.
+      function cachedFetchJson (url) {
+        try {
+          const hit = sessionStorage.getItem(url)
+          if (hit) return Promise.resolve(JSON.parse(hit))
+        } catch (e) { /* ignore malformed / unavailable storage */ }
+        return fetch(url).then(r => r.json()).then(data => {
+          try { sessionStorage.setItem(url, JSON.stringify(data)) } catch (e) { /* quota / private mode */ }
+          return data
+        })
+      }
+
+      // Assemble the sidebar + map payload from already-fetched covers/hedges responses,
+      // resolving the parcel geometry from the loaded all-parcels set. Shared by the initial
+      // (parallel) load and the in-page switchParcel flow so their filtering stays in sync.
+      function buildParcelData (ngc, landCoversData, hedgeData) {
         const sheetId = ngc.substring(0, 6)
-        const parcelId = ngc.substring(6)
-        const selectedFeature = allParcels.find(f => f.properties.ngc === ngc)
-        return Promise.all([
-          fetch(coversUrlFor(parcelId)).then(r => r.json()),
-          fetch(hedgeUrlFor(parcelId)).then(r => r.json())
-        ]).then(([landCoversData, hedgeData]) => ({
+        return {
           ngc,
           sheetId,
-          selectedFeature,
+          selectedFeature: allParcels.find(f => f.properties.ngc === ngc),
           // Filter to this sheet — the server-side filter only includes PARCEL_ID,
           // which can collide across sheets within a single SBI.
           parcelCovers: (landCoversData.features || []).filter(f => f.properties.SHEET_ID === sheetId),
           parcelHedges: (hedgeData.features || []).filter(f => f.properties.REF_PARCEL_SHEET_ID === sheetId)
-        }))
+        }
+      }
+
+      // Fetch a parcel's land covers + hedgerows (in parallel) and resolve its geometry from the
+      // already-loaded all-parcels set. Used by switchParcel; the initial load fetches the three
+      // WFS calls together (see below) so they don't wait on each other.
+      function loadParcelData (ngc) {
+        const parcelId = ngc.substring(6)
+        return Promise.all([
+          cachedFetchJson(coversUrlFor(parcelId)),
+          cachedFetchJson(hedgeUrlFor(parcelId))
+        ]).then(([landCoversData, hedgeData]) => buildParcelData(ngc, landCoversData, hedgeData))
       }
 
       // --- Sidebar (re-run on every parcel change) -----------------------------
@@ -920,13 +1003,21 @@
       }
 
       // --- Initial load --------------------------------------------------------
-      fetch(allParcelsUrl).then(r => r.json()).then(apData => {
+      // The selected parcel's covers + hedges only need the SBI + parcel id (both known from the
+      // URL), so they don't have to wait for the all-parcels response — fire all three together.
+      const selectedParcelId = selectedNgc.substring(6)
+      Promise.all([
+        cachedFetchJson(allParcelsUrl),
+        cachedFetchJson(coversUrlFor(selectedParcelId)),
+        cachedFetchJson(hedgeUrlFor(selectedParcelId))
+      ]).then(([apData, landCoversData, hedgeData]) => {
         allParcels = apData.features || []
         allParcels.forEach(f => { f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID })
-        return loadParcelData(selectedNgc)
+        return buildParcelData(selectedNgc, landCoversData, hedgeData)
       }).then(d => {
         if (!d.selectedFeature) {
           document.getElementById('parcel-heading').textContent = 'Could not load parcel'
+          hideMapLoading()  // no parcel to frame — don't leave the overlay stuck
           return
         }
 
@@ -1021,6 +1112,10 @@
           hedgeMap = e.map
           enableInteract()
 
+          // The map is constructed already framed on the parcel, so the first idle = the framed
+          // view's tiles have rendered. Reveal the map then, fading out the loading overlay.
+          hedgeMap.once('idle', hideMapLoading)
+
           // Hover affordance: tint whichever OTHER parcel the pointer is over. Keyed off the
           // 'parcels-hit' fill (the whole-parcel click target). Tracks hoverNgc so we only
           // setData when the hovered parcel actually changes, not on every mouse move.
@@ -1111,6 +1206,7 @@
       }).catch(err => {
         console.error('Failed to load parcel data:', err)
         document.getElementById('parcel-heading').textContent = 'Could not load parcel'
+        hideMapLoading()  // map was never constructed — don't leave the overlay stuck
       })
     }
   </script>

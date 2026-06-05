@@ -115,12 +115,52 @@
   .app-map-fullscreen__map {
     flex: 1;
     height: 100%;
+    position: relative; /* anchor for the loading overlay */
   }
 
   /* DEFRA map container fills its column */
+  #map {
+    width: 100%;
+  }
   #map,
   #map .im-o-app {
     height: 100% !important;
+  }
+
+  /* Loading overlay — shown while the map frames + tiles load, then faded out.
+     Background matches the map's backgroundColor so the reveal is seamless. */
+  .app-map-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #f5f5f0;
+    color: #0b0c0c;
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 1.1875rem;
+    transition: opacity 0.3s ease;
+  }
+  .app-map-loading--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .app-map-loading__spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 4px solid #b1b4b6;
+    border-top-color: #1d70b8;
+    animation: app-map-spin 0.8s linear infinite;
+  }
+  @keyframes app-map-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app-map-loading__spinner { animation: none; }
   }
 
   /* DEFRA's "Map view" button — relocated into sidebar via JS */
@@ -265,7 +305,13 @@
     </table>
   </div>
 
-  <div id="map" class="app-map-fullscreen__map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
+  <div class="app-map-fullscreen__map">
+    <div id="map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
+    <div id="map-loading" class="app-map-loading" role="status" aria-live="polite">
+      <span class="app-map-loading__text">Loading map</span>
+      <span class="app-map-loading__spinner" aria-hidden="true"></span>   
+    </div>
+  </div>
 
 </main>
 {% endblock main %}
@@ -280,6 +326,12 @@
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
 
   <script>
+    // Reveal the page immediately rather than waiting for the DEFRA library to remove its
+    // `.im-is-loading { visibility:hidden }` body hide on map mount. The #map-loading overlay
+    // covers the map area, so the sidebar can show straight away and we don't depend on map
+    // timing to un-blank the page (matches view-land-parcel).
+    document.body.classList.remove('im-is-loading')
+
     const interact = defra.interactPlugin({
       interactionModes: ['selectFeature'],
       multiSelect: false,
@@ -452,9 +504,9 @@
       buildColourPanel()
     }
 
-    // The map is built only after the WFS fetch resolves (see createMap below), so
-    // it can open already framed on the parcels with no pan/zoom. These are its
-    // static options; `bounds` is added at construction once the data is in.
+    // The map is built immediately on load (see createMap below) so MapLibre/tile init runs
+    // concurrently with the WFS fetch, then reframed on the parcels via fitBounds once the data
+    // arrives. These are its static options.
     let interactiveMap = null
     const mapOptions = {
       mapProvider: defra.maplibreProvider(),
@@ -524,6 +576,53 @@
     let landParcelsData = null
     let hoveredNgc = null      // parcel currently tinted under the pointer
     let hoverWired = false     // hover listeners attached once (layers persist across style re-adds)
+    let pendingBounds = null   // bounds to frame on once both map + data are ready
+    let parcelsApplied = false // guards against adding the parcel layers twice
+
+    // Fade out the "Loading map…" overlay. Called once the map is framed on the parcels and its
+    // tiles have rendered (or on a fetch error) — never leaving the overlay stuck on screen.
+    function hideMapLoading () {
+      const el = document.getElementById('map-loading')
+      if (el) el.classList.add('app-map-loading--hidden')
+    }
+
+    // Fetch JSON via a sessionStorage cache keyed on the full request URL (which already
+    // encodes the SBI + date filter), so repeat visits with the same query skip the network.
+    // Quota/parse failures fall back to a live fetch, so caching can never break a load.
+    function cachedFetchJson (url) {
+      try {
+        const hit = sessionStorage.getItem(url)
+        if (hit) return Promise.resolve(JSON.parse(hit))
+      } catch (e) { /* ignore malformed / unavailable storage */ }
+      return fetch(url).then(r => r.json()).then(data => {
+        try { sessionStorage.setItem(url, JSON.stringify(data)) } catch (e) { /* quota / private mode */ }
+        return data
+      })
+    }
+
+    // Frame the map on the parcels and add their layers once BOTH the map is ready and the
+    // data has arrived (either order). The map is built immediately on load so MapLibre/tile
+    // init overlaps the WFS fetch; whichever of the two finishes last triggers the work here.
+    function applyParcelsIfReady () {
+      if (parcelsApplied || !mapInstance || !landParcelsData) return
+      const doApply = () => {
+        if (parcelsApplied) return
+        parcelsApplied = true
+        if (pendingBounds) {
+          mapInstance.fitBounds(
+            [[pendingBounds[0], pendingBounds[1]], [pendingBounds[2], pendingBounds[3]]],
+            { padding: 40, duration: 0 }
+          )
+        }
+        // Reveal the map once the framed view's tiles have finished rendering. Registered
+        // before addParcelsToMap so a throw there can't leave the overlay stuck on screen.
+        mapInstance.once('idle', hideMapLoading)
+        addParcelsToMap(mapInstance, landParcelsData)
+      }
+      // addSource throws if the style isn't done loading — defer until it is.
+      if (mapInstance.isStyleLoaded && mapInstance.isStyleLoaded()) doApply()
+      else mapInstance.once('idle', doApply)
+    }
 
     // Add parcel source and layers to the map
     function addParcelsToMap(map, data) {
@@ -669,9 +768,24 @@
     const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
     const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
 
+    // Build the map straight away so MapLibre init + base-tile loading run concurrently with
+    // the WFS fetch below, rather than waiting for it.
+    //
+    // If the parcels are already cached (e.g. navigating back from a parcel page), frame the map
+    // on them at construction — the library fits with duration:0, so it opens in the right place
+    // with no flash of the #map default centre. On a cold load they aren't cached yet, so the map
+    // opens at the default centre and snaps to the parcels via fitBounds once the fetch resolves.
+    let initialBounds = null
+    try {
+      const cached = sessionStorage.getItem(parcelsUrl)
+      const feats = cached && JSON.parse(cached).features
+      if (feats && feats.length) initialBounds = computeBounds(feats)
+    } catch (e) { /* no/!invalid cache → fall back to default centre */ }
+    createMap(initialBounds)
+
     Promise.all([
-      fetch(parcelsUrl).then(r => r.json()),
-      fetch(coversUrl).then(r => r.json())
+      cachedFetchJson(parcelsUrl),
+      cachedFetchJson(coversUrl)
     ]).then(([parcelsData, landCoversData]) => {
 
       landParcelsData = parcelsData
@@ -716,35 +830,35 @@
         .map(([k, v]) => `&from-date-${k}=${encodeURIComponent(v)}`)
         .join('')
 
-      landParcelsData.features.forEach(f => {
+      // Build all rows as one HTML string and insert in a single pass (one reflow) rather
+      // than appendChild per row. data-ngc drives the filter + map-selection wiring below.
+      const rowsHtml = landParcelsData.features.map(f => {
         const { SHEET_ID, PARCEL_ID, ngc, AREA_HA } = f.properties
         const dominant = parcelCovers[ngc]
         const area = parseFloat(AREA_HA)
-        const tr = document.createElement('tr')
-        tr.className = 'govuk-table__row'
-        tr.dataset.ngc = ngc
-        tr.innerHTML = `
+        return `<tr class="govuk-table__row" data-ngc="${ngc}">
           <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
           <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
-        `
-        tableBody.appendChild(tr)
+        </tr>`
       })
+      tableBody.insertAdjacentHTML('beforeend', rowsHtml.join(''))
 
       // Initial filter pass populates the status line
       filterParcels(filterInput.value)
 
-      // Build the map now we know where the parcels are, so it opens already
-      // framed on them: bounds go to the constructor, which fits with duration:0
-      // inside the library — no visible pan/zoom on load.
-      const bounds = landParcelsData.features.length ? computeBounds(landParcelsData.features) : null
-      createMap(bounds)
+      // Frame + draw the parcels. The map may already be ready (it was built up front), so
+      // this either runs now or is picked up by the map:ready handler — whichever is last.
+      pendingBounds = landParcelsData.features.length ? computeBounds(landParcelsData.features) : null
+      applyParcelsIfReady()
 
     }).catch(err => {
       console.error('Failed to load land parcels:', err)
       document.getElementById('summary-parcel-count').textContent = '–'
       document.getElementById('summary-total-area').textContent = '–'
-      createMap(null)
+      // Map was already created up front; nothing parcel-specific to add. Reveal it (at the
+      // default centre) so the overlay doesn't hang on a failed load.
+      hideMapLoading()
     })
 
     // Construct the map (reusing mapOptions) framed on `bounds`, then wire events.
@@ -755,17 +869,14 @@
       if (interactiveMap) return
       interactiveMap = new defra.InteractiveMap('map', bounds ? { ...mapOptions, bounds } : mapOptions)
 
-      // When map becomes ready, add the parcel layers (data is already loaded)
+      // When map becomes ready, frame + add the parcel layers if the data has already arrived;
+      // otherwise the fetch handler calls applyParcelsIfReady once it lands. Either order works.
       interactiveMap.on('map:ready', (e) => {
         mapInstance = e.map
         // Build the colour panel first — it's independent of the parcel layers, so it must not
         // be blocked if addParcelsToMap throws (only shown when ?colours is set).
         buildColourPanel()
-        // map:ready can fire before the style has finished loading; addSource throws if so.
-        // Defer until the style is ready to avoid "Style is not done loading".
-        const addParcels = () => { if (landParcelsData) addParcelsToMap(mapInstance, landParcelsData) }
-        if (mapInstance.isStyleLoaded && mapInstance.isStyleLoaded()) addParcels()
-        else mapInstance.once('idle', addParcels)
+        applyParcelsIfReady()
       })
 
       // Map -> Sidebar: highlight selected parcel row and surface its details
