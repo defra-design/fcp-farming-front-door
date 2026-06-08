@@ -36,7 +36,6 @@
   <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
 
   <link rel="prefetch" href="/v18/view-land-parcel" as="document">
@@ -322,7 +321,6 @@
   <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
 
   <script>
@@ -331,12 +329,6 @@
     // covers the map area, so the sidebar can show straight away and we don't depend on map
     // timing to un-blank the page (matches view-land-parcel).
     document.body.classList.remove('im-is-loading')
-
-    const interact = defra.interactPlugin({
-      interactionModes: ['selectFeature'],
-      multiSelect: false,
-      deselectOnClickOutside: true
-    })
 
     // ── Map colours: live-tuneable palette + panel (open with ?colours) ──────────
     // view-land draws parcels as raw MapLibre layers, so colours apply with
@@ -360,11 +352,49 @@
     }
     const palette = mergePalette(clonePalette(DEFAULT_PALETTE), loadPaletteOverride())
 
-    // Enable parcel selection, colouring the interact plugin's selected-parcel highlight from
-    // the palette (selectedStroke). Re-callable to recolour live; preserves the current
-    // selection (the ENABLE payload carries no selectedFeatures).
-    function enableParcelInteract () {
-      interact.enable({ layers: [{ layerId: 'parcels-fill', idProperty: 'ngc', selectedStroke: palette.selectedBorder }] })
+    // Sentinel filter value that matches no parcel (ngc is always a non-empty grid code).
+    const NO_PARCEL = '__none__'
+
+    // Select a parcel: highlight its outline on the map (parcels-selected layer) and surface its
+    // row + details in the sidebar. Driven by a native MapLibre click (see wireParcelSelect)
+    // rather than the interact plugin, whose polygon hit-test misses clicks at vector-tile seams.
+    function selectParcel (ngc) {
+      selectedNgc = ngc
+      if (mapInstance && mapInstance.getLayer('parcels-selected')) {
+        mapInstance.setFilter('parcels-selected', ['==', ['get', 'ngc'], ngc])
+      }
+      const rows = Array.from(document.querySelectorAll('#parcel-table-body tr'))
+      // If the selected parcel's row is hidden by the active filter, clear the filter to show it.
+      if (rows.some(tr => tr.dataset.ngc === ngc && tr.hidden) && filterInput.value) {
+        filterInput.value = ''
+        filterParcels('')
+      }
+      rows.forEach(tr => tr.classList.toggle('app-parcel--selected', tr.dataset.ngc === ngc))
+
+      const row = rows.find(tr => tr.dataset.ngc === ngc)
+      const panel = document.getElementById('selected-parcel-panel')
+      if (row) {
+        const anchor = row.querySelector('a')
+        const cells = row.querySelectorAll('td')
+        document.getElementById('selected-parcel-link').href = anchor ? anchor.getAttribute('href') : '#'
+        document.getElementById('selected-parcel-link').textContent = anchor ? anchor.textContent : ''
+        document.getElementById('selected-parcel-cover').textContent = cells[1] ? cells[1].textContent.trim() : ''
+        document.getElementById('selected-parcel-area').textContent = cells[2] ? cells[2].textContent.trim() : ''
+        panel.hidden = false
+      } else if (panel) {
+        panel.hidden = true
+      }
+    }
+
+    // Clear the current selection (click on empty map / no parcel under the pointer).
+    function clearParcelSelection () {
+      selectedNgc = null
+      if (mapInstance && mapInstance.getLayer('parcels-selected')) {
+        mapInstance.setFilter('parcels-selected', ['==', ['get', 'ngc'], NO_PARCEL])
+      }
+      document.querySelectorAll('#parcel-table-body tr').forEach(tr => tr.classList.remove('app-parcel--selected'))
+      const panel = document.getElementById('selected-parcel-panel')
+      if (panel) panel.hidden = true
     }
 
     // Apply palette to the live map layers (read by addParcelsToMap on first add / restyle).
@@ -373,8 +403,8 @@
       if (!m) return
       if (key === 'parcelBorder' && m.getLayer('parcels-outline')) {
         m.setPaintProperty('parcels-outline', 'line-color', palette.parcelBorder)
-      } else if (key === 'selectedBorder') {
-        enableParcelInteract()   // recolours the selected-parcel highlight live
+      } else if (key === 'selectedBorder' && m.getLayer('parcels-selected')) {
+        m.setPaintProperty('parcels-selected', 'line-color', palette.selectedBorder)
       } else if (key === 'hoverFill' && m.getLayer('parcels-hover')) {
         m.setPaintProperty('parcels-hover', 'fill-color', palette.hoverFill)
       } else if (key === 'hoverOpacity' && m.getLayer('parcels-hover')) {
@@ -566,8 +596,7 @@
             // },
 
           ]
-        }),
-        interact
+        })
       ]
     }
 
@@ -578,6 +607,8 @@
     let hoverWired = false     // hover listeners attached once (layers persist across style re-adds)
     let pendingBounds = null   // bounds to frame on once both map + data are ready
     let parcelsApplied = false // guards against adding the parcel layers twice
+    let selectedNgc = null     // parcel currently selected (click), highlighted via parcels-selected
+    let selectWired = false    // selection click listeners attached once (survive style re-adds)
 
     // Fade out the "Loading map…" overlay. Called once the map is framed on the parcels and its
     // tiles have rendered (or on a fetch error) — never leaving the overlay stuck on screen.
@@ -667,9 +698,39 @@
         }
       })
 
-      enableParcelInteract()
+      // Selected-parcel highlight: a bold outline filtered to selectedNgc. The filter is seeded
+      // from the current selection so it persists across base-map style re-adds (which re-run
+      // addParcelsToMap). Replaces the interact plugin's selectedStroke.
+      map.addLayer({
+        id: 'parcels-selected',
+        type: 'line',
+        source: 'parcels',
+        paint: {
+          'line-color': palette.selectedBorder,
+          'line-width': 3
+        },
+        filter: ['==', ['get', 'ngc'], selectedNgc == null ? NO_PARCEL : selectedNgc]
+      })
 
+      wireParcelSelect(map)
       wireParcelHover(map)
+    }
+
+    // Parcel selection via MapLibre's native layer hit-test (reliable across tile seams, unlike
+    // the interact plugin's point-in-polygon on tile-clipped geometry). Attached once; the
+    // delegated listeners survive parcel-layer re-adds.
+    function wireParcelSelect(map) {
+      if (selectWired) return
+      selectWired = true
+      map.on('click', 'parcels-fill', (e) => {
+        const ngc = e.features && e.features[0] && e.features[0].id
+        if (ngc != null) selectParcel(ngc)
+      })
+      // A click that isn't on a parcel deselects (mirrors the old deselectOnClickOutside).
+      map.on('click', (e) => {
+        if (map.queryRenderedFeatures(e.point, { layers: ['parcels-fill'] }).length) return
+        clearParcelSelection()
+      })
     }
 
     // Tint the hovered parcel via feature-state. Attached once; the delegated listeners
@@ -879,39 +940,9 @@
         applyParcelsIfReady()
       })
 
-      // Map -> Sidebar: highlight selected parcel row and surface its details
-      // in the "Selected parcel" panel above the table. If the selection is
-      // currently hidden by the filter, clear the filter first.
-      const selectedPanel = document.getElementById('selected-parcel-panel')
-      const selectedLink = document.getElementById('selected-parcel-link')
-      const selectedCover = document.getElementById('selected-parcel-cover')
-      const selectedArea = document.getElementById('selected-parcel-area')
-
-      interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
-        const selectedIds = new Set(selectedFeatures.map(f => f.featureId))
-        const rows = document.querySelectorAll('#parcel-table-body tr')
-        const hiddenSelection = Array.from(rows).some(tr => selectedIds.has(tr.dataset.ngc) && tr.hidden)
-        if (hiddenSelection && filterInput.value) {
-          filterInput.value = ''
-          filterParcels('')
-        }
-        rows.forEach(tr => {
-          tr.classList.toggle('app-parcel--selected', selectedIds.has(tr.dataset.ngc))
-        })
-
-        const selectedRow = Array.from(rows).find(tr => selectedIds.has(tr.dataset.ngc))
-        if (selectedRow) {
-          const anchor = selectedRow.querySelector('a')
-          const cells = selectedRow.querySelectorAll('td')
-          selectedLink.href = anchor ? anchor.getAttribute('href') : '#'
-          selectedLink.textContent = anchor ? anchor.textContent : ''
-          selectedCover.textContent = cells[1] ? cells[1].textContent.trim() : ''
-          selectedArea.textContent = cells[2] ? cells[2].textContent.trim() : ''
-          selectedPanel.hidden = false
-        } else {
-          selectedPanel.hidden = true
-        }
-      })
+      // Map -> Sidebar selection (row highlight + "Selected parcel" panel) is handled by
+      // selectParcel/clearParcelSelection, driven by the native 'parcels-fill' click wired in
+      // wireParcelSelect — not the interact plugin.
 
       // Re-add parcel layers after a map style change
       interactiveMap.on('map:stylechange', () => {

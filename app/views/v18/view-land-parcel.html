@@ -957,7 +957,14 @@
       // this is re-run whenever the hedgerow layer is recreated or the style changes.
       function enableInteract () {
         if (!hedgeMap || !interact || !hedgeMap.getLayer('parcels-hit')) return false
-        const layers = [{ layerId: 'parcels-hit', idProperty: 'ngc', selectedStroke: 'transparent' }]
+        // Only hedgerows go through the interact plugin. Parcel selection is handled by a native
+        // MapLibre click on 'parcels-hit' (see map:ready) instead, because the plugin re-tests a
+        // polygon click with point-in-polygon against the TILE-CLIPPED geometry from
+        // queryRenderedFeatures (de-duped to one fragment per feature). When a parcel straddles a
+        // vector-tile seam — increasingly likely as you zoom in (e.g. ~1km) — the retained
+        // fragment may not contain the click, so the test fails and the parcel can't be selected.
+        // MapLibre's own layer hit-test has no such limitation.
+        const layers = []
         if (hedgeMap.getLayer('hedgerows')) layers.push({ layerId: 'hedgerows', idProperty: 'hedgeId' })
         interact.enable({ layers })
         return true
@@ -1133,6 +1140,15 @@
           hedgeMap.on('mouseleave', 'parcels-hit', () => {
             if (hoverNgc) clearParcelHover()
           })
+
+          // Parcel selection via MapLibre's native layer hit-test (reliable across tile seams —
+          // see enableInteract for why we bypass the interact plugin here). A click that's also on
+          // a hedgerow line is left to the interact plugin so hedgerow-row highlighting still works.
+          hedgeMap.on('click', 'parcels-hit', (ev) => {
+            if (hedgeMap.queryRenderedFeatures(ev.point, { layers: ['hedgerows'] }).length) return
+            const ngc = ev.features && ev.features[0] && ev.features[0].properties.ngc
+            if (ngc && ngc !== currentNgc) switchParcel(ngc)
+          })
         })
         interactiveMap.on('datasets:ready', () => {
           enableInteract()
@@ -1160,16 +1176,9 @@
           hedgeMap.on('idle', reapply)
         })
 
-        // Map -> sidebar. A click on another parcel's hit-fill switches the page to it;
-        // a click on a hedgerow line highlights its row.
+        // Map -> sidebar. A click on a hedgerow line highlights its row. (Parcel switching is
+        // handled by the native 'parcels-hit' click in map:ready, not the interact plugin.)
         interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
-          const parcelHit = selectedFeatures.find(f => f.layerId === 'parcels-hit')
-          if (parcelHit) {
-            // Selection is shown via the bold parcel-outline, not the interact highlight.
-            if (parcelHit.featureId !== currentNgc) switchParcel(parcelHit.featureId)
-            interact.clear()
-            return
-          }
           const selectedIds = new Set(
             selectedFeatures.filter(f => f.layerId === 'hedgerows').map(f => f.featureId)
           )
