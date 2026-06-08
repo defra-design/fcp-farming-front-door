@@ -25,20 +25,20 @@
         View land
       </h1>
 
-      <p class="govuk-body">Enter a farm name and SBI to use in the prototype. Leave blank to use the defaults.</p>
+      <p class="govuk-body">Enter a business name and SBI to use in the prototype. Leave blank to use the defaults.</p>
 
       <form method="post">
 
         {{ govukInput({
           label: {
-            text: "Farm name",
+            text: "Business name",
             classes: "govuk-label--m govuk-!-static-margin-bottom-0"
           },
           hint: {
             text: "Default: Agile Farm Ltd"
           },
-          id: "farm-name",
-          name: "farm-name",
+          id: "business-name",
+          name: "business-name",
           classes: "govuk-input--width-20"
         }) }}
 

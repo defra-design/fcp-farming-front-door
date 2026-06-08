@@ -214,7 +214,7 @@
 <main class="app-map-fullscreen" id="main-content">
 
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Map controls">
-    <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">{{ myData.farmName | default('Agile Farm Ltd') }}</h1>
+    <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">{{ myData.businessName | default('Agile Farm Ltd') }}</h1>
     {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
     {% from "govuk/components/button/macro.njk" import govukButton %}
 

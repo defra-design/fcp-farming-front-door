@@ -1613,7 +1613,7 @@ module.exports = function (router, _myData) {
         });
     });
 
-    //demo-start - prototype configuration (farm name + SBI)
+    //demo-start - prototype configuration (business name + SBI)
     router.get('/' + version + '/demo-start', function (req, res) {
         res.render(version + '/demo-start', {
             myData: req.session.myData
@@ -1622,10 +1622,10 @@ module.exports = function (router, _myData) {
 
     //demo-start - apply defaults, store in myData, continue to view-land
     router.post('/' + version + '/demo-start', function (req, res) {
-        var farmName = (req.session.data['farm-name'] || '').trim();
+        var businessName = (req.session.data['business-name'] || '').trim();
         var sbi = (req.session.data['sbi'] || '').trim();
 
-        req.session.myData.farmName = farmName || 'Agile Farm Ltd';
+        req.session.myData.businessName = businessName || 'Agile Farm Ltd';
         req.session.myData.sbi = sbi || '111089693';
 
         res.redirect('/' + version + '/view-land');
