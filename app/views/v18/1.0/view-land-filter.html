@@ -39,17 +39,13 @@
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
 
-  <link rel="prefetch" href="/v18/view-land-parcel-cs" as="document">
+  <link rel="prefetch" href="/v18/1.0/view-land-parcel" as="document">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/index.js">
 
   <style>
   /* Fullscreen 2-column layout: GOV.UK header + service nav stack at the top,
      <main> fills the remaining viewport, sidebar + map sit side-by-side. */
-
-  /* govuk-frontend sets display: block on headings, which beats the UA
-     stylesheet's [hidden] { display: none } on cascade order. Force-hide. */
-  [hidden] { display: none !important; }
 
   html, body {
     height: 100%;
@@ -209,7 +205,7 @@
     <table class="govuk-table govuk-!-margin-bottom-4">
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Total number of parcels</td>
+          <td class="govuk-table__cell">Number of parcels</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-parcel-count"></td>
         </tr>
         <tr class="govuk-table__row">
@@ -219,31 +215,44 @@
       </tbody>
     </table>
 
-    <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4" id="cs-contract-heading" hidden>Countryside stewardship (Middle tier)</h2>
-    <table class="govuk-table govuk-!-margin-bottom-4" id="cs-contract-table" hidden>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Start date</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" id="cs-contract-start"></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">End date</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" id="cs-contract-end"></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Number of parcels</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" id="cs-contract-parcel-total"></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Total value</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" id="cs-contract-value"></td>
-        </tr>
-      </tbody>
-    </table>
-
     <div id="map-button-slot"></div>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Land parcels</h2>
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+    {{ govukInput({
+      id: "parcel-filter",
+      name: "parcel-filter",
+      label: {
+        text: "Filter parcels"
+      },
+      hint: {
+        text: "Enter a parcel ID, for example SK1234 5678"
+      },
+      classes: "govuk-input--width-10",
+      attributes: {
+        autocomplete: "off",
+        autocapitalize: "characters",
+        spellcheck: "false"
+      }
+    }) }}
+    <p class="govuk-body govuk-!-margin-bottom-2" id="parcel-filter-status" aria-live="polite"></p>
+    <table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet" hidden aria-live="polite">
+      <caption class="govuk-table__caption govuk-table__caption--s">Selected parcel</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap">ID</th>
+          <th scope="col" class="govuk-table__header" style="width:55%">Land cover</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap">Area (ha)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" id="selected-parcel-link" href="#"></a></td>
+          <td class="govuk-table__cell" id="selected-parcel-cover"></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" id="selected-parcel-area"></td>
+        </tr>
+      </tbody>
+    </table>
     <table class="govuk-table govuk-table--small-text-until-tablet" data-module="moj-sortable-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -421,6 +430,31 @@
       return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
     }
 
+    // Parcel filter — narrows the list (not the map) by parcel ID substring
+    const filterInput = document.getElementById('parcel-filter')
+    const filterStatus = document.getElementById('parcel-filter-status')
+
+    function normaliseTerm (s) {
+      return (s || '').toUpperCase().replace(/\s+/g, '')
+    }
+
+    function filterParcels (term) {
+      const needle = normaliseTerm(term)
+      const rows = document.querySelectorAll('#parcel-table-body tr')
+      let visible = 0
+      rows.forEach(tr => {
+        if (!tr.dataset.ngc) return
+        const match = needle === '' || tr.dataset.ngc.toUpperCase().includes(needle)
+        tr.hidden = !match
+        if (match) visible++
+      })
+      filterStatus.textContent = (rows.length && visible === 0)
+        ? `No parcels match "${term}"`
+        : ''
+    }
+
+    filterInput.addEventListener('input', e => filterParcels(e.target.value))
+
     // Fetch data immediately on page load
     const sbi = '106332870'
     const cql = `SBI=${sbi}${buildDateClause()}`
@@ -429,9 +463,8 @@
 
     Promise.all([
       fetch(parcelsUrl).then(r => r.json()),
-      fetch(coversUrl).then(r => r.json()),
-      fetch('/v18/data/cs-agreements').then(r => r.json())
-    ]).then(([parcelsData, landCoversData, csAgreements]) => {
+      fetch(coversUrl).then(r => r.json())
+    ]).then(([parcelsData, landCoversData]) => {
 
       landParcelsData = parcelsData
 
@@ -439,30 +472,6 @@
       landParcelsData.features.forEach(f => {
         f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID
       })
-
-      // Countryside Stewardship contract: any agreements whose parcref matches
-      // one of this SBI's parcels. Contract-level fields (start, end, value)
-      // are identical across rows of a given contract_id, so we read them
-      // off the first matching record.
-      const parcelKeys = new Set(landParcelsData.features.map(f => f.properties.ngc))
-      const matchedAgreements = (csAgreements || []).filter(a => parcelKeys.has(a.parcref))
-      if (matchedAgreements.length > 0) {
-        const first = matchedAgreements[0]
-        const fmtCsDate = v => {
-          if (!v || v.length < 8) return ''
-          const dt = new Date(`${v.slice(0,4)}-${v.slice(4,6)}-${v.slice(6,8)}`)
-          return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-        }
-        const value = parseFloat(first.total_value)
-        const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 2 })
-        const matchedParcels = new Set(matchedAgreements.map(a => a.parcref))
-        document.getElementById('cs-contract-start').textContent = fmtCsDate(first.startdate)
-        document.getElementById('cs-contract-end').textContent = fmtCsDate(first.enddate)
-        document.getElementById('cs-contract-parcel-total').textContent = matchedParcels.size
-        document.getElementById('cs-contract-value').textContent = isNaN(value) ? '' : gbp.format(value)
-        document.getElementById('cs-contract-heading').hidden = false
-        document.getElementById('cs-contract-table').hidden = false
-      }
 
       // Build a lookup of dominant land cover per parcel (largest area)
       const parcelCovers = {}
@@ -507,12 +516,15 @@
         tr.className = 'govuk-table__row'
         tr.dataset.ngc = ngc
         tr.innerHTML = `
-          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel-cs?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/1.0/view-land-parcel?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
           <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
         `
         tableBody.appendChild(tr)
       })
+
+      // Initial filter pass populates the status line
+      filterParcels(filterInput.value)
 
       // If map is already ready, add layers now
       if (mapInstance) {
@@ -533,12 +545,38 @@
       }
     })
 
-    // Map -> Sidebar: highlight selected parcel row
+    // Map -> Sidebar: highlight selected parcel row and surface its details
+    // in the "Selected parcel" panel above the table. If the selection is
+    // currently hidden by the filter, clear the filter first.
+    const selectedPanel = document.getElementById('selected-parcel-panel')
+    const selectedLink = document.getElementById('selected-parcel-link')
+    const selectedCover = document.getElementById('selected-parcel-cover')
+    const selectedArea = document.getElementById('selected-parcel-area')
+
     interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
       const selectedIds = new Set(selectedFeatures.map(f => f.featureId))
-      document.querySelectorAll('#parcel-table-body tr').forEach(tr => {
+      const rows = document.querySelectorAll('#parcel-table-body tr')
+      const hiddenSelection = Array.from(rows).some(tr => selectedIds.has(tr.dataset.ngc) && tr.hidden)
+      if (hiddenSelection && filterInput.value) {
+        filterInput.value = ''
+        filterParcels('')
+      }
+      rows.forEach(tr => {
         tr.classList.toggle('app-parcel--selected', selectedIds.has(tr.dataset.ngc))
       })
+
+      const selectedRow = Array.from(rows).find(tr => selectedIds.has(tr.dataset.ngc))
+      if (selectedRow) {
+        const anchor = selectedRow.querySelector('a')
+        const cells = selectedRow.querySelectorAll('td')
+        selectedLink.href = anchor ? anchor.getAttribute('href') : '#'
+        selectedLink.textContent = anchor ? anchor.textContent : ''
+        selectedCover.textContent = cells[1] ? cells[1].textContent.trim() : ''
+        selectedArea.textContent = cells[2] ? cells[2].textContent.trim() : ''
+        selectedPanel.hidden = false
+      } else {
+        selectedPanel.hidden = true
+      }
     })
 
     // Re-add parcel layers after a map style change

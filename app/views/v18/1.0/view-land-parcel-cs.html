@@ -11,7 +11,7 @@
   serviceUrl: "#",
   navigation: [
     {
-      href: "/v18/view-land",
+      href: "/v18/1.0/view-land",
       text: "View land",
       active: true
     },
@@ -38,7 +38,7 @@
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
 
-  <link rel="prefetch" href="/v18/view-land" as="document">
+  <link rel="prefetch" href="/v18/1.0/view-land" as="document">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css">
@@ -152,7 +152,7 @@
 <main class="app-map-fullscreen" id="main-content">
 
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Parcel details">
-    <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/view-land-cs">Back to land summary</a>
+    <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/1.0/view-land-cs">Back to land summary</a>
     <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h2>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2>
@@ -331,7 +331,7 @@
         fetch(parcelUrl).then(r => r.json()),
         fetch(coversUrl).then(r => r.json()),
         fetch(hedgeUrl).then(r => r.json()),
-        fetch('/v18/data/cs-agreements').then(r => r.json())
+        fetch('/v18/1.0/data/cs-agreements').then(r => r.json())
       ]).then(([parcelData, landCoversData, hedgeData, csAgreements]) => {
 
         // Disambiguate by SHEET_ID — the server-side filter only includes

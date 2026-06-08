@@ -39,9 +39,17 @@
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
 
+  <link rel="prefetch" href="/v18/1.0/view-land-parcel-cs" as="document">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/index.js">
+
   <style>
   /* Fullscreen 2-column layout: GOV.UK header + service nav stack at the top,
      <main> fills the remaining viewport, sidebar + map sit side-by-side. */
+
+  /* govuk-frontend sets display: block on headings, which beats the UA
+     stylesheet's [hidden] { display: none } on cascade order. Force-hide. */
+  [hidden] { display: none !important; }
 
   html, body {
     height: 100%;
@@ -170,8 +178,6 @@
 {% block main %}
 <main class="app-map-fullscreen" id="main-content">
 
-  <div id="map" class="app-map-fullscreen__map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
-
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Map controls">
     <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">Land summary</h1>
     {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
@@ -203,12 +209,34 @@
     <table class="govuk-table govuk-!-margin-bottom-4">
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Number of parcels</td>
+          <td class="govuk-table__cell">Total number of parcels</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-parcel-count"></td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">Total area (ha)</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-total-area"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4" id="cs-contract-heading" hidden>Countryside stewardship (Middle tier)</h2>
+    <table class="govuk-table govuk-!-margin-bottom-4" id="cs-contract-table" hidden>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Start date</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="cs-contract-start"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">End date</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="cs-contract-end"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Number of parcels</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="cs-contract-parcel-total"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Total value</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="cs-contract-value"></td>
         </tr>
       </tbody>
     </table>
@@ -227,6 +255,8 @@
       <tbody class="govuk-table__body" id="parcel-table-body"></tbody>
     </table>
   </div>
+
+  <div id="map" class="app-map-fullscreen__map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
 
 </main>
 {% endblock main %}
@@ -399,8 +429,9 @@
 
     Promise.all([
       fetch(parcelsUrl).then(r => r.json()),
-      fetch(coversUrl).then(r => r.json())
-    ]).then(([parcelsData, landCoversData]) => {
+      fetch(coversUrl).then(r => r.json()),
+      fetch('/v18/1.0/data/cs-agreements').then(r => r.json())
+    ]).then(([parcelsData, landCoversData, csAgreements]) => {
 
       landParcelsData = parcelsData
 
@@ -408,6 +439,30 @@
       landParcelsData.features.forEach(f => {
         f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID
       })
+
+      // Countryside Stewardship contract: any agreements whose parcref matches
+      // one of this SBI's parcels. Contract-level fields (start, end, value)
+      // are identical across rows of a given contract_id, so we read them
+      // off the first matching record.
+      const parcelKeys = new Set(landParcelsData.features.map(f => f.properties.ngc))
+      const matchedAgreements = (csAgreements || []).filter(a => parcelKeys.has(a.parcref))
+      if (matchedAgreements.length > 0) {
+        const first = matchedAgreements[0]
+        const fmtCsDate = v => {
+          if (!v || v.length < 8) return ''
+          const dt = new Date(`${v.slice(0,4)}-${v.slice(4,6)}-${v.slice(6,8)}`)
+          return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+        }
+        const value = parseFloat(first.total_value)
+        const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 2 })
+        const matchedParcels = new Set(matchedAgreements.map(a => a.parcref))
+        document.getElementById('cs-contract-start').textContent = fmtCsDate(first.startdate)
+        document.getElementById('cs-contract-end').textContent = fmtCsDate(first.enddate)
+        document.getElementById('cs-contract-parcel-total').textContent = matchedParcels.size
+        document.getElementById('cs-contract-value').textContent = isNaN(value) ? '' : gbp.format(value)
+        document.getElementById('cs-contract-heading').hidden = false
+        document.getElementById('cs-contract-table').hidden = false
+      }
 
       // Build a lookup of dominant land cover per parcel (largest area)
       const parcelCovers = {}
@@ -452,7 +507,7 @@
         tr.className = 'govuk-table__row'
         tr.dataset.ngc = ngc
         tr.innerHTML = `
-          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel-alt?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/1.0/view-land-parcel-cs?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
           <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
         `

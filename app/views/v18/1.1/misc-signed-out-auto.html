@@ -1,0 +1,53 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set _pageID = "" %}
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "For your security, we have signed you out" %}
+{% set serviceName = "Farm and Land Service" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+  "status": 'In development',
+  "name": "Auto signed out",
+  "id": "mp07",
+  "url": "misc-signed-out-auto?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+  ]
+  
+}
+%}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        For your security, we have signed you out
+      </h1>
+
+
+      <p class="govuk-body">
+        <a href="LFS-start" class="govuk-link govuk-link--no-visited-state">Sign back in</a>.
+      </p>
+
+  </div>
+</div>
+
+
+{% endblock %}

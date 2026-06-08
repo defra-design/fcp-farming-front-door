@@ -1,0 +1,257 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set pageName="Home" %}
+
+{% block beforeContent %}
+{{super()}}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      Land summary (v1.0)
+      <!-- <span class="govuk-caption-xl">Private Beta. Round 1: 16 to 20 December 2024</span> -->
+    </h1>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <a href="start-sfd-start" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+        Start now
+        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+        </svg>
+      </a>
+    </div>
+</div>
+  
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <!-- <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"> -->
+    <h2 class="govuk-heading-m">
+      Design history
+    </h2>
+
+    <p class="govuk-body">
+      This prototype is based on the existing land summary customer journey. It has been built using the <a href="https://defra.github.io/interactive-map/">interactive mapping component</a>. Version (v0.0.22-alpha).
+    </p>
+
+    <h3 class="govuk-heading-m">
+      What's unique in this version
+    </h3>    
+
+    <p class="govuk-body">
+      <a href="../_design-history/design-history-1-0">View design history</a>
+    </p>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  </div>
+</div>
+  
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <p>The below list documents the new pages prototyped as part of this journey. The list does not include the entirety of pages held within Business and Personal details, as already documented as part of <a href="../MVP/index">MVP</a>.</p>
+
+    {% from "govuk/components/table/macro.njk" import govukTable %}
+
+      {{ govukTable({
+        caption: "What\'s new",
+        captionClasses: "govuk-table__caption--m",
+        firstCellIsHeader: false,
+        head: [
+          {
+            text: "Name"
+          },
+          {
+            text: "Prototype link"
+          },
+          {
+            text: "Version"
+          }
+        ],
+        rows: [
+          [
+            {
+              text: "View land"
+            },
+            {
+              html: "<a href='view-land'>view-land</a>"
+            },
+            {
+              text: "1.0"
+            }
+          ],
+          [
+            {
+              text: "View land parcel"
+            },
+            {
+              html: "<a href='view-land-parcel?parcel=SK82871468'>view-land-parcel?parcel=SK82871468</a>"
+            },
+            {
+              text: "1.0"
+            }
+          ],
+          [
+            {
+              text: "Demo start"
+            },
+            {
+              html: "<a href='demo-start'>Enter SBI and farm name</a>"
+            },
+            {
+              text: "1.0"
+            }
+          ]
+        ]
+      }) }}
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <!-- <div class="govuk-grid-column-one-third">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-m" id="subsection-title">
+        Information
+        <span class="govuk-caption-s">(all links open in a new tab)</span>
+      </h2>
+
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <a href="_design-history">
+              Design history
+            </a>
+          </li>
+          <li>
+            <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1708095369498/312f9f5bbd6500ac2e567b6390d0453ecb6bf290?wid=0-1726655395429" target="_blank">
+              Hypothesis
+            </a>
+          </li>
+          <li>
+            <a href="https://app.mural.co/t/coredefra2548/m/defraallcompany8330/1700644751131/8f9698d767ce508393323a6dacb8abb8d923b960?wid=0-1726065444141" target="_blank">
+              Planning scenario and flow for research
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div> -->
+</div>
+
+{% endblock %}
+
+{% block pageScriptsAfter %}
+<script>
+    $(document).ready(function(){
+
+        var _startURL = $("#start-url a"),
+            _startURLLabel = $("#start-url-label"),
+            _options = $("[data-option]")
+
+        _options.change(function(){
+            setValues()
+            optionsVisibility()
+        }).trigger("change");
+
+        _options.on('input', function() {
+            setValues()
+            optionsVisibility()
+        }).trigger("input");
+
+        //SET VISIBILITY OF OPTIONS BASED ON INTERNAL VS EXTERNAL
+        function optionsVisibility(){
+          var _intExtValue = $('input[name=view]:checked').val()
+
+          if (_intExtValue == "int") {
+            $('#releaseContainer').hide()
+            $('#startFromContainer').hide()
+          } else {
+            $('#releaseContainer').show()
+            $('#startFromContainer').show()
+          }
+
+        }
+
+        //SET VALUES
+        function setValues(){
+
+            //Base URL
+            var _urlBase = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + {{myData.version|dump|safe}} + "/";
+
+
+            //Queries
+            var _urlStartFrom = $('input[name=startFrom]:checked').val(),
+                _urlPage = "start-sfd-sign-in",
+                _urlNewApplication = "";
+            
+            //Start from
+            if ($('input[name=view]:checked').val() == "int") {
+              _urlPage = "internal-sign-in"
+            } else {
+              switch(_urlStartFrom) {
+                  case "st":
+                    _urlPage = "start-sfd-start"
+                    break;
+                  case "si":
+                    _urlPage = "start-sfd-sign-in"
+                    break;
+                  case "bl":
+                    _urlPage = "businesses-list"
+                    break;
+                  case "home":
+                    _urlPage = "business-home"
+                    break;
+                  default:
+                  _urlPage = "start-sfd-sign-in"
+              }
+            }
+
+            var _urlRelease = "&release=b1",
+                _urlView = "&view=" + $('input[name=view]:checked').val(),
+                // _urlPageQuery = "&start=" + _urlStartFrom;
+                _urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val();
+                // _urlshutter = "&shutter=" + _options.filter("#shutter").val(),
+                // _urlcookies = "&c=" + _options.filter("#cookies").val(),
+                // _urlinviteScenario = "&adb2cLink=" + _options.filter("#inviteScenario").val();
+
+
+            if ($('input[name=view]:checked').val() == "int") {
+              _urlRelease = ""
+            }
+
+            //Queries combined
+            var _urlPageQueries = _urlPage + "?r=t" + _urlRelease + _urlView + _urlincludeValidation;
+
+            //URL text
+            var _startURLText = _urlBase + _urlPageQueries,
+                _startURLHREF =  _urlPageQueries;
+            // update label
+            _startURLLabel
+                .text(_startURLText)
+                .show()
+            //update link
+            _startURL
+                .attr("href", _startURLHREF)
+                .parent().show()
+        }
+
+    });
+</script>
+{% endblock %}

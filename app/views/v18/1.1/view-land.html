@@ -38,7 +38,7 @@
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
 
-  <link rel="prefetch" href="/v18/view-land-parcel" as="document">
+  <link rel="prefetch" href="/v18/1.1/view-land-parcel" as="document">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js">
 
@@ -898,7 +898,7 @@
         const dominant = parcelCovers[ngc]
         const area = parseFloat(AREA_HA)
         return `<tr class="govuk-table__row" data-ngc="${ngc}">
-          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/view-land-parcel?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/1.1/view-land-parcel?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
           <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
         </tr>`

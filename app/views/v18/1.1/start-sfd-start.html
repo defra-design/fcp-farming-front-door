@@ -1,0 +1,178 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "Your business" %}
+{% set serviceName = "Farm and Land Service" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "SFD Home/Business Page",
+"id": "bp02",
+"url": "business-home?r=t&release=b1",
+"release": "Buffalo 1.0 MVP",
+"variants": [
+{
+"name": "SFD Home/Business Page (full and legal permissions - default)",
+"url": "business-home?r=t&release=b1&permissionsMVP=full"
+},
+{
+"name": "SFD Home/Business Page (amend permissions)",
+"url": "business-home?r=t&release=b1&permissionsMVP=amend"
+},
+{
+"name": "SFD Home/Business Page (view permissions)",
+"url": "business-home?r=t&release=b1&permissionsMVP=view"
+}
+
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "",
+"errormessages": [
+
+],
+"notes": [
+"Conditional link text: the visible link text for 'View and update your business details' should change according to the
+permission level. See variants. Note that full, legal and amend permissions have the same link text."
+
+]
+
+}
+%}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% include "_common/phase-banner-2.html" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    {% if data.release == "b1" %}
+    {% set _hideAccountLink = true %}
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      Start using the Farm and Land Service
+    </h1>
+
+    <p class="govuk-body">
+      Use the Farm and Land Service to:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        update your personal details
+      </li>
+      <li>
+        update your business details
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      You’ll need your Rural Payments service customer reference number (CRN) and password to sign in.
+    </p>
+
+    <a href="start-sfd-sign-in" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+      Start now
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19"
+        viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+    </a>
+
+    <h2 class="govuk-heading-l">
+      What the Farm and Land Service is
+    </h2>
+
+    <p class="govuk-body">
+      The Farm and Land Service is being developed to:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        replace the Rural Payments service, improving the design and technology that people use to manage their account
+        with the Rural Payments Agency
+      </li>
+      <li>
+        provide a single place for people to interact with the government about anything to do on their farm or land
+      </li>
+    </ul>
+
+    <p class="govuk-body">
+      At the moment, you can only use the Farm and Land Service to update some of your account information.
+    </p>
+
+    <p class="govuk-body">
+      Over time, the Farm and Land Service will provide farmers and land owners with access all the services they need
+      to manage their farm or land. It will be accessed through a single sign in, as a single account, and offer a
+      single menu of choices.
+    </p>
+
+    <h2 class="govuk-heading-l">
+      What you'll be able to use the service for in future
+    </h2>
+
+    <p class="govuk-body">
+      In the future people will be able to do a range of tasks including:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        applying for or managing agri-environment schemes such as the Sustainable Farming Incentive
+      </li>
+      <li>
+        finding new grants and funding opportunities that are relevant to their business
+      </li>
+      <li>
+        managing the business account including who can act for the business
+      </li>
+      <li>
+        managing land
+      </li>
+      <li>
+        tracking when a payment is due and what it is for
+      </li>
+      <li>
+        applying for permissions to carry out activities on their farm or land
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-l">
+      Contact the Rural Payments Agency for help
+    </h2>
+
+      <p class="govuk-body">Phone: 03000 200 301</p>
+
+      <p class="govuk-body">Monday to Friday, 8.30am to 5pm (except bank holidays)</p>
+
+      <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="http://www.gov.uk/call-charges" rel="noreferrer noopener" target="_blank">Find out about call charges (opens in new tab)</a>.</p>
+
+      <p class="govuk-body">Email: <a class="govuk-link govuk-link--no-visited-state" href="mailto:ruralpayments@defra.gov.uk">ruralpayments@defra.gov.uk</a></p>
+
+      <p class="govuk-body">We aim to respond to emails within 10 working days.</p>
+
+  </div>
+
+</div>
+
+{% endblock %}

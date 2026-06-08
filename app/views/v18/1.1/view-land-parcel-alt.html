@@ -1,0 +1,552 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block header %}
+  {{ govukHeader({
+    rebrand: true
+  }) }}
+{{ govukServiceNavigation({
+  serviceName: "Farm and Land Service",
+  serviceUrl: "#",
+  navigation: [
+    {
+      href: "/v18/1.1/view-land-alt",
+      text: "View land",
+      active: true
+    },
+    {
+      href: "#",
+      text: "Register land"
+    },
+    {
+      href: "#",
+      text: "Get maps of your land"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block pageTitle %}
+  View land - Land parcel – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
+
+  <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body.govuk-template__body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .govuk-service-navigation {
+    position: relative;
+    z-index: 100;
+  }
+
+  html.im-is-fullscreen .govuk-header,
+  html.im-is-fullscreen .govuk-service-navigation {
+    display: none;
+  }
+
+  .govuk-header__container,
+  .govuk-width-container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+
+  .app-map-fullscreen {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: relative;
+  }
+
+  .app-map-fullscreen__sidebar {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+    background: #ffffff;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 15px 15px;
+  }
+
+  .app-map-fullscreen__sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .app-map-fullscreen__map {
+    flex: 1;
+    height: 100%;
+  }
+
+  #map,
+  #map .im-o-app {
+    height: 100% !important;
+  }
+
+  /* DEFRA's "Map view" button — relocated into sidebar via JS */
+  .im-c-open-map-button {
+    margin: 0 0 15px;
+  }
+
+  @media (max-width: 640px) {
+    .app-map-fullscreen__sidebar {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .app-map-fullscreen__map {
+      flex: 0 0 0;
+      width: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+  }
+  </style>
+{% endblock %}
+
+{% block bodyStart %}
+  <script>document.body.classList.add('im-is-loading')</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block main %}
+<main class="app-map-fullscreen" id="main-content">
+
+  <div id="map" class="app-map-fullscreen__map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
+
+  <div class="app-map-fullscreen__sidebar" role="region" aria-label="Parcel details">
+    <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/1.1/view-land-alt">Back to land summary</a>
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details</h2>
+
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2>
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Last updated</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-last-updated"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Total area (ha)</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-total-area"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Land covers</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-land-covers"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Hedgerows</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-hedgerows"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="map-button-slot"></div>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-4">Land covers</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Land cover</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Area (ha)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body" id="land-covers-table-body"></tbody>
+    </table>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-4">Hedgerows</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Number</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Length (m)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body" id="hedgerows-table-body"></tbody>
+    </table>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">Land parcel map</h2>
+
+    <p>Print or save a copy of your land parcel map.</p>
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    {{ govukButton({
+      text: "Download PDF",
+      classes: "govuk-button--secondary",
+      href: "/public/pdf/example-land-parcel.pdf"
+    }) }}
+
+  </div>
+
+</main>
+{% endblock main %}
+
+{% block pageScripts %}
+  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js"></script>
+
+  <script>
+    // Land cover colour mapping
+    const landCoverColors = {
+      'Permanent Grassland': '#DEFADE',
+      'Temporary Grassland': '#85994B',
+      'Fallow Land': '#F3F2F1',
+      'Arable Land': '#FAF0B9',
+      'Permanent Crops': '#7B2D8E',
+      'Farm Building': '#D6CABD',
+      'Farmyards': '#C4B8A8',
+      'Hard Standings': '#F2E6D4',
+      'Residential dwelling, House': '#E8927C',
+      'Residential Gardens': '#90C87C',
+      'Woodland': '#E4EFDF',
+      'Scrub - Ungrazeable': '#F8CDBC',
+      'Drain/Ditch/Dyke': '#5CACEE',
+      'Rivers and streams type 2': '#4A7FB5',
+      'Pond': '#4A90D9',
+      'Road': '#787878',
+      'Metalled track': '#505A5F',
+      'Track - Natural Surface': '#B58840'
+    }
+
+    // Land covers rendered with a fillPattern to visually distinguish them.
+    const landCoverPatterns = {
+      'Farm Building': 'diagonal-cross-hatch',
+      'Farmyards': 'diagonal-cross-hatch',
+      'Hard Standings': 'diagonal-cross-hatch',
+      'Residential dwelling, House': 'diagonal-cross-hatch',
+      'Scrub - Ungrazeable': 'dot',
+      'Arable Land': 'horizontal-hatch',
+      'Permanent Grassland': 'vertical-hatch',
+      'Woodland': 'diagonal-cross-hatch'
+    }
+
+    // Get selected parcel from query string
+    const urlParams = new URLSearchParams(window.location.search)
+    const selectedNgc = urlParams.get('parcel')
+
+    if (selectedNgc) {
+      // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
+      // We can't filter SHEET_ID server-side (the WAF rejects URL-encoded quotes
+      // around the alphanumeric value), so we keep PARCEL_ID on the wire and
+      // disambiguate by SHEET_ID client-side once features arrive.
+      const sheetId = selectedNgc.substring(0, 6)
+      const parcelId = selectedNgc.substring(6)
+      const sbi = '106332870'
+
+      // If the parent page passed a ?from-date-* window, scope the covers fetch
+      // to "covers that came into existence on/after that date" via CREATED_ON.
+      // (The WFS only exposes currently-valid rows, so this is the only "change"
+      // signal we have — VALID_FROM is then displayed per row.)
+      function buildDateClause () {
+        const d = urlParams.get('from-date-day')
+        const m = urlParams.get('from-date-month')
+        const y = urlParams.get('from-date-year')
+        if (!d || !m || !y) return ''
+        const iso = `${y.padStart(4, '0')}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
+        const dt = new Date(iso)
+        if (isNaN(dt.getTime()) || dt > new Date()) return ''
+        const today = new Date().toISOString().slice(0, 10)
+        return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
+      }
+      const coversCql = `SBI=${sbi} AND PARCEL_ID=${parcelId}${buildDateClause()}`
+
+      // Format YYYYMMDDhhmmss → 'DD MMM YYYY' for display.
+      function fmtValidFrom (v) {
+        if (!v || v.length < 8) return ''
+        const dt = new Date(`${v.slice(0,4)}-${v.slice(4,6)}-${v.slice(6,8)}`)
+        if (isNaN(dt.getTime())) return ''
+        return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+      }
+
+      const parcelUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}+AND+PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
+      const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(coversCql)}&srsname=EPSG:4326&outputFormat=application/json`
+      const hedgeUrl = `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID=${parcelId}&srsname=EPSG:4326&outputFormat=application/json`
+
+      // Fetch data FIRST, then create the map with datasets in the initial config
+      Promise.all([
+        fetch(parcelUrl).then(r => r.json()),
+        fetch(coversUrl).then(r => r.json()),
+        fetch(hedgeUrl).then(r => r.json())
+      ]).then(([parcelData, landCoversData, hedgeData]) => {
+
+        // Disambiguate by SHEET_ID — the server-side filter only includes
+        // PARCEL_ID, which can collide across sheets within a single SBI.
+        const selectedFeature = (parcelData.features || []).find(f => f.properties.SHEET_ID === sheetId)
+        if (!selectedFeature) return
+
+        selectedFeature.properties.ngc = selectedFeature.properties.SHEET_ID + selectedFeature.properties.PARCEL_ID
+
+        // Set the heading
+        document.getElementById('parcel-heading').textContent =
+          'Parcel details: ' + selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID
+
+        // Populate total area
+        document.getElementById('parcel-total-area').textContent =
+          parseFloat(selectedFeature.properties.AREA_HA).toFixed(4)
+
+        // Populate land covers sidebar (filter to this sheet — see SHEET_ID note above)
+        const parcelCovers = (landCoversData.features || []).filter(f => f.properties.SHEET_ID === sheetId)
+        document.getElementById('parcel-land-covers').textContent = parcelCovers.length
+
+        const lcTableBody = document.getElementById('land-covers-table-body')
+        let lcTotalArea = 0
+        let lcMaxValidFrom = ''   // YYYYMMDDhhmmss strings sort lexicographically; drives "Last updated"
+        parcelCovers.forEach(f => {
+          const area = parseFloat(f.properties.AREA_HA)
+          lcTotalArea += area
+          const vf = f.properties.VALID_FROM || ''
+          if (vf > lcMaxValidFrom) lcMaxValidFrom = vf
+          const tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          tr.innerHTML = `
+            <td class="govuk-table__cell">${f.properties.DESCRIPTION}</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${area.toFixed(4)}</td>
+          `
+          lcTableBody.appendChild(tr)
+        })
+
+        if (parcelCovers.length === 0) {
+          const tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          tr.innerHTML = '<td class="govuk-table__cell" colspan="2">No changes to land covers in this period.</td>'
+          lcTableBody.appendChild(tr)
+        } else {
+          const lcTotalRow = document.createElement('tr')
+          lcTotalRow.className = 'govuk-table__row'
+          lcTotalRow.innerHTML = `
+            <td class="govuk-table__cell" style="font-weight:700">Total</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${lcTotalArea.toFixed(4)}</td>
+          `
+          lcTableBody.appendChild(lcTotalRow)
+        }
+
+        document.getElementById('parcel-last-updated').textContent =
+          lcMaxValidFrom ? fmtValidFrom(lcMaxValidFrom) : '–'
+
+        // Populate hedgerows sidebar (filter to this sheet — see SHEET_ID note above)
+        const parcelHedges = (hedgeData.features || []).filter(f => f.properties.REF_PARCEL_SHEET_ID === sheetId)
+        document.getElementById('parcel-hedgerows').textContent = parcelHedges.length
+
+        const hTableBody = document.getElementById('hedgerows-table-body')
+        let hTotalLength = 0
+        parcelHedges.forEach((f, i) => {
+          const length = parseFloat(f.properties.LENGTH)
+          hTotalLength += length
+          const tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          tr.innerHTML = `
+            <td class="govuk-table__cell">${i + 1}</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${Math.round(length)}</td>
+          `
+          hTableBody.appendChild(tr)
+        })
+        const hTotalRow = document.createElement('tr')
+        hTotalRow.className = 'govuk-table__row'
+        hTotalRow.innerHTML = `
+          <td class="govuk-table__cell" style="font-weight:700">Total</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${Math.round(hTotalLength)}</td>
+        `
+        hTableBody.appendChild(hTotalRow)
+
+        // Build datasets array from fetched data
+        const coversByType = {}
+        parcelCovers.forEach(f => {
+          const desc = f.properties.DESCRIPTION
+          if (!coversByType[desc]) coversByType[desc] = []
+          coversByType[desc].push(f)
+        })
+
+        const datasets = []
+
+        // Land cover datasets
+        Object.entries(coversByType).forEach(([type, features]) => {
+          const color = landCoverColors[type] || '#CCCCCC'
+          const style = {
+            fill: color,
+            stroke: color,
+            strokeWidth: 1
+          }
+          if (landCoverPatterns[type]) {
+            style.fillPattern = landCoverPatterns[type]
+            style.fillPatternBackgroundColor = color
+            style.fillPatternForegroundColor = '#0b0c0c'
+          }
+          datasets.push({
+            id: 'lc-' + type.replace(/\s+/g, '-').toLowerCase(),
+            label: type,
+            geojson: { type: 'FeatureCollection', features },
+            style,
+            showInKey: true,
+            showInLayers: false
+          })
+        })
+
+        // Parcel outline dataset
+        datasets.push({
+          id: 'parcel-outline',
+          label: selectedFeature.properties.SHEET_ID + ' ' + selectedFeature.properties.PARCEL_ID,
+          geojson: { type: 'FeatureCollection', features: [selectedFeature] },
+          style: {
+            fill: 'transparent',
+            stroke: '#1d70b8',
+            strokeWidth: 3
+          },
+          showInKey: false,
+          showInLayers: false
+        })
+
+        // Hedgerow dataset (last = on top, so boundary hedges aren't hidden by the parcel outline)
+        if (parcelHedges.length > 0) {
+          datasets.push({
+            id: 'hedgerows',
+            label: 'Hedgerow',
+            geojson: { type: 'FeatureCollection', features: parcelHedges },
+            style: {
+              stroke: '#00703c',
+              strokeWidth: 6,
+              keySymbolShape: 'line'
+            },
+            showInKey: true,
+            showInLayers: false
+          })
+        }
+
+        // Create the map with all datasets in the initial config
+        const datasetsPlugin = defra.datasetsMaplibrePlugin({ datasets })
+
+        const interactiveMap = new defra.InteractiveMap('map', {
+          mapProvider: defra.maplibreProvider(),
+          behaviour: 'hybrid',
+          mapLabel: 'Land parcel',
+          minZoom: 6,
+          maxZoom: 18,
+          enableZoomControls: true,
+          hasExitButton: true,
+          mapStyle: {
+            url: 'https://tiles.openfreemap.org/styles/liberty',
+            attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
+            backgroundColor: '#f5f5f0'
+          },
+          plugins: [
+            defra.scaleBarPlugin({
+              units: 'metric'
+            }),
+            defra.mapStylesPlugin({
+              mapStyles: [
+            {
+              id: 'liberty',
+              label: 'Default',
+              url: 'https://tiles.openfreemap.org/styles/liberty',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#f5f5f0'
+            },
+            {
+              id: 'satellite',
+              label: 'Satellite',
+              url: '/satellite-style.json',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              attribution: '© Esri, Maxar, Earthstar Geographics',
+              backgroundColor: '#1a1a1a',
+              mapColorScheme: 'dark',
+              appColorScheme: 'dark'
+            },
+            {
+              id: 'positron',
+              label: 'Light',
+              url: 'https://tiles.openfreemap.org/styles/positron',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#ffffff'
+            },
+            // {
+            //   id: 'bright',
+            //   label: 'Bright',
+            //   url: 'https://tiles.openfreemap.org/styles/bright',
+            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+            //   appColorScheme: 'light',
+            //   mapColorScheme: 'light',
+            //   backgroundColor: '#f5f5f0'
+            // },
+
+          ]
+            }),
+            datasetsPlugin
+          ]
+        })
+
+        // Fit once size & style have settled so zoom is computed against the
+        // final viewport, not an intermediate layout state.
+        interactiveMap.on('map:ready', () => {
+          interactiveMap.fitToBounds(selectedFeature)
+        })
+
+        // Move the "Map view" button into the sidebar on mobile
+        function moveMapButton() {
+          const btn = document.querySelector('.im-c-open-map-button')
+          const slot = document.getElementById('map-button-slot')
+          if (btn && slot && !slot.contains(btn)) {
+            slot.appendChild(btn)
+            return true
+          }
+          return false
+        }
+
+        if (!moveMapButton()) {
+          const observer = new MutationObserver(() => {
+            if (moveMapButton()) observer.disconnect()
+          })
+          observer.observe(document.getElementById('main-content'), { childList: true, subtree: true })
+        }
+
+        window.addEventListener('resize', () => {
+          interactiveMap.api?.map?.resize()
+        })
+
+      }).catch(err => {
+        console.error('Failed to load parcel data:', err)
+        document.getElementById('parcel-heading').textContent = 'Could not load parcel'
+      })
+    }
+  </script>
+{% endblock %}

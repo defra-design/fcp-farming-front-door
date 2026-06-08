@@ -1,9 +1,9 @@
 
-const csAgreements = require('../../data/countryside-stewardship-agreements.json');
+const csAgreements = require('../../../data/countryside-stewardship-agreements.json');
 
 module.exports = function (router, _myData) {
 
-    var version = "v18";
+    var version = "v18/1.1";
 
     //coverts a number to a month
     function toMonth(_monthNumber) {
@@ -1683,6 +1683,19 @@ module.exports = function (router, _myData) {
     //Countryside Stewardship agreements data (used client-side by view-land-parcel-cs)
     router.get('/' + version + '/data/cs-agreements', function (req, res) {
         res.json(csAgreements);
+    });
+
+    // Fallback: render any view by name on GET or POST. Restores the prototype kit's
+    // automatic page routing (incl. POSTing a form to a page), which doesn't fire for
+    // URLs containing a dot (e.g. the "1.0"/"1.1" dir). Explicit routes above still win.
+    router.all('/' + version + '/:view', function (req, res, next) {
+        res.render(version + '/' + req.params.view, { myData: req.session.myData }, function (err, html) {
+            if (err) {
+                next();
+            } else {
+                res.send(html);
+            }
+        });
     });
 
 }
