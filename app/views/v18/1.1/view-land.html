@@ -45,16 +45,29 @@
   /* Fullscreen 2-column layout: GOV.UK header + service nav stack at the top,
      <main> fills the remaining viewport, sidebar + map sit side-by-side. */
 
-  html, body {
+  /* html stays pinned to the viewport (no scroll); the body is the scroll
+     container. Keeping height:100% gives the map area a definite-height ancestor
+     so #map's height:100% resolves. */
+  html {
     height: 100%;
-    margin: 0;
     overflow: hidden;
-    overscroll-behavior: none;
   }
 
+  html, body {
+    margin: 0;
+  }
+
+  /* Body is exactly one viewport tall and scrolls its own overflow. On tall
+     screens nothing overflows (full-screen, no scrollbar); on short screens the
+     map area's 600px floor pushes past the viewport, so the body scrolls and the
+     header chrome scrolls away with it. */
   body.govuk-template__body {
+    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
   }
 
   /* Keep the service-nav dropdown above the map */
@@ -98,7 +111,7 @@
   .app-map-fullscreen {
     flex: 1;
     display: flex;
-    min-height: 0;
+    min-height: 600px;
     overflow: hidden;
     overscroll-behavior: none;
     position: relative;
@@ -208,6 +221,11 @@
       overflow: hidden;
     }
 
+    .app-map-fullscreen {
+      flex: 1 1 0;
+      min-height: 0;
+    }
+
   }
 
   #parcel-table-body tr {
@@ -279,7 +297,7 @@
     }) }}
     <p class="govuk-body govuk-!-margin-bottom-2" id="parcel-filter-status" aria-live="polite"></p>
     <table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet" hidden aria-live="polite">
-      <caption class="govuk-table__caption govuk-table__caption--s">Selected parcel</caption>
+      <caption class="govuk-table__caption govuk-table__caption--s">Selected</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap">ID</th>
