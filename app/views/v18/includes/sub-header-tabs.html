@@ -1,0 +1,19 @@
+{% set _selectedBusiness = myData.selectedBusiness %}
+
+<div class="govuk-grid-row sub-header-container" >
+
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-top-0">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1" >{{ myData.businessName | default('Agile Farm Ltd') }}</h3>
+      <p class="govuk-body-s govuk-!-margin-bottom-0">Single business identifier (SBI): {{ myData.sbi | default('111089693') }}</p>
+      <p class="govuk-body-s govuk-!-margin-bottom-0">Number of parcels: <span id="summary-parcel-count"></span></p>
+      <p class="govuk-body-s govuk-!-margin-bottom-0">Total area (ha): <span id="summary-total-area"></span></p>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <div class="sub-header-user-name">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1" >{{ myData.user.name | default('Alfred Waldron') }}</h3>
+      <p class="govuk-body-s govuk-!-margin-bottom-0"><a href="#" class="govuk-link govuk-link--no-visited-state">Sign out</a></p>
+    </div>
+  </div>
+
+</div>

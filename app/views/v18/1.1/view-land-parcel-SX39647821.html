@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-  View land - Land parcel – GOV.UK Prototype Kit
+  View land - Land parcel SX3964 7821 – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block head %}
@@ -222,24 +222,21 @@
 <main class="app-map-fullscreen" id="main-content">
 
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Parcel details">
-    <a class="govuk-back-link govuk-!-margin-top-4" href="/v18/1.1/view-land">Back to land summary</a>
+    <a class="govuk-back-link govuk-!-margin-top-4" href="javascript:window.history.back()">Back</a>
     <!-- <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-2">{{ myData.businessName | default('Agile Farm Ltd') }}</h1> -->
 
     <h1 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details:</h1>
 
-    <!-- <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2> -->
-    <table class="govuk-table govuk-!-margin-bottom-4">
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Last updated</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-last-updated"></td>
-        </tr>
-        <tr class="govuk-table__row" id="parcel-previous-version-row" hidden>
-          <td class="govuk-table__cell"><a class="govuk-link" href="view-land-parcel-SX39647821" id="parcel-previous-version-link">Show previous version</a></td>
-          <td class="govuk-table__cell"></td>
-        </tr>
-      </tbody>
-    </table>
+    {# MOJ 'inset text (highlighted)' — govukInsetText + the guidance-panel class (blue left
+       border + light blue fill, defined in application.scss). #}
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+    {% call govukInsetText({ classes: "govuk-!-margin-0 guidance-panel" }) %}
+      <p class="govuk-!-margin-bottom-0">You are viewing the land parcel for a date in the past (12 October 2023 to 2 February 2026).</p>
+    {% endcall %}
+
+    <p class="govuk-body govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+      <a class="govuk-link" href="/v18/1.1/view-land-parcel?parcel=SX39647821">Return to current version</a>
+    </p>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
     <table class="govuk-table govuk-!-margin-bottom-4">
@@ -366,12 +363,8 @@
         'Track - Natural Surface': '#B58840'
       },
       patternLine: '#0b0c0c',     // fillPatternForegroundColor on patterned land covers
-      parcelBorder: '#1d70b8',    // selected outline + every-other-parcel outline stroke
-      hedgerow: '#00703c',        // hedgerow line
-      hoverFill: '#1d70b8',       // tint on the parcel under the pointer
-      hoverOpacity: 0.15,
-      loadingFill: '#1d70b8',     // tint on a just-clicked parcel while it loads
-      loadingOpacity: 0.4
+      parcelBorder: '#1d70b8',    // the parcel outline stroke
+      hedgerow: '#00703c'         // hedgerow line
     }
 
     // Named starter combinations. Grow this by pasting a "Copy palette" export.
@@ -379,9 +372,11 @@
       Default: DEFAULT_PALETTE
     }
 
-    // Get selected parcel from query string
+    // This page is fixed to a single parcel — SX3964 7821 — so the ngc is hardcoded rather
+    // than read from ?parcel=. ngc is the 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
+    // (urlParams is still read for the ?colours / ?palette dev panel below.)
     const urlParams = new URLSearchParams(window.location.search)
-    const selectedNgc = urlParams.get('parcel')
+    const selectedNgc = 'SX39647821'
 
     // Working palette = defaults, with any shared (?palette=) or saved (localStorage)
     // overrides merged in. ?palette= wins so share links are reproducible.
@@ -415,15 +410,12 @@
     if (selectedNgc) {
       const sbi = '{{ myData.sbi | default("111089693") }}'
 
-      // --- Per-parcel state (the displayed parcel changes in place on map click) ---
-      let allParcels = []        // every parcel in the business — context outlines + click targets
+      // --- Single-parcel state ---
       let datasetsPlugin = null
       let interact = null
       let interactiveMap = null
       let hedgeMap = null        // raw MapLibre map (from the map:ready payload; no public accessor)
-      let currentNgc = selectedNgc
-      let currentData = null     // last-loaded parcel data, re-applied after a base-map style change
-      let hoverNgc = null        // parcel currently tinted under the pointer (hover affordance)
+      let currentData = null     // loaded parcel data, re-applied after a base-map style change
 
       // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
 
@@ -442,18 +434,15 @@
         return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
       }
 
-      // Format YYYYMMDDhhmmss → 'DD Month YYYY' for display.
-      function fmtValidFrom (v) {
-        if (!v || v.length < 8) return ''
-        const dt = new Date(`${v.slice(0,4)}-${v.slice(4,6)}-${v.slice(6,8)}`)
-        if (isNaN(dt.getTime())) return ''
-        return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-      }
-
       // --- WFS endpoints -------------------------------------------------------
-      // All parcels for the business — drawn as context outlines and used as click
-      // targets (no date clause, so the whole holding is always navigable).
-      const allParcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=SBI=${sbi}&srsname=EPSG:4326&outputFormat=application/json`
+      // Just this one parcel's geometry — filtered to the SBI + PARCEL_ID (the WFS requires an
+      // SBI). PARCEL_ID is quoted so it's compared as a string; SHEET_ID can't be filtered
+      // server-side (the WAF rejects quotes around the alphanumeric value), so we disambiguate
+      // by SHEET_ID client-side. No all-parcels fetch — surrounding parcels are never loaded.
+      function parcelUrlFor (parcelId) {
+        const cql = `SBI=${sbi} AND PARCEL_ID='${parcelId}'`
+        return `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+      }
 
       // PARCEL_ID is quoted so the WFS compares it as a string — unquoted, a leading-zero
       // id like 0469 coerces to 469 and matches nothing. SHEET_ID can't be filtered
@@ -496,34 +485,23 @@
         })
       }
 
-      // Assemble the sidebar + map payload from already-fetched covers/hedges responses,
-      // resolving the parcel geometry from the loaded all-parcels set. Shared by the initial
-      // (parallel) load and the in-page switchParcel flow so their filtering stays in sync.
-      function buildParcelData (ngc, landCoversData, hedgeData) {
+      // Assemble the sidebar + map payload from the parcel/covers/hedges responses. The server
+      // filters all three to PARCEL_ID (which can collide across sheets within an SBI), so each
+      // is narrowed to this parcel's SHEET_ID client-side.
+      function buildParcelData (ngc, parcelsData, landCoversData, hedgeData) {
         const sheetId = ngc.substring(0, 6)
+        const selectedFeature = (parcelsData.features || []).find(f => f.properties.SHEET_ID === sheetId)
+        if (selectedFeature) selectedFeature.properties.ngc = ngc
         return {
           ngc,
           sheetId,
-          selectedFeature: allParcels.find(f => f.properties.ngc === ngc),
-          // Filter to this sheet — the server-side filter only includes PARCEL_ID,
-          // which can collide across sheets within a single SBI.
+          selectedFeature,
           parcelCovers: (landCoversData.features || []).filter(f => f.properties.SHEET_ID === sheetId),
           parcelHedges: (hedgeData.features || []).filter(f => f.properties.REF_PARCEL_SHEET_ID === sheetId)
         }
       }
 
-      // Fetch a parcel's land covers + hedgerows (in parallel) and resolve its geometry from the
-      // already-loaded all-parcels set. Used by switchParcel; the initial load fetches the three
-      // WFS calls together (see below) so they don't wait on each other.
-      function loadParcelData (ngc) {
-        const parcelId = ngc.substring(6)
-        return Promise.all([
-          cachedFetchJson(coversUrlFor(parcelId)),
-          cachedFetchJson(hedgeUrlFor(parcelId))
-        ]).then(([landCoversData, hedgeData]) => buildParcelData(ngc, landCoversData, hedgeData))
-      }
-
-      // --- Sidebar (re-run on every parcel change) -----------------------------
+      // --- Sidebar -------------------------------------------------------------
       function updateSidebar (d) {
         const { selectedFeature, parcelCovers, parcelHedges } = d
 
@@ -537,12 +515,9 @@
         const lcTableBody = document.getElementById('land-covers-table-body')
         lcTableBody.innerHTML = ''
         let lcTotalArea = 0
-        let lcMaxValidFrom = ''   // YYYYMMDDhhmmss strings sort lexicographically; drives "Last updated"
         parcelCovers.forEach(f => {
           const area = parseFloat(f.properties.AREA_HA)
           lcTotalArea += area
-          const vf = f.properties.VALID_FROM || ''
-          if (vf > lcMaxValidFrom) lcMaxValidFrom = vf
           const tr = document.createElement('tr')
           tr.className = 'govuk-table__row'
           tr.innerHTML = `
@@ -565,13 +540,6 @@
           `
           lcTableBody.appendChild(lcTotalRow)
         }
-        document.getElementById('parcel-last-updated').textContent =
-          lcMaxValidFrom ? fmtValidFrom(lcMaxValidFrom) : '–'
-
-        // Only parcel SX3964 7821 has a previous version to show (for now).
-        const isPreviousVersionParcel =
-          selectedFeature.properties.SHEET_ID === 'SX3964' && selectedFeature.properties.PARCEL_ID === '7821'
-        document.getElementById('parcel-previous-version-row').hidden = !isPreviousVersionParcel
 
         // Hedgerows
         document.getElementById('parcel-hedgerows').textContent = parcelHedges.length
@@ -652,11 +620,11 @@
       const lcSublayerId = (type) => 'lc-' + type.replace(/\s+/g, '-').toLowerCase()
 
       // Most colours are applied with hedgeMap.setPaintProperty: synchronous, and it does NOT
-      // remove/re-add layers — so it never disturbs the interactive layers (parcels-hit,
-      // hedgerows) the way the plugin's async setStyle does. (setStyle churning the hedgerow
-      // layer was intermittently breaking parcel selection.) setStyle is used ONLY for the
-      // pattern cases, which must regenerate the rasterised pattern image and only ever touch
-      // non-interactive land-cover sublayers.
+      // remove/re-add layers — so it never disturbs the interactive hedgerows layer the way the
+      // plugin's async setStyle does. (setStyle churning the hedgerow layer was intermittently
+      // breaking hedgerow selection.) setStyle is used ONLY for the pattern cases, which must
+      // regenerate the rasterised pattern image and only ever touch non-interactive land-cover
+      // sublayers.
       const paintLine = (id, c) => { if (hedgeMap && hedgeMap.getLayer(id)) hedgeMap.setPaintProperty(id, 'line-color', c) }
       const paintFill = (id, c) => { if (hedgeMap && hedgeMap.getLayer(id)) hedgeMap.setPaintProperty(id, 'fill-color', c) }
       const paintFillOpacity = (id, o) => { if (hedgeMap && hedgeMap.getLayer(id)) hedgeMap.setPaintProperty(id, 'fill-opacity', o) }
@@ -665,12 +633,12 @@
       // stacking once the async re-add has landed (next idle). moveLayer only reorders.
       function restoreZOrder () {
         if (!hedgeMap) return
-        const order = ['parcels-outline-all', 'parcels-hit']
+        const order = []
         Object.keys(palette.landCover).forEach(type => {
           const id = 'land-cover-' + lcSublayerId(type)
           order.push(id, id + '-stroke')
         })
-        order.push('parcel-hover', 'parcel-outline', 'parcel-loading', 'hedgerows')
+        order.push('parcel-outline', 'hedgerows')
         order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
       }
       // After a setStyle (which re-adds layers), once the map settles: re-assert z-order and
@@ -711,7 +679,6 @@
       function applyColour (key) {
         switch (key) {
           case 'parcelBorder':
-            paintLine('parcels-outline-all', palette.parcelBorder)
             paintLine('parcel-outline', palette.parcelBorder)
             break
           case 'hedgerow':
@@ -726,17 +693,13 @@
             // pattern foreground, so there's a single debounced setStyle per sublayer (no race).
             Object.keys(landCoverPatterns).forEach(applyLandCover)
             break
-          case 'hoverFill': paintFill('parcel-hover', palette.hoverFill); break
-          case 'hoverOpacity': paintFillOpacity('parcel-hover', palette.hoverOpacity); break
-          case 'loadingFill': paintFill('parcel-loading', palette.loadingFill); break
-          case 'loadingOpacity': paintFillOpacity('parcel-loading', palette.loadingOpacity); break
         }
       }
 
       // Re-apply the entire palette (used after a preset/reset/share-link load).
       function applyAllColours () {
         Object.keys(palette.landCover).forEach(applyLandCover)
-        ;['parcelBorder', 'hedgerow', 'patternLine', 'hoverFill', 'hoverOpacity', 'loadingFill', 'loadingOpacity'].forEach(applyColour)
+        ;['parcelBorder', 'hedgerow', 'patternLine'].forEach(applyColour)
       }
 
       // --- Persistence / sharing ----------------------------------------------
@@ -747,7 +710,7 @@
       // re-apply to the live map and persist. Used by presets, reset and share-link loads.
       function setPalette (next) {
         Object.assign(palette.landCover, next.landCover)
-        ;['patternLine', 'parcelBorder', 'hedgerow', 'hoverFill', 'hoverOpacity', 'loadingFill', 'loadingOpacity']
+        ;['patternLine', 'parcelBorder', 'hedgerow']
           .forEach(k => { palette[k] = next[k] })
         applyAllColours()
         persistPalette()
@@ -810,10 +773,6 @@
         colourRow('Parcel border', () => palette.parcelBorder, (v) => { palette.parcelBorder = v; applyColour('parcelBorder') })
         colourRow('Hedgerow', () => palette.hedgerow, (v) => { palette.hedgerow = v; applyColour('hedgerow') })
         colourRow('Pattern line', () => palette.patternLine, (v) => { palette.patternLine = v; applyColour('patternLine') })
-        colourRow('Hover tint', () => palette.hoverFill, (v) => { palette.hoverFill = v; applyColour('hoverFill') })
-        opacityRow('Hover opacity', () => palette.hoverOpacity, (v) => { palette.hoverOpacity = v; applyColour('hoverOpacity') })
-        colourRow('Loading tint', () => palette.loadingFill, (v) => { palette.loadingFill = v; applyColour('loadingFill') })
-        opacityRow('Loading opacity', () => palette.loadingOpacity, (v) => { palette.loadingOpacity = v; applyColour('loadingOpacity') })
 
         heading('Land cover')
         Object.keys(palette.landCover).forEach(type => {
@@ -909,109 +868,22 @@
         }
       }
 
-      // Outline of every other parcel in the business — same blue as the selected
-      // parcel (the selected one also gets the bold parcel-outline on top).
-      function buildParcelsOutlineAllDataset () {
-        return {
-          id: 'parcels-outline-all',
-          label: 'Other parcels',
-          geojson: { type: 'FeatureCollection', features: allParcels },
-          style: { fill: 'transparent', stroke: palette.parcelBorder, strokeWidth: 1 },
-          showInKey: false,
-          showInMenu: true
-        }
-      }
-
-      // Near-invisible fill over every parcel so the whole interior is a click target.
-      // A true fill-opacity of 0 is unavailable here (the plugin's `opacity || 1` turns 0
-      // into 1), so 0.01 is used — imperceptible but still returned by feature queries.
-      function buildParcelsHitDataset () {
-        return {
-          id: 'parcels-hit',
-          geojson: { type: 'FeatureCollection', features: allParcels },
-          style: { fill: '#9b9b9b', opacity: 0.01 },
-          showInKey: false,
-          showInMenu: false
-        }
-      }
-
-      // A subtle blue fill shown on a just-clicked parcel while its data loads, then cleared.
-      // Empty to start; its data is swapped with setData (see showParcelLoading/clearParcelLoading).
-      function buildParcelLoadingDataset () {
-        return {
-          id: 'parcel-loading',
-          geojson: { type: 'FeatureCollection', features: [] },
-          // stroke:'transparent' overrides the library's default red outline — the shared
-          // parcels-outline-all already provides the parcel border.
-          style: { fill: palette.loadingFill, stroke: 'transparent', opacity: palette.loadingOpacity },
-          showInKey: false,
-          showInMenu: false
-        }
-      }
-
-      function showParcelLoading (ngc) {
-        const feature = allParcels.find(f => f.properties.ngc === ngc)
-        if (feature) {
-          datasetsPlugin.setData({ type: 'FeatureCollection', features: [feature] }, { datasetId: 'parcel-loading' })
-        }
-      }
-
-      function clearParcelLoading () {
-        datasetsPlugin.setData({ type: 'FeatureCollection', features: [] }, { datasetId: 'parcel-loading' })
-      }
-
-      // A fainter blue fill shown on whichever OTHER parcel the pointer is over, as a hover
-      // affordance (lighter than the click/loading tint). Empty to start; swapped with setData.
-      function buildParcelHoverDataset () {
-        return {
-          id: 'parcel-hover',
-          geojson: { type: 'FeatureCollection', features: [] },
-          // stroke:'transparent' overrides the library's default red outline (see parcel-loading).
-          style: { fill: palette.hoverFill, stroke: 'transparent', opacity: palette.hoverOpacity },
-          showInKey: false,
-          showInMenu: false
-        }
-      }
-
-      function showParcelHover (ngc) {
-        const feature = allParcels.find(f => f.properties.ngc === ngc)
-        if (feature) {
-          datasetsPlugin.setData({ type: 'FeatureCollection', features: [feature] }, { datasetId: 'parcel-hover' })
-        }
-      }
-
-      function clearParcelHover () {
-        hoverNgc = null
-        datasetsPlugin.setData({ type: 'FeatureCollection', features: [] }, { datasetId: 'parcel-hover' })
-      }
-
       // --- Interaction ---------------------------------------------------------
-      // Make both the parcel hit-fill (click to switch parcel) and the hedgerow lines
-      // (click to highlight the row) interactive. enable() replaces the layer config, so
-      // this is re-run whenever the hedgerow layer is recreated or the style changes.
+      // Only the hedgerow lines are interactive (click to highlight the row). There are no
+      // other parcels on this page, so there's no parcel hit-fill / click-to-switch. enable()
+      // replaces the layer config, so this is re-run when the hedgerow layer is recreated
+      // (e.g. after a base-map style change).
       function enableInteract () {
-        if (!hedgeMap || !interact || !hedgeMap.getLayer('parcels-hit')) return false
-        // Only hedgerows go through the interact plugin. Parcel selection is handled by a native
-        // MapLibre click on 'parcels-hit' (see map:ready) instead, because the plugin re-tests a
-        // polygon click with point-in-polygon against the TILE-CLIPPED geometry from
-        // queryRenderedFeatures (de-duped to one fragment per feature). When a parcel straddles a
-        // vector-tile seam — increasingly likely as you zoom in (e.g. ~1km) — the retained
-        // fragment may not contain the click, so the test fails and the parcel can't be selected.
-        // MapLibre's own layer hit-test has no such limitation.
+        if (!hedgeMap || !interact) return false
         const layers = []
         if (hedgeMap.getLayer('hedgerows')) layers.push({ layerId: 'hedgerows', idProperty: 'hedgeId' })
         interact.enable({ layers })
         return true
       }
 
-      // Show the clicked parcel's data on the map. Land cover, the selected outline and
-      // hedgerows are all PERMANENT datasets: their data is swapped in place with setData,
-      // and Key/visibility toggled with setDatasetVisibility. Both act through the adapter's
-      // own datasetId→source map, NOT the plugin's React state, so they apply on every switch
-      // — unlike remove+add, whose removeDataset is a no-op whenever its commit-lagged state
-      // lacks the entry (which left a previous parcel's hedgerows stuck on the map). Because
-      // nothing is removed or re-added, the construction-time layer order — and the Key order
-      // (Land cover above Hedgerow) — is preserved.
+      // Re-assert the parcel's data on its permanent datasets. The data never changes on this
+      // single-parcel page, but a base-map style change wipes and rebuilds the datasets plugin's
+      // layers from their construction-time geojson, so this is used to re-apply after that.
       function swapParcelDatasets (d) {
         datasetsPlugin.setData({ type: 'FeatureCollection', features: d.parcelCovers }, { datasetId: 'land-cover' })
         syncLandCoverKey(d.parcelCovers)
@@ -1020,42 +892,17 @@
         datasetsPlugin.setDatasetVisibility(d.parcelHedges.length > 0, { datasetId: 'hedgerows' })
       }
 
-      // Load + show a different parcel in place (no page reload). The clicked parcel is
-      // filled with a subtle tint as immediate feedback while its data loads, then cleared.
-      function switchParcel (ngc) {
-        if (ngc === currentNgc) return
-        clearParcelHover()
-        hoverNgc = ngc          // suppress the hover tint on the parcel now being loaded
-        showParcelLoading(ngc)
-        loadParcelData(ngc).then(d => {
-          if (!d.selectedFeature) { clearParcelLoading(); return }
-          currentNgc = ngc
-          currentData = d
-          updateSidebar(d)
-          swapParcelDatasets(d)
-          const b = computeBounds(d.selectedFeature)
-          hedgeMap.fitBounds([[b[0], b[1]], [b[2], b[3]]], { padding: 40, duration: 600 })
-          enableInteract()
-          clearParcelLoading()
-          const p = new URLSearchParams(window.location.search)
-          p.set('parcel', ngc)
-          history.replaceState(null, '', '?' + p.toString())
-        }).catch(err => { clearParcelLoading(); console.error('Failed to switch parcel:', err) })
-      }
-
       // --- Initial load --------------------------------------------------------
-      // The selected parcel's covers + hedges only need the SBI + parcel id (both known from the
-      // URL), so they don't have to wait for the all-parcels response — fire all three together.
+      // Fetch just this parcel's geometry, land covers and hedgerows (all scoped to the SBI +
+      // PARCEL_ID) together — no all-parcels fetch, so surrounding parcels are never loaded.
       const selectedParcelId = selectedNgc.substring(6)
       Promise.all([
-        cachedFetchJson(allParcelsUrl),
+        cachedFetchJson(parcelUrlFor(selectedParcelId)),
         cachedFetchJson(coversUrlFor(selectedParcelId)),
         cachedFetchJson(hedgeUrlFor(selectedParcelId))
-      ]).then(([apData, landCoversData, hedgeData]) => {
-        allParcels = apData.features || []
-        allParcels.forEach(f => { f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID })
-        return buildParcelData(selectedNgc, landCoversData, hedgeData)
-      }).then(d => {
+      ]).then(([parcelsData, landCoversData, hedgeData]) =>
+        buildParcelData(selectedNgc, parcelsData, landCoversData, hedgeData)
+      ).then(d => {
         if (!d.selectedFeature) {
           document.getElementById('parcel-heading').textContent = 'Could not load parcel'
           hideMapLoading()  // no parcel to frame — don't leave the overlay stuck
@@ -1065,18 +912,12 @@
         currentData = d
         updateSidebar(d)
 
-        // Datasets, bottom → top: context outlines, click hit-fill, then the selected
-        // parcel's land cover / outline / loading-tint / hedgerows. All of the per-parcel
-        // datasets are permanent and swapped in place (see swapParcelDatasets), so this
-        // order — and the Key order (Land cover above Hedgerow) — is fixed for the life of
-        // the page.
+        // Datasets, bottom → top: the single parcel's land cover, its bold outline, then its
+        // hedgerows. All are permanent; their construction-time geojson is re-applied after a
+        // base-map style change (see swapParcelDatasets). No other-parcel context layers.
         const datasets = [
-          buildParcelsOutlineAllDataset(),
-          buildParcelsHitDataset(),
           buildLandCoverDataset(d.parcelCovers),
-          buildParcelHoverDataset(),
           buildParcelOutlineDataset(d.selectedFeature),
-          buildParcelLoadingDataset(),
           buildHedgerowDataset(d.parcelHedges)
         ]
 
@@ -1157,32 +998,8 @@
           // view's tiles have rendered. Reveal the map then, fading out the loading overlay.
           hedgeMap.once('idle', hideMapLoading)
 
-          // Hover affordance: tint whichever OTHER parcel the pointer is over. Keyed off the
-          // 'parcels-hit' fill (the whole-parcel click target). Tracks hoverNgc so we only
-          // setData when the hovered parcel actually changes, not on every mouse move.
-          hedgeMap.on('mousemove', 'parcels-hit', (ev) => {
-            const ngc = ev.features && ev.features[0] && ev.features[0].properties.ngc
-            if (ngc && ngc !== currentNgc) {
-              if (ngc !== hoverNgc) {
-                hoverNgc = ngc
-                showParcelHover(ngc)
-              }
-            } else if (hoverNgc) {
-              clearParcelHover()
-            }
-          })
-          hedgeMap.on('mouseleave', 'parcels-hit', () => {
-            if (hoverNgc) clearParcelHover()
-          })
-
-          // Parcel selection via MapLibre's native layer hit-test (reliable across tile seams —
-          // see enableInteract for why we bypass the interact plugin here). A click that's also on
-          // a hedgerow line is left to the interact plugin so hedgerow-row highlighting still works.
-          hedgeMap.on('click', 'parcels-hit', (ev) => {
-            if (hedgeMap.queryRenderedFeatures(ev.point, { layers: ['hedgerows'] }).length) return
-            const ngc = ev.features && ev.features[0] && ev.features[0].properties.ngc
-            if (ngc && ngc !== currentNgc) switchParcel(ngc)
-          })
+          // No parcel hover/click handlers — this page shows a single parcel with no other
+          // parcels to hover or switch to. Only hedgerow selection (via the interact plugin) runs.
         })
         interactiveMap.on('datasets:ready', () => {
           enableInteract()
@@ -1210,8 +1027,7 @@
           hedgeMap.on('idle', reapply)
         })
 
-        // Map -> sidebar. A click on a hedgerow line highlights its row. (Parcel switching is
-        // handled by the native 'parcels-hit' click in map:ready, not the interact plugin.)
+        // Map -> sidebar. A click on a hedgerow line highlights its row.
         interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
           const selectedIds = new Set(
             selectedFeatures.filter(f => f.layerId === 'hedgerows').map(f => f.featureId)

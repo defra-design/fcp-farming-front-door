@@ -1,6 +1,7 @@
 {% extends "layouts/main-rebrand.html" %}
 
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% block header %}
   {{ govukHeader({
@@ -8,23 +9,21 @@
   }) }}
 {{ govukServiceNavigation({
   serviceName: "Farm and Land Service",
-  serviceUrl: "#",
-  navigation: [
-    {
-      href: "#",
-      text: "View land",
-      active: true
-    },
-    {
-      href: "#",
-      text: "Register land"
-    },
-    {
-      href: "#",
-      text: "Get maps of your land"
-    }
-  ]
+  serviceUrl: "#"
+
 }) }}
+
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Prototype"
+    },
+    html: 'This is a prototype.'
+  }) }}
+
+  <div class="app-sub-header govuk-!-padding-top-0">
+    {% include "v18/includes/sub-header.html" %}
+  </div>
+
 {% endblock %}
 
 {% block pageTitle %}
@@ -77,6 +76,25 @@
     padding: 0 15px;
   }
 
+  .govuk-phase-banner {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 15px;
+  }
+
+  /* Sub-header full width + 15px gutter; the inner govuk-grid-row's -15px margins
+     then align its columns left with the phase banner and service navigation.
+     border-box keeps width:100% + padding inside the viewport (the GOV.UK reset
+     only sets border-box on grid columns, not arbitrary blocks), so the right-
+     floated user name isn't pushed off-screen. The full-width border-bottom
+     matches the phase banner's divider (replaces the inset hr in the include). */
+  .app-sub-header {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 15px;
+    border-bottom: 1px solid #b1b4b6;
+  }
+
   .app-map-fullscreen {
     flex: 1;
     display: flex;
@@ -124,6 +142,12 @@
   #map,
   #map .im-o-app {
     height: 100% !important;
+  }
+
+  /* Remove the inline map's top border (DEFRA's .im-o-app--inline draws a
+     full --app-border-color frame; drop the top edge below the phase banner). */
+  #map .im-o-app--inline {
+    border-top: 0;
   }
 
   /* Loading overlay — shown while the map frames + tiles load, then faded out.
@@ -214,33 +238,8 @@
 <main class="app-map-fullscreen" id="main-content">
 
   <div class="app-map-fullscreen__sidebar" role="region" aria-label="Map controls">
-    <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">{{ myData.businessName | default('Agile Farm Ltd') }}</h1>
-    {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
-    {% from "govuk/components/button/macro.njk" import govukButton %}
-
-    <form method="get" action="" novalidate>
-      {{ govukDateInput({
-        id: "from-date",
-        namePrefix: "from-date",
-        fieldset: {
-          legend: {
-            text: "Enter a date",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--s"
-          }
-        },
-        hint: {
-          text: "Enter a date to see the land details and map for a specific date in the past, for example, 27 3 2007. Leave blank for today’s date."
-        }
-      }) }}
-
-      {{ govukButton({
-        classes: "govuk-!-margin-bottom-0",
-        text: "Search"
-      }) }}
-    </form>
-
-    <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
+    <a class="govuk-back-link govuk-!-margin-top-4" href="#">Back to {{ myData.businessName | default('Agile Farm Ltd') }}</a>
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-0">Summary</h2>
     <table class="govuk-table govuk-!-margin-bottom-4">
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
@@ -256,13 +255,17 @@
 
     <div id="map-button-slot"></div>
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Land parcels</h2>
+    <!-- <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Land parcels</h2> -->
     {% from "govuk/components/input/macro.njk" import govukInput %}
     {{ govukInput({
       id: "parcel-filter",
       name: "parcel-filter",
+      formGroup: {
+        classes: "govuk-!-margin-bottom-0"
+      },
       label: {
-        text: "Filter parcels"
+        text: "Find a land parcel",
+        classes: "govuk-label--m govuk-!-margin-bottom-0"
       },
       hint: {
         text: "Enter a parcel ID, for example SK1234 5678"
@@ -378,7 +381,8 @@
         const cells = row.querySelectorAll('td')
         document.getElementById('selected-parcel-link').href = anchor ? anchor.getAttribute('href') : '#'
         document.getElementById('selected-parcel-link').textContent = anchor ? anchor.textContent : ''
-        document.getElementById('selected-parcel-cover').textContent = cells[1] ? cells[1].textContent.trim() : ''
+        // Copy the cover cell's markup (a govuk-list of all covers) so the panel mirrors the row.
+        document.getElementById('selected-parcel-cover').innerHTML = cells[1] ? cells[1].innerHTML : ''
         document.getElementById('selected-parcel-area').textContent = cells[2] ? cells[2].textContent.trim() : ''
         panel.hidden = false
       } else if (panel) {
@@ -618,7 +622,7 @@
     }
 
     // Fetch JSON via a sessionStorage cache keyed on the full request URL (which already
-    // encodes the SBI + date filter), so repeat visits with the same query skip the network.
+    // encodes the SBI), so repeat visits with the same query skip the network.
     // Quota/parse failures fall back to a live fetch, so caching can never break a load.
     function cachedFetchJson (url) {
       try {
@@ -772,32 +776,6 @@
       return [minLng, minLat, maxLng, maxLat]
     }
 
-    // Repopulate the date input from ?from-date-* on the URL after a search submit.
-    // Done client-side because this prototype uses myData rather than the kit's
-    // standard `data` binding, so GET params don't reach Nunjucks reliably.
-    const urlParams = new URLSearchParams(location.search)
-    ;['day', 'month', 'year'].forEach(part => {
-      const v = urlParams.get(`from-date-${part}`)
-      if (v != null) {
-        const el = document.getElementById(`from-date-${part}`)
-        if (el) el.value = v
-      }
-    })
-
-    // Build a CQL clause for "changes since the entered date" (between that date and today).
-    // Returns '' if no/invalid/future date is entered, so baseline behaviour is preserved.
-    function buildDateClause () {
-      const d = urlParams.get('from-date-day')
-      const m = urlParams.get('from-date-month')
-      const y = urlParams.get('from-date-year')
-      if (!d || !m || !y) return ''
-      const iso = `${y.padStart(4, '0')}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
-      const dt = new Date(iso)
-      if (isNaN(dt.getTime()) || dt > new Date()) return ''
-      const today = new Date().toISOString().slice(0, 10)
-      return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
-    }
-
     // Parcel filter — narrows the list (not the map) by parcel ID substring
     const filterInput = document.getElementById('parcel-filter')
     const filterStatus = document.getElementById('parcel-filter-status')
@@ -825,7 +803,7 @@
 
     // Fetch data immediately on page load
     const sbi = '{{ myData.sbi | default("111089693") }}'
-    const cql = `SBI=${sbi}${buildDateClause()}`
+    const cql = `SBI=${sbi}`
     const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
     const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
 
@@ -856,22 +834,23 @@
         f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID
       })
 
-      // Build a lookup of dominant land cover per parcel (largest area)
+      // Build a lookup of every land cover per parcel, keyed on ngc. Repeated cover types
+      // (same DESCRIPTION) are merged and their areas summed, so each parcel maps to an
+      // object of { description: totalArea }.
       const parcelCovers = {}
       if (landCoversData && landCoversData.features) {
         landCoversData.features.forEach(f => {
           const key = f.properties.SHEET_ID + f.properties.PARCEL_ID
           const area = parseFloat(f.properties.AREA_HA || 0)
-          if (!parcelCovers[key] || area > parcelCovers[key].area) {
-            parcelCovers[key] = { description: f.properties.DESCRIPTION, area }
-          }
+          const byDesc = parcelCovers[key] || (parcelCovers[key] = {})
+          byDesc[f.properties.DESCRIPTION] = (byDesc[f.properties.DESCRIPTION] || 0) + area
         })
       }
 
       // Populate summary table
       const totalArea = landParcelsData.features.reduce((sum, f) => sum + parseFloat(f.properties.AREA_HA || 0), 0)
       document.getElementById('summary-parcel-count').textContent = landParcelsData.features.length
-      document.getElementById('summary-total-area').textContent = totalArea.toFixed(2)
+      document.getElementById('summary-total-area').textContent = totalArea.toFixed(4)
 
       // Build sidebar parcel table
       const tableBody = document.getElementById('parcel-table-body')
@@ -879,27 +858,25 @@
       if (landParcelsData.features.length === 0) {
         const tr = document.createElement('tr')
         tr.className = 'govuk-table__row'
-        tr.innerHTML = '<td class="govuk-table__cell" colspan="3">No changes found in this period.</td>'
+        tr.innerHTML = '<td class="govuk-table__cell" colspan="3">No land parcels found.</td>'
         tableBody.appendChild(tr)
       }
-
-      // Forward the active date filter to parcel detail links so the parcel
-      // page can apply the same window to its land covers fetch.
-      const parcelLinkSuffix = ['day', 'month', 'year']
-        .map(k => [k, urlParams.get(`from-date-${k}`)])
-        .filter(([, v]) => v != null)
-        .map(([k, v]) => `&from-date-${k}=${encodeURIComponent(v)}`)
-        .join('')
 
       // Build all rows as one HTML string and insert in a single pass (one reflow) rather
       // than appendChild per row. data-ngc drives the filter + map-selection wiring below.
       const rowsHtml = landParcelsData.features.map(f => {
         const { SHEET_ID, PARCEL_ID, ngc, AREA_HA } = f.properties
-        const dominant = parcelCovers[ngc]
+        // All cover descriptions for this parcel, largest area first.
+        const covers = Object.entries(parcelCovers[ngc] || {})
+          .sort((a, b) => b[1] - a[1])
+          .map(([description]) => description)
+        const coversHtml = covers.length
+          ? `<ul class="govuk-list govuk-!-margin-bottom-0">${covers.map(d => `<li>${d}</li>`).join('')}</ul>`
+          : '–'
         const area = parseFloat(AREA_HA)
         return `<tr class="govuk-table__row" data-ngc="${ngc}">
-          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/1.1/view-land-parcel?parcel=${ngc}${parcelLinkSuffix}">${SHEET_ID} ${PARCEL_ID}</a></td>
-          <td class="govuk-table__cell">${dominant ? dominant.description : '–'}</td>
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/1.1/view-land-parcel?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell">${coversHtml}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
         </tr>`
       })

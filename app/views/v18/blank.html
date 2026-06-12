@@ -1,0 +1,37 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+{% block header %}
+  {{ govukHeader({
+    rebrand: true
+  }) }}
+{{ govukServiceNavigation({
+  serviceName: "Farm and Land Service",
+  serviceUrl: "#"
+
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Prototype"
+    },
+    html: 'This is a prototype.'
+  }) }}
+
+  {% include "v18/includes/sub-header.html" %}
+
+{% endblock %}
+
+{% block pageTitle %}
+  View land – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+
+{% endblock %}

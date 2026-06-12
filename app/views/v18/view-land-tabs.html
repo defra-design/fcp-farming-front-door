@@ -1,0 +1,530 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% block header %}
+  {{ govukHeader({
+    rebrand: true
+  }) }}
+{{ govukServiceNavigation({
+  serviceName: "Farm and Land Service",
+  serviceUrl: "#"
+
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Prototype"
+    },
+    html: 'This is a prototype.'
+  }) }}
+
+  {% include "v18/includes/sub-header-tabs.html" %}
+
+{% endblock %}
+
+{% block pageTitle %}
+  View land – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+
+  <style>
+  /* Embedded (non-fullscreen) map: a fixed-height box inside the Map tab panel.
+     Unlike view-land.html this page stays in normal document flow — only the map
+     box is sized, not the whole viewport. */
+  .app-map-embed {
+    position: relative;       /* anchor for the loading overlay */
+    height: 600px;
+    margin-bottom: 0;
+  }
+
+  /* DEFRA map container fills the embed box */
+  #map {
+    width: 100%;
+  }
+  #map,
+  #map .im-o-app {
+    height: 100% !important;
+  }
+
+  /* Map tab only: drop the panel padding so the map fills the panel edge-to-edge,
+     and remove DEFRA's inline-map border so the tab panel's own border frames the
+     map (no double border). The Land parcels panel keeps its default padding. */
+  #map-panel {
+    padding: 0;
+  }
+  #map .im-o-app--inline {
+    border: 0;
+  }
+
+  /* Loading overlay — shown while the map frames + tiles load, then faded out.
+     Background matches the map's backgroundColor so the reveal is seamless. */
+  .app-map-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #f5f5f0;
+    color: #0b0c0c;
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 1.1875rem;
+    transition: opacity 0.3s ease;
+  }
+  .app-map-loading--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .app-map-loading__spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 4px solid #b1b4b6;
+    border-top-color: #1d70b8;
+    animation: app-map-spin 0.8s linear infinite;
+  }
+  @keyframes app-map-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app-map-loading__spinner { animation: none; }
+  }
+
+  /* Keep the service-nav / map-styles dropdowns above the map canvas */
+  .govuk-service-navigation {
+    position: relative;
+    z-index: 100;
+  }
+
+  /* Pull the tabs up to the sub-header — drop the wrapper's 40px top padding */
+  .govuk-main-wrapper {
+    padding-top: 20px;
+  }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-tabs" data-module="govuk-tabs">
+    <h2 class="govuk-tabs__title">Contents</h2>
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <a class="govuk-tabs__tab" href="#land-parcels">Land parcels</a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="#map-panel">Map</a>
+      </li>
+    </ul>
+
+    <!-- Tab 1: Land parcels -->
+    <div class="govuk-tabs__panel" id="land-parcels">
+      <!-- <h2 class="govuk-heading-l">Land parcels</h2> -->
+
+      {{ govukInput({
+        id: "parcel-filter",
+        name: "parcel-filter",
+        formGroup: {
+          classes: "govuk-!-margin-bottom-2"
+        },
+        label: {
+          text: "Find a land parcel",
+          classes: "govuk-label--m govuk-!-margin-bottom-0"
+        },
+        hint: {
+          text: "Enter a parcel ID, for example SK1234 5678"
+        },
+        classes: "govuk-input--width-10",
+        attributes: {
+          autocomplete: "off",
+          autocapitalize: "characters",
+          spellcheck: "false"
+        }
+      }) }}
+      <p class="govuk-body govuk-!-margin-bottom-4" id="parcel-filter-status" aria-live="polite"></p>
+
+      <table class="govuk-table" data-module="moj-sortable-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header" style="width:20%;white-space:nowrap" aria-sort="ascending">ID</th>
+            <th scope="col" class="govuk-table__header" style="width:42%" aria-sort="none">Land cover</th>
+            <th scope="col" class="govuk-table__header" style="width:20%;white-space:nowrap" aria-sort="none">Last updated</th>
+            <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:18%;white-space:nowrap" aria-sort="none">Area (ha)</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body" id="parcel-table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Tab 2: Map -->
+    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="map-panel">
+      <!-- <h2 class="govuk-heading-l">Map</h2> -->
+      <div class="app-map-embed">
+        <div id="map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
+        <div id="map-loading" class="app-map-loading" role="status" aria-live="polite">
+          <span class="app-map-loading__text">Loading map</span>
+          <span class="app-map-loading__spinner" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <!-- Defra library scripts -->
+  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
+
+  <script>
+    // Parcel outline + hover tint palette.
+    const palette = { parcelBorder: '#1d70b8', hoverFill: '#1d70b8', hoverOpacity: 0.15 }
+
+    // Static map options (mirrors view-land). The map is built lazily — only when the
+    // Map tab is first shown — because MapLibre sizes to 0×0 if constructed while its
+    // container is in a hidden (display:none) tab panel.
+    let interactiveMap = null
+    const mapOptions = {
+      mapProvider: defra.maplibreProvider(),
+      behaviour: 'hybrid',
+      mapLabel: 'Ambleside',
+      minZoom: 6,
+      maxZoom: 18,
+      enableZoomControls: true,
+      mapStyle: {
+        url: 'https://tiles.openfreemap.org/styles/liberty',
+        attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
+        backgroundColor: '#f5f5f0'
+      },
+      plugins: [
+        defra.scaleBarPlugin({ units: 'metric' }),
+        defra.mapStylesPlugin({
+          mapStyles: [
+            {
+              id: 'liberty',
+              label: 'Default',
+              url: 'https://tiles.openfreemap.org/styles/liberty',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#f5f5f0'
+            },
+            {
+              id: 'satellite',
+              label: 'Satellite',
+              url: '/satellite-style.json',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              attribution: '© Esri, Maxar, Earthstar Geographics',
+              backgroundColor: '#1a1a1a',
+              mapColorScheme: 'dark',
+              appColorScheme: 'dark'
+            },
+            {
+              id: 'positron',
+              label: 'Light',
+              url: 'https://tiles.openfreemap.org/styles/positron',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#ffffff'
+            }
+          ]
+        })
+      ]
+    }
+
+    // Shared state
+    let mapInstance = null
+    let landParcelsData = null
+    let hoveredNgc = null
+    let hoverWired = false
+    let selectWired = false
+    let pendingBounds = null
+    let parcelsApplied = false
+    let mapBuilt = false
+
+    // Fade out the "Loading map…" overlay once the framed view's tiles have rendered.
+    function hideMapLoading () {
+      const el = document.getElementById('map-loading')
+      if (el) el.classList.add('app-map-loading--hidden')
+    }
+
+    // Fetch JSON via a sessionStorage cache keyed on the full request URL (encodes the SBI).
+    function cachedFetchJson (url) {
+      try {
+        const hit = sessionStorage.getItem(url)
+        if (hit) return Promise.resolve(JSON.parse(hit))
+      } catch (e) { /* ignore malformed / unavailable storage */ }
+      return fetch(url).then(r => r.json()).then(data => {
+        try { sessionStorage.setItem(url, JSON.stringify(data)) } catch (e) { /* quota / private mode */ }
+        return data
+      })
+    }
+
+    // Frame the map on the parcels and add their layers once BOTH the map is ready and the
+    // data has arrived (either order).
+    function applyParcelsIfReady () {
+      if (parcelsApplied || !mapInstance || !landParcelsData) return
+      const doApply = () => {
+        if (parcelsApplied) return
+        parcelsApplied = true
+        if (pendingBounds) {
+          mapInstance.fitBounds(
+            [[pendingBounds[0], pendingBounds[1]], [pendingBounds[2], pendingBounds[3]]],
+            { padding: 40, duration: 0 }
+          )
+        }
+        mapInstance.once('idle', hideMapLoading)
+        addParcelsToMap(mapInstance, landParcelsData)
+      }
+      if (mapInstance.isStyleLoaded && mapInstance.isStyleLoaded()) doApply()
+      else mapInstance.once('idle', doApply)
+    }
+
+    // Add parcel source + layers (outline + hover tint).
+    function addParcelsToMap (map, data) {
+      if (!data || !data.features || data.features.length === 0) return
+      if (map.getSource('parcels')) return
+
+      map.addSource('parcels', {
+        type: 'geojson',
+        data: data,
+        promoteId: 'ngc'
+      })
+
+      map.addLayer({
+        id: 'parcels-fill',
+        type: 'fill',
+        source: 'parcels',
+        paint: { 'fill-color': '#1d70b8', 'fill-opacity': 0 }
+      })
+
+      map.addLayer({
+        id: 'parcels-hover',
+        type: 'fill',
+        source: 'parcels',
+        paint: {
+          'fill-color': palette.hoverFill,
+          'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], palette.hoverOpacity, 0]
+        }
+      })
+
+      map.addLayer({
+        id: 'parcels-outline',
+        type: 'line',
+        source: 'parcels',
+        paint: { 'line-color': palette.parcelBorder, 'line-width': 2 }
+      })
+
+      wireParcelSelect(map)
+      wireParcelHover(map)
+    }
+
+    // Click a parcel → open its detail page (the parcel list lives in the other tab,
+    // so there's no in-page sidebar to highlight). Uses MapLibre's native layer hit-test.
+    function wireParcelSelect (map) {
+      if (selectWired) return
+      selectWired = true
+      map.on('click', 'parcels-fill', (e) => {
+        const ngc = e.features && e.features[0] && e.features[0].id
+        if (ngc != null) window.location.href = '/v18/1.1/view-land-parcel?parcel=' + ngc
+      })
+      map.on('mouseenter', 'parcels-fill', () => { map.getCanvas().style.cursor = 'pointer' })
+      map.on('mouseleave', 'parcels-fill', () => { map.getCanvas().style.cursor = '' })
+    }
+
+    // Tint the hovered parcel via feature-state.
+    function wireParcelHover (map) {
+      if (hoverWired) return
+      hoverWired = true
+      const setHover = (ngc, on) => {
+        if (ngc == null) return
+        map.setFeatureState({ source: 'parcels', id: ngc }, { hover: on })
+      }
+      map.on('mousemove', 'parcels-fill', (e) => {
+        const ngc = e.features && e.features[0] && e.features[0].id
+        if (ngc == null || ngc === hoveredNgc) return
+        setHover(hoveredNgc, false)
+        hoveredNgc = ngc
+        setHover(hoveredNgc, true)
+      })
+      map.on('mouseleave', 'parcels-fill', () => {
+        setHover(hoveredNgc, false)
+        hoveredNgc = null
+      })
+    }
+
+    // Bounding box [west, south, east, north] spanning all parcel features.
+    function computeBounds (features) {
+      let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
+      features.forEach(f => {
+        const coords = f.geometry.type === 'MultiPolygon'
+          ? f.geometry.coordinates.flat(2)
+          : f.geometry.coordinates.flat(1)
+        coords.forEach(([lng, lat]) => {
+          if (lng < minLng) minLng = lng
+          if (lat < minLat) minLat = lat
+          if (lng > maxLng) maxLng = lng
+          if (lat > maxLat) maxLat = lat
+        })
+      })
+      return [minLng, minLat, maxLng, maxLat]
+    }
+
+    // Build the map (once). Called only after the Map tab is shown, so the container is
+    // visible and MapLibre can size correctly. Frames on the parcels if they've loaded.
+    function buildMapOnce () {
+      if (mapBuilt) return
+      mapBuilt = true
+      const bounds = (landParcelsData && landParcelsData.features.length)
+        ? computeBounds(landParcelsData.features)
+        : null
+      interactiveMap = new defra.InteractiveMap('map', bounds ? { ...mapOptions, bounds } : mapOptions)
+      // The DEFRA library may hide the body with .im-is-loading; drop it so the page stays visible.
+      document.body.classList.remove('im-is-loading')
+      interactiveMap.on('map:ready', (e) => {
+        mapInstance = e.map
+        mapInstance.resize()   // ensure the canvas matches the now-visible panel
+        applyParcelsIfReady()
+      })
+      interactiveMap.on('map:stylechange', () => {
+        setTimeout(() => {
+          if (mapInstance && landParcelsData) addParcelsToMap(mapInstance, landParcelsData)
+        }, 100)
+      })
+    }
+
+    // Format a WFS timestamp ('YYYYMMDDhhmmss') as a GOV.UK-style date, e.g. "6 May 2021".
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    function formatUpdated (raw) {
+      if (!raw || raw.length < 8) return '–'
+      const year = raw.slice(0, 4)
+      const monthIndex = parseInt(raw.slice(4, 6), 10) - 1
+      const day = parseInt(raw.slice(6, 8), 10)
+      if (monthIndex < 0 || monthIndex > 11 || !day) return '–'
+      return `${day} ${MONTHS[monthIndex]} ${year}`
+    }
+
+    // ── Parcel filter (narrows the list, not the map) ──────────────────────────────
+    const filterInput = document.getElementById('parcel-filter')
+    const filterStatus = document.getElementById('parcel-filter-status')
+
+    function normaliseTerm (s) {
+      return (s || '').toUpperCase().replace(/\s+/g, '')
+    }
+
+    function filterParcels (term) {
+      const needle = normaliseTerm(term)
+      const rows = document.querySelectorAll('#parcel-table-body tr')
+      let visible = 0
+      rows.forEach(tr => {
+        if (!tr.dataset.ngc) return
+        const match = needle === '' || tr.dataset.ngc.toUpperCase().includes(needle)
+        tr.hidden = !match
+        if (match) visible++
+      })
+      filterStatus.textContent = (rows.length && visible === 0)
+        ? `No parcels match "${term}"`
+        : ''
+    }
+
+    if (filterInput) filterInput.addEventListener('input', e => filterParcels(e.target.value))
+
+    // ── Fetch parcels + covers (by current SBI) and build the Land parcels table ─────
+    const sbi = '{{ myData.sbi | default("111089693") }}'
+    const cql = `SBI=${sbi}`
+    const parcelsUrl = `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+    const coversUrl = `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+
+    Promise.all([
+      cachedFetchJson(parcelsUrl),
+      cachedFetchJson(coversUrl)
+    ]).then(([parcelsData, landCoversData]) => {
+
+      landParcelsData = parcelsData
+
+      // Compute ngc (SHEET_ID + PARCEL_ID) for each feature
+      landParcelsData.features.forEach(f => {
+        f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID
+      })
+
+      // Lookup of land covers per parcel, keyed on ngc; repeated descriptions merged + summed.
+      const parcelCovers = {}
+      if (landCoversData && landCoversData.features) {
+        landCoversData.features.forEach(f => {
+          const key = f.properties.SHEET_ID + f.properties.PARCEL_ID
+          const area = parseFloat(f.properties.AREA_HA || 0)
+          const byDesc = parcelCovers[key] || (parcelCovers[key] = {})
+          byDesc[f.properties.DESCRIPTION] = (byDesc[f.properties.DESCRIPTION] || 0) + area
+        })
+      }
+
+      // Summary
+      const totalArea = landParcelsData.features.reduce((sum, f) => sum + parseFloat(f.properties.AREA_HA || 0), 0)
+      document.getElementById('summary-parcel-count').textContent = landParcelsData.features.length
+      document.getElementById('summary-total-area').textContent = totalArea.toFixed(4)
+
+      // Parcel table
+      const tableBody = document.getElementById('parcel-table-body')
+
+      if (landParcelsData.features.length === 0) {
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row'
+        tr.innerHTML = '<td class="govuk-table__cell" colspan="3">No land parcels found.</td>'
+        tableBody.appendChild(tr)
+      }
+
+      const rowsHtml = landParcelsData.features.map(f => {
+        const { SHEET_ID, PARCEL_ID, ngc, AREA_HA, VALID_FROM } = f.properties
+        const covers = Object.entries(parcelCovers[ngc] || {})
+          .sort((a, b) => b[1] - a[1])
+          .map(([description]) => description)
+        const coversHtml = covers.length
+          ? `<ul class="govuk-list govuk-!-margin-bottom-0">${covers.map(d => `<li>${d}</li>`).join('')}</ul>`
+          : '–'
+        const area = parseFloat(AREA_HA)
+        return `<tr class="govuk-table__row" data-ngc="${ngc}">
+          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/1.1/view-land-parcel?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
+          <td class="govuk-table__cell">${coversHtml}</td>
+          <td class="govuk-table__cell" style="white-space:nowrap" data-sort-value="${VALID_FROM || ''}">${formatUpdated(VALID_FROM)}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
+        </tr>`
+      })
+      tableBody.insertAdjacentHTML('beforeend', rowsHtml.join(''))
+
+      filterParcels(filterInput.value)
+
+      // If the map was already built (user opened the Map tab before this resolved), frame it now.
+      pendingBounds = landParcelsData.features.length ? computeBounds(landParcelsData.features) : null
+      applyParcelsIfReady()
+
+    }).catch(err => {
+      console.error('Failed to load land parcels:', err)
+      document.getElementById('summary-parcel-count').textContent = '–'
+      document.getElementById('summary-total-area').textContent = '–'
+      hideMapLoading()
+    })
+
+    // ── Lazily build the map when the Map tab is first activated ─────────────────────
+    // The govuk-frontend Tabs module toggles panel visibility synchronously on click, so a
+    // 0ms defer guarantees the panel is visible before MapLibre measures its container.
+    const mapTab = document.querySelector('.govuk-tabs__tab[href="#map-panel"]')
+    if (mapTab) mapTab.addEventListener('click', () => setTimeout(buildMapOnce, 0))
+    // Deep link: /v18/view-land-tabs#map-panel opens the Map tab on load.
+    if (location.hash === '#map-panel') setTimeout(buildMapOnce, 0)
+  </script>
+{% endblock %}
