@@ -47,8 +47,10 @@
 
   /* html stays pinned to the viewport (no scroll); the body is the scroll
      container. Keeping height:100% gives the map area a definite-height ancestor
-     so #map's height:100% resolves. */
-  html {
+     so #map's height:100% resolves. The .govuk-template qualifier beats GOV.UK
+     Frontend's `.govuk-template { overflow-y: scroll }` (which would otherwise
+     leave a permanent second scrollbar on the html element). */
+  html.govuk-template {
     height: 100%;
     overflow: hidden;
   }
