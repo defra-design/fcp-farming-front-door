@@ -245,6 +245,14 @@
   #parcel-table-body tr.app-parcel--selected td {
     font-weight: 700;
   }
+
+  #selected-parcel-panel tbody tr {
+    background: #f4f8fb;
+  }
+
+  #selected-parcel-panel tbody td {
+    font-weight: 700;
+  }
   </style>
 {% endblock %}
 
@@ -276,30 +284,14 @@
     <div id="map-button-slot"></div>
 
     <!-- <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Land parcels</h2> -->
-    {% from "govuk/components/input/macro.njk" import govukInput %}
-    {{ govukInput({
-      id: "parcel-filter",
-      name: "parcel-filter",
-      formGroup: {
-        classes: "govuk-!-margin-bottom-0"
-      },
-      label: {
-        text: "Find a land parcel",
-        classes: "govuk-label--m govuk-!-margin-bottom-0"
-      },
-      hint: {
-        text: "Enter a parcel ID, for example SK1234 5678"
-      },
-      classes: "govuk-input--width-10",
-      attributes: {
-        autocomplete: "off",
-        autocapitalize: "characters",
-        spellcheck: "false"
-      }
-    }) }}
-    <p class="govuk-body govuk-!-margin-bottom-2" id="parcel-filter-status" aria-live="polite"></p>
+    <div class="govuk-form-group govuk-!-margin-bottom-0">
+      <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="parcel-filter">Find a land parcel</label>
+      <div id="parcel-filter-hint" class="govuk-hint">Enter a parcel ID, for example SK1234 5678</div>
+      <p class="govuk-body govuk-!-margin-bottom-2" id="parcel-filter-status" aria-live="polite" style="color:#ca3535;font-weight:700"></p>
+      <input class="govuk-input govuk-input--width-10" id="parcel-filter" name="parcel-filter" type="text" aria-describedby="parcel-filter-hint" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    </div>
     <table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet" hidden aria-live="polite">
-      <caption class="govuk-table__caption govuk-table__caption--s">Selected</caption>
+      <caption class="govuk-table__caption govuk-visually-hidden">Selected land parcel</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap">ID</th>
@@ -815,7 +807,7 @@
         if (match) visible++
       })
       filterStatus.textContent = (rows.length && visible === 0)
-        ? `No parcels match "${term}"`
+        ? 'No parcels found'
         : ''
     }
 
