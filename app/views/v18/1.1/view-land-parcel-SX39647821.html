@@ -439,7 +439,6 @@
 
       // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
 
-
       // --- WFS endpoints -------------------------------------------------------
       // Just this one parcel's geometry — filtered to the SBI + PARCEL_ID (the WFS requires an
       // SBI). PARCEL_ID is quoted so it's compared as a string; SHEET_ID can't be filtered
@@ -478,8 +477,8 @@
         return [minLng, minLat, maxLng, maxLat]
       }
 
-      // Fetch JSON via a sessionStorage cache keyed on the full request URL (which already
-      // encodes the SBI + date filter), so repeat visits with the same query skip the network.
+      // Fetch JSON via a sessionStorage cache keyed on the full request URL (or the static
+      // file path, for the historical covers), so repeat visits with the same key skip the network.
       // Quota/parse failures fall back to a live fetch, so caching can never break a load.
       function cachedFetchJson (url) {
         try {
