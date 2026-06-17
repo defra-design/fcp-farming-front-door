@@ -439,20 +439,6 @@
 
       // ngc is a 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
 
-      // If the page was opened with a ?from-date-* window, scope the covers fetch to
-      // "covers created on/after that date" via CREATED_ON (the WFS only exposes
-      // currently-valid rows, so this is the only "change" signal — VALID_FROM shown per row).
-      function buildDateClause () {
-        const d = urlParams.get('from-date-day')
-        const m = urlParams.get('from-date-month')
-        const y = urlParams.get('from-date-year')
-        if (!d || !m || !y) return ''
-        const iso = `${y.padStart(4, '0')}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
-        const dt = new Date(iso)
-        if (isNaN(dt.getTime()) || dt > new Date()) return ''
-        const today = new Date().toISOString().slice(0, 10)
-        return ` AND CREATED_ON BETWEEN '${iso}' AND '${today}'`
-      }
 
       // --- WFS endpoints -------------------------------------------------------
       // Just this one parcel's geometry — filtered to the SBI + PARCEL_ID (the WFS requires an
@@ -464,13 +450,14 @@
         return `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
       }
 
-      // PARCEL_ID is quoted so the WFS compares it as a string — unquoted, a leading-zero
-      // id like 0469 coerces to 469 and matches nothing. SHEET_ID can't be filtered
-      // server-side (the WAF rejects quotes around the alphanumeric value), so we
-      // disambiguate by SHEET_ID client-side after the fetch.
+      // Land covers come from a local "before 3 February 2026" snapshot, not the live
+      // WFS: the WFS only exposes currently-valid rows, so the pre-update covers can't
+      // be queried. The file mirrors the WFS LandCovers GeoJSON schema, so the rest of
+      // this page renders it unchanged (filtered by SHEET_ID, styled by DESCRIPTION,
+      // area from AREA_HA). A real RPA historical extract can later overwrite the file.
+      // parcelId is unused — this page is fixed to the single parcel SX3964 7821.
       function coversUrlFor (parcelId) {
-        const cql = `SBI=${sbi} AND PARCEL_ID='${parcelId}'${buildDateClause()}`
-        return `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+        return '/public/data/land-covers/SX39647821-before.json'
       }
       function hedgeUrlFor (parcelId) {
         return `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
