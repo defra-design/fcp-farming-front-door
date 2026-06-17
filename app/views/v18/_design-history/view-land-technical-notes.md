@@ -52,16 +52,75 @@ Two different ways of putting features on the map are used in this prototype:
 
 ## Land cover styling
 
-`landCoverColors` and `landCoverPatterns` (defined inline in the parcel
-files) drive the dataset styles. Patterned land covers (`Farm Building`,
-`Farmyards`, `Hard Standings`, `Residential dwelling, House`,
-`Scrub - Ungrazeable`, `Arable Land`, `Permanent Grassland`, `Woodland`)
-get a `fillPattern` overlay so that visually similar fills can still be told
-apart and the map remains legible printed in black and white.
+Map colours are defined inline in the parcel files. The primary
+`view-land-parcel.html` keeps every colour in a single `DEFAULT_PALETTE`
+object (its `landCover` map holds one entry per land cover description); the
+`-alt` and `-cs` variants still use the older flat `landCoverColors` object.
+`landCoverPatterns` (in all variants) maps the patterned covers to a pattern
+shape. Patterned land covers (`Farm Building`, `Farmyards`, `Hard Standings`,
+`Residential dwelling, House`, `Scrub - Ungrazeable`, `Arable Land`,
+`Permanent Grassland`, `Woodland`) get a `fillPattern` overlay so that
+visually similar fills can still be told apart and the map remains legible
+printed in black and white. Pattern *shapes* are fixed; only their colour
+(`patternLine`) is tuneable.
 
 If a land cover description comes back from the WFS that's not in the colour
-map, it falls back to `#CCCCCC`. Worth widening the colour map as new types
+map, it falls back to `#CCCCCC`. Worth widening the palette as new types
 appear.
+
+## Live colour tuning (`?colours`)
+
+Both maps ship a built-in palette editor for tuning colours in the browser
+without editing code or reloading. Add a `colours` query flag and a floating
+**Map colours** panel is injected (a compact "Map colours" button shows first;
+clicking it opens the panel):
+
+- Summary: `view-land?colours`
+- Detail: `view-land-parcel?parcel=<NGC>&colours` — note the `&`. The detail
+  page already carries `?parcel=`, so the flag is a second parameter. A second
+  `?` (`…?parcel=<NGC>?colours`) does *not* work: it folds `colours` into the
+  `parcel` value and the guard (`urlParams.has('colours')`) stays false.
+
+It is a design/research tool only — nothing renders unless `colours` is present
+in the query string.
+
+**Source of truth.** `DEFAULT_PALETTE` is the single source of truth for every
+map colour on the page. The detail page exposes the full palette
+(`landCover` per cover, plus `patternLine`, `parcelBorder`, `hedgerow`,
+`hoverFill`/`hoverOpacity`, `loadingFill`/`loadingOpacity`); the summary page
+exposes a smaller one (`parcelBorder`, `selectedBorder`, `hoverFill`,
+`hoverOpacity`). The working `palette` is `DEFAULT_PALETTE` with any overrides
+merged in.
+
+**Live application.** Edits apply to the live map immediately — the summary
+page uses MapLibre `setPaintProperty`; the detail page uses the datasets
+plugin's `setStyle` (plus `setPaintProperty` for non-dataset layers). No
+restyle or reload.
+
+**Persistence and overrides.** Edits are saved to `localStorage` and reloaded
+on the next visit. Override precedence is: `?palette=` (a base64-encoded JSON
+palette in the URL) wins over `localStorage`, which wins over
+`DEFAULT_PALETTE`. The `?palette=` form makes a tuned palette reproducible by
+link. Keys per page:
+
+| Page | Palette key | Panel open/closed key |
+| --- | --- | --- |
+| Summary (`view-land`) | `land-map-palette` | `land-map-palette-open` |
+| Detail (`view-land-parcel`) | `parcel-map-palette` | `parcel-map-palette-open` |
+
+**Panel controls.** A colour picker per element / per land cover, a hover
+opacity slider, a **Preset** dropdown (from the `PRESETS` object), and three
+buttons:
+
+- **Copy palette** — copies the working palette as JSON to the clipboard.
+- **Copy share link** — copies the current URL with `?colours&palette=…`.
+- **Reset** — restores `DEFAULT_PALETTE` and clears the saved `localStorage`
+  palette.
+
+**Promoting a palette to default.** Tune it in the browser, hit *Copy palette*,
+then paste the JSON into `DEFAULT_PALETTE` in the parcel file (or add it to
+`PRESETS` as a named starter combination). Until that is done, a tuned palette
+only lives in the editor's `localStorage` / share link, not in the code.
 
 ## Layout shell (CSS)
 

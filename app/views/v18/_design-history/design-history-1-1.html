@@ -29,14 +29,73 @@
   <div class="govuk-grid-column-two-thirds">
 
     <p class="govuk-body">
-      First iteration of a prototype that re-presents the existing
-      land summary customer journey using the Defra
+      Second iteration of a prototype that re-presents the existing land summary customer journey using the Defra
       <a class="govuk-link" href="https://defra.github.io/interactive-map/" rel="noreferrer noopener" target="_blank">interactive mapping component (opens in new tab)</a>
-      (v0.0.22-alpha). A full-bleed map and sidebar layout, and a side-by-side alternative layout.
+      (v0.0.22-alpha).
     </p>
 
+    <h2 class="govuk-heading-l">Design review</h2>
+    <img src="/public/images/design-history/v18/1-1/design-review.webp" alt="" class="design-history">
+    <p>What did we do?</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Give the team an opportunity to review the View Land designs</li>
+      <li>Give the team an opportunity to review the 'View Land' user needs and requirements and provide feedback</li>
+      <li>Get consensus on</li>
+      <li>The real land data that will be available</li>
+      <li>The business requirements</li>
+    </ul>
+    <h2 class="govuk-heading-l">Demo</h2>
+    <img src="/public/images/design-history/v18/1-1/demo-start.webp" alt="" class="design-history">
+    <h2 class="govuk-heading-l">Hedgerows</h2>
+    <img src="/public/images/design-history/v18/1-1/hedgerows-screenshot.webp" alt="" class="design-history">
+    <h2 class="govuk-heading-l">Layers</h2>
+    <img src="/public/images/design-history/v18/1-1/layers-screenshot.webp" alt="" class="design-history">
+    <h2 class="govuk-heading-l">Header</h2>
+    <h2 class="govuk-heading-l">Historical view</h2>
+    <h2 class="govuk-heading-l">UI improvements</h2>
+    <h2 class="govuk-heading-l">Choosing colours</h2>
 
-    <h2 class="govuk-heading-l">Coming soon.</h2>
+    <p class="govuk-body">
+      Each land cover type on the parcel map is drawn in its own colour. We
+      grouped the palette so related covers read together — greens for
+      grassland and woodland, blues for water (drains, rivers, ponds), greys
+      for hard surfaces and roads, and warmer tones for buildings and
+      farmyards. Where two fills sit close in colour, a fill pattern
+      (cross-hatch, dot, horizontal or vertical hatch) is layered on top so
+      they can still be told apart, and so the map stays legible if printed in
+      black and white.
+    </p>
+
+    <p class="govuk-body">
+      Rather than guess at hex values in code, we built a small colour-tuning
+      tool into the prototype so we could try combinations live on the real map
+      during design sessions. Adding a <code>colours</code> flag to the URL of a
+      <a class="govuk-link" href="../view-land?colours">view-land</a> or
+      <a class="govuk-link" href="../1.1/view-land-parcel?parcel=SX39647821&colours">view-land-parcel</a>
+      page opens a <strong>Map colours</strong> panel over the map. On
+      view-land it is <code>?colours</code>; on a parcel page, which already has
+      a <code>?parcel=</code> in the URL, it is joined with an ampersand —
+      <code>?parcel=SK82871468&amp;colours</code>.
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Each map element and land cover type has its own colour picker, plus
+        a slider for the hover tint, and changes apply to the map instantly.</li>
+      <li>A chosen palette is remembered in the browser, so it persists between
+        page loads while you are working.</li>
+      <li><strong>Copy share link</strong> produces a URL that reproduces the
+        exact palette, so a combination can be shared with the team for
+        feedback without changing any code.</li>
+      <li><strong>Copy palette</strong> exports the values as JSON, ready to
+        paste in as the new default once a palette is agreed.</li>
+    </ul>
+
+    <p class="govuk-body">
+      The panel only appears when <code>?colours</code> is present in the URL —
+      it is a design and research aid, not part of the user-facing journey.
+      Technical detail is in the developer technical notes
+      (<code>view-land-technical-notes.md</code>) alongside this prototype.
+    </p>
 
     <!-- <p class="govuk-body">
       The current View land journey on the Rural Payments Service shows

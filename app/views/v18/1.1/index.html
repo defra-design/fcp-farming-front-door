@@ -99,10 +99,10 @@
           ],
           [
             {
-              text: "View land parcel"
+              text: "Historical view"
             },
             {
-              html: "<a href='view-land-parcel?parcel=SK82871468'>view-land-parcel?parcel=SK82871468</a>"
+              html: "<a href='view-land-parcel?parcel=SX39647821'>view-land-parcel?parcel=SX39647821</a>"
             },
             {
               text: "1.1"
@@ -155,103 +155,4 @@
   </div> -->
 </div>
 
-{% endblock %}
-
-{% block pageScriptsAfter %}
-<script>
-    $(document).ready(function(){
-
-        var _startURL = $("#start-url a"),
-            _startURLLabel = $("#start-url-label"),
-            _options = $("[data-option]")
-
-        _options.change(function(){
-            setValues()
-            optionsVisibility()
-        }).trigger("change");
-
-        _options.on('input', function() {
-            setValues()
-            optionsVisibility()
-        }).trigger("input");
-
-        //SET VISIBILITY OF OPTIONS BASED ON INTERNAL VS EXTERNAL
-        function optionsVisibility(){
-          var _intExtValue = $('input[name=view]:checked').val()
-
-          if (_intExtValue == "int") {
-            $('#releaseContainer').hide()
-            $('#startFromContainer').hide()
-          } else {
-            $('#releaseContainer').show()
-            $('#startFromContainer').show()
-          }
-
-        }
-
-        //SET VALUES
-        function setValues(){
-
-            //Base URL
-            var _urlBase = "https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/" + {{myData.version|dump|safe}} + "/";
-
-
-            //Queries
-            var _urlStartFrom = $('input[name=startFrom]:checked').val(),
-                _urlPage = "start-sfd-sign-in",
-                _urlNewApplication = "";
-            
-            //Start from
-            if ($('input[name=view]:checked').val() == "int") {
-              _urlPage = "internal-sign-in"
-            } else {
-              switch(_urlStartFrom) {
-                  case "st":
-                    _urlPage = "start-sfd-start"
-                    break;
-                  case "si":
-                    _urlPage = "start-sfd-sign-in"
-                    break;
-                  case "bl":
-                    _urlPage = "businesses-list"
-                    break;
-                  case "home":
-                    _urlPage = "business-home"
-                    break;
-                  default:
-                  _urlPage = "start-sfd-sign-in"
-              }
-            }
-
-            var _urlRelease = "&release=b1",
-                _urlView = "&view=" + $('input[name=view]:checked').val(),
-                // _urlPageQuery = "&start=" + _urlStartFrom;
-                _urlincludeValidation = "&iv=" + _options.filter("#includeValidation").val();
-                // _urlshutter = "&shutter=" + _options.filter("#shutter").val(),
-                // _urlcookies = "&c=" + _options.filter("#cookies").val(),
-                // _urlinviteScenario = "&adb2cLink=" + _options.filter("#inviteScenario").val();
-
-
-            if ($('input[name=view]:checked').val() == "int") {
-              _urlRelease = ""
-            }
-
-            //Queries combined
-            var _urlPageQueries = _urlPage + "?r=t" + _urlRelease + _urlView + _urlincludeValidation;
-
-            //URL text
-            var _startURLText = _urlBase + _urlPageQueries,
-                _startURLHREF =  _urlPageQueries;
-            // update label
-            _startURLLabel
-                .text(_startURLText)
-                .show()
-            //update link
-            _startURL
-                .attr("href", _startURLHREF)
-                .parent().show()
-        }
-
-    });
-</script>
 {% endblock %}
