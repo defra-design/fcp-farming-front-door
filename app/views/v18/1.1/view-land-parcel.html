@@ -255,7 +255,7 @@
           <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-last-updated"></td>
         </tr>
         <tr class="govuk-table__row" id="parcel-previous-version-row" hidden>
-          <td class="govuk-table__cell"><a class="govuk-link" href="view-land-parcel-SX39647821" id="parcel-previous-version-link">Show previous version</a></td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="#" id="parcel-previous-version-link">Show previous version</a></td>
           <td class="govuk-table__cell"></td>
         </tr>
       </tbody>
@@ -588,10 +588,16 @@
         document.getElementById('parcel-last-updated').textContent =
           lcMaxValidFrom ? fmtValidFrom(lcMaxValidFrom) : '–'
 
-        // Only parcel SX3964 7821 has a previous version to show (for now).
-        const isPreviousVersionParcel =
-          selectedFeature.properties.SHEET_ID === 'SX3964' && selectedFeature.properties.PARCEL_ID === '7821'
-        document.getElementById('parcel-previous-version-row').hidden = !isPreviousVersionParcel
+        // Parcels with a historical "previous version" page, keyed by ngc
+        // (SHEET_ID + PARCEL_ID) -> the hardcoded historical page to link to.
+        // Add an entry here when a new parcel gets a before-<date> data file + page.
+        const PARCELS_WITH_HISTORY = {
+          SX39647821: 'view-land-parcel-SX39647821',
+          SX39632340: 'view-land-parcel-SX39632340'
+        }
+        const historyPage = PARCELS_WITH_HISTORY[selectedFeature.properties.SHEET_ID + selectedFeature.properties.PARCEL_ID]
+        if (historyPage) document.getElementById('parcel-previous-version-link').setAttribute('href', historyPage)
+        document.getElementById('parcel-previous-version-row').hidden = !historyPage
 
         // Hedgerows
         document.getElementById('parcel-hedgerows').textContent = parcelHedges.length

@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-  View land - Land parcel SX3964 7821 – GOV.UK Prototype Kit
+  View land - Land parcel SX3963 2340 – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block head %}
@@ -251,11 +251,11 @@
        border + light blue fill, defined in application.scss). #}
     {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
     {% call govukInsetText({ classes: "govuk-!-margin-0 guidance-panel" }) %}
-      <p class="govuk-!-margin-bottom-0">You are viewing the land parcel for a date in the past (12 October 2023 to 2 February 2026).</p>
+      <p class="govuk-!-margin-bottom-0">You are viewing the land parcel for a date in the past (12 October 2023 to 16 October 2025).</p>
     {% endcall %}
 
     <p class="govuk-body govuk-!-margin-top-4 govuk-!-margin-bottom-4">
-      <a class="govuk-link" href="/v18/1.1/view-land-parcel?parcel=SX39647821">Return to current version</a>
+      <a class="govuk-link" href="/v18/1.1/view-land-parcel?parcel=SX39632340">Return to current version</a>
     </p>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
@@ -392,11 +392,11 @@
       Default: DEFAULT_PALETTE
     }
 
-    // This page is fixed to a single parcel — SX3964 7821 — so the ngc is hardcoded rather
+    // This page is fixed to a single parcel — SX3963 2340 — so the ngc is hardcoded rather
     // than read from ?parcel=. ngc is the 10-char composite: 6-char SHEET_ID + 4-char PARCEL_ID.
     // (urlParams is still read for the ?colours / ?palette dev panel below.)
     const urlParams = new URLSearchParams(window.location.search)
-    const selectedNgc = 'SX39647821'
+    const selectedNgc = 'SX39632340'
 
     // Working palette = defaults, with any shared (?palette=) or saved (localStorage)
     // overrides merged in. ?palette= wins so share links are reproducible.
@@ -449,17 +449,17 @@
         return `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
       }
 
-      // Land covers come from a local "before 3 February 2026" snapshot, not the live
+      // Land covers come from a local "before 17 October 2025" snapshot, not the live
       // WFS: the WFS only exposes currently-valid rows, so the pre-update covers can't
       // be queried. The file mirrors the WFS LandCovers GeoJSON schema, so the rest of
       // this page renders it unchanged (filtered by SHEET_ID, styled by DESCRIPTION,
       // area from AREA_HA). A real RPA historical extract can later overwrite the file.
-      // parcelId is unused — this page is fixed to the single parcel SX3964 7821.
+      // parcelId is unused — this page is fixed to the single parcel SX3963 2340.
       // The ?v= marker is a cache-buster: cachedFetchJson keys its sessionStorage
       // entry on this URL, so bump the number whenever the data file changes to
       // force a fresh fetch (otherwise a same-tab reload replays the old covers).
       function coversUrlFor (parcelId) {
-        return '/public/data/land-covers/SX39647821-before.json?v=4'
+        return '/public/data/land-covers/SX39632340-before.json?v=1'
       }
       function hedgeUrlFor (parcelId) {
         return `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
