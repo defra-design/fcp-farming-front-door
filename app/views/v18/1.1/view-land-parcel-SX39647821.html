@@ -459,7 +459,7 @@
       // entry on this URL, so bump the number whenever the data file changes to
       // force a fresh fetch (otherwise a same-tab reload replays the old covers).
       function coversUrlFor (parcelId) {
-        return '/public/data/land-covers/SX39647821-before.json?v=4'
+        return '/public/data/land-covers/SX39647821-before.json?v=5'
       }
       function hedgeUrlFor (parcelId) {
         return `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
