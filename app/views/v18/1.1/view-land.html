@@ -447,8 +447,15 @@
     // to that parcel's page, Back exits. Enabled only on small viewports so the
     // reliable native click selection still drives the inline desktop map (the
     // interact plugin's polygon hit-test misses clicks at vector-tile seams).
-    const useInteract = window.matchMedia('(max-width: 640px)').matches
+    const mobileMql = window.matchMedia('(max-width: 640px)')
+    const useInteract = mobileMql.matches
     let interact = null
+
+    // useInteract is a load-time snapshot — the interact plugin is built (or not) once at
+    // construction. So crossing the 640px breakpoint live (e.g. toggling DevTools device mode)
+    // leaves the map built for the previous viewport. Reload on a breakpoint cross to re-sync.
+    // (No-op for real users, whose viewport doesn't cross 640px mid-session.)
+    mobileMql.addEventListener('change', () => window.location.reload())
 
     // Point interact at the parcel fill layer (its features carry an `ngc` property), enabling its
     // crosshair + Back/Select/Continue bar. No-ops until the map + parcel layer exist, so it's safe
