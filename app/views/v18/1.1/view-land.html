@@ -36,6 +36,7 @@
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css" rel="stylesheet" type="text/css">
   <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
 
   <link rel="prefetch" href="/v18/1.1/view-land-parcel" as="document">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
@@ -228,6 +229,31 @@
       min-height: 0;
     }
 
+    /* In the normal (non-fullscreen) view the map is hidden at this width, so
+       release the full-height scroll lock and let the whole page (sub-header
+       included) scroll in normal document flow. The :not(.im-is-fullscreen)
+       guard keeps the original locked layout for "Map view" fullscreen, where
+       the DEFRA map and its control bar must fill the viewport. */
+    html.govuk-template:not(.im-is-fullscreen) {
+      height: auto;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) body.govuk-template__body {
+      height: auto;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) .app-map-fullscreen {
+      flex: 0 0 auto;
+      min-height: 0;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) .app-map-fullscreen__sidebar {
+      overflow: visible;
+    }
+
   }
 
   #parcel-table-body tr {
@@ -287,7 +313,7 @@
     <div class="govuk-form-group govuk-!-margin-bottom-0">
       <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="parcel-filter">Find a land parcel</label>
       <div id="parcel-filter-hint" class="govuk-hint">Enter all or part of a parcel ID to filter the list</div>
-      <p class="govuk-body govuk-!-margin-bottom-2" id="parcel-filter-status" aria-live="polite" style="color:#ca3535;font-weight:700"></p>
+      <p class="govuk-body govuk-!-margin-bottom-2" id="parcel-filter-status" aria-live="polite" style="color:#d4351c;font-weight:700"></p>
       <input class="govuk-input govuk-input--width-10" id="parcel-filter" name="parcel-filter" type="text" aria-describedby="parcel-filter-hint" autocomplete="off" autocapitalize="characters" spellcheck="false">
     </div>
     <table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet" hidden aria-live="polite">
@@ -337,6 +363,7 @@
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js"></script>
   <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
 
   <script>
     // Reveal the page immediately rather than waiting for the DEFRA library to remove its
@@ -411,6 +438,55 @@
       document.querySelectorAll('#parcel-table-body tr').forEach(tr => tr.classList.remove('app-parcel--selected'))
       const panel = document.getElementById('selected-parcel-panel')
       if (panel) panel.hidden = true
+    }
+
+    // ── Mobile crosshair selection (DEFRA interact plugin) ───────────────────────
+    // On mobile the map is fullscreen-only; the interact plugin renders a centre
+    // crosshair plus its own Back / Select / Done action bar on touch (parity with
+    // view-land-parcel). Select picks the parcel under the crosshair, Done continues
+    // to that parcel's page, Back exits. Enabled only on small viewports so the
+    // reliable native click selection still drives the inline desktop map (the
+    // interact plugin's polygon hit-test misses clicks at vector-tile seams).
+    // TEMP DEBUG instrumentation for the "interact bar only shows after hard refresh" issue.
+    // Logs to the console AND to an on-screen overlay (so it's readable on a mobile device,
+    // including over the fullscreen map). Remove once diagnosed.
+    function IMLOG (...a) {
+      const msg = a.map(x => (typeof x === 'object' ? JSON.stringify(x) : String(x))).join(' ')
+      console.log('[IM]', msg)
+      let box = document.getElementById('im-debug')
+      if (!box) {
+        box = document.createElement('div')
+        box.id = 'im-debug'
+        box.style.cssText = 'position:fixed;top:0;left:0;right:0;max-height:45vh;overflow:auto;z-index:2147483647;background:rgba(0,0,0,0.82);color:#0f0;font:11px/1.35 monospace;padding:4px 6px;white-space:pre-wrap;pointer-events:none'
+        ;(document.body || document.documentElement).appendChild(box)
+      }
+      const t = (typeof performance !== 'undefined' ? Math.round(performance.now()) : 0)
+      box.textContent += `+${t}ms  ${msg}\n`
+    }
+    const useInteract = window.matchMedia('(max-width: 640px)').matches
+    let interact = null
+    let appOpen = false   // true while the fullscreen map app is open (app:opened → app:closed)
+    IMLOG('startup: useInteract=', useInteract, 'typeof defra.interactPlugin=', typeof (window.defra && defra.interactPlugin))
+
+    // Point interact at the parcel fill layer (its features carry an `ngc` property).
+    // enable() replaces the layer config, so this is also re-run after style re-adds.
+    function enableInteract (from) {
+      const reason = !useInteract ? 'useInteract=false'
+        : !interact ? 'interact=null'
+        : !appOpen ? 'appOpen=false'
+        : !mapInstance ? 'mapInstance=null'
+        : !mapInstance.getLayer('parcels-fill') ? 'no parcels-fill layer'
+        : null
+      if (reason) { IMLOG('enableInteract(' + from + ') SKIPPED:', reason); return }
+      // selectedStroke transparent: the existing parcels-selected layer already draws the
+      // selection outline (via selectParcel), so let interact handle hit-testing only.
+      interact.enable({ layers: [{ layerId: 'parcels-fill', idProperty: 'ngc', selectedStroke: 'transparent' }] })
+      IMLOG('enableInteract(' + from + ') -> interact.enable() CALLED')
+    }
+
+    // The ngc of a selected interact feature (idProperty 'ngc' → featureId; fall back to props).
+    function featureNgc (f) {
+      return f && (f.featureId != null ? f.featureId : (f.properties && f.properties.ngc))
     }
 
     // Apply palette to the live map layers (read by addParcelsToMap on first add / restyle).
@@ -554,6 +630,17 @@
     // concurrently with the WFS fetch, then reframed on the parcels via fitBounds once the data
     // arrives. These are its static options.
     let interactiveMap = null
+
+    // On mobile, build the interact plugin so the map gets a centre crosshair + Back/Select/Done
+    // bar on touch. Single-select; aiming off any parcel clears the selection.
+    if (useInteract) {
+      interact = defra.interactPlugin({
+        interactionModes: ['selectFeature'],
+        multiSelect: false,
+        deselectOnClickOutside: true
+      })
+    }
+
     const mapOptions = {
       mapProvider: defra.maplibreProvider(),
       behaviour: 'hybrid',
@@ -612,7 +699,8 @@
             // },
 
           ]
-        })
+        }),
+        ...(interact ? [interact] : [])
       ]
     }
 
@@ -730,13 +818,17 @@
 
       wireParcelSelect(map)
       wireParcelHover(map)
+      IMLOG('addParcelsToMap: layers added (parcels-fill present)')
+      // Mobile: hand parcel selection to the interact plugin (crosshair + Select).
+      enableInteract('addParcelsToMap')
     }
 
     // Parcel selection via MapLibre's native layer hit-test (reliable across tile seams, unlike
     // the interact plugin's point-in-polygon on tile-clipped geometry). Attached once; the
-    // delegated listeners survive parcel-layer re-adds.
+    // delegated listeners survive parcel-layer re-adds. Skipped on mobile, where the interact
+    // plugin's crosshair owns selection (wiring both would double-handle each tap).
     function wireParcelSelect(map) {
-      if (selectWired) return
+      if (selectWired || useInteract) return
       selectWired = true
       map.on('click', 'parcels-fill', (e) => {
         const ngc = e.features && e.features[0] && e.features[0].id
@@ -922,16 +1014,40 @@
       // When map becomes ready, frame + add the parcel layers if the data has already arrived;
       // otherwise the fetch handler calls applyParcelsIfReady once it lands. Either order works.
       interactiveMap.on('map:ready', (e) => {
+        IMLOG('map:ready fired')
         mapInstance = e.map
         // Build the colour panel first — it's independent of the parcel layers, so it must not
         // be blocked if addParcelsToMap throws (only shown when ?colours is set).
         buildColourPanel()
         applyParcelsIfReady()
       })
+      // Log every app/interact lifecycle event to see what does/doesn't fire on first load.
+      ;['app:ready', 'app:opened', 'app:closed', 'app:setmode', 'app:revertmode'].forEach(ev =>
+        interactiveMap.on(ev, () => IMLOG('event:', ev)))
 
-      // Map -> Sidebar selection (row highlight + "Selected parcel" panel) is handled by
-      // selectParcel/clearParcelSelection, driven by the native 'parcels-fill' click wired in
-      // wireParcelSelect — not the interact plugin.
+      // Desktop: Map -> Sidebar selection is driven by the native 'parcels-fill' click in
+      // wireParcelSelect. Mobile: the interact plugin's crosshair owns selection — mirror its
+      // changes into the sidebar/highlight, and treat "Done" as Continue (open the parcel page).
+      if (useInteract) {
+        // On hybrid mobile the map is a "Map view" button until opened; the app shell (and the
+        // `actions` slot where interact's bar lives) only mounts on app:opened. Track open state
+        // and enable interact then — deferred to the next frame so the fullscreen layout has
+        // settled before the action bar mounts (enabling mid-transition leaves it mis-positioned).
+        interactiveMap.on('app:closed', () => { appOpen = false })
+        interactiveMap.on('app:opened', () => {
+          appOpen = true
+          requestAnimationFrame(() => enableInteract('app:opened'))
+        })
+        interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
+          const ngc = selectedFeatures && selectedFeatures.length ? featureNgc(selectedFeatures[0]) : null
+          if (ngc != null) selectParcel(ngc)
+          else clearParcelSelection()
+        })
+        interactiveMap.on('interact:done', ({ selectedFeatures }) => {
+          const ngc = selectedFeatures && selectedFeatures.length ? featureNgc(selectedFeatures[0]) : null
+          if (ngc != null) window.location.href = `/v18/1.1/view-land-parcel?parcel=${ngc}`
+        })
+      }
 
       // Re-add parcel layers after a map style change
       interactiveMap.on('map:stylechange', () => {

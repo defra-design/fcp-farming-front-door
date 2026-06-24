@@ -218,6 +218,31 @@
       flex: 1 1 0;
       min-height: 0;
     }
+
+    /* In the normal (non-fullscreen) view the map is hidden at this width, so
+       release the full-height scroll lock and let the whole page (sub-header
+       included) scroll in normal document flow. The :not(.im-is-fullscreen)
+       guard keeps the original locked layout for "Map view" fullscreen, where
+       the DEFRA map and its control bar must fill the viewport. */
+    html.govuk-template:not(.im-is-fullscreen) {
+      height: auto;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) body.govuk-template__body {
+      height: auto;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) .app-map-fullscreen {
+      flex: 0 0 auto;
+      min-height: 0;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) .app-map-fullscreen__sidebar {
+      overflow: visible;
+    }
   }
 
   /* Map -> sidebar: highlight a hedgerow's row when its line is clicked on the map
@@ -1017,15 +1042,18 @@
       // this is re-run whenever the hedgerow layer is recreated or the style changes.
       function enableInteract () {
         if (!hedgeMap || !interact || !hedgeMap.getLayer('parcels-hit')) return false
-        // Only hedgerows go through the interact plugin. Parcel selection is handled by a native
-        // MapLibre click on 'parcels-hit' (see map:ready) instead, because the plugin re-tests a
-        // polygon click with point-in-polygon against the TILE-CLIPPED geometry from
-        // queryRenderedFeatures (de-duped to one fragment per feature). When a parcel straddles a
-        // vector-tile seam — increasingly likely as you zoom in (e.g. ~1km) — the retained
-        // fragment may not contain the click, so the test fails and the parcel can't be selected.
-        // MapLibre's own layer hit-test has no such limitation.
+        // Desktop parcel selection is handled by a native MapLibre click on 'parcels-hit' (see
+        // map:ready) rather than the interact plugin, because the plugin re-tests a polygon click
+        // with point-in-polygon against the TILE-CLIPPED geometry from queryRenderedFeatures
+        // (de-duped to one fragment per feature). When a parcel straddles a vector-tile seam —
+        // increasingly likely as you zoom in (e.g. ~1km) — the retained fragment may not contain
+        // the click, so the test fails and the parcel can't be selected. MapLibre's own layer
+        // hit-test has no such limitation. On mobile, though, parcel switching has to go through
+        // interact (its touch crosshair owns selection), so 'parcels-hit' is also registered below
+        // — accepting the seam-bug risk, matching view-land's mobile behaviour.
         const layers = []
         if (hedgeMap.getLayer('hedgerows')) layers.push({ layerId: 'hedgerows', idProperty: 'hedgeId' })
+        if (hedgeMap.getLayer('parcels-hit')) layers.push({ layerId: 'parcels-hit', idProperty: 'ngc' })
         interact.enable({ layers })
         return true
       }
@@ -1236,8 +1264,9 @@
           hedgeMap.on('idle', reapply)
         })
 
-        // Map -> sidebar. A click on a hedgerow line highlights its row. (Parcel switching is
-        // handled by the native 'parcels-hit' click in map:ready, not the interact plugin.)
+        // Map -> sidebar. A click on a hedgerow line highlights its row. Desktop parcel switching
+        // is handled by the native 'parcels-hit' click in map:ready; on mobile the touch crosshair
+        // selects a parcel through interact, so we also switch parcels off this event.
         interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
           const selectedIds = new Set(
             selectedFeatures.filter(f => f.layerId === 'hedgerows').map(f => f.featureId)
@@ -1248,6 +1277,12 @@
               tr.dataset.hedgeId != null && selectedIds.has(tr.dataset.hedgeId)
             )
           })
+          // Mobile crosshair selected a parcel → switch to it (mirrors the native click).
+          const parcelFeat = selectedFeatures.find(f => f.layerId === 'parcels-hit')
+          if (parcelFeat) {
+            const ngc = parcelFeat.featureId != null ? parcelFeat.featureId : (parcelFeat.properties && parcelFeat.properties.ngc)
+            if (ngc && ngc !== currentNgc) switchParcel(ngc)
+          }
         })
 
         // Move the "Map view" button into the sidebar on mobile

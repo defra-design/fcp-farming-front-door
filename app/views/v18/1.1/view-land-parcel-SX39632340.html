@@ -218,6 +218,31 @@
       flex: 1 1 0;
       min-height: 0;
     }
+
+    /* In the normal (non-fullscreen) view the map is hidden at this width, so
+       release the full-height scroll lock and let the whole page (sub-header
+       included) scroll in normal document flow. The :not(.im-is-fullscreen)
+       guard keeps the original locked layout for "Map view" fullscreen, where
+       the DEFRA map and its control bar must fill the viewport. */
+    html.govuk-template:not(.im-is-fullscreen) {
+      height: auto;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) body.govuk-template__body {
+      height: auto;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) .app-map-fullscreen {
+      flex: 0 0 auto;
+      min-height: 0;
+      overflow: visible;
+    }
+
+    html:not(.im-is-fullscreen) .app-map-fullscreen__sidebar {
+      overflow: visible;
+    }
   }
 
   /* Map -> sidebar: highlight a hedgerow's row when its line is clicked on the map
