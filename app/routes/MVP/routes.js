@@ -375,6 +375,20 @@ module.exports = function (router, _myData) {
     });
 
 
+       //internal customer page 2
+        router.get('/' + version + '/internal-customer-page-2', function (req, res) {
+            res.render(version + '/internal-customer-page-2', {
+                myData: req.session.myData
+            });
+        });
+
+           //internal customer no business
+           router.get('/' + version + '/internal-customer-no-business', function (req, res) {
+            res.render(version + '/internal-customer-no-business', {
+                myData: req.session.myData
+            });
+        });
+
 
     //payment action letter
     router.get('/' + version + '/payment-action-letter', function (req, res) {

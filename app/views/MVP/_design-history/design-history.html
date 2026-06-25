@@ -145,7 +145,56 @@
           header banner that was displaying the selected business information (this is because the user would not
           necessarily have come to this page from a selected business)
         </li>
-        <li>because of our integration with Defra ID for signing in users, bp01 will be built by their team and used by other services. This means that we cannot customise this page, and we have therefore removed the link to 'View personal details'</li>
+        <li>
+          because of our integration with Defra ID for signing in users, bp01 will be built by their team and used by 
+          other services. This means that we cannot customise this page, and we have therefore removed the link to 
+          'View personal details'
+        </li>
+          <li>
+            removed mentions of the service name from mp06 signed out, mp07 auto signed out and se04 forbidden. This is 
+            because the service name is in the header and does not need to be played back within the service, as this will 
+            be apparent
+          </li>
+          <li>
+            updated FLS start page with information about what FLS is, that it is replacing RPS and what you can use if for 
+            now and in future. The design has further evolved from UR since the MVP was developed. The most recent design is 
+            in prototype v17 Start using the Farm and Land Service
+          </li>
+          <li>
+            for the internal journey, we have redesigned the screens to search for a customer or business (we cannot use omnisearch 
+            (one search box serving multiple criteria). We have pivoted to single search criteria. Search by SBI is the default, 
+            as RPA feedback tells us that this is the most common search criteria. The internal user can select 
+            ‘Change search criteria’ to select different parameters. Selecting the link 'Clear search' does the same.
+              <ul class="govuk-list--bullet govuk-list"> 
+                <li>
+                  Validation on search criteria has been replicated from the as-is. For some criteria, this requires the full input 
+                  (eg, SBI). For others, a partial match is sufficient (eg, customer name).  
+                </li>
+              </ul>
+          </li>
+          <li>
+            also for the internal journey, for all pages we have updated the LHS link text to ‘Search for another business’ and 
+            location to int-sr01a Search by SBI. This is because we believe the majority of internal users will be searching by full SBI, 
+            and should be surfaced right result first time, therefore there's little benefit in them returning to the search results
+          </li>
+          <li>
+            for int-cv01 Selected customer view, we have:
+              <ul class="govuk-list--bullet govuk-list"> 
+                <li>
+                  added a variant for pagination for 2+ page results, which removes the capability to View and update personal details, 
+                  on the assumption that if a user if searching for businesses linked to the customer then their intention is not to update 
+                  personal details. The same approach to be taken for int-bv01 Selected business view 
+                </li>
+                <li>
+                  added a variant for customers with no businesses registered
+                </li>
+              </ul>
+          </li>
+          <li>
+            for internal users updating business details, we have updated the legal status journey to remove conditional formatting. 
+            Instead, we are using branching to request charity commission or company registration numbers where required.          
+          </li>
+
       </ul>
     </ul>
 
