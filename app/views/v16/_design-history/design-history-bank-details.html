@@ -29,172 +29,304 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h2 class="govuk-heading-l">
-      Why did we do this iteration?
+      Design history for adding and updating bank details v1.1
     </h2>
 
     <p class="govuk-body">
-      The purpose of this iteration was to design various loose ends we had not had time to think through until now. These include:
+         Update bank details was a new capability in the Rural Payments service (RPs) when we
+       <a href="https://fcp-farming-front-door-59e0a6ac6fb8.herokuapp.com/v9/_design-history/design-history_bank-details"> first explored this feature</a>
+          in 2025. The brief for design was to reuse the as-is journey with minor improvements to bring it in line with the
+       <a href="https://design-system.service.gov.uk/">GOV.UK Design System </a>
+         and
+       <a href="https://www.gov.uk/guidance/style-guide/a-to-z">stlye guide.</a>
+     </p>
+
+    <p class="govuk-body">
+         We tested our prototype with external users and took
+      <a href="https://eaflood.atlassian.net/browse/SFD2-24"> a small number of actions. </a>
+          Bank details was then put in the backlog and our team reorganised into 2 cross-disciplinary squads with new priorities.
     </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        making simple prioritised updates 
-      </li>
-      <li>exploring different scenarios relating to permission levels and business relationships, especially for users with full permissions and/or owners</li>
-    </ul>
-
-    <p>
-      The mural board work for this iteration is here: <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1765188385049/52966f8ac42c31e942ea6d8cb3e4aa57599bb19d?wid=0-1767878025899">Explore board 3 (opens in new tab)</a>
-    </p>
 
     <h2 class="govuk-heading-l">
-      Simple updates 
+      Where we are now
     </h2>
 
-    <img src="/public/images/design-history/v16/test-image.png"
-    alt="Diagram showing the journeys within Scenario 1: a user updates details before starting application" class="design-history">
-
 
     <p class="govuk-body">
-      With our product manager, we prioritised some straightforward iterations for the initial release of permissions:
+      When we returned to bank details we identified 2 significant items requiring further design exploration.
     </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        removed link to guidance on recommended permission levels
-      </li>
-      <li>
-        removed request/grant access journey as this has been descoped for initial release (when back in scope, this could involve multiple changes following the last round of UR) 
-      </li>
-    </ul>
 
-    <p class="govuk-body" target="_blank">
-      There are other major changes that would be important to consider for initial release (any changes needed to notifications, and the internal user journeys) which our PM decided for now could go on the backlog, together with the longer term ideas (which includes a complete rethinking of RPA’s permissions rules). There is a <a href="https://eaflood.atlassian.net/browse/SFD2-650?search_id=1378f967-4502-4146-a84f-13c6276efd25" target="_blank">Jira ticket for all these medium and long term plans in the backlog which contains relevant notes and links (opens in new tab)</a>.
-    </p>
-
-    <p class="govuk-body">
-      <a href="../../v10/_design-history/design-history_permissions-v1-1">All the proposed changes following the latest round of permissions user research</a> (prototype version 10) were reviewed and have been either addressed in version 16, or are in this backlog ticket.
-    </p>
-
-    <h2 class="govuk-heading-l">
-      Scenarios for users with different permission levels and relationships
-    </h2>
-
-    <p class="govuk-body">
-      In the latest iteration we attempted to clarify journeys for users with varying permission levels and relationships, especially users with high permission and/or owners.
-    </p>
-    <p class="govuk-body">
-      As part of this work, we addressed the user need which clearly came out of the last round of UR for  more prominent warnings when giving high permission. We did this by moving the warning higher, splitting it across pages to make it easier to digest and more in context, and adding extra warnings at high-risk moments.
-    </p>
 
     <h3 class="govuk-heading-m">
-      Business rules and our assumptions
+      30-day payment risk to an old account
     </h3>
 
     <p class="govuk-body">
-      The underlying business rules are complex and in some key respects are unclear to us (and, we believe, will be confusing to both external and internal users). There are some apparent conflicts between some of the rules. This post covers permissions in general, while <a href="../../v14/_design-history/design-history">other conflicts which relate to doc upload permissions are covered in the doc upload/permissions design history</a>.
+      User research for v1 of bank details showed the legal declaration to be contentious. In particular, 
+      users were not content for payments to go to an old account and were confused about the 30-day timeline.
     </p>
     <p class="govuk-body">
-      It was not possible to confirm all the business rules on permissions with certainty, so we had to design based on our best assumptions of how we think permissions could and should logically work, based on our BAs' knowledge, the test environment, BAs' discussions with RPA, and design thinking. 
+      We spoke with RPA colleagues in Customer Payments and Accounting, Customer Operations and the Customer Service Centre, 
+      who each have a hand in paying customers or dealing with payment enquiries.
     </p>
     <p class="govuk-body">
-      UCD’s recommendation continues to be that the whole RPS permissions model should be completely re-thought and therefore re-designed. 
+      We found that the risk arises in RPAʼs use of future-dated payments, where a large number of
+      payments are scheduled in batches in advance. If a user updates their details after a payment
+      has been scheduled, this change will not be picked up by RPA and payment may continue to the
+      account details that were previously held for their business. Colleagues were aware of a
+      ‘handfulʼ of times this had happened. Neither RPA nor its users have any means to stop a future-
+      dated payment run.    
     </p>
     <p class="govuk-body">
-      Fundamental change is especially important due to the RPA’s plan to make the portal entirely self-serve when it comes to permissions, with the exception of assisted digital users. This will make it easier for high-permission users to make major business changes online, which poses a significant risk to businesses and vulnerable users if they have given someone high levels of permission without understanding the implications. It will be more important than ever to restrict the giving of ‘full permissions’.
-    </p>
-    <p class="govuk-body">
-      If our initial release of permissions goes ahead, the fundamental permissions model will not change but things may appear different to users. We have tried to address this in our designs by playing back information and choices to users in the service, but there needs to be careful planning in terms of the comms around dual running, for example whether existing users might be invited to review or reset permissions online.
+      We also engaged Defra Legal Group, who were concerned that the legal declaration:
     </p>
 
+    <ul class="govuk-list govuk-list--bullet">
+      <li> may contravene
+        <a href="https://www.legislation.gov.uk/uksi/2021/405/contents"> 
+          The Agriculture (Financial Assistance) Regulations 2021
+        </a>
+      </li>
+      <li>is not applicable to users adding bank details for the first time</li>
+     </ul>
+
+     <p class="govuk-body">
+      We strongly recommend that RPA review their payment process so that customers are not 
+      prevented from accessing any money they are due. In the meantime, we will look to:
+    </p>
+
+     <ul class="govuk-list govuk-list--bullet">
+      <li> support clearer messaging to help users understand why a payment may be made to
+        previously held account details
+      </li>
+      <li>only serve this message to users who are updating business bank account details</li>
+     </ul>
+
+
     <h3 class="govuk-heading-m">
-      Journeys prototyped
+      Temporary block on users updating details
     </h3>
 
     <p class="govuk-body">
-      Based on our assumptions, we mapped out the following scenarios in Mural, prototyped them and shared them for review with RPA colleagues:
+      Our business analyst uncovered 2 additional unhappy paths that had not been accounted for in
+      the v1 bank details prototype.    
     </p>
 
-    <h4 class="govuk-heading-s">
-      A full permission user gives someone else full permission
-    </h4>
-
     <p class="govuk-body">
-      In this scenario, we decided a user should not need to click through and select any land or scheme permissions, and can move straight to the check page, because by assigning full business permission, they are automatically, in effect, handing the other user full control of all land and schemes. 
+      Users are temporarily blocked from adding or updating bank details for:
     </p>
-    <p class="govuk-body">
-      This is something which is not made clear to users in the as-is, and we think it could be a major contributor to users not understanding the implications of giving someone full permission. Not being clear on this misleads users into, for example, believing they are restricting someone’s scheme or land permissions, when in fact there is no such restriction because any user with full permission can change their own permissions. 
-    </p>
-    <p class="govuk-body">
-      In our iteration, we now remove unnecessary and misleading steps for users, explain what full permission means, and make the risks more obvious. 
-    </p>
-
-    <h4 class="govuk-heading-s">
-      A user changes their own permission or business relationship
-    </h4>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>
-        only a full permission user can change their own business relationship and reduce their own permissions (we wondered why anyone would want to reduce their own permission, and have been advised by BAs that users may want to do this to stop getting so much correspondence). The user will, in our new design, get a warning about losing their full control of the business
-      </li>
-      <li>
-        any user without full permission sees a variation of the ‘View access’ page which has no ‘change’ links next to their own and others' roles and permissions - they only see links to ‘details’ because they have no permission to change their own or others' roles or permissions
-      </li>
-      <li>
-        any type of user can remove their own access to the business. There are a few exceptions which we have prototyped as unhappy paths:
-      </li>
-      <ol class="govuk-body" type="a">
-        <li>
-          a full permission user cannot reduce their own permissions or remove themself if they are the only full permission user
-        </li>
-        <li>
-          an ‘owner or sole trader’ (any permission level) cannot change their business relationship or remove themself if they are the only ‘owner or sole trader’
-        </li>
-      </ol>
+      <li> 24 hours after registering a new business</li>
+      <li>14 days after updating their bank details</li>
     </ul>
 
-    <h4 class="govuk-heading-s">
-      A user views and changes others' permissions
-    </h4>
+     <p class="govuk-body">
+      RPs currently serves both scenarios with the same pop-up error message.
+     </p>
+
+     <p class="govuk-body">
+      We took advice from one of our software developers who suggested we create:
+     </p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>
-        a full permission user can't make any changes to another person with full permission’s role, permissions or remove them. The other person could be an owner or not - the fact the other user has full permission trumps everything
-      </li>
-      <li>
-        a full permission user can change a lower permission user’s role or permissions. Even if the lower permission user is an owner
-      </li>
-      <li>
-        a full permission user can remove a lower permission user, except if the lower permission user is an ‘owner or sole trader’
-      </li>
-      <li>
-        any user without full permission sees a variation of the ‘View access’ page which has no ‘change’ links next to their own and others' roles and permissions - they only see links to ‘details’ because they have no permission to change their own or others' roles or permissions
-      </li>
+      <li> individual variants that are specific to the scenario (preferred option)</li>
+      <li>a single journey that encompasses both scenarios (second choice)</li>
     </ul>
+    <p class="govuk-body">
+      While it might make sense to us in design to advocate for separate journeys, 
+      technically speaking this may not be possible, for example, if both scenarios are 
+      drawing from the same data source. We will not know the technical constraints until 
+      the developers start building it out.
+    </p>
+    <p class="govuk-body">
+      In this case, as the design effort is fairly lightweight, we are happy to 
+      explore both our preferred option and the alternative. We would not advise this 
+      approach for high-effort, high-value capabilities, such as land management, 
+      where any technical constraints should be investigatedand mapped out up front.
+    </p>
+
+
+    <h3 class="govuk-heading-m">
+      What we designed 
+    </h3>
+
+       <p class="govuk-body">
+        We now have separate journeys for users:
+       </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li> adding bank details for the first time</li>
+          <li>updating existing bank details</li>
+       </ul>
+
+       <p class="govuk-body">
+        Both are accessible from bd01 and follow the same journey, with one exception: 
+        on selecting to update details, existing account holders will be presented with ba01 interrupter page.
+       </p>
+
     
-    <h2 class="govuk-heading-l">
-      Next steps
-    </h2>
+
+    <img src="/public/images/design-history/v16/payment-to-existing.png"
+    alt="Screen design showing an interuption card to show there is an existing bank account linked" class="design-history">
 
     <p class="govuk-body">
-      Confirm the assumptions we have prototyped with RPA for our initial release and change designs as needed.
-    </p>
-    <p class="govuk-body">
-      The move to get users to make all permissions changes online (except for assisted digital users) only emerged after we had done our designs, and if this affects initial release, our designs will need significant updating to reflect this and put in appropriate safeguards.
-    </p>
-    <p class="govuk-body">
-      Consider if RPA need any operational changes to email or letter notifications and any need for an internal user journey (see backlog ticket).
-    </p>
-    <p class="govuk-body">
-      Consider dual running comms around permissions.
-    </p>
-    <p class="govuk-body">
-      Metadata and ALAN will be done once we have finalised designs for initial release.
-    </p>
-    <p class="govuk-body">
-      This iteration is brand new and has not been through any user testing - it should be tested. The <a href="../../v10/_design-history/design-history_permissions-v1-1">ideas for user testing noted at the end of the previous permissions design history</a> are still valid.
+      The component is borrowed from the Ministry of Justice’s
+        <a href="https://design-patterns.service.justice.gov.uk/components/interruption-card/"> Interruption card,</a>
+        use case 5, ‘showing important content ahead of a task’.
+     </p>
+
+     <p class="govuk-body">
+      Our interrupter foregrounds the risk of payment to existing bank account details. 
+      It gives context to why this may happen and asserts the user as the responsible party 
+      to recover any funds. The user can either click the primary button - at which point 
+      they start the update details journey - or choose to cancel the transaction.    
     </p>
 
+    <p class="govuk-body">
+      The interrupter is separate to the legal declaration, which is now the final step in both the add and 
+      update bank account details journeys. The declaration has been simplified to contain only 
+      the actions a user needs to confirm that they have understood before they submit their update.
+      This change brings it in closer alignment with the Home Office
+      <a href="https://design.homeoffice.gov.uk/design-system/patterns/ask-users-for/declarations"> Declarations </a>
+      pattern.
+    </p>
+
+   
+
+  <img src="/public/images/design-history/v16/declaration-correct-payment-details.png"
+  alt="Screen design showing a declaration to confirm bank detials are correct" class="design-history">
+
+
+  <p class="govuk-body">
+      For the 2 new unhappy paths where updates are temporarily blocked, we designed:
+     </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li> a separate page for each scenario</li>
+        <li>1 page to serve both scenarios</li>
+     </ul>
+
+    <p class="govuk-body">
+      A user who has registered a new business within the last 24 hours will be presented with a 
+      message asking them to try again when the time has expired.
+    </p>
+
+   
+  <img src="/public/images/design-history/v16/unable-to-add-bank-details.png"
+  alt="Screen design showing that bank details were unable to be added becuase the account is new" class="design-history">
+
+
+
+
+    <p class="govuk-body">
+      A user of a business where the details have been updated in the previous 14 days will 
+      be given context that a user with the appropriate permissions has updated the details and 
+      a hold has been placed on the account.
+    </p>
+       
+
+  <img src="/public/images/design-history/v16/unable-to-update-bank-details.png"
+  alt="Page showing that bank details were unable to be updated because the account has been updated within the last 14 days" class="design-history">
+  
+
+    <p class="govuk-body">
+      If we do need to serve the same content, we also have a variant in the design spec that covers both scenarios.    
+    </p>
+
+
+  <img src="/public/images/design-history/v16/unable-to-add-or-update-bank-details.png"
+  alt="Screen design showing that bank details were unable to be both added or updated" class="design-history">
+    
+  <p class="govuk-body">
+    Additionally, we looked again at the designs for the unhappy paths where there is:
+  </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li> a partial match </li>
+      <li>failure to validate </li>
+    </ul>
+
+    <p class="govuk-body">
+      This was based on user testing which found that while users were generally able to navigate 
+      the unhappy paths, some were confused by the failure messages.
+    </p>
+
+    <p class="govuk-body">
+      On the partial match, v1.1 is now more coherent with the
+      <a href="https://design-system.service.gov.uk/patterns/question-pages/"> Question pages</a>
+      pattern for ‘Asking a complex question without hint text’. It uses
+    </p>
+  
+      <ul class="govuk-list govuk-list--bullet">
+        <li> a stripped back version of the
+            <a href="https://design-system.service.gov.uk/components/notification-banner/"> Notification banner </a>
+            that more concisely conveys the failure (that the name is only a partial match)</li>
+        <li>a H1 that’s a very short statement</li>
+        <li>brief explanatory text for why the partial match has been triggered, which sits below the H1</li>
+        <li>a H2 that’s a call to action - ‘Check the name on the account is correct’ – which prompts the 
+          user to check their details before confirming</li>
+      </ul>
+
+  
+    <img src="/public/images/design-history/v16/partial-match.png"
+    alt="Screen design that shows there was only a partial match identified when entering account details" class="design-history">
+  
+    <p class="govuk-body">
+      Where a bank account cannot be validated, we have clarified the number of attempts a user 
+      has to input the correct details and the consequence of not doing so. Contact details for 
+      RPA are made available through the
+      <a href="https://design-system.service.gov.uk/components/details/"> Details</a>
+      component.
+    </p>
+
+
+  <img src="/public/images/design-history/v16/no-validation.png"
+  alt="Screen design showing that the bank account could not be validated" class="design-history">
+
+      <p class="govuk-body">
+       On the third attempt, the user is informed they are locked out of updating bank details for 24
+       hours. They may return to business details. They also have the option to contact RPA if they
+        have questions or need support, although this is not a requirement: the update feature will
+       reinstate after 24 hours for the user to try again.
+      </p>
+
+ 
+
+<img src="/public/images/design-history/v16/no-validation-3-attempts.png"
+alt="Screen design showing that the bank account could not be validated as details have been incorrectly entered 3 times" class="design-history">
+
+
+     <p class="govuk-body">
+       It should be noted that update bank details is only available to users with full permission or
+       make legal changes. Lower permissions users are not presented with a hyperlink on bd01 and have 
+       no way of accessing this capability.
+    </p>
+
+  <h3 class="govuk-heading-m">
+    Next steps
+  </h3>
+
+     <p class="govuk-body">
+        Confirm the updated journeys with RPA and iterate as needed based on their feedback: this is the biggest priority.
+      </p>
+
+      <p class="govuk-body">
+        Confirm with Single Front Door’s technical team the approach and variants for the 2 unhappy 
+        paths where update details capability is temporarily blocked.      
+      </p>
+
+      <p class="govuk-body">
+        Consider updates to RPA processes and notifications that are sent to users with full permission when 
+        bank details have been added or updated (placed on the backlog on the instruction of SFD Product Manager, see ticket    
+        <a href="https://eaflood.atlassian.net/browse/SFD2-661?atlOrigin=eyJpIjoiMmNmMjJmODdmZDFlNGM0N2FlOWQxYmEzY2JjMzVkMzEiLCJwIjoiaiJ9">SFD2-661: Notifications for bank details updates to full permissions users).</a>  
+      </p>
+
+      <p class="govuk-body">
+        There are currently no plans to test the updated journey.     
+      </p>
 
   </div>
 
