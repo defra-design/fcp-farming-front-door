@@ -328,17 +328,17 @@
       <tbody class="govuk-table__body" id="hedgerows-table-body"></tbody>
     </table>
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">Land parcel map</h2>
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-4">Print map</h2>
 
-    <p>Print or save a copy of your land parcel map.</p>
+    <p><a href="/public/pdf/example-land-parcel.pdf">Print or save</a> a copy of your land parcel map and details.</p>
 
-    {% from "govuk/components/button/macro.njk" import govukButton %}
+    <!-- {% from "govuk/components/button/macro.njk" import govukButton %}
 
     {{ govukButton({
       text: "Download PDF",
       classes: "govuk-button--secondary",
       href: "/public/pdf/example-land-parcel.pdf"
-    }) }}
+    }) }} -->
 
   </div>
 
@@ -583,6 +583,8 @@
         lcTableBody.innerHTML = ''
         let lcTotalArea = 0
         let lcMaxValidFrom = ''   // YYYYMMDDhhmmss strings sort lexicographically; drives "Last updated"
+        // Sort A–Z by land cover name so the order matches the historical views.
+        parcelCovers.sort((a, b) => (a.properties.DESCRIPTION || '').localeCompare(b.properties.DESCRIPTION || ''))
         parcelCovers.forEach(f => {
           const area = parseFloat(f.properties.AREA_HA)
           lcTotalArea += area
