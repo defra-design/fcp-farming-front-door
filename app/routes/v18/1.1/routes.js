@@ -470,6 +470,14 @@ module.exports = function (router, _myData) {
             myData: req.session.myData
         });
     });
+
+    // Sign out — wipe the whole session cache (incl. any entered SBI) so the next
+    // user-testing participant starts from defaults. Session is re-seeded on redirect.
+    router.get('/' + version + '/sign-out', function (req, res) {
+        req.session.destroy(function () {
+            res.redirect('/' + version + '/start-sfd-start');
+        });
+    });
     router.get('/' + version + '/misc-terms', function (req, res) {
         res.render(version + '/misc-terms', {
             myData: req.session.myData
