@@ -36,8 +36,16 @@
 "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=amend"
 },
 {
+"name": "External user with amend permissions adding bank details for the first time",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=amend&bankchanged=false&bank=empty"
+},
+{
 "name": "External user with view permissions",
 "url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=view"
+},
+{
+"name": "External user with view permissions adding bank details for the first time",
+"url": "details-business-details?r=t&release=b1&view=ext&permissionsMVP=view&bankchanged=false&bank=empty"
 },
 {
 "name": "no existing phone numbers - add",
@@ -737,9 +745,15 @@ row. View example with the query string &traderCount=0"
       Bank account details
     </h2>
 
+    {% if data.bank == "empty" and data.bankchanged == "false" %}
+    <p class="govuk-body">
+      You do not have permission to add bank account details for this business.
+    </p>
+    {% else %}
     <p class="govuk-body">
       You do not have permission to view or update bank account details for this business.
     </p>
+    {% endif %}
 
     {% elif data.permissionsMVP == "view" %}
 
@@ -747,9 +761,15 @@ row. View example with the query string &traderCount=0"
       Bank account details
     </h2>
 
+    {% if data.bank == "empty" and data.bankchanged == "false" %}
+    <p class="govuk-body">
+      You do not have permission to add bank account details for this business.
+    </p>
+    {% else %}
     <p class="govuk-body">
       You do not have permission to view or update bank account details for this business.
     </p>
+    {% endif %}
 
     {% else %}
 

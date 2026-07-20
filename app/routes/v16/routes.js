@@ -1012,6 +1012,17 @@ module.exports = function (router, _myData) {
         req.session.myData.vendorCount = req.query.vendorCount
         req.session.myData.traderCount = req.query.traderCount
 
+        // Bank state must reflect the current URL only. The prototype kit persists
+        // query params in req.session.data and copies them into res.locals.data
+        // (the template's `data`) in middleware that runs BEFORE this handler. So we
+        // reset both: the session (so the "empty" bank state doesn't leak forward
+        // into other variants, e.g. amend vs amend-adding-for-the-first-time) and
+        // res.locals.data (so the current render reflects this URL, not the last one).
+        req.session.data.bank = req.query.bank || ""
+        req.session.data.bankchanged = req.query.bankchanged || ""
+        res.locals.data.bank = req.session.data.bank
+        res.locals.data.bankchanged = req.session.data.bankchanged
+
         if (req.query.changed == "true") {
             req.session.myData.notifications.type = "success"
             req.session.myData.showNotification = "true"
