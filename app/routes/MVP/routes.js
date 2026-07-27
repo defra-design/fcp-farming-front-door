@@ -192,7 +192,7 @@ module.exports = function (router, _myData) {
 
     // defining the submission destintation for test-page
 
-    router.post('/search-criteria-answer', function (request, response) {
+    router.post('/MVP/search-criteria-answer', function (request, response) {
 
         var searchCriteria = request.session.data['searchCriteria']
         if (searchCriteria == "int-sr-cusName") {
@@ -1452,32 +1452,32 @@ module.exports = function (router, _myData) {
         });
     });
 
-    router.post('/legal-answer', function (request, response) {
+    router.post('/MVP/legal-answer', function (request, response) {
 
         var legalBus = request.session.data['legalBus']
         if (legalBus == "Charitable incorporated organisation (CIO)") {
-            response.redirect("mvp/business-details-legal-charity")
+            response.redirect("/MVP/business-details-legal-charity")
         }
         else if (legalBus == "Charitable trust") {
-            response.redirect("mvp/business-details-legal-check")
+            response.redirect("/MVP/business-details-legal-check")
         }
         else if (legalBus == "Government (central)") {
-            response.redirect("mvp/business-details-legal-check")
+            response.redirect("/MVP/business-details-legal-check")
         }
         else if (legalBus == "Government (local)") {
-            response.redirect("mvp/business-details-legal-check")
+            response.redirect("/MVP/business-details-legal-check")
         }
         else if (legalBus == "Partnership") {
-            response.redirect("mvp/business-details-legal-check")
+            response.redirect("/MVP/business-details-legal-check")
         }
         else if (legalBus == "Sole proprietorship") {
-            response.redirect("mvp/business-details-legal-check")
+            response.redirect("/MVP/business-details-legal-check")
         }
         else if (legalBus == "The Crown") {
-            response.redirect("mvp/business-details-legal-check")
+            response.redirect("/MVP/business-details-legal-check")
         }
         else {
-            response.redirect("mvp/business-details-legal-company")
+            response.redirect("/MVP/business-details-legal-company")
         }
     })
 

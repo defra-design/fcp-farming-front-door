@@ -112,8 +112,21 @@
 
 {% block beforeContent %}
 
-{% set _loginNavClasses = "no-bread" %}
 {% include "_common/login-nav-internal-a.html" %}
+
+<div class="govuk-breadcrumbs" style="display: inline-block">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="internal-search-criteria">Search criteria</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      Customer name
+    </li>
+  </ol>
+</div>
 
 {% endblock %}
 
