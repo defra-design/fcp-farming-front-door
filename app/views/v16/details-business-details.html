@@ -16,6 +16,13 @@
 
 
 {% set pageName = "View and update your business details" %}
+{% if data.view == "int" %}
+  {% set pageName = "View and update business details" %}
+{% endif %}
+
+{# default h1 matches the title; the permission-limited variants below are external-only #}
+{% set _headingText = pageName %}
+
 {% set serviceName = "Farm and Land Service" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -329,7 +336,7 @@ row. View example with the query string &traderCount=0"
     </p>
     {% else %}
     <h1 class="govuk-heading-l">
-      View and update your business details
+      {{ _headingText }}
     </h1>
     {% endif %}
 

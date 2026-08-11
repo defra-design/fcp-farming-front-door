@@ -332,6 +332,13 @@ module.exports = function (router, _myData) {
         });
     });
 
+    //internal sign in
+    router.get('/' + version + '/internal-sign-in', function (req, res) {
+        res.render(version + '/internal-sign-in', {
+            myData: req.session.myData
+        });
+    });
+
     //internal search
     router.get('/' + version + '/internal-search', function (req, res) {
 
@@ -1054,7 +1061,11 @@ module.exports = function (router, _myData) {
             req.session.myData.notifications.message = "You have updated your business legal status"
         }
         if (req.query.bankchanged == "true") {
-            req.session.myData.notifications.message = "You have updated your business bank account details"
+            if (req.session.data.view == "int") {
+                req.session.myData.notifications.message = "The business bank account details have been updated"
+            } else {
+                req.session.myData.notifications.message = "You have updated your business bank account details"
+            }
         }
 
         res.render(version + '/details-business-details', {

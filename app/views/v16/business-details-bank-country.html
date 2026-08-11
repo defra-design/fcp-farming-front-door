@@ -10,10 +10,16 @@
 {% set _inError = myData.validationError == "true"  %}
 
 {% set pageTitle = "How do you want to be paid?" %}
+{% if data.view == "int" %}
+  {% set pageTitle = "How will payment be made?" %}
+{% endif %}
 {% set pageName = pageTitle %}
-{% if _inError %} 
+{% if _inError %}
   {% set pageName = "Error: " + pageTitle %}
 {% endif %}
+
+{# h1 is the same wording as the title on this page #}
+{% set _headingText = pageTitle %}
 
 {% set _showIntExtLinks = true %}
 
@@ -114,7 +120,7 @@
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                 <h1 class="govuk-fieldset__heading">
-                    How do you want to be paid?
+                    {{ _headingText }}
                 </h1>
                 </legend>
                 <div class="govuk-radios" data-module="govuk-radios">

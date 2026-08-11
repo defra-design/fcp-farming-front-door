@@ -10,6 +10,13 @@
 {% set _showIntExtLinks = true %}
 
 {% set pageName = "Check your bank or building society details" %}
+{% if data.view == "int" %}
+  {% set pageName = "Check the bank or building society details" %}
+{% endif %}
+
+{# h1 is the same wording as the title on this page #}
+{% set _headingText = pageName %}
+
 {% set serviceName = "Farm and Land Service" %}
 
 {% if data.view == "ext" and data.release != "concept" %}
@@ -122,7 +129,7 @@
     <form method="POST" novalidate action="business-details-bank-declaration">
 
       <h1 class="govuk-heading-l">
-        Check your bank or building society details
+        {{ _headingText }}
       </h1>
 
       <dl class="govuk-summary-list">
