@@ -116,14 +116,6 @@
     "pageurl": "",
     "errormessages": [
       {
-        "scenario": "Customer reference number (CRN): Empty field / nothing entered",
-        "content": "Enter the customer’s CRN"
-      },
-      {
-        "scenario": "Customer reference number (CRN): Incorrect format, or too long or short",
-        "content": "Enter a valid CRN, like 1101996862"
-      },
-      {
         "scenario": "Name on the account: Empty field / nothing entered",
         "content": "Enter the name on the account"
       },
@@ -161,9 +153,7 @@
       }
     ],
     "notes": [
-    "Form fields shown on this page are determined by the selection made on int-ba03. For this variation (ba04a), 'Business' have been selected.",
-
-    "The form is a mirror of the external page ba04, except for the addition of the Customer reference number input field."
+    "Form fields shown on this page are determined by the selection made on int-ba03. For this variation (ba04a), 'Business' have been selected."
   ]
   
 
@@ -225,6 +215,7 @@
           </h1>
         </legend>
 
+{#
         {% if data.view == "int" %}
         <div class="govuk-form-group">
           <label class="govuk-label" for="bankCRNbus">
@@ -233,6 +224,7 @@
           <input class="govuk-input govuk-input--width-10" id="bankCRNbus" name="bankCRNbus" type="text" value ="{{ data['bankCRNbus'] }}">
         </div>
         {% endif %}
+        #}
 
         <!-- Name on the account -->
         <div class="govuk-form-group {% if myData.validationErrors.bankNameBus %}govuk-form-group--error{% endif %}">

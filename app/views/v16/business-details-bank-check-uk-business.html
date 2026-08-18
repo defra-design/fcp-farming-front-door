@@ -73,9 +73,7 @@
     "notes": [
     "Form fields shown on this page are determined by the selection made on int-ba03, and then the fields filled out accordingly on int-ba04a. For this variation (int-ba05a), 'Business' have been selected.",
 
-    "Optional fields such as the Building society roll number should still be displayed in the summary list even if left blank by the user, with a 'No number added' (or relevant message), to let the user know they skipped it",
-
-    "The summary list is a mirror of the external page ba05, except for the addition of the Customer reference number input field."
+    "Optional fields such as the Building society roll number should still be displayed in the summary list even if left blank by the user, with a 'No number added' (or relevant message), to let the user know they skipped it"
   ]
   
 
@@ -128,6 +126,7 @@
             <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-type">Change<span class="govuk-visually-hidden"> account number</span></a>
           </dd>
         </div>
+{#
         {% if data.view == "int" %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
@@ -147,6 +146,7 @@
           </dd>
         </div>
         {% endif %}
+        #}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Name on the account
