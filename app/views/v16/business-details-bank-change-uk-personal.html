@@ -10,9 +10,17 @@
 {% set _inError = myData.validationError == "true"  %}
 
 {% set pageTitle = "Change your bank or building society account details" %}
+{% if data.view == "int" %}
+  {% set pageTitle = "Change the bank or building society account details" %}
+{% endif %}
 {% set pageName = pageTitle %}
 {% if _inError %} 
   {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set _headingText = "What are your bank or building society account details?" %}
+{% if data.view == "int" %}
+  {% set _headingText = "What are the bank or building society account details?" %}
 {% endif %}
 
 {% set _showIntExtLinks = true %}
@@ -219,7 +227,7 @@
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">
-            What are your bank or building society account details?
+            {{ _headingText }}
           </h1>
         </legend>
 
