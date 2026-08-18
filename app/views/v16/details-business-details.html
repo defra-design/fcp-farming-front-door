@@ -795,7 +795,7 @@ row. View example with the query string &traderCount=0"
     </p>
 
     <p class="govuk-body">
-      <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-country">
+      <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-type">
         Add bank account details
       </a>
     </p>
@@ -803,18 +803,6 @@ row. View example with the query string &traderCount=0"
     {% else %}
     <dl class="govuk-summary-list">
       {% if data.bankchanged == "true" %}
-      {% if (data['bankCountrybus'] == "European bank account") %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Country code where the account is held
-        </dt>
-        <dd class="govuk-summary-list__value">
-          {{ data['bankCountryCodebus'] }}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      {% endif %}
       <div class="govuk-summary-list__row">
         {% if (data['bankAccountTypebus'] == "Business") %}
         <dt class="govuk-summary-list__key">
@@ -865,8 +853,6 @@ row. View example with the query string &traderCount=0"
         <dd class="govuk-summary-list__actions">
         </dd>
       </div>
-      {% if (data['bankCountrybus'] == "UK bank or building society account") %}
-
       {% if data['bankBuildbus'] %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -889,42 +875,6 @@ row. View example with the query string &traderCount=0"
         <dd class="govuk-summary-list__actions">
         </dd>
       </div>
-      {% endif %}
-      {% elseif (data['bankCountrybus'] == "European bank account") %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          IBAN
-        </dt>
-        <dd class="govuk-summary-list__value">
-          ***********89
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      {% if data['bankSwiftCodebus'] %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          SWIFT code (optional)
-        </dt>
-        <dd class="govuk-summary-list__value">
-          ********34
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      {% else %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          SWIFT code (optional)
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <span style="color:#505a5f">No number added</span>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      {% endif %}
-      {% else %}
       {% endif %}
       {% else %}
       <div class="govuk-summary-list__row">

@@ -186,28 +186,11 @@
 
   {% set _hideAccountLink = true %}
   {% include "_common/login-nav-3a.html" %}
-
-  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
   {% else %}
   {% include "_common/login-nav-internal-a.html" %}
-
-  <div class="govuk-breadcrumbs" style="display: inline-block">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-business">{{myData.selectedBusiness.name}} (SBI: {{myData.selectedBusiness.sbiNumber}})</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="details-business-details?view=int">Business details</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        Business legal status
-      </li>
-    </ol>
-  </div>
 {% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 

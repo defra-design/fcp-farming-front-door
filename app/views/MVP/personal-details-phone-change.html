@@ -56,7 +56,7 @@
       {
         "field": "Mobile",
         "scenario": "Entry contains invalid characters",
-        "content": "Personal mobile phone number must only include numbers 0 to 9 and special characters such as spaces, brackets and +"
+        "content": "Personal mobile number must only include numbers 0 to 9 and special characters such as spaces, hyphens, brackets, - and +"
       },
       
       {
@@ -72,7 +72,7 @@
       {
         "field": "Telephone",
         "scenario": "Entry contains invalid characters",
-        "content": "Personal telephone number must only include numbers 0 to 9 and special characters such as spaces, brackets and +"
+        "content": "Personal telephone number must only include numbers 0 to 9 and special characters such as spaces, hyphens, brackets, - and +"
       }
     ]
     
@@ -110,7 +110,7 @@
       {
         "field": "Mobile",
         "scenario": "Entry contains invalid characters",
-        "content": "Personal mobile number must only include numbers 0 to 9 and special characters such as spaces, brackets and +"
+        "content": "Personal mobile number must only include numbers 0 to 9 and special characters such as spaces, hyphens, brackets, - and +"
       },
       
       {
@@ -126,7 +126,7 @@
       {
         "field": "Telephone",
         "scenario": "Entry contains invalid characters",
-        "content": "Personal telephone number must only include numbers 0 to 9 and special characters such as spaces, brackets and +"
+        "content": "Personal telephone number must only include numbers 0 to 9 and special characters such as spaces, hyphens, brackets, - and +"
       }
     ]
     
@@ -145,28 +145,11 @@
 
   {% set _hideAccountLink = true %}
   {% include "_common/login-nav-3a.html" %}
-
-  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
   {% else %}
   {% include "_common/login-nav-internal-a.html" %}
-
-  <div class="govuk-breadcrumbs" style="display: inline-block">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-search?q={{myData.searchTerm}}">Search</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="internal-customer">{{myData.selectedUser.name}} (CRN: {{myData.selectedUser.crn}})</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="details-personal-details?view=int">Personal details</a>
-      </li>
-      <li class="govuk-breadcrumbs__list-item">
-        Personal phone numbers
-      </li>
-    </ol>
-  </div>
 {% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
 
 {% endblock %}
 

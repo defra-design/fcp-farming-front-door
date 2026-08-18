@@ -39,7 +39,7 @@
     ],
     "notes": [
     "This page is reached where the bank account details submitted are a partial match during the bank account validation – e.g. the bank account first name is 'Andrew', but the user has submitted 'Andy', with the rest of the bank account details being correct/a match. We allow the user to either submit with these bank account details, or return to the check page (the relevant variation of ba05) to edit.",
-    "The summary list under 'Your bank account or building society details' should show the same inputs as displayed on whatever is the relevant variant of ba05 preceeding this page. I.e. if a European personal account was submitted, then it should display the fields entered accordingly."
+    "The summary list under 'Your bank account or building society details' should show the same inputs as displayed on whatever is the relevant variant of ba05 preceeding this page. I.e. if a personal account was submitted, then it should display the fields entered accordingly."
   ]
   }
 %}
@@ -63,7 +63,7 @@
     ],
     "notes": [
     "This page is reached where the bank account details submitted are a partial match during the bank account validation – e.g. the bank account first name is 'Andrew', but the user has submitted 'Andy', with the rest of the bank account details being correct/a match. We allow the user to either submit with these bank account details, or return to the check page (the relevant variation of int-ba05) to edit.",
-    "The summary list under 'Your bank account or building society details' should show the same inputs as displayed on whatever is the relevant variant of ba05 preceeding this page. I.e. if a European personal account was submitted, then it should display the fields entered accordingly."
+    "The summary list under 'Your bank account or building society details' should show the same inputs as displayed on whatever is the relevant variant of ba05 preceeding this page. I.e. if a personal account was submitted, then it should display the fields entered accordingly."
   ]
   }
 %}
@@ -140,16 +140,6 @@
           Check the account name you entered is correct
         </h2>
         <dl class="govuk-summary-list">
-          {% if (data['bankCountrybus'] == "European bank account") %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Country code where the account is held 
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {{ data['bankCountryCodebus'] }}
-            </dd>
-          </div>
-          {% endif %}
           <div class="govuk-summary-list__row">
             {% if (data['bankAccountTypebus'] == "Business") %}
             <dt class="govuk-summary-list__key">
@@ -190,8 +180,6 @@
               {{data['bankAccountbus'] or "12345678"}}
             </dd>
           </div>
-          {% if (data['bankCountrybus'] == "UK bank or building society account") %}
-          
             {% if data['bankBuildbus'] %}
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">
@@ -211,37 +199,6 @@
               </dd>
             </div>
             {% endif %}
-          {% elseif (data['bankCountrybus'] == "European bank account") %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              IBAN
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {{ data['bankIBANbus'] or 123456789}}
-            </dd>
-          </div>
-            {% if data['bankSwiftCodebus'] %}
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                SWIFT code (optional)
-              </dt>
-              <dd class="govuk-summary-list__value">
-                {{ data['bankSwiftCodebus'] }}
-              </dd>
-            </div>
-            {% else %}
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                SWIFT code (optional)
-              </dt>
-              <dd class="govuk-summary-list__value">
-                <span style="color:#505a5f">No number added</span>
-              </dd>
-
-            </div>
-            {% endif %}
-          {% else %}
-          {% endif %}
         </dl>
 
         <div class="govuk-form-group">

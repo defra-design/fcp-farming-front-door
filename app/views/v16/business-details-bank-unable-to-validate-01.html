@@ -110,18 +110,30 @@ is their FIRST attempt."
 
     <form method="POST" novalidate action="/v16-validation-return-to-check-1">
 
+      {% if data.view == "int" %}
+      <h1 class="govuk-heading-l">We could not validate these bank details</h1>
+      {% else %}
       <h1 class="govuk-heading-l">We could not validate your bank account</h1>
+      {% endif %}
 
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
           <span class="govuk-visually-hidden">Warning</span>
-          You have 2 attempts left to enter the correct details.
+          {% if data.view == "int" %}
+          2 attempts remaining
+          {% else %}
+          You have 2 attempts remaining
+          {% endif %}
         </strong>
       </div>
 
       <p class="govuk-body">
-        If you enter the wrong details 3 times you will not be able to change your bank account details for 24 hours.
+        {% if data.view == "int" %}
+        If you enter the wrong details, you will not be able to change this account’s bank details for 24 hours.
+        {% else %}
+        If you enter the wrong details, you will not be able to change your bank account details for 24 hours.
+        {% endif %}
       </p>
 
       {{govukButton({

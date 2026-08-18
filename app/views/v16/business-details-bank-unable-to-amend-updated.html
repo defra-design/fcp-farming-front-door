@@ -60,7 +60,7 @@
     "id": "int-ba09a",
     "release": "MVP 1.0",
     "pagetitle": pageName,
-    "pagedesc": "You cannot update bank account details that have been updated by the business in the last 10 days.",
+    "pagedesc": "You cannot update the bank account details for this business as they have been updated in the last 10 calendar days.",
     "pageurl": "internal-business-bank-unable-update",
     "version" : "v16",
     "prototypeurl" : "business-details-bank-unable-to-amend-updated",
@@ -79,7 +79,7 @@
       }
     ],
     "notes": [
-      "Our preference is to display the unhappy paths for unable to amend bank details separately for: a business being less than 24 hours from registration, and bank details have been updated in the last 10 days. This is the error page to display for bank details having been updated in the last 10 days."
+      "Our preference is to display the unhappy paths for unable to amend bank details separately for: a business being less than 24 hours from registration, and bank details have been updated in the last 10 calendar days. This is the error page to display for bank details having been updated in the last 10 calendar days by a person with ‘full permissions’ or ‘make legal changes’."
       
     ]
 }
@@ -115,7 +115,11 @@
       <h1 class="govuk-heading-l">Unable to update bank account details</h1>
 
       <p class="govuk-body">
+        {% if data.view == "int" %}
+        You cannot update the bank account details for this business. This is because the bank account details have been updated in the last 10 calendar days by a person with ‘full permissions’ or ‘make legal changes’.
+        {% else %}
         You cannot update bank account details for this business. This is because the bank account details have been updated in the last 10 days by a person with 'full permissions' or 'make legal changes'. 
+        {% endif %}
       </p>
 
       <p class="govuk-body"><a href="details-business-details"

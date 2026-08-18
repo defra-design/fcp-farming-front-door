@@ -28,21 +28,13 @@
     {
       "name": "ba05b",
       "url": "business-details-bank-check-uk-personal?r=t&view=ext&release=b2"
-    },
-    {
-      "name": "ba05c",
-      "url": "business-details-bank-check-european-business?r=t&view=ext&release=b2"
-    },
-    {
-      "name": "ba05d",
-      "url": "business-details-bank-check-european-personal?r=t&view=ext&release=b2"
     }
     ],
     "pagetitle": pageName,
     "pagedesc": "",
     "pageurl": "",
     "notes": [
-    "Form fields shown on this page are determined by the selections made on ba02 and ba03. For this variation (ba05b), 'UK' and 'Personal' have been selected. "
+    "Form fields shown on this page are determined by the selection made on ba03. For this variation (ba05b), 'Personal' have been selected. "
   ]
 
   }
@@ -64,23 +56,13 @@
     {
       "name": "int-ba05b",
       "url": "business-details-bank-check-uk-personal?r=t&view=int&release=b2"
-    },
-    {
-      "name": "int-ba05c",
-      "url": "business-details-bank-check-european-business?r=t&view=int&release=b2"
-    },
-    {
-      "name": "int-ba05d",
-      "url": "business-details-bank-check-european-personal?r=t&view=int&release=b2"
     }
     ],
     "pagetitle": pageName,
     "pagedesc": "",
     "pageurl": "",
     "notes": [
-    "Form fields shown on this page are determined by the selections made on int-ba02 and int-ba03. For this variation (ba05b), 'UK' and 'Personal' have been selected.",
-
-    "The summary list is a mirror of the external page ba05, except for the addition of the Customer reference number input field."
+    "Form fields shown on this page are determined by the selection made on int-ba03. For this variation (ba05b), 'Personal' have been selected."
   ]
   
 
@@ -124,17 +106,6 @@
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            How do you want to be paid?
-          </dt>
-          <dd class="govuk-summary-list__value">
-            UK bank or building society account 
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-country">Change<span class="govuk-visually-hidden"> account number</span></a>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
             Account type
           </dt>
           <dd class="govuk-summary-list__value">
@@ -144,6 +115,7 @@
             <a class="govuk-link govuk-link--no-visited-state" href="business-details-bank-type">Change<span class="govuk-visually-hidden"> account number</span></a>
           </dd>
         </div>
+{#
         {% if data.view == "int" %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
@@ -163,6 +135,7 @@
           </dd>
         </div>
         {% endif %}
+        #}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             First and last name

@@ -35,14 +35,6 @@
     {
       "name": "ba04b",
       "url": "business-details-bank-change-uk-personal?r=t&view=ext&release=b2"
-    },
-    {
-      "name": "ba04c",
-      "url": "business-details-bank-change-european-business?r=t&view=ext&release=b2"
-    },
-    {
-      "name": "ba04d",
-      "url": "business-details-bank-change-european-personal?r=t&view=ext&release=b2"
     }
     ],
     "pagetitle": pageName,
@@ -95,7 +87,7 @@
       }
     ],
     "notes": [
-    "Form fields shown on this page are determined by the selections made on ba02 and ba03. For this variation (ba04b), 'UK' and 'Personal' have been selected. "
+    "Form fields shown on this page are determined by the selection made on ba03. For this variation (ba04b), 'Personal' have been selected. "
   ]
 
   }
@@ -117,28 +109,12 @@
     {
       "name": "int-ba04b",
       "url": "business-details-bank-change-uk-personal?r=t&view=int&release=b2"
-    },
-    {
-      "name": "int-ba04c",
-      "url": "business-details-bank-change-european-business?r=t&view=int&release=b2"
-    },
-    {
-      "name": "int-ba04d",
-      "url": "business-details-bank-change-european-personal?r=t&view=int&release=b2"
     }
     ],
     "pagetitle": pageName,
     "pagedesc": "",
     "pageurl": "",
     "errormessages": [
-      {
-        "scenario": "Customer reference number (CRN): Empty field / nothing entered",
-        "content": "Enter the customer’s CRN"
-      },
-      {
-        "scenario": "Customer reference number (CRN): Incorrect format, or too long or short",
-        "content": "Enter a valid CRN, like 1101996862"
-      },
       {
         "scenario": "First name: Empty field / nothing entered",
         "content": "Enter the first name on the account"
@@ -185,9 +161,7 @@
       }
     ],
     "notes": [
-    "Form fields shown on this page are determined by the selections made on int-ba02 and int-ba03. For this variation (ba04b), 'UK' and 'Personal' have been selected.",
-
-    "The form is a mirror of the external page ba04, except for the addition of the Customer reference number input field."
+    "Form fields shown on this page are determined by the selection made on int-ba03. For this variation (ba04b), 'Personal' have been selected."
   ]
   
 
@@ -249,8 +223,9 @@
           </h1>
         </legend>
 
-        <p>If this is a joint bank account please only enter the details of one account holder.</p>
+        <p>If this is a joint bank account only enter the details of one account holder.</p>
 
+{#
         {% if data.view == "int" %}
         <div class="govuk-form-group">
           <label class="govuk-label" for="bankCRNbus">
@@ -259,6 +234,7 @@
           <input class="govuk-input govuk-input--width-10" id="bankCRNbus" name="bankCRNbus" type="text" value ="{{ data['bankCRNbus'] }}">
         </div>
         {% endif %}
+        #}
 
           <!-- FIRST NAME -->
           <div class="govuk-form-group {% if myData.validationErrors.bankFirstName %}govuk-form-group--error{% endif %}">
