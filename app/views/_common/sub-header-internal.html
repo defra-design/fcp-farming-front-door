@@ -1,16 +1,11 @@
 
 {% set _subHeaderBusiness = data.selectedBusiness %}
-{% set _subHeaderUser = data.selectedUser or data.user %}
 
 <div class="govuk-grid-row sub-header-container" >
 
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
       <h3 class="govuk-heading-s govuk-!-margin-bottom-1" >{{_subHeaderBusiness.name}}</h3>
       <p class="govuk-body-s govuk-!-margin-bottom-2" >Single business identifier (SBI): {{_subHeaderBusiness.sbiNumber}}</p>
-  </div>
-
-  <div class="govuk-grid-column-one-third">
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-1 sub-header-user-name" >{{_subHeaderUser.name}}</h3>
   </div>
 
 </div>
