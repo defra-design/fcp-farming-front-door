@@ -1070,7 +1070,7 @@ module.exports = function (router, _myData) {
         }
         if (req.query.bankchanged == "true") {
             if (req.session.data.view == "int") {
-                req.session.myData.notifications.message = "The business bank account details have been updated"
+                req.session.myData.notifications.message = "Your business bank account details have been updated"
             } else {
                 req.session.myData.notifications.message = "You have updated your business bank account details"
             }
