@@ -124,3 +124,4 @@ require('./routes/AHWP-v2/routes.js')(router,JSON.parse(JSON.stringify(_myData))
 require('./routes/IAHW/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v18/1.0/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 require('./routes/v18/1.1/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
+require('./routes/v18/1.2/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
