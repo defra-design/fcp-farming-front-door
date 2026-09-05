@@ -284,6 +284,37 @@
   .im-c-datasets-key__group[aria-labelledby="key-heading-land-cover"] .im-c-datasets-key__item:first-child {
     padding-top: 10px;
   }
+
+  /* Layers panel: the "Land cover" group. The plugin renders a sublayer group as a
+     <fieldset> with a <legend> and no parent checkbox, so the page injects one (see
+     enhanceLayersPanel). The legend is kept in the DOM but visually hidden — the
+     fieldset still needs it for screen readers, and the injected checkbox now carries
+     the visible "Land cover" text. */
+  .im-c-datasets-layers-group:has(input[data-dataset-id="land-cover"]) .im-c-datasets-layers-group__legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Nest the individual cover types under the injected parent. Indent only — no rail,
+     the offset alone carries the hierarchy. */
+  .im-c-datasets-layers-group:has(input[data-dataset-id="land-cover"]) .im-c-datasets-layers__item:not(.app-lc-parent) {
+    padding-left: 16px;
+  }
+
+  /* enhanceLayersPanel hides the cover types absent from the current parcel. Stated
+     explicitly rather than relying on the UA [hidden] rule, which any display
+     declaration on the item would beat. */
+  .im-c-datasets-layers-group:has(input[data-dataset-id="land-cover"]) .im-c-datasets-layers__item[hidden] {
+    display: none;
+  }
   </style>
 {% endblock %}
 
@@ -311,6 +342,7 @@
 
     <p class="govuk-body govuk-!-margin-top-4 govuk-!-margin-bottom-4">
       <a class="govuk-link" href="/v18/1.2/view-land-parcel?parcel=SX39647821">Return to current version</a>
+      <br><a class="govuk-link" href="/v18/1.2/view-land-parcel-compare?parcel=SX39647821">Compare with current version</a>
     </p>
 
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-4">Summary</h2>
@@ -669,7 +701,7 @@
             filter: ['==', ['get', 'DESCRIPTION'], type],
             style,
             showInKey: true,
-            showInMenu: false
+            showInMenu: true
           }
         })
         return {
@@ -682,18 +714,47 @@
         }
       }
 
+      // The cover types on the CURRENT parcel. Tracked separately from sublayer visibility
+      // because the two mean different things once the types are individually toggleable:
+      // absent-from-this-parcel (never listed) vs. present-but-unticked (listed, unchecked).
+      let presentCovers = new Set()
+
+      // Cover types the user has unticked in the Layers panel. Recorded so a base-map style
+      // change — which rebuilds every layer and re-runs the sync below — does not silently
+      // put them back. Switching parcels deliberately clears it.
+      const hiddenCovers = new Set()
+
       // Show only the cover types present on the current parcel in the Key/Layers by hiding
       // the rest (their sublayers have no matching features so they draw nothing anyway —
       // this is purely for the Key/Layers, whose UI omits sublayers marked hidden).
-      function syncLandCoverKey (parcelCovers) {
-        const present = new Set(parcelCovers.map(f => f.properties.DESCRIPTION))
+      // Switching parcels therefore also resets every type back on; a style-change re-apply
+      // passes preserveSelection so it keeps the user's ticks.
+      function syncLandCoverKey (parcelCovers, { preserveSelection = false } = {}) {
+        presentCovers = new Set(parcelCovers.map(f => f.properties.DESCRIPTION))
+        if (!preserveSelection) hiddenCovers.clear()
         Object.keys(palette.landCover).forEach(type => {
-          datasetsPlugin.setDatasetVisibility(present.has(type), { datasetId: 'land-cover', sublayerId: lcSublayerId(type) })
+          const visible = presentCovers.has(type) && !hiddenCovers.has(type)
+          datasetsPlugin.setDatasetVisibility(visible, { datasetId: 'land-cover', sublayerId: lcSublayerId(type) })
         })
+        enhanceLayersPanel()
+      }
+
+      // The "Land cover" parent checkbox's action: show/hide every type on this parcel.
+      // It must drive the sublayers individually — setDatasetVisibility(true, { datasetId })
+      // deliberately re-hides sublayers whose stored visibility is 'hidden', so a
+      // dataset-level toggle could hide all but never bring them back.
+      function setLandCoverGroupVisibility (visible) {
+        presentCovers.forEach(type => {
+          if (visible) hiddenCovers.delete(type); else hiddenCovers.add(type)
+          datasetsPlugin.setDatasetVisibility(visible, { datasetId: 'land-cover', sublayerId: lcSublayerId(type) })
+        })
+        syncLandCoverSelectedLayer()
       }
 
       // --- Live colour application (used by the ?colours panel) ----------------
       const lcSublayerId = (type) => 'lc-' + type.replace(/\s+/g, '-').toLowerCase()
+      // Reverse of the above, for reading a cover type back off a Layers panel checkbox.
+      const lcTypeBySublayerId = Object.fromEntries(Object.keys(palette.landCover).map(type => [lcSublayerId(type), type]))
 
       // --- Land cover selection (map click -> sidebar row) ---------------------
       // Selection is IDEMPOTENT, never a toggle: the native map click below and the interact
@@ -749,6 +810,75 @@
           })
         }
         restoreZOrder()
+      }
+
+      // The selected-land-cover outline is ours, not the plugin's, so hiding a land cover
+      // through the Layers panel does not hide it. Drop it whenever nothing it could outline
+      // is on the map.
+      function syncLandCoverSelectedLayer () {
+        if (!hedgeMap || !hedgeMap.getLayer(LC_SELECTED_LAYER)) return
+        const anyVisible = lcFillLayerIds()
+          .some(id => hedgeMap.getLayoutProperty(id, 'visibility') !== 'none')
+        hedgeMap.setLayoutProperty(LC_SELECTED_LAYER, 'visibility', anyVisible ? 'visible' : 'none')
+      }
+
+      // --- Layers panel: the injected "Land cover" parent checkbox -------------
+      // The datasets plugin renders a sublayer group as a <fieldset> + <legend> with one
+      // checkbox per sublayer and NO parent checkbox, and offers no option for one. So the
+      // page adds it, and re-applies on every React commit (see the MutationObserver in
+      // datasets:ready). Everything here is idempotent.
+      //
+      // Nothing is written to plugin-owned attributes: Layers.jsx recomputes className on
+      // each render and would strip anything added there. The absent-type hiding uses the
+      // `hidden` PROPERTY, which React does not manage, so it survives a re-render.
+      function enhanceLayersPanel () {
+        const anySublayerInput = document.querySelector('.im-c-datasets-layers-group__fieldset input[data-dataset-id="land-cover"]')
+        if (!anySublayerInput) return   // panel not mounted — it is dismissible
+        const fieldset = anySublayerInput.closest('.im-c-datasets-layers-group__fieldset')
+
+        // Only list the types actually on this parcel. The plugin registers all of them
+        // (see buildLandCoverDataset) and Layers.jsx lists every showInMenu sublayer
+        // regardless of visibility, so the absent ones have to be hidden here.
+        const childInputs = [...fieldset.querySelectorAll('input[data-sublayer-id]')]
+        childInputs.forEach(input => {
+          const type = lcTypeBySublayerId[input.dataset.sublayerId]
+          const item = input.closest('.im-c-datasets-layers__item')
+          if (item) item.hidden = !presentCovers.has(type)
+          // The checkbox itself is the plugin's, and its handler is all the map needs. This
+          // extra listener only records the choice so a style-change rebuild can restore it.
+          // React uses delegated listeners, so a direct one alongside is safe; the flag keeps
+          // it to one per input across re-renders.
+          if (!input.__lcTracked) {
+            input.__lcTracked = true
+            input.addEventListener('change', (e) => {
+              if (e.target.checked) hiddenCovers.delete(type); else hiddenCovers.add(type)
+            })
+          }
+        })
+
+        let parent = fieldset.querySelector('.app-lc-parent input')
+        if (!parent) {
+          const wrapper = document.createElement('div')
+          wrapper.className = 'app-lc-parent im-c-datasets-layers__item govuk-checkboxes govuk-checkboxes--small'
+          wrapper.setAttribute('data-module', 'govuk-checkboxes')
+          wrapper.innerHTML = '<div class="govuk-checkboxes__item">' +
+            '<input class="govuk-checkboxes__input" id="lc-parent" type="checkbox">' +
+            '<label class="im-c-datasets-layers__item-label govuk-label govuk-checkboxes__label" for="lc-parent">Land cover</label>' +
+            '</div>'
+          parent = wrapper.querySelector('input')
+          parent.addEventListener('change', (e) => { setLandCoverGroupVisibility(e.target.checked) })
+          fieldset.insertBefore(wrapper, fieldset.querySelector('.im-c-datasets-layers-group__legend').nextSibling)
+        }
+
+        // Ticked while any listed type is ticked, so clicking it always flips the whole group.
+        parent.checked = childInputs.some(input => {
+          const item = input.closest('.im-c-datasets-layers__item')
+          return item && !item.hidden && input.checked
+        })
+
+        // The children are wired to the plugin's own handler, so this is also where a
+        // child tick/untick gets followed up (the observer re-runs us after that render).
+        syncLandCoverSelectedLayer()
       }
 
       // Most colours are applied with hedgeMap.setPaintProperty: synchronous, and it does NOT
@@ -986,7 +1116,7 @@
           geojson: { type: 'FeatureCollection', features: [feature] },
           style: { fill: 'transparent', stroke: palette.parcelBorder, strokeWidth: 3 },
           showInKey: false,
-          showInMenu: true
+          showInMenu: false
         }
       }
 
@@ -1031,9 +1161,9 @@
       // Re-assert the parcel's data on its permanent datasets. The data never changes on this
       // single-parcel page, but a base-map style change wipes and rebuilds the datasets plugin's
       // layers from their construction-time geojson, so this is used to re-apply after that.
-      function swapParcelDatasets (d) {
+      function swapParcelDatasets (d, { preserveSelection = false } = {}) {
         datasetsPlugin.setData({ type: 'FeatureCollection', features: d.parcelCovers }, { datasetId: 'land-cover' })
-        syncLandCoverKey(d.parcelCovers)
+        syncLandCoverKey(d.parcelCovers, { preserveSelection })
         datasetsPlugin.setData({ type: 'FeatureCollection', features: [d.selectedFeature] }, { datasetId: 'parcel-outline' })
         datasetsPlugin.setData({ type: 'FeatureCollection', features: d.parcelHedges }, { datasetId: 'hedgerows' })
         datasetsPlugin.setDatasetVisibility(d.parcelHedges.length > 0, { datasetId: 'hedgerows' })
@@ -1171,7 +1301,18 @@
           enableInteract()
           addLandCoverSelectedLayer()
           // Hide the land-cover types not present on the initial parcel from the Key/Layers.
+          // (This also runs the first enhanceLayersPanel pass.)
           syncLandCoverKey(d.parcelCovers)
+          // Re-apply the injected "Land cover" parent checkbox whenever the panel's DOM
+          // changes. Two cases need it and neither has an event to hook: the Layers panel
+          // being mounted when the user opens it (it is dismissible, so the DOM comes and
+          // goes), and React re-rendering the fieldset after any child checkbox change.
+          // enhanceLayersPanel bails immediately when the panel is absent, and its own
+          // writes are either a guarded one-off insert or property (not attribute) sets,
+          // so the observer does not loop on them.
+          new MutationObserver(enhanceLayersPanel).observe(
+            document.getElementById('map'), { childList: true, subtree: true }
+          )
           // Colour-tuning panel for the team (only when ?colours is in the URL).
           buildColourPanel()
         })
@@ -1185,7 +1326,9 @@
           const reapply = () => {
             if (!hedgeMap.getSource('geojson-land-cover') || !hedgeMap.getSource('geojson-hedgerows')) return
             hedgeMap.off('idle', reapply)
-            if (currentData) swapParcelDatasets(currentData)
+            // preserveSelection: this is the same parcel being redrawn, not a new one, so
+            // the user's Layers panel ticks must survive it.
+            if (currentData) swapParcelDatasets(currentData, { preserveSelection: true })
             // setPaintProperty colour edits aren't in plugin state, so the rebuilt layers carry
             // the construction palette — re-apply the working palette over them.
             applyAllColours()
