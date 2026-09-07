@@ -34,10 +34,11 @@
       (v0.0.22-alpha).
     </p>
 
-    <p>This iteration focused on the land parcel page. We made the land covers on the map interactive, and simplified how they are presented in the map's Key and Layers panels. The same changes were applied to the two historical land parcel views (SX3963 2340 and SX3964 7821).</p>
+    <p>This iteration focused on the land parcel page. We made the land covers on the map interactive, and simplified how they are presented in the map's Key and Layers panels. The same changes were applied to the two historical land parcel views (SX3963 2340 and SX3964 7821). We also added a page that compares a previous version of a land parcel with the current version side by side.</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li><a class="govuk-link" href="../1.2/view-land-parcel?parcel=SX39647821">view-land-parcel</a></li>
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare?parcel=SX39647821">view-land-parcel-compare</a></li>
     </ul>
 
     <h2 class="govuk-heading-l">Selecting a land cover on the map</h2>
@@ -80,6 +81,46 @@
     <ul class="govuk-list govuk-list--bullet">
       <li><a class="govuk-link" href="../1.2/view-land-parcel?parcel=SX39647821&colours">view-land-parcel with colour tuning</a></li>
     </ul>
+
+    <h2 class="govuk-heading-l">Comparing land parcel versions</h2>
+
+    <p>In v1.1 a user could open a historical view of a land parcel, but to see what had changed they had to move between that page and the current version and hold the differences in their head. We added a compare page that puts the two versions on one screen.</p>
+
+    <p>The page is reached from a "Compare versions" row in the land parcel's summary table, and from a "Compare with current version" link on the historical view. Both only appear for parcels that have a previous version, currently SX3963 2340 and SX3964 7821.</p>
+
+    <h3 class="govuk-heading-m">Layout</h3>
+
+    <p>The previous and current versions are shown in two columns, each with its own map and, below it, the same Summary, Land covers and Hedgerows tables as the land parcel page. A highlighted panel at the top states the date range of the previous version, and each column repeats its own date so the tables stay level. On small screens the columns stack.</p>
+
+    <p>Unlike the land parcel page, which locks the page to one viewport, this page scrolls as a normal document. The two maps sit in fixed-height frames at the top and the tables follow underneath.</p>
+
+    <h3 class="govuk-heading-m">Linked maps</h3>
+
+    <p>Panning or zooming either map moves the other to match, so the user is always looking at the same area of the parcel in both versions. Both maps open already framed on the parcel. Each map keeps its own Key and Layers panels and its own base map choice, so a user can, for example, put the current version on aerial imagery while keeping the previous one on the default style.</p>
+
+    <p>Clicking a land cover or hedgerow on either map highlights the matching row in that column's tables, using the same behaviour as the land parcel page.</p>
+
+    <h3 class="govuk-heading-m">Marking the differences</h3>
+
+    <p>The tables mark what has changed between the two versions using GOV.UK tags in the first cell of a row:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong class="govuk-tag govuk-tag--green">Added</strong> on a current version row with no equivalent in the previous version</li>
+      <li><strong class="govuk-tag govuk-tag--red">Removed</strong> on a previous version row with no equivalent in the current version</li>
+      <li><strong class="govuk-tag govuk-tag--yellow">Changed</strong> on both rows where the same land cover or hedgerow has a different area or length</li>
+    </ul>
+
+    <p>For a change, the current version's value also carries an up or down arrow showing which way it moved. The arrow appears only on the current side, as an arrow next to the previous value would read as the previous value itself having moved. Screen reader users hear "increased" or "decreased" and the previous value after the current one. The Summary rows are marked in the same way when their totals differ.</p>
+
+    <p>Land covers are matched by name, and where a parcel has more than one cover of the same type they are paired in area order. Hedgerows have no stable identity between versions, so they are matched by position in the list. This is good enough for the prototype's two example parcels but would need real identifiers in the live service.</p>
+
+    <h3 class="govuk-heading-m">Where the data comes from</h3>
+
+    <p>The current version is read live from the land covers service, as on the land parcel page. That service only returns the covers that are valid today, so the previous version comes from a snapshot file stored with the prototype. The parcel boundary and hedgerows are fetched once and shown on both sides, as only the land covers differ between the two example versions.</p>
+
+    <h3 class="govuk-heading-m">Running two maps on one page</h3>
+
+    <p>The mapping component is not designed for two instances on one page. Its plugins cache their setup from the first map and re-use it for the second, so the second map would otherwise be built with the first map's layers. The prototype works around this by giving each map its own copy of each plugin and its own set of layer identifiers. This is a prototype workaround and would need to be raised with the interactive map team if the real service needs two maps on a page.</p>
 
   </div>
 
