@@ -699,7 +699,7 @@
         document.getElementById('parcel-previous-version-row').hidden = !historyPage
         // Same gate for the side-by-side compare page (previous vs current, one screen).
         const compareNgc = selectedFeature.properties.SHEET_ID + selectedFeature.properties.PARCEL_ID
-        if (historyPage) document.getElementById('parcel-compare-link').setAttribute('href', 'view-land-parcel-compare?parcel=' + compareNgc)
+        if (historyPage) document.getElementById('parcel-compare-link').setAttribute('href', 'view-land-parcel-compare-side-by-side?parcel=' + compareNgc)
         document.getElementById('parcel-compare-row').hidden = !historyPage
 
         // Hedgerows
