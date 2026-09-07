@@ -1,0 +1,130 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% set _showDefraIDFooterLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName="Your businesses" %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+{% block beforeContent %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    {% set _hideAccountLink = true %}
+
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="signIn-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+          <h1 class="govuk-fieldset__heading">
+            Choose a business
+          </h1>
+        </legend>
+        <div id="signIn-hint" class="govuk-hint">
+          These are businesses registered to your rural payments account including their single business identifier
+          (SBI).
+        </div>
+        <form action="fp-business-home">
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+                aria-describedby="signIn-item-hint">
+              <label class="govuk-label govuk-radios__label" for="signIn">
+                Agile Farm Ltd - SBI 123456789
+              </label>
+            </div>
+
+
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+                aria-describedby="signIn-2-item-hint">
+              <label class="govuk-label govuk-radios__label" for="signIn-2">
+                D M Jones & Partners - SBI 202736410
+              </label>
+            </div>
+
+
+
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+                aria-describedby="signIn-2-item-hint">
+              <label class="govuk-label govuk-radios__label" for="signIn-2">
+                Home Farm - SBI 64432221
+              </label>
+            </div>
+
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="signIn" name="signIn" type="radio" value="government-gateway"
+                aria-describedby="signIn-item-hint">
+              <label class="govuk-label govuk-radios__label" for="signIn">
+                MEADOW FARM LTD - SBI 107297345
+              </label>
+
+            </div>
+
+
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="signIn-2" name="signIn" type="radio" value="govuk-one-login"
+                aria-describedby="signIn-2-item-hint">
+              <label class="govuk-label govuk-radios__label" for="signIn-2">
+                Ronnie's Farm - SBI 761132198
+              </label>
+            </div>
+
+
+
+
+          </div>
+      </fieldset>
+    </div>
+
+
+
+    <button type="submit" class="govuk-button" data-module="govuk-button">
+      Continue
+    </button>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Need more help?
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">Contact the Rural Payments Agency for help</p>
+
+        <p class="govuk-body">Phone: 03000 200 301</p>
+
+        <p class="govuk-body">Monday to Friday, 8:30am to 5pm, except bank holidays</p>
+
+        <p class="govuk-body"><a href="https://www.gov.uk/call-charges" class="govuk-link--no-visited-state"
+            rel="noreferrer noopener" target="_blank">Find out about call charges (opens in new tab)</a></p>
+
+        <p class="govuk-body">Email: <a href="mailto:ruralpayments@defra.gov.uk"
+            class="govuk-link--no-visited-state">ruralpayments@defra.gov.uk</a></p>
+
+        <p class="govuk-body">We aim to respond to emails within 10 working days.</p>
+      </div>
+    </details>
+    </form>
+
+  </div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
