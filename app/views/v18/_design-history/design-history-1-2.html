@@ -1,0 +1,92 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../../index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">V18</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Design history</span>
+      Land summary (v1.2)
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    <p class="govuk-body">
+      Third iteration of a prototype that re-presents the existing land summary customer journey using the Defra
+      <a class="govuk-link" href="https://defra.github.io/interactive-map/" rel="noreferrer noopener" target="_blank">interactive mapping component (opens in new tab)</a>
+      (v0.0.22-alpha).
+    </p>
+
+    <p>This iteration focused on the land parcel page. We made the land covers on the map interactive, and simplified how they are presented in the map's Key and Layers panels. The same changes were applied to the two historical land parcel views (SX3963 2340 and SX3964 7821).</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link" href="../1.2/view-land-parcel?parcel=SX39647821">view-land-parcel</a></li>
+    </ul>
+
+    <h2 class="govuk-heading-l">Selecting a land cover on the map</h2>
+    <p>In v1.1 a user could click a hedgerow on the map to highlight the matching row in the data column, but land covers were not clickable. We extended the same behaviour to land covers. When a user clicks a land cover on the map:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the matching row in the Land covers table is highlighted and its text made bold</li>
+      <li>the land cover is outlined on the map</li>
+      <li>clicking anywhere on the map that is not a land cover clears the selection</li>
+    </ul>
+
+    <p>Where a hedgerow and a land cover overlap, the hedgerow takes the click. This keeps the existing hedgerow behaviour unchanged and avoids highlighting two things at once.</p>
+
+    <p>On mobile, the fullscreen map's touch crosshair can also select a land cover.</p>
+
+    <h3 class="govuk-heading-m">Why we used the map's own click handling</h3>
+    <p>The mapping component's interact plugin misses clicks on polygons that cross a vector tile boundary, which happens often when zoomed in to a single parcel. We used the underlying map library's own hit test for land cover clicks instead, which is reliable across tile seams. The selection outline is drawn by the prototype rather than the plugin for the same reason.</p>
+
+    <h2 class="govuk-heading-l">Key panel</h2>
+    <p>The Key listed the land cover types under a "Land cover" group heading. As the Key only ever shows land covers and hedgerows, the heading added noise without helping users, so we hid it. The heading is visually hidden rather than removed, so screen reader users keep the grouping.</p>
+
+    <h2 class="govuk-heading-l">Layers panel</h2>
+    <p>In v1.1 the Layers panel offered three toggles: Land covers, Land parcel outlines and Hedgerows. Land covers could only be switched on or off as a whole. We changed the panel so that:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>each land cover type on the parcel can be switched on or off individually</li>
+      <li>a "Land cover" parent checkbox switches all of them together, and is ticked while any type is ticked</li>
+      <li>only the land cover types present on the current parcel are listed, rather than every type the service knows about</li>
+      <li>the individual types are indented under the parent to show the hierarchy</li>
+      <li>the land parcel outline toggles were removed, as the outline is the context for everything else on the page</li>
+    </ul>
+
+    <p>A user's choices in the Layers panel survive a change of base map. They reset when the user navigates to a different parcel, as the list of types changes with the parcel.</p>
+
+    <p>The mapping component does not provide a parent checkbox for a group of layers, so the prototype adds one to the panel. This is a prototype workaround and would need to be raised with the interactive map team for the real service.</p>
+
+    <h2 class="govuk-heading-l">Colour tuning tool</h2>
+    <p>The colour tuning tool, introduced in v1.1, gained a "Land cover selected" colour for the outline drawn around a selected land cover. As before, the panel only appears when ?colours is present in the URL.</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link" href="../1.2/view-land-parcel?parcel=SX39647821&colours">view-land-parcel with colour tuning</a></li>
+    </ul>
+
+  </div>
+
+  <!-- right third of page to link to relevant mural boards and UR findings -->
+  <div class="govuk-grid-column-one-third">
+
+  </div>
+</div>
+
+{% endblock %}
