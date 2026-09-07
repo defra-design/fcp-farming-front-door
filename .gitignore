@@ -1,2 +1,4 @@
 # General ignores
 .vscode/
+*.pdf
+.DS_Store
