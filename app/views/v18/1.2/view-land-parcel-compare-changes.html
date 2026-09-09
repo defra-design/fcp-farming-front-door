@@ -1,0 +1,28 @@
+{# Single-map compare, variant D: the overlay checkboxes plus a "Changes" checkbox that
+   outlines what was added (green), removed (red) or changed (orange) — the same marks as
+   the table's tags. See _compare-single-map.html for everything shared. #}
+{% set compareMode = "changes" %}
+{% set compareModeLabel = "changes" %}
+{% extends "v18/1.2/_compare-single-map.html" %}
+
+{% block compareControls %}
+  <div class="govuk-form-group govuk-!-margin-bottom-0">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-1">Show on the map</legend>
+      <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="show-previous" name="show-version" type="checkbox" value="previous" checked data-version-toggle="previous">
+          <label class="govuk-label govuk-checkboxes__label" for="show-previous">Previous version</label>
+        </div>
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="show-current" name="show-version" type="checkbox" value="current" checked data-version-toggle="current">
+          <label class="govuk-label govuk-checkboxes__label" for="show-current">Current version</label>
+        </div>
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="show-changes" name="show-changes" type="checkbox" value="changes" checked data-changes-toggle>
+          <label class="govuk-label govuk-checkboxes__label" for="show-changes">Changes</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+{% endblock %}

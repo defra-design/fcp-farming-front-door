@@ -1,0 +1,1949 @@
+{#
+  Base template for the SINGLE-MAP compare variants. Not a page in its own right — the
+  four entry pages (view-land-parcel-compare-overlay / -layers / -fade / -changes) set
+  `compareMode` and `compareModeLabel`, extend this file and fill the `compareControls`
+  block with the control that sits above the map. Everything else (map, data, tables)
+  is shared here so the variants differ only in how the two versions are toggled.
+
+  compareLayout (optional):
+    stacked  – default: map on top, one merged table below (page scrolls as a document)
+    sidebar  – two columns like view-land-parcel: a scrolling sidebar (heading, controls,
+               then the two versions' tables in a Tabs component, each tab with its own
+               date inset) beside a full-height map
+
+  compareMode:
+    overlay  – two checkboxes above the map (Previous version / Current version)
+    layers   – no page control; the map's own Layers panel toggles each version
+    fade     – a slider that crossfades between the two versions
+    changes  – the overlay checkboxes plus a "Changes" checkbox that outlines what
+               was added, removed or changed
+#}
+{% extends "layouts/main-rebrand.html" %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+{% block header %}
+  {{ govukHeader({
+    rebrand: true
+  }) }}
+{{ govukServiceNavigation({
+  serviceName: "Farm and Land Service",
+  serviceUrl: "#"
+
+}) }}
+
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Prototype"
+    },
+    html: 'This is a prototype.'
+  }) }}
+
+  <div class="app-sub-header govuk-!-padding-top-0">
+    {% set _versionPath = "v18/1.2" %}{% include "v18/includes/sub-header.html" %}
+  </div>
+
+{% endblock %}
+
+{% block pageTitle %}
+  View land - Compare land parcel versions ({{ compareModeLabel }}) – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
+
+  <link rel="prefetch" href="/v18/1.2/view-land" as="document">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js">
+
+  <style>
+  /* This page scrolls as a normal document (one map on top, the comparison tables
+     below), unlike view-land-parcel which locks the body to one viewport. Only the
+     full-width header treatment is carried over. */
+  html, body {
+    margin: 0;
+  }
+
+  .govuk-service-navigation {
+    position: relative;
+    z-index: 100;
+  }
+
+  html.im-is-fullscreen .govuk-header,
+  html.im-is-fullscreen .govuk-service-navigation {
+    display: none;
+  }
+
+  .govuk-header__container,
+  .govuk-width-container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+
+  .govuk-phase-banner {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 15px;
+  }
+
+  /* Sub-header full width + 15px gutter; the inner govuk-grid-row's -15px margins
+     then align its columns left with the phase banner and service navigation. */
+  .app-sub-header {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 15px;
+    border-bottom: 1px solid #b1b4b6;
+  }
+
+  /* --- Compare layout ------------------------------------------------------- */
+  .app-compare {
+    padding: 0 15px 30px;
+  }
+
+  /* The control above the map (checkboxes / slider). Checkbox items run inline so the
+     control reads as one line rather than a stacked list. */
+  .app-compare__controls {
+    margin-bottom: 15px;
+  }
+  .app-compare__controls .govuk-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 25px;
+  }
+  .app-compare__controls .govuk-checkboxes__item {
+    flex: 0 0 auto;
+  }
+  .app-compare__controls .govuk-checkboxes__label {
+    white-space: nowrap;
+  }
+  /* A variant can opt out of the inline run and stack its checkboxes instead. */
+  .app-compare__controls .app-compare__checkboxes--stacked {
+    display: block;
+  }
+
+  /* Fade slider: a plain range input with the two version names at either end. */
+  .app-compare__fade {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 15px;
+    max-width: 640px;
+  }
+  .app-compare__fade-range {
+    flex: 1 1 240px;
+    min-width: 160px;
+    height: 44px;
+    margin: 0;
+    accent-color: #1d70b8;
+    cursor: pointer;
+  }
+  .app-compare__fade-range:focus-visible {
+    outline: 3px solid #ffdd00;
+    outline-offset: 0;
+  }
+  .app-compare__fade-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 15px;
+  }
+  .app-compare__fade-buttons .govuk-button {
+    margin-bottom: 0;
+  }
+
+  /* The map sits in a fixed-height well so the page keeps a normal document scroll
+     below it. */
+  .app-compare__well {
+    position: relative; /* anchor for the loading overlay */
+    height: clamp(420px, 60vh, 640px);
+  }
+
+  .app-compare__map {
+    width: 100%;
+  }
+  /* The library sets an inline height (containerHeight) on the root; fill the well instead. */
+  .app-compare__map,
+  .app-compare__map .im-o-app {
+    height: 100% !important;
+  }
+
+  /* Loading overlay — shown while the map frames + tiles load, then faded out.
+     Background matches the map's backgroundColor so the reveal is seamless. */
+  .app-map-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #f5f5f0;
+    color: #0b0c0c;
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 1.1875rem;
+    transition: opacity 0.3s ease;
+  }
+  .app-map-loading--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .app-map-loading__spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 4px solid #b1b4b6;
+    border-top-color: #1d70b8;
+    animation: app-map-spin 0.8s linear infinite;
+  }
+  @keyframes app-map-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app-map-loading__spinner { animation: none; }
+  }
+
+  /* DEFRA's "Map view" button (hybrid mode, mobile only) is inserted just before the
+     map root, i.e. inside the well. */
+  .app-compare__well .im-c-open-map-button {
+    margin: 0 0 15px;
+  }
+
+  @media (max-width: 640px) {
+    /* Below the hybrid breakpoint the inline map never mounts — only the "Map view"
+       button shows — so the well collapses to fit it and the overlay (which would
+       otherwise never be dismissed) is hidden. */
+    .app-compare__well {
+      height: auto;
+    }
+    .app-compare__well .app-map-loading {
+      display: none;
+    }
+  }
+
+  /* --- Tables --------------------------------------------------------------- */
+  /* One data column under the map. */
+  .app-compare__data {
+    max-width: 720px;
+  }
+
+  /* Map -> table: highlight a hedgerow's row when its line is clicked on the map */
+  .app-compare__data tr.app-hedge--selected {
+    background: #f4f8fb;
+  }
+  .app-compare__data tr.app-hedge--selected td {
+    font-weight: 700;
+  }
+
+  /* Map <-> table: highlight a land cover's row when its polygon is clicked on the map,
+     and let a row click select the polygon. */
+  .app-compare__data tr[data-land-cover-id] {
+    cursor: pointer;
+  }
+  .app-compare__data tr.app-land-cover--selected {
+    background: #f4f8fb;
+  }
+  .app-compare__data tr.app-land-cover--selected td {
+    font-weight: 700;
+  }
+
+  /* Difference marks: a GOV.UK tag in the row's first cell (Added / Removed / Changed), and
+     for a change an up/down arrow before the value in the numeric cell. */
+  tr.app-diff .govuk-tag {
+    vertical-align: middle;
+  }
+  .app-diff__arrow {
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    margin-right: 6px;
+    vertical-align: -1px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .app-diff__arrow--down {
+    transform: rotate(180deg);
+  }
+
+  /* --- DEFRA Key / Layers panels --------------------------------------------- */
+  /* Key panel: hide the "Current version" land cover group heading. It is kept in the DOM
+     (visually hidden, not display:none) because the group's <section> is aria-labelledby
+     it, so screen reader users keep the grouping. The first item then needs its own top
+     padding back — the plugin zeroes it on the assumption a visible heading spaces it.
+     The previous version's covers are not listed in the Key (same colours, faded) — a
+     single "Previous version" line item explains the encoding instead. */
+  [id^="key-heading-land-cover"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .im-c-datasets-key__group[aria-labelledby^="key-heading-land-cover"] .im-c-datasets-key__item:first-child {
+    padding-top: 10px;
+  }
+
+  /* Layers panel: the two version groups. The plugin renders a sublayer group as a
+     <fieldset> with a <legend> and no parent checkbox, so the page injects one per group
+     (see enhanceLayersPanel). The legend is kept in the DOM but visually hidden — the
+     fieldset still needs it for screen readers, and the injected checkbox now carries
+     the visible "Previous version" / "Current version" text. */
+  .im-c-datasets-layers-group:has(input[data-dataset-id^="land-cover"]) .im-c-datasets-layers-group__legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Nest the individual cover types under the injected parent. Indent only — no rail,
+     the offset alone carries the hierarchy. */
+  .im-c-datasets-layers-group:has(input[data-dataset-id^="land-cover"]) .im-c-datasets-layers__item:not(.app-lc-parent) {
+    padding-left: 16px;
+  }
+
+  /* enhanceLayersPanel hides the cover types absent from the parcel. Stated
+     explicitly rather than relying on the UA [hidden] rule, which any display
+     declaration on the item would beat. */
+  .im-c-datasets-layers-group:has(input[data-dataset-id^="land-cover"]) .im-c-datasets-layers__item[hidden] {
+    display: none;
+  }
+
+  {% if compareLayout == "sidebar" %}
+  /* --- Sidebar layout (mirrors view-land-parcel) ----------------------------- */
+  /* html stays pinned to the viewport (no scroll); the body is the scroll container.
+     The .govuk-template qualifier beats GOV.UK Frontend's `.govuk-template
+     { overflow-y: scroll }` (which would otherwise leave a permanent second
+     scrollbar on the html element). */
+  html.govuk-template {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Body is exactly one viewport tall and scrolls its own overflow. On tall screens
+     nothing overflows; on short screens the map area's 600px floor pushes past the
+     viewport, so the body scrolls and the header chrome scrolls away with it. */
+  body.govuk-template__body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+  }
+
+  .app-map-fullscreen {
+    flex: 1;
+    display: flex;
+    min-height: 600px;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: relative;
+  }
+
+  .app-map-fullscreen__sidebar {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+    background: #ffffff;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 15px 15px;
+  }
+  .app-map-fullscreen__sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  .app-map-fullscreen__sidebar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .app-map-fullscreen__map {
+    flex: 1;
+    height: 100%;
+    position: relative; /* anchor for the loading overlay */
+  }
+  #map {
+    width: 100%;
+  }
+  #map,
+  #map .im-o-app {
+    height: 100% !important;
+  }
+  /* Remove the inline map's top border (DEFRA's .im-o-app--inline draws a full frame). */
+  #map .im-o-app--inline {
+    border-top: 0;
+  }
+
+  /* The sidebar's tables run the full sidebar width. */
+  .app-compare__data {
+    max-width: none;
+  }
+  .app-compare__tabs .govuk-tabs__panel {
+    padding: 15px 10px;
+  }
+
+  /* DEFRA's "Map view" button — relocated into the sidebar via JS (see moveMapButton) */
+  .im-c-open-map-button {
+    margin: 0 0 15px;
+  }
+
+  @media (max-width: 640px) {
+    .app-map-fullscreen__sidebar {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    .app-map-fullscreen__map {
+      flex: 0 0 0;
+      width: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .app-map-fullscreen {
+      flex: 1 1 0;
+      min-height: 0;
+    }
+    /* In the normal (non-fullscreen) view the map is hidden at this width, so release
+       the full-height scroll lock and let the whole page scroll in normal document
+       flow. The :not(.im-is-fullscreen) guard keeps the locked layout for "Map view"
+       fullscreen, where the DEFRA map and its control bar must fill the viewport. */
+    html.govuk-template:not(.im-is-fullscreen) {
+      height: auto;
+      overflow: visible;
+    }
+    html:not(.im-is-fullscreen) body.govuk-template__body {
+      height: auto;
+      overflow: visible;
+    }
+    html:not(.im-is-fullscreen) .app-map-fullscreen {
+      flex: 0 0 auto;
+      min-height: 0;
+      overflow: visible;
+    }
+    html:not(.im-is-fullscreen) .app-map-fullscreen__sidebar {
+      overflow: visible;
+    }
+  }
+  {% endif %}
+  </style>
+{% endblock %}
+
+{% block bodyStart %}
+  <script>document.body.classList.add('im-is-loading')</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block main %}
+{# The control above the map / in the sidebar is captured once so both layouts can place it. #}
+{% set controlsHtml %}{% block compareControls %}{% endblock %}{% endset %}
+{% if compareLayout == "sidebar" %}
+
+{# Tab panels: one set of tables per version, marked with the same Added / Removed / Changed
+   tags as the two-map compare pages (arrows on the current version only). #}
+{% set currentPanel %}
+  <div id="current-tab-last-updated" hidden>
+    {% call govukInsetText({ classes: "govuk-!-margin-top-0 govuk-!-margin-bottom-2 guidance-panel" }) %}
+      <p class="govuk-!-margin-bottom-0">Last updated <span id="current-tab-last-updated-date"></span>.</p>
+    {% endcall %}
+  </div>
+  <h3 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-2">Summary</h3>
+  <table class="govuk-table govuk-!-margin-bottom-4">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Total area (ha)</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-total-area-current"></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Land covers</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-land-covers-current"></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Hedgerows</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-hedgerows-current"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  {# No "Land covers" heading: the table's own "Land cover" column header is enough. #}
+  <table class="govuk-table govuk-!-margin-top-4">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Land cover</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Area (ha)</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body" id="land-covers-table-body-current"></tbody>
+  </table>
+
+  <h3 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Hedgerows</h3>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Number</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Length (m)</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body" id="hedgerows-table-body-current"></tbody>
+  </table>
+{% endset %}
+
+{% set previousPanel %}
+  <div id="previous-tab-date-range" hidden>
+    {% call govukInsetText({ classes: "govuk-!-margin-top-0 govuk-!-margin-bottom-2 guidance-panel" }) %}
+      <p class="govuk-!-margin-bottom-0">Version from <span id="previous-tab-date-range-text"></span>.</p>
+    {% endcall %}
+  </div>
+  <h3 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-2">Summary</h3>
+  <table class="govuk-table govuk-!-margin-bottom-4">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Total area (ha)</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-total-area-previous"></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Land covers</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-land-covers-previous"></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">Hedgerows</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-hedgerows-previous"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  {# No "Land covers" heading: the table's own "Land cover" column header is enough. #}
+  <table class="govuk-table govuk-!-margin-top-4">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Land cover</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Area (ha)</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body" id="land-covers-table-body-previous"></tbody>
+  </table>
+
+  <h3 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Hedgerows</h3>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Number</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Length (m)</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body" id="hedgerows-table-body-previous"></tbody>
+  </table>
+{% endset %}
+
+<main class="app-map-fullscreen" id="main-content">
+
+  <div class="app-map-fullscreen__sidebar" role="region" aria-label="Comparison details">
+    <a class="govuk-back-link govuk-!-margin-top-4" id="compare-back-link" href="/v18/1.2/view-land-parcel">Back to current version</a>
+
+    <h1 class="govuk-heading-m govuk-!-margin-bottom-4" id="compare-heading" data-heading-prefix="Parcel details:">Parcel details:</h1>
+
+    <div class="app-compare__controls">
+      {{ controlsHtml | safe }}
+    </div>
+
+    <div id="map-button-slot"></div>
+
+    <div class="app-compare__data" id="compare-data">
+      {{ govukTabs({
+        classes: "app-compare__tabs",
+        title: "Versions",
+        items: [
+          { label: "Current version", id: "tab-current", panel: { html: currentPanel } },
+          { label: "Previous version", id: "tab-previous", panel: { html: previousPanel } }
+        ]
+      }) }}
+    </div>
+  </div>
+
+  <div class="app-map-fullscreen__map">
+    <div id="map"></div>
+    <div id="map-loading" class="app-map-loading" role="status" aria-live="polite">
+      <span class="app-map-loading__text">Loading map</span>
+      <span class="app-map-loading__spinner" aria-hidden="true"></span>
+    </div>
+  </div>
+
+</main>
+
+{% else %}
+<main class="govuk-main-wrapper app-compare" id="main-content">
+
+  <a class="govuk-back-link" id="compare-back-link" href="/v18/1.2/view-land-parcel">Back to current version</a>
+
+  <h1 class="govuk-heading-l govuk-!-margin-top-4" id="compare-heading">Compare land parcel versions</h1>
+
+  {# MOJ 'inset text (highlighted)' — govukInsetText + the guidance-panel class (blue left
+     border + light blue fill, defined in application.scss). #}
+  {% call govukInsetText({ classes: "govuk-!-margin-top-0 guidance-panel" }) %}
+    <p class="govuk-!-margin-bottom-0">You are comparing a previous version of this land parcel (<span id="compare-date-range"></span>) with the current version<span id="current-last-updated" hidden>, last updated <span id="current-last-updated-date"></span></span>.</p>
+  {% endcall %}
+
+  <div class="app-compare__controls">
+    {{ controlsHtml | safe }}
+  </div>
+
+  <div class="app-compare__well">
+    <div id="map" class="app-compare__map"></div>
+    <div id="map-loading" class="app-map-loading" role="status" aria-live="polite">
+      <span class="app-map-loading__text">Loading map</span>
+      <span class="app-map-loading__spinner" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="app-compare__data govuk-!-margin-top-6" id="compare-data">
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Summary</h2>
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Total area (ha)</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-total-area"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Land covers</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-land-covers"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Hedgerows</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric" id="parcel-hedgerows"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-6">Land covers</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Land cover</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Area (ha)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body" id="land-covers-table-body"></tbody>
+    </table>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-6">Hedgerows</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Number</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Length (m)</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body" id="hedgerows-table-body"></tbody>
+    </table>
+
+  </div>
+
+</main>
+
+{% endif %}
+{% endblock main %}
+
+{% block pageScripts %}
+  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
+
+  <script>
+    // Reveal the page immediately. The DEFRA library hides the whole <body> via
+    // `.im-is-loading { visibility:hidden }` (added in bodyStart) and only removes it when a
+    // map mounts — but this page builds its map AFTER the WFS fetch, which would blank the
+    // entire page for the whole fetch. The #map-loading overlay covers just the map well,
+    // so we drop the body-level hide now and let the rest of the page render.
+    document.body.classList.remove('im-is-loading')
+
+    // Which variant this page is (set by the extending template). See the comment at the
+    // top of the file for what each mode changes.
+    const COMPARE_MODE = '{{ compareMode }}'
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Constants and helpers shared with the two-map compare pages.
+    // ───────────────────────────────────────────────────────────────────────────
+
+    // Land covers rendered with a fillPattern to visually distinguish them.
+    const landCoverPatterns = {
+      'Farm Building': 'diagonal-cross-hatch',
+      'Farmyards': 'diagonal-cross-hatch',
+      'Hard Standings': 'diagonal-cross-hatch',
+      'Residential dwelling, House': 'diagonal-cross-hatch',
+      'Scrub - Ungrazeable': 'dot',
+      'Arable Land': 'horizontal-hatch',
+      'Permanent Grassland': 'vertical-hatch',
+      'Woodland': 'diagonal-cross-hatch'
+    }
+
+    // Single source of truth for every map colour. Mirrors view-land-parcel's
+    // DEFAULT_PALETTE; there is no colour-tuning panel on this page.
+    const palette = {
+      landCover: {
+        'Permanent Grassland': '#DEFADE',
+        'Temporary Grassland': '#85994B',
+        'Fallow Land': '#F3F2F1',
+        'Arable Land': '#FAF0B9',
+        'Permanent Crops': '#7B2D8E',
+        'Farm Building': '#D6CABD',
+        'Farmyards': '#C4B8A8',
+        'Hard Standings': '#F2E6D4',
+        'Residential dwelling, House': '#E8927C',
+        'Residential Gardens': '#90C87C',
+        'Woodland': '#E4EFDF',
+        'Scrub - Ungrazeable': '#F8CDBC',
+        'Drain/Ditch/Dyke': '#5CACEE',
+        'Rivers and streams type 2': '#4A7FB5',
+        'Rivers and streams type 3': '#3D6699',
+        'Pond': '#4A90D9',
+        'Road': '#787878',
+        'Metalled track': '#505A5F',
+        'Track - Natural Surface': '#B58840'
+      },
+      patternLine: '#0b0c0c',     // fillPatternForegroundColor on patterned land covers
+      // The previous version's hatching. Grey suits the faded look, and it is also load-
+      // bearing: the map provider names each pattern image by its pattern + colours and
+      // rasterises every dataset's patterns concurrently, so two datasets with identical
+      // pattern styles race to add the same image and the loser logs an error per pattern
+      // (8 on load). A different foreground colour gives the previous version its own images.
+      patternLinePrevious: '#505a5f',
+      parcelBorder: '#1d70b8',    // the parcel outline stroke
+      hedgerow: '#00703c',        // hedgerow line
+      landCoverSelected: '#0b0c0c',   // outline on the land cover selected by a map click
+      // Change outlines (mode 'changes'). GOV.UK green / red / orange, matching the
+      // Added / Removed / Changed tags in the table.
+      change: { added: '#00703c', removed: '#d4351c', changed: '#f47738' }
+    }
+
+    // How the PREVIOUS version is drawn when both are on the map: the same land cover
+    // colours, faded, under the current version, with a dashed dark outline so its
+    // boundaries still read where a current cover sits on top.
+    const PREVIOUS_OPACITY = 0.35
+    const PREVIOUS_DASH = [2, 2]
+
+    // Parcels with a historical "previous version" snapshot, keyed by ngc (the 10-char
+    // composite: 6-char SHEET_ID + 4-char PARCEL_ID). Each maps to the local before-update
+    // land covers file (see view-land-parcel-<ngc>.html for how these are produced) and the
+    // date range shown to the user. The ?v= marker is a cache-buster: cachedFetchJson keys
+    // its sessionStorage entry on this URL, so bump it whenever the data file changes.
+    // Add an entry here when a new parcel gets a before-<date> data file.
+    const HISTORY = {
+      SX39647821: {
+        beforeFile: '/public/data/land-covers/SX39647821-before.json?v=5',
+        dateLabel: '12 October 2023 to 2 February 2026'
+      },
+      SX39632340: {
+        beforeFile: '/public/data/land-covers/SX39632340-before.json?v=2',
+        dateLabel: '12 October 2023 to 16 October 2025'
+      }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const selectedNgc = urlParams.get('parcel')
+    const history = HISTORY[selectedNgc]
+
+    const sbi = '{{ myData.sbi | default("111089693") }}'
+
+    // --- WFS endpoints -------------------------------------------------------
+    // Just this one parcel's geometry — filtered to the SBI + PARCEL_ID (the WFS requires an
+    // SBI). PARCEL_ID is quoted so it's compared as a string; SHEET_ID can't be filtered
+    // server-side (the WAF rejects quotes around the alphanumeric value), so we disambiguate
+    // by SHEET_ID client-side.
+    function parcelUrlFor (parcelId) {
+      const cql = `SBI=${sbi} AND PARCEL_ID='${parcelId}'`
+      return `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+    }
+    // The CURRENT land covers, live from the WFS (same query as view-land-parcel, no date
+    // clause). The previous version's covers come from the HISTORY file instead — the WFS
+    // only exposes currently-valid rows, so pre-update covers can't be queried.
+    function currentCoversUrlFor (parcelId) {
+      const cql = `SBI=${sbi} AND PARCEL_ID='${parcelId}'`
+      return `https://environment.data.gov.uk/data-services/RPA/LandCovers/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandCovers&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
+    }
+    function hedgeUrlFor (parcelId) {
+      return `https://environment.data.gov.uk/data-services/RPA/HedgeControl/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:HedgeControl&cql_filter=SBI=${sbi}+AND+REF_PARCEL_PARCEL_ID='${parcelId}'&srsname=EPSG:4326&outputFormat=application/json`
+    }
+
+    // Bounding box [west, south, east, north] for a single parcel feature.
+    function computeBounds (feature) {
+      let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity
+      const coords = feature.geometry.type === 'MultiPolygon'
+        ? feature.geometry.coordinates.flat(2)
+        : feature.geometry.coordinates.flat(1)
+      coords.forEach(([lng, lat]) => {
+        if (lng < minLng) minLng = lng
+        if (lat < minLat) minLat = lat
+        if (lng > maxLng) maxLng = lng
+        if (lat > maxLat) maxLat = lat
+      })
+      return [minLng, minLat, maxLng, maxLat]
+    }
+
+    // Fetch JSON via a sessionStorage cache keyed on the full request URL (or the static
+    // file path, for the historical covers), so repeat visits with the same key skip the network.
+    // Quota/parse failures fall back to a live fetch, so caching can never break a load.
+    function cachedFetchJson (url) {
+      try {
+        const hit = sessionStorage.getItem(url)
+        if (hit) return Promise.resolve(JSON.parse(hit))
+      } catch (e) { /* ignore malformed / unavailable storage */ }
+      return fetch(url).then(r => r.json()).then(data => {
+        try { sessionStorage.setItem(url, JSON.stringify(data)) } catch (e) { /* quota / private mode */ }
+        return data
+      })
+    }
+
+    // Assemble one version's payload from the parcel/covers/hedges responses. The server
+    // filters all three to PARCEL_ID (which can collide across sheets within an SBI), so
+    // each is narrowed to this parcel's SHEET_ID client-side.
+    function buildParcelData (ngc, parcelsData, landCoversData, hedgeData) {
+      const sheetId = ngc.substring(0, 6)
+      const selectedFeature = (parcelsData.features || []).find(f => f.properties.SHEET_ID === sheetId)
+      if (selectedFeature) selectedFeature.properties.ngc = ngc
+      return {
+        ngc,
+        sheetId,
+        selectedFeature,
+        parcelCovers: (landCoversData.features || []).filter(f => f.properties.SHEET_ID === sheetId),
+        parcelHedges: (hedgeData.features || []).filter(f => f.properties.REF_PARCEL_SHEET_ID === sheetId)
+      }
+    }
+
+    // Format YYYYMMDDhhmmss → 'D Month YYYY' for display.
+    function fmtValidFrom (v) {
+      if (!v || v.length < 8) return ''
+      const dt = new Date(`${v.slice(0, 4)}-${v.slice(4, 6)}-${v.slice(6, 8)}`)
+      if (isNaN(dt.getTime())) return ''
+      return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    }
+
+    const lcSublayerId = (type) => 'lc-' + type.replace(/\s+/g, '-').toLowerCase()
+    // Reverse of the above, for reading a cover type back off a Layers panel checkbox.
+    const lcTypeBySublayerId = Object.fromEntries(Object.keys(palette.landCover).map(type => [lcSublayerId(type), type]))
+
+    // Base-map choices.
+    const mapStyles = [
+      {
+        id: 'liberty',
+        label: 'Default',
+        url: 'https://tiles.openfreemap.org/styles/liberty',
+        thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+        appColorScheme: 'light',
+        mapColorScheme: 'light',
+        backgroundColor: '#f5f5f0'
+      },
+      {
+        id: 'satellite',
+        label: 'Satellite',
+        url: '/satellite-style.json',
+        thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+        attribution: '© Esri, Maxar, Earthstar Geographics',
+        backgroundColor: '#1a1a1a',
+        mapColorScheme: 'dark',
+        appColorScheme: 'dark'
+      },
+      {
+        id: 'positron',
+        label: 'Light',
+        url: 'https://tiles.openfreemap.org/styles/positron',
+        thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+        appColorScheme: 'light',
+        mapColorScheme: 'light',
+        backgroundColor: '#ffffff'
+      }
+    ]
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Ids. Both versions' land covers live on ONE map as two permanent datasets,
+    // namespaced by version. The datasets adapter names the source
+    // `geojson-<datasetId>`, a sublayer's fill `<datasetId>-<sublayerId>` (+ `-stroke`),
+    // and a plain line/outline dataset's single layer `<datasetId>`. The parcel outline
+    // and hedgerows are identical in both versions, so there is one of each.
+    // ───────────────────────────────────────────────────────────────────────────
+    const VERSIONS = ['previous', 'current']
+    const VERSION_LABEL = { previous: 'Previous version', current: 'Current version' }
+    const DS = {
+      landCover: (version) => 'land-cover-' + version,
+      outline: 'parcel-outline',
+      hedgerows: 'hedgerows',
+      keyPrevious: 'key-previous-version',            // Key-only entry explaining the faded style
+      keyChange: (kind) => 'key-change-' + kind        // Key-only entries for the change outlines
+    }
+    const LC_SELECTED = (version) => 'land-cover-selected-' + version
+    const CHANGE_LAYER = (kind) => 'changes-' + kind
+    // Which version's source each change outline is drawn from: a removed cover only exists
+    // in the previous version; added and changed covers are outlined on the current shape.
+    const CHANGE_KINDS = ['removed', 'changed', 'added']
+    const CHANGE_SOURCE_VERSION = { removed: 'previous', changed: 'current', added: 'current' }
+    const CHANGE_LABEL = { added: 'Added', removed: 'Removed', changed: 'Changed' }
+    const NO_LAND_COVER = '__none__'   // sentinel filter value matching no land cover
+    const lcSource = (version) => 'geojson-' + DS.landCover(version)
+    const lcFillId = (version, type) => DS.landCover(version) + '-' + lcSublayerId(type)
+    const lcParentId = (version) => 'lc-parent-' + version
+
+    // --- Page state ---
+    const container = document.getElementById('map')
+    // 'tabs' (sidebar layout: one set of tables per version in a Tabs component) or
+    // 'merged' (stacked layout: one table describing the current version, removed
+    // covers appended).
+    const TABLE_LAYOUT = document.getElementById('land-covers-table-body-current') ? 'tabs' : 'merged'
+    let datasetsPlugin = null
+    let interact = null
+    let interactiveMap = null
+    let hedgeMap = null        // raw MapLibre map (from the map:ready payload; no public accessor)
+    let data = null            // { previous, current, marks } once loaded; re-applied after a style change
+    // Per version: the cover types on the parcel, and the ones the user has switched off.
+    // Tracked separately because the two mean different things once the types are
+    // individually toggleable: absent-from-this-parcel (never listed) vs.
+    // present-but-unticked (listed, unchecked). hiddenCovers is what a base-map style change
+    // (which rebuilds every layer) re-applies so the user's choices survive it.
+    const presentCovers = { previous: new Set(), current: new Set() }
+    const hiddenCovers = { previous: new Set(), current: new Set() }
+    let changesShown = true    // mode 'changes': the "Changes" checkbox
+    let fadePosition = 1       // mode 'fade': 0 = previous only … 1 = current only
+    let selection = null       // { rowVersion, rowId, previous, current } — see selectionFor
+
+    // Fade out the "Loading map…" overlay. Called once the map is ready and rendered and on
+    // every error path — never left stuck.
+    function hideMapLoading () {
+      const overlay = document.getElementById('map-loading')
+      if (overlay) overlay.classList.add('app-map-loading--hidden')
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Difference marking. Runs on the sorted, id-stamped covers (see stampIds) so every
+    // feature carries its landCoverId / hedgeId, which is also its row's position.
+    // ───────────────────────────────────────────────────────────────────────────
+    const AREA_EPS = 0.00005   // below the 4dp shown in the tables
+    const DIFF_TAG = {
+      added: { text: 'Added', cls: 'govuk-tag--green' },
+      removed: { text: 'Removed', cls: 'govuk-tag--red' },
+      changed: { text: 'Changed', cls: 'govuk-tag--yellow' }
+    }
+
+    // Land covers: group by DESCRIPTION, pair by position within each name (both versions
+    // are sorted name-then-area, so the pairing is deterministic). Unpaired previous =
+    // removed, unpaired current = added, paired but different area = changed. The pairing
+    // itself is also returned (prevToCurr / currToPrev) so a click on a previous-version
+    // shape can find the current row it corresponds to.
+    function diffCovers (prev, curr) {
+      const byDesc = new Map()
+      const add = (f, k) => {
+        const desc = f.properties.DESCRIPTION || ''
+        if (!byDesc.has(desc)) byDesc.set(desc, { prev: [], curr: [] })
+        byDesc.get(desc)[k].push(f)
+      }
+      prev.forEach(f => add(f, 'prev'))
+      curr.forEach(f => add(f, 'curr'))
+      const marks = { prev: new Map(), curr: new Map(), prevToCurr: new Map(), currToPrev: new Map() }
+      byDesc.forEach(({ prev: p, curr: c }) => {
+        const n = Math.min(p.length, c.length)
+        for (let i = 0; i < n; i++) {
+          const pId = p[i].properties.landCoverId
+          const cId = c[i].properties.landCoverId
+          marks.prevToCurr.set(pId, cId)
+          marks.currToPrev.set(cId, pId)
+          const pa = parseFloat(p[i].properties.AREA_HA)
+          const ca = parseFloat(c[i].properties.AREA_HA)
+          if (Math.abs(pa - ca) > AREA_EPS) {
+            const direction = ca > pa ? 'up' : 'down'
+            marks.prev.set(pId, { kind: 'changed' })
+            marks.curr.set(cId, { kind: 'changed', direction, was: pa.toFixed(4) })
+          }
+        }
+        p.slice(n).forEach(f => marks.prev.set(f.properties.landCoverId, { kind: 'removed' }))
+        c.slice(n).forEach(f => marks.curr.set(f.properties.landCoverId, { kind: 'added' }))
+      })
+      return marks
+    }
+
+    // Hedgerows: compared by position (they have no stable identity across versions).
+    function diffHedges (prev, curr) {
+      const marks = { prev: new Map(), curr: new Map() }   // hedgeId -> { kind, was }
+      const n = Math.max(prev.length, curr.length)
+      for (let i = 0; i < n; i++) {
+        const p = prev[i], c = curr[i]
+        if (p && !c) {
+          marks.prev.set(String(i), { kind: 'removed' })
+        } else if (!p && c) {
+          marks.curr.set(String(i), { kind: 'added' })
+        } else {
+          const pl = Math.round(parseFloat(p.properties.LENGTH))
+          const cl = Math.round(parseFloat(c.properties.LENGTH))
+          if (pl !== cl) {
+            const direction = cl > pl ? 'up' : 'down'
+            marks.prev.set(String(i), { kind: 'changed' })
+            marks.curr.set(String(i), { kind: 'changed', direction, was: String(pl) })
+          }
+        }
+      }
+      return marks
+    }
+
+    // Mark one row: a GOV.UK tag in the first cell; for a change an up/down arrow before
+    // the value (how it moved from previous to current) with visually-hidden
+    // "increased"/"decreased" and a visually-hidden "was" so the old value is read out.
+    // Thin line arrow: a stroked stem with an open head (the down arrow is a CSS rotation).
+    const ARROW_SVG = '<svg class="app-diff__arrow app-diff__arrow--DIR" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 9V1.5M1.5 5 5 1.5 8.5 5"/></svg>'
+    function markRow (tr, { kind, was, direction }) {
+      if (!tr) return
+      tr.classList.add('app-diff', 'app-diff--' + kind)
+      const tag = DIFF_TAG[kind]
+      const first = tr.querySelector('td')
+      if (first && !first.querySelector('.govuk-tag')) {
+        first.insertAdjacentHTML('beforeend',
+          ' <strong class="govuk-tag ' + tag.cls + ' govuk-!-margin-left-2">' + tag.text + '</strong>')
+      }
+      const last = tr.querySelector('td:last-child')
+      if (!last) return
+      if (kind === 'changed' && direction && !last.querySelector('.app-diff__arrow')) {
+        // Arrow sits to the LEFT of the value; the hidden word follows the value so screen
+        // readers hear "0.0447 increased (was 0.0225)".
+        last.insertAdjacentHTML('afterbegin', ARROW_SVG.replace('DIR', direction))
+        last.insertAdjacentHTML('beforeend',
+          '<span class="govuk-visually-hidden"> ' + (direction === 'up' ? 'increased' : 'decreased') + '</span>')
+      }
+      if (was != null) {
+        last.insertAdjacentHTML('beforeend', '<span class="govuk-visually-hidden"> (was ' + was + ')</span>')
+      }
+    }
+
+    // Mark a single-value row (a total or a Summary count) as changed when the displayed
+    // previous and current values differ.
+    function markIfChanged (tr, prev, curr, dp) {
+      const p = prev.toFixed(dp), c = curr.toFixed(dp)
+      if (p === c) return
+      markRow(tr, { kind: 'changed', direction: curr > prev ? 'up' : 'down', was: p })
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Tables. ONE set of tables describes the current version and marks every change
+    // with a tag and arrow, so the reader never has to cross-reference two columns.
+    // Removed covers (previous version only) are listed at the end with their previous
+    // area and a Removed tag.
+    // ───────────────────────────────────────────────────────────────────────────
+
+    // Sort a version's covers and stamp the stable ids the map features and table rows
+    // share (the datasets source uses generateId, and land cover features have no unique
+    // property of their own — feature.id/ID are duplicated and DESCRIPTION repeats within a
+    // parcel). Sorted A–Z by name, then by area, identically for both versions, so diffCovers
+    // can pair same-named covers by position. Stamped AFTER the sort so landCoverId is also
+    // the position. Mirrors hedgeId.
+    function stampIds (d) {
+      d.parcelCovers.sort((a, b) =>
+        (a.properties.DESCRIPTION || '').localeCompare(b.properties.DESCRIPTION || '') ||
+        (parseFloat(a.properties.AREA_HA) - parseFloat(b.properties.AREA_HA))
+      )
+      d.parcelCovers.forEach((f, i) => { f.properties.landCoverId = String(i) })
+      d.parcelHedges.forEach((f, i) => { f.properties.hedgeId = String(i) })
+    }
+
+    // Stamp each cover with its diff outcome so the map can draw the change outlines with a
+    // plain filter (mode 'changes'): previous covers are 'removed' | 'changed' | 'same',
+    // current covers 'added' | 'changed' | 'same'.
+    function stampDiffKind (dPrev, dCurr, marks) {
+      dPrev.parcelCovers.forEach(f => {
+        f.properties.diffKind = (marks.covers.prev.get(f.properties.landCoverId) || { kind: 'same' }).kind
+      })
+      dCurr.parcelCovers.forEach(f => {
+        f.properties.diffKind = (marks.covers.curr.get(f.properties.landCoverId) || { kind: 'same' }).kind
+      })
+    }
+
+    const sumArea = (covers) => covers.reduce((t, f) => t + parseFloat(f.properties.AREA_HA), 0)
+    const sumLength = (hedges) => Math.round(hedges.reduce((t, f) => t + parseFloat(f.properties.LENGTH), 0))
+
+    // In the merged table a removed cover's area is its PREVIOUS area — say so for screen
+    // reader users, who otherwise hear it alongside the current values. (In the tabbed
+    // tables the tab itself says which version the row belongs to.)
+    const versionNote = (version, withNote) =>
+      withNote && version === 'previous' ? '<span class="govuk-visually-hidden"> (previous version)</span>' : ''
+
+    function coverRow (f, version, { note = true } = {}) {
+      const area = parseFloat(f.properties.AREA_HA)
+      const tr = document.createElement('tr')
+      tr.className = 'govuk-table__row'
+      tr.dataset.version = version
+      tr.dataset.landCoverId = f.properties.landCoverId
+      tr.innerHTML = `
+        <td class="govuk-table__cell">${f.properties.DESCRIPTION}</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${area.toFixed(4)}${versionNote(version, note)}</td>
+      `
+      return tr
+    }
+
+    function hedgeRow (f, i, version, { note = true } = {}) {
+      const length = parseFloat(f.properties.LENGTH)
+      const tr = document.createElement('tr')
+      tr.className = 'govuk-table__row'
+      tr.dataset.version = version
+      tr.dataset.hedgeId = f.properties.hedgeId
+      tr.innerHTML = `
+        <td class="govuk-table__cell">${i + 1}</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap">${Math.round(length)}${versionNote(version, note)}</td>
+      `
+      return tr
+    }
+
+    function totalRow (which, text) {
+      const tr = document.createElement('tr')
+      tr.className = 'govuk-table__row'
+      tr.dataset.totalRow = which
+      tr.innerHTML = `
+        <td class="govuk-table__cell" style="font-weight:700">Total</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap;font-weight:700">${text}</td>
+      `
+      return tr
+    }
+
+    function emptyRow (text) {
+      const tr = document.createElement('tr')
+      tr.className = 'govuk-table__row'
+      tr.innerHTML = '<td class="govuk-table__cell" colspan="2">' + text + '</td>'
+      return tr
+    }
+
+    function renderMergedTables (dPrev, dCurr, marks) {
+      const el = (id) => document.getElementById(id)
+      const rowFor = (body, attr, version, id) =>
+        el(body).querySelector('tr[data-version="' + version + '"][data-' + attr + '="' + id + '"]')
+
+      // Summary. The parcel boundary is the same in both versions, so Total area never
+      // changes here; the counts can.
+      el('parcel-total-area').textContent = parseFloat(dCurr.selectedFeature.properties.AREA_HA).toFixed(4)
+      el('parcel-land-covers').textContent = dCurr.parcelCovers.length
+      el('parcel-hedgerows').textContent = dCurr.parcelHedges.length
+
+      // Land covers: the current version's rows, then the removed previous-version rows.
+      const removedCovers = dPrev.parcelCovers.filter(f => (marks.covers.prev.get(f.properties.landCoverId) || {}).kind === 'removed')
+      const lcBody = el('land-covers-table-body')
+      lcBody.innerHTML = ''
+      dCurr.parcelCovers.forEach(f => lcBody.appendChild(coverRow(f, 'current')))
+      removedCovers.forEach(f => lcBody.appendChild(coverRow(f, 'previous')))
+      if (dCurr.parcelCovers.length + removedCovers.length === 0) {
+        lcBody.appendChild(emptyRow('No land covers recorded.'))
+      } else {
+        lcBody.appendChild(totalRow('land-covers', sumArea(dCurr.parcelCovers).toFixed(4)))
+      }
+
+      // Hedgerows: same shape. The two example versions share their hedgerows, so this
+      // carries no marks today, but the diff stays wired for a snapshot that differs.
+      const removedHedges = dPrev.parcelHedges.filter(f => (marks.hedges.prev.get(f.properties.hedgeId) || {}).kind === 'removed')
+      const hBody = el('hedgerows-table-body')
+      hBody.innerHTML = ''
+      dCurr.parcelHedges.forEach((f, i) => hBody.appendChild(hedgeRow(f, i, 'current')))
+      removedHedges.forEach((f, i) => hBody.appendChild(hedgeRow(f, dCurr.parcelHedges.length + i, 'previous')))
+      hBody.appendChild(totalRow('hedgerows', String(sumLength(dCurr.parcelHedges))))
+
+      // Tags and arrows. A 'changed' mark on the previous side has no row of its own — its
+      // change is shown on the paired current row — so only removed previous rows are marked.
+      marks.covers.curr.forEach((m, id) => markRow(rowFor('land-covers-table-body', 'land-cover-id', 'current', id), m))
+      marks.covers.prev.forEach((m, id) => { if (m.kind === 'removed') markRow(rowFor('land-covers-table-body', 'land-cover-id', 'previous', id), m) })
+      marks.hedges.curr.forEach((m, id) => markRow(rowFor('hedgerows-table-body', 'hedge-id', 'current', id), m))
+      marks.hedges.prev.forEach((m, id) => { if (m.kind === 'removed') markRow(rowFor('hedgerows-table-body', 'hedge-id', 'previous', id), m) })
+
+      // Totals and Summary counts.
+      markIfChanged(lcBody.querySelector('tr[data-total-row]'), sumArea(dPrev.parcelCovers), sumArea(dCurr.parcelCovers), 4)
+      markIfChanged(hBody.querySelector('tr[data-total-row]'), sumLength(dPrev.parcelHedges), sumLength(dCurr.parcelHedges), 0)
+      markIfChanged(el('parcel-land-covers').closest('tr'), dPrev.parcelCovers.length, dCurr.parcelCovers.length, 0)
+      markIfChanged(el('parcel-hedgerows').closest('tr'), dPrev.parcelHedges.length, dCurr.parcelHedges.length, 0)
+
+      applyLandCoverRowClass()
+    }
+
+    // Sidebar layout: one set of tables per version, in the Current / Previous tabs. The
+    // marks match the two-map compare pages: Added and Changed (with the arrow and the old
+    // value) on the current version's rows, Removed and Changed (tag only — an arrow next to
+    // the previous value would read as the previous value itself having moved) on the
+    // previous version's. Totals and Summary counts are marked on both sides when they differ.
+    function renderVersionTables (dPrev, dCurr, marks) {
+      const el = (id) => document.getElementById(id)
+      const dataFor = { previous: dPrev, current: dCurr }
+      VERSIONS.forEach(version => {
+        const d = dataFor[version]
+        el('parcel-total-area-' + version).textContent = parseFloat(d.selectedFeature.properties.AREA_HA).toFixed(4)
+        el('parcel-land-covers-' + version).textContent = d.parcelCovers.length
+        el('parcel-hedgerows-' + version).textContent = d.parcelHedges.length
+
+        const lcBody = el('land-covers-table-body-' + version)
+        lcBody.innerHTML = ''
+        d.parcelCovers.forEach(f => lcBody.appendChild(coverRow(f, version, { note: false })))
+        if (d.parcelCovers.length === 0) {
+          lcBody.appendChild(emptyRow('No land covers recorded.'))
+        } else {
+          lcBody.appendChild(totalRow('land-covers', sumArea(d.parcelCovers).toFixed(4)))
+        }
+
+        const hBody = el('hedgerows-table-body-' + version)
+        hBody.innerHTML = ''
+        d.parcelHedges.forEach((f, i) => hBody.appendChild(hedgeRow(f, i, version, { note: false })))
+        hBody.appendChild(totalRow('hedgerows', String(sumLength(d.parcelHedges))))
+      })
+
+      const rowFor = (base, attr, version, id) =>
+        el(base + '-' + version).querySelector('tr[data-' + attr + '="' + id + '"]')
+      marks.covers.prev.forEach((m, id) => markRow(rowFor('land-covers-table-body', 'land-cover-id', 'previous', id), m))
+      marks.covers.curr.forEach((m, id) => markRow(rowFor('land-covers-table-body', 'land-cover-id', 'current', id), m))
+      marks.hedges.prev.forEach((m, id) => markRow(rowFor('hedgerows-table-body', 'hedge-id', 'previous', id), m))
+      marks.hedges.curr.forEach((m, id) => markRow(rowFor('hedgerows-table-body', 'hedge-id', 'current', id), m))
+
+      // Previous side: tag only. Current side: tag, arrow and the previous value.
+      const both = (prevTr, currTr, prev, curr, dp) => {
+        if (prev.toFixed(dp) === curr.toFixed(dp)) return
+        markRow(prevTr, { kind: 'changed' })
+        markRow(currTr, { kind: 'changed', direction: curr > prev ? 'up' : 'down', was: prev.toFixed(dp) })
+      }
+      const totalRowIn = (base, version) => el(base + '-' + version).querySelector('tr[data-total-row]')
+      both(totalRowIn('land-covers-table-body', 'previous'), totalRowIn('land-covers-table-body', 'current'), sumArea(dPrev.parcelCovers), sumArea(dCurr.parcelCovers), 4)
+      both(totalRowIn('hedgerows-table-body', 'previous'), totalRowIn('hedgerows-table-body', 'current'), sumLength(dPrev.parcelHedges), sumLength(dCurr.parcelHedges), 0)
+      both(el('parcel-land-covers-previous').closest('tr'), el('parcel-land-covers-current').closest('tr'), dPrev.parcelCovers.length, dCurr.parcelCovers.length, 0)
+      both(el('parcel-hedgerows-previous').closest('tr'), el('parcel-hedgerows-current').closest('tr'), dPrev.parcelHedges.length, dCurr.parcelHedges.length, 0)
+
+      applyLandCoverRowClass()
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Dataset builders
+    // ───────────────────────────────────────────────────────────────────────────
+    // Land cover for one version — one dataset with a sublayer for EVERY cover type.
+    // Building all types (rather than only those present) means every colour/pattern is
+    // registered once at construction, so this can be a PERMANENT dataset whose data is
+    // swapped with setData instead of being rebuilt. Each sublayer filters the shared
+    // source by DESCRIPTION; syncLandCoverKey() hides the types absent from this parcel.
+    // The previous version uses the same colours faded, with a dashed dark outline, and
+    // stays out of the Key (a single "Previous version" Key entry explains the encoding).
+    function buildLandCoverDataset (version, parcelCovers) {
+      const previous = version === 'previous'
+      const sublayers = Object.keys(palette.landCover).map(type => {
+        const color = palette.landCover[type]
+        const style = previous
+          ? { fill: color, stroke: palette.landCoverSelected, strokeWidth: 1.5, strokeDashArray: PREVIOUS_DASH, opacity: PREVIOUS_OPACITY }
+          : { fill: color, stroke: color, strokeWidth: 1 }
+        if (landCoverPatterns[type]) {
+          style.fillPattern = landCoverPatterns[type]
+          style.fillPatternBackgroundColor = color
+          style.fillPatternForegroundColor = previous ? palette.patternLinePrevious : palette.patternLine
+        }
+        return {
+          id: lcSublayerId(type),
+          label: type,
+          filter: ['==', ['get', 'DESCRIPTION'], type],
+          style,
+          showInKey: !previous,
+          showInMenu: true
+        }
+      })
+      return {
+        id: DS.landCover(version),
+        label: VERSION_LABEL[version],
+        geojson: { type: 'FeatureCollection', features: parcelCovers },
+        showInKey: !previous,
+        showInMenu: true,
+        sublayers
+      }
+    }
+
+    // A dataset with no features that exists only to put a line in the Key. The Key lists
+    // datasets from config, not from what is drawn, so this is a reliable way to explain a
+    // page-drawn layer (the previous-version styling, the change outlines).
+    function buildKeyOnlyDataset (id, label, style) {
+      return {
+        id,
+        label,
+        geojson: { type: 'FeatureCollection', features: [] },
+        style: { keySymbolShape: 'line', ...style },
+        showInKey: true,
+        showInMenu: false
+      }
+    }
+
+    // The bold outline of the parcel.
+    function buildParcelOutlineDataset (feature) {
+      return {
+        id: DS.outline,
+        label: 'Land parcel',
+        geojson: { type: 'FeatureCollection', features: [feature] },
+        style: { fill: 'transparent', stroke: palette.parcelBorder, strokeWidth: 3 },
+        showInKey: false,
+        showInMenu: false
+      }
+    }
+
+    // The parcel's hedgerows. Built once at construction and thereafter re-applied with
+    // setData (see swapParcelDatasets), so it is a permanent dataset — when a parcel has no
+    // hedges its data is emptied and the layer is hidden (which also drops it from the Key).
+    function buildHedgerowDataset (parcelHedges) {
+      const hasHedges = parcelHedges.length > 0
+      return {
+        id: DS.hedgerows,
+        label: 'Hedgerow',
+        geojson: { type: 'FeatureCollection', features: parcelHedges },
+        style: { stroke: palette.hedgerow, strokeWidth: 6, keySymbolShape: 'line' },
+        showInKey: true,
+        showInMenu: true,
+        visibility: hasHedges ? 'visible' : 'hidden'
+      }
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Version visibility. Every control on every variant — page checkboxes, the Layers
+    // panel's injected parent checkboxes, the fade slider's end stops — goes through
+    // setVersionVisibility, and everything that depends on a version being shown (its
+    // selection outline, the change outlines, the page controls) is re-synced from the
+    // one source of truth: presentCovers minus hiddenCovers.
+    // ───────────────────────────────────────────────────────────────────────────
+    function isVersionVisible (version) {
+      return [...presentCovers[version]].some(type => !hiddenCovers[version].has(type))
+    }
+    function visibleTypes (version) {
+      return [...presentCovers[version]].filter(type => !hiddenCovers[version].has(type))
+    }
+
+    // Show only the cover types present on the parcel in the Key/Layers by hiding the rest
+    // (their sublayers have no matching features so they draw nothing anyway — this is
+    // purely for the Key/Layers, whose UI omits sublayers marked hidden). A style-change
+    // re-apply passes preserveSelection so it keeps the user's ticks.
+    function syncLandCoverKey (version, parcelCovers, { preserveSelection = false } = {}) {
+      presentCovers[version] = new Set(parcelCovers.map(f => f.properties.DESCRIPTION))
+      if (!preserveSelection) hiddenCovers[version].clear()
+      Object.keys(palette.landCover).forEach(type => {
+        const visible = presentCovers[version].has(type) && !hiddenCovers[version].has(type)
+        datasetsPlugin.setDatasetVisibility(visible, { datasetId: DS.landCover(version), sublayerId: lcSublayerId(type) })
+      })
+      enhanceLayersPanel()
+    }
+
+    // Show/hide every cover type of one version. It must drive the sublayers individually —
+    // setDatasetVisibility(true, { datasetId }) deliberately re-hides sublayers whose stored
+    // visibility is 'hidden', so a dataset-level toggle could hide all but never bring them back.
+    function setVersionVisibility (version, visible) {
+      presentCovers[version].forEach(type => {
+        if (visible) hiddenCovers[version].delete(type); else hiddenCovers[version].add(type)
+        datasetsPlugin.setDatasetVisibility(visible, { datasetId: DS.landCover(version), sublayerId: lcSublayerId(type) })
+      })
+      syncOverlayLayers()
+    }
+
+    // Mode 'fade': crossfade the two versions. t = 0 shows only the previous version at full
+    // strength, t = 1 only the current; in between both are drawn with complementary
+    // opacity (the previous version keeps its dashed outline, so the two stay tellable
+    // apart even at the midpoint). Opacity goes through the plugin so it is stored in its
+    // state and survives a base-map style change. At either end the faded-out version is
+    // hidden outright so it is neither drawn nor clickable.
+    function applyFade (t) {
+      fadePosition = t
+      const opacity = { previous: 1 - t, current: t }
+      VERSIONS.forEach(version => {
+        presentCovers[version].forEach(type => {
+          datasetsPlugin.setOpacity(opacity[version], { datasetId: DS.landCover(version), sublayerId: lcSublayerId(type) })
+        })
+      })
+      setVersionVisibility('previous', t < 1)
+      setVersionVisibility('current', t > 0)
+      const status = document.getElementById('compare-fade-status')
+      if (status) {
+        status.textContent = t === 0
+          ? 'Showing the previous version only'
+          : t === 1
+            ? 'Showing the current version only'
+            : 'Showing both versions, current at ' + Math.round(t * 100) + '%'
+      }
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Land cover selection (map click <-> table row)
+    // Selection is IDEMPOTENT, never a toggle: the native map click below and the interact
+    // plugin both observe the same click, and a toggle would have them cancel each other
+    // out (interact's reducer deselects when the same single feature is re-selected).
+    // ───────────────────────────────────────────────────────────────────────────
+
+    // Land cover fill layers of one version that currently exist. Computed lazily — the
+    // datasets plugin adds them asynchronously and a base-map style change removes and
+    // re-adds them.
+    function lcFillLayerIds (version) {
+      if (!hedgeMap) return []
+      return Object.keys(palette.landCover)
+        .map(type => lcFillId(version, type))
+        .filter(id => hedgeMap.getLayer(id))
+    }
+
+    // Resolve a clicked feature to ONE table row plus the shape(s) to outline. A current
+    // cover is its own row; a previous cover maps to the current row it is paired with
+    // (so the map outlines both the old and the new shape), or to its Removed row when it
+    // has no current equivalent.
+    function selectionFor (version, id) {
+      if (id == null || !data) return null
+      const { prevToCurr, currToPrev } = data.marks.covers
+      if (version === 'current') {
+        return { rowVersion: 'current', rowId: id, current: id, previous: currToPrev.has(id) ? currToPrev.get(id) : null }
+      }
+      if (prevToCurr.has(id)) {
+        const paired = prevToCurr.get(id)
+        return { rowVersion: 'current', rowId: paired, current: paired, previous: id }
+      }
+      return { rowVersion: 'previous', rowId: id, current: null, previous: id }
+    }
+
+    // Highlight the selected row(s). Merged table: the one row the selection resolved to.
+    // Tabbed tables: the current row and the paired previous row, one per tab.
+    function applyLandCoverRowClass () {
+      const wanted = !selection
+        ? {}
+        : TABLE_LAYOUT === 'tabs'
+          ? { previous: selection.previous, current: selection.current }
+          : { [selection.rowVersion]: selection.rowId }
+      document.querySelectorAll('#compare-data tr[data-land-cover-id]').forEach(tr => {
+        const id = wanted[tr.dataset.version]
+        tr.classList.toggle('app-land-cover--selected', id != null && id === tr.dataset.landCoverId)
+      })
+      revealSelectedTab()
+    }
+
+    // Tabbed tables: if the open tab has no highlighted row but the other tab does (a
+    // removed cover only has a row under Previous version), switch to it. Only when the
+    // Tabs component is actually tabbed — on narrow screens it shows every panel.
+    function revealSelectedTab () {
+      if (TABLE_LAYOUT !== 'tabs' || !selection) return
+      if (!document.querySelector('.govuk-tabs__panel--hidden')) return
+      const open = document.querySelector('.govuk-tabs__panel:not(.govuk-tabs__panel--hidden)')
+      if (!open || open.querySelector('tr.app-land-cover--selected')) return
+      const target = document.querySelector('.govuk-tabs__panel--hidden tr.app-land-cover--selected')
+      const panel = target && target.closest('.govuk-tabs__panel')
+      const link = panel && document.querySelector('.govuk-tabs__tab[href="#' + panel.id + '"]')
+      if (link) link.click()
+    }
+
+    // Select a land cover by version + stamped landCoverId (null clears). Drives the table
+    // row and the per-version outline layers.
+    function selectLandCover (version, id) {
+      selection = selectionFor(version, id)
+      VERSIONS.forEach(v => {
+        const layer = LC_SELECTED(v)
+        if (!hedgeMap || !hedgeMap.getLayer(layer)) return
+        const target = selection && selection[v] != null ? selection[v] : NO_LAND_COVER
+        hedgeMap.setFilter(layer, ['==', ['get', 'landCoverId'], target])
+      })
+      applyLandCoverRowClass()
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Page-owned layers: the selection outlines (one per version) and, in mode
+    // 'changes', the three change outlines. All sit on the plugin's own sources.
+    // ───────────────────────────────────────────────────────────────────────────
+    // Selected-land-cover outlines: our own line layers on the plugin's shared sources,
+    // filtered to the selection. We own them rather than using interact's built-in
+    // highlight because selection is driven by a native click that interact's own hit-test
+    // can miss (see enableInteract) — interact's highlight is suppressed with
+    // selectedStroke:'transparent'. Filters are seeded from the live selection so they
+    // survive base-map style re-adds. The selection line is wider than a change outline and
+    // sits under it, so a selected changed cover shows a black halo around its colour.
+    function addPageLayers () {
+      if (!hedgeMap) return
+      VERSIONS.forEach(v => {
+        if (!hedgeMap.getSource(lcSource(v)) || hedgeMap.getLayer(LC_SELECTED(v))) return
+        const target = selection && selection[v] != null ? selection[v] : NO_LAND_COVER
+        hedgeMap.addLayer({
+          id: LC_SELECTED(v),
+          type: 'line',
+          source: lcSource(v),
+          paint: { 'line-color': palette.landCoverSelected, 'line-width': COMPARE_MODE === 'changes' ? 6 : 3 },
+          filter: ['==', ['get', 'landCoverId'], target]
+        })
+      })
+      if (COMPARE_MODE === 'changes') {
+        CHANGE_KINDS.forEach(kind => {
+          const source = lcSource(CHANGE_SOURCE_VERSION[kind])
+          if (!hedgeMap.getSource(source) || hedgeMap.getLayer(CHANGE_LAYER(kind))) return
+          hedgeMap.addLayer({
+            id: CHANGE_LAYER(kind),
+            type: 'line',
+            source,
+            paint: { 'line-color': palette.change[kind], 'line-width': 3 },
+            filter: ['==', ['get', 'diffKind'], kind]
+          })
+        })
+      }
+      restoreZOrder()
+      syncOverlayLayers()
+    }
+
+    // The page-owned outlines are not the plugin's, so hiding a version through any control
+    // does not hide them. Follow the version: a selection outline shows only while its
+    // version has a visible cover type; a change outline shows only while "Changes" is on
+    // and is filtered to the cover types of its source version that are still ticked.
+    function syncOverlayLayers () {
+      if (hedgeMap) {
+        VERSIONS.forEach(v => {
+          const id = LC_SELECTED(v)
+          if (hedgeMap.getLayer(id)) hedgeMap.setLayoutProperty(id, 'visibility', isVersionVisible(v) ? 'visible' : 'none')
+        })
+        CHANGE_KINDS.forEach(kind => {
+          const id = CHANGE_LAYER(kind)
+          if (!hedgeMap.getLayer(id)) return
+          const types = visibleTypes(CHANGE_SOURCE_VERSION[kind])
+          hedgeMap.setLayoutProperty(id, 'visibility', changesShown && types.length ? 'visible' : 'none')
+          hedgeMap.setFilter(id, ['all', ['==', ['get', 'diffKind'], kind], ['in', ['get', 'DESCRIPTION'], ['literal', types]]])
+        })
+      }
+      syncPageControls()
+    }
+
+    // Re-assert the full bottom→top stacking. moveLayer only reorders.
+    function restoreZOrder () {
+      if (!hedgeMap) return
+      const order = []
+      VERSIONS.forEach(v => {
+        Object.keys(palette.landCover).forEach(type => {
+          const id = lcFillId(v, type)
+          order.push(id, id + '-stroke')
+        })
+      })
+      VERSIONS.forEach(v => order.push(LC_SELECTED(v)))
+      CHANGE_KINDS.forEach(kind => order.push(CHANGE_LAYER(kind)))
+      order.push(DS.outline, DS.hedgerows)
+      order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Page controls (the compareControls block). Generic hooks so each variant is just
+    // markup: [data-version-toggle="previous|current"] checkboxes, a
+    // [data-changes-toggle] checkbox, a #compare-fade range with [data-fade-to] buttons.
+    // ───────────────────────────────────────────────────────────────────────────
+    function syncPageControls () {
+      document.querySelectorAll('[data-version-toggle]').forEach(input => {
+        input.checked = isVersionVisible(input.dataset.versionToggle)
+      })
+      document.querySelectorAll('[data-changes-toggle]').forEach(input => {
+        input.checked = changesShown
+      })
+    }
+
+    function wireControls () {
+      document.querySelectorAll('[data-version-toggle]').forEach(input => {
+        input.addEventListener('change', (e) => setVersionVisibility(e.target.dataset.versionToggle, e.target.checked))
+      })
+      document.querySelectorAll('[data-changes-toggle]').forEach(input => {
+        input.addEventListener('change', (e) => { changesShown = e.target.checked; syncOverlayLayers() })
+      })
+      const fade = document.getElementById('compare-fade')
+      if (fade) {
+        fade.addEventListener('input', () => applyFade(Number(fade.value) / 100))
+        document.querySelectorAll('[data-fade-to]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            fade.value = btn.dataset.fadeTo
+            applyFade(Number(fade.value) / 100)
+          })
+        })
+      }
+      // Table -> map: a click on a land cover row selects it on the map.
+      document.getElementById('compare-data').addEventListener('click', (e) => {
+        const tr = e.target.closest('tr[data-land-cover-id]')
+        if (tr) selectLandCover(tr.dataset.version, tr.dataset.landCoverId)
+      })
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Layers panel: the injected parent checkboxes. The datasets plugin renders a
+    // sublayer group as a <fieldset> + <legend> with one checkbox per sublayer and NO
+    // parent checkbox, and offers no option for one. So the page adds one per version
+    // group, and re-applies on every React commit (see the MutationObserver in
+    // datasets:ready). Everything here is idempotent.
+    //
+    // Nothing is written to plugin-owned attributes: Layers.jsx recomputes className on
+    // each render and would strip anything added there. The absent-type hiding uses the
+    // `hidden` PROPERTY, which React does not manage, so it survives a re-render.
+    // ───────────────────────────────────────────────────────────────────────────
+    function enhanceLayersPanel () {
+      VERSIONS.forEach(version => {
+        const datasetId = DS.landCover(version)
+        const anySublayerInput = container.querySelector('.im-c-datasets-layers-group__fieldset input[data-dataset-id="' + datasetId + '"]')
+        if (!anySublayerInput) return   // panel not mounted — it is dismissible
+        const fieldset = anySublayerInput.closest('.im-c-datasets-layers-group__fieldset')
+
+        // Only list the types actually on this parcel. The plugin registers all of them
+        // (see buildLandCoverDataset) and Layers.jsx lists every showInMenu sublayer
+        // regardless of visibility, so the absent ones have to be hidden here.
+        const childInputs = [...fieldset.querySelectorAll('input[data-sublayer-id]')]
+        childInputs.forEach(input => {
+          const type = lcTypeBySublayerId[input.dataset.sublayerId]
+          const item = input.closest('.im-c-datasets-layers__item')
+          if (item) item.hidden = !presentCovers[version].has(type)
+          // The checkbox itself is the plugin's, and its handler is all the map needs. This
+          // extra listener only records the choice so a style-change rebuild can restore it.
+          // React uses delegated listeners, so a direct one alongside is safe; the flag keeps
+          // it to one per input across re-renders.
+          if (!input.__lcTracked) {
+            input.__lcTracked = true
+            input.addEventListener('change', (e) => {
+              if (e.target.checked) hiddenCovers[version].delete(type); else hiddenCovers[version].add(type)
+            })
+          }
+        })
+
+        let parent = fieldset.querySelector('.app-lc-parent input')
+        if (!parent) {
+          const wrapper = document.createElement('div')
+          wrapper.className = 'app-lc-parent im-c-datasets-layers__item govuk-checkboxes govuk-checkboxes--small'
+          wrapper.setAttribute('data-module', 'govuk-checkboxes')
+          wrapper.innerHTML = '<div class="govuk-checkboxes__item">' +
+            '<input class="govuk-checkboxes__input" id="' + lcParentId(version) + '" type="checkbox">' +
+            '<label class="im-c-datasets-layers__item-label govuk-label govuk-checkboxes__label" for="' + lcParentId(version) + '">' + VERSION_LABEL[version] + '</label>' +
+            '</div>'
+          parent = wrapper.querySelector('input')
+          parent.addEventListener('change', (e) => { setVersionVisibility(version, e.target.checked) })
+          fieldset.insertBefore(wrapper, fieldset.querySelector('.im-c-datasets-layers-group__legend').nextSibling)
+        }
+
+        // Ticked while any listed type is ticked, so clicking it always flips the whole group.
+        parent.checked = childInputs.some(input => {
+          const item = input.closest('.im-c-datasets-layers__item')
+          return item && !item.hidden && input.checked
+        })
+      })
+
+      // The children are wired to the plugin's own handler, so this is also where a
+      // child tick/untick gets followed up (the observer re-runs us after that render).
+      syncOverlayLayers()
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Interaction
+    // ───────────────────────────────────────────────────────────────────────────
+    // Only the hedgerow lines are interactive through the plugin (click to highlight the
+    // row). enable() replaces the layer config, so this is re-run when the layers are
+    // recreated (e.g. after a base-map style change).
+    function enableInteract () {
+      if (!hedgeMap || !interact) return false
+      const layers = []
+      if (hedgeMap.getLayer(DS.hedgerows)) layers.push({ layerId: DS.hedgerows, idProperty: 'hedgeId' })
+      // Land cover fills are registered so the mobile touch crosshair can select them; the
+      // reliable path is the native map click in map:ready — interact re-tests a polygon
+      // click with point-in-polygon against TILE-CLIPPED geometry from queryRenderedFeatures,
+      // so a polygon straddling a vector-tile seam silently fails to select. selectedStroke
+      // 'transparent' suppresses interact's own highlight so only our outlines draw.
+      VERSIONS.forEach(v => {
+        lcFillLayerIds(v).forEach(id => {
+          layers.push({ layerId: id, idProperty: 'landCoverId', selectedStroke: 'transparent' })
+        })
+      })
+      interact.enable({ layers })
+      return true
+    }
+
+    // Re-assert both versions' data on the permanent datasets. The data never changes on
+    // this page, but a base-map style change wipes and rebuilds the datasets plugin's layers
+    // from their construction-time geojson, so this is used to re-apply after that.
+    function swapParcelDatasets ({ preserveSelection = false } = {}) {
+      VERSIONS.forEach(v => {
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: data[v].parcelCovers }, { datasetId: DS.landCover(v) })
+        syncLandCoverKey(v, data[v].parcelCovers, { preserveSelection })
+      })
+      datasetsPlugin.setData({ type: 'FeatureCollection', features: [data.current.selectedFeature] }, { datasetId: DS.outline })
+      datasetsPlugin.setData({ type: 'FeatureCollection', features: data.current.parcelHedges }, { datasetId: DS.hedgerows })
+      datasetsPlugin.setDatasetVisibility(data.current.parcelHedges.length > 0, { datasetId: DS.hedgerows })
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Build the map
+    // ───────────────────────────────────────────────────────────────────────────
+    function buildMap () {
+      // Datasets in Layers-panel / Key order: the current version's land cover, the
+      // previous version's, the Key-only explainer entries, the bold outline, then the
+      // hedgerows. This is also the plugin's initial draw order, which would put the
+      // previous version ON TOP — restoreZOrder (run as soon as the layers exist, and
+      // after every base-map change) moves it back underneath. All are permanent; their
+      // construction-time geojson is re-applied after a base-map style change (see
+      // swapParcelDatasets).
+      const datasets = [
+        buildLandCoverDataset('current', data.current.parcelCovers),
+        buildLandCoverDataset('previous', data.previous.parcelCovers),
+        buildKeyOnlyDataset(DS.keyPrevious, 'Previous version', {
+          stroke: palette.landCoverSelected, strokeWidth: 2, strokeDashArray: PREVIOUS_DASH, opacity: 0.6,
+          symbolDescription: 'faded fill with a dashed outline'
+        })
+      ]
+      if (COMPARE_MODE === 'changes') {
+        CHANGE_KINDS.forEach(kind => {
+          datasets.push(buildKeyOnlyDataset(DS.keyChange(kind), CHANGE_LABEL[kind], {
+            stroke: palette.change[kind], strokeWidth: 3, symbolDescription: CHANGE_LABEL[kind].toLowerCase() + ' outline'
+          }))
+        })
+      }
+      datasets.push(
+        buildParcelOutlineDataset(data.current.selectedFeature),
+        buildHedgerowDataset(data.current.parcelHedges)
+      )
+
+      // Frame the map on the parcel at construction time (fits with duration:0 inside the
+      // library), so the map opens already framed with no visible pan/zoom.
+      const parcelBounds = computeBounds(data.current.selectedFeature)
+
+      datasetsPlugin = defra.datasetsMaplibrePlugin({ datasets })
+      interact = defra.interactPlugin({
+        interactionModes: ['selectFeature'],
+        multiSelect: false,
+        deselectOnClickOutside: true
+      })
+
+      interactiveMap = new defra.InteractiveMap('map', {
+        mapProvider: defra.maplibreProvider(),
+        behaviour: 'hybrid',
+        mapLabel: 'Land parcel, previous and current versions',
+        pageTitle: 'Compare versions map',
+        bounds: parcelBounds,
+        minZoom: 6,
+        maxZoom: 18,
+        enableZoomControls: true,
+        hasExitButton: true,
+        mapStyle: {
+          url: 'https://tiles.openfreemap.org/styles/liberty',
+          attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
+          backgroundColor: '#f5f5f0'
+        },
+        plugins: [
+          defra.scaleBarPlugin({
+            units: 'metric'
+          }),
+          defra.mapStylesPlugin({ mapStyles }),
+          datasetsPlugin,
+          interact
+        ]
+      })
+
+      // Sidebar layout, mobile: DEFRA's hybrid mode renders a "Map view" button where the
+      // inline map would be, which this layout collapses to zero width. Move the button
+      // into the sidebar's slot (it is rendered asynchronously, hence the observer).
+      const slot = document.getElementById('map-button-slot')
+      if (slot) {
+        const moveMapButton = () => {
+          const btn = document.querySelector('.im-c-open-map-button')
+          if (btn && !slot.contains(btn)) { slot.appendChild(btn); return true }
+          return false
+        }
+        if (!moveMapButton()) {
+          const observer = new MutationObserver(() => { if (moveMapButton()) observer.disconnect() })
+          observer.observe(document.getElementById('main-content'), { childList: true, subtree: true })
+        }
+      }
+
+      // The MapLibre map instance comes from the map:ready payload — the InteractiveMap
+      // wrapper exposes no public accessor for it. The datasets plugin adds its layers
+      // asynchronously, so enabling is retried on datasets:ready and after a style change.
+      interactiveMap.on('map:ready', (e) => {
+        hedgeMap = e.map
+        enableInteract()
+
+        // The map is constructed already framed on the parcel, so the first idle = the framed
+        // view's tiles have rendered. Reveal the map then, fading out the loading overlay.
+        hedgeMap.once('idle', hideMapLoading)
+
+        // Land cover selection via MapLibre's native hit-test — reliable across tile seams,
+        // unlike interact's point-in-polygon on de-duped tile-clipped geometry (see
+        // enableInteract). Map-level rather than per-layer so a click that misses every land
+        // cover clears the selection. The hedgerow test uses interact's own 10px tolerance
+        // bbox so both paths agree on what counts as a hedgerow click. With both versions
+        // under the point the SMALLEST cover wins: a removed cover that has since been
+        // absorbed into a larger current one would otherwise be unselectable (the current
+        // cover, drawn on top, would always take the click). Equal areas — the same cover
+        // in both versions — go to the current version.
+        const HEDGE_TOLERANCE = 10
+        hedgeMap.on('click', (ev) => {
+          const { x, y } = ev.point
+          const hedgeBox = [[x - HEDGE_TOLERANCE, y - HEDGE_TOLERANCE], [x + HEDGE_TOLERANCE, y + HEDGE_TOLERANCE]]
+          if (hedgeMap.getLayer(DS.hedgerows) && hedgeMap.queryRenderedFeatures(hedgeBox, { layers: [DS.hedgerows] }).length) {
+            selectLandCover(null, null)   // hedgerow wins the click (interact highlights its row)
+            return
+          }
+          let best = null
+          for (const v of ['current', 'previous']) {
+            const ids = lcFillLayerIds(v)
+            const hit = ids.length ? hedgeMap.queryRenderedFeatures(ev.point, { layers: ids }) : []
+            hit.forEach(f => {
+              if (!f.properties || f.properties.landCoverId == null) return
+              const area = parseFloat(f.properties.AREA_HA)
+              if (!best || area < best.area - AREA_EPS) best = { version: v, id: String(f.properties.landCoverId), area }
+            })
+          }
+          selectLandCover(best ? best.version : null, best ? best.id : null)
+        })
+      })
+      interactiveMap.on('datasets:ready', () => {
+        enableInteract()
+        addPageLayers()
+        // Hide the land-cover types not present on the parcel from the Key/Layers.
+        // (This also runs the first enhanceLayersPanel pass.)
+        VERSIONS.forEach(v => syncLandCoverKey(v, data[v].parcelCovers))
+        if (COMPARE_MODE === 'fade') applyFade(fadePosition)
+        // Re-apply the injected parent checkboxes whenever the panel's DOM changes. Two
+        // cases need it and neither has an event to hook: the Layers panel being mounted
+        // when the user opens it (it is dismissible, so the DOM comes and goes), and React
+        // re-rendering the fieldset after any child checkbox change. enhanceLayersPanel
+        // bails immediately when the panel is absent, and its own writes are either a
+        // guarded one-off insert or property (not attribute) sets, so the observer does
+        // not loop on them.
+        new MutationObserver(enhanceLayersPanel).observe(container, { childList: true, subtree: true })
+      })
+      // A base-map style change wipes all sources/layers; the datasets plugin re-adds them
+      // from each dataset's STORED geojson. So once the sources have been recreated (watched
+      // via 'idle'), re-apply the parcel's data and re-enable interaction.
+      interactiveMap.on('map:stylechange', () => {
+        if (!hedgeMap) return
+        const reapply = () => {
+          if (!hedgeMap.getSource(lcSource('previous')) || !hedgeMap.getSource(lcSource('current')) || !hedgeMap.getSource('geojson-' + DS.hedgerows)) return
+          hedgeMap.off('idle', reapply)
+          // preserveSelection: this is the same parcel being redrawn, not a new one, so
+          // the user's Layers panel ticks must survive it.
+          swapParcelDatasets({ preserveSelection: true })
+          if (COMPARE_MODE === 'fade') applyFade(fadePosition)
+          enableInteract()
+          addPageLayers()
+        }
+        hedgeMap.on('idle', reapply)
+      })
+
+      // Map -> table. A click on a hedgerow line highlights its row.
+      interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
+        const selectedIds = new Set(
+          selectedFeatures.filter(f => f.layerId === DS.hedgerows).map(f => f.featureId)
+        )
+        document.querySelectorAll('#compare-data tr[data-hedge-id]').forEach(tr => {
+          tr.classList.toggle('app-hedge--selected', selectedIds.has(tr.dataset.hedgeId))
+        })
+
+        // Mobile crosshair selected a land cover. SELECT-ONLY, never clear: the native map
+        // click above is authoritative and owns clearing. If interact's hit-test seam-misses
+        // it emits an empty selection, and clearing here would undo the native selection made
+        // microseconds earlier in the same click.
+        const lcFeat = selectedFeatures.find(f => f.layerId && f.layerId.startsWith('land-cover-'))
+        if (lcFeat && lcFeat.featureId != null) {
+          const version = lcFeat.layerId.startsWith(DS.landCover('previous')) ? 'previous' : 'current'
+          selectLandCover(version, String(lcFeat.featureId))
+        }
+      })
+    }
+
+    // ───────────────────────────────────────────────────────────────────────────
+    // Page orchestration
+    // ───────────────────────────────────────────────────────────────────────────
+    function showLoadError () {
+      document.getElementById('compare-heading').textContent = 'Could not load parcel'
+      hideMapLoading()   // no map to frame — don't leave the overlay stuck
+    }
+
+    if (!selectedNgc || !history) {
+      showLoadError()
+    } else {
+      // The stacked layout states the date range in an inset under the heading; the sidebar
+      // layout leaves that to the tab panels' date insets.
+      const dateRange = document.getElementById('compare-date-range')
+      if (dateRange) dateRange.textContent = history.dateLabel
+      document.getElementById('compare-back-link').setAttribute('href', '/v18/1.2/view-land-parcel?parcel=' + selectedNgc)
+      const previousTabDate = document.getElementById('previous-tab-date-range')
+      if (previousTabDate) {
+        document.getElementById('previous-tab-date-range-text').textContent = history.dateLabel
+        previousTabDate.hidden = false
+      }
+
+      // Fetch the parcel geometry and hedgerows ONCE (they are the same in both versions)
+      // and the land covers per version: the previous version's from the local snapshot,
+      // the current version's live from the WFS.
+      const parcelId = selectedNgc.substring(6)
+      Promise.all([
+        cachedFetchJson(parcelUrlFor(parcelId)),
+        cachedFetchJson(hedgeUrlFor(parcelId)),
+        cachedFetchJson(history.beforeFile),
+        cachedFetchJson(currentCoversUrlFor(parcelId))
+      ]).then(([parcelsData, hedgeData, beforeCovers, currentCovers]) => {
+        // Each version must own its feature objects: stampIds writes per-version properties
+        // (landCoverId, hedgeId, diffKind) and sorts in place, and the datasets adapter hands
+        // the geojson straight to each source.
+        const own = (x) => JSON.parse(JSON.stringify(x))
+        const dPrev = buildParcelData(selectedNgc, own(parcelsData), beforeCovers, own(hedgeData))
+        const dCurr = buildParcelData(selectedNgc, own(parcelsData), currentCovers, own(hedgeData))
+
+        if (!dPrev.selectedFeature || !dCurr.selectedFeature) {
+          showLoadError()
+          return
+        }
+
+        // Heading: the sidebar layout reads "Parcel details: <ref>" like view-land-parcel;
+        // the stacked layout keeps "Compare land parcel versions: <ref>".
+        const p = dCurr.selectedFeature.properties
+        const heading = document.getElementById('compare-heading')
+        heading.textContent =
+          (heading.dataset.headingPrefix || 'Compare land parcel versions:') + ' ' + p.SHEET_ID + ' ' + p.PARCEL_ID
+
+        // "Last updated" for the current version = the newest VALID_FROM across its land
+        // covers (mirrors view-land-parcel; YYYYMMDDhhmmss strings sort lexicographically).
+        const lastUpdated = dCurr.parcelCovers.reduce((max, f) => {
+          const vf = f.properties.VALID_FROM || ''
+          return vf > max ? vf : max
+        }, '')
+        const lastUpdatedText = fmtValidFrom(lastUpdated)
+        if (lastUpdatedText) {
+          const lastUpdatedInset = document.getElementById('current-last-updated')
+          if (lastUpdatedInset) {
+            document.getElementById('current-last-updated-date').textContent = lastUpdatedText
+            lastUpdatedInset.hidden = false
+          }
+          const currentTabDate = document.getElementById('current-tab-last-updated')
+          if (currentTabDate) {
+            document.getElementById('current-tab-last-updated-date').textContent = lastUpdatedText
+            currentTabDate.hidden = false
+          }
+        }
+
+        // Sort + id both versions, diff them, draw the one table, stamp each feature with its
+        // diff outcome, THEN build the map so its sources carry everything the change
+        // outlines and the click-to-row mapping need.
+        stampIds(dPrev)
+        stampIds(dCurr)
+        const marks = {
+          covers: diffCovers(dPrev.parcelCovers, dCurr.parcelCovers),
+          hedges: diffHedges(dPrev.parcelHedges, dCurr.parcelHedges)
+        }
+        data = { previous: dPrev, current: dCurr, marks }
+        if (TABLE_LAYOUT === 'tabs') renderVersionTables(dPrev, dCurr, marks)
+        else renderMergedTables(dPrev, dCurr, marks)
+        stampDiffKind(dPrev, dCurr, marks)
+        buildMap()
+        wireControls()
+
+        window.addEventListener('resize', () => {
+          if (hedgeMap) hedgeMap.resize()
+        })
+      }).catch(err => {
+        console.error('Failed to load parcel data:', err)
+        showLoadError()
+      })
+    }
+  </script>
+{% endblock %}
