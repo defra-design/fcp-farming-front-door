@@ -1,23 +1,27 @@
 {# Single-map compare, variant C: both versions on one map, blended with a slider that
-   runs from the previous version (left) to the current version (right). The two buttons
-   jump to either end. See _compare-single-map.html for everything shared. #}
+   runs from the current version (left) to the previous version (right). The two buttons
+   jump to either end. Two-column layout like view-land-parcel — heading, slider and the two
+   versions' tables (in Current / Previous tabs) in a sidebar beside a full-height map.
+   See _compare-single-map.html for everything shared between the variants. #}
 {% set compareMode = "fade" %}
 {% set compareModeLabel = "fade" %}
+{% set compareLayout = "sidebar" %}
 {% extends "v18/1.2/_compare-single-map.html" %}
 
 {% block compareControls %}
   <div class="govuk-form-group govuk-!-margin-bottom-2">
-    <label class="govuk-label govuk-label--s govuk-!-margin-bottom-1" for="compare-fade">Fade between the previous and current version</label>
+    {# No visible label — the Current / Previous end labels carry the meaning; the label is
+       kept for screen readers as the input's accessible name. #}
+    <label class="govuk-label govuk-visually-hidden" for="compare-fade">Fade between the current and previous version</label>
     <div class="app-compare__fade">
-      <span class="govuk-body govuk-!-margin-bottom-0" aria-hidden="true">Previous</span>
-      <input class="app-compare__fade-range" id="compare-fade" type="range" min="0" max="100" step="5" value="100"
-             aria-valuetext="Current version only" aria-describedby="compare-fade-status">
       <span class="govuk-body govuk-!-margin-bottom-0" aria-hidden="true">Current</span>
+      <input class="app-compare__fade-range" id="compare-fade" type="range" min="0" max="100" step="5" value="0"
+             aria-valuetext="Showing the current version only">
+      <span class="govuk-body govuk-!-margin-bottom-0" aria-hidden="true">Previous</span>
     </div>
-    <p class="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-2" id="compare-fade-status" aria-live="polite">Showing the current version only</p>
-    <div class="app-compare__fade-buttons">
-      <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-fade-to="0">Show previous version</button>
-      <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-fade-to="100">Show current version</button>
+    <div class="app-compare__fade-buttons govuk-!-margin-top-2">
+      <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-fade-to="0">Show current version</button>
+      <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-fade-to="100">Show previous version</button>
     </div>
   </div>
 {% endblock %}

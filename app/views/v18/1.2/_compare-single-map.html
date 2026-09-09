@@ -14,7 +14,8 @@
   compareMode:
     overlay  – two checkboxes above the map (Previous version / Current version)
     layers   – no page control; the map's own Layers panel toggles each version
-    fade     – a slider that crossfades between the two versions
+    fade     – a slider that crossfades between the two versions (current at the left
+               end, previous at the right)
     changes  – the overlay checkboxes plus a "Changes" checkbox that outlines what
                was added, removed or changed
 #}
@@ -136,17 +137,53 @@
     gap: 10px 15px;
     max-width: 640px;
   }
+  /* The range input is restyled so the thumb can be made large enough to grab easily:
+     a 32px blue circle on a 6px grey track (appearance:none is what unlocks the thumb
+     and track pseudo-elements). Focus uses the GOV.UK yellow + black ring on the thumb. */
   .app-compare__fade-range {
+    -webkit-appearance: none;
+    appearance: none;
     flex: 1 1 240px;
     min-width: 160px;
     height: 44px;
     margin: 0;
-    accent-color: #1d70b8;
+    background: transparent;
     cursor: pointer;
   }
+  .app-compare__fade-range::-webkit-slider-runnable-track {
+    height: 6px;
+    background: #b1b4b6;
+  }
+  .app-compare__fade-range::-moz-range-track {
+    height: 6px;
+    background: #b1b4b6;
+  }
+  .app-compare__fade-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 32px;
+    height: 32px;
+    margin-top: -13px; /* centre the 32px thumb on the 6px track */
+    border-radius: 50%;
+    background: #1d70b8;
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 0 1px #1d70b8;
+  }
+  .app-compare__fade-range::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #1d70b8;
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 0 1px #1d70b8;
+  }
   .app-compare__fade-range:focus-visible {
-    outline: 3px solid #ffdd00;
-    outline-offset: 0;
+    outline: none;
+  }
+  .app-compare__fade-range:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px #ffdd00, 0 0 0 6px #0b0c0c;
+  }
+  .app-compare__fade-range:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 3px #ffdd00, 0 0 0 6px #0b0c0c;
   }
   .app-compare__fade-buttons {
     display: flex;
@@ -930,6 +967,7 @@
     let changesShown = true    // mode 'changes': the "Changes" checkbox
     let fadePosition = 1       // mode 'fade': 0 = previous only … 1 = current only
     let selection = null       // { rowVersion, rowId, previous, current } — see selectionFor
+    let nativeClickAt = -Infinity   // when the native map click last ran — see the interact handler
 
     // Fade out the "Loading map…" overlay. Called once the map is ready and rendered and on
     // every error path — never left stuck.
@@ -1368,13 +1406,15 @@
       })
       setVersionVisibility('previous', t < 1)
       setVersionVisibility('current', t > 0)
-      const status = document.getElementById('compare-fade-status')
-      if (status) {
-        status.textContent = t === 0
+      // No visible status line — the map is the feedback. Screen reader users get the
+      // position read as text via aria-valuetext instead of a bare percentage.
+      const slider = document.getElementById('compare-fade')
+      if (slider) {
+        slider.setAttribute('aria-valuetext', t === 0
           ? 'Showing the previous version only'
           : t === 1
             ? 'Showing the current version only'
-            : 'Showing both versions, current at ' + Math.round(t * 100) + '%'
+            : 'Showing both versions, current at ' + Math.round(t * 100) + '%')
       }
     }
 
@@ -1536,6 +1576,8 @@
     // Page controls (the compareControls block). Generic hooks so each variant is just
     // markup: [data-version-toggle="previous|current"] checkboxes, a
     // [data-changes-toggle] checkbox, a #compare-fade range with [data-fade-to] buttons.
+    // The range runs 0 = current version only (left) … 100 = previous version only (right);
+    // applyFade takes the CURRENT version's share, so the value is inverted on the way in.
     // ───────────────────────────────────────────────────────────────────────────
     function syncPageControls () {
       document.querySelectorAll('[data-version-toggle]').forEach(input => {
@@ -1555,11 +1597,12 @@
       })
       const fade = document.getElementById('compare-fade')
       if (fade) {
-        fade.addEventListener('input', () => applyFade(Number(fade.value) / 100))
+        const fromSlider = () => 1 - Number(fade.value) / 100
+        fade.addEventListener('input', () => applyFade(fromSlider()))
         document.querySelectorAll('[data-fade-to]').forEach(btn => {
           btn.addEventListener('click', () => {
             fade.value = btn.dataset.fadeTo
-            applyFade(Number(fade.value) / 100)
+            applyFade(fromSlider())
           })
         })
       }
@@ -1776,6 +1819,7 @@
         // in both versions — go to the current version.
         const HEDGE_TOLERANCE = 10
         hedgeMap.on('click', (ev) => {
+          nativeClickAt = performance.now()
           const { x, y } = ev.point
           const hedgeBox = [[x - HEDGE_TOLERANCE, y - HEDGE_TOLERANCE], [x + HEDGE_TOLERANCE, y + HEDGE_TOLERANCE]]
           if (hedgeMap.getLayer(DS.hedgerows) && hedgeMap.queryRenderedFeatures(hedgeBox, { layers: [DS.hedgerows] }).length) {
@@ -1841,7 +1885,12 @@
         // Mobile crosshair selected a land cover. SELECT-ONLY, never clear: the native map
         // click above is authoritative and owns clearing. If interact's hit-test seam-misses
         // it emits an empty selection, and clearing here would undo the native selection made
-        // microseconds earlier in the same click.
+        // microseconds earlier in the same click. And when this fires for a click the native
+        // handler has just processed, it is skipped altogether: interact takes the first cover
+        // it hits, which with two versions on one map can be the larger one over the small
+        // removed cover the native handler deliberately chose. (The crosshair fires no native
+        // click, so it still gets through.)
+        if (performance.now() - nativeClickAt < 300) return
         const lcFeat = selectedFeatures.find(f => f.layerId && f.layerId.startsWith('land-cover-'))
         if (lcFeat && lcFeat.featureId != null) {
           const version = lcFeat.layerId.startsWith(DS.landCover('previous')) ? 'previous' : 'current'
