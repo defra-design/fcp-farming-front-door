@@ -1,0 +1,10 @@
+{# Single-map compare, variant B: both versions on one map with no page-level control —
+   the map's own Layers panel lists each version (with its cover types) and toggles it.
+   See _compare-single-map.html for everything shared between the variants. #}
+{% set compareMode = "layers" %}
+{% set compareModeLabel = "layers panel" %}
+{% extends "v18/1.2/_compare-single-map.html" %}
+
+{% block compareControls %}
+  <p class="govuk-body govuk-!-margin-bottom-0">Use the Layers panel on the map to show or hide the previous and current versions.</p>
+{% endblock %}

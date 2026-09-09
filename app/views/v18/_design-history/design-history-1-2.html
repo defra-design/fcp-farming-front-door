@@ -34,12 +34,16 @@
       (v0.0.22-alpha).
     </p>
 
-    <p>This iteration focused on the land parcel page. We made the land covers on the map interactive, and simplified how they are presented in the map's Key and Layers panels. The same changes were applied to the two historical land parcel views (SX3963 2340 and SX3964 7821). We also added a page that compares a previous version of a land parcel with the current version side by side, and a stacked variant that places the current version above the previous one, with the data on the left and the map on the right.</p>
+    <p>This iteration focused on the land parcel page. We made the land covers on the map interactive, and simplified how they are presented in the map's Key and Layers panels. The same changes were applied to the two historical land parcel views (SX3963 2340 and SX3964 7821). We also added a page that compares a previous version of a land parcel with the current version side by side, and a stacked variant that places the current version above the previous one, with the data on the left and the map on the right. Following product owner feedback we then added four variants that put both versions on a single map, each with a different way of switching the versions on and off.</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li><a class="govuk-link" href="../1.2/view-land-parcel?parcel=SX39647821">view-land-parcel</a></li>
       <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-side-by-side?parcel=SX39647821">view-land-parcel-compare-side-by-side</a></li>
       <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-stacked?parcel=SX39647821">view-land-parcel-compare-stacked</a></li>
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-overlay?parcel=SX39647821">view-land-parcel-compare-overlay</a></li>
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-layers?parcel=SX39647821">view-land-parcel-compare-layers</a></li>
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-fade?parcel=SX39647821">view-land-parcel-compare-fade</a></li>
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-changes?parcel=SX39647821">view-land-parcel-compare-changes</a></li>
     </ul>
 
     <h2 class="govuk-heading-l">Selecting a land cover on the map</h2>
@@ -122,6 +126,37 @@
     <h3 class="govuk-heading-m">Running two maps on one page</h3>
 
     <p>The mapping component is not designed for two instances on one page. Its plugins cache their setup from the first map and re-use it for the second, so the second map would otherwise be built with the first map's layers. The prototype works around this by giving each map its own copy of each plugin and its own set of layer identifiers. This is a prototype workaround and would need to be raised with the interactive map team if the real service needs two maps on a page.</p>
+
+    <h2 class="govuk-heading-l">Comparing versions on a single map</h2>
+
+    <p>The product owner reviewed the two-map pages and asked to see the previous and current versions on one map, with each version switchable on and off. We built four variants so the way of switching can be tested with users. They share one map, one set of data and one table, and differ only in the control above the map.</p>
+
+    <h3 class="govuk-heading-m">How the two versions are drawn together</h3>
+
+    <p>Both versions use the same land cover colours, so drawing them on top of each other in the same style would hide the differences. The previous version is drawn underneath the current one, faded to about a third of its normal strength, with a dashed dark outline round each cover. The dashed outline shows where a previous cover's boundary sat even where a current cover is drawn over it, and a removed cover keeps its colour so its type can still be read from the map. The Key explains this with a single "Previous version" entry rather than listing every cover type twice.</p>
+
+    <p>The parcel boundary and hedgerows are the same in both versions, so they are drawn once and are not affected by the version controls.</p>
+
+    <h3 class="govuk-heading-m">One table instead of two columns</h3>
+
+    <p>The two-map pages showed a Previous and a Current column of tables. On the layers panel, fade slider and changes outlined pages there is one set of tables under the map (the overlay checkboxes page uses tabs instead, described below). The rows describe the current version, with the same Added and Changed tags and up or down arrows as before, and the covers that were removed are listed at the end of the Land covers table with their previous area and a Removed tag. Screen reader users hear "previous version" after a removed cover's area so it is not mistaken for a current value. The Summary counts and the table totals are marked in the same way when they differ.</p>
+
+    <p>Clicking a cover on the map highlights one row: a current cover highlights its own row, a previous cover highlights the current row it corresponds to (and the map outlines both the old and the new shape), or its Removed row if it no longer exists. Clicking a row does the same in reverse.</p>
+
+    <h3 class="govuk-heading-m">The four variants</h3>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-overlay?parcel=SX39647821">Overlay checkboxes</a>: two checkboxes, "Previous version" and "Current version", both ticked to start. The simplest control and the one that most directly matches the request. This variant uses the land parcel page's two-column layout: the heading, the checkboxes and the data sit in a scrolling sidebar beside a full-height map, and the data is shown in a Tabs component with a tab for each version, opening on the current version. Each tab carries the same Summary, Land covers and Hedgerows tables and the same tags as the two-map pages. Clicking a cover that only exists in the previous version switches to that tab so its row can be seen.</li>
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-layers?parcel=SX39647821">Layers panel</a>: no control on the page. The map's own Layers panel lists each version as a group, with a parent checkbox for the version and a checkbox per cover type beneath it, so a user can also switch individual types on and off. This tests whether users find and use an in-map control.</li>
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-fade?parcel=SX39647821">Fade slider</a>: a slider that runs from the previous version on the left to the current version on the right, blending the two in between, with a button for each end. It opens on the current version. This lets a user watch a cover change shape rather than infer it from two static views.</li>
+      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-changes?parcel=SX39647821">Changes outlined</a>: the overlay checkboxes plus a "Changes" checkbox. When ticked, the map outlines added covers in green, removed covers in red and changed covers in orange, matching the tags in the table, and the Key lists the three outlines. This answers "what changed?" on the map itself.</li>
+    </ul>
+
+    <p>On every variant the Layers panel also carries the "Previous version" and "Current version" parent checkboxes, so the versions can still be switched from inside the fullscreen map on mobile, where the controls above the map are not visible.</p>
+
+    <h3 class="govuk-heading-m">How the change outlines are worked out</h3>
+
+    <p>The change outlines reuse the matching that already marks the table: land covers are paired by name and, within a name, by area order. A previous cover with no pair is outlined as removed, a current cover with no pair as added, and a pair with a different area as changed. No geometry is compared, so the outlines follow whole covers rather than showing exactly which part of a boundary moved. That is good enough to draw the eye to what the table lists as changed, and would need proper identifiers in the live service, as noted above.</p>
 
   </div>
 

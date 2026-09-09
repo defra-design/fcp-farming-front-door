@@ -1,0 +1,27 @@
+{# Single-map compare, variant A: both versions on one map, toggled with two checkboxes.
+   Two-column layout like view-land-parcel — heading, inset, checkboxes and the two versions'
+   tables (in Current / Previous tabs) in a sidebar beside a full-height map.
+   See _compare-single-map.html for everything shared between the variants. #}
+{% set compareMode = "overlay" %}
+{% set compareModeLabel = "overlay" %}
+{% set compareLayout = "sidebar" %}
+{% extends "v18/1.2/_compare-single-map.html" %}
+
+{% block compareControls %}
+  <div class="govuk-form-group govuk-!-margin-bottom-2">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-1">Show on the map</legend>
+      {# Stacked, current first — matching the order of the tabs below. #}
+      <div class="govuk-checkboxes govuk-checkboxes--small app-compare__checkboxes--stacked" data-module="govuk-checkboxes">
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="show-current" name="show-version" type="checkbox" value="current" checked data-version-toggle="current">
+          <label class="govuk-label govuk-checkboxes__label" for="show-current">Current version</label>
+        </div>
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="show-previous" name="show-version" type="checkbox" value="previous" checked data-version-toggle="previous">
+          <label class="govuk-label govuk-checkboxes__label" for="show-previous">Previous version</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+{% endblock %}
