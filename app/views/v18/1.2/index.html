@@ -70,6 +70,31 @@
 
     {% from "govuk/components/table/macro.njk" import govukTable %}
 
+      {# Commented out of the table below. Nunjucks comments can't sit inside the
+         {{ govukTable() }} expression, so the rows are parked here to restore later.
+          [
+            {
+              text: "Compare versions (single map: layers panel)"
+            },
+            {
+              html: "<a href='view-land-parcel-compare-layers?parcel=SX39647821'>view-land-parcel-compare-layers?parcel=SX39647821</a>"
+            },
+            {
+              text: "1.2"
+            }
+          ],
+          [
+            {
+              text: "Compare versions (single map: changes outlined)"
+            },
+            {
+              html: "<a href='view-land-parcel-compare-changes?parcel=SX39647821'>view-land-parcel-compare-changes?parcel=SX39647821</a>"
+            },
+            {
+              text: "1.2"
+            }
+          ],
+      #}
       {{ govukTable({
         caption: "What\'s new",
         captionClasses: "govuk-table__caption--m",
@@ -132,21 +157,10 @@
           ],
           [
             {
-              text: "Compare versions (single map: overlay checkboxes)"
+              text: "Compare versions (single map: overlay radios)"
             },
             {
               html: "<a href='view-land-parcel-compare-overlay?parcel=SX39647821'>view-land-parcel-compare-overlay?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Compare versions (single map: layers panel)"
-            },
-            {
-              html: "<a href='view-land-parcel-compare-layers?parcel=SX39647821'>view-land-parcel-compare-layers?parcel=SX39647821</a>"
             },
             {
               text: "1.2"
@@ -158,17 +172,6 @@
             },
             {
               html: "<a href='view-land-parcel-compare-fade?parcel=SX39647821'>view-land-parcel-compare-fade?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Compare versions (single map: changes outlined)"
-            },
-            {
-              html: "<a href='view-land-parcel-compare-changes?parcel=SX39647821'>view-land-parcel-compare-changes?parcel=SX39647821</a>"
             },
             {
               text: "1.2"
