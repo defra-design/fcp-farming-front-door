@@ -1,4 +1,4 @@
-{# Single-map compare, variant A: both versions on one map, toggled with two checkboxes.
+{# Single-map compare, variant A: one map, with radios choosing which version it shows.
    Two-column layout like view-land-parcel — heading, inset, checkboxes and the two versions'
    tables (in Current / Previous tabs) in a sidebar beside a full-height map.
    See _compare-single-map.html for everything shared between the variants. #}
@@ -11,15 +11,15 @@
   <div class="govuk-form-group govuk-!-margin-bottom-2">
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-1">Show on the map</legend>
-      {# Stacked, current first — matching the order of the tabs below. #}
-      <div class="govuk-checkboxes govuk-checkboxes--small app-compare__checkboxes--stacked" data-module="govuk-checkboxes">
-        <div class="govuk-checkboxes__item">
-          <input class="govuk-checkboxes__input" id="show-current" name="show-version" type="checkbox" value="current" checked data-version-toggle="current">
-          <label class="govuk-label govuk-checkboxes__label" for="show-current">Current version</label>
+      {# One version at a time: the radio's version is shown, the other hidden. #}
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-current" name="show-version" type="radio" value="current" checked data-version-radio="current">
+          <label class="govuk-label govuk-radios__label" for="show-current">Current version</label>
         </div>
-        <div class="govuk-checkboxes__item">
-          <input class="govuk-checkboxes__input" id="show-previous" name="show-version" type="checkbox" value="previous" checked data-version-toggle="previous">
-          <label class="govuk-label govuk-checkboxes__label" for="show-previous">Previous version</label>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-previous" name="show-version" type="radio" value="previous" data-version-radio="previous">
+          <label class="govuk-label govuk-radios__label" for="show-previous">Previous version</label>
         </div>
       </div>
     </fieldset>

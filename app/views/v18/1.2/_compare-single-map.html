@@ -12,7 +12,7 @@
                date inset) beside a full-height map
 
   compareMode:
-    overlay  – two checkboxes above the map (Previous version / Current version)
+    overlay  – radios choosing which ONE version the map shows (Current / Previous)
     layers   – no page control; the map's own Layers panel toggles each version
     fade     – a slider that crossfades between the two versions (current at the left
                end, previous at the right)
@@ -1574,7 +1574,8 @@
 
     // ───────────────────────────────────────────────────────────────────────────
     // Page controls (the compareControls block). Generic hooks so each variant is just
-    // markup: [data-version-toggle="previous|current"] checkboxes, a
+    // markup: [data-version-toggle="previous|current"] checkboxes,
+    // [data-version-radio="previous|current"] radios (one version at a time), a
     // [data-changes-toggle] checkbox, a #compare-fade range with [data-fade-to] buttons.
     // The range runs 0 = current version only (left) … 100 = previous version only (right);
     // applyFade takes the CURRENT version's share, so the value is inverted on the way in.
@@ -1583,14 +1584,38 @@
       document.querySelectorAll('[data-version-toggle]').forEach(input => {
         input.checked = isVersionVisible(input.dataset.versionToggle)
       })
+      // Radios reflect the version on show. The Layers panel can still put both on (or
+      // neither); then the current version's radio wins, or the radios are left as they are.
+      const radios = [...document.querySelectorAll('[data-version-radio]')]
+      if (radios.length) {
+        const shown = VERSIONS.filter(isVersionVisible)
+        const pick = shown.includes('current') ? 'current' : shown[0]
+        if (pick) radios.forEach(r => { r.checked = r.dataset.versionRadio === pick })
+      }
       document.querySelectorAll('[data-changes-toggle]').forEach(input => {
         input.checked = changesShown
       })
     }
 
+    // Show one version and hide the other (the radios' action).
+    function showOnlyVersion (version) {
+      VERSIONS.forEach(v => { if (v !== version) setVersionVisibility(v, false) })
+      setVersionVisibility(version, true)
+    }
+
+    // Radios: apply whichever is checked (used at load and after a style change so the
+    // map starts on the radio's version rather than on both).
+    function applyVersionRadio () {
+      const checked = document.querySelector('[data-version-radio]:checked')
+      if (checked) showOnlyVersion(checked.dataset.versionRadio)
+    }
+
     function wireControls () {
       document.querySelectorAll('[data-version-toggle]').forEach(input => {
         input.addEventListener('change', (e) => setVersionVisibility(e.target.dataset.versionToggle, e.target.checked))
+      })
+      document.querySelectorAll('[data-version-radio]').forEach(input => {
+        input.addEventListener('change', (e) => { if (e.target.checked) showOnlyVersion(e.target.dataset.versionRadio) })
       })
       document.querySelectorAll('[data-changes-toggle]').forEach(input => {
         input.addEventListener('change', (e) => { changesShown = e.target.checked; syncOverlayLayers() })
@@ -1846,6 +1871,7 @@
         // (This also runs the first enhanceLayersPanel pass.)
         VERSIONS.forEach(v => syncLandCoverKey(v, data[v].parcelCovers))
         if (COMPARE_MODE === 'fade') applyFade(fadePosition)
+        applyVersionRadio()
         // Re-apply the injected parent checkboxes whenever the panel's DOM changes. Two
         // cases need it and neither has an event to hook: the Layers panel being mounted
         // when the user opens it (it is dismissible, so the DOM comes and goes), and React
