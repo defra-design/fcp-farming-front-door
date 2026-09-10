@@ -1,6 +1,6 @@
 {# Single-map compare, variant C: both versions on one map, blended with a slider that
-   runs from the current version (left) to the previous version (right). The two buttons
-   jump to either end. Two-column layout like view-land-parcel — heading, slider and the two
+   runs from the current version (left) to the previous version (right). Two radios above
+   it jump to either end. Two-column layout like view-land-parcel — heading, slider and the two
    versions' tables (in Current / Previous tabs) in a sidebar beside a full-height map.
    See _compare-single-map.html for everything shared between the variants. #}
 {% set compareMode = "fade" %}
@@ -10,6 +10,23 @@
 
 {% block compareControls %}
   <div class="govuk-form-group govuk-!-margin-bottom-2">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-1">Show on the map</legend>
+      {# The radios pick a version outright (snapping the slider to that end); the slider
+         below blends between the two, and selects the matching radio when it reaches an end. #}
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-current" name="show-version" type="radio" value="current" checked data-fade-radio="0">
+          <label class="govuk-label govuk-radios__label" for="show-current">Current version</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-previous" name="show-version" type="radio" value="previous" data-fade-radio="100">
+          <label class="govuk-label govuk-radios__label" for="show-previous">Previous version</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="govuk-form-group govuk-!-margin-bottom-2">
     {# No visible label — the Current / Previous end labels carry the meaning; the label is
        kept for screen readers as the input's accessible name. #}
     <label class="govuk-label govuk-visually-hidden" for="compare-fade">Fade between the current and previous version</label>
@@ -18,10 +35,6 @@
       <input class="app-compare__fade-range" id="compare-fade" type="range" min="0" max="100" step="5" value="0"
              aria-valuetext="Showing the current version only">
       <span class="govuk-body govuk-!-margin-bottom-0" aria-hidden="true">Previous</span>
-    </div>
-    <div class="app-compare__fade-buttons govuk-!-margin-top-2">
-      <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-fade-to="0">Show current version</button>
-      <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-fade-to="100">Show previous version</button>
     </div>
   </div>
 {% endblock %}

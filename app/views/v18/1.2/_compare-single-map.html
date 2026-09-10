@@ -1576,9 +1576,10 @@
     // Page controls (the compareControls block). Generic hooks so each variant is just
     // markup: [data-version-toggle="previous|current"] checkboxes,
     // [data-version-radio="previous|current"] radios (one version at a time), a
-    // [data-changes-toggle] checkbox, a #compare-fade range with [data-fade-to] buttons.
-    // The range runs 0 = current version only (left) … 100 = previous version only (right);
-    // applyFade takes the CURRENT version's share, so the value is inverted on the way in.
+    // [data-changes-toggle] checkbox, a #compare-fade range with [data-fade-to] buttons or
+    // [data-fade-radio] radios (each carrying the slider value it snaps to). The range runs
+    // 0 = current version only (left) … 100 = previous version only (right); applyFade takes
+    // the CURRENT version's share, so the value is inverted on the way in.
     // ───────────────────────────────────────────────────────────────────────────
     function syncPageControls () {
       document.querySelectorAll('[data-version-toggle]').forEach(input => {
@@ -1623,10 +1624,23 @@
       const fade = document.getElementById('compare-fade')
       if (fade) {
         const fromSlider = () => 1 - Number(fade.value) / 100
-        fade.addEventListener('input', () => applyFade(fromSlider()))
+        // Keep the radios in step with the slider: a radio is selected only while the slider
+        // sits at its end, so a blended position leaves neither selected.
+        const syncFadeRadios = () => {
+          document.querySelectorAll('[data-fade-radio]').forEach(r => { r.checked = r.dataset.fadeRadio === fade.value })
+        }
+        fade.addEventListener('input', () => { applyFade(fromSlider()); syncFadeRadios() })
         document.querySelectorAll('[data-fade-to]').forEach(btn => {
           btn.addEventListener('click', () => {
             fade.value = btn.dataset.fadeTo
+            applyFade(fromSlider())
+            syncFadeRadios()
+          })
+        })
+        document.querySelectorAll('[data-fade-radio]').forEach(radio => {
+          radio.addEventListener('change', (e) => {
+            if (!e.target.checked) return
+            fade.value = e.target.dataset.fadeRadio
             applyFade(fromSlider())
           })
         })
