@@ -312,12 +312,12 @@
   }
 
   /* --- DEFRA Key / Layers panels --------------------------------------------- */
-  /* Key panel: hide the "Current version" land cover group heading. It is kept in the DOM
+  /* Key panel: hide the "Current details" land cover group heading. It is kept in the DOM
      (visually hidden, not display:none) because the group's <section> is aria-labelledby
      it, so screen reader users keep the grouping. The first item then needs its own top
      padding back — the plugin zeroes it on the assumption a visible heading spaces it.
      The previous version's covers are not listed in the Key (same colours, faded) — a
-     single "Previous version" line item explains the encoding instead. */
+     single "Previous details" line item explains the encoding instead. */
   [id^="key-heading-land-cover"] {
     position: absolute;
     width: 1px;
@@ -339,7 +339,7 @@
      <fieldset> with a <legend> and no parent checkbox, so the page injects one per group
      (see enhanceLayersPanel). The legend is kept in the DOM but visually hidden — the
      fieldset still needs it for screen readers, and the injected checkbox now carries
-     the visible "Previous version" / "Current version" text. */
+     the visible "Previous details" / "Current details" text. */
   .im-c-datasets-layers-group:has(input[data-dataset-id^="land-cover"]) .im-c-datasets-layers-group__legend {
     position: absolute;
     width: 1px;
@@ -405,6 +405,13 @@
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 0 15px 15px;
+  }
+  /* Keyboard focus on the scrollable sidebar region (see the tabindex note on the markup).
+     GOV.UK's focus colour, drawn inside the box because the parent clips overflow. Only on
+     keyboard focus: a mouse click inside the sidebar also focuses it, and should not ring it. */
+  .app-map-fullscreen__sidebar:focus-visible {
+    outline: 3px solid #ffdd00;
+    outline-offset: -3px;
   }
   .app-map-fullscreen__sidebar::-webkit-scrollbar {
     width: 8px;
@@ -598,8 +605,12 @@
 
 <main class="app-map-fullscreen" id="main-content">
 
-  <div class="app-map-fullscreen__sidebar" role="region" aria-label="Comparison details">
-    <a class="govuk-back-link govuk-!-margin-top-4" id="compare-back-link" href="/v18/1.2/view-land-parcel">Back to current version</a>
+  {# tabindex="0": the sidebar is its own scroll container and nothing focusable sits below the
+     tabs, so without a tab stop of its own a keyboard user could not scroll the tables into
+     view once focus had moved on to the map. Focusing the region lets the arrow and Page keys
+     scroll it (the DEFRA map does the same for its panel body). #}
+  <div class="app-map-fullscreen__sidebar" role="region" aria-label="Comparison details" tabindex="0">
+    <a class="govuk-back-link govuk-!-margin-top-4" id="compare-back-link" href="/v18/1.2/view-land">Back to land summary</a>
 
     <h1 class="govuk-heading-m govuk-!-margin-bottom-4" id="compare-heading" data-heading-prefix="Parcel details:">Parcel details:</h1>
 
@@ -634,7 +645,7 @@
 {% else %}
 <main class="govuk-main-wrapper app-compare" id="main-content">
 
-  <a class="govuk-back-link" id="compare-back-link" href="/v18/1.2/view-land-parcel">Back to current version</a>
+  <a class="govuk-back-link" id="compare-back-link" href="/v18/1.2/view-land">Back to land summary</a>
 
   <h1 class="govuk-heading-l govuk-!-margin-top-4" id="compare-heading">Compare land parcel versions</h1>
 
@@ -926,7 +937,7 @@
     // and hedgerows are identical in both versions, so there is one of each.
     // ───────────────────────────────────────────────────────────────────────────
     const VERSIONS = ['previous', 'current']
-    const VERSION_LABEL = { previous: 'Previous version', current: 'Current version' }
+    const VERSION_LABEL = { previous: 'Previous details', current: 'Current details' }
     const DS = {
       landCover: (version) => 'land-cover-' + version,
       outline: 'parcel-outline',
@@ -1277,7 +1288,7 @@
     // swapped with setData instead of being rebuilt. Each sublayer filters the shared
     // source by DESCRIPTION; syncLandCoverKey() hides the types absent from this parcel.
     // The previous version uses the same colours faded, with a dashed dark outline, and
-    // stays out of the Key (a single "Previous version" Key entry explains the encoding).
+    // stays out of the Key (a single "Previous details" Key entry explains the encoding).
     function buildLandCoverDataset (version, parcelCovers) {
       const previous = version === 'previous'
       const sublayers = Object.keys(palette.landCover).map(type => {
@@ -1468,7 +1479,7 @@
     }
 
     // Tabbed tables: if the open tab has no highlighted row but the other tab does (a
-    // removed cover only has a row under Previous version), switch to it. Only when the
+    // removed cover only has a row under Previous details), switch to it. Only when the
     // Tabs component is actually tabbed — on narrow screens it shows every panel.
     function revealSelectedTab () {
       if (TABLE_LAYOUT !== 'tabs' || !selection) return
@@ -1767,7 +1778,7 @@
       const datasets = [
         buildLandCoverDataset('current', data.current.parcelCovers),
         buildLandCoverDataset('previous', data.previous.parcelCovers),
-        buildKeyOnlyDataset(DS.keyPrevious, 'Previous version', {
+        buildKeyOnlyDataset(DS.keyPrevious, 'Previous details', {
           stroke: palette.landCoverSelected, strokeWidth: 2, strokeDashArray: PREVIOUS_DASH, opacity: 0.6,
           symbolDescription: 'faded fill with a dashed outline'
         })
@@ -1954,7 +1965,6 @@
       // layout leaves that to the tab panels' date insets.
       const dateRange = document.getElementById('compare-date-range')
       if (dateRange) dateRange.textContent = history.dateLabel
-      document.getElementById('compare-back-link').setAttribute('href', '/v18/1.2/view-land-parcel?parcel=' + selectedNgc)
       const previousTabDate = document.getElementById('previous-tab-date-range')
       if (previousTabDate) {
         document.getElementById('previous-tab-date-range-text').textContent = history.dateLabel
