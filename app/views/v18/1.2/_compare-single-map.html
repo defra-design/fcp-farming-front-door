@@ -270,7 +270,11 @@
     max-width: 720px;
   }
 
-  /* Map -> table: highlight a hedgerow's row when its line is clicked on the map */
+  /* Map <-> table: highlight a hedgerow's row when its line is clicked on the map, and
+     let a row click select the line. */
+  .app-compare__data tr[data-hedge-id] {
+    cursor: pointer;
+  }
   .app-compare__data tr.app-hedge--selected {
     background: #f4f8fb;
   }
@@ -978,6 +982,7 @@
     let changesShown = true    // mode 'changes': the "Changes" checkbox
     let fadePosition = 1       // mode 'fade': 0 = previous only … 1 = current only
     let selection = null       // { rowVersion, rowId, previous, current } — see selectionFor
+    let selectedHedgeIds = new Set()   // hedgeIds the interact plugin currently has selected
     let nativeClickAt = -Infinity   // when the native map click last ran — see the interact handler
 
     // Fade out the "Loading map…" overlay. Called once the map is ready and rendered and on
@@ -1505,6 +1510,18 @@
       applyLandCoverRowClass()
     }
 
+    // Select a hedgerow by stamped hedgeId THROUGH the interact plugin, so a row click gets
+    // exactly the highlight a map click gets (the plugin's default stroke — black, or white
+    // on the dark base map). interact's selectFeature is a toggle, so it is skipped when the
+    // hedgerow is already the sole selection; the land cover outline clears either way,
+    // mirroring the native map click where a hedgerow wins.
+    function selectHedgerow (id) {
+      if (!interact || id == null) return
+      selectLandCover(null, null)
+      if (selectedHedgeIds.has(id) && selectedHedgeIds.size === 1) return
+      interact.selectFeature({ featureId: id, layerId: DS.hedgerows, idProperty: 'hedgeId' })
+    }
+
     // ───────────────────────────────────────────────────────────────────────────
     // Page-owned layers: the selection outlines (one per version) and, in mode
     // 'changes', the three change outlines. All sit on the plugin's own sources.
@@ -1656,10 +1673,15 @@
           })
         })
       }
-      // Table -> map: a click on a land cover row selects it on the map.
+      // Table -> map: a click on a hedgerow or land cover row selects it on the map. Like
+      // the map, the two selections are exclusive: a land cover click drops the hedgerow.
       document.getElementById('compare-data').addEventListener('click', (e) => {
+        const hedge = e.target.closest('tr[data-hedge-id]')
+        if (hedge) return selectHedgerow(hedge.dataset.hedgeId)
         const tr = e.target.closest('tr[data-land-cover-id]')
-        if (tr) selectLandCover(tr.dataset.version, tr.dataset.landCoverId)
+        if (!tr) return
+        if (interact && selectedHedgeIds.size) interact.clear()
+        selectLandCover(tr.dataset.version, tr.dataset.landCoverId)
       })
     }
 
@@ -1924,13 +1946,14 @@
         hedgeMap.on('idle', reapply)
       })
 
-      // Map -> table. A click on a hedgerow line highlights its row.
+      // Map -> table. A click on a hedgerow line highlights its row. (A row click also lands
+      // here, via selectHedgerow -> interact.selectFeature.)
       interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
-        const selectedIds = new Set(
-          selectedFeatures.filter(f => f.layerId === DS.hedgerows).map(f => f.featureId)
+        selectedHedgeIds = new Set(
+          selectedFeatures.filter(f => f.layerId === DS.hedgerows).map(f => String(f.featureId))
         )
         document.querySelectorAll('#compare-data tr[data-hedge-id]').forEach(tr => {
-          tr.classList.toggle('app-hedge--selected', selectedIds.has(tr.dataset.hedgeId))
+          tr.classList.toggle('app-hedge--selected', selectedHedgeIds.has(tr.dataset.hedgeId))
         })
 
         // Mobile crosshair selected a land cover. SELECT-ONLY, never clear: the native map
