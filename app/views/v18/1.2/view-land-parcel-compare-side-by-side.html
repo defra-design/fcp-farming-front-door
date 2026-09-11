@@ -28,7 +28,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-  View land - Compare land parcel versions – GOV.UK Prototype Kit
+  View land - Compare land parcel details – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block head %}
@@ -173,7 +173,11 @@
   }
 
   /* --- Tables --------------------------------------------------------------- */
-  /* Map -> table: highlight a hedgerow's row when its line is clicked on the map */
+  /* Map <-> table: highlight a hedgerow's row when its line is clicked on the map, and
+     let a row click select the line on that side's map. */
+  .app-compare__data tr[data-hedge-id] {
+    cursor: pointer;
+  }
   .app-compare__data tr.app-hedge--selected {
     background: #f4f8fb;
   }
@@ -181,7 +185,11 @@
     font-weight: 700;
   }
 
-  /* Map -> table: highlight a land cover's row when its polygon is clicked on the map */
+  /* Map <-> table: highlight a land cover's row when its polygon is clicked on the map,
+     and let a row click select the polygon on that side's map. */
+  .app-compare__data tr[data-land-cover-id] {
+    cursor: pointer;
+  }
   .app-compare__data tr.app-land-cover--selected {
     background: #f4f8fb;
   }
@@ -275,20 +283,20 @@
 {% block main %}
 <main class="govuk-main-wrapper app-compare" id="main-content">
 
-  <a class="govuk-back-link" id="compare-back-link" href="/v18/1.2/view-land-parcel">Back to current version</a>
+  <a class="govuk-back-link" id="compare-back-link" href="/v18/1.2/view-land">Back to land summary</a>
 
-  <h1 class="govuk-heading-l govuk-!-margin-top-4" id="compare-heading">Compare land parcel versions</h1>
+  <h1 class="govuk-heading-l govuk-!-margin-top-4" id="compare-heading">Compare land parcel details</h1>
 
   {# MOJ 'inset text (highlighted)' — govukInsetText + the guidance-panel class (blue left
      border + light blue fill, defined in application.scss). #}
   {% call govukInsetText({ classes: "govuk-!-margin-top-0 guidance-panel" }) %}
-    <p class="govuk-!-margin-bottom-0">You are comparing a previous version of this land parcel (<span id="compare-date-range"></span>) with the current version.</p>
+    <p class="govuk-!-margin-bottom-0">You are comparing the previous details of this land parcel (<span id="compare-date-range"></span>) with the current details.</p>
   {% endcall %}
 
   <div class="app-compare__maps">
 
     <section class="app-compare__col" aria-labelledby="map-heading-previous">
-      <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="map-heading-previous">Previous version</h2>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="map-heading-previous">Previous details</h2>
       <div class="app-compare__well">
         <div id="map-previous" class="app-compare__map"></div>
         <div id="map-loading-previous" class="app-map-loading" role="status" aria-live="polite">
@@ -299,7 +307,7 @@
     </section>
 
     <section class="app-compare__col" aria-labelledby="map-heading-current">
-      <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="map-heading-current">Current version</h2>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="map-heading-current">Current details</h2>
       <div class="app-compare__well">
         <div id="map-current" class="app-compare__map"></div>
         <div id="map-loading-current" class="app-map-loading" role="status" aria-live="polite">
@@ -314,13 +322,13 @@
   <div class="app-compare__data govuk-!-margin-top-6">
 
     <section class="app-compare__col" aria-labelledby="data-heading-previous">
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-2" id="data-heading-previous">Previous version</h3>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2" id="data-heading-previous">Previous details</h3>
 
       {# Date range of the previous version — matches the Current column's "Last updated"
          inset so the two columns' tables stay level. #}
       <div id="previous-date-range" hidden>
         {% call govukInsetText({ classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-2 guidance-panel" }) %}
-          <p class="govuk-!-margin-bottom-0">Version from <span id="previous-date-range-text"></span>.</p>
+          <p class="govuk-!-margin-bottom-0">Details from <span id="previous-date-range-text"></span>.</p>
         {% endcall %}
       </div>
 
@@ -365,7 +373,7 @@
     </section>
 
     <section class="app-compare__col" aria-labelledby="data-heading-current">
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-2" id="data-heading-current">Current version</h3>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2" id="data-heading-current">Current details</h3>
 
       {# Last updated — same MOJ-style highlighted inset as the historical pages' date banner. #}
       <div id="current-last-updated" hidden>
@@ -668,6 +676,7 @@
       let hedgeMap = null        // raw MapLibre map (from the map:ready payload; no public accessor)
       let currentData = null     // loaded parcel data, re-applied after a base-map style change
       let selectedLandCoverId = null
+      let selectedHedgeIds = new Set()   // hedgeIds this side's interact plugin currently has selected
 
       // Fade out this map's "Loading map…" overlay. Called once the map is ready and rendered
       // and on every error path — never left stuck.
@@ -891,6 +900,32 @@
         applyLandCoverRowClass()
       }
 
+      // Select a hedgerow by stamped hedgeId THROUGH the interact plugin, so a row click gets
+      // exactly the highlight a map click gets (the plugin's default stroke — black, or white
+      // on the dark base map). interact's selectFeature is a toggle, so it is skipped when the
+      // hedgerow is already the sole selection; the land cover outline clears either way,
+      // mirroring the native map click where a hedgerow wins.
+      function selectHedgerow (id) {
+        if (!interact || id == null) return
+        selectLandCover(null)
+        if (selectedHedgeIds.has(id) && selectedHedgeIds.size === 1) return
+        interact.selectFeature({ featureId: id, layerId: DS.hedgerows, idProperty: 'hedgeId' })
+      }
+
+      // Table -> map: a click on a hedgerow or land cover row selects it on this side's map.
+      // Delegated on the tbodies, which outlive the rows load() recreates. Like the map, the
+      // two selections are exclusive: a land cover click drops the hedgerow.
+      el('hedgerows-table-body').addEventListener('click', (e) => {
+        const tr = e.target.closest('tr[data-hedge-id]')
+        if (tr) selectHedgerow(tr.dataset.hedgeId)
+      })
+      el('land-covers-table-body').addEventListener('click', (e) => {
+        const tr = e.target.closest('tr[data-land-cover-id]')
+        if (!tr) return
+        if (interact && selectedHedgeIds.size) interact.clear()
+        selectLandCover(tr.dataset.landCoverId)
+      })
+
       // Selected-land-cover outline: our own line layer on the plugin's shared source,
       // filtered to selectedLandCoverId. We own it rather than using interact's built-in
       // highlight because selection is driven by a native click that interact's own hit-test
@@ -1056,8 +1091,8 @@
         interactiveMap = new defra.InteractiveMap(containerId, {
           mapProvider: defra.maplibreProvider(),
           behaviour: 'hybrid',
-          mapLabel: 'Land parcel, ' + side + ' version',
-          pageTitle: (side === 'previous' ? 'Previous' : 'Current') + ' version map',
+          mapLabel: 'Land parcel, ' + side + ' details',
+          pageTitle: (side === 'previous' ? 'Previous' : 'Current') + ' details map',
           bounds: parcelBounds,
           minZoom: 6,
           maxZoom: 18,
@@ -1146,15 +1181,16 @@
           hedgeMap.on('idle', reapply)
         })
 
-        // Map -> table. A click on a hedgerow line highlights its row on this side.
+        // Map -> table. A click on a hedgerow line highlights its row on this side. (A row
+        // click also lands here, via selectHedgerow -> interact.selectFeature.)
         interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
-          const selectedIds = new Set(
-            selectedFeatures.filter(f => f.layerId === DS.hedgerows).map(f => f.featureId)
+          selectedHedgeIds = new Set(
+            selectedFeatures.filter(f => f.layerId === DS.hedgerows).map(f => String(f.featureId))
           )
           el('hedgerows-table-body').querySelectorAll('tr').forEach(tr => {
             tr.classList.toggle(
               'app-hedge--selected',
-              tr.dataset.hedgeId != null && selectedIds.has(tr.dataset.hedgeId)
+              tr.dataset.hedgeId != null && selectedHedgeIds.has(tr.dataset.hedgeId)
             )
           })
 
@@ -1345,7 +1381,6 @@
       document.getElementById('compare-date-range').textContent = history.dateLabel
       document.getElementById('previous-date-range-text').textContent = history.dateLabel
       document.getElementById('previous-date-range').hidden = false
-      document.getElementById('compare-back-link').setAttribute('href', '/v18/1.2/view-land-parcel?parcel=' + selectedNgc)
 
       // Fetch the parcel geometry and hedgerows ONCE (they are the same on both sides) and the
       // land covers per side: the previous version's from the local snapshot, the current
@@ -1371,7 +1406,7 @@
 
         const p = dCurr.selectedFeature.properties
         document.getElementById('compare-heading').textContent =
-          'Compare land parcel versions: ' + p.SHEET_ID + ' ' + p.PARCEL_ID
+          'Compare land parcel details: ' + p.SHEET_ID + ' ' + p.PARCEL_ID
 
         // "Last updated" for the current version = the newest VALID_FROM across its land
         // covers (mirrors view-land-parcel; YYYYMMDDhhmmss strings sort lexicographically).
