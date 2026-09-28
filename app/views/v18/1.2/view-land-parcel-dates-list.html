@@ -167,13 +167,25 @@
         radio.dispatchEvent(new Event('change', { bubbles: true }))
       }
 
+      // Swapping the list for the tables keeps the sidebar's scroll position, so a date picked
+      // from low in a long list would open the tables halfway down. Start them at the top, as a
+      // new page would: the sidebar scrolls itself on desktop; on mobile it does not (the page
+      // scrolls), so bring the tabs into view if they are above the viewport.
+      function scrollToTop () {
+        const sidebar = document.querySelector('.app-map-fullscreen__sidebar')
+        const tabs = document.querySelector('.app-compare__tabs')
+        if (sidebar) sidebar.scrollTop = 0
+        if (tabs && tabs.getBoundingClientRect().top < 0) tabs.scrollIntoView({ block: 'start' })
+      }
+
       function reveal (version, button) {
         dateText.textContent = version.validUntil
         list.hidden = true
         detail.hidden = false
         lastDateButton = button || null
         setRadio('previous')
-        detail.focus()
+        scrollToTop()
+        detail.focus({ preventScroll: true })
       }
 
       // Load the chosen date's snapshot (if it is not the one already on the page), then
