@@ -1,0 +1,81 @@
+{% extends "layouts/pattern-library.html" %}
+
+{% set pageName = "Overview" %}
+{% set _patternPage = "index" %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">Mapping patterns</h1>
+
+<p class="govuk-body-l">Settled building blocks for map pages in the Single front door prototype, for designers and developers.</p>
+
+<p class="govuk-body">These patterns are the shared source for the map pages, not just a description of them. The <a class="govuk-link" href="/v18/1.2/view-land">land summary (v1.2 view land)</a> page is built from them, so a change here changes that page too.</p>
+
+<h2 class="govuk-heading-l">Patterns</h2>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><a class="govuk-link" href="/patterns/mapping/full-screen-layout">Full-screen map layout</a></dt>
+    <dd class="govuk-summary-list__value">A sidebar and an interactive map that fill the screen below the header, with a phone layout that opens the map fullscreen.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><a class="govuk-link" href="/patterns/mapping/header">Map page header</a></dt>
+    <dd class="govuk-summary-list__value">The GOV.UK header, service navigation, phase banner and business sub-header, stretched to the full width of the map layout.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><a class="govuk-link" href="/patterns/mapping/data-panel">Land data panel</a></dt>
+    <dd class="govuk-summary-list__value">The land summary sidebar: totals, a parcel filter, the selected parcel and a list of every parcel with its land covers and area.</dd>
+  </div>
+</dl>
+
+<h2 class="govuk-heading-l">What is not included yet</h2>
+
+<p class="govuk-body">These are still being designed and tested, so they are not patterns yet:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>the land parcel data panel (on <code>view-land-parcel</code>): land covers, hedges and previous versions</li>
+  <li>the v1.2 design variants, including the alternative and Countryside Stewardship views, the filter view, the ways of comparing versions (side by side, stacked, overlay, fade, layers, changes) and the dates list</li>
+</ul>
+
+<p class="govuk-body">Those pages carry their own copies of the layout code and do not use these shared files.</p>
+
+<h2 class="govuk-heading-l">Where the code lives</h2>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">File</th>
+      <th scope="col" class="govuk-table__header">What it is</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>app/views/layouts/map-fullscreen.html</code></td>
+      <td class="govuk-table__cell">Layout for a full-screen map page</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>app/views/_common/map/header.html</code></td>
+      <td class="govuk-table__cell">Map page header</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>app/views/_common/map/land-data-panel.html</code></td>
+      <td class="govuk-table__cell">Land data panel markup</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>app/assets/sass/components/_map.scss</code></td>
+      <td class="govuk-table__cell">Styles for all three, scoped to <code>html.app-map-page</code></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>app/assets/javascripts/map/map-fullscreen.js</code></td>
+      <td class="govuk-table__cell">Layout behaviour (<code>AppMap.fullscreen</code>)</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>app/assets/javascripts/map/land-data-panel.js</code></td>
+      <td class="govuk-table__cell">Data panel behaviour (<code>AppMap.landDataPanel</code>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="govuk-heading-l">Map library</h2>
+
+<p class="govuk-body">The maps use DEFRA's <a class="govuk-link" href="https://defra.github.io/interactive-map/">interactive map component</a> (<code>@defra/interactive-map</code> 0.0.22-alpha) with the MapLibre provider. Land data comes from the Rural Payments Agency's public WFS services (<code>RPA:LandParcels</code> and <code>RPA:LandCovers</code>), filtered by SBI.</p>
+{% endblock %}

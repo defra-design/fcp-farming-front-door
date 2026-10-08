@@ -1,377 +1,28 @@
-{% extends "layouts/main-rebrand.html" %}
+{% extends "layouts/map-fullscreen.html" %}
 
-{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{#- Built from the mapping pattern library (/patterns/mapping): full-screen layout, map page
+    header and land data panel. Only the map and its parcel layers are page-specific. -#}
 
-{% block header %}
-  {{ govukHeader({
-    rebrand: true
-  }) }}
-{{ govukServiceNavigation({
-  serviceName: "Farm and Land Service",
-  serviceUrl: "#"
-
-}) }}
-
-  {{ govukPhaseBanner({
-    tag: {
-      text: "Prototype"
-    },
-    html: 'This is a prototype.'
-  }) }}
-
-  <div class="app-sub-header govuk-!-padding-top-0">
-    {% set _versionPath = "v18/1.2" %}{% include "v18/includes/sub-header.html" %}
-  </div>
-
-{% endblock %}
+{% set _versionPath = "v18/1.2" %}
 
 {% block pageTitle %}
   View land – GOV.UK Prototype Kit
 {% endblock %}
 
-{% block head %}
-  <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
-
+{% block mapHead %}
   <link rel="prefetch" href="/v18/1.2/view-land-parcel" as="document">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js">
-
-  <style>
-  /* Fullscreen 2-column layout: GOV.UK header + service nav stack at the top,
-     <main> fills the remaining viewport, sidebar + map sit side-by-side. */
-
-  /* html stays pinned to the viewport (no scroll); the body is the scroll
-     container. Keeping height:100% gives the map area a definite-height ancestor
-     so #map's height:100% resolves. The .govuk-template qualifier beats GOV.UK
-     Frontend's `.govuk-template { overflow-y: scroll }` (which would otherwise
-     leave a permanent second scrollbar on the html element). */
-  html.govuk-template {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  html, body {
-    margin: 0;
-  }
-
-  /* Body is exactly one viewport tall and scrolls its own overflow. On tall
-     screens nothing overflows (full-screen, no scrollbar); on short screens the
-     map area's 600px floor pushes past the viewport, so the body scrolls and the
-     header chrome scrolls away with it. */
-  body.govuk-template__body {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-  }
-
-  /* Keep the service-nav dropdown above the map */
-  .govuk-service-navigation {
-    position: relative;
-    z-index: 100;
-  }
-
-  /* Hide GOV.UK chrome when DEFRA opens the map fullscreen */
-  html.im-is-fullscreen .govuk-header,
-  html.im-is-fullscreen .govuk-service-navigation {
-    display: none;
-  }
-
-  /* Full-width header (the map layout spans edge-to-edge) */
-  .govuk-header__container,
-  .govuk-width-container {
-    max-width: 100%;
-    padding: 0 15px;
-  }
-
-  .govuk-phase-banner {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 12px 15px;
-  }
-
-  /* Sub-header full width + 15px gutter; the inner govuk-grid-row's -15px margins
-     then align its columns left with the phase banner and service navigation.
-     border-box keeps width:100% + padding inside the viewport (the GOV.UK reset
-     only sets border-box on grid columns, not arbitrary blocks), so the right-
-     floated user name isn't pushed off-screen. The full-width border-bottom
-     matches the phase banner's divider (replaces the inset hr in the include). */
-  .app-sub-header {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 12px 15px;
-    border-bottom: 1px solid #b1b4b6;
-  }
-
-  .app-map-fullscreen {
-    flex: 1;
-    display: flex;
-    min-height: 600px;
-    overflow: hidden;
-    overscroll-behavior: none;
-    position: relative;
-  }
-
-  .app-map-fullscreen__sidebar {
-    flex: 0 0 33.3333%;
-    max-width: 33.3333%;
-    background: #ffffff;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: 0 15px 15px;
-  }
-
-  .app-map-fullscreen__sidebar::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .app-map-fullscreen__sidebar::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-
-  .app-map-fullscreen__sidebar::-webkit-scrollbar-thumb {
-    background: #888;
-  }
-
-  .app-map-fullscreen__sidebar::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-
-  .app-map-fullscreen__map {
-    flex: 1;
-    height: 100%;
-    position: relative; /* anchor for the loading overlay */
-  }
-
-  /* DEFRA map container fills its column */
-  #map {
-    width: 100%;
-  }
-  #map,
-  #map .im-o-app {
-    height: 100% !important;
-  }
-
-  /* Remove the inline map's top border (DEFRA's .im-o-app--inline draws a
-     full --app-border-color frame; drop the top edge below the phase banner). */
-  #map .im-o-app--inline {
-    border-top: 0;
-  }
-
-  /* Loading overlay — shown while the map frames + tiles load, then faded out.
-     Background matches the map's backgroundColor so the reveal is seamless. */
-  .app-map-loading {
-    position: absolute;
-    inset: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    background: #f5f5f0;
-    color: #0b0c0c;
-    font-family: "GDS Transport", arial, sans-serif;
-    font-size: 1.1875rem;
-    transition: opacity 0.3s ease;
-  }
-  .app-map-loading--hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
-  .app-map-loading__spinner {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 4px solid #b1b4b6;
-    border-top-color: #1d70b8;
-    animation: app-map-spin 0.8s linear infinite;
-  }
-  @keyframes app-map-spin {
-    to { transform: rotate(360deg); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .app-map-loading__spinner { animation: none; }
-  }
-
-  /* DEFRA's "Map view" button — relocated into sidebar via JS */
-  .im-c-open-map-button {
-    margin: 0 0 15px;
-  }
-
-  /* On mobile, the sidebar takes the full viewport width and the inline
-     map column collapses to zero (DEFRA renders the "Map view" button
-     instead). The map element stays in the DOM and renderable so it can
-     go fullscreen when the button is clicked. */
-  @media (max-width: 640px) {
-    .app-map-fullscreen__sidebar {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
-
-    .app-map-fullscreen__map {
-      flex: 0 0 0;
-      width: 0;
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    .app-map-fullscreen {
-      flex: 1 1 0;
-      min-height: 0;
-    }
-
-    /* In the normal (non-fullscreen) view the map is hidden at this width, so
-       release the full-height scroll lock and let the whole page (sub-header
-       included) scroll in normal document flow. The :not(.im-is-fullscreen)
-       guard keeps the original locked layout for "Map view" fullscreen, where
-       the DEFRA map and its control bar must fill the viewport. */
-    html.govuk-template:not(.im-is-fullscreen) {
-      height: auto;
-      overflow: visible;
-    }
-
-    html:not(.im-is-fullscreen) body.govuk-template__body {
-      height: auto;
-      overflow: visible;
-    }
-
-    html:not(.im-is-fullscreen) .app-map-fullscreen {
-      flex: 0 0 auto;
-      min-height: 0;
-      overflow: visible;
-    }
-
-    html:not(.im-is-fullscreen) .app-map-fullscreen__sidebar {
-      overflow: visible;
-    }
-
-  }
-
-  #parcel-table-body tr {
-    cursor: pointer;
-  }
-
-  #parcel-table-body tr:hover {
-    background: #f3f2f1;
-  }
-
-  #parcel-table-body tr.app-parcel--selected {
-    background: #f4f8fb;
-  }
-
-  #parcel-table-body tr.app-parcel--selected td {
-    font-weight: 700;
-  }
-
-  #selected-parcel-panel tbody tr {
-    background: #f4f8fb;
-  }
-
-  #selected-parcel-panel tbody td {
-    font-weight: 700;
-  }
-  </style>
 {% endblock %}
 
-{% block bodyStart %}
-  <script>document.body.classList.add('im-is-loading')</script>
+{% block mapSidebar %}
+  {% include "_common/map/land-data-panel.html" %}
 {% endblock %}
 
-{% block footer %}{% endblock %}
-
-{% block main %}
-<main class="app-map-fullscreen" id="main-content">
-
-  <div class="app-map-fullscreen__sidebar" role="region" aria-label="Map controls">
-    <a class="govuk-back-link govuk-!-margin-top-4" href="#">Back to {{ myData.businessName | default('Agile Farm Ltd') }}</a>
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-0">Summary</h2>
-    <table class="govuk-table govuk-!-margin-bottom-4">
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Number of parcels</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-parcel-count"></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Total area (ha)</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-total-area"></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div id="map-button-slot"></div>
-
-    <!-- <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Land parcels</h2> -->
-    <div class="govuk-form-group govuk-!-margin-bottom-0">
-      <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="parcel-filter">Find a land parcel</label>
-      <div id="parcel-filter-hint" class="govuk-hint">Enter all or part of a parcel ID to filter the list</div>
-      <p class="govuk-body govuk-!-margin-bottom-2" id="parcel-filter-status" aria-live="polite" style="color:#d4351c;font-weight:700"></p>
-      <input class="govuk-input govuk-input--width-10" id="parcel-filter" name="parcel-filter" type="text" aria-describedby="parcel-filter-hint" autocomplete="off" autocapitalize="characters" spellcheck="false">
-    </div>
-    <table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet" hidden aria-live="polite">
-      <caption class="govuk-table__caption govuk-visually-hidden">Selected land parcel</caption>
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap">ID</th>
-          <th scope="col" class="govuk-table__header" style="width:55%">Land cover</th>
-          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap">Area (ha)</th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" id="selected-parcel-link" href="#"></a></td>
-          <td class="govuk-table__cell" id="selected-parcel-cover"></td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" id="selected-parcel-area"></td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="govuk-table govuk-table--small-text-until-tablet" data-module="moj-sortable-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap" aria-sort="ascending">Parcel ID</th>
-          <th scope="col" class="govuk-table__header" style="width:55%" aria-sort="none">Land cover</th>
-          <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap" aria-sort="none">Area (ha)</th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body" id="parcel-table-body"></tbody>
-    </table>
-  </div>
-
-  <div class="app-map-fullscreen__map">
-    <div id="map" data-zoom="12" data-center="[-0.69, 53.39]"></div>
-    <div id="map-loading" class="app-map-loading" role="status" aria-live="polite">
-      <span class="app-map-loading__text">Loading map</span>
-      <span class="app-map-loading__spinner" aria-hidden="true"></span>   
-    </div>
-  </div>
-
-</main>
-{% endblock main %}
-
-{% block pageScripts %}
-  <!-- Defra library scripts -->
-  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
+{% block mapScripts %}
+  <script src="/public/javascripts/map/land-data-panel.js"></script>
 
   <script>
-    // Reveal the page immediately rather than waiting for the DEFRA library to remove its
-    // `.im-is-loading { visibility:hidden }` body hide on map mount. The #map-loading overlay
-    // covers the map area, so the sidebar can show straight away and we don't depend on map
-    // timing to un-blank the page (matches view-land-parcel).
-    document.body.classList.remove('im-is-loading')
-
     // ── Map colours: live-tuneable palette + panel (open with ?colours) ──────────
     // view-land draws parcels as raw MapLibre layers, so colours apply with
     // setPaintProperty (instant, no churn). Only the parcel border and hover tint are
@@ -405,28 +56,7 @@
       if (mapInstance && mapInstance.getLayer('parcels-selected')) {
         mapInstance.setFilter('parcels-selected', ['==', ['get', 'ngc'], ngc])
       }
-      const rows = Array.from(document.querySelectorAll('#parcel-table-body tr'))
-      // If the selected parcel's row is hidden by the active filter, clear the filter to show it.
-      if (rows.some(tr => tr.dataset.ngc === ngc && tr.hidden) && filterInput.value) {
-        filterInput.value = ''
-        filterParcels('')
-      }
-      rows.forEach(tr => tr.classList.toggle('app-parcel--selected', tr.dataset.ngc === ngc))
-
-      const row = rows.find(tr => tr.dataset.ngc === ngc)
-      const panel = document.getElementById('selected-parcel-panel')
-      if (row) {
-        const anchor = row.querySelector('a')
-        const cells = row.querySelectorAll('td')
-        document.getElementById('selected-parcel-link').href = anchor ? anchor.getAttribute('href') : '#'
-        document.getElementById('selected-parcel-link').textContent = anchor ? anchor.textContent : ''
-        // Copy the cover cell's markup (a govuk-list of all covers) so the panel mirrors the row.
-        document.getElementById('selected-parcel-cover').innerHTML = cells[1] ? cells[1].innerHTML : ''
-        document.getElementById('selected-parcel-area').textContent = cells[2] ? cells[2].textContent.trim() : ''
-        panel.hidden = false
-      } else if (panel) {
-        panel.hidden = true
-      }
+      panel.select(ngc)
     }
 
     // Clear the current selection (click on empty map / no parcel under the pointer).
@@ -435,9 +65,7 @@
       if (mapInstance && mapInstance.getLayer('parcels-selected')) {
         mapInstance.setFilter('parcels-selected', ['==', ['get', 'ngc'], NO_PARCEL])
       }
-      document.querySelectorAll('#parcel-table-body tr').forEach(tr => tr.classList.remove('app-parcel--selected'))
-      const panel = document.getElementById('selected-parcel-panel')
-      if (panel) panel.hidden = true
+      panel.clear()
     }
 
     // ── Mobile crosshair selection (DEFRA interact plugin) ───────────────────────
@@ -447,15 +75,10 @@
     // to that parcel's page, Back exits. Enabled only on small viewports so the
     // reliable native click selection still drives the inline desktop map (the
     // interact plugin's polygon hit-test misses clicks at vector-tile seams).
-    const mobileMql = window.matchMedia('(max-width: 640px)')
-    const useInteract = mobileMql.matches
+    // useInteract is a load-time snapshot (map-fullscreen.js reloads the page if the viewport
+    // crosses the breakpoint).
+    const useInteract = AppMap.fullscreen.isMobile()
     let interact = null
-
-    // useInteract is a load-time snapshot — the interact plugin is built (or not) once at
-    // construction. So crossing the 640px breakpoint live (e.g. toggling DevTools device mode)
-    // leaves the map built for the previous viewport. Reload on a breakpoint cross to re-sync.
-    // (No-op for real users, whose viewport doesn't cross 640px mid-session.)
-    mobileMql.addEventListener('change', () => window.location.reload())
 
     // Point interact at the parcel fill layer (its features carry an `ngc` property), enabling its
     // crosshair + Back/Select/Continue bar. No-ops until the map + parcel layer exist, so it's safe
@@ -714,10 +337,7 @@
 
     // Fade out the "Loading map…" overlay. Called once the map is framed on the parcels and its
     // tiles have rendered (or on a fetch error) — never leaving the overlay stuck on screen.
-    function hideMapLoading () {
-      const el = document.getElementById('map-loading')
-      if (el) el.classList.add('app-map-loading--hidden')
-    }
+    const hideMapLoading = AppMap.fullscreen.hideLoading
 
     // Fetch JSON via a sessionStorage cache keyed on the full request URL (which already
     // encodes the SBI), so repeat visits with the same query skip the network.
@@ -878,30 +498,9 @@
       return [minLng, minLat, maxLng, maxLat]
     }
 
-    // Parcel filter — narrows the list (not the map) by parcel ID substring
-    const filterInput = document.getElementById('parcel-filter')
-    const filterStatus = document.getElementById('parcel-filter-status')
-
-    function normaliseTerm (s) {
-      return (s || '').toUpperCase().replace(/\s+/g, '')
-    }
-
-    function filterParcels (term) {
-      const needle = normaliseTerm(term)
-      const rows = document.querySelectorAll('#parcel-table-body tr')
-      let visible = 0
-      rows.forEach(tr => {
-        if (!tr.dataset.ngc) return
-        const match = needle === '' || tr.dataset.ngc.toUpperCase().includes(needle)
-        tr.hidden = !match
-        if (match) visible++
-      })
-      filterStatus.textContent = (rows.length && visible === 0)
-        ? 'No parcels found'
-        : ''
-    }
-
-    filterInput.addEventListener('input', e => filterParcels(e.target.value))
+    // Sidebar: the land data panel (summary, filter, parcel list, selected parcel)
+    const panel = AppMap.landDataPanel
+    panel.init({ parcelUrl: (ngc) => `/v18/1.2/view-land-parcel?parcel=${ngc}` })
 
     // Fetch data immediately on page load
     const sbi = '{{ myData.sbi | default("111089693") }}'
@@ -936,56 +535,7 @@
         f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID
       })
 
-      // Build a lookup of every land cover per parcel, keyed on ngc. Repeated cover types
-      // (same DESCRIPTION) are merged and their areas summed, so each parcel maps to an
-      // object of { description: totalArea }.
-      const parcelCovers = {}
-      if (landCoversData && landCoversData.features) {
-        landCoversData.features.forEach(f => {
-          const key = f.properties.SHEET_ID + f.properties.PARCEL_ID
-          const area = parseFloat(f.properties.AREA_HA || 0)
-          const byDesc = parcelCovers[key] || (parcelCovers[key] = {})
-          byDesc[f.properties.DESCRIPTION] = (byDesc[f.properties.DESCRIPTION] || 0) + area
-        })
-      }
-
-      // Populate summary table
-      const totalArea = landParcelsData.features.reduce((sum, f) => sum + parseFloat(f.properties.AREA_HA || 0), 0)
-      document.getElementById('summary-parcel-count').textContent = landParcelsData.features.length
-      document.getElementById('summary-total-area').textContent = totalArea.toFixed(4)
-
-      // Build sidebar parcel table
-      const tableBody = document.getElementById('parcel-table-body')
-
-      if (landParcelsData.features.length === 0) {
-        const tr = document.createElement('tr')
-        tr.className = 'govuk-table__row'
-        tr.innerHTML = '<td class="govuk-table__cell" colspan="3">No land parcels found.</td>'
-        tableBody.appendChild(tr)
-      }
-
-      // Build all rows as one HTML string and insert in a single pass (one reflow) rather
-      // than appendChild per row. data-ngc drives the filter + map-selection wiring below.
-      const rowsHtml = landParcelsData.features.map(f => {
-        const { SHEET_ID, PARCEL_ID, ngc, AREA_HA } = f.properties
-        // All cover descriptions for this parcel, largest area first.
-        const covers = Object.entries(parcelCovers[ngc] || {})
-          .sort((a, b) => b[1] - a[1])
-          .map(([description]) => description)
-        const coversHtml = covers.length
-          ? `<ul class="govuk-list govuk-!-margin-bottom-0">${covers.map(d => `<li>${d}</li>`).join('')}</ul>`
-          : '–'
-        const area = parseFloat(AREA_HA)
-        return `<tr class="govuk-table__row" data-ngc="${ngc}">
-          <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" href="/v18/1.2/view-land-parcel?parcel=${ngc}">${SHEET_ID} ${PARCEL_ID}</a></td>
-          <td class="govuk-table__cell">${coversHtml}</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" data-sort-value="${area}">${area.toFixed(4)}</td>
-        </tr>`
-      })
-      tableBody.insertAdjacentHTML('beforeend', rowsHtml.join(''))
-
-      // Initial filter pass populates the status line
-      filterParcels(filterInput.value)
+      panel.render(landParcelsData, landCoversData)
 
       // Frame + draw the parcels. The map may already be ready (it was built up front), so
       // this either runs now or is picked up by the map:ready handler — whichever is last.
@@ -994,8 +544,7 @@
 
     }).catch(err => {
       console.error('Failed to load land parcels:', err)
-      document.getElementById('summary-parcel-count').textContent = '–'
-      document.getElementById('summary-total-area').textContent = '–'
+      panel.renderError()
       // Map was already created up front; nothing parcel-specific to add. Reveal it (at the
       // default centre) so the overlay doesn't hang on a failed load.
       hideMapLoading()
@@ -1046,29 +595,8 @@
         }, 100)
       })
 
-      // Move the "Map view" button into the sidebar on mobile
-      function moveMapButton() {
-        const btn = document.querySelector('.im-c-open-map-button')
-        const slot = document.getElementById('map-button-slot')
-        if (btn && slot && !slot.contains(btn)) {
-          slot.appendChild(btn)
-          return true
-        }
-        return false
-      }
-
-      // Try immediately, then observe for late insertion
-      if (!moveMapButton()) {
-        const observer = new MutationObserver(() => {
-          if (moveMapButton()) observer.disconnect()
-        })
-        observer.observe(document.getElementById('main-content'), { childList: true, subtree: true })
-      }
-
-      // Keep the map sized correctly when the viewport resizes
-      window.addEventListener('resize', () => {
-        interactiveMap.api?.map?.resize()
-      })
+      // "Map view" button slot (mobile) and resize handling
+      AppMap.fullscreen.init({ interactiveMap })
     }
   </script>
 {% endblock %}

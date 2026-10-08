@@ -1,0 +1,50 @@
+{#- Docs layout for the mapping pattern library (/patterns/mapping).
+    Set `_patternPage` to the current page's slug to mark it in the side navigation. -#}
+{% extends "layouts/main-rebrand.html" %}
+
+{% set _patternNav = [
+  { slug: "index", text: "Overview", href: "/patterns/mapping" },
+  { slug: "full-screen-layout", text: "Full-screen map layout", href: "/patterns/mapping/full-screen-layout" },
+  { slug: "header", text: "Map page header", href: "/patterns/mapping/header" },
+  { slug: "data-panel", text: "Land data panel", href: "/patterns/mapping/data-panel" }
+] %}
+
+{% block pageTitle %}
+  {{ pageName }} – Mapping pattern library – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    .app-pattern-nav { list-style: none; padding: 0; margin: 0 0 30px; border-left: 1px solid #b1b4b6; }
+    .app-pattern-nav__item { margin: 0; padding: 6px 0 6px 15px; border-left: 4px solid transparent; margin-left: -1px; }
+    .app-pattern-nav__item--current { border-left-color: #1d70b8; font-weight: 700; }
+    .app-example { border: 1px solid #b1b4b6; margin-bottom: 10px; }
+    .app-example iframe { display: block; width: 100%; height: 640px; border: 0; }
+    .app-code { margin: 0 0 30px; padding: 15px; overflow-x: auto; background: #f3f2f1; border: 1px solid #b1b4b6; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14px; line-height: 1.5; color: #0b0c0c; }
+  </style>
+{% endblock %}
+
+{% block main %}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-quarter">
+        <nav aria-label="Mapping pattern library">
+          <ul class="app-pattern-nav govuk-body-s">
+            {% for item in _patternNav %}
+              <li class="app-pattern-nav__item{% if item.slug == _patternPage %} app-pattern-nav__item--current{% endif %}">
+                <a class="govuk-link govuk-link--no-visited-state" href="{{ item.href }}"{% if item.slug == _patternPage %} aria-current="page"{% endif %}>{{ item.text }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+      <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">Mapping pattern library</span>
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}
