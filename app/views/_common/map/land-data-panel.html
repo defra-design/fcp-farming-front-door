@@ -1,0 +1,56 @@
+{#- Land data panel (mapping pattern library: /patterns/mapping/data-panel).
+    The view-land sidebar: back link, summary, "Map view" button slot (mobile), parcel filter,
+    selected parcel and the parcel list. Filled in by /public/javascripts/map/land-data-panel.js.
+    Optional variables, set before including:
+      dataPanelBackHref  back link href (default "#")
+      dataPanelBackText  back link text (default "Back to <business name>") -#}
+<a class="govuk-back-link govuk-!-margin-top-4" href="{{ dataPanelBackHref | default('#') }}">{{ dataPanelBackText | default('Back to ' + (myData.businessName | default('Agile Farm Ltd'))) }}</a>
+<h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-0">Summary</h2>
+<table class="govuk-table govuk-!-margin-bottom-4">
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Number of parcels</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-parcel-count"></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Total area (ha)</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric" id="summary-total-area"></td>
+    </tr>
+  </tbody>
+</table>
+
+<div id="map-button-slot"></div>
+
+<div class="govuk-form-group govuk-!-margin-bottom-0">
+  <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="parcel-filter">Find a land parcel</label>
+  <div id="parcel-filter-hint" class="govuk-hint">Enter all or part of a parcel ID to filter the list</div>
+  <p class="govuk-body govuk-!-margin-bottom-2 app-data-panel__filter-status" id="parcel-filter-status" aria-live="polite"></p>
+  <input class="govuk-input govuk-input--width-10" id="parcel-filter" name="parcel-filter" type="text" aria-describedby="parcel-filter-hint" autocomplete="off" autocapitalize="characters" spellcheck="false">
+</div>
+<table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet app-data-panel__selected" hidden aria-live="polite">
+  <caption class="govuk-table__caption govuk-visually-hidden">Selected land parcel</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap">ID</th>
+      <th scope="col" class="govuk-table__header" style="width:55%">Land cover</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap">Area (ha)</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" id="selected-parcel-link" href="#"></a></td>
+      <td class="govuk-table__cell" id="selected-parcel-cover"></td>
+      <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" id="selected-parcel-area"></td>
+    </tr>
+  </tbody>
+</table>
+<table class="govuk-table govuk-table--small-text-until-tablet" data-module="moj-sortable-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header" style="width:25%;white-space:nowrap" aria-sort="ascending">Parcel ID</th>
+      <th scope="col" class="govuk-table__header" style="width:55%" aria-sort="none">Land cover</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap" aria-sort="none">Area (ha)</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body app-data-panel__parcels" id="parcel-table-body"></tbody>
+</table>

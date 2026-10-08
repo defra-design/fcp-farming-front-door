@@ -309,6 +309,12 @@
   tr.app-diff .govuk-tag {
     vertical-align: middle;
   }
+  /* A land cover whose type changed (compareSplits pages): "Was <type>" under the current
+     row's name, see pairByOverlap. */
+  .app-diff__type {
+    display: block;
+    color: #505a5f;
+  }
   .app-diff__arrow {
     display: inline-block;
     width: 0.75em;
@@ -758,6 +764,14 @@
     // Which variant this page is (set by the extending template). See the comment at the
     // top of the file for what each mode changes.
     const COMPARE_MODE = '{{ compareMode }}'
+    // Set by view-land-parcel-dates-list-splits-and-merge: draws the land a split parcel's
+    // earlier version held that is now in ANOTHER parcel (covers carrying a NOW_IN of a
+    // different ngc) with a grey hatch and its own Key entry. Off everywhere else, so the other
+    // compare pages keep exactly their datasets.
+    const COMPARE_SPLITS = {{ 'true' if compareSplits else 'false' }}
+    // Also only with compareSplits: every other parcel in the business is outlined thinly
+    // around this one (as on v18/1.1 view-land-parcel), so the parcels a split or merge
+    // involved can be found on the map.
 
     // ───────────────────────────────────────────────────────────────────────────
     // Constants and helpers shared with the two-map compare pages.
@@ -834,12 +848,28 @@
       SX39632340: {
         beforeFile: '/public/data/land-covers/SX39632340-before.json?v=2',
         dateLabel: '12 October 2023 to 16 October 2025'
+      },
+      // MOCKED: SX3964 6918 does not exist. It stands for the parcel made on 1 June 2026 by
+      // merging SX3964 6418 and SX3964 7821 (both live), so its current version cannot come from
+      // the WFS: `currentFile` replaces the three live requests (see the orchestration below).
+      // Its previous version is the two former parcels. See
+      // view-land-parcel-dates-list-splits-and-merge.
+      SX39646918: {
+        beforeFile: '/public/data/land-covers/SX39646918-before-merge-20260531.json?v=4',
+        currentFile: '/public/data/land-covers/SX39646918-current.json?v=2',
+        // The live parcels this mocked one replaced: left out of the surrounding parcels, where
+        // they would otherwise be drawn across it as if the merge had not happened.
+        replaces: ['SX39646418', 'SX39647821'],
+        dateLabel: '3 February 2026 to 31 May 2026'
       }
     }
 
     const urlParams = new URLSearchParams(window.location.search)
     const selectedNgc = urlParams.get('parcel')
-    const history = HISTORY[selectedNgc]
+    // With compareSplits a clicked surrounding parcel opens on this page, and most parcels have
+    // no previous version: they get an empty history (no beforeFile), and the page shows their
+    // current details only. Elsewhere a parcel without a HISTORY entry is a load error.
+    const history = HISTORY[selectedNgc] || (COMPARE_SPLITS && selectedNgc ? { beforeFile: null, dateLabel: '' } : undefined)
 
     const sbi = '{{ myData.sbi | default("111089693") }}'
 
@@ -848,6 +878,10 @@
     // SBI). PARCEL_ID is quoted so it's compared as a string; SHEET_ID can't be filtered
     // server-side (the WAF rejects quotes around the alphanumeric value), so we disambiguate
     // by SHEET_ID client-side.
+    // Every parcel in the business (the surrounding parcels; COMPARE_SPLITS only).
+    function allParcelsUrl () {
+      return `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent('SBI=' + sbi)}&srsname=EPSG:4326&outputFormat=application/json`
+    }
     function parcelUrlFor (parcelId) {
       const cql = `SBI=${sbi} AND PARCEL_ID='${parcelId}'`
       return `https://environment.data.gov.uk/data-services/RPA/LandParcels/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:LandParcels&cql_filter=${encodeURIComponent(cql)}&srsname=EPSG:4326&outputFormat=application/json`
@@ -916,6 +950,9 @@
       return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
     }
 
+    // 'SX39647821' → 'SX3964 7821', the way parcel references are shown on the page.
+    const fmtNgc = (ngc) => ngc ? ngc.substring(0, 6) + ' ' + ngc.substring(6) : ''
+
     const lcSublayerId = (type) => 'lc-' + type.replace(/\s+/g, '-').toLowerCase()
     // Reverse of the above, for reading a cover type back off a Layers panel checkbox.
     const lcTypeBySublayerId = Object.fromEntries(Object.keys(palette.landCover).map(type => [lcSublayerId(type), type]))
@@ -968,6 +1005,11 @@
       landCover: (version) => 'land-cover-' + version,
       outline: 'parcel-outline',
       outlinePrevious: 'parcel-outline-previous',
+      elsewhere: 'now-in-another-parcel',              // COMPARE_SPLITS only: see buildElsewhereDataset
+      surrounding: 'parcels-outline-all',               // COMPARE_SPLITS only: see buildSurroundingDataset
+      surroundingHit: 'parcels-hit',                    // COMPARE_SPLITS only: their click targets
+      parcelHover: 'parcel-hover',                      // COMPARE_SPLITS only: tint on the hovered one
+      parcelLoading: 'parcel-loading',                  // COMPARE_SPLITS only: tint on the clicked one
       hedgerows: 'hedgerows',
       keyPrevious: 'key-previous-version',            // Key-only entry explaining the faded style
       keyChange: (kind) => 'key-change-' + kind        // Key-only entries for the change outlines
@@ -997,6 +1039,7 @@
     let data = null            // { previous, current, marks } once loaded; re-applied after a style change
     let rawParcels = null      // the parcel + hedgerow WFS responses as fetched, kept so another
     let rawHedges = null       // previous snapshot can be assembled without refetching them
+    let surroundingParcels = []   // COMPARE_SPLITS: the business's other parcels, outlined thinly
     // Per version: the cover types on the parcel, and the ones the user has switched off.
     // Tracked separately because the two mean different things once the types are
     // individually toggleable: absent-from-this-parcel (never listed) vs.
@@ -1025,14 +1068,31 @@
     const DIFF_TAG = {
       added: { text: 'Added', cls: 'govuk-tag--green' },
       removed: { text: 'Removed', cls: 'govuk-tag--red' },
-      changed: { text: 'Changed', cls: 'govuk-tag--yellow' }
+      changed: { text: 'Changed', cls: 'govuk-tag--yellow' },
+      // A split: the cover's land is now in another parcel (its mark carries `to`, the ngc).
+      moved: { text: 'Now in', cls: 'govuk-tag--grey' },
+      // A merge: the cover met a cover of the same kind across the removed boundary and the
+      // two are now one (the other one's row carries the change in area).
+      joined: { text: 'Joined', cls: 'govuk-tag--grey' }
     }
+
+    // A previous-version cover whose land is now in a DIFFERENT parcel: set on the covers of a
+    // snapshot taken before a split (NOW_IN = the ngc the land went to). Absent on every other
+    // snapshot, so this is false for them all.
+    const nowElsewhere = (f) => !!f.properties.NOW_IN && f.properties.NOW_IN !== selectedNgc
+    // A previous-version cover absorbed into a larger one when a merge removed the boundary
+    // between them: marked JOINED:'Y' on a snapshot taken before a merge.
+    const joinedUp = (f) => f.properties.JOINED === 'Y'
 
     // Land covers: group by DESCRIPTION, pair by position within each name (both versions
     // are sorted name-then-area, so the pairing is deterministic). Unpaired previous =
     // removed, unpaired current = added, paired but different area = changed. The pairing
     // itself is also returned (prevToCurr / currToPrev) so a click on a previous-version
     // shape can find the current row it corresponds to.
+    // Covers now in another parcel (see nowElsewhere) take no part in the pairing: their land
+    // was not removed, it went to the other parcel, so they are marked 'moved' instead. Covers
+    // joined into another across a removed boundary (joinedUp) likewise are marked 'joined'.
+    // With COMPARE_SPLITS the rest are paired by where they lie instead (pairByOverlap).
     function diffCovers (prev, curr) {
       const byDesc = new Map()
       const add = (f, k) => {
@@ -1040,9 +1100,19 @@
         if (!byDesc.has(desc)) byDesc.set(desc, { prev: [], curr: [] })
         byDesc.get(desc)[k].push(f)
       }
-      prev.forEach(f => add(f, 'prev'))
-      curr.forEach(f => add(f, 'curr'))
       const marks = { prev: new Map(), curr: new Map(), prevToCurr: new Map(), currToPrev: new Map() }
+      const paired = []   // previous covers that take part in the pairing
+      prev.forEach(f => {
+        if (nowElsewhere(f)) marks.prev.set(f.properties.landCoverId, { kind: 'moved', to: f.properties.NOW_IN })
+        else if (joinedUp(f)) marks.prev.set(f.properties.landCoverId, { kind: 'joined' })
+        else paired.push(f)
+      })
+      if (COMPARE_SPLITS) {
+        pairByOverlap(paired, curr, marks)
+        return marks
+      }
+      paired.forEach(f => add(f, 'prev'))
+      curr.forEach(f => add(f, 'curr'))
       byDesc.forEach(({ prev: p, curr: c }) => {
         const n = Math.min(p.length, c.length)
         for (let i = 0; i < n; i++) {
@@ -1062,6 +1132,87 @@
         c.slice(n).forEach(f => marks.curr.set(f.properties.landCoverId, { kind: 'added' }))
       })
       return marks
+    }
+
+    // COMPARE_SPLITS only: pair covers by WHERE THEY LIE rather than by name and size order.
+    // Name-and-size pairing goes wrong when a field changes type or several covers share a
+    // name (a grassland ploughed for arable read as the grassland shrinking to a small corner
+    // plus an arable field Added). Here each previous cover is paired with the current cover
+    // that occupies the same ground, whatever either is called:
+    //   - a candidate pair is one where over half of either cover lies inside the other (the
+    //     same land, on one side or the other); ranked by how much ground they share, and
+    //     taken greedily so each cover is paired at most once;
+    //   - a pair is Changed when its area moved (arrow and old value on the current row) or
+    //     its type changed (the current row says "Was <type>"); unchanged otherwise;
+    //   - anything left unpaired shares no real ground with the other version: Removed / Added.
+    function pairByOverlap (prev, curr, marks) {
+      const candidates = []
+      prev.forEach(p => {
+        const pa = parseFloat(p.properties.AREA_HA)
+        curr.forEach(c => {
+          const ca = parseFloat(c.properties.AREA_HA)
+          const pInC = overlapShare(p, c)
+          const cInP = overlapShare(c, p)
+          if (pInC > 0.5 || cInP > 0.5) candidates.push({ p, c, shared: Math.max(pInC * pa, cInP * ca) })
+        })
+      })
+      candidates.sort((a, b) => b.shared - a.shared)
+      const usedPrev = new Set(), usedCurr = new Set()
+      candidates.forEach(({ p, c }) => {
+        if (usedPrev.has(p) || usedCurr.has(c)) return
+        usedPrev.add(p)
+        usedCurr.add(c)
+        const pId = p.properties.landCoverId, cId = c.properties.landCoverId
+        marks.prevToCurr.set(pId, cId)
+        marks.currToPrev.set(cId, pId)
+        const pa = parseFloat(p.properties.AREA_HA), ca = parseFloat(c.properties.AREA_HA)
+        const areaMoved = Math.abs(pa - ca) > AREA_EPS
+        const typeChanged = p.properties.DESCRIPTION !== c.properties.DESCRIPTION
+        if (!areaMoved && !typeChanged) return
+        marks.prev.set(pId, { kind: 'changed' })
+        marks.curr.set(cId, {
+          kind: 'changed',
+          wasType: typeChanged ? p.properties.DESCRIPTION : undefined,
+          direction: areaMoved ? (ca > pa ? 'up' : 'down') : undefined,
+          was: areaMoved ? pa.toFixed(4) : undefined
+        })
+      })
+      prev.forEach(p => { if (!usedPrev.has(p)) marks.prev.set(p.properties.landCoverId, { kind: 'removed' }) })
+      curr.forEach(c => { if (!usedCurr.has(c)) marks.curr.set(c.properties.landCoverId, { kind: 'added' }) })
+    }
+
+    // The share of cover a's area that lies inside cover b, estimated by sampling a grid of
+    // points over a's bounding box (no geometry library on the page; 0.05 ha precision is
+    // plenty to tell "the same field" from "a neighbour").
+    const GRID = 24
+    function overlapShare (a, b) {
+      const [w, s, e, n] = computeBounds(a)
+      const [bw, bs, be, bn] = computeBounds(b)
+      if (be < w || bw > e || bn < s || bs > n) return 0
+      let inA = 0, inBoth = 0
+      for (let i = 0; i < GRID; i++) {
+        for (let j = 0; j < GRID; j++) {
+          const pt = [w + (e - w) * (i + 0.5) / GRID, s + (n - s) * (j + 0.5) / GRID]
+          if (!inPolygonFeature(pt, a)) continue
+          inA++
+          if (inPolygonFeature(pt, b)) inBoth++
+        }
+      }
+      return inA ? inBoth / inA : 0
+    }
+    // Point in a Polygon / MultiPolygon feature (even-odd ray cast over every ring, so holes count).
+    function inPolygonFeature ([x, y], feature) {
+      const polys = feature.geometry.type === 'MultiPolygon' ? feature.geometry.coordinates : [feature.geometry.coordinates]
+      return polys.some(rings => {
+        let inside = false
+        rings.forEach(ring => {
+          for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+            const [xi, yi] = ring[i], [xj, yj] = ring[j]
+            if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) inside = !inside
+          }
+        })
+        return inside
+      })
     }
 
     // Hedgerows: compared by position (they have no stable identity across versions).
@@ -1092,14 +1243,17 @@
     // "increased"/"decreased" and a visually-hidden "was" so the old value is read out.
     // Thin line arrow: a stroked stem with an open head (the down arrow is a CSS rotation).
     const ARROW_SVG = '<svg class="app-diff__arrow app-diff__arrow--DIR" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 9V1.5M1.5 5 5 1.5 8.5 5"/></svg>'
-    function markRow (tr, { kind, was, direction }) {
+    function markRow (tr, { kind, was, direction, to, wasType }) {
       if (!tr) return
       tr.classList.add('app-diff', 'app-diff--' + kind)
       const tag = DIFF_TAG[kind]
+      const text = kind === 'moved' ? tag.text + ' ' + fmtNgc(to) : tag.text
       const first = tr.querySelector('td')
       if (first && !first.querySelector('.govuk-tag')) {
         first.insertAdjacentHTML('beforeend',
-          ' <strong class="govuk-tag ' + tag.cls + ' govuk-!-margin-left-2">' + tag.text + '</strong>')
+          ' <strong class="govuk-tag ' + tag.cls + ' govuk-!-margin-left-2">' + text + '</strong>')
+        // A change of land cover type (see pairByOverlap): the current row says what it was.
+        if (wasType) first.insertAdjacentHTML('beforeend', '<span class="govuk-body-s govuk-!-margin-bottom-0 app-diff__type">Was ' + wasType + '</span>')
       }
       const last = tr.querySelector('td:last-child')
       if (!last) return
@@ -1142,6 +1296,8 @@
         (parseFloat(a.properties.AREA_HA) - parseFloat(b.properties.AREA_HA))
       )
       d.parcelCovers.forEach((f, i) => { f.properties.landCoverId = String(i) })
+      // Hedges are numbered in order of length, longest first (as the live service does).
+      d.parcelHedges.sort((a, b) => parseFloat(b.properties.LENGTH) - parseFloat(a.properties.LENGTH))
       d.parcelHedges.forEach((f, i) => { f.properties.hedgeId = String(i) })
     }
 
@@ -1273,6 +1429,7 @@
       markIfChanged(el('parcel-hedgerows').closest('tr'), dPrev.parcelHedges.length, dCurr.parcelHedges.length, 0)
 
       applyLandCoverRowClass()
+      announceRendered(dPrev, dCurr, marks)
     }
 
     // Sidebar layout: one set of tables per version, in the Current / Previous tabs. The
@@ -1323,6 +1480,14 @@
       both(el('parcel-hedgerows-previous').closest('tr'), el('parcel-hedgerows-current').closest('tr'), dPrev.parcelHedges.length, dCurr.parcelHedges.length, 0)
 
       applyLandCoverRowClass()
+      announceRendered(dPrev, dCurr, marks)
+    }
+
+    // Tell an extending page the tables have just been (re)built, so it can add to them (the
+    // splits-and-merge page groups a merge's covers by the parcel they were in). Fired after
+    // every render: at load and on every loadPreviousSnapshot.
+    function announceRendered (dPrev, dCurr, marks) {
+      document.dispatchEvent(new CustomEvent('compare:rendered', { detail: { previous: dPrev, current: dCurr, marks } }))
     }
 
     // ───────────────────────────────────────────────────────────────────────────
@@ -1407,6 +1572,100 @@
       }
     }
 
+    // COMPARE_SPLITS only. The land an earlier version held that is now in ANOTHER parcel
+    // (a split's sibling), hatched grey over the previous version's faded covers so it reads
+    // as "not this parcel any more". Permanent and usually empty: its data is the previous
+    // version's nowElsewhere covers, and it is hidden while it has none (which also keeps it
+    // out of the Key) and whenever the previous version is. A pattern no land cover uses, so
+    // its pattern image never collides with theirs.
+    function buildElsewhereDataset (features) {
+      return {
+        id: DS.elsewhere,
+        label: 'Now in another parcel',
+        geojson: { type: 'FeatureCollection', features },
+        style: {
+          fill: '#f3f2f1',
+          fillPattern: 'forward-diagonal-hatch',
+          fillPatternBackgroundColor: '#f3f2f1',
+          fillPatternForegroundColor: '#6f777b',
+          stroke: '#505a5f',
+          strokeWidth: 2,
+          symbolDescription: 'grey diagonal hatching'
+        },
+        showInKey: true,
+        showInMenu: false,
+        visibility: features.length ? 'visible' : 'hidden'
+      }
+    }
+    // COMPARE_SPLITS only. Every other parcel in the business, outlined in the parcel blue at
+    // 1px like v18/1.1 view-land-parcel's "Other parcels", so a split's sibling or the
+    // neighbours of a merged parcel can be picked out around this one. Listed in the Layers
+    // panel (it can be switched off) but not the Key. Fixed: it does not change with the
+    // version shown.
+    function buildSurroundingDataset (features) {
+      return {
+        id: DS.surrounding,
+        label: 'Other parcels',
+        geojson: { type: 'FeatureCollection', features },
+        style: { fill: 'transparent', stroke: palette.parcelBorder, strokeWidth: 1 },
+        showInKey: false,
+        showInMenu: true
+      }
+    }
+
+    // The surrounding parcels' click target: a near-invisible fill over each, so a click
+    // anywhere inside one (not just on its 1px outline) opens it. As on v18/1.1, opacity is
+    // 0.01 rather than 0 — the plugin turns an opacity of 0 into 1 — so it is imperceptible but
+    // still returned by queryRenderedFeatures.
+    function buildSurroundingHitDataset (features) {
+      return {
+        id: DS.surroundingHit,
+        label: 'Other parcels (click targets)',
+        geojson: { type: 'FeatureCollection', features },
+        style: { fill: '#9b9b9b', stroke: 'transparent', opacity: 0.01 },
+        showInKey: false,
+        showInMenu: false
+      }
+    }
+
+    // Hover and click tints on the surrounding parcels, matching v18/1.1 view-land-parcel: the
+    // parcel under the pointer is filled faintly in the parcel blue, and a clicked one more
+    // strongly while the page loads it. Both start empty and are swapped with setData.
+    // stroke:'transparent' overrides the library's default red outline.
+    const HOVER_STYLE = { fill: '#1d70b8', stroke: 'transparent', opacity: 0.15 }
+    const LOADING_STYLE = { fill: '#1d70b8', stroke: 'transparent', opacity: 0.4 }
+    let hoverNgc = null   // the surrounding parcel currently tinted under the pointer
+    function buildTintDataset (id, style) {
+      return { id, geojson: { type: 'FeatureCollection', features: [] }, style, showInKey: false, showInMenu: false }
+    }
+    function tintParcel (datasetId, ngc) {
+      const feature = ngc && surroundingParcels.find(f => f.properties.ngc === ngc)
+      datasetsPlugin.setData({ type: 'FeatureCollection', features: feature ? [feature] : [] }, { datasetId })
+    }
+    // Only setData when the hovered parcel actually changes, not on every mouse move.
+    function setParcelHover (ngc) {
+      if (ngc === hoverNgc) return
+      hoverNgc = ngc
+      tintParcel(DS.parcelHover, ngc)
+    }
+
+    // Open another parcel on this page: the same URL with ?parcel= swapped, so the browser's
+    // Back button returns to this one. The map keeps its view in the URL (map:center,
+    // map:zoom); those are dropped so the new parcel opens framed on itself, not on this one's
+    // view. The loading overlay comes back over the map while the page reloads.
+    function openParcel (ngc) {
+      setParcelHover(null)
+      tintParcel(DS.parcelLoading, ngc)
+      const overlay = document.getElementById('map-loading')
+      if (overlay) overlay.classList.remove('app-map-loading--hidden')
+      const params = new URLSearchParams(window.location.search)
+      ;[...params.keys()].filter(k => k.startsWith('map:')).forEach(k => params.delete(k))
+      params.set('parcel', ngc)
+      window.location.assign(window.location.pathname + '?' + params.toString())
+    }
+
+    const elsewhereFeatures = () => data ? data.previous.parcelCovers.filter(nowElsewhere) : []
+
     // The previous boundary, only when it is not the same shape as the current one: a
     // dashed outline exactly under the solid one would add nothing but noise.
     function previousOutlineFeatures () {
@@ -1476,8 +1735,12 @@
         if (visible) hiddenCovers[version].delete(type); else hiddenCovers[version].add(type)
         datasetsPlugin.setDatasetVisibility(visible, { datasetId: DS.landCover(version), sublayerId: lcSublayerId(type) })
       })
-      // The previous boundary (when there is one) comes and goes with the previous version.
-      if (version === 'previous') datasetsPlugin.setDatasetVisibility(visible, { datasetId: DS.outlinePrevious })
+      // The previous boundary (when there is one) comes and goes with the previous version,
+      // and so does the land now in another parcel (while there is any).
+      if (version === 'previous') {
+        datasetsPlugin.setDatasetVisibility(visible, { datasetId: DS.outlinePrevious })
+        if (COMPARE_SPLITS) datasetsPlugin.setDatasetVisibility(visible && elsewhereFeatures().length > 0, { datasetId: DS.elsewhere })
+      }
       syncOverlayLayers()
     }
 
@@ -1672,7 +1935,14 @@
       })
       VERSIONS.forEach(v => order.push(LC_SELECTED(v)))
       CHANGE_KINDS.forEach(kind => order.push(CHANGE_LAYER(kind)))
+      if (COMPARE_SPLITS) {
+        order.push(DS.surrounding, DS.surrounding + '-stroke', DS.parcelHover, DS.parcelHover + '-stroke', DS.parcelLoading, DS.parcelLoading + '-stroke',
+          DS.elsewhere, DS.elsewhere + '-stroke')
+      }
       order.push(DS.outlinePrevious, DS.outline, DS.hedgerows)
+      // The surrounding parcels' click targets go to the very bottom (moveLayer to the top in
+      // order, so first is lowest).
+      if (COMPARE_SPLITS) order.unshift(DS.surroundingHit, DS.surroundingHit + '-stroke')
       order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
     }
 
@@ -1706,6 +1976,7 @@
     function showOnlyVersion (version) {
       VERSIONS.forEach(v => { if (v !== version) setVersionVisibility(v, false) })
       setVersionVisibility(version, true)
+      if (COMPARE_SPLITS && data && datasetsPlugin) showVersionHedges()
     }
 
     // Radios: apply whichever is checked (used at load and after a style change so the
@@ -1845,6 +2116,14 @@
           layers.push({ layerId: id, idProperty: 'landCoverId', selectedStroke: 'transparent' })
         })
       })
+      // COMPARE_SPLITS: the surrounding parcels' click targets too, as on v18/1.1 — that is what
+      // gives them the hand cursor on hover (the plugin owns the cursor over its layers), and
+      // it lets the mobile crosshair pick one (see interact:selectionchange). The desktop click
+      // still goes through the native handler; selectedStroke 'transparent' stops the plugin
+      // outlining the parcel it selects.
+      if (COMPARE_SPLITS && hedgeMap.getLayer(DS.surroundingHit)) {
+        layers.push({ layerId: DS.surroundingHit, idProperty: 'ngc', selectedStroke: 'transparent' })
+      }
       interact.enable({ layers })
       return true
     }
@@ -1859,8 +2138,29 @@
       })
       datasetsPlugin.setData({ type: 'FeatureCollection', features: [data.current.selectedFeature] }, { datasetId: DS.outline })
       datasetsPlugin.setData({ type: 'FeatureCollection', features: previousOutlineFeatures() }, { datasetId: DS.outlinePrevious })
-      datasetsPlugin.setData({ type: 'FeatureCollection', features: data.current.parcelHedges }, { datasetId: DS.hedgerows })
-      datasetsPlugin.setDatasetVisibility(data.current.parcelHedges.length > 0, { datasetId: DS.hedgerows })
+      if (COMPARE_SPLITS) {
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: surroundingParcels }, { datasetId: DS.surrounding })
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: surroundingParcels }, { datasetId: DS.surroundingHit })
+        // A base-map change rebuilt the hover tint empty; forget the hovered parcel so the next
+        // mouse move tints it again.
+        hoverNgc = null
+        const elsewhere = elsewhereFeatures()
+        datasetsPlugin.setData({ type: 'FeatureCollection', features: elsewhere }, { datasetId: DS.elsewhere })
+        datasetsPlugin.setDatasetVisibility(elsewhere.length > 0 && isVersionVisible('previous'), { datasetId: DS.elsewhere })
+      }
+      showVersionHedges()
+    }
+
+    // The hedgerows drawn: today's, except (COMPARE_SPLITS, where a version can have hedgerows
+    // of its own) while only the previous version is on show, when they are its hedgerows.
+    function showVersionHedges () {
+      const previousOnly = COMPARE_SPLITS && isVersionVisible('previous') && !isVersionVisible('current')
+      const hedges = previousOnly ? data.previous.parcelHedges : data.current.parcelHedges
+      // A hedgerow selection belongs to the hedgerows it was made on, so it goes when they are
+      // swapped (COMPARE_SPLITS only; elsewhere they never change).
+      if (COMPARE_SPLITS && interact && selectedHedgeIds.size) interact.clear()
+      datasetsPlugin.setData({ type: 'FeatureCollection', features: hedges }, { datasetId: DS.hedgerows })
+      datasetsPlugin.setDatasetVisibility(hedges.length > 0, { datasetId: DS.hedgerows })
     }
 
     // Replace the previous version with another snapshot file (view-land-parcel-dates-list,
@@ -1873,16 +2173,55 @@
     // A snapshot file may carry the parcel boundary AS IT WAS in a top-level `parcel`
     // Feature (same properties as a LandParcels WFS feature). Then the previous version uses
     // that outline; otherwise it shares the live one.
-    function snapshotParcels (beforeCovers) {
+    // A snapshot taken before a MERGE carries the former parcels instead, as a top-level
+    // `parcels` array. They are combined into one MultiPolygon feature standing in for "the
+    // previous version": its dashed outline then traces every former boundary, including the
+    // one that was removed, and its area is theirs added up. It takes this parcel's
+    // SHEET_ID/PARCEL_ID so buildParcelData finds it (the former parcels' own ids are on the
+    // snapshot for the page to show).
+    // `fallbackParcel` (optional) is the outline to use when the file carries none, in place of
+    // the live one: a version of ANOTHER parcel (one this parcel was merged from) whose file
+    // relied on that parcel's live outline, which is not this one's.
+    function snapshotParcels (beforeCovers, fallbackParcel) {
       const own = (x) => JSON.parse(JSON.stringify(x))
-      return beforeCovers.parcel ? { features: [own(beforeCovers.parcel)] } : own(rawParcels)
+      if (beforeCovers.parcels && beforeCovers.parcels.length) {
+        const parts = beforeCovers.parcels
+        const polygons = parts.flatMap(f => f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates])
+        const area = parts.reduce((t, f) => t + parseFloat(f.properties.AREA_HA), 0)
+        return {
+          features: [{
+            type: 'Feature',
+            geometry: { type: 'MultiPolygon', coordinates: own(polygons) },
+            properties: {
+              ...own(parts[0].properties),
+              SHEET_ID: selectedNgc.substring(0, 6),
+              PARCEL_ID: selectedNgc.substring(6),
+              AREA_HA: String(area)
+            }
+          }]
+        }
+      }
+      if (beforeCovers.parcel) return { features: [own(beforeCovers.parcel)] }
+      return fallbackParcel ? { features: [own(fallbackParcel)] } : own(rawParcels)
     }
 
-    function loadPreviousSnapshot (file, dateLabel) {
+    // A version's hedgerows: given by the page, or carried by the snapshot file as a top-level
+    // `hedges` array, or else the live ones (the hedge data is not historical, so most
+    // snapshots have none of their own and share today's).
+    function snapshotHedges (snapshot, given) {
+      if (given) return { features: given }
+      if (snapshot && snapshot.hedges) return { features: snapshot.hedges }
+      return rawHedges
+    }
+
+    // options.parcel: the outline for a file that carries none (see snapshotParcels).
+    // options.hedges: the version's hedgerows (an array of HedgeControl features), when they
+    // are not in the file itself (see snapshotHedges).
+    function loadPreviousSnapshot (file, dateLabel, options = {}) {
       if (!data || !rawParcels || !rawHedges) return Promise.reject(new Error('parcel not loaded'))
       return cachedFetchJson(file).then(beforeCovers => {
         const own = (x) => JSON.parse(JSON.stringify(x))
-        const dPrev = buildParcelData(selectedNgc, snapshotParcels(beforeCovers), own(beforeCovers), own(rawHedges))
+        const dPrev = buildParcelData(selectedNgc, snapshotParcels(beforeCovers, options.parcel), own(beforeCovers), own(snapshotHedges(beforeCovers, options.hedges)))
         if (!dPrev.selectedFeature) throw new Error('snapshot has no parcel feature')
         const dCurr = data.current
         stampIds(dPrev)
@@ -1953,6 +2292,15 @@
             stroke: palette.change[kind], strokeWidth: 3, symbolDescription: CHANGE_LABEL[kind].toLowerCase() + ' outline'
           }))
         })
+      }
+      if (COMPARE_SPLITS) {
+        datasets.push(
+          buildSurroundingHitDataset(surroundingParcels),
+          buildSurroundingDataset(surroundingParcels),
+          buildTintDataset(DS.parcelHover, HOVER_STYLE),
+          buildTintDataset(DS.parcelLoading, LOADING_STYLE),
+          buildElsewhereDataset(elsewhereFeatures())
+        )
       }
       datasets.push(
         buildPreviousOutlineDataset(previousOutlineFeatures()),
@@ -2052,9 +2400,32 @@
               if (!best || area < best.area - AREA_EPS) best = { version: v, id: String(f.properties.landCoverId), area }
             })
           }
+          // No land cover under the click: a surrounding parcel there opens it on this page.
+          if (!best && COMPARE_SPLITS && hedgeMap.getLayer(DS.surroundingHit)) {
+            const parcel = hedgeMap.queryRenderedFeatures(ev.point, { layers: [DS.surroundingHit] })[0]
+            if (parcel && parcel.properties.ngc) return openParcel(parcel.properties.ngc)
+          }
           selectLandCover(best ? best.version : null, best ? best.id : null)
         })
       })
+      // Hovering a surrounding parcel (where no land cover is, the same rule as the click):
+      // tint it as v18/1.1 does, so it reads as clickable. Cleared when the pointer moves onto a
+      // land cover, off every parcel, or off the map. The hand cursor comes from the interact
+      // plugin (the click targets are registered with it in enableInteract).
+      if (COMPARE_SPLITS) {
+        interactiveMap.on('map:ready', (e) => {
+          const map = e.map
+          map.on('mousemove', (ev) => {
+            if (!map.getLayer(DS.surroundingHit)) return
+            const covers = [...lcFillLayerIds('current'), ...lcFillLayerIds('previous')]
+            const onCover = covers.length && map.queryRenderedFeatures(ev.point, { layers: covers }).length
+            const parcel = !onCover && map.queryRenderedFeatures(ev.point, { layers: [DS.surroundingHit] })[0]
+            const ngc = parcel ? parcel.properties.ngc : null
+            setParcelHover(ngc)
+          })
+          map.on('mouseout', () => setParcelHover(null))
+        })
+      }
       interactiveMap.on('datasets:ready', () => {
         enableInteract()
         addPageLayers()
@@ -2109,6 +2480,10 @@
         // removed cover the native handler deliberately chose. (The crosshair fires no native
         // click, so it still gets through.)
         if (performance.now() - nativeClickAt < 300) return
+        // Mobile crosshair picked a surrounding parcel: open it (the native click does this on
+        // desktop).
+        const parcelFeat = selectedFeatures.find(f => f.layerId === DS.surroundingHit)
+        if (parcelFeat && parcelFeat.featureId != null) return openParcel(String(parcelFeat.featureId))
         const lcFeat = selectedFeatures.find(f => f.layerId && f.layerId.startsWith('land-cover-'))
         if (lcFeat && lcFeat.featureId != null) {
           const version = lcFeat.layerId.startsWith(DS.landCover('previous')) ? 'previous' : 'current'
@@ -2133,7 +2508,7 @@
       const dateRange = document.getElementById('compare-date-range')
       if (dateRange) dateRange.textContent = history.dateLabel
       const previousTabDate = document.getElementById('previous-tab-date-range')
-      if (previousTabDate) {
+      if (previousTabDate && history.beforeFile) {
         document.getElementById('previous-tab-date-range-text').textContent = history.dateLabel
         previousTabDate.hidden = false
       }
@@ -2141,20 +2516,52 @@
       // Fetch the parcel geometry and hedgerows ONCE (they are the same in both versions)
       // and the land covers per version: the previous version's from the local snapshot,
       // the current version's live from the WFS.
+      // A parcel that is not in the live data (a mocked merge result) has a `currentFile`
+      // instead: one snapshot carrying its covers, its `parcel` Feature and its `hedges`, split
+      // here into the same three responses the WFS would give.
       const parcelId = selectedNgc.substring(6)
-      Promise.all([
-        cachedFetchJson(parcelUrlFor(parcelId)),
-        cachedFetchJson(hedgeUrlFor(parcelId)),
-        cachedFetchJson(history.beforeFile),
-        cachedFetchJson(currentCoversUrlFor(parcelId))
-      ]).then(([parcelsData, hedgeData, beforeCovers, currentCovers]) => {
+      const currentRequests = history.currentFile
+        ? cachedFetchJson(history.currentFile).then(file => [
+          { features: [file.parcel] },
+          { features: file.hedges || [] },
+          { features: file.features }
+        ])
+        : Promise.all([
+          cachedFetchJson(parcelUrlFor(parcelId)),
+          cachedFetchJson(hedgeUrlFor(parcelId)),
+          cachedFetchJson(currentCoversUrlFor(parcelId))
+        ])
+      // The surrounding parcels are context only: if they fail to load the page carries on
+      // without them.
+      // The mocked parcels (HISTORY entries with a currentFile) stand in for the live parcels
+      // they replaced, so wherever the surrounding parcels are drawn the mock is consistent:
+      // the replaced parcels are left out and the mocked parcel is drawn (and opens) instead.
+      const MOCKED = Object.keys(HISTORY).filter(n => HISTORY[n].currentFile && HISTORY[n].replaces)
+      const surroundingRequest = COMPARE_SPLITS
+        ? Promise.all([
+          cachedFetchJson(allParcelsUrl()),
+          Promise.all(MOCKED.filter(n => n !== selectedNgc).map(n => cachedFetchJson(HISTORY[n].currentFile).then(file => file.parcel)))
+        ]).then(([live, mocked]) => ({ features: [...(live.features || []), ...mocked] }))
+          .catch(err => { console.error('Failed to load surrounding parcels:', err); return { features: [] } })
+        : Promise.resolve({ features: [] })
+      // A parcel with no previous version has no beforeFile: its "previous" is its current
+      // covers again, so nothing is marked as changed.
+      const beforeRequest = history.beforeFile ? cachedFetchJson(history.beforeFile) : Promise.resolve(null)
+      Promise.all([currentRequests, beforeRequest, surroundingRequest])
+        .then(([[parcelsData, hedgeData, currentCovers], beforeFile, allParcelsData]) => {
+        const beforeCovers = beforeFile || JSON.parse(JSON.stringify(currentCovers))
+        // Not this parcel (it has its own bold outline), and not the live parcels any mocked one
+        // replaced. Each is stamped with its ngc for the click.
+        const leaveOut = new Set([selectedNgc, ...MOCKED.flatMap(n => HISTORY[n].replaces)])
+        surroundingParcels = (allParcelsData.features || []).filter(f => !leaveOut.has(f.properties.SHEET_ID + f.properties.PARCEL_ID))
+        surroundingParcels.forEach(f => { f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID })
         // Each version must own its feature objects: stampIds writes per-version properties
         // (landCoverId, hedgeId, diffKind) and sorts in place, and the datasets adapter hands
         // the geojson straight to each source.
         const own = (x) => JSON.parse(JSON.stringify(x))
         rawParcels = parcelsData
         rawHedges = hedgeData
-        const dPrev = buildParcelData(selectedNgc, snapshotParcels(beforeCovers), beforeCovers, own(hedgeData))
+        const dPrev = buildParcelData(selectedNgc, snapshotParcels(beforeCovers), beforeCovers, own(beforeFile && beforeFile.hedges ? { features: beforeFile.hedges } : hedgeData))
         const dCurr = buildParcelData(selectedNgc, own(parcelsData), currentCovers, own(hedgeData))
 
         if (!dPrev.selectedFeature || !dCurr.selectedFeature) {

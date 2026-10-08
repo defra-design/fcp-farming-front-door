@@ -707,6 +707,9 @@
         const hTableBody = document.getElementById('hedgerows-table-body')
         hTableBody.innerHTML = ''
         let hTotalLength = 0
+        // Numbered in order of length, longest first (as the live service does), so a change in
+        // length can change a hedge's number.
+        parcelHedges.sort((a, b) => parseFloat(b.properties.LENGTH) - parseFloat(a.properties.LENGTH))
         parcelHedges.forEach((f, i) => {
           // Stable id shared by the map feature and this row (the datasets source uses
           // generateId, so we set an explicit property and target it via interact's idProperty).

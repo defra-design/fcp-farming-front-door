@@ -1,0 +1,96 @@
+{% extends "layouts/map-fullscreen.html" %}
+
+{#- Example: the land data panel against live RPA data for one SBI. A cut-down view-land:
+    parcels drawn as MapLibre layers, a map click selects a parcel in the panel. -#}
+
+{% block pageTitle %}
+  Example: land data panel – Mapping pattern library
+{% endblock %}
+
+{% block mapSidebar %}
+  {% include "_common/map/land-data-panel.html" %}
+{% endblock %}
+
+{% block mapScripts %}
+  <script src="/public/javascripts/map/land-data-panel.js"></script>
+  <script>
+    const sbi = '{{ myData.sbi | default("111089693") }}'
+    const wfs = (type) => `https://environment.data.gov.uk/data-services/RPA/${type}/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:${type}&cql_filter=${encodeURIComponent('SBI=' + sbi)}&srsname=EPSG:4326&outputFormat=application/json`
+    const NO_PARCEL = '__none__'
+
+    // sessionStorage cache keyed on the request URL (shared with view-land, same URLs)
+    function cachedFetchJson (url) {
+      try {
+        const hit = sessionStorage.getItem(url)
+        if (hit) return Promise.resolve(JSON.parse(hit))
+      } catch (e) { /* ignore */ }
+      return fetch(url).then(r => r.json()).then(data => {
+        try { sessionStorage.setItem(url, JSON.stringify(data)) } catch (e) { /* quota */ }
+        return data
+      })
+    }
+
+    const panel = AppMap.landDataPanel
+    panel.init({ parcelUrl: (ngc) => `/v18/1.2/view-land-parcel?parcel=${ngc}` })
+
+    const interactiveMap = new defra.InteractiveMap('map', {
+      mapProvider: defra.maplibreProvider(),
+      behaviour: 'hybrid',
+      mapLabel: 'Land parcels',
+      minZoom: 6,
+      maxZoom: 18,
+      enableZoomControls: true,
+      mapStyle: {
+        url: 'https://tiles.openfreemap.org/styles/liberty',
+        attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
+        backgroundColor: '#f5f5f0'
+      },
+      plugins: [defra.scaleBarPlugin({ units: 'metric' })]
+    })
+    AppMap.fullscreen.init({ interactiveMap })
+
+    const mapReady = new Promise(resolve => interactiveMap.on('map:ready', (e) => resolve(e.map)))
+    const dataReady = Promise.all([cachedFetchJson(wfs('LandParcels')), cachedFetchJson(wfs('LandCovers'))])
+
+    dataReady.then(([parcels, covers]) => {
+      parcels.features.forEach(f => { f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID })
+      panel.render(parcels, covers)
+      return mapReady.then(map => drawParcels(map, parcels))
+    }).catch(err => {
+      console.error('Failed to load land parcels:', err)
+      panel.renderError()
+      AppMap.fullscreen.hideLoading()
+    })
+
+    function drawParcels (map, parcels) {
+      const add = () => {
+        map.addSource('parcels', { type: 'geojson', data: parcels, promoteId: 'ngc' })
+        map.addLayer({ id: 'parcels-fill', type: 'fill', source: 'parcels', paint: { 'fill-color': '#1d70b8', 'fill-opacity': 0 } })
+        map.addLayer({ id: 'parcels-outline', type: 'line', source: 'parcels', paint: { 'line-color': '#1d70b8', 'line-width': 2 } })
+        map.addLayer({ id: 'parcels-selected', type: 'line', source: 'parcels', paint: { 'line-color': '#0b0c0c', 'line-width': 3 }, filter: ['==', ['get', 'ngc'], NO_PARCEL] })
+
+        // Map -> panel: a parcel click selects it, a click elsewhere clears
+        map.on('click', (e) => {
+          const hit = map.queryRenderedFeatures(e.point, { layers: ['parcels-fill'] })[0]
+          map.setFilter('parcels-selected', ['==', ['get', 'ngc'], hit ? hit.id : NO_PARCEL])
+          if (hit) panel.select(hit.id)
+          else panel.clear()
+        })
+
+        // Frame the map on all the parcels: [[west, south], [east, north]]
+        const b = [[Infinity, Infinity], [-Infinity, -Infinity]]
+        parcels.features.forEach(f => {
+          const rings = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates.flat(1) : f.geometry.coordinates
+          rings.forEach(ring => ring.forEach(([lng, lat]) => {
+            b[0][0] = Math.min(b[0][0], lng); b[0][1] = Math.min(b[0][1], lat)
+            b[1][0] = Math.max(b[1][0], lng); b[1][1] = Math.max(b[1][1], lat)
+          }))
+        })
+        if (parcels.features.length) map.fitBounds(b, { padding: 40, duration: 0 })
+        map.once('idle', AppMap.fullscreen.hideLoading)
+      }
+      if (map.isStyleLoaded()) add()
+      else map.once('idle', add)
+    }
+  </script>
+{% endblock %}

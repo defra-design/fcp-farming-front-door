@@ -671,6 +671,8 @@
         // Hedgerows have no table on this page, but each feature still needs a stable id
         // for the map (the datasets source uses generateId, so we set an explicit property
         // and target it via interact's idProperty).
+        // Longest first, matching the hedge numbering on the land summary.
+        parcelHedges.sort((a, b) => parseFloat(b.properties.LENGTH) - parseFloat(a.properties.LENGTH))
         parcelHedges.forEach((f, i) => { f.properties.hedgeId = String(i) })
 
         // Rows were just recreated — re-apply the live land cover selection.

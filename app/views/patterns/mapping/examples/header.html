@@ -1,0 +1,22 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{#- Example: the map page header on its own. The header styles are scoped to
+    html.app-map-page, so set the class here as the map layout does. -#}
+
+{% set htmlClasses = "app-map-page" %}
+
+{% block pageTitle %}
+  Example: map page header – Mapping pattern library
+{% endblock %}
+
+{% block header %}
+  {% include "_common/map/header.html" %}
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block main %}
+<main id="main-content" style="padding:15px">
+  <p class="govuk-body">Page content starts here, below the sub-header.</p>
+</main>
+{% endblock %}

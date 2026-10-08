@@ -1,0 +1,28 @@
+{#- Map page header (mapping pattern library: /patterns/mapping/header).
+    GOV.UK header, service navigation, phase banner, then the business/user sub-header.
+    Optional variables, set before including:
+      mapServiceName  service name in the service navigation (default "Farm and Land Service")
+      _versionPath    prefix for the sub-header's Sign out link (default "v18/1.2") -#}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+{{ govukHeader({
+  rebrand: true
+}) }}
+
+{{ govukServiceNavigation({
+  serviceName: mapServiceName | default("Farm and Land Service"),
+  serviceUrl: "#"
+}) }}
+
+{{ govukPhaseBanner({
+  tag: {
+    text: "Prototype"
+  },
+  html: 'This is a prototype.'
+}) }}
+
+<div class="app-sub-header govuk-!-padding-top-0">
+  {% set _versionPath = _versionPath | default("v18/1.2") %}{% include "v18/includes/sub-header.html" %}
+</div>

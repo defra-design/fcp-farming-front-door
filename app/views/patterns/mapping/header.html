@@ -1,0 +1,75 @@
+{% extends "layouts/pattern-library.html" %}
+
+{% set pageName = "Map page header" %}
+{% set _patternPage = "header" %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">Map page header</h1>
+
+<p class="govuk-body-l">The header for a full-screen map page: who the user is acting for, stretched to the full width of the screen.</p>
+
+<div class="app-example">
+  <iframe src="/patterns/mapping/examples/header" title="Example: map page header" style="height:320px" loading="lazy"></iframe>
+</div>
+<p class="govuk-body"><a class="govuk-link" href="/patterns/mapping/examples/header" target="_blank">Open this example in a new tab (opens in new tab)</a></p>
+
+<h2 class="govuk-heading-l">When to use this pattern</h2>
+<p class="govuk-body">Use it on every <a class="govuk-link" href="/patterns/mapping/full-screen-layout">full-screen map page</a>. The layout includes it for you.</p>
+
+<h2 class="govuk-heading-l">When not to use this pattern</h2>
+<p class="govuk-body">Don't use it on ordinary pages in a fixed-width column. Use the standard header from the main layout there.</p>
+
+<h2 class="govuk-heading-l">How it works</h2>
+<p class="govuk-body">From top to bottom, the header has:</p>
+<ol class="govuk-list govuk-list--number">
+  <li>the GOV.UK header (rebranded)</li>
+  <li>service navigation with the service name</li>
+  <li>a "Prototype" phase banner</li>
+  <li>the business sub-header: business name, SBI, the signed-in user's name and a sign out link</li>
+</ol>
+<p class="govuk-body">Each part goes the full width of the screen, with a 15px gutter that lines up with the sidebar below. The service navigation sits above the map, so its menu isn't hidden behind it on small screens. The GOV.UK header and service navigation are hidden while the map is fullscreen, and the map covers the rest.</p>
+<p class="govuk-body">The business and user come from session data (<code>myData.businessName</code>, <code>myData.sbi</code> and <code>myData.user.name</code>). If they aren't set, Agile Farm Ltd and Alfred Waldron are shown.</p>
+
+<h2 class="govuk-heading-l">How to build it</h2>
+<p class="govuk-body">The <code>layouts/map-fullscreen.html</code> layout already includes the header. To use it in another layout, include the partial in the <code>header</code> block and set the <code>app-map-page</code> class on <code>&lt;html&gt;</code>, which the header styles depend on.</p>
+
+<pre class="app-code"><code>{% filter forceescape %}{% raw %}{% extends "layouts/main-rebrand.html" %}
+
+{% set htmlClasses = "app-map-page" %}
+{% set mapServiceName = "Farm and Land Service" %}
+{% set _versionPath = "v18/1.2" %}
+
+{% block header %}
+  {% include "_common/map/header.html" %}
+{% endblock %}{% endraw %}{% endfilter %}</code></pre>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Variable</th>
+      <th scope="col" class="govuk-table__header">Use</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>mapServiceName</code></td>
+      <td class="govuk-table__cell">Service name in the service navigation. Defaults to "Farm and Land Service".</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>_versionPath</code></td>
+      <td class="govuk-table__cell">Prototype version folder for the sign out link, so it goes to <code>/&lt;version&gt;/sign-out</code>. Defaults to <code>v18/1.2</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="govuk-heading-l">Accessibility</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The business and user names in the sub-header are <code>h3</code> headings with no <code>h1</code> or <code>h2</code> before them, so automated checks report a heading order problem.</li>
+</ul>
+
+<h2 class="govuk-heading-l">Known issues</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>"Farm and Land Service" is a working name, and the service name doesn't link anywhere yet.</li>
+  <li>Between 641px and 1020px wide, the GOV.UK header and service navigation are indented further than the phase banner and sub-header, because GOV.UK's 30px page margin still applies at that width. You can see this in the example above.</li>
+</ul>
+{% endblock %}
