@@ -26,8 +26,14 @@
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Land summary prototypes</legend>
         <div class="govuk-radios" data-module="govuk-radios">
           <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="version-1-3" name="version" type="radio" value="1.3" data-start="view-land" aria-describedby="version-1-3-hint">
+            <label class="govuk-label govuk-radios__label" for="version-1-3">Version 1.3</label>
+            <div id="version-1-3-hint" class="govuk-hint govuk-radios__hint">Interactive map 0.0.52, measurement tools</div>
+          </div>
+          <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="version-1-2" name="version" type="radio" value="1.2" checked>
             <label class="govuk-label govuk-radios__label" for="version-1-2">Version 1.2</label>
+            <div id="version-1-3-hint" class="govuk-hint govuk-radios__hint">Historical view of land parcels.</div>
           </div>
           <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="version-1-1" name="version" type="radio" value="1.1">
@@ -55,8 +61,8 @@
     var _startButton = $("#start-button");
 
     function updateLink() {
-      var _version = $("input[name=version]:checked").val();
-      _startButton.attr("href", "/v18/" + _version + "/index");
+      var _checked = $("input[name=version]:checked");
+      _startButton.attr("href", "/v18/" + _checked.val() + "/" + (_checked.data("start") || "index"));
     }
 
     $("input[name=version]").on("change", updateLink);
