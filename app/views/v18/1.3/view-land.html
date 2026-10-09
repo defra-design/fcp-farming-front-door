@@ -336,6 +336,7 @@
     let parcelsApplied = false // guards against adding the parcel layers twice
     let selectedNgc = null     // parcel currently selected (click), highlighted via parcels-selected
     let selectWired = false    // selection click listeners attached once (survive style re-adds)
+    let clusterWired = false   // parcel-group disc listeners attached once (survive style re-adds)
 
     // Fade out the "Loading map…" overlay. Called once the map is framed on the parcels and its
     // tiles have rendered (or on a fetch error) — never leaving the overlay stuck on screen.
@@ -394,6 +395,7 @@
         id: 'parcels-fill',
         type: 'fill',
         source: 'parcels',
+        minzoom: CLUSTER_MAX_ZOOM,
         paint: {
           'fill-color': '#1d70b8',
           'fill-opacity': 0
@@ -406,6 +408,7 @@
         id: 'parcels-hover',
         type: 'fill',
         source: 'parcels',
+        minzoom: CLUSTER_MAX_ZOOM,
         paint: {
           'fill-color': palette.hoverFill,
           'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], palette.hoverOpacity, 0]
@@ -416,6 +419,7 @@
         id: 'parcels-outline',
         type: 'line',
         source: 'parcels',
+        minzoom: CLUSTER_MAX_ZOOM,
         paint: {
           'line-color': palette.parcelBorder,
           'line-width': 2
@@ -429,6 +433,7 @@
         id: 'parcels-selected',
         type: 'line',
         source: 'parcels',
+        minzoom: CLUSTER_MAX_ZOOM,
         paint: {
           'line-color': palette.selectedBorder,
           'line-width': 3
@@ -436,8 +441,11 @@
         filter: ['==', ['get', 'ngc'], selectedNgc == null ? NO_PARCEL : selectedNgc]
       })
 
+      addParcelClusters(map, data)
+
       wireParcelSelect(map)
       wireParcelHover(map)
+      wireParcelClusters(map)
       // Mobile: hand parcel selection to the interact plugin (crosshair + Select). Harmless if the
       // app isn't open yet; the app:opened poll re-runs this once it is.
       enableInteract()
@@ -456,7 +464,8 @@
       })
       // A click that isn't on a parcel deselects (mirrors the old deselectOnClickOutside).
       map.on('click', (e) => {
-        if (map.queryRenderedFeatures(e.point, { layers: ['parcels-fill'] }).length) return
+        const layers = ['parcels-fill', 'parcel-clusters'].filter(id => map.getLayer(id))
+        if (map.queryRenderedFeatures(e.point, { layers }).length) return
         clearParcelSelection()
       })
     }
@@ -481,6 +490,109 @@
         setHover(hoveredNgc, false)
         hoveredNgc = null
       })
+    }
+
+    // ── Parcel groups (zoomed out) ───────────────────────────────────────────────
+    // Below CLUSTER_MAX_ZOOM a business's parcels are drawn as numbered discs, as the live
+    // service does, instead of outlines, which are specks at that scale (an SBI spread over
+    // several counties opens around zoom 7). A lone parcel gets a "1" disc so nothing vanishes.
+    // From CLUSTER_MAX_ZOOM up, the outlines show (their layers take it as minzoom).
+    const CLUSTER_MAX_ZOOM = 11
+    const CLUSTER_IMAGE_PREFIX = 'parcel-cluster-'
+
+    // One point per parcel, at the centre of its bounding box, for MapLibre's clustering.
+    function parcelPoints (data) {
+      return {
+        type: 'FeatureCollection',
+        features: data.features.map(f => {
+          const [west, south, east, north] = computeBounds([f])
+          return {
+            type: 'Feature',
+            properties: { ngc: f.properties.ngc },
+            geometry: { type: 'Point', coordinates: [(west + east) / 2, (south + north) / 2] }
+          }
+        })
+      }
+    }
+
+    // The discs are images rather than text because the Satellite style has no glyphs, so
+    // MapLibre can't draw text on it. Each count's image is drawn on demand (styleimagemissing,
+    // see wireParcelClusters), which also covers a base-map switch dropping all images.
+    function addParcelClusters (map, data) {
+      map.addSource('parcel-points', {
+        type: 'geojson',
+        data: parcelPoints(data),
+        cluster: true,
+        clusterRadius: 50,
+        clusterMaxZoom: CLUSTER_MAX_ZOOM - 1
+      })
+      map.addLayer({
+        id: 'parcel-clusters',
+        type: 'symbol',
+        source: 'parcel-points',
+        maxzoom: CLUSTER_MAX_ZOOM,
+        layout: {
+          // Unclustered points have no point_count: a lone parcel shows "1".
+          'icon-image': ['concat', CLUSTER_IMAGE_PREFIX, ['to-string', ['coalesce', ['get', 'point_count'], 1]]],
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true
+        }
+      })
+    }
+
+    // A GOV.UK blue disc with a white ring and the count in bold white, sized to its digits.
+    function clusterImage (label) {
+      const size = label.length <= 1 ? 28 : label.length === 2 ? 34 : 40
+      const pixelRatio = Math.max(1, Math.round(window.devicePixelRatio || 1))
+      const canvas = document.createElement('canvas')
+      canvas.width = canvas.height = size * pixelRatio
+      const ctx = canvas.getContext('2d')
+      ctx.scale(pixelRatio, pixelRatio)
+      const r = size / 2
+      ctx.beginPath(); ctx.arc(r, r, r - 1, 0, Math.PI * 2); ctx.fillStyle = '#ffffff'; ctx.fill()
+      ctx.beginPath(); ctx.arc(r, r, r - 3, 0, Math.PI * 2); ctx.fillStyle = '#1d70b8'; ctx.fill()
+      ctx.fillStyle = '#ffffff'
+      ctx.font = 'bold 14px "GDS Transport", arial, sans-serif'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText(label, r, r + 1)
+      return { image: ctx.getImageData(0, 0, canvas.width, canvas.height), pixelRatio }
+    }
+
+    // Disc images, click-to-zoom and the pointer cursor. Attached once; the delegated listeners
+    // survive layer re-adds. Wired on mobile too: below CLUSTER_MAX_ZOOM there are no parcel
+    // outlines for the interact crosshair to pick, so a tap on a disc has to zoom in.
+    function wireParcelClusters (map) {
+      if (clusterWired) return
+      clusterWired = true
+      map.on('styleimagemissing', (e) => {
+        if (!e.id.startsWith(CLUSTER_IMAGE_PREFIX) || map.hasImage(e.id)) return
+        const { image, pixelRatio } = clusterImage(e.id.slice(CLUSTER_IMAGE_PREFIX.length))
+        map.addImage(e.id, image, { pixelRatio })
+      })
+      const fitParcels = (features) => {
+        if (!features.length) return
+        const [west, south, east, north] = computeBounds(features)
+        map.fitBounds([[west, south], [east, north]], { padding: 40, maxZoom: 16 })
+      }
+      // A group zooms to fit its parcels (a wide group may split into smaller discs); a lone
+      // parcel zooms to it and selects it.
+      map.on('click', 'parcel-clusters', (e) => {
+        const f = e.features && e.features[0]
+        if (!f) return
+        if (f.properties.cluster) {
+          map.getSource('parcel-points').getClusterLeaves(f.properties.cluster_id, Infinity, 0).then(leaves => {
+            const ngcs = new Set(leaves.map(l => l.properties.ngc))
+            fitParcels(landParcelsData.features.filter(p => ngcs.has(p.properties.ngc)))
+          })
+        } else {
+          const ngc = f.properties.ngc
+          fitParcels(landParcelsData.features.filter(p => p.properties.ngc === ngc))
+          selectParcel(ngc)
+        }
+      })
+      map.on('mouseenter', 'parcel-clusters', () => { map.getCanvas().style.cursor = 'pointer' })
+      map.on('mouseleave', 'parcel-clusters', () => { map.getCanvas().style.cursor = '' })
     }
 
     // Bounding box [west, south, east, north] spanning all parcel features.
