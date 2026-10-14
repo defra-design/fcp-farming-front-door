@@ -1232,6 +1232,16 @@ img.design-history {
   margin: 30px 0;
 }
 
+// Light grey notification banner for "What this means for the design"
+.app-notification-banner--grey {
+  border-color: govuk-colour("light-grey");
+  background-color: govuk-colour("light-grey");
+
+  .govuk-notification-banner__title {
+    color: $govuk-text-colour;
+  }
+}
+
 // External user permissions styles
 
 .govuk-table__cell_actions{

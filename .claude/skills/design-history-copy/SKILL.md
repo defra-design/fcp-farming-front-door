@@ -23,7 +23,7 @@ Design history pages record what changed in a prototype iteration and why, for d
 1. Read the whole file first, so you know what is said where (rule 4 depends on it).
 2. Note the word count of the visible copy per `h2` section (strip tags; a quick Python script is fine).
 3. Edit one `h2` section at a time.
-4. Check the page renders: `npm run dev` (not `npm start`, which forces https), then `curl` the page URL (e.g. `/v18/_design-history/design-history-1-2`) and confirm a 200 and that the edited headings are present. Stop the dev server afterwards if you started it.
+4. Check the page renders by `curl`ing it on the user's already-running dev server (e.g. `http://localhost:3000/v18/_design-history/design-history-1-2`) and confirm a 200 and that the edited headings are present. Don't start or stop the server yourself: a broad `pkill` kills the user's own server. If nothing is running on port 3000, ask the user to run `npm run dev` (not `npm start`, which forces https).
 5. Report a before/after word count table per section, and list anything you moved into technical notes or flagged as ambiguous.
 
 ## Example
