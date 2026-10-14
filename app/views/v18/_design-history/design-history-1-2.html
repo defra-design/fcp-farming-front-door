@@ -34,7 +34,15 @@
       (v0.0.22-alpha).
     </p>
 
-    <p>This iteration focused on the land parcel page. We made the land covers on the map interactive, and simplified how they are presented in the map's Key and Layers panels. The same changes were applied to the two historical land parcel views (SX3963 2340 and SX3964 7821). We also added a page that compares a previous version of a land parcel with the current version side by side, and a stacked variant that places the current version above the previous one, with the data on the left and the map on the right. Following product owner feedback we then added four variants that put both versions on a single map, each with a different way of switching the versions on and off.</p>
+    <p>This iteration focused on the land parcel page. We:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>made land covers on the map clickable</li>
+      <li>simplified the Key and Layers panels</li>
+      <li>applied both changes to the 2 historical land parcel views (SX3963 2340 and SX3964 7821)</li>
+      <li>added side by side and stacked pages to compare a previous version of a parcel with the current one</li>
+      <li>added 4 variants that show both versions on a single map</li>
+    </ul>
 
     <ul class="govuk-list govuk-list--bullet">
       <li><a class="govuk-link" href="../1.2/view-land-parcel?parcel=SX39647821">view-land-parcel</a></li>
@@ -46,117 +54,834 @@
       <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-changes?parcel=SX39647821">view-land-parcel-compare-changes</a></li>
     </ul>
 
-    <h2 class="govuk-heading-l">Selecting a land cover on the map</h2>
-    <p>In v1.1 a user could click a hedgerow on the map to highlight the matching row in the data column, but land covers were not clickable. We extended the same behaviour to land covers. When a user clicks a land cover on the map:</p>
+    <h2 class="govuk-heading-l">User research on v1.1</h2>
+
+    <p>Round 10 of user research tested v1.1 in moderated remote usability sessions. Participants used their own or representative land parcels and thought aloud.</p>
+
+    <p>There were 7 participants: farmers, land managers, estate managers, environmental advisers, agents and experienced GIS users. Holdings ranged from small holdings and commercial farms to environmental organisations and large estates. One participant manages about 930 parcels.</p>
+
+        <p>Users could find and review parcels and valued historic mapping, but many were not confident they had found every change. The main challenge was confidence, not navigation.</p>
+
+    <h3 class="govuk-heading-l">What we learned about users</h3>
+
+    <h4 class="govuk-heading-s">Users are trying to verify information, not simply view it</h4>
+
+    <p>Users mainly used mapping to check that the RPA's understanding of their land matched their own records. Participants described:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>the matching row in the Land covers table is highlighted and its text made bold</li>
-      <li>the land cover is outlined on the map</li>
-      <li>clicking anywhere on the map that is not a land cover clears the selection</li>
+      <li>checking boundary updates</li>
+      <li>reviewing land cover classifications</li>
+      <li>challenging changes made by the RPA</li>
+      <li>validating information before applications or claims</li>
+      <li>comparing mapping against local knowledge or other systems</li>
     </ul>
 
-    <p>Where a hedgerow and a land cover overlap, the hedgerow takes the click. This keeps the existing hedgerow behaviour unchanged and avoids highlighting two things at once.</p>
+    <div class="govuk-inset-text">
+      <p class="govuk-body">"Sometimes it comes through and we think that isn't right." (P1)</p>
+      <p class="govuk-body">"RPA are constantly tinkering with boundaries and changing shapes." (P11)</p>
+    </div>
 
-    <p>On mobile, the fullscreen map's touch crosshair can also select a land cover.</p>
+    <div class="govuk-notification-banner" role="region" aria-labelledby="design-implication-title-1" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h5 class="govuk-notification-banner__title" id="design-implication-title-1">What this means for the design</h5>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Users need tools that support validation and verification, not simply viewing.</p>
+      </div>
+    </div>
 
-    <h3 class="govuk-heading-m">Why we used the map's own click handling</h3>
-    <p>The mapping component's interact plugin misses clicks on polygons that cross a vector tile boundary, which happens often when zoomed in to a single parcel. We used the underlying map library's own hit test for land cover clicks instead, which is reliable across tile seams. The selection outline is drawn by the prototype rather than the plugin for the same reason.</p>
+    <h4 class="govuk-heading-s">Confidence matters more than task completion</h4>
+
+    <p>The biggest usability challenge was confidence, not task completion. Most participants completed the tasks, but many were unsure whether they had:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>found all the relevant information</li>
+      <li>identified all the changes</li>
+      <li>correctly interpreted the mapping information</li>
+      <li>reached the correct conclusion</li>
+    </ul>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body">"No, not at all." (P8, when asked how confident they were they had found all the changes)</p>
+      <p class="govuk-body">"How do I know how it's changed?" (P2)</p>
+    </div>
+
+    <div class="govuk-notification-banner" role="region" aria-labelledby="design-implication-title-2" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h5 class="govuk-notification-banner__title" id="design-implication-title-2">What this means for the design</h5>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Future improvements should help users feel confident in their understanding, not simply let them complete tasks.</p>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Historic mapping solves a genuine user problem</h4>
+
+    <p>Historic mapping was one of the most valued parts of the prototype. Participants understood it immediately and named real uses, including:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>auditing changes</li>
+      <li>validating mapping</li>
+      <li>challenging updates</li>
+      <li>investigating parcel history</li>
+      <li>supporting environmental applications</li>
+    </ul>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body">"That functionality was great." (P8)</p>
+      <p class="govuk-body">"I think that's a very good thing." (P4)</p>
+    </div>
+
+    <div class="govuk-notification-banner" role="region" aria-labelledby="design-implication-title-3" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h5 class="govuk-notification-banner__title" id="design-implication-title-3">What this means for the design</h5>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Historic mapping should be treated as a validated opportunity.</p>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Users expect mapping tools to behave like mapping tools</h4>
+
+    <p>Many usability issues came from missing behaviours that participants expected from tools they already use: RPS mapping, GIS software such as ArcGIS and Cadcorp, Gatekeeper, Land App and other professional mapping tools. They expected:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>click to highlight</li>
+      <li>hover to highlight</li>
+      <li>measurement tools</li>
+      <li>layer controls</li>
+      <li>transparency controls</li>
+      <li>data linked to the map</li>
+    </ul>
+
+    <div class="govuk-notification-banner" role="region" aria-labelledby="design-implication-title-4" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h5 class="govuk-notification-banner__title" id="design-implication-title-4">What this means for the design</h5>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">The prototype should align more closely with established mapping interaction patterns where possible.</p>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Adviser and agent workflows differ from farmer workflows</h4>
+
+    <p>Advisers, estate managers and environmental professionals often had different needs from farmers. They were more likely to talk about:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>multiple parcels</li>
+      <li>exports</li>
+      <li>grouping parcels</li>
+      <li>bulk workflows</li>
+      <li>auditing history</li>
+      <li>GIS integration</li>
+    </ul>
+
+    <div class="govuk-notification-banner" role="region" aria-labelledby="design-implication-title-5" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h5 class="govuk-notification-banner__title" id="design-implication-title-5">What this means for the design</h5>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Future design work should consider whether different user groups need different workflows or capabilities.</p>
+      </div>
+    </div>
+
+    <h3 class="govuk-heading-l">Task outcomes</h3>
+
+    <h4 class="govuk-heading-m">
+      <span class="govuk-caption-m">Task 1</span>
+      Review one of your own parcels
+    </h4>
+
+    <p>Participants located one of their own parcels, reviewed its information and judged whether the mapping looked accurate.</p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Results</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Observation</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Participants</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Completed the task without assistance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">7 of 7</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Expected stronger links between map features and information panels</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">6 of 7</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Relied on satellite imagery to validate mapping</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">6 of 7</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Struggled to interpret some land cover information</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">4 of 7</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Expected measurement tools</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">4 of 7</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Outcomes</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-three-quarters">Outcome</th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Result</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Users can find parcels, navigate the map and review parcel information</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Yes</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Users can confidently interpret all the information about a parcel</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Not always</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="govuk-heading-m">
+      <span class="govuk-caption-m">Task 2</span>
+      Find out what has changed on a parcel
+    </h4>
+
+    <p>Participants located a given parcel, opened previous versions of its mapping, and explained what had changed and how they could tell.</p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Results</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Observation</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Participants</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Found historic mapping without assistance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">5 of 7</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Needed assistance to find historic mapping</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">2 of 7</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Identified at least one change once historic mapping was open</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">7 of 7</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Were not confident they had identified all the changes</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">5 of 7</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Outcomes</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-three-quarters">Outcome</th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Result</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Users can identify changes</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Yes</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Users can easily compare versions</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Not yet</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Users are confident they have found all the changes</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Not yet</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Users understand what changed and why</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Not yet</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    {# Detailed findings: commented out
+    <h3 class="govuk-heading-l">Detailed findings</h3>
+
+    <h4 class="govuk-heading-s">Finding and selecting land parcels</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users can successfully locate parcels</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">7 of 7 succeeded</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--grey">Low</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Users located and navigated to parcels using search, map navigation and parcel selection.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Parcel IDs are not always how users identify land</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">3 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Many users think in terms of field names, locations and land use rather than parcel IDs.</p><div class="govuk-inset-text govuk-!-margin-bottom-0"><p class="govuk-body">"We've got names for all the fields."</p><p class="govuk-body govuk-!-margin-bottom-0">"Encouraging farmers to add names might be more helpful."</p></div></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Search and filtering could better support larger holdings</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">4 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Users asked for:</p><ul class="govuk-list govuk-list--bullet"><li>field name search</li><li>land cover filtering</li><li>woodland filtering</li><li>other ways to find parcels</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Understanding parcel information</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users expect map and panel interactions to be linked</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">6 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">This was the most frequent usability finding.</p><div class="govuk-inset-text govuk-!-margin-bottom-0"><p class="govuk-body">"It'd be nice if it just highlighted it."</p><p class="govuk-body">"Which is hedgerow #1?"</p><p class="govuk-body govuk-!-margin-bottom-0">"Hover to highlight."</p></div></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Land cover information is not always easy to interpret</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">4 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants struggled to work out which mapped areas matched particular classifications.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Validating mapping accuracy</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Satellite imagery is critical</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">6 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Imagery was often used to:</p><ul class="govuk-list govuk-list--bullet"><li>validate boundaries</li><li>challenge changes</li><li>understand land cover</li><li>verify RPA data</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users want stronger validation tools</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">4 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants expected:</p><ul class="govuk-list govuk-list--bullet"><li>measurement tools</li><li>distance calculations</li><li>area calculations</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Historic mapping and identifying changes</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Historic mapping is highly valuable</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">7 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Historic mapping clearly meets a genuine user need and was the strongest positive finding.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Historic mapping could be easier to find</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">2 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Two participants could not find the functionality without assistance.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users want easier comparison between versions</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">4 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--orange">Medium to high</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants asked for:</p><ul class="govuk-list govuk-list--bullet"><li>side by side comparison</li><li>split screen views</li><li>easier comparison of changes</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users need more confidence that they have identified all changes</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">5 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Most users could find changes but were not confident they had found all of them.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users want explanations of changes</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">5 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants wanted to understand:</p><ul class="govuk-list govuk-list--bullet"><li>what changed</li><li>why it changed</li><li>when it changed</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Large holdings and adviser workflows</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Multi-parcel workflows are important</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">2 of 7 (explicitly)</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--orange">Medium to high</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants wanted to select, review and export multiple parcels.</p><p class="govuk-body">Although only 2 participants raised this explicitly, both had complex land management roles, which suggests it is of high strategic importance.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    #}
+
+    <h3 class="govuk-heading-l">What this means for the design overall</h3>
+
+    <p>The research suggests the design should:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>support two-way interactions between information panels and mapped features</li>
+      <li>help users understand changes, not simply view them</li>
+      <li>support validation using satellite imagery</li>
+      <li>improve confidence rather than simply task completion</li>
+      <li>support complex workflows involving multiple parcels</li>
+      <li>better explain land cover information and classifications</li>
+      <li>accommodate both parcel ID and field name based workflows</li>
+    </ul>
+
+    <h3 class="govuk-heading-l">Recommended actions</h3>
+
+    <h4 class="govuk-heading-s">Immediate priorities</h4>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>Strengthen the interactions between the map and the information panel.</li>
+      <li>Improve confidence identifying changes.</li>
+      <li>Make historic mapping easier to find.</li>
+      <li>Improve how mapping changes are explained.</li>
+    </ol>
+
+    <h4 class="govuk-heading-s">Next iteration</h4>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>Test side by side comparison concepts.</li>
+      <li>Explore transparency controls for imagery.</li>
+      <li>Make land cover information easier to interpret.</li>
+      <li>Review layer terminology and descriptions.</li>
+    </ol>
+
+    <h4 class="govuk-heading-s">Longer-term opportunities</h4>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>Support multi-parcel workflows.</li>
+      <li>Explore parcel naming.</li>
+      <li>Show scheme information directly against parcels.</li>
+      <li>Improve accessibility support.</li>
+    </ol>
+
+    <h4 class="govuk-heading-s">Areas for further research</h4>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>multi-parcel workflows</li>
+      <li>large estates and holdings</li>
+      <li>measurement functionality</li>
+      <li>parcel names and identifiers</li>
+      <li>Countryside Stewardship and SFI integration</li>
+      <li>accessibility requirements</li>
+      <li>bulk parcel management</li>
+      <li>filtering and grouping concepts</li>
+      <li>visualising historic changes</li>
+    </ul>
+
+    <h3 class="govuk-heading-l">How v1.2 responds to the research</h3>
+
+    <p>Each change section below names the finding it responds to. None of the v1.2 changes has been tested with users yet.</p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Top 5 design priorities and the v1.2 response</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Design priority</th>
+          <th scope="col" class="govuk-table__header">What v1.2 does</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Strengthen the interactions between the map and the information panel</th>
+          <td class="govuk-table__cell">Clicking a land cover highlights its table row. On the single map compare pages, clicking a row also highlights the cover. There is no hover to highlight.</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Improve confidence identifying mapping changes</th>
+          <td class="govuk-table__cell">Compare pages show both versions on one screen. Tags and arrows mark every difference in the tables, and the changes outlined variant marks them on the map. Outlines follow whole covers, not the part of a boundary that moved.</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Improve the discoverability of historic mapping</th>
+          <td class="govuk-table__cell">"Compare versions" and "Compare with current version" links, shown only for parcels with a previous version.</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Explain what changed and why</th>
+          <td class="govuk-table__cell">The tags, arrows and change outlines show what changed. Nothing yet explains why a change was made or when.</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Improve support for validation using satellite imagery</th>
+          <td class="govuk-table__cell">On the two map compare pages, one version can be viewed on aerial imagery. Imagery transparency controls were not explored.</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Not addressed</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>v1.2 does not address these findings:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>why and when changes were made</li>
+      <li>measurement tools for distance and area</li>
+      <li>searching, filtering and naming parcels by field name</li>
+      <li>selecting, reviewing and exporting multiple parcels</li>
+      <li>separate workflows for agents, advisers and estate managers</li>
+    </ul>
+
+    <h2 class="govuk-heading-l">Selecting a land cover on the map</h2>
+
+    <p>Land covers are now clickable, as hedgerows were in v1.1. This responds to the strongest usability finding from the research: 6 of 7 participants expected the map and information panel to be linked.</p>
+
+    <p>When a user clicks a land cover:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>its row in the Land covers table is highlighted and made bold</li>
+      <li>it is outlined on the map</li>
+      <li>clicking anywhere else on the map clears the selection</li>
+    </ul>
+
+    <p>Where a hedgerow and a land cover overlap, the hedgerow takes the click, so only one thing is highlighted. On mobile, the fullscreen map's touch crosshair can also select a land cover.</p>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Technical notes</span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>The interact plugin misses clicks on polygons that cross a vector tile boundary, which is common when zoomed in to one parcel. We used the map library's own hit test instead, and the prototype draws the selection outline itself.</p>
+      </div>
+    </details>
 
     <h2 class="govuk-heading-l">Key panel</h2>
-    <p>The Key listed the land cover types under a "Land cover" group heading. As the Key only ever shows land covers and hedgerows, the heading added noise without helping users, so we hid it. The heading is visually hidden rather than removed, so screen reader users keep the grouping.</p>
+
+    <p>We hid the "Land cover" group heading in the Key. The Key only shows land covers and hedgerows, so the heading added noise. It is visually hidden, not removed, so screen reader users keep the grouping.</p>
 
     <h2 class="govuk-heading-l">Layers panel</h2>
-    <p>In v1.1 the Layers panel offered three toggles: Land covers, Land parcel outlines and Hedgerows. Land covers could only be switched on or off as a whole. We changed the panel so that:</p>
+
+    <p>Each land cover type can now be switched on and off individually, so a user can isolate one classification on the map. This responds to the research: participants expected GIS-style layer controls, and 4 of 7 struggled to match land cover classifications to areas on the map.</p>
+
+    <p>In v1.1 the panel had 3 toggles: Land covers, Land parcel outlines and Hedgerows. Now:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>each land cover type on the parcel can be switched on or off individually</li>
-      <li>a "Land cover" parent checkbox switches all of them together, and is ticked while any type is ticked</li>
-      <li>only the land cover types present on the current parcel are listed, rather than every type the service knows about</li>
-      <li>the individual types are indented under the parent to show the hierarchy</li>
-      <li>the land parcel outline toggles were removed, as the outline is the context for everything else on the page</li>
+      <li>each land cover type on the parcel has its own checkbox, indented under a "Land cover" parent checkbox</li>
+      <li>the parent switches all types together, and stays ticked while any type is ticked</li>
+      <li>only the types on the current parcel are listed</li>
+      <li>the land parcel outline toggles are removed, as the outline is the context for everything else</li>
     </ul>
 
-    <p>A user's choices in the Layers panel survive a change of base map. They reset when the user navigates to a different parcel, as the list of types changes with the parcel.</p>
+    <p>Choices survive a change of base map, and reset when the user moves to a different parcel.</p>
 
-    <p>The mapping component does not provide a parent checkbox for a group of layers, so the prototype adds one to the panel. This is a prototype workaround and would need to be raised with the interactive map team for the real service.</p>
-
-    <h2 class="govuk-heading-l">Colour tuning tool</h2>
-    <p>The colour tuning tool, introduced in v1.1, gained a "Land cover selected" colour for the outline drawn around a selected land cover. As before, the panel only appears when ?colours is present in the URL.</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link" href="../1.2/view-land-parcel?parcel=SX39647821&colours">view-land-parcel with colour tuning</a></li>
-    </ul>
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Technical notes</span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>The mapping component has no parent checkbox for a group of layers, so the prototype adds one. This is a prototype workaround and would need to be raised with the interactive map team for the real service.</p>
+      </div>
+    </details>
 
     <h2 class="govuk-heading-l">Comparing land parcel versions</h2>
 
-    <p>In v1.1 a user could open a historical view of a land parcel, but to see what had changed they had to move between that page and the current version and hold the differences in their head. We added a compare page that puts the two versions on one screen.</p>
+    <p>We added a page that shows a previous and the current version of a parcel on one screen. In v1.1 users had to move between the 2 versions and remember the differences. In the research, 4 of 7 participants asked for an easier way to compare, such as side by side views.</p>
 
-    <p>The page is reached from a "Compare versions" row in the land parcel's summary table, and from a "Compare with current version" link on the historical view. Both only appear for parcels that have a previous version, currently SX3963 2340 and SX3964 7821.</p>
+    <p>The page is linked from a "Compare versions" row in the land parcel summary and a "Compare with current version" link on the historical view. Both only appear for parcels with a previous version (SX3963 2340 and SX3964 7821). The row also signposts historic mapping from the current parcel page, which 2 of 7 participants could not find without help.</p>
 
-    <h3 class="govuk-heading-m">Layout</h3>
+    <h3 class="govuk-heading-l">Layout</h3>
 
-    <p>The previous and current versions are shown in two columns, each with its own map and, below it, the same Summary, Land covers and Hedgerows tables as the land parcel page. A highlighted panel at the top states the date range of the previous version, and each column repeats its own date so the tables stay level. On small screens the columns stack.</p>
+    <p>Each version has its own column with a map and, below it, the Summary, Land covers and Hedgerows tables from the land parcel page. A highlighted panel gives the previous version's date range, and each column repeats its date so the tables line up. On small screens the columns stack.</p>
 
-    <p>Unlike the land parcel page, which locks the page to one viewport, this page scrolls as a normal document. The two maps sit in fixed-height frames at the top and the tables follow underneath.</p>
+    <p>Unlike the land parcel page, this page scrolls normally, with the maps in fixed-height frames above the tables.</p>
 
-    <h3 class="govuk-heading-m">Linked maps</h3>
+    <h3 class="govuk-heading-l">Linked maps</h3>
 
-    <p>Panning or zooming either map moves the other to match, so the user is always looking at the same area of the parcel in both versions. Both maps open already framed on the parcel. Each map keeps its own Key and Layers panels and its own base map choice, so a user can, for example, put the current version on aerial imagery while keeping the previous one on the default style.</p>
+    <p>Panning or zooming one map moves the other, so both show the same area. Both open framed on the parcel. Each map keeps its own Key, Layers panel and base map, so a user can, for example, view the current version on aerial imagery.</p>
 
-    <p>Clicking a land cover or hedgerow on either map highlights the matching row in that column's tables, using the same behaviour as the land parcel page.</p>
+    <p>Clicking a land cover or hedgerow highlights its row in that column's tables, as on the land parcel page.</p>
 
-    <h3 class="govuk-heading-m">Marking the differences</h3>
+    <h3 class="govuk-heading-l">Marking the differences</h3>
 
-    <p>The tables mark what has changed between the two versions using GOV.UK tags in the first cell of a row:</p>
+    <p>The tables mark each difference, so users do not have to spot every change themselves. In the research, 5 of 7 participants were not confident they had found all the changes, and 5 of 7 wanted to understand what had changed.</p>
+
+    <p>A tag in the first cell of a row shows:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li><strong class="govuk-tag govuk-tag--green">Added</strong> on a current version row with no equivalent in the previous version</li>
-      <li><strong class="govuk-tag govuk-tag--red">Removed</strong> on a previous version row with no equivalent in the current version</li>
-      <li><strong class="govuk-tag govuk-tag--yellow">Changed</strong> on both rows where the same land cover or hedgerow has a different area or length</li>
+      <li><strong class="govuk-tag govuk-tag--green">Added</strong> on a current row with no equivalent in the previous version</li>
+      <li><strong class="govuk-tag govuk-tag--red">Removed</strong> on a previous row with no equivalent in the current version</li>
+      <li><strong class="govuk-tag govuk-tag--yellow">Changed</strong> on both rows where a land cover or hedgerow has a different area or length</li>
     </ul>
 
-    <p>For a change, the current version's value also carries an up or down arrow showing which way it moved. The arrow appears only on the current side, as an arrow next to the previous value would read as the previous value itself having moved. Screen reader users hear "increased" or "decreased" and the previous value after the current one. The Summary rows are marked in the same way when their totals differ.</p>
+    <p>A changed value on the current side also has an up or down arrow. It appears only on the current side, as an arrow beside the previous value would suggest that value had moved. Screen reader users hear "increased" or "decreased" and the previous value. Summary rows are marked the same way when totals differ.</p>
 
-    <p>Land covers are matched by name, and where a parcel has more than one cover of the same type they are paired in area order. Hedgerows have no stable identity between versions, so they are matched by position in the list. This is good enough for the prototype's two example parcels but would need real identifiers in the live service.</p>
-
-    <h3 class="govuk-heading-m">Where the data comes from</h3>
-
-    <p>The current version is read live from the land covers service, as on the land parcel page. That service only returns the covers that are valid today, so the previous version comes from a snapshot file stored with the prototype. The parcel boundary and hedgerows are fetched once and shown on both sides, as only the land covers differ between the two example versions.</p>
-
-    <h3 class="govuk-heading-m">Running two maps on one page</h3>
-
-    <p>The mapping component is not designed for two instances on one page. Its plugins cache their setup from the first map and re-use it for the second, so the second map would otherwise be built with the first map's layers. The prototype works around this by giving each map its own copy of each plugin and its own set of layer identifiers. This is a prototype workaround and would need to be raised with the interactive map team if the real service needs two maps on a page.</p>
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Technical notes</span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>Land covers are matched by name, and covers of the same type are paired in area order. Hedgerows have no stable identity between versions, so they are matched by position. This works for the 2 example parcels but would need real identifiers in the live service.</p>
+        <p>The current version is read live from the land covers service, which only returns covers valid today. The previous version comes from a snapshot file stored with the prototype. The parcel boundary and hedgerows are fetched once and shown on both sides, as only the land covers differ in the examples.</p>
+        <p>The mapping component is not designed for 2 maps on a page: its plugins cache setup from the first map and reuse it for the second. The prototype gives each map its own copy of each plugin and its own layer identifiers. This is a prototype workaround and would need to be raised with the interactive map team if the real service needs 2 maps on a page.</p>
+      </div>
+    </details>
 
     <h2 class="govuk-heading-l">Comparing versions on a single map</h2>
 
-    <p>The product owner reviewed the two-map pages and asked to see the previous and current versions on one map, with each version switchable on and off. We built four variants so the way of switching can be tested with users. They share one map, one set of data and one table, and differ only in the control above the map.</p>
+    <p>The product owner reviewed the two-map pages and asked to see both versions on one map, each switchable on and off. We built 4 variants to test different ways of switching. They share one map and one set of data, and differ in the control used.</p>
 
-    <h3 class="govuk-heading-m">How the two versions are drawn together</h3>
+    <h3 class="govuk-heading-l">How the two versions are drawn together</h3>
 
-    <p>Both versions use the same land cover colours, so drawing them on top of each other in the same style would hide the differences. The previous version is drawn underneath the current one, faded to about a third of its normal strength, with a dashed dark outline round each cover. The dashed outline shows where a previous cover's boundary sat even where a current cover is drawn over it, and a removed cover keeps its colour so its type can still be read from the map. The Key explains this with a single "Previous version" entry rather than listing every cover type twice.</p>
+    <p>Both versions use the same colours, so the previous version is drawn underneath the current one, faded to about a third of its strength, with a dashed dark outline round each cover. The outline shows where a previous boundary sat even under a current cover. A removed cover keeps its colour so its type can still be read. The Key has a single "Previous version" entry rather than listing every type twice.</p>
 
-    <p>The parcel boundary and hedgerows are the same in both versions, so they are drawn once and are not affected by the version controls.</p>
+    <p>The parcel boundary and hedgerows are the same in both versions, so they are drawn once and the version controls do not affect them.</p>
 
-    <h3 class="govuk-heading-m">One table instead of two columns</h3>
+    <h3 class="govuk-heading-l">One table instead of two columns</h3>
 
-    <p>The two-map pages showed a Previous and a Current column of tables. On the layers panel and changes outlined pages there is one set of tables under the map (the overlay checkboxes and fade slider pages use tabs instead, described below). The rows describe the current version, with the same Added and Changed tags and up or down arrows as before, and the covers that were removed are listed at the end of the Land covers table with their previous area and a Removed tag. Screen reader users hear "previous version" after a removed cover's area so it is not mistaken for a current value. The Summary counts and the table totals are marked in the same way when they differ.</p>
+    <p>The layers panel and changes outlined pages have one set of tables under the map. The rows describe the current version, with the same tags and arrows as the two-map pages. Removed covers are listed at the end of the Land covers table with their previous area and a Removed tag, and screen reader users hear "previous version" after that area. Summary counts and table totals are marked the same way.</p>
 
-    <p>Clicking a cover on the map highlights one row: a current cover highlights its own row, a previous cover highlights the current row it corresponds to (and the map outlines both the old and the new shape), or its Removed row if it no longer exists. Clicking a row does the same in reverse.</p>
-
-    <h3 class="govuk-heading-m">The four variants</h3>
+    <p>Clicking a cover on the map highlights one row:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-overlay?parcel=SX39647821">Overlay checkboxes</a>: originally two checkboxes, "Previous version" and "Current version", both ticked to start, so the versions overlaid. Now two small radios, "Current version" and "Previous version", so the map shows one version at a time and opens on the current version; the faded overlay of both versions can still be reached through the Layers panel. This variant uses the land parcel page's two-column layout: the heading, the checkboxes and the data sit in a scrolling sidebar beside a full-height map, and the data is shown in a Tabs component with a tab for each version, opening on the current version. Each tab carries the same Summary, Land covers and Hedgerows tables and the same tags as the two-map pages. Clicking a cover that only exists in the previous version switches to that tab so its row can be seen.</li>
-      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-layers?parcel=SX39647821">Layers panel</a>: no control on the page. The map's own Layers panel lists each version as a group, with a parent checkbox for the version and a checkbox per cover type beneath it, so a user can also switch individual types on and off. This tests whether users find and use an in-map control.</li>
-      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-fade?parcel=SX39647821">Fade slider</a>: two small radios, "Current version" and "Previous version", above a slider that runs from the current version on the left to the previous version on the right, blending the two in between. A radio jumps the slider to its end, and the slider selects the matching radio when it reaches an end. It opens on the current version. This lets a user watch a cover change shape rather than infer it from two static views. Like the overlay checkboxes page, it uses the land parcel page's two-column layout with the data in Current and Previous version tabs.</li>
-      <li><a class="govuk-link" href="../1.2/view-land-parcel-compare-changes?parcel=SX39647821">Changes outlined</a>: the overlay checkboxes plus a "Changes" checkbox. When ticked, the map outlines added covers in green, removed covers in red and changed covers in orange, matching the tags in the table, and the Key lists the three outlines. This answers "what changed?" on the map itself.</li>
+      <li>a current cover highlights its own row</li>
+      <li>a previous cover highlights the matching current row, and the map outlines both shapes</li>
+      <li>a cover that no longer exists highlights its Removed row</li>
     </ul>
 
-    <p>On every variant the Layers panel also carries the "Previous version" and "Current version" parent checkboxes, so the versions can still be switched from inside the fullscreen map on mobile, where the controls above the map are not visible.</p>
+    <p>Clicking a row does the same in reverse.</p>
 
-    <h3 class="govuk-heading-m">How the change outlines are worked out</h3>
+    <h3 class="govuk-heading-l">The four variants</h3>
 
-    <p>The change outlines reuse the matching that already marks the table: land covers are paired by name and, within a name, by area order. A previous cover with no pair is outlined as removed, a current cover with no pair as added, and a pair with a different area as changed. No geometry is compared, so the outlines follow whole covers rather than showing exactly which part of a boundary moved. That is good enough to draw the eye to what the table lists as changed, and would need proper identifiers in the live service, as noted above.</p>
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Single map compare variants</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Variant</th>
+          <th scope="col" class="govuk-table__header">Control</th>
+          <th scope="col" class="govuk-table__header">Data</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a class="govuk-link" href="../1.2/view-land-parcel-compare-overlay?parcel=SX39647821">Overlay checkboxes</a></th>
+          <td class="govuk-table__cell">"Current version" and "Previous version" radios, opening on the current version. These replaced 2 checkboxes that overlaid both versions; the overlay can still be reached through the Layers panel.</td>
+          <td class="govuk-table__cell">Current and Previous version tabs in a scrolling sidebar beside a full-height map. Clicking a cover that only exists in the previous version opens that tab.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a class="govuk-link" href="../1.2/view-land-parcel-compare-layers?parcel=SX39647821">Layers panel</a></th>
+          <td class="govuk-table__cell">None on the page. The map's Layers panel lists each version as a group, with a checkbox per cover type. Tests whether users find an in-map control.</td>
+          <td class="govuk-table__cell">One set of tables under the map.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a class="govuk-link" href="../1.2/view-land-parcel-compare-fade?parcel=SX39647821">Fade slider</a></th>
+          <td class="govuk-table__cell">"Current version" and "Previous version" radios above a slider that blends from current to previous. A radio jumps the slider to its end, and the slider selects a radio at each end. Opens on the current version. Lets users watch a cover change shape.</td>
+          <td class="govuk-table__cell">Current and Previous version tabs in a sidebar, as on the overlay checkboxes page.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header"><a class="govuk-link" href="../1.2/view-land-parcel-compare-changes?parcel=SX39647821">Changes outlined</a></th>
+          <td class="govuk-table__cell">Version checkboxes plus a "Changes" checkbox that outlines added covers in green, removed in red and changed in orange, matching the table tags. The Key lists the 3 outlines. Responds to the research request for change highlighting.</td>
+          <td class="govuk-table__cell">One set of tables under the map.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>On every variant the Layers panel also has "Previous version" and "Current version" checkboxes, so versions can be switched in the fullscreen map on mobile, where the controls above the map are hidden.</p>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Technical notes</span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>The change outlines reuse the table's matching: covers are paired by name, then by area order. An unpaired previous cover is removed, an unpaired current cover is added, and a pair with a different area is changed. No geometry is compared, so outlines follow whole covers rather than the part of a boundary that moved. This would need proper identifiers in the live service.</p>
+      </div>
+    </details>
 
   </div>
 
