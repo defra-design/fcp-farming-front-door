@@ -1,0 +1,27 @@
+{# Single-map compare, variant A: one map, with radios choosing which version it shows.
+   Two-column layout like view-land-parcel — heading, inset, checkboxes and the two versions'
+   tables (in Current / Previous tabs) in a sidebar beside a full-height map.
+   See _compare-single-map.html for everything shared between the variants. #}
+{% set compareMode = "overlay" %}
+{% set compareModeLabel = "overlay" %}
+{% set compareLayout = "sidebar" %}
+{% extends "v18/1.2/_compare-single-map.html" %}
+
+{% block compareControls %}
+  <div class="govuk-form-group govuk-!-margin-bottom-2">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-1">Show on the map</legend>
+      {# One version at a time: the radio's version is shown, the other hidden. #}
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-current" name="show-version" type="radio" value="current" checked data-version-radio="current">
+          <label class="govuk-label govuk-radios__label" for="show-current">Current details</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-previous" name="show-version" type="radio" value="previous" data-version-radio="previous">
+          <label class="govuk-label govuk-radios__label" for="show-previous">Previous details</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+{% endblock %}

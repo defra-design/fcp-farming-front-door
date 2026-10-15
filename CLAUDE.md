@@ -25,9 +25,11 @@ The prototype uses a versioning pattern where each design iteration lives in its
 - **Views:** `app/views/<version>/` — Nunjucks templates for that version
 - Main router (`app/routes.js`) wires all versions together, passing a deep-cloned `_myData` object to each
 
-Active versions (as wired up in `app/routes.js`): `v6`–`v11`, `v14`, `v15-DAL`, `v16`, `v18/1.0`, `v18/1.1`, `MVP`, `MVP-integration`, `AHWP`, `AHWP-v2`, `IAHW`
+Active versions (as wired up in `app/routes.js`): `v6`–`v11`, `v14`, `v15-DAL`, `v16`, `v18/1.0`, `v18/1.1`, `v18/1.2`, `v18/1.3`, `MVP`, `MVP-integration`, `AHWP`, `AHWP-v2`, `IAHW`
 
 `v18` nests its iterations one level deeper (`app/routes/v18/1.0/routes.js`, views in `app/views/v18/1.0/`), so its URL prefix is `/v18/1.0/`. Because the kit's auto-routing 404s on URLs containing a dot, each `v18` sub-version registers a catch-all render route in its own `routes.js`.
+
+`v18/1.3` holds only `view-land` and `view-land-parcel`, and runs on a newer interactive map than every other map page. Two copies of `@defra/interactive-map` are installed side by side: `0.0.22-alpha` under its own name (all 1.0–1.2 pages) and `0.0.52-alpha` under the npm alias `@defra/interactive-map-v52`, served at `/plugin-assets/%40defra%2Finteractive-map-v52/...`. 1.3 map pages use that path and `layouts/map-fullscreen-v52.html`. 1.3 keeps its SBI in `req.session.sbiV18_13` (default `112965195`, `?sbi=` overrides) rather than `myData.sbi`, because `req.session.myData` is shared across versions.
 
 Not wired into the router: `app/routes/V15/` (note the capital V) and the `app/views/v1/` and `app/views/to-be/` view folders.
 

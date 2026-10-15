@@ -1,0 +1,42 @@
+{% extends "layouts/map-fullscreen.html" %}
+
+{#- Example: the full-screen map layout with an empty sidebar and a basic map. -#}
+
+{% set mapCenter = "[-4.25, 50.45]" %}
+{% set mapZoom = 11 %}
+
+{% block pageTitle %}
+  Example: full-screen map layout – Mapping pattern library
+{% endblock %}
+
+{% block mapSidebar %}
+  <h2 class="govuk-heading-m govuk-!-margin-top-4">Sidebar</h2>
+  <p class="govuk-body">The sidebar takes a third of the width and scrolls on its own. Put the page's data panel here.</p>
+  <div id="map-button-slot"></div>
+  <p class="govuk-body">On a phone the sidebar is full width and the map opens fullscreen from the "Map view" button above.</p>
+{% endblock %}
+
+{% block mapScripts %}
+  <script>
+    const interactiveMap = new defra.InteractiveMap('map', {
+      mapProvider: defra.maplibreProvider(),
+      behaviour: 'hybrid',
+      mapLabel: 'Example map',
+      minZoom: 6,
+      maxZoom: 18,
+      enableZoomControls: true,
+      mapStyle: {
+        url: 'https://tiles.openfreemap.org/styles/liberty',
+        attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
+        backgroundColor: '#f5f5f0'
+      },
+      plugins: [defra.scaleBarPlugin({ units: 'metric' })]
+    })
+
+    interactiveMap.on('map:ready', (e) => {
+      e.map.once('idle', AppMap.fullscreen.hideLoading)
+    })
+
+    AppMap.fullscreen.init({ interactiveMap })
+  </script>
+{% endblock %}

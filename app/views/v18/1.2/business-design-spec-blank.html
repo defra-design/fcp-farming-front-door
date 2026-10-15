@@ -1,0 +1,85 @@
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set pageName = "A blank design spec for the external user view" %}
+{% set serviceName = "Farm and Land Service" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In design',
+    "name": "TO DO",
+    "id": "xx",
+    "release": "Buffalo MVP 1.0",
+    "pagetitle": pageName,
+    "pagedesc": "TO DO",
+    "pageurl": "TO DO",
+    "version" : "version-name",
+    "prototypeurl" : "business-design-spec-blank",
+
+    "variants": [
+      {
+        "name": "Name of the variant here",
+        "url": "business-design-spec-test?r=t&release=b1&permissionsMVP=full"
+      }
+      
+    ],
+    "errormessages": [
+      {
+        "field": "fieldname",
+        "scenario": "describe error scenario",
+        "content": "Error message content"
+      }
+    ],
+    "notes": [
+      "These are notes, each set of quotation marks makes a new bullet point"
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% if data.release == "b1" %}
+        {% set _hideAccountLink = true %}
+      {% endif %}
+      {% include "_common/login-nav-2.html" %}
+
+      <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <h1 class="govuk-heading-l">
+      This is a page to test the design spec version 2. 
+    </h1>
+
+    <p>Take no notice of it. </p>
+
+
+  </div>
+  
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{#- Full-screen map layout (mapping pattern library: /patterns/mapping/full-screen-layout).
+
+    Header chrome at the top, then <main> fills the rest of the viewport with a sidebar
+    (one third) and the DEFRA interactive map (two thirds). On mobile (≤640px) the sidebar
+    is full width and the map opens fullscreen from DEFRA's "Map view" button.
+
+    Blocks:
+      mapSidebar   sidebar content (e.g. {% include "_common/map/land-data-panel.html" %})
+      mapCanvas    the map column (default: #map + the loading overlay)
+      mapHead      extra <head> content (extra plugin CSS, prefetches)
+      mapScripts   page script; runs after the DEFRA library and map-fullscreen.js
+    Variables:
+      mapSidebarLabel   aria-label for the sidebar region (default "Map controls")
+      mapCenter, mapZoom  #map's fallback centre/zoom before the page frames its data
+    Styles: app/assets/sass/components/_map.scss (scoped to html.app-map-page) -#}
+{% extends "layouts/main-rebrand.html" %}
+
+{% set htmlClasses = "app-map-page" %}
+
+{% block header %}
+  {% include "_common/map/header.html" %}
+{% endblock %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css" rel="stylesheet" type="text/css">
+  {% block mapHead %}{% endblock %}
+{% endblock %}
+
+{# Hide the page until the map mounts (DEFRA's .im-is-loading). map-fullscreen.js removes it
+   straight away and the #map-loading overlay covers just the map instead. #}
+{% block bodyStart %}
+  <script>document.body.classList.add('im-is-loading')</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block main %}
+<main class="app-map-fullscreen" id="main-content">
+
+  <div class="app-map-fullscreen__sidebar" role="region" aria-label="{{ mapSidebarLabel | default('Map controls') }}">
+    {% block mapSidebar %}{% endblock %}
+  </div>
+
+  <div class="app-map-fullscreen__map">
+    {% block mapCanvas %}
+    <div id="map" data-zoom="{{ mapZoom | default(12) }}" data-center="{{ mapCenter | default('[-0.69, 53.39]') }}"></div>
+    <div id="map-loading" class="app-map-loading" role="status" aria-live="polite">
+      <span class="app-map-loading__text">Loading map</span>
+      <span class="app-map-loading__spinner" aria-hidden="true"></span>
+    </div>
+    {% endblock %}
+  </div>
+
+</main>
+{% endblock main %}
+
+{% block pageScripts %}
+  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
+  <script src="/public/javascripts/map/map-fullscreen.js"></script>
+  {% block mapScripts %}{% endblock %}
+{% endblock %}

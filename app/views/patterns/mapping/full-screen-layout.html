@@ -1,0 +1,132 @@
+{% extends "layouts/pattern-library.html" %}
+
+{% set pageName = "Full-screen map layout" %}
+{% set _patternPage = "full-screen-layout" %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">Full-screen map layout</h1>
+
+<p class="govuk-body-l">A sidebar and an interactive map that fill the screen below the header.</p>
+
+<div class="app-example">
+  <iframe src="/patterns/mapping/examples/full-screen-layout" title="Example: full-screen map layout" loading="lazy"></iframe>
+</div>
+<p class="govuk-body"><a class="govuk-link" href="/patterns/mapping/examples/full-screen-layout" target="_blank">Open this example in a new tab (opens in new tab)</a></p>
+
+<h2 class="govuk-heading-l">When to use this pattern</h2>
+<p class="govuk-body">Use it when the map is the main way a user finds or understands their land, and they need a list or summary alongside it. For example, viewing all the land parcels on a business.</p>
+
+<h2 class="govuk-heading-l">When not to use this pattern</h2>
+<p class="govuk-body">Don't use it when the map only supports the page, such as a location shown on a question page or a check answers page. Use a normal page with an inline map instead.</p>
+<p class="govuk-body">Don't use it for long forms: the sidebar is narrow and scrolls on its own.</p>
+
+<h2 class="govuk-heading-l">How it works</h2>
+
+<h3 class="govuk-heading-m">Layout and scrolling</h3>
+<p class="govuk-body">The header sits at the top. Below it, the page is split into a sidebar (one third) and the map (two thirds). The page itself doesn't scroll. The sidebar scrolls on its own, and the map fills its column.</p>
+<p class="govuk-body">The map area is at least 600px tall. On a short screen the whole page scrolls, and the header scrolls away with it.</p>
+<p class="govuk-body">There is no footer.</p>
+
+<h3 class="govuk-heading-m">On a phone</h3>
+<p class="govuk-body">At 640px wide or less, the sidebar takes the full width and the map is hidden. The map component shows a "Map view" button instead, which the layout moves into the sidebar's <code>#map-button-slot</code>. The button opens the map fullscreen, and the GOV.UK header and service navigation are hidden while it's open.</p>
+<p class="govuk-body">The page reloads if the window crosses 640px, so the map is always built for the current screen size. Real users won't notice this, but you'll see it when you resize the window or switch device in browser developer tools.</p>
+
+<h3 class="govuk-heading-m">Loading</h3>
+<p class="govuk-body">A "Loading map" message with a spinner covers the map until it has rendered, while the sidebar shows straight away. The page decides when to hide it, usually once its data is drawn and the map is idle. The spinner doesn't move if the user has asked for reduced motion.</p>
+
+<h2 class="govuk-heading-l">How to build it</h2>
+<p class="govuk-body">Extend the layout, put the sidebar content in <code>mapSidebar</code>, then build the map in <code>mapScripts</code>. The DEFRA scripts and <code>map-fullscreen.js</code> are already loaded.</p>
+
+<pre class="app-code"><code>{% filter forceescape %}{% raw %}{% extends "layouts/map-fullscreen.html" %}
+
+{% block mapSidebar %}
+  <h2 class="govuk-heading-m">…</h2>
+  <div id="map-button-slot"></div>
+{% endblock %}
+
+{% block mapScripts %}
+  <script>
+    const interactiveMap = new defra.InteractiveMap('map', {
+      mapProvider: defra.maplibreProvider(),
+      behaviour: 'hybrid',
+      mapLabel: 'Land parcels',
+      mapStyle: { url: 'https://tiles.openfreemap.org/styles/liberty' }
+    })
+
+    interactiveMap.on('map:ready', (e) => {
+      // add the page's layers, then hide the overlay once they've rendered
+      e.map.once('idle', AppMap.fullscreen.hideLoading)
+    })
+
+    AppMap.fullscreen.init({ interactiveMap })
+  </script>
+{% endblock %}{% endraw %}{% endfilter %}</code></pre>
+
+<h3 class="govuk-heading-m">Options</h3>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Block or variable</th>
+      <th scope="col" class="govuk-table__header">Use</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>mapSidebar</code></td>
+      <td class="govuk-table__cell">Sidebar content. Include <code>&lt;div id="map-button-slot"&gt;&lt;/div&gt;</code> where the phone "Map view" button should go.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>mapScripts</code></td>
+      <td class="govuk-table__cell">The page's own script. It runs after the DEFRA map scripts and <code>map-fullscreen.js</code>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>mapHead</code></td>
+      <td class="govuk-table__cell">Extra <code>&lt;head&gt;</code> content, such as another plugin's CSS or prefetch links.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>mapCanvas</code></td>
+      <td class="govuk-table__cell">Replaces the map column. By default it holds <code>#map</code> and the loading overlay.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>mapSidebarLabel</code></td>
+      <td class="govuk-table__cell">Accessible name for the sidebar region. Defaults to "Map controls".</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>mapCenter</code>, <code>mapZoom</code></td>
+      <td class="govuk-table__cell">Where the map starts before the page frames its data. Defaults to <code>[-0.69, 53.39]</code> and 12.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="govuk-heading-m">JavaScript</h3>
+<table class="govuk-table">
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>AppMap.fullscreen.init({ interactiveMap })</code></td>
+      <td class="govuk-table__cell">Moves the "Map view" button into the sidebar and keeps the map sized when the window changes.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>AppMap.fullscreen.hideLoading()</code></td>
+      <td class="govuk-table__cell">Fades out the loading overlay. Also call it if loading the data fails, so the overlay isn't left on screen.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>AppMap.fullscreen.isMobile()</code></td>
+      <td class="govuk-table__cell">True at 640px wide or less. Use it to decide on map behaviour for phones, such as building the interact plugin.</td>
+    </tr>
+  </tbody>
+</table>
+<p class="govuk-body">The styles only apply to pages with the <code>app-map-page</code> class on <code>&lt;html&gt;</code>, which the layout sets. That stops them changing how other pages scroll.</p>
+
+<h2 class="govuk-heading-l">Accessibility</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The sidebar is a labelled region, so screen reader users can jump to it.</li>
+  <li>The loading message is a status message, so screen readers announce it.</li>
+  <li>The page has no footer, so the cookies and accessibility statement links aren't there. A live service would need them somewhere.</li>
+</ul>
+
+<h2 class="govuk-heading-l">Known issues</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>On a short screen the map's 600px minimum height makes the page scroll, so the header scrolls out of view.</li>
+  <li>Between 641px and 1020px wide, the GOV.UK header's contents are indented further than the sidebar, because GOV.UK's 30px page margin still applies at that width.</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,173 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+  {% set _showFooterMVPLinks = false %}
+{% else %}
+  {% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% set _showReleaseLinks = false %}
+
+{% set _showIntExtLinks = true %}
+
+{% set _inError = myData.validationError == "true"  %}
+
+{% set pageTitle = "What is your business email address?" %}
+{% set pageName = pageTitle %}
+{% if _inError %} 
+  {% set pageName = "Error: " + pageTitle %}
+{% endif %}
+
+{% set serviceName = "Farm and Land Service" %}
+
+
+{% if data.view == "ext" and data.release != "concept" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Email address (change) - business details",
+    "id": "bd10",
+    "url": "business-details-email-check?r=t&view=ext&release=b1&newChange=true",
+    "release": "Buffalo 1.0 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter business email address"
+      },
+      {
+        "scenario": "Entry is too long",
+        "content": "Business email address must be 254 characters or less"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter an email address, like name@example.com"
+      }
+
+    ]
+    
+  }
+%}
+
+{% elif data.view == "int" %}
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "Email address (change) - business details",
+    "id": "int-bd10",
+    "url": "business-details-email-check?r=t&view=int&release=b2&newChange=true",
+    "release": "Buffalo 1.1 MVP",
+    "variants": [],
+
+    "pagetitle": pageTitle,
+    "pagedesc": "",
+    "pageurl": "",
+    "errormessages": [
+      {
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter business email address"
+      },
+      {
+        "scenario": "Entry is too long",
+        "content": "Business email address must be 254 characters or less"
+      },
+      {
+        "scenario": "Wrong format",
+        "content": "Enter an email address, like name@example.com"
+      }
+
+    ]
+    
+  }
+%}
+
+{% else %}
+
+{% endif %}
+
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+  {% include "_common/phase-banner-2.html" %}
+  {% include "_common/sub-header.html" %}
+
+  {% set _hideAccountLink = true %}
+  {% include "_common/login-nav-3a.html" %}
+  {% else %}
+  {% include "_common/login-nav-internal-a.html" %}
+{% endif %}
+
+  <a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% if _inError %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            {% for name, item in myData.validationErrors %}
+            <li>
+              <a href="#{{item.anchor}}">{{item.message}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+
+      <div class="govuk-form-group {% if _inError %}govuk-form-group--error{% endif %}">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="emailBus">
+            What is your business email address?
+          </label>
+        </h1>
+
+        {% if _inError %}
+        <p id="emailBus-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">Error:</span> {{myData.validationErrors.emailBus.message}}
+        </p>
+        {% endif %}
+
+        {% set _valueNewEmailBus = myData.newEmailBus or myData.emailBus %}
+        {% if myData.validationErrors.emailBus %}
+            {% set _valueNewEmailBus = myData.newEmailBus %}
+        {% endif %}
+
+        <input class="govuk-input govuk-input--width-20 {% if _inError %}govuk-input--error{% endif %}" id="emailBus" name="emailBus" type="email" autocomplete="email" spellcheck="false" value="{{_valueNewEmailBus}}" {% if _inError %}aria-describedby="emailBus-error"{% endif %}>
+      </div>
+
+      {{govukButton({
+        text: "Continue"
+      })}}
+
+      <!--- <p class="govuk-body"><a href="details-business-details" class="govuk-link govuk-link--no-visited-state">Cancel</a></p> --->
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

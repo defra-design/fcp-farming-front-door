@@ -1,0 +1,100 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% if data.view == "int" %}
+{% set _showFooterMVPLinks = false %}
+{% else %}
+{% set _showFooterMVPLinks = true %}
+{% endif %}
+
+{% if data.view == "int" %}
+{% set _showReleaseLinks = false %}
+{% else %}
+{% set _showReleaseLinks = false %}
+{% endif %}
+
+{% set _showIntExtLinks = true %}
+
+{% set pageName = "Enter your charity commission registration number" %}
+{% set serviceName = "Farm and Land Service" %}
+
+{% if data.view == "int" %}
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+"status": 'In development',
+"name": "Legal status (charity) - business details",
+"id": "int-bd15a",
+"url": "business-details-legal-check?r=t&release=b2&view=int",
+"release": "Buffalo 1.1 MVP",
+"variants": [
+],
+
+"pagetitle": pageName,
+"pagedesc": "",
+"pageurl": "", 
+"errormessages": [
+      {
+        "field": "Charity commission registration number",
+        "scenario": "Empty field / nothing entered",
+        "content": "Enter a charity commission registration number"
+      },
+      
+      {
+        "field": "Charity commission registration number",
+        "scenario": "Wrong format",
+        "content": "Enter a charity commission registration number, like 12345678"
+      }
+
+    ]
+
+}
+%}
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+{% if data.view != "int" %}
+
+{% include "_common/phase-banner-2.html" %}
+{% include "_common/sub-header.html" %}
+
+{% set _hideAccountLink = true %}
+{% include "_common/login-nav-3a.html" %}
+{% else %}
+{% include "_common/login-nav-internal-a.html" %}
+{% endif %}
+
+<a href="javascript:history.back()" class="govuk-back-link govuk-!-margin-bottom-0">Back</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="post">
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="legalCHRNBus">
+            Enter your charity commission registration number
+          </label>
+        </h1>
+        <div id="legalCHRNBus-hint" class="govuk-hint">
+          This is 7 or 8 numbers, for example, 12345678.
+        </div>
+        <input class="govuk-input govuk-input--width-10" id="legalCHRNBus" name="legalCHRNBus" type="text"
+          value="{{ data['legalCHRNBus']}}">
+      </div>
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

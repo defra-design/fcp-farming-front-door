@@ -1,0 +1,93 @@
+<!-- MAKE SURE YOU INCLUDE LAYOUT FILE THAT HAS DESIGN SPEC VERSION 2 -->
+{% extends "layouts/main-rebrand-design-spec-v2.html" %}
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+<!-- Page name and service name should still be set as variables here, independently of design spec -->
+{% set pageName = "Testing new design spec" %}
+{% set serviceName = "Farm and Land Service" %}
+
+<!-- The example below shows what a design spec for external view could look like. If you need internal, you need to add the corresponding else statement  -->
+{% if data.view == "ext" and data.release != "concept" %}
+
+  {% set _showDesignSpec = true %}
+  {% set _designSpecData = {
+    "status": 'In development',
+    "name": "SFD Home/This can be whatever Page",
+    "id": "045",
+    "release": "So long as its text, put whatever",
+    "pagetitle": pageName,
+    "pagedesc": "testingdescription",
+    "pageurl": "testingURLslug",
+    "version" : "MVP",
+    "prototypeurl" : "business-design-spec-test",
+
+    "variants": [
+      {
+        "name": "SFD Home/Business Page (full and legal permissions - default)",
+        "url": "business-design-spec-test?r=t&release=b1&permissionsMVP=full"
+      }, 
+      {
+        "name": "SFD Home/Business Page (amend permissions)",
+        "url": "business-design-spec-test?r=t&release=b1&permissionsMVP=amend"
+      }, 
+      {
+        "name": "SFD Home/Business Page (view permissions)",
+        "url": "business-design-spec-test?r=t&release=b1&permissionsMVP=view"
+      }
+      
+    ],
+    "errormessages": [
+    
+    ],
+    "notes": [
+      "Conditional link text: the visible link text for 'View and update your business details' should change according to the permission level. See variants. Note that full, legal and amend permissions have the same link text."
+      
+    ]
+    
+  }
+  %}
+
+{% else %}
+
+{% endif %}
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% if data.release == "b1" %}
+        {% set _hideAccountLink = true %}
+      {% endif %}
+      {% include "_common/login-nav-2.html" %}
+
+      <a class="govuk-back-link" href="businesses-list">Back to your businesses</a>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+       This is a page to test the design spec version 2 by playing with the fields. 
+    </h1>
+
+    <p class="govuk-body">
+      Take no notice of it.
+    </p>
+
+    <p class="govuk-body">
+      <a href="business-design-spec-blank">business-design-spec-blank.html</a> can be used as a template.
+    </p>
+  </div>
+</div>
+
+
+{% endblock %}

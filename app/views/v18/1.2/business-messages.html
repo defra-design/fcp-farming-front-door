@@ -1,0 +1,330 @@
+{% extends "layouts/main-rebrand.html" %}
+
+
+{% set _showFooterMVPLinks = true %}
+{% set _showReleaseLinks = false %}
+
+{% set _includeServiceNavigation = "false" %}
+{% set _paymentsServiceNavigationActive = true %}
+
+{% set pageName = "Your business's messages" %}
+{% set serviceName = "Farm and Land Service" %}
+
+{% set _showDesignSpec = true %}
+{% set _designSpecData = {
+
+  "name": "???",
+  "id": "???",
+  "url": "businesses-messages?r=t&release=b1",
+  "release": "Buffalo 1.0 MVP",
+  "variants": [
+    
+  ],
+
+  "pagetitle": pageName,
+  "pagedesc": "",
+  "pageurl": "",
+  "errormessages": [
+    
+  ],
+  "notes": [
+    
+  ]
+  
+}
+%}
+
+
+
+{% set _displayCount = myData.displaycount %}
+{% set _filterOrSearchApplied = myData.schemefilterapplied or myData.searchapplied %}
+
+<!-- Query strings (for use in hrefs) -->
+{% set _searchQuery = "" %}
+{% set _schemefilterQuery = "" %}
+{% if myData.searchapplied == true %}
+    {% set _searchQuery = "&q=" + myData.searchTerm %}
+{% endif %}
+{% if myData.schemefilterapplied == true %}
+    {% for _item in myData.schemefilters %}
+        {% set _schemefilterQuery = _schemefilterQuery + "&schemefilters=" + _item %}
+    {% endfor %}
+{% endif %}
+
+{% set _fullURL = "business-messages?" + _searchQuery + _schemefilterQuery %}
+
+
+
+{% block beforeContent %}
+
+  {% include "_common/phase-banner-2.html" %}
+
+  {% include "_common/sub-header.html" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {% include "_common/login-nav-3a.html" %}
+
+      <div class="govuk-breadcrumbs" style="display: inline-block">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="business-home">Home</a>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  <style>
+    .sfd-messages-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sfd-messages-list li {
+      border-bottom: 1px solid #b1b4b6;
+      padding: 15px 0;
+    }
+  </style>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% set _selectedBusiness = myData.selectedBusiness %} 
+
+      <span class="govuk-caption-xl">Messages for</span>
+      <h1 class="govuk-heading-xl">
+        {{_selectedBusiness.name}}
+      </h1>
+
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <div class="sfd-filter">
+
+        <div class="sfd-filter__header">
+            <div class="sfd-filter__header-title">
+                <h2 class="govuk-heading-m">Filter</h2>
+            </div>
+            <div class="sfd-filter__header-action">
+            </div>
+        </div>
+
+        <div class="sfd-filter__content">
+
+            {% if _filterOrSearchApplied %}
+            <div class="sfd-filter__selected">
+                <div class="sfd-filter__selected-heading">
+                    <div class="sfd-filter__heading-title">
+                        <h2 class="govuk-heading-m">Selected filters</h2>
+                    </div>
+                    <div class="sfd-filter__heading-action">
+                        <p><a class="govuk-link govuk-link--no-visited-state" href="business-messages">Clear</a></p>
+                    </div>
+                </div>
+      
+                <!-- For each filter type -->
+                {% for _filter in myData.searchfilters %}
+                    {% set _url = "business-messages?" + _schemefilterQuery %}
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0">{{_filter.typeText|safe}}</h3>
+                    <ul class="sfd-filter-tags">
+                        {% if _filter.typeof == "array" %}
+                            {% for _item in _filter.value %}
+                                {% set _urlBit = "&" + _filter.type + "=" + _item.id %}
+                                {% set _url2 = _fullURL|replace(_urlBit,"") %}
+                                <li><a class="sfd-filter__tag" href="{{_url2}}"><span class="govuk-visually-hidden">Clear this filter</span> {{_item.label}}</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a class="sfd-filter__tag" href="{{_url}}"><span class="govuk-visually-hidden">Clear this filter</span> {{_filter.value}}</a></li>
+                        {% endif %}
+                    </ul>
+                {% endfor %}
+                
+            </div>
+            {% endif %}
+
+            <div class="sfd-filter__options">
+
+                <!-- Search box -->
+                <form action="business-messages" method="GET" >
+
+                    <button type="submit" class="govuk-button sfd-filter__submit" id="filters-submit">Apply filters</button>
+
+                    <div class="govuk-form-group" data-list-search-filter >
+                        <label for="search-messages" class="govuk-label" >
+                            <span class="govuk-!-font-weight-bold govuk-!-font-size-24">Messages</span>
+                            <div class="govuk-hint">Enter a keyword</div>
+                        </label>
+                        <input type="search" value="{% if myData.searchapplied == true %}{{myData.searchTerm}}{% endif %}" id="search-messages" name="q" title="Search" class="govuk-input search-input" >
+                    </div>
+
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                Scheme or grant
+                            </legend>
+                            <div class="govuk-checkboxes govuk-checkboxes--small">
+                                {% for _scheme in data.schemes %}
+                                    {% set _checked = "" %}
+                                    {% for _item in myData.schemefilters %}
+                                        {% if _item == _scheme.value and myData.schemefilterapplied == true %}
+                                            {% set _checked = "checked" %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="govuk-checkboxes__item">
+                                        <input {{_checked}} class="govuk-checkboxes__input" id="scheme-{{_scheme.value}}" name="schemefilters" type="checkbox" value="{{_scheme.value}}">
+                                        <label class="govuk-label govuk-checkboxes__label" for="scheme-{{_scheme.value}}">
+                                            {{_scheme.value}}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+
+                    </div>
+
+                    <button type="submit" class="govuk-button sfd-filter__submit" id="filters-submit-2">Apply filters</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+
+      
+      {#
+      {% set _totalMessages = data.messages.length %}
+      {% set _unreadMessages = 0 %}
+      {% for _message in data.messages %}
+        {% if _message.unread %}
+          {% set _unreadMessages = _unreadMessages + 1 %}
+        {% endif %}
+      {% endfor %}
+
+      {% set _messageCategories = ["All messages", "Unread"] %}
+      {% set _selectedMessagesType = data.selectedMessagesType %}
+
+      <!-- <p class="govuk-body govuk-!-margin-bottom-2">View all messages or only unread</p> -->
+      <ul class="govuk-list inline-filter-list">
+        {% for _messageCategory in _messageCategories %}
+          
+          {% set _countLabel = "(" + _totalMessages + ")" %}
+          {% if _messageCategory != "All messages" %}
+            {% set _countLabel = "(" + _unreadMessages + ")" %}
+          {% endif %}
+
+          <li class="inline-filter-list-item">
+          {% if _messageCategory == _selectedMessagesType %}
+            <strong>{{_messageCategory}} {{_countLabel}}</strong>
+          {% else %}
+            <a href="business-messages?selectedMessagesType={{_messageCategory}}" class="govuk-link govuk-link--no-visited-state">{{_messageCategory}} {{_countLabel}}</a>
+          {% endif %}
+          
+          </li>
+        {% endfor %}
+      </ul>
+
+      #}
+      
+
+        <!-- <h2 class="govuk-heading-m">{{_selectedMessagesType}}</h2> -->
+
+        <!-- <p class="govuk-body"><a href="#" class="govuk-link govuk-link--no-visited-state">Mark all as read</a></p> -->
+
+        <h2 class="govuk-heading-m">{{myData.displaycount}} result{% if myData.displaycount != 1 %}s{% endif %}</h2>
+
+        <hr class="govuk-section-break govuk-section-break--visible">
+
+        {% if _displayCount > 0 %}
+<!-- 
+        <table class="govuk-table govuk-!-margin-bottom-8">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Subject</th>
+              <th scope="col" class="govuk-table__header">Date received</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body"> -->
+
+            <ol class="sfd-messages-list">
+
+            {% for _message in data.messages %}
+
+            {% if _message.search == true %}
+
+             {# {% if _selectedMessagesType == "Unread" and _message.unread or _selectedMessagesType == "All messages" %} #}
+             <li {% if _message.unread %}style="padding-left:15px; border-left: 5px solid #1d70b8; background: #f3f2f1;" {% endif %}>
+              <!-- <tr class="govuk-table__row" {% if _message.unread %}style="background: #f3f2f1;" {% endif %} > -->
+
+                
+                <!-- <th class="govuk-table__cell __header" {% if _message.unread %}style="padding-left:15px; border-left: 5px solid 	#1d70b8" {% endif %}> -->
+                  <p class="govuk-body govuk-!-margin-bottom-2" {% if _message.unread %}style="font-weight: bold;"{% endif %}>
+                  <a href="#" class="govuk-link--no-visited-state">
+                    {{_message.subject}}
+                  </a>
+                  </p>
+                  <p class="govuk-body-s govuk-!-margin-bottom-0">{{_message.date}}</p>
+                  <!-- <p style="font-weight: normal;" class="govuk-body">This is the intro text for the message, giving a short look at the contents of it.</p> -->
+                  <dl class="sfd-definition-list sfd-definition-list--meta govuk-!-margin-bottom-1">
+                    <dt class="sfd-definition-list__title">Scheme</dt>
+                    <dd class="sfd-definition-list__definition">{{_message.scheme}}</dd>
+                  </dl>
+                <!-- </th> -->
+                <!-- <td class="govuk-table__cell">
+                  {% if _message.unread %}
+                  <strong class="govuk-tag govuk-tag--yellow" >
+                    Unread
+                  </strong>
+                  {% endif %}
+                </td> -->
+                <!-- <td class="govuk-table__cell"> -->
+                  
+                  
+                <!-- </td> -->
+                <!-- <td class="govuk-table__cell">
+                  <a href="#" class="govuk-link--no-visited-state">
+                    View
+                  </a>
+                </td> -->
+              <!-- </tr>  -->
+            </li>
+             {# {% endif %} #}
+
+            {% endif %}
+
+
+            {% endfor %}
+          </ol>
+
+          <!-- </tbody>
+        </table> -->
+
+        {% else %}
+        <p class="govuk-body govuk-!-margin-top-4">No messages for the selected filters.</p>
+        <p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="business-messages">Clear filters</a></p>
+        {% endif %}
+
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block pageScriptsAfter %}
+<script src="/public/javascripts/filter.js" ></script>
+<script>
+  filterVisibilityToggle({{_filterOrSearchApplied | dump | safe }})
+</script>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "layouts/pattern-library.html" %}
+
+{% set pageName = "Land data panel" %}
+{% set _patternPage = "data-panel" %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">Land data panel</h1>
+
+<p class="govuk-body-l">The sidebar of the land summary: totals for the business, a way to find a parcel, and every parcel with its land covers and area.</p>
+
+<div class="app-example">
+  <iframe src="/patterns/mapping/examples/data-panel" title="Example: land data panel" loading="lazy"></iframe>
+</div>
+<p class="govuk-body"><a class="govuk-link" href="/patterns/mapping/examples/data-panel" target="_blank">Open this example in a new tab (opens in new tab)</a></p>
+
+<h2 class="govuk-heading-l">When to use this pattern</h2>
+<p class="govuk-body">Use it in the sidebar of a <a class="govuk-link" href="/patterns/mapping/full-screen-layout">full-screen map page</a> that shows all the land parcels on a business.</p>
+
+<h2 class="govuk-heading-l">When not to use this pattern</h2>
+<p class="govuk-body">Don't use it for a single parcel's details. The land parcel panel (land covers, hedges and previous versions) is still being designed, so it isn't part of this library yet.</p>
+
+<h2 class="govuk-heading-l">How it works</h2>
+
+<h3 class="govuk-heading-m">Summary</h3>
+<p class="govuk-body">Shows the number of parcels and their total area in hectares, to 4 decimal places.</p>
+
+<h3 class="govuk-heading-m">Find a land parcel</h3>
+<p class="govuk-body">Typing all or part of a parcel ID narrows the list. Matching ignores spaces and case, so "sx3964 78" finds SX3964 7821. The filter only changes the list, not the map. If nothing matches, "No parcels found" is shown and announced.</p>
+
+<h3 class="govuk-heading-m">Selecting a parcel</h3>
+<p class="govuk-body">Selecting a parcel on the map does 3 things:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>it outlines the parcel on the map</li>
+  <li>it highlights the parcel's row in the list</li>
+  <li>it shows the parcel in a table above the list, so the user doesn't have to scroll to find it</li>
+</ul>
+<p class="govuk-body">If the filter is hiding that parcel, the filter is cleared. Selecting empty map clears the selection. On a phone, the user selects a parcel with the map component's crosshair and Select button. Done then opens that parcel's page.</p>
+
+<h3 class="govuk-heading-m">Parcel list</h3>
+<p class="govuk-body">There is one row per parcel, with:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>the parcel ID, which links to the parcel's page</li>
+  <li>every land cover on the parcel, largest area first (a cover type that appears more than once is shown once)</li>
+  <li>the parcel's area</li>
+</ul>
+<p class="govuk-body">Every column can be sorted (MoJ sortable table).</p>
+
+<h3 class="govuk-heading-m">Data</h3>
+<p class="govuk-body">Parcels and land covers come from the RPA's <code>RPA:LandParcels</code> and <code>RPA:LandCovers</code> WFS services, filtered by SBI. A parcel's ID (<code>ngc</code>) is its <code>SHEET_ID</code> followed by its <code>PARCEL_ID</code>, for example <code>SX39647821</code>. Responses are cached for the browser session.</p>
+
+<h2 class="govuk-heading-l">How to build it</h2>
+<p class="govuk-body">Include the partial in the layout's sidebar, then hand the panel the data. The panel doesn't know about the map: the page tells it when a parcel is selected.</p>
+
+<pre class="app-code"><code>{% filter forceescape %}{% raw %}{% block mapSidebar %}
+  {% include "_common/map/land-data-panel.html" %}
+{% endblock %}
+
+{% block mapScripts %}
+  <script src="/public/javascripts/map/land-data-panel.js"></script>
+  <script>
+    const panel = AppMap.landDataPanel
+    panel.init({ parcelUrl: (ngc) => `/v18/1.2/view-land-parcel?parcel=${ngc}` })
+
+    Promise.all([fetchJson(parcelsUrl), fetchJson(coversUrl)])
+      .then(([parcels, covers]) => panel.render(parcels, covers))
+      .catch(() => panel.renderError())
+
+    // from the page's own map click handling
+    panel.select('SX39647821')
+    panel.clear()
+  </script>
+{% endblock %}{% endraw %}{% endfilter %}</code></pre>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Variable or function</th>
+      <th scope="col" class="govuk-table__header">Use</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>dataPanelBackHref</code>, <code>dataPanelBackText</code></td>
+      <td class="govuk-table__cell">The back link. Defaults to "Back to" and the business name, linking to <code>#</code>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>init({ parcelUrl })</code></td>
+      <td class="govuk-table__cell">Sets up the filter. <code>parcelUrl(ngc)</code> returns the link for a parcel's ID.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>render(parcels, covers)</code></td>
+      <td class="govuk-table__cell">Fills in the summary and the list from the 2 WFS feature collections.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>renderError()</code></td>
+      <td class="govuk-table__cell">Shows a dash in the summary when the data can't be loaded.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>select(ngc)</code>, <code>clear()</code></td>
+      <td class="govuk-table__cell">Show or clear the selected parcel in the panel. Outlining the parcel on the map is up to the page.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="govuk-heading-l">Accessibility</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The filter's "No parcels found" message and the selected parcel table are live regions, so changes are announced.</li>
+  <li>Selection only goes from the map to the list. Rows look clickable (a pointer cursor and a hover colour), but only the parcel ID link does anything. Keyboard and screen reader users can't select a parcel on the map from the list.</li>
+  <li>"No parcels found" is shown in red bold text, which looks like an error message but isn't one.</li>
+</ul>
+
+<h2 class="govuk-heading-l">Known issues</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Selecting a row in the list doesn't select the parcel on the map yet.</li>
+  <li>The panel needs live RPA data, so it shows nothing if the WFS services can't be reached.</li>
+</ul>
+{% endblock %}

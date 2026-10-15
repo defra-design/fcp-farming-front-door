@@ -1,0 +1,277 @@
+{# Dates list: the single-map overlay compare (one map, radios choosing which version it
+   shows) with a different Previous tab. Instead of showing the previous version's tables
+   straight away, the tab lists the dates of the previous versions; choosing a date swaps
+   the list for that version's parcel data (and switches the map to the previous version),
+   with a link to return to the list.
+   Two-column layout like view-land-parcel — heading, radios and the two versions' tables
+   (in Current / Previous tabs) in a sidebar beside a full-height map.
+   See _compare-single-map.html for everything shared with the other compare variants.
+
+   Each listed date is a version's VALID_FROM, read from its own land-covers snapshot file;
+   once chosen, the tab's inset says "Valid until <the day before its VALID_TO>" — in the
+   data VALID_TO is the instant the next version was created, so the last day the version
+   was in force is the day before.
+   The newest is the parcel's real previous snapshot (HISTORY in the base); the older ones are
+   MOCKED — derived from that real file by relabelling or merging existing covers so every
+   version looks clearly different on the map; some also carry a different parcel boundary
+   (wider / without the eastern tail). Their dates chain back from the real snapshot with the
+   same convention: each mock's VALID_TO is the next version's VALID_FROM. They stand in until
+   snapshots of live data are available; DATE_VERSIONS below is the seam (swap the `file`
+   paths). Choosing a date calls the base's loadPreviousSnapshot. #}
+{% set compareMode = "overlay" %}
+{% set compareModeLabel = "overlay" %}
+{% set compareLayout = "sidebar" %}
+{# The Previous tab's inset names the chosen version's last valid day: "Valid until <date>". #}
+{% set previousDateInsetPrefix = "Valid until" %}
+
+{# The Previous tab: a list of dates first; the base's inset + tables sit in a hidden
+   wrapper that the script reveals when a date is chosen. These captures are set BEFORE
+   extends (like compareMode) because the base drops them into its own `set` capture,
+   where a block would not be registered by Nunjucks. #}
+{% set previousPanelBefore %}
+  <div id="previous-dates" tabindex="-1">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Parcel updated</th>
+        </tr>
+      </thead>
+      {# One row per date, built by the script below. #}
+      <tbody class="govuk-table__body" id="previous-dates-list"></tbody>
+    </table>
+  </div>
+  <div id="previous-detail" tabindex="-1" hidden>
+    {# Styled as the GOV.UK back link (chevron, 16px) to match "Back to land summary" above,
+       but a button: it changes in-page state only. #}
+    <button type="button" class="govuk-back-link app-back-button govuk-!-margin-top-0 govuk-!-margin-bottom-2" id="previous-dates-return">Back to dates</button>
+{% endset %}
+{% set previousPanelAfter %}
+  </div>
+{% endset %}
+
+{% extends "v18/1.2/_compare-single-map.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    /* A button that looks like a govuk-link: the date and return controls change in-page
+       state only, so they are buttons, not links. govuk-link supplies colour, underline,
+       hover and the focus state; this just strips the button chrome. */
+    .app-link-button {
+      background: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+    }
+    /* Same for the back-link button: keep govuk-back-link's left padding (chevron space)
+       and font, strip only the button chrome. */
+    .app-back-button {
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+  </style>
+{% endblock %}
+
+{% block compareControls %}
+  <div class="govuk-form-group govuk-!-margin-bottom-2">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-1">Show on the map</legend>
+      {# One version at a time: the radio's version is shown, the other hidden. #}
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-current" name="show-version" type="radio" value="current" checked data-version-radio="current">
+          <label class="govuk-label govuk-radios__label" for="show-current">Current details</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-previous" name="show-version" type="radio" value="previous" data-version-radio="previous">
+          <label class="govuk-label govuk-radios__label" for="show-previous">Previous details</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+{% endblock %}
+
+{% block pageScripts %}
+  {{ super() }}
+  <script>
+    // Runs after the base's script, which is a plain classic script: its top-level
+    // declarations (selectedNgc, the radios' wiring, showOnlyVersion...) are reachable from
+    // here, and must NOT be redeclared — hence the IIFE.
+    (function () {
+      // Previous versions per parcel, newest first. `file: null` means the base's real snapshot
+      // (HISTORY[ngc].beforeFile); the other files are mocked from that real file (see `note`)
+      // and served from app/assets/data/land-covers, named by the last day the version was in
+      // force. The date shown for each is its VALID_FROM, read from the file. A file can also
+      // carry the parcel boundary as it was (top-level `parcel` Feature); the base then draws
+      // it dashed beside today's and marks Total area. The ?v= marker is a cache-buster for
+      // cachedFetchJson — bump it whenever a file changes.
+      const DATE_VERSIONS = {
+        SX39647821: [
+          { file: null },  // real: valid from 27 September 2024
+          {
+            file: '/public/data/land-covers/SX39647821-before-20240926.json?v=3',  // valid from 4 March 2024
+            note: 'mock: the Track merged into the large Permanent Grassland (no track yet)'
+          },
+          {
+            file: '/public/data/land-covers/SX39647821-before-20240303.json?v=3',  // valid from 13 October 2023
+            note: 'mock: as 4 Mar 2024, and the large field relabelled Arable Land'
+          },
+          {
+            file: '/public/data/land-covers/SX39647821-before-20231012.json?v=4',  // valid from 1 January 2022
+            note: 'mock: Hard Standings, the small Permanent Grassland and the Track all merged into one Permanent Grassland; only the river is separate. Parcel boundary was wider: a ~14 m strip along the west edge (1.5384 ha, now 1.3059)'
+          }
+        ],
+        SX39632340: [
+          { file: null },  // real: valid from 27 August 2024
+          {
+            file: '/public/data/land-covers/SX39632340-before-20240826.json?v=4',  // valid from 13 October 2023
+            note: 'mock: the Woodland relabelled Scrub - Ungrazeable. Parcel boundary was smaller: without the eastern tail (0.6324 ha, now 0.7269)'
+          },
+          {
+            file: '/public/data/land-covers/SX39632340-before-20231012.json?v=4',  // valid from 1 January 2022
+            note: 'mock: the Pond relabelled Permanent Grassland (pond not yet dug). Parcel boundary was smaller: without the eastern tail, as on 13 Oct 2023'
+          }
+        ]
+      }
+      const versions = DATE_VERSIONS[selectedNgc] || []
+
+      const list = document.getElementById('previous-dates')
+      const listBody = document.getElementById('previous-dates-list')
+      const detail = document.getElementById('previous-detail')
+      const returnButton = document.getElementById('previous-dates-return')
+      const dateText = document.getElementById('previous-tab-date-range-text')
+      let lastDateButton = null // where focus returns to after "Back to dates"
+      // The snapshot file the base currently has as the previous version. It starts on the
+      // real snapshot (what the base fetched at load), so choosing the newest date is a no-op.
+      let loadedFile = history ? history.beforeFile : null
+      let loading = false
+
+      // No dates for this parcel: behave like the overlay page (tables shown straight away).
+      if (!versions.length) {
+        list.hidden = true
+        detail.hidden = false
+        return
+      }
+
+      // Check a version radio and fire change so the base's wiring shows that version on the
+      // map. Before the data loads the listener is not attached yet, but the base re-reads
+      // the checked radio once the map's datasets are ready, so the state still applies.
+      function setRadio (version) {
+        const radio = document.querySelector('[data-version-radio="' + version + '"]')
+        if (!radio || radio.checked) return
+        radio.checked = true
+        radio.dispatchEvent(new Event('change', { bubbles: true }))
+      }
+
+      // Swapping the list for the tables keeps the sidebar's scroll position, so a date picked
+      // from low in a long list would open the tables halfway down. Start them at the top, as a
+      // new page would: the sidebar scrolls itself on desktop; on mobile it does not (the page
+      // scrolls), so bring the tabs into view if they are above the viewport.
+      function scrollToTop () {
+        const sidebar = document.querySelector('.app-map-fullscreen__sidebar')
+        const tabs = document.querySelector('.app-compare__tabs')
+        if (sidebar) sidebar.scrollTop = 0
+        if (tabs && tabs.getBoundingClientRect().top < 0) tabs.scrollIntoView({ block: 'start' })
+      }
+
+      function reveal (version, button) {
+        dateText.textContent = version.validUntil
+        list.hidden = true
+        detail.hidden = false
+        lastDateButton = button || null
+        setRadio('previous')
+        scrollToTop()
+        detail.focus({ preventScroll: true })
+      }
+
+      // Load the chosen date's snapshot (if it is not the one already on the page), then
+      // reveal the tables. One load at a time: the list is marked busy and clicks are ignored
+      // while a fetch is in flight, so two quick clicks cannot interleave. A failed load is
+      // logged and the tables are revealed on whatever snapshot the page already had.
+      function showDetail (version, button) {
+        const file = version.file || (history && history.beforeFile)
+        if (loading) return
+        if (!file || file === loadedFile) {
+          reveal(version, button)
+          return
+        }
+        loading = true
+        list.setAttribute('aria-busy', 'true')
+        loadPreviousSnapshot(file, version.validUntil)
+          .then(() => { loadedFile = file })
+          .catch(err => console.error('Failed to load previous snapshot:', err))
+          .then(() => {
+            loading = false
+            list.removeAttribute('aria-busy')
+            reveal(version, button)
+          })
+      }
+
+      function showList () {
+        detail.hidden = true
+        list.hidden = false
+        setRadio('current')
+        ;(lastDateButton || list).focus()
+      }
+
+      // Read a date property (YYYYMMDDhhmmss) off a snapshot's features — the earliest, though
+      // every cover in a snapshot carries the same one.
+      function snapshotDate (snapshot, prop) {
+        const values = (snapshot.features || []).map(f => f.properties && f.properties[prop]).filter(Boolean)
+        return values.length ? values.sort()[0] : ''
+      }
+
+      // The day before a YYYYMMDDhhmmss stamp, as YYYYMMDD (what fmtValidFrom takes). VALID_TO
+      // is the instant the next version was created, so the last day in force is the day before.
+      function dayBefore (v) {
+        if (!v || v.length < 8) return ''
+        const dt = new Date(Number(v.slice(0, 4)), Number(v.slice(4, 6)) - 1, Number(v.slice(6, 8)) - 1)
+        const pad = (n) => String(n).padStart(2, '0')
+        return String(dt.getFullYear()) + pad(dt.getMonth() + 1) + pad(dt.getDate())
+      }
+
+      function addRow (version, i) {
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row'
+        const td = document.createElement('td')
+        td.className = 'govuk-table__cell'
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.className = 'govuk-link app-link-button'
+        button.dataset.dateVersion = String(i)
+        button.textContent = version.label
+        td.appendChild(button)
+        tr.appendChild(td)
+        listBody.appendChild(tr)
+      }
+
+      // Each row's date is the version's VALID_FROM, and its inset text the day before its
+      // VALID_TO, both read from its snapshot file so they stay right when the mocked files are
+      // swapped for real ones. The files go through the base's cache (the real snapshot is
+      // already in it), and the list is built once they have all settled so the rows land in
+      // order. A file that cannot be read is logged and left out: choosing it would fail in
+      // the same way.
+      Promise.all(versions.map(version => {
+        const file = version.file || (history && history.beforeFile)
+        return cachedFetchJson(file)
+          .then(snapshot => {
+            version.label = fmtValidFrom(snapshotDate(snapshot, 'VALID_FROM'))
+            version.validUntil = fmtValidFrom(dayBefore(snapshotDate(snapshot, 'VALID_TO')))
+          })
+          .catch(err => console.error('Failed to read snapshot for the dates list:', file, err))
+      })).then(() => {
+        versions.forEach((version, i) => { if (version.label) addRow(version, i) })
+      })
+
+      listBody.addEventListener('click', (e) => {
+        const button = e.target.closest('[data-date-version]')
+        if (button) showDetail(versions[Number(button.dataset.dateVersion)], button)
+      })
+      returnButton.addEventListener('click', showList)
+    })()
+  </script>
+{% endblock %}

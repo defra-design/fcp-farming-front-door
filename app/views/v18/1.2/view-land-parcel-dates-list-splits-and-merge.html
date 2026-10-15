@@ -1,0 +1,663 @@
+{# Dates list, with splits and merges: a copy of view-land-parcel-dates-list that also shows
+   where a parcel came from when it was created by SPLITTING another parcel or by MERGING
+   several. Everything else (the list of dates, choosing one, "Back to dates") works as on
+   the original; see that page and _compare-single-map.html.
+
+   A split or merge gives the land a new parcel reference (the RPA assigns it), so the version
+   before the event belongs to a DIFFERENT parcel:
+   - split: the version before is the larger parent. The part of it that is now in the other
+     new parcel is tagged "Now in <ref>" in the tables and hatched grey on the map (covers
+     carry NOW_IN in the snapshot; the base draws it because compareSplits is set).
+   - merge: the version before is the former parcels. The snapshot carries them as a
+     top-level `parcels` array; the base draws their outlines dashed (including the boundary
+     that was removed) and this page groups the Previous tab's land covers by former parcel.
+   Opening the version before the event explains what happened and shows where the land went
+   (a table whose areas add up), and the Current tab says when and how the parcel was created.
+
+   ALL MOCKED until the RPA sample data arrives. The lineage (which parcels an event came
+   from / went to, and their areas) lives in DATE_VERSIONS below as `event`, next to the
+   snapshot file it belongs to, so the real data only has to be plugged in there:
+   - SX3964 6918 (invented) was made on 1 June 2026 by merging SX3964 6418 and SX3964 7821
+     (both live neighbours, as they are today). The new parcel is not in the live data, so
+     its current version is a mocked file too (HISTORY's `currentFile` in the base): the two
+     parcels' outline joined, the grassland and the track that met across the removed boundary
+     joined, and both parcels' hedgerows. Open it with ?parcel=SX39646918. In the before
+     snapshot, SX3964 6418's grassland and track carry JOINED:'Y', so they are tagged "Joined"
+     rather than "Removed".
+     Its dates list also carries both former parcels' own histories (inherited), each date
+     opening that parcel's version: SX3964 7821's real snapshot and mocks (shared with the
+     original dates-list page) and SX3964 6418's mocked 2005 and 2008 versions.
+   There is no split example at the moment; the split support (NOW_IN, the hatched "Now in
+   another parcel" land) is still in place for when there is one.
+
+   ?splitView=grouped lists the dates in groups, one per parcel reference, so the history
+   inherited from a parent is visible without opening anything. The default is one list with
+   a "Change" column. #}
+{% set compareMode = "overlay" %}
+{% set compareModeLabel = "overlay" %}
+{% set compareLayout = "sidebar" %}
+{% set compareSplits = true %}
+{# The Previous tab's inset names the chosen version's last valid day: "Valid until <date>". #}
+{% set previousDateInsetPrefix = "Valid until" %}
+
+{# The Previous tab: a list of dates first; the base's inset + tables sit in a hidden
+   wrapper that the script reveals when a date is chosen. These captures are set BEFORE
+   extends (like compareMode) because the base drops them into its own `set` capture,
+   where a block would not be registered by Nunjucks. #}
+{% set previousPanelBefore %}
+  <div id="previous-dates" tabindex="-1">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Parcel updated</th>
+          <th scope="col" class="govuk-table__header">Change</th>
+        </tr>
+      </thead>
+      {# One row per date (and, grouped, a heading row per parcel), built by the script below. #}
+      <tbody class="govuk-table__body" id="previous-dates-list"></tbody>
+    </table>
+  </div>
+  <div id="previous-detail" tabindex="-1" hidden>
+    {# Styled as the GOV.UK back link (chevron, 16px) to match "Back to land summary" above,
+       but a button: it changes in-page state only. #}
+    <button type="button" class="govuk-back-link app-back-button govuk-!-margin-top-0 govuk-!-margin-bottom-2" id="previous-dates-return">Back to dates</button>
+    {# What happened to the parcel, for the version before a split or merge. Filled in and
+       moved to just below the "Valid until" inset by the script. #}
+    <div id="previous-event" hidden></div>
+{% endset %}
+{% set previousPanelAfter %}
+  </div>
+{% endset %}
+
+{% extends "v18/1.2/_compare-single-map.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    /* A button that looks like a govuk-link: the date and return controls change in-page
+       state only, so they are buttons, not links. govuk-link supplies colour, underline,
+       hover and the focus state; this just strips the button chrome. */
+    .app-link-button {
+      background: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+    }
+    /* Same for the back-link button: keep govuk-back-link's left padding (chevron space)
+       and font, strip only the button chrome. */
+    .app-back-button {
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+    /* The parcel reference under a date whose version belonged to another parcel. */
+    .app-dates__parcel {
+      display: block;
+      color: #505a5f;
+    }
+    /* Grouped view: the heading row that starts each parcel's group of dates. */
+    .app-dates__group th {
+      padding-top: 20px;
+    }
+    .app-dates__change .govuk-tag {
+      margin-right: 5px;
+    }
+    /* "Where the land went": the before and after rows, indented under their label rows. */
+    .app-lineage__label th {
+      font-weight: 700;
+    }
+    .app-lineage__part td:first-child {
+      padding-left: 15px;
+    }
+  </style>
+{% endblock %}
+
+{% block compareControls %}
+  <div class="govuk-form-group govuk-!-margin-bottom-2">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-1">Show on the map</legend>
+      {# One version at a time: the radio's version is shown, the other hidden. #}
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-current" name="show-version" type="radio" value="current" checked data-version-radio="current">
+          <label class="govuk-label govuk-radios__label" for="show-current">Current details</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-previous" name="show-version" type="radio" value="previous" data-version-radio="previous">
+          <label class="govuk-label govuk-radios__label" for="show-previous">Previous details</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+{% endblock %}
+
+{% block pageScripts %}
+  {{ super() }}
+  <script>
+    // Runs after the base's script, which is a plain classic script: its top-level
+    // declarations (selectedNgc, the radios' wiring, showOnlyVersion...) are reachable from
+    // here, and must NOT be redeclared — hence the IIFE.
+    (function () {
+      // Previous versions per parcel, newest first. `file: null` means the base's own "before"
+      // snapshot (HISTORY[ngc].beforeFile). The date shown for each is its VALID_FROM, read
+      // from the file; `change` is what happened on that date, for the list's Change column.
+      //
+      // `event` marks the version BEFORE a split or merge — a version of a different parcel
+      // (or parcels). It is the lineage record: `from` is the parcel(s) as they were just
+      // before, `to` the parcel(s) they became, each with its area in hectares then. The row
+      // above it (the version the event created) gets its Change from the event; the Current
+      // tab says when this parcel was created. The ?v= marker is a cache-buster for
+      // cachedFetchJson — bump it whenever a file changes.
+      //
+      // `parcel` marks a version of ONE of the parcels this one was merged from: its own history,
+      // inherited. The list shows the parcel under the date (grouped: under a heading per
+      // parcel), and opening it says which parcel it was. A file without its own outline is
+      // drawn with that parcel's outline as it was at the merge (from the merge snapshot).
+      // Grouped, entries are listed in this order; otherwise newest first across all parcels.
+      //
+      // `hedges` is a file of that version's hedgerows (the merge snapshot carries its own). The
+      // live hedge records only go back to July 2022 (6418) and February 2026 (7821), so older
+      // ones are MOCKED: a parcel keeps its live hedgerows while its boundary is unchanged, and
+      // SX3964 7821's wider 2022 boundary did not run along today's western edge, so that hedge
+      // is not in 2022.
+      const DATE_VERSIONS = {
+        SX39646918: [
+          {
+            file: null,  // the merge snapshot (HISTORY's beforeFile): valid from 3 February 2026
+            change: 'Land cover',
+            event: {
+              type: 'merge',
+              from: [{ ngc: 'SX39646418', areaHa: 3.6323 }, { ngc: 'SX39647821', areaHa: 1.3059 }],
+              to: [{ ngc: 'SX39646918', areaHa: 4.9382 }]
+            },
+            note: 'mock: the live SX3964 6418 and SX3964 7821 exactly as they are today, ending 1 June 2026'
+          },
+          // SX3964 7821's history. Its last version is live; the others are the files the
+          // original dates-list page uses for this parcel (the real snapshot and three mocks).
+          { parcel: 'SX39647821', file: '/public/data/land-covers/SX39647821-before-20260531.json?v=1', hedges: '/public/data/land-covers/SX39647821-hedges.json?v=1', change: 'Land cover', note: 'live, valid from 3 February 2026 to the merge' },
+          { parcel: 'SX39647821', file: '/public/data/land-covers/SX39647821-before.json?v=5', hedges: '/public/data/land-covers/SX39647821-hedges.json?v=1', change: 'Land cover', note: 'real snapshot: valid from 27 September 2024 (the Track split out)' },
+          { parcel: 'SX39647821', file: '/public/data/land-covers/SX39647821-before-20240926.json?v=3', hedges: '/public/data/land-covers/SX39647821-hedges.json?v=1', change: 'Land cover', note: 'mock: the Track merged into the large Permanent Grassland' },
+          { parcel: 'SX39647821', file: '/public/data/land-covers/SX39647821-before-20240303.json?v=3', hedges: '/public/data/land-covers/SX39647821-hedges.json?v=1', change: 'Boundary and land cover', note: 'mock: the large field Arable Land; boundary as today' },
+          { parcel: 'SX39647821', file: '/public/data/land-covers/SX39647821-before-20231012.json?v=4', hedges: '/public/data/land-covers/SX39647821-hedges-20231012.json?v=1', note: 'mock: one Permanent Grassland; wider boundary' },
+          // SX3964 6418's history. Its last version is live (unchanged since 2010); the older
+          // two are mocked.
+          { parcel: 'SX39646418', file: '/public/data/land-covers/SX39646418-before-20260531.json?v=1', hedges: '/public/data/land-covers/SX39646418-hedges.json?v=1', change: 'Land cover', note: 'live, valid from 1 January 2010 to the merge' },
+          { parcel: 'SX39646418', file: '/public/data/land-covers/SX39646418-before-20091231.json?v=1', hedges: '/public/data/land-covers/SX39646418-hedges.json?v=1', change: 'Land cover', note: 'mock: the Track still part of the Permanent Grassland' },
+          { parcel: 'SX39646418', file: '/public/data/land-covers/SX39646418-before-20071231.json?v=1', hedges: '/public/data/land-covers/SX39646418-hedges.json?v=1', note: 'mock: as 2008, and the field Arable Land' }
+        ]
+      }
+      const versions = DATE_VERSIONS[selectedNgc] || []
+      const GROUPED = urlParams.get('splitView') === 'grouped'
+
+      const list = document.getElementById('previous-dates')
+      const listBody = document.getElementById('previous-dates-list')
+      const detail = document.getElementById('previous-detail')
+      const returnButton = document.getElementById('previous-dates-return')
+      const dateText = document.getElementById('previous-tab-date-range-text')
+      const eventBox = document.getElementById('previous-event')
+      let lastDateButton = null // where focus returns to after "Back to dates"
+      // The snapshot file the base currently has as the previous version. It starts on the
+      // real snapshot (what the base fetched at load), so choosing the newest date is a no-op.
+      let loadedFile = history ? history.beforeFile : null
+      let loading = false
+
+      // The event box sits just below the "Valid until" inset rather than above it.
+      const insetWrapper = document.getElementById('previous-tab-date-range')
+      if (insetWrapper) insetWrapper.after(eventBox)
+
+      // ── Words ────────────────────────────────────────────────────────────────
+      const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
+      // "A", "A and B", "A, B and C"
+      const andList = (items) => items.length < 2 ? items.join('') : items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1]
+      // A parcel reference, linked to its own dates list when it is one of this prototype's
+      // current parcels (the parcels an event came from no longer exist, so they are plain).
+      const refHtml = (ngc) => DATE_VERSIONS[ngc] && ngc !== selectedNgc
+        ? '<a class="govuk-link" href="?parcel=' + encodeURIComponent(ngc) + (GROUPED ? '&splitView=grouped' : '') + '">' + esc(fmtNgc(ngc)) + '</a>'
+        : esc(fmtNgc(ngc))
+      const thisOrRef = (ngc) => ngc === selectedNgc ? esc(fmtNgc(ngc)) + ' (this parcel)' : refHtml(ngc)
+      const ngcs = (parts) => parts.map(p => p.ngc)
+
+      // The Change column for the version an event CREATED (the row above the event's row).
+      function eventChange (event) {
+        const from = andList(ngcs(event.from).map(n => esc(fmtNgc(n))))
+        return event.type === 'split'
+          ? '<strong class="govuk-tag govuk-tag--blue">Split</strong> from ' + from
+          : '<strong class="govuk-tag govuk-tag--blue">Merged</strong> from ' + from
+      }
+
+      // The parcel reference shown under the date of a version that belonged to another parcel.
+      function versionParcel (version) {
+        if (version.parcel) return 'Parcel ' + esc(fmtNgc(version.parcel))
+        const event = version.event
+        return event.type === 'split'
+          ? 'Parcel ' + esc(fmtNgc(event.from[0].ngc))
+          : 'Parcels ' + andList(ngcs(event.from).map(n => esc(fmtNgc(n))))
+      }
+
+      // What happened, for the detail of the version before a split or merge: a sentence and a
+      // "where the land went" table whose before and after areas add up (with the difference,
+      // so a gap would show).
+      function renderEvent (version) {
+        const event = version.event
+        // An inherited version of one of the parcels this one was merged from: say which.
+        const merge = versions.find(v => v.event && v.event.type === 'merge')
+        if (!event && version.parcel && merge) {
+          eventBox.innerHTML = '<p class="govuk-body govuk-!-margin-top-4">This was parcel ' + esc(fmtNgc(version.parcel)) +
+            '. On ' + merge.eventDate + ' it was merged with ' +
+            andList(ngcs(merge.event.from).filter(n => n !== version.parcel).map(n => esc(fmtNgc(n)))) +
+            ' into ' + andList(merge.event.to.map(p => thisOrRef(p.ngc))) + '.</p>'
+          eventBox.hidden = false
+          return
+        }
+        if (!event) {
+          eventBox.hidden = true
+          eventBox.innerHTML = ''
+          return
+        }
+        const date = version.eventDate
+        const from = event.from, to = event.to
+        const sentence = event.type === 'split'
+          ? 'This was parcel ' + esc(fmtNgc(from[0].ngc)) + '. On ' + date + ' it was split into ' + andList(to.map(p => thisOrRef(p.ngc))) + '.'
+          : 'This land was ' + from.length + ' parcels, ' + andList(from.map(p => esc(fmtNgc(p.ngc)))) + '. On ' + date + ' they were merged into ' + andList(to.map(p => thisOrRef(p.ngc))) + '.'
+        const sum = (parts) => parts.reduce((t, p) => t + p.areaHa, 0)
+        const diff = sum(to) - sum(from)
+        const row = (label, area, cls) =>
+          '<tr class="govuk-table__row ' + (cls || '') + '"><td class="govuk-table__cell">' + label + '</td>' +
+          '<td class="govuk-table__cell govuk-table__cell--numeric">' + area.toFixed(4) + '</td></tr>'
+        const labelRow = (text) =>
+          '<tr class="govuk-table__row app-lineage__label"><th scope="rowgroup" colspan="2" class="govuk-table__header">' + text + '</th></tr>'
+        eventBox.innerHTML =
+          '<p class="govuk-body govuk-!-margin-top-4">' + sentence + '</p>' +
+          '<table class="govuk-table">' +
+            '<caption class="govuk-table__caption govuk-table__caption--s">' + (event.type === 'split' ? 'Where the land went' : 'Where the land came from') + '</caption>' +
+            '<thead class="govuk-table__head"><tr class="govuk-table__row">' +
+              '<th scope="col" class="govuk-table__header">Parcel</th>' +
+              '<th scope="col" class="govuk-table__header govuk-table__header--numeric" style="white-space:nowrap">Area (ha)</th>' +
+            '</tr></thead>' +
+            '<tbody class="govuk-table__body">' +
+              labelRow('Before ' + date) +
+              from.map(p => row(esc(fmtNgc(p.ngc)), p.areaHa, 'app-lineage__part')).join('') +
+              labelRow('From ' + date) +
+              to.map(p => row(thisOrRef(p.ngc), p.areaHa, 'app-lineage__part')).join('') +
+              row('<strong>Difference</strong>', Math.abs(diff) < 0.00005 ? 0 : diff) +
+            '</tbody>' +
+          '</table>'
+        eventBox.hidden = false
+      }
+
+      // The Current tab: when and how this parcel was created, if an event made it.
+      function renderCreated () {
+        const made = versions.find(v => v.event && ngcs(v.event.to).includes(selectedNgc))
+        const inset = document.getElementById('current-tab-last-updated')
+        if (!made || !made.eventDate || !inset) return
+        const e = made.event
+        const p = document.createElement('p')
+        p.className = 'govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2'
+        p.innerHTML = e.type === 'split'
+          ? 'Created on ' + made.eventDate + ' when ' + esc(fmtNgc(e.from[0].ngc)) + ' was split into ' + andList(e.to.map(x => thisOrRef(x.ngc))) + '.'
+          : 'Created on ' + made.eventDate + ' by merging ' + andList(e.from.map(x => esc(fmtNgc(x.ngc)))) + '.'
+        inset.after(p)
+      }
+
+      // ── Tags: each version against the version BEFORE it ─────────────────────
+      // The base tags both tabs by comparing the chosen version with today's. Here the tags say
+      // what changed ON each version's date instead, like the Change column: the opened version
+      // is compared with its predecessor (Previous tab), and today's version with the newest
+      // previous version (Current tab, so it is the same whichever date is open). The oldest
+      // version has no predecessor, so it carries no tags. Re-applied after every reveal, as the
+      // base re-tags both tabs on every load.
+      //
+      // A version's predecessor, per parcel it covers (one, or a merge's former parcels): that
+      // parcel's newest version that began before it did. For the merge snapshot (begun when
+      // the last of its parcels changed, 3 February 2026) that is SX3964 7821's 27 September
+      // 2024 version and SX3964 6418's live 2010 one, compared parcel by parcel.
+      const own = (x) => JSON.parse(JSON.stringify(x))
+      let tagToken = 0
+      let taggedVersion = null   // the version whose tags the Previous tab carries (null: none opened)
+
+      // One version's covers (sorted and id-stamped like the base's, so diffCovers can pair
+      // them) and total area, read from its file. Its outline is only needed for the area.
+      function versionData (version) {
+        const file = version.file || history.beforeFile
+        return Promise.all([cachedFetchJson(file), cachedFetchJson(history.beforeFile), versionHedges(version)]).then(([snapshot, mergeSnapshot, hedges]) => {
+          const fallback = version.parcel && (mergeSnapshot.parcels || []).find(f => f.properties.SHEET_ID + f.properties.PARCEL_ID === version.parcel)
+          const parcels = snapshot.parcels || [snapshot.parcel || fallback].filter(Boolean)
+          return {
+            parcelCovers: own(snapshot.features || []),
+            parcelHedges: own(hedges || snapshot.hedges || []),
+            area: parcels.reduce((t, f) => t + parseFloat(f.properties.AREA_HA), 0)
+          }
+        })
+      }
+
+      // A version's hedgerows from its `hedges` file (undefined when it has none: the merge
+      // snapshot carries them itself).
+      function versionHedges (version) {
+        return version.hedges ? cachedFetchJson(version.hedges).then(fc => fc.features || []) : Promise.resolve(undefined)
+      }
+
+      // The predecessor of a version, as one combined set of covers and area; null when there is
+      // none (the oldest version of each of its parcels).
+      function predecessorData (version) {
+        const parts = version.event ? ngcs(version.event.from) : version.parcel ? [version.parcel] : []
+        const preds = parts.map(ngc => versions
+          .filter(v => v.parcel === ngc && v.validFrom && v.validFrom < version.validFrom)
+          .sort((a, b) => b.validFrom.localeCompare(a.validFrom))[0]).filter(Boolean)
+        if (!preds.length) return Promise.resolve(null)
+        return Promise.all(preds.map(versionData)).then(ds => {
+          // A hedge on the edge two of the parcels shared is recorded under both (same FEATURE_ID
+          // and length, different parcel): count it once, as the merge snapshot does.
+          const seen = new Set()
+          const hedges = ds.flatMap(x => x.parcelHedges).filter(h => {
+            const key = h.properties.FEATURE_ID + '|' + Math.round(parseFloat(h.properties.LENGTH))
+            if (seen.has(key)) return false
+            seen.add(key)
+            return true
+          })
+          const d = { parcelCovers: ds.flatMap(x => x.parcelCovers), parcelHedges: hedges, area: ds.reduce((t, x) => t + x.area, 0) }
+          stampIds(d)
+          return d
+        })
+      }
+
+      // Marks for version x's covers against its predecessor p (diffCovers' current side). When x
+      // spans several parcels (the merge snapshot), each parcel is compared with its own
+      // predecessor, so same-named covers in different parcels are never paired.
+      function marksAgainst (p, xCovers) {
+        const ngcOf = (f) => f.properties.SHEET_ID + f.properties.PARCEL_ID
+        const xParcels = [...new Set(xCovers.map(ngcOf))]
+        if (xParcels.length < 2) return diffCovers(p.parcelCovers, xCovers).curr
+        const out = new Map()
+        xParcels.forEach(ngc => {
+          const pc = p.parcelCovers.filter(f => ngcOf(f) === ngc)
+          if (pc.length) diffCovers(pc, xCovers.filter(f => ngcOf(f) === ngc)).curr.forEach((m, id) => out.set(id, m))
+        })
+        return out
+      }
+
+      // Hedgerow marks for version x's hedges against p's: the same hedge is the one with the same
+      // FEATURE_ID (not unique on its own: one hedge can be recorded as several segments), the
+      // closest in length among those. A hedge with no match is Added; a matched one whose
+      // length moved by a metre or more is Changed. Keyed by x's hedgeId (the row's).
+      function hedgeMarks (pHedges, xHedges) {
+        const out = new Map()
+        const left = [...pHedges]
+        const len = (h) => parseFloat(h.properties.LENGTH)
+        xHedges.forEach(h => {
+          const same = left.filter(o => o.properties.FEATURE_ID === h.properties.FEATURE_ID)
+            .sort((a, b) => Math.abs(len(a) - len(h)) - Math.abs(len(b) - len(h)))[0]
+          if (!same) return out.set(h.properties.hedgeId, { kind: 'added' })
+          left.splice(left.indexOf(same), 1)
+          const was = Math.round(len(same)), now = Math.round(len(h))
+          if (was !== now) out.set(h.properties.hedgeId, { kind: 'changed', direction: now > was ? 'up' : 'down', was: String(was) })
+        })
+        return out
+      }
+
+      function clearTags () {
+        resetSummaryRows()
+        document.querySelectorAll('#compare-data tr[data-land-cover-id], #compare-data tr[data-hedge-id]').forEach(tr => {
+          tr.classList.remove(...[...tr.classList].filter(c => c.startsWith('app-diff')))
+          tr.querySelectorAll('.govuk-tag, .app-diff__arrow, .govuk-visually-hidden, .app-diff__type').forEach(n => n.remove())
+        })
+      }
+
+      // Tag one tab's rows: version x (its covers as the base rendered them) against p.
+      function tagTab (tab, x, xArea, p) {
+        const body = document.getElementById('land-covers-table-body-' + tab)
+        marksAgainst(p, x.parcelCovers).forEach((m, id) => markRow(body.querySelector('tr[data-land-cover-id="' + id + '"]'), m))
+        const summary = (id, prev, curr, dp) => {
+          if (prev.toFixed(dp) === curr.toFixed(dp)) return
+          markRow(document.getElementById(id + tab).closest('tr'), { kind: 'changed', direction: curr > prev ? 'up' : 'down', was: prev.toFixed(dp) })
+        }
+        summary('parcel-total-area-', p.area, xArea, 4)
+        summary('parcel-land-covers-', p.parcelCovers.length, x.parcelCovers.length, 0)
+        summary('parcel-hedgerows-', p.parcelHedges.length, x.parcelHedges.length, 0)
+        const hedgeBody = document.getElementById('hedgerows-table-body-' + tab)
+        hedgeMarks(p.parcelHedges, x.parcelHedges).forEach((m, id) => markRow(hedgeBody.querySelector('tr[data-hedge-id="' + id + '"]'), m))
+      }
+
+      function applyTags (version) {
+        if (!data || !history || !history.beforeFile || !versions.length) return
+        taggedVersion = version
+        const token = ++tagToken
+        const latest = versions.find(v => !v.file) || versions[0]
+        Promise.all([versionData(latest).then(d => { stampIds(d); return d }), version ? predecessorData(version) : null])
+          .then(([dLatest, dPred]) => {
+            if (token !== tagToken) return
+            clearTags()
+            tagTab('current', data.current, parseFloat(data.current.selectedFeature.properties.AREA_HA), dLatest)
+            if (version && dPred) tagTab('previous', data.previous, parseFloat(data.previous.selectedFeature.properties.AREA_HA), dPred)
+          })
+          .catch(err => console.error('Failed to tag the versions:', err))
+      }
+
+      // The base re-tags both tabs its own way on every render (the first one included, before
+      // any date is opened): replace them each time. A reveal that follows re-applies for the
+      // version it opens, and the token drops whichever finishes out of turn.
+      document.addEventListener('compare:rendered', () => applyTags(taggedVersion))
+
+      // A merge: the Previous tab's land covers are grouped under the former parcel each was in
+      // (the rows keep their landCoverId, so map <-> row selection is unaffected). Re-run on
+      // every render; does nothing when the previous version is one parcel.
+      document.addEventListener('compare:rendered', (e) => {
+        const covers = e.detail.previous.parcelCovers
+        const parcelOf = new Map(covers.map(f => [f.properties.landCoverId, f.properties.SHEET_ID + f.properties.PARCEL_ID]))
+        const parcels = [...new Set(parcelOf.values())]
+        if (parcels.length < 2) return
+        const body = document.getElementById('land-covers-table-body-previous')
+        const rows = [...body.querySelectorAll('tr[data-land-cover-id]')]
+        const total = body.querySelector('tr[data-total-row]')
+        parcels.sort().forEach(ngc => {
+          const head = document.createElement('tr')
+          head.className = 'govuk-table__row app-lineage__label'
+          head.innerHTML = '<th scope="rowgroup" colspan="2" class="govuk-table__header">' + esc(fmtNgc(ngc)) + '</th>'
+          body.insertBefore(head, total)
+          rows.filter(tr => parcelOf.get(tr.dataset.landCoverId) === ngc).forEach(tr => body.insertBefore(tr, total))
+        })
+      })
+
+      // A parcel with no previous version at all (opened by clicking a surrounding parcel):
+      // the Previous tab just says so, and the map has only the current version to show, so
+      // the radios go.
+      if (!history || !history.beforeFile) {
+        list.innerHTML = '<p class="govuk-body">There are no previous versions of this parcel.</p>'
+        detail.hidden = true
+        const radios = document.querySelector('[data-version-radio]')
+        const group = radios && radios.closest('.govuk-form-group')
+        if (group) group.hidden = true
+        return
+      }
+
+      // No dates for this parcel: behave like the overlay page (tables shown straight away).
+      if (!versions.length) {
+        list.hidden = true
+        detail.hidden = false
+        return
+      }
+
+      // Check a version radio and fire change so the base's wiring shows that version on the
+      // map. Before the data loads the listener is not attached yet, but the base re-reads
+      // the checked radio once the map's datasets are ready, so the state still applies.
+      function setRadio (version) {
+        const radio = document.querySelector('[data-version-radio="' + version + '"]')
+        if (!radio || radio.checked) return
+        radio.checked = true
+        radio.dispatchEvent(new Event('change', { bubbles: true }))
+      }
+
+      // Swapping the list for the tables keeps the sidebar's scroll position, so a date picked
+      // from low in a long list would open the tables halfway down. Start them at the top, as a
+      // new page would: the sidebar scrolls itself on desktop; on mobile it does not (the page
+      // scrolls), so bring the tabs into view if they are above the viewport.
+      function scrollToTop () {
+        const sidebar = document.querySelector('.app-map-fullscreen__sidebar')
+        const tabs = document.querySelector('.app-compare__tabs')
+        if (sidebar) sidebar.scrollTop = 0
+        if (tabs && tabs.getBoundingClientRect().top < 0) tabs.scrollIntoView({ block: 'start' })
+      }
+
+      function reveal (version, button) {
+        dateText.textContent = version.validUntil
+        renderEvent(version)
+        applyTags(version)
+        list.hidden = true
+        detail.hidden = false
+        lastDateButton = button || null
+        setRadio('previous')
+        scrollToTop()
+        detail.focus({ preventScroll: true })
+      }
+
+      // Load the chosen date's snapshot (if it is not the one already on the page), then
+      // reveal the tables. One load at a time: the list is marked busy and clicks are ignored
+      // while a fetch is in flight, so two quick clicks cannot interleave. A failed load is
+      // logged and the tables are revealed on whatever snapshot the page already had.
+      function showDetail (version, button) {
+        const file = version.file || (history && history.beforeFile)
+        if (loading) return
+        if (!file || file === loadedFile) {
+          reveal(version, button)
+          return
+        }
+        loading = true
+        list.setAttribute('aria-busy', 'true')
+        // An inherited version whose file has no outline of its own uses its parcel's outline
+        // from the merge snapshot (the base would otherwise draw this parcel's).
+        const outline = version.parcel
+          ? cachedFetchJson(history.beforeFile).then(s => (s.parcels || []).find(f => f.properties.SHEET_ID + f.properties.PARCEL_ID === version.parcel))
+          : Promise.resolve(undefined)
+        Promise.all([outline, versionHedges(version)])
+          .then(([parcel, hedges]) => loadPreviousSnapshot(file, version.validUntil, { parcel, hedges }))
+          .then(() => { loadedFile = file })
+          .catch(err => console.error('Failed to load previous snapshot:', err))
+          .then(() => {
+            loading = false
+            list.removeAttribute('aria-busy')
+            reveal(version, button)
+          })
+      }
+
+      function showList () {
+        detail.hidden = true
+        list.hidden = false
+        setRadio('current')
+        ;(lastDateButton || list).focus()
+      }
+
+      // Read a date property (YYYYMMDDhhmmss) off a snapshot's features. Every cover of one
+      // parcel's snapshot carries the same one, but a snapshot of several parcels (before a
+      // merge) mixes their histories: the combined state began when the LAST of them changed,
+      // so VALID_FROM takes the latest; VALID_TO (the event) is shared.
+      function snapshotDate (snapshot, prop) {
+        const values = (snapshot.features || []).map(f => f.properties && f.properties[prop]).filter(Boolean).sort()
+        if (!values.length) return ''
+        return prop === 'VALID_FROM' ? values[values.length - 1] : values[0]
+      }
+
+      // The day before a YYYYMMDDhhmmss stamp, as YYYYMMDD (what fmtValidFrom takes). VALID_TO
+      // is the instant the next version was created, so the last day in force is the day before.
+      function dayBefore (v) {
+        if (!v || v.length < 8) return ''
+        const dt = new Date(Number(v.slice(0, 4)), Number(v.slice(4, 6)) - 1, Number(v.slice(6, 8)) - 1)
+        const pad = (n) => String(n).padStart(2, '0')
+        return String(dt.getFullYear()) + pad(dt.getMonth() + 1) + pad(dt.getDate())
+      }
+
+      // The Change cell: the event this version was created by (from the entry below it), or
+      // the entry's own `change` text.
+      function changeHtml (i) {
+        const older = versions[i + 1]
+        if (older && older.event) return eventChange(older.event)
+        return versions[i].change ? esc(versions[i].change) : ''
+      }
+
+      function addRow (version, i) {
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row'
+        const td = document.createElement('td')
+        td.className = 'govuk-table__cell'
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.className = 'govuk-link app-link-button'
+        button.dataset.dateVersion = String(i)
+        button.textContent = version.label
+        td.appendChild(button)
+        // Grouped, the group heading already names the parcel.
+        if ((version.event || version.parcel) && !GROUPED) td.insertAdjacentHTML('beforeend', '<span class="govuk-body-s app-dates__parcel govuk-!-margin-bottom-0">' + versionParcel(version) + '</span>')
+        const change = document.createElement('td')
+        change.className = 'govuk-table__cell app-dates__change'
+        change.innerHTML = changeHtml(i)
+        tr.append(td, change)
+        listBody.appendChild(tr)
+      }
+
+      // Grouped view: a heading row whenever the parcel changes. Each group runs until an event
+      // (a version before a split or merge starts the next, older, group).
+      function addGroupHeading (text) {
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row app-dates__group'
+        tr.innerHTML = '<th scope="rowgroup" colspan="2" class="govuk-table__header">' + text + '</th>'
+        listBody.appendChild(tr)
+      }
+      function groupHeading (version, first) {
+        if (version.parcel) return esc(fmtNgc(version.parcel)) + ', before it was merged'
+        if (version.event) {
+          const e = version.event
+          return e.type === 'split'
+            ? esc(fmtNgc(e.from[0].ngc)) + ', before it was split'
+            : andList(ngcs(e.from).map(n => esc(fmtNgc(n)))) + ', before they were merged'
+        }
+        return first ? esc(fmtNgc(selectedNgc)) + ' (this parcel)' : null
+      }
+
+      // Each row's date is the version's VALID_FROM, and its inset text the day before its
+      // VALID_TO, both read from its snapshot file so they stay right when the mocked files are
+      // swapped for real ones; an event happened on its version's VALID_TO. The files go
+      // through the base's cache (the real snapshot is already in it), and the list is built
+      // once they have all settled so the rows land in order. A file that cannot be read is
+      // logged and left out: choosing it would fail in the same way.
+      Promise.all(versions.map(version => {
+        const file = version.file || (history && history.beforeFile)
+        return cachedFetchJson(file)
+          .then(snapshot => {
+            version.validFrom = snapshotDate(snapshot, 'VALID_FROM')
+            version.label = fmtValidFrom(version.validFrom)
+            version.validUntil = fmtValidFrom(dayBefore(snapshotDate(snapshot, 'VALID_TO')))
+            version.eventDate = fmtValidFrom(snapshotDate(snapshot, 'VALID_TO'))
+          })
+          .catch(err => console.error('Failed to read snapshot for the dates list:', file, err))
+      })).then(() => {
+        // Grouped: in DATE_VERSIONS order, a heading wherever the parcel changes. Otherwise one
+        // list, newest first across every parcel (a stable sort, so on the same date the
+        // DATE_VERSIONS order decides — the merge snapshot before the parcel it shares a date
+        // with).
+        const groupKey = (v) => v.event ? 'event' : (v.parcel || selectedNgc)
+        const order = versions.map((version, i) => i).filter(i => versions[i].label)
+        if (!GROUPED) order.sort((a, b) => (versions[b].validFrom || '').slice(0, 8).localeCompare((versions[a].validFrom || '').slice(0, 8)))
+        let lastKey = null
+        order.forEach((i, n) => {
+          const version = versions[i]
+          if (GROUPED && groupKey(version) !== lastKey) {
+            const heading = groupHeading(version, n === 0)
+            if (heading) addGroupHeading(heading)
+            lastKey = groupKey(version)
+          }
+          addRow(version, i)
+        })
+        renderCreated()
+        // The Current tab against the newest previous version, before any date is opened.
+        applyTags(null)
+      })
+
+      listBody.addEventListener('click', (e) => {
+        const button = e.target.closest('[data-date-version]')
+        if (button) showDetail(versions[Number(button.dataset.dateVersion)], button)
+      })
+      returnButton.addEventListener('click', showList)
+    })()
+  </script>
+{% endblock %}
