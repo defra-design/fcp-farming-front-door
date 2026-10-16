@@ -1232,6 +1232,16 @@ img.design-history {
   margin: 30px 0;
 }
 
+// Status table: a last column of tags (Yes / Partly addressed / Not addressed) that
+// never wraps. govuk-tag's 160px max-width would otherwise break "Partly addressed".
+.app-status-table {
+  .govuk-table__header,
+  .govuk-table__cell { padding-right: govuk-spacing(3); }
+  th:last-child,
+  td:last-child { padding-right: 0; white-space: nowrap; }
+  .govuk-tag { max-width: none; }
+}
+
 // Light grey notification banner for "What this means for the design"
 .app-notification-banner--grey {
   border-color: govuk-colour("light-grey");

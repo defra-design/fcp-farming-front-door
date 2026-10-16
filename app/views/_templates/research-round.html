@@ -1,0 +1,211 @@
+{#
+  Research round template
+  =======================
+  One page per round of user research, filed with the version it tested. Copy this file to
+  app/views/<version>/_design-history/research-<tested-x-y>.html and replace every
+  [square bracket] placeholder. Preview it at /_templates/research-round.
+
+  The design history for the next iteration links here from each decision's Problem row,
+  so findings are written once. See app/views/v18/_design-history/research-1-1.html.
+
+  Structure:
+    1. Summary         method, participants, headline finding
+    2. Themes          one block per theme: a What we learned banner, the evidence,
+                       participant quotes, a grey What this means for the design banner
+    3. Task outcomes   one block per task: results and outcomes tables
+    4. Recommended actions
+    Right column       round, version tested, participants, the iteration it led to
+
+  - Quote participants exactly, with their participant number. Quotes keep their
+    quotation marks; UI labels don't.
+  - Follow the design-history-copy skill (.claude/skills/design-history-copy/SKILL.md).
+  - Before shipping, run: npm run -s check-links -- /<version>/_design-history/research-<x-y>
+#}
+
+{% extends "layouts/main-rebrand.html" %}
+
+{% set pageName = "Design history" %}
+
+{%- block beforeContent -%}
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">[Version, e.g. V18]</a>
+    </li>
+  </ol>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">User research: round [N]</span>
+      [Journey name] (v[tested x.y])
+    </h1>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+
+    {# =================================================================================
+       1. Summary
+       ================================================================================= #}
+
+    <p>Round [N] of user research tested v[tested x.y] in [method, e.g. moderated remote usability sessions]. [How participants used the prototype.]</p>
+
+    <p>There were [N] participants: [roles]. [Range of holdings or context.]</p>
+
+    <p>[Headline finding in 1 or 2 sentences.]</p>
+
+
+    {# =================================================================================
+       2. Themes: one block per theme, separated by a section break. Number the ids.
+       ================================================================================= #}
+
+    <h2 class="govuk-heading-l">What we learned about users</h2>
+
+    <div class="govuk-notification-banner" role="region" aria-labelledby="what-we-learned-title-1" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="what-we-learned-title-1">What we learned</h3>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">[Theme, as one sentence.]</p>
+      </div>
+    </div>
+
+    <p>[Evidence for the theme.] Participants described:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>[observation]</li>
+      <li>[observation]</li>
+    </ul>
+
+    <div class="govuk-inset-text">
+      <p class="govuk-body">"[Participant quote.]" (P[n])</p>
+    </div>
+
+    <div class="govuk-notification-banner app-notification-banner--grey" role="region" aria-labelledby="design-implication-title-1" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="design-implication-title-1">What this means for the design</h3>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">[Design implication.]</p>
+      </div>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    {# Next theme: copy the block above with ids ending -2. #}
+
+
+    {# =================================================================================
+       3. Task outcomes: one block per task. Outcome tags: green Yes, yellow Not always /
+       Not yet, grey No.
+       ================================================================================= #}
+
+    <h2 class="govuk-heading-l">Task outcomes</h2>
+
+    <h3 class="govuk-heading-m">
+      <span class="govuk-caption-m">Task 1</span>
+      [Task name]
+    </h3>
+
+    <p>[What participants were asked to do.]</p>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Results</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Observation</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Participants</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">[Observation]</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">[n] of [N]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="govuk-table app-status-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Outcomes</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Outcome</th>
+          <th scope="col" class="govuk-table__header">Result</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Users can [outcome]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Yes</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Users can [outcome]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Not always</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    {# =================================================================================
+       4. Recommended actions. The next design history's status table answers these.
+       ================================================================================= #}
+
+    <h2 class="govuk-heading-l">Recommended actions</h2>
+
+    <h3 class="govuk-heading-m">Immediate priorities</h3>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>[Priority.]</li>
+    </ol>
+
+    <h3 class="govuk-heading-m">Next iteration</h3>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>[Action.]</li>
+    </ol>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <aside role="complementary">
+      <h2 class="govuk-heading-s">Page details</h2>
+      <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-font-size-16">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Round</dt>
+          <dd class="govuk-summary-list__value">[N]</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Date</dt>
+          <dd class="govuk-summary-list__value">[Month year]</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Tested</dt>
+          <dd class="govuk-summary-list__value"><a class="govuk-link" href="design-history-[tested-x-y]">v[tested x.y]</a></dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Participants</dt>
+          <dd class="govuk-summary-list__value">[N]</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Led to</dt>
+          <dd class="govuk-summary-list__value"><a class="govuk-link" href="design-history-[next-x-y]">v[next x.y]</a></dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-s">Related links</h2>
+      <ul class="govuk-list govuk-!-font-size-16">
+        <li><a class="govuk-link" href="[Research report URL]" rel="noreferrer noopener" target="_blank">[Research report] (opens in new tab)</a></li>
+      </ul>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

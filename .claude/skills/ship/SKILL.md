@@ -35,6 +35,7 @@ For each changed view under `app/views/`, work out its URL (the path under `app/
 - Map pages under `v18/` usually need a `?parcel=` query string to render meaningfully.
 - For changed Sass, confirm `/public/stylesheets/application.css` returns 200 and contains the new selector.
 - If a page returns an error, stop and report it — don't ship a broken page.
+- For each changed design history page (`app/views/**/_design-history/*.html`), and for any change to an `app/data/*-pages.js` page list or to pages a design history links to, run `npm run -s check-links -- <design history URL>` (e.g. `/v18/_design-history/design-history-1-2`). It fetches every internal link on the page and flags broken links, empty hrefs (an unknown page id) and links to pages marked `parked`. Fix broken or parked links before shipping, or ask the user. Some older design histories (v9, v18 1.0) already have broken links; only block on problems in the pages you're shipping.
 
 ## 4. Write the commit message
 
