@@ -44,7 +44,7 @@
       <li>added 4 variants that show both versions on a single map</li>
     </ul>
 
-    {# Structure: summary, research findings and what we changed, UI changes and layout
+    {# Structure: summary, research findings and what we are prioritising, UI changes and layout
        iterations (one h3 per decision
        (problem and hypothesis, what we did, options considered, technical notes), what
        we're testing next, then reference material. Template:
@@ -57,16 +57,16 @@
       {% endif %}{% endfor %}
     </ul>
 
-    <h2 class="govuk-heading-l">Research findings and what we changed</h2>
+    <h2 class="govuk-heading-l">Research findings and what we are prioritising</h2>
 
-    <p>v1.2 responds to round 10 of user research, which tested v1.1 with 7 participants. The <a class="govuk-link" href="research-1-1">research on v1.1</a> found that:</p>
+    <p>The <a class="govuk-link" href="research-1-1">research on v1.1</a> found that:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>users are trying to verify information, not simply view it</li>
-      <li>confidence matters more than task completion</li>
-      <li>historic mapping solves a genuine user problem</li>
-      <li>users expect mapping tools to behave like mapping tools</li>
-      <li>adviser and agent workflows differ from farmer workflows</li>
+      <li>Users are trying to verify information, not simply view it</li>
+      <li>Confidence matters more than task completion</li>
+      <li>Historic mapping solves a genuine user problem</li>
+      <li>Users expect mapping tools to behave like mapping tools</li>
+      <li>Adviser and agent workflows differ from farmer workflows</li>
     </ul>
 
 
@@ -117,7 +117,7 @@
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Strengthen the interactions between the map and the information panel</th>
+          <th scope="row" class="govuk-table__header">Strengthen the interactions between the map and the data table</th>
           <td class="govuk-table__cell"><p>Clicking a land cover or hedgerow on the map highlights its panel row.</p> <p>Clicking a panel row also highlights the land cover or hedgerow on the map.</p></td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Done</strong></td>
         </tr>
@@ -128,7 +128,7 @@
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Improve the discoverability of historic mapping</th>
-          <td class="govuk-table__cell">Tabs added to the information panel to separate current and previous versions of a land parcel data.</td>
+          <td class="govuk-table__cell">Tabs added to the data table to separate current and previous versions of a land parcel data.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
         </tr>
         <tr class="govuk-table__row">
@@ -141,6 +141,31 @@
           <td class="govuk-table__cell">Satellite imagery to be the default map style.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Done</strong></td>
         </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Why and when changes were made</th>
+          <td class="govuk-table__cell">[What v1.2 does about this]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Work in progress</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Measurement tools for distance and area</th>
+          <td class="govuk-table__cell">[What v1.2 does about this]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Work in progress</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Searching, filtering and naming parcels by field name</th>
+          <td class="govuk-table__cell">[What v1.2 does about this]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Future iteration</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Selecting, reviewing and exporting multiple parcels</th>
+          <td class="govuk-table__cell">[What v1.2 does about this]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Future iteration</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Separate workflows for agents, advisers and estate managers</th>
+          <td class="govuk-table__cell">[What v1.2 does about this]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Future iteration</strong></td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -149,21 +174,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <p>v1.2 does not address these findings:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>why and when changes were made</li>
-      <li>measurement tools for distance and area</li>
-      <li>searching, filtering and naming parcels by field name</li>
-      <li>selecting, reviewing and exporting multiple parcels</li>
-      <li>separate workflows for agents, advisers and estate managers</li>
-    </ul>
-
     <h2 class="govuk-heading-l">UI changes</h2>
 
-    <h3 class="govuk-heading-m" id="land-covers-clickable">Clickable land covers</h3>
+    <h3 class="govuk-heading-m" id="land-covers-clickable">Data tables</h3>
 
-    <p>In v1.1, only hedgerows on the map were clickable. Land covers are now clickable too, so clicking either highlights its row in the information panel.</p>
+    <p>In v1.1, only hedgerows on the map were clickable. Land covers are now clickable too, so clicking either highlights its row in the data table.</p>
 
     <h4 class="govuk-heading-s">Before: v1.1</h4>
     <img src="/public/images/design-history/v18/1-1/hedgerows-screenshot.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
@@ -189,7 +204,7 @@
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Problem</dt>
-        <dd class="govuk-summary-list__value">6 of 7 participants expected the map and information panel to be linked. This was the most frequent usability finding in the <a class="govuk-link" href="research-1-1">research on v1.1</a>.</dd>
+        <dd class="govuk-summary-list__value">6 of 7 participants expected the map and data table to be linked. This was the most frequent usability finding in the <a class="govuk-link" href="research-1-1">research on v1.1</a>.</dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">We believe</dt>

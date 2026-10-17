@@ -100,10 +100,12 @@
     {# =================================================================================
        2. Research this iteration responds to. Themes only: the findings, quotes and
        task outcomes live on the research round page. Status tags: green Done, yellow
-       Partly addressed, grey Not addressed. Delete if there was no research.
+       Partly addressed, blue Work in progress, grey Future iteration. Every priority and
+       finding from the research gets a row, including ones this iteration doesn't
+       address. Delete if there was no research.
        ================================================================================= #}
 
-    <h2 class="govuk-heading-l">Research findings and what we changed</h2>
+    <h2 class="govuk-heading-l">Research findings and what we are prioritising</h2>
 
     <p>v[x.y] responds to round [N] of user research, which tested v[previous x.y] with [N] participants. The <a class="govuk-link" href="research-[previous-x-y]">research on v[previous x.y]</a> found that:</p>
 
@@ -137,18 +139,17 @@
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
         </tr>
         <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">[Priority]</th>
-          <td class="govuk-table__cell">[Why it was not addressed.]</td>
-          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Not addressed</strong></td>
+          <th scope="row" class="govuk-table__header">[Finding being worked on]</th>
+          <td class="govuk-table__cell">[What v[x.y] does about this]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Work in progress</strong></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">[Finding for a later iteration]</th>
+          <td class="govuk-table__cell">[What v[x.y] does about this]</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Future iteration</strong></td>
         </tr>
       </tbody>
     </table>
-
-    <p>v[x.y] does not address these findings:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>[finding]</li>
-    </ul>
 
 
     {# =================================================================================
