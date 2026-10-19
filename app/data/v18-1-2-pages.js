@@ -27,7 +27,7 @@ const pages = [
     url: 'view-land-parcel-dates-list-splits-and-merge?parcel=SX39646918',
     linkText: 'SX39646918 (SX3964 6418 + SX3964 7821)',
     extraLinks: [{ text: 'Grouped list (splitView=grouped)', url: 'view-land-parcel-dates-list-splits-and-merge?parcel=SX39646918&splitView=grouped' }],
-    status: 'live',
+    status: 'parked',
     designHistory: true
   },
   { id: 'compare-layers', name: 'Compare versions (single map: layers panel)', url: 'view-land-parcel-compare-layers?parcel=SX39647821', status: 'parked' },

@@ -34,6 +34,7 @@
       (v0.0.22-alpha).
     </p>
 
+    {# Summary list: commented out for now.
     <p>This iteration focused on the land parcel page. We:</p>
 
     <ul class="govuk-list govuk-list--bullet">
@@ -41,8 +42,9 @@
       <li>simplified the Key and Layers panels</li>
       <li>applied both changes to the 2 historical land parcel views (SX3963 2340 and SX3964 7821)</li>
       <li>added side by side and stacked pages to compare a previous version of a parcel with the current one</li>
-      <li>added 4 variants that show both versions on a single map</li>
+      <li>added 3 variants that show both versions on a single map</li>
     </ul>
+    #}
 
     {# Structure: summary, research findings and what we are prioritising, UI changes and layout
        iterations (one h3 per decision
@@ -51,11 +53,13 @@
        app/views/_templates/design-history.html #}
 
     {# Pages come from app/data/v18-1-2-pages.js (live pages with designHistory: true). #}
+    {# Page links: commented out for now.
     <ul class="govuk-list govuk-list--bullet">
       {% for p in v18_12.live %}{% if p.designHistory %}
       <li><a class="govuk-link" href="{{ p.href }}">{{ p.path }}</a></li>
       {% endif %}{% endfor %}
     </ul>
+    #}
 
     <h2 class="govuk-heading-l">Research findings and what we are prioritising</h2>
 
@@ -74,8 +78,8 @@
 
   <div class="govuk-grid-column-one-third">
     <aside role="complementary">
-      <h2 class="govuk-heading-s">Page details</h2>
-      <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-font-size-16">
+      <!-- <h2 class="govuk-heading-s">Page details</h2> -->
+      <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Date</dt>
           <dd class="govuk-summary-list__value">September to October 2026</dd>
@@ -91,7 +95,7 @@
       </dl>
 
       <h2 class="govuk-heading-s">Other iterations</h2>
-      <ul class="govuk-list govuk-!-font-size-16">
+      <ul class="govuk-list">
         <li><a class="govuk-link" href="design-history-1-1">Previous: v1.1</a></li>
         <li><a class="govuk-link" href="design-history-1-3">Next: v1.3</a></li>
       </ul>
@@ -118,12 +122,12 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Strengthen the interactions between the map and the data table</th>
-          <td class="govuk-table__cell"><p>Clicking a land cover or hedgerow on the map highlights its panel row.</p> <p>Clicking a panel row also highlights the land cover or hedgerow on the map.</p></td>
+          <td class="govuk-table__cell"><p>Clicking a land cover or hedgerow on the map highlights its data table row.</p> <p>Clicking a data table row also highlights the land cover or hedgerow on the map.</p></td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Done</strong></td>
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Improve confidence identifying mapping changes</th>
-          <td class="govuk-table__cell"><p>Tags and arrows highlight changes in the panel.</p><p>Changes outlined on whole land covers within the map.</p></td>
+          <td class="govuk-table__cell"><p>Tags and arrows highlight changes in the data table.</p><p>Changes outlined on whole land covers within the map.</p></td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
         </tr>
         <tr class="govuk-table__row">
@@ -148,22 +152,22 @@
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Measurement tools for distance and area</th>
-          <td class="govuk-table__cell">[What v1.2 does about this]</td>
-          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Work in progress</strong></td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="#measure-tools">Measure tools</a> on the map measure a distance or an area as the user draws.</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Done</strong></td>
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Searching, filtering and naming parcels by field name</th>
-          <td class="govuk-table__cell">[What v1.2 does about this]</td>
+          <td class="govuk-table__cell">Not addressed in this version.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Future iteration</strong></td>
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Selecting, reviewing and exporting multiple parcels</th>
-          <td class="govuk-table__cell">[What v1.2 does about this]</td>
+          <td class="govuk-table__cell">Not addressed in this version.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Future iteration</strong></td>
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Separate workflows for agents, advisers and estate managers</th>
-          <td class="govuk-table__cell">[What v1.2 does about this]</td>
+          <td class="govuk-table__cell">Not addressed in this version.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Future iteration</strong></td>
         </tr>
       </tbody>
@@ -181,15 +185,16 @@
     <p>In v1.1, only hedgerows on the map were clickable. Land covers are now clickable too, so clicking either highlights its row in the data table.</p>
 
     <h4 class="govuk-heading-s">Before: v1.1</h4>
-    <img src="/public/images/design-history/v18/1-1/hedgerows-screenshot.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
+    <img src="/public/images/design-history/v18/1-2/hedgerow-highlight.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
     <ul class="govuk-list govuk-list--bullet">
-      <li>clicking a hedgerow highlighted its row in the Hedgerows table</li>
+      <li>clicking a hedgerow highlighted its row in the Hedgerows data table</li>
       <li>land covers could not be clicked</li>
     </ul>
 
     <h4 class="govuk-heading-s">After: v1.2</h4>
+        <img src="/public/images/design-history/v18/1-2/landcover-highlight.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
     <ul class="govuk-list govuk-list--bullet">
-      <li>clicking a land cover highlights its row in the Land covers table and makes it bold</li>
+      <li>clicking a land cover highlights its row in the Land covers data table and makes it bold</li>
       <li>the land cover is outlined on the map</li>
       <li>clicking anywhere else on the map clears the selection</li>
       <li>where a hedgerow and a land cover overlap, the hedgerow takes the click, so only one thing is highlighted</li>
@@ -198,7 +203,7 @@
 
     {# After screenshot to add: a land cover selected on the 1.2 land parcel page. #}
 
-    <h4 class="govuk-heading-s">Why we changed it</h4>
+    <h4 class="govuk-heading-m">Why we changed it</h4>
 
     {# Draft hypothesis, written from the research findings: check before sharing. #}
     <dl class="govuk-summary-list">
@@ -208,11 +213,11 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">We believe</dt>
-        <dd class="govuk-summary-list__value">Linking map features and panel rows both ways will help users match what they see on the map to its data.</dd>
+        <dd class="govuk-summary-list__value">Linking map features and data table rows both ways will help users match what they see on the map to its data.</dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">We'll know if</dt>
-        <dd class="govuk-summary-list__value">Participants can match a land cover on the map to its row in the panel without help.</dd>
+        <dd class="govuk-summary-list__value">Participants can match a land cover on the map to its row in the data table without help.</dd>
       </div>
     </dl>
 
@@ -245,7 +250,7 @@
       <li>the Other parcels and Land parcel checkboxes have been removed to simplify the panel</li>
     </ul>
 
-    <h4 class="govuk-heading-s">Why we changed it</h4>
+    <h4 class="govuk-heading-m">Why we changed it</h4>
 
     {# Draft hypothesis, written from the research findings: check before sharing. #}
     <dl class="govuk-summary-list">
@@ -269,6 +274,148 @@
       </summary>
       <div class="govuk-details__text">
         <p>The mapping component has no parent checkbox for a group of layers, so the prototype adds one. This is a prototype workaround and would need to be raised with the interactive map team for the real service.</p>
+      </div>
+    </details>
+
+    <h3 class="govuk-heading-m" id="measure-tools">Measure tools</h3>
+
+    {# Placeholder link: point it at the 1.2 land parcel page once 1.3 is merged into 1.2. #}
+    <p>The map on the <a class="govuk-link" href="#">[land parcel page]</a> now has a Measure tools menu, so users can measure a distance or an area themselves.</p>
+
+    {# Screenshots to add: the Measure tools menu open, and the Area panel showing a measurement. #}
+
+    <h4 class="govuk-heading-s">Distance</h4>
+    <img src="/public/images/design-history/v18/1-2/measure-distance.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
+    
+    <h4 class="govuk-heading-s">Area</h4>
+    <img src="/public/images/design-history/v18/1-2/measure-area.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the menu has 4 options: Measure a distance, Measure an area, Edit measurement and Clear measurement</li>
+      <li>Edit measurement and Clear measurement are disabled until there is a measurement</li>
+      <li>a panel on the map shows the figure live as the user draws, headed Distance or Area</li>
+      <li>there is one measurement at a time: starting a new one clears the last</li>
+      <li>screen readers announce the figure each time a point is added and when the shape is finished</li>
+    </ul>
+
+    <h4 class="govuk-heading-m">What the panel shows</h4>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Tool</th>
+          <th scope="col" class="govuk-table__header">Figures</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Distance</th>
+          <td class="govuk-table__cell">Length in metres, to the nearest metre. This matches the Length (m) column in the Hedgerows table.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Area</th>
+          <td class="govuk-table__cell"><p>Hectares to 4 decimal places, matching the Land covers table and the total area, so figures can be compared directly. Below that, the area in square metres and the perimeter in metres, for example 1.9638 ha, then 19,638 m² · perimeter 669 m.</p>
+          <p>Square metres are included because hectares are hard to picture for small shapes: 0.0113 ha is easier to understand as 113 m². The perimeter answers questions like how much fencing or hedging would go round an area.</p></td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+
+    <h4 class="govuk-heading-m">Why we changed it</h4>
+
+    {# Draft hypothesis, written from the research findings: check before sharing. #}
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Problem</dt>
+        <dd class="govuk-summary-list__value">4 of 7 participants expected measurement tools for distance and area (<a class="govuk-link" href="research-1-1">research on v1.1</a>).</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We believe</dt>
+        <dd class="govuk-summary-list__value">Letting users measure on the map will help them check parcel and land cover figures against what they see.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We'll know if</dt>
+        <dd class="govuk-summary-list__value">Participants can measure a distance or an area without help, and say whether they need the square metres and perimeter line. If not, it could be cut to hectares only, or show square metres only for small areas.</dd>
+      </div>
+    </dl>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Technical notes</span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>Measure tools use the interactive map's draw plugin, which is only in the newer map version (0.0.52). Figures are worked out on the curved surface of the Earth, using the same formula as the map component's own area check (<code>@turf/area</code>).</p>
+        <p>RPA's published areas are usually measured on the flat British National Grid, so tracing an existing land cover may differ slightly in the last decimal place. Most of the difference comes from where the user places the points, not the maths.</p>
+      </div>
+    </details>
+
+    <h3 class="govuk-heading-m" id="change-tags">Data tables: change tags and arrows</h3>
+
+    <p>When a previous version is shown, the data tables now mark every difference from the current version. Users no longer have to compare 2 sets of figures to find what changed.</p>
+
+    <img src="/public/images/design-history/v18/1-2/data-table.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4" style="width: 75%;">
+
+    
+
+    {# Screenshot to add: the Land covers table with Added, Removed and Changed tags and an arrow. #}
+
+    <h4 class="govuk-heading-s">Tags</h4>
+    <p>A tag in the first cell of a row shows:</p>
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      <li><strong class="govuk-tag govuk-tag--green">Added</strong> on a current row with no equivalent in the previous version</li>
+      <li><strong class="govuk-tag govuk-tag--red">Removed</strong> on a previous row with no equivalent in the current version</li>
+      <li><strong class="govuk-tag govuk-tag--yellow">Changed</strong> on both rows where an area or length has changed</li>
+    </ul>
+
+    <h4 class="govuk-heading-s">Arrows</h4>
+    <p>A changed value on the current tab also has an up or down arrow before it, showing whether it went up or down. It appears only on the current tab, as an arrow beside the previous value would suggest that value had moved.</p>
+    <p>Summary rows are marked the same way when totals differ. The Total rows under each table are not marked, as a total changes whenever a row above it does.</p>
+
+    <h4 class="govuk-heading-s">Where they appear</h4>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Layout</th>
+          <th scope="col" class="govuk-table__header">How changes are marked</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Tabbed data tables, side by side and stacked</th>
+          <td class="govuk-table__cell">Each version of a land parcel has its own data table. Previous land parcel rows get a tag only. Current rows get a tag, and an arrow for a changed value.</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Single set of tables</th>
+          <td class="govuk-table__cell">The current version's rows, with removed covers listed at the end with their previous area and a Removed tag.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="govuk-heading-m">Why we changed it</h4>
+
+    {# Draft hypothesis, written from the research findings: check before sharing. #}
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Problem</dt>
+        <dd class="govuk-summary-list__value">Most participants were not confident they had found all the changes on a parcel, and wanted to understand what had changed (<a class="govuk-link" href="research-1-1">research on v1.1</a>).</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We believe</dt>
+        <dd class="govuk-summary-list__value">Tagging each changed row, and showing which way a value moved, will help users find every change without comparing figures themselves.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We'll know if</dt>
+        <dd class="govuk-summary-list__value">Participants can say what changed on a parcel, and whether each area went up or down, without help.</dd>
+      </div>
+    </dl>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Technical notes</span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>The arrow is hidden from screen readers. Instead they hear increased or decreased and the previous value after the figure, for example 0.0447 increased (was 0.0225).</p>
+        <p>A value only counts as changed if it differs at the number of decimal places shown, so a tag never marks a difference users cannot see.</p>
       </div>
     </details>
 
@@ -299,13 +446,24 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h4 class="govuk-heading-s govuk-!-static-margin-bottom-0">Side by side</h4>
+    <h4 class="govuk-heading-m govuk-!-static-margin-bottom-0">Side by side</h4>
 
     <img src="/public/images/design-history/v18/1-2/compare-versions-side-by-side.webp" alt="" class="design-history">
 
-    <h4 class="govuk-heading-s govuk-!-static-margin-bottom-0">Stacked</h4>
+      <h3 class="govuk-heading-s">Feedback from UCD team</h3>
+
+      <p class="govuk-body">“It’s a big cognitive load that” <span class="govuk-hint govuk-!-display-inline">(UR)</span></p>
+      <p class="govuk-body">“It’s busy” <span class="govuk-hint govuk-!-display-inline">(CD)</span></p>
+      <p class="govuk-body">“Can we even display 2 maps on a screen?” <span class="govuk-hint govuk-!-display-inline">(IxD)</span></p>
+
+    <h4 class="govuk-heading-m govuk-!-static-margin-bottom-0">Stacked</h4>
 
     <img src="/public/images/design-history/v18/1-2/compare-versions-stacked.webp" alt="" class="design-history">
+
+      <h3 class="govuk-heading-s">Feedback from UCD team</h3>
+
+      <p class="govuk-body">“Much map and page scrolling” <span class="govuk-hint govuk-!-display-inline">(UR)</span></p>
+      <p class="govuk-body">“Woah!” <span class="govuk-hint govuk-!-display-inline">(CD)</span></p>
 
   </div>
 </div>
@@ -313,21 +471,26 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <p>Each version has its own column with a map. The Summary, Land covers and Hedgerows tables from the land parcel page. A highlighted panel gives the previous version's date range, and each column repeats its date so the tables line up. On small screens the columns stack.</p>
+     <h4 class="govuk-heading-m" id="why-not-2-maps">How these layouts work</h4>
+
+    <p>Each version has its own column with a map. A text insert gives the previous version's date range, the last updated date is diplayed on the current version. On small screens the columns stack.</p>
 
     <p>Panning or zooming one map moves the other, so both show the same area. Both open framed on the parcel. Each map keeps its own Key, Layers panel and base map.</p>
 
-    <p>The tables highlight each difference, so users do not have to spot every change themselves.</p>
+    <p>The tables highlight each difference with <a class="govuk-link" href="#change-tags">tags and arrows</a>, so users do not have to spot every change themselves.</p>
 
-    <p>A tag in the first cell of a row shows:</p>
+    <h4 class="govuk-heading-m" id="why-not-2-maps">Why we moved away from 2 maps</h4>
 
-    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-      <li><strong class="govuk-tag govuk-tag--green">Added</strong> on a current row with no equivalent in the previous version</li>
-      <li><strong class="govuk-tag govuk-tag--red">Removed</strong> on a previous row with no equivalent in the current version</li>
-      <li><strong class="govuk-tag govuk-tag--yellow">Changed</strong> on both rows where an area or length has changed</li>
+    <p>Participants asked for side by side views, but the need behind it was confidence that they had found every change. 2 maps still leave users to spot differences by eye, so we moved to <a class="govuk-link" href="#compare-single-map">Comparing land parcel versions on a single map</a>. We have not tested either layout with users.</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the layouts only fit 2 parcelversions, but parcels can have many</li>
+      <li>a small change is hard to see across 2 maps, but sits in one place when both versions share a map</li>
+      <li>side by side halves the width of each map and table, so small land covers are hard to see and table rows wrap</li>
+      <li>stacked maps are taller than most laptop screens, so users have to scroll between versions</li>
+      <li>on mobile, and when zoomed in to 200% or more, both layouts become a single column with 2 Map view buttons, and the fullscreen map shows one version at a time</li>
+      <li>keyboard and screen reader users go through every map control, Key, Layers panel and table twice</li>
     </ul>
-
-    <p>A changed value on the current side also has an up or down arrow. It appears only on the current side, as an arrow beside the previous value would suggest that value had moved. Summary rows are marked the same way when totals differ.</p>
 
     <details class="govuk-details">
       <summary class="govuk-details__summary">
@@ -340,13 +503,13 @@
       </div>
     </details>
 
-    <h3 class="govuk-heading-m" id="compare-single-map">Comparing versions on a single map</h3>
+    <h3 class="govuk-heading-m" id="compare-single-map">Comparing land parcel versions on a single map</h3>
 
     {# Draft hypothesis, written from the research findings: check before sharing. #}
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Problem</dt>
-        <dd class="govuk-summary-list__value">Users need to compare versions (see the side by side and stacked pages above). Parcels can have more than 2 versions, and can be split or merged.</dd>
+        <dd class="govuk-summary-list__value">Users need to compare versions. Parcels can have more than 2 versions.</dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">We believe</dt>
@@ -358,7 +521,7 @@
       </div>
     </dl>
 
-    <p>We built 4 variants to test different ways of switching between current and previous versions of land parcels. They share one map and one set of data, and differ in the control used.</p>
+    
 
     <h4 class="govuk-heading-s">How the two versions are drawn together</h4>
 
@@ -366,17 +529,21 @@
 
     <p>The parcel boundary and hedgerows are the same in both versions, so they are drawn once and the version controls do not affect them.</p>
 
-    <h4 class="govuk-heading-s">Tabbed data table to accommodate multiple historical versions of land parcels</h4>
+
+
+
+    <h4 class="govuk-heading-s">The three variants</h4>
+
+    <p>We built 3 variants to test different ways of switching between current and previous versions of land parcels. They share one map and one set of data, and differ in the control used.</p>
+
+    <h4 class="govuk-heading-s">Updated UI</h4>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>UI must accommodate multiple versions of historical land parcels</li>
       <li>date list if more than 2 versions of historical data available</li>
-      <li>splits and mergers</li>
       <li>transparency controls</li>
+      <li>previous and current land cover checkboxes in the Layers panel</li>
     </ul>
-
-
-    <h4 class="govuk-heading-s">The four variants</h4>
 
     {# Link URLs come from app/data/v18-1-2-pages.js, looked up by id. #}
 
@@ -387,7 +554,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--s">Single map compare variants</caption>
+      <!-- <caption class="govuk-table__caption govuk-table__caption--s">Single map compare variants</caption> -->
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Variant</th>
@@ -399,22 +566,17 @@
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{ v18_12.byId['compare-overlay'].href }}">Overlay radios</a></th>
           <td class="govuk-table__cell">Current details and Previous details radios, opening on the current version. These replaced 2 checkboxes that overlaid both versions; the overlay can still be reached through the Layers panel.</td>
-          <td class="govuk-table__cell">Current details and Previous details tabs in a scrolling sidebar beside a full-height map. Clicking a cover that only exists in the previous version opens that tab.</td>
+          <td class="govuk-table__cell">Current details and Previous details tabs in a data table. Clicking a cover that only exists in the previous version opens that tab.</td>
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{ v18_12.byId['compare-fade'].href }}">Fade slider</a></th>
-          <td class="govuk-table__cell">Current details and Previous details radios above a slider that blends from current to previous. A radio jumps the slider to its end, and the slider selects a radio at each end. Opens on the current version. Lets users watch a cover change shape.</td>
+          <td class="govuk-table__cell"><p>Current details and Previous details radios above a slider that blends from current to previous.</p><p>A radio button jumps the slider to its end, and the slider selects a radio at each end.</p> <p>Opens on the current version. Lets users watch a cover change shape.</p> </td>
           <td class="govuk-table__cell">Current details and Previous details tabs in a sidebar, as on the overlay radios page.</td>
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{ v18_12.byId['dates-list'].href }}">Dates list</a></th>
           <td class="govuk-table__cell">The same radios as the overlay radios page. Choosing a date also switches the map to that previous version.</td>
-          <td class="govuk-table__cell">The Previous tab lists the dates the parcel was updated. Choosing one shows that version's tables, the last day it was valid and a Back to dates link. Tests how to handle more than 2 versions. Older versions are mocked.</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{ v18_12.byId['dates-list-merges'].href }}">Dates list with merges</a></th>
-          <td class="govuk-table__cell">As the dates list. The former parcels' outlines are drawn dashed on the map, including the boundary that was removed.</td>
-          <td class="govuk-table__cell">A copy of the dates list for SX3964 6918, a mocked parcel made by merging SX3964 6418 and SX3964 7821. The list includes both former parcels' histories, with a Change column. The Previous tab groups land covers by former parcel, and the Current tab says when and how the parcel was created. <a class="govuk-link" href="{{ v18_12.byId['dates-list-merges'].extraLinks[0].href }}">Grouped list</a> groups the dates by parcel reference instead.</td>
+          <td class="govuk-table__cell"><p>The Previous tab lists the dates the parcel was updated. Choosing one shows that version's data table, the last day it was valid and a Back to dates link. Tests how to handle more than 2 versions.</p><p>Older versions are using mocked data.</p> </td>
         </tr>
       </tbody>
     </table>
@@ -424,8 +586,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <p>On every variant the Layers panel also has Previous details and Current details checkboxes, so versions can be switched in the fullscreen map on mobile, where the controls above the map are hidden.</p>
-
+    {# Options we considered: commented out for now.
     <h4 class="govuk-heading-s">Options we considered</h4>
 
     <table class="govuk-table">
@@ -450,6 +611,7 @@
         </tr>
       </tbody>
     </table>
+    #}
 
     <details class="govuk-details">
       <summary class="govuk-details__summary">
@@ -466,7 +628,7 @@
     <p>None of the v1.2 changes has been tested with users yet. In the next round of research, we want to find out whether participants can:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>match a land cover on the map to its row in the panel without help</li>
+      <li>match a land cover on the map to its row in the data table without help</li>
       <li>match a land cover classification to its area on the map</li>
       <li>say they are confident they have found all the changes on a parcel</li>
       <li>tell what changed between versions using one map, without help</li>
@@ -509,11 +671,6 @@
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Older versions in the dates list</th>
           <td class="govuk-table__cell">Made from the real snapshot by relabelling or merging covers, so each version looks different on the map. Some have a different parcel boundary. They stand in until snapshots of live data are available.</td>
-          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Mocked</strong></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Merged parcel SX3964 6918</th>
-          <td class="govuk-table__cell">Invented parcel made by merging SX3964 6418 and SX3964 7821, with its current version and history. Waiting on RPA sample data.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Mocked</strong></td>
         </tr>
       </tbody>

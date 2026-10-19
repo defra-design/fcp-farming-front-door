@@ -6,21 +6,22 @@
   [square bracket] placeholder. Preview it at /_templates/design-history.
 
   Structure (see app/views/v18/_design-history/design-history-1-2.html for a real one):
-    1. Summary          what changed, the pages, test status. A reader who stops here
-                        should know the story.
-    2. Research         the themes from the research round this iteration responds to,
-                        linking to that round's own page (template: research-round.html),
-                        and a status table of how this iteration responds.
+    1. Summary          one paragraph on what the prototype is, then the research themes
+                        this iteration responds to, linking to that round's own page
+                        (template: research-round.html). Page details sit beside it.
+    2. Priorities       a full-width status table of how this iteration responds to every
+                        priority and finding from the research.
     3. Decisions        grouped under UI changes (panels, controls, map interactions, the
-                        information panel) and Layout iterations (how the page is arranged:
+                        data tables) and Layout iterations (how the page is arranged:
                         side by side, stacked, single map). One h3 per problem. Each keeps
-                        its finding, hypothesis, what we did, options considered,
-                        accessibility and technical notes together.
+                        its finding, hypothesis, what we did, accessibility and technical
+                        notes together.
     4. Testing next     the "We'll know if" lines from every decision, plus the riskiest
                         assumption: the starting point for the next research plan.
     5. Reference        what's real and what's mocked, asks of other teams, accessibility
                         checks. Lookup material, not story.
-    Right column        page details and links to the previous and next iterations.
+    Right column        page details and links to the previous and next iterations, beside
+                        the summary.
 
   - Delete any block an iteration doesn't need. Keep the order of the rest.
   - Research findings live on the research round page. Name the finding a decision responds
@@ -32,21 +33,14 @@
     served from /public/images/design-history/<version>/<x-y>/.
   - Page links: give the iteration a page list in app/data/<version>-<x-y>-pages.js (see
     app/data/v18-1-2-pages.js) and expose it with a router.use in that version's routes.js.
-    Then set dhPages below to its live list, e.g. {% set dhPages = v18_12.live %}, and look
-    single pages up by id: {{ v18_12.byId['compare-fade'].href }}. Until then, list them
-    by hand in dhPages.
+    Then look single pages up by id, e.g. {{ v18_12.byId['compare-fade'].href }}. Until
+    then, link them by hand.
   - Before shipping, run: npm run -s check-links -- /<version>/_design-history/design-history-<x-y>
 #}
 
 {% extends "layouts/main-rebrand.html" %}
 
 {% set pageName = "Design history" %}
-
-{# Pages built in this iteration: replace with the version's page list (see above). #}
-{% set dhPages = [
-  { path: "[page-one]", href: "../[x.y]/[page-one]" },
-  { path: "[page-two]", href: "../[x.y]/[page-two]?parcel=[PARCEL]" }
-] %}
 
 {%- block beforeContent -%}
 <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
@@ -75,45 +69,64 @@
   <div class="govuk-grid-column-two-thirds">
 
     {# =================================================================================
-       1. Summary
+       1. Summary, and the research this iteration responds to. Themes only: the
+       findings, quotes and task outcomes live on the research round page. Delete the
+       research block if there was no research.
        ================================================================================= #}
 
-    <p>[Ordinal, e.g. Fourth] iteration of a prototype that [what the prototype does] using the Defra
+    <p class="govuk-body">
+      [Ordinal, e.g. Fourth] iteration of a prototype that [what the prototype does] using the Defra
       <a class="govuk-link" href="https://defra.github.io/interactive-map/" rel="noreferrer noopener" target="_blank">interactive mapping component (opens in new tab)</a>
       (v[component version]).
     </p>
 
-    <p>This iteration focused on [the page or journey]. We:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>[change, lower case, no full stop]</li>
-      <li>[change]</li>
-    </ul>
-
-    <ul class="govuk-list govuk-list--bullet">
-      {% for p in dhPages %}
-      <li><a class="govuk-link" href="{{ p.href }}">{{ p.path }}</a></li>
-      {% endfor %}
-    </ul>
-
-
-    {# =================================================================================
-       2. Research this iteration responds to. Themes only: the findings, quotes and
-       task outcomes live on the research round page. Status tags: green Done, yellow
-       Partly addressed, blue Work in progress, grey Future iteration. Every priority and
-       finding from the research gets a row, including ones this iteration doesn't
-       address. Delete if there was no research.
-       ================================================================================= #}
-
     <h2 class="govuk-heading-l">Research findings and what we are prioritising</h2>
 
-    <p>v[x.y] responds to round [N] of user research, which tested v[previous x.y] with [N] participants. The <a class="govuk-link" href="research-[previous-x-y]">research on v[previous x.y]</a> found that:</p>
+    <p>The <a class="govuk-link" href="research-[previous-x-y]">research on v[previous x.y]</a> found that:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>[theme, as on the research page]</li>
       <li>[theme]</li>
     </ul>
 
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    {# Page details, so readers can move between iterations without going back to the index. #}
+    <aside role="complementary">
+      <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Date</dt>
+          <dd class="govuk-summary-list__value">[Month to month year]</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Responds to</dt>
+          <dd class="govuk-summary-list__value"><a class="govuk-link" href="research-[previous-x-y]">Round [N] of user research</a></dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Status</dt>
+          <dd class="govuk-summary-list__value">[Not tested with users yet / Tested in round N]</dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-s">Other iterations</h2>
+      <ul class="govuk-list">
+        <li><a class="govuk-link" href="design-history-[previous-x-y]">Previous: v[previous x.y]</a></li>
+        <li><a class="govuk-link" href="design-history-[next-x-y]">Next: v[next x.y]</a></li>
+      </ul>
+    </aside>
+  </div>
+</div>
+
+{# =====================================================================================
+   2. How this iteration responds. Status tags: green Done, yellow Partly addressed, blue
+   Work in progress, grey Future iteration. Every priority and finding from the research
+   gets a row, including ones this iteration doesn't address. Full width, so the
+   descriptions have room.
+   ===================================================================================== #}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
     <table class="govuk-table app-status-table">
       <colgroup>
         <col style="width: 33%">
@@ -130,12 +143,12 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">[Priority from the research]</th>
-          <td class="govuk-table__cell">[What changed. Link to the decision below.]</td>
+          <td class="govuk-table__cell">[What changed. Link to the <a class="govuk-link" href="#[decision-id]">decision</a> below.]</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Done</strong></td>
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">[Priority]</th>
-          <td class="govuk-table__cell">[What changed, and what is still missing.]</td>
+          <td class="govuk-table__cell"><p>[What changed.]</p><p>[What is still missing.]</p></td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
         </tr>
         <tr class="govuk-table__row">
@@ -145,12 +158,16 @@
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">[Finding for a later iteration]</th>
-          <td class="govuk-table__cell">[What v[x.y] does about this]</td>
+          <td class="govuk-table__cell">Not addressed in this version.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Future iteration</strong></td>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
     {# =================================================================================
        3. Decisions, in 2 groups: UI changes and Layout iterations. One h3 per problem,
@@ -160,9 +177,9 @@
 
     <h2 class="govuk-heading-l">UI changes</h2>
 
-    {# Changes to parts of the page: panels, controls, map interactions, the information
-       panel. One h3 per component, named after it. Each shows the previous version beside
-       the new one, then why we changed it. #}
+    {# Changes to parts of the page: panels, controls, map interactions, the data tables.
+       One h3 per component, named after it. Each shows the previous version beside the
+       new one, then why we changed it. #}
 
     <h3 class="govuk-heading-m" id="[decision-id]">[Component name, e.g. Layers panel]</h3>
 
@@ -171,7 +188,8 @@
 
     {# Before and after, stacked: a screenshot and bullets for each version. Crop both
        screenshots to the same frame (e.g. just the panel) and show them at the same width.
-       If there was no previous version, keep only the After block. #}
+       If there was no previous version, replace both blocks with a screenshot under an h4
+       per mode or state (e.g. Distance, Area), then one bullet list of how it works. #}
     <h4 class="govuk-heading-s">Before: v[previous x.y]</h4>
     <img src="/public/images/design-history/[version]/[previous-x-y]/[screenshot-before].webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
     <ul class="govuk-list govuk-list--bullet">
@@ -185,13 +203,31 @@
       <li>[behaviour]</li>
     </ul>
 
-    <h4 class="govuk-heading-s">Why we changed it</h4>
+    {# Optional: a table when the component shows several kinds of output or state,
+       e.g. what a panel shows for each tool, or how changes are marked on each layout. #}
+    <h4 class="govuk-heading-s">[What it shows]</h4>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">[Mode or layout]</th>
+          <th scope="col" class="govuk-table__header">[What it shows]</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">[Mode]</th>
+          <td class="govuk-table__cell">[Description.]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="govuk-heading-m">Why we changed it</h4>
 
     {# Problem and hypothesis: makes the next research round a test of this decision. #}
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Problem</dt>
-        <dd class="govuk-summary-list__value">[The finding, with its figure, e.g. 6 of 7 participants expected the map and panel to be linked.] Link to the <a class="govuk-link" href="research-[previous-x-y]">research on v[previous x.y]</a>.</dd>
+        <dd class="govuk-summary-list__value">[The finding, with its figure, e.g. 6 of 7 participants expected the map and data table to be linked] (<a class="govuk-link" href="research-[previous-x-y]">research on v[previous x.y]</a>).</dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">We believe</dt>
@@ -202,25 +238,6 @@
         <dd class="govuk-summary-list__value">[What participants do in the next round, e.g. match a land cover to its row without help.]</dd>
       </div>
     </dl>
-
-    {# Options considered: so a rejected idea isn't proposed again without its reason.
-       Don't link parked pages: the link check flags them. #}
-    <h4 class="govuk-heading-s">Options we considered</h4>
-
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header govuk-!-width-one-third">Option</th>
-          <th scope="col" class="govuk-table__header">Why we didn't go with it</th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">[Option, sketched, built or parked]</th>
-          <td class="govuk-table__cell">[What it was, and the reason.]</td>
-        </tr>
-      </tbody>
-    </table>
 
     {# What we're unsure about for this decision. Feeds section 4. #}
     <h4 class="govuk-heading-s">Open questions</h4>
@@ -254,17 +271,15 @@
     {# How the page is arranged: e.g. side by side, stacked, single map. One h3 per
        layout decision. #}
 
-    <h3 class="govuk-heading-m" id="[layout-decision-id]">[Layout, e.g. Comparing versions on a single map]</h3>
+    <h3 class="govuk-heading-m" id="[layout-decision-id]">[Layout, e.g. Side by side and stacked]</h3>
 
     <p>[What we built and why, in 1 or 2 sentences.]</p>
-
-    <h4 class="govuk-heading-s">Why we changed it</h4>
 
     {# Problem and hypothesis: makes the next research round a test of this decision. #}
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Problem</dt>
-        <dd class="govuk-summary-list__value">[The finding, with its figure, e.g. 6 of 7 participants expected the map and panel to be linked.] Link to the <a class="govuk-link" href="research-[previous-x-y]">research on v[previous x.y]</a>.</dd>
+        <dd class="govuk-summary-list__value">[The finding, with its figure, e.g. 4 of 7 participants asked for an easier way to compare versions] (<a class="govuk-link" href="research-[previous-x-y]">research on v[previous x.y]</a>).</dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">We believe</dt>
@@ -272,21 +287,75 @@
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">We'll know if</dt>
-        <dd class="govuk-summary-list__value">[What participants do in the next round, e.g. match a land cover to its row without help.]</dd>
+        <dd class="govuk-summary-list__value">[What participants do in the next round.]</dd>
       </div>
     </dl>
 
-    {# One screenshot per layout, each under its own h4. #}
-    <h4 class="govuk-heading-s">[Layout name, e.g. Side by side]</h4>
+  </div>
+</div>
+
+{# Full-width screenshots: one per layout, each under its own h4, with any team
+   feedback on it. Attribute quotes by role, e.g. UR, CD, IxD. #}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h4 class="govuk-heading-m govuk-!-static-margin-bottom-0">[Layout name, e.g. Side by side]</h4>
 
     <img src="/public/images/design-history/[version]/[x-y]/[screenshot].webp" alt="" class="design-history">
 
+    <h5 class="govuk-heading-s">Feedback from UCD team</h5>
+
+    <p class="govuk-body">“[Quote]” <span class="govuk-hint govuk-!-display-inline">([Role])</span></p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h4 class="govuk-heading-m">How [this layout works / these layouts work]</h4>
+
     <p>[How it works.]</p>
 
+    {# If we moved away from the layout: lead with what users needed and why this layout
+       doesn't meet it, link to what replaced it, then the reasons as bullets. Say if
+       it has not been tested. Delete if the layout is being kept. #}
+    <h4 class="govuk-heading-m" id="[why-not-layout-id]">Why we moved away from [layout]</h4>
+
+    <p>[What users needed, and why this layout doesn't meet it.] We moved to <a class="govuk-link" href="#[layout-decision-id]">[the layout that replaced it]</a>.</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>[reason, lower case, no full stop]</li>
+    </ul>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Technical notes</span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>[Workarounds, plugin bugs, data sources.]</p>
+      </div>
+    </details>
+
     {# Variants: when the decision was explored as several built versions of one page.
-       Link each with its page list id. Delete if there are none. #}
+       Introduce them here, list what they share as bullets, then give the full-width
+       table below. Delete if there are none. #}
+    <h4 class="govuk-heading-s">The [number] variants</h4>
+
+    <p>We built [N] variants to test [what differs between them]. They share [what stays the same], and differ in [what changes].</p>
+
+    <h4 class="govuk-heading-s">Updated UI</h4>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>[change shared by every variant, lower case, no full stop]</li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    {# Link each variant with its page list id. Don't link parked pages: the link check
+       flags them. #}
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--s">[Variants caption]</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Variant</th>
@@ -302,35 +371,11 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
 
-    {# Options considered: so a rejected idea isn't proposed again without its reason.
-       Don't link parked pages: the link check flags them. #}
-    <h4 class="govuk-heading-s">Options we considered</h4>
-
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header govuk-!-width-one-third">Option</th>
-          <th scope="col" class="govuk-table__header">Why we didn't go with it</th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">[Option, sketched, built or parked]</th>
-          <td class="govuk-table__cell">[What it was, and the reason.]</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <details class="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">Technical notes</span>
-      </summary>
-      <div class="govuk-details__text">
-        <p>[Workarounds, plugin bugs, data sources.]</p>
-      </div>
-    </details>
-
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
     {# =================================================================================
        4. What we're testing next: the "We'll know if" lines from every decision.
@@ -389,7 +434,7 @@
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Snapshot</strong></td>
         </tr>
         <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">[e.g. Merged parcel]</th>
+          <th scope="row" class="govuk-table__header">[e.g. Older versions]</th>
           <td class="govuk-table__cell">[What it stands in for, and what real data it is waiting on.]</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Mocked</strong></td>
         </tr>
@@ -466,42 +511,6 @@
       </tbody>
     </table>
 
-  </div>
-
-  <div class="govuk-grid-column-one-third">
-    {# Page details, so readers can move between iterations without going back to the index. #}
-    <aside role="complementary">
-      <h2 class="govuk-heading-s">Page details</h2>
-      <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-font-size-16">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Date</dt>
-          <dd class="govuk-summary-list__value">[Month year]</dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">People</dt>
-          <dd class="govuk-summary-list__value">[Names and roles]</dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Responds to</dt>
-          <dd class="govuk-summary-list__value"><a class="govuk-link" href="research-[previous-x-y]">Round [N] of user research</a></dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Status</dt>
-          <dd class="govuk-summary-list__value">[Not tested with users yet / Tested in round N]</dd>
-        </div>
-      </dl>
-
-      <h2 class="govuk-heading-s">Related links</h2>
-      <ul class="govuk-list govuk-!-font-size-16">
-        <li><a class="govuk-link" href="[Mural board URL]" rel="noreferrer noopener" target="_blank">[Mural board] (opens in new tab)</a></li>
-      </ul>
-
-      <h2 class="govuk-heading-s">Other iterations</h2>
-      <ul class="govuk-list govuk-!-font-size-16">
-        <li><a class="govuk-link" href="design-history-[previous-x-y]">Previous: v[previous x.y]</a></li>
-        <li><a class="govuk-link" href="design-history-[next-x-y]">Next: v[next x.y]</a></li>
-      </ul>
-    </aside>
   </div>
 </div>
 
