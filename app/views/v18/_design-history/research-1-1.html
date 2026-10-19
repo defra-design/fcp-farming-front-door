@@ -1,0 +1,684 @@
+{#
+  Research round 10: what testing v1.1 found. Laid out as a numbered narrative: study
+  details, contents, then each finding in the same order (caption, heading, evidence,
+  quotes, design implication), task outcomes and recommended actions.
+  Built from brief-research-1-1-layout-c.md. GOV.UK Frontend macros only, apart from the
+  combined task outcomes table, which needs rowspan and so is plain govuk-table HTML.
+  The v1.2 design history links here from each decision's Problem row.
+#}
+
+{% extends "layouts/main-rebrand.html" %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+{% set pageName="Design history" %}
+
+{%- block beforeContent -%}
+{{ govukBreadcrumbs({
+  items: [
+    { text: "Single front door prototypes", href: "../../index" },
+    { text: "V18", href: "../index" }
+  ]
+}) }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <span class="govuk-caption-l">User research: round 10</span>
+    <h1 class="govuk-heading-xl">Land summary (v1.1)</h1>
+
+    <p class="govuk-body-l">Most participants completed the tasks. The main challenge was confidence, not navigation.</p>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Version tested" },
+          value: { html: '<a class="govuk-link" href="design-history-1-1">v1.1</a>, which led to <a class="govuk-link" href="design-history-1-2">v1.2</a>' }
+        },
+        {
+          key: { text: "Participants" },
+          value: { text: "7 farmers, land managers, estate managers, environmental advisers, agents and experienced GIS users" }
+        }
+      ]
+    }) }}
+
+    {% set methodHtml %}
+      <p class="govuk-body">Moderated remote usability sessions. Participants used their own or representative land parcels and thought aloud.</p>
+      <p class="govuk-body">Holdings ranged from small holdings and commercial farms to environmental organisations and large estates. One participant manages about 930 parcels.</p>
+    {% endset %}
+    {{ govukDetails({
+      summaryText: "How we ran this round",
+      html: methodHtml
+    }) }}
+
+    <h2 class="govuk-heading-s">Contents</h2>
+
+    <ol class="govuk-list govuk-list--number">
+      <li><a class="govuk-link" href="#finding-1">Users are trying to verify information, not simply view it</a></li>
+      <li><a class="govuk-link" href="#finding-2">Confidence matters more than task completion</a></li>
+      <li><a class="govuk-link" href="#finding-3">Historic mapping solves a genuine user problem</a></li>
+      <li><a class="govuk-link" href="#finding-4">Users expect mapping tools to behave like mapping tools</a></li>
+      <li><a class="govuk-link" href="#finding-5">Adviser and agent workflows differ from farmer workflows</a></li>
+      <li><a class="govuk-link" href="#task-outcomes">Task outcomes</a></li>
+      <li><a class="govuk-link" href="#recommended-actions">Recommended actions</a></li>
+    </ol>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <section id="finding-1">
+      <span class="govuk-caption-m">Finding 1 of 5</span>
+      <h2 class="govuk-heading-l">Users are trying to verify information, not simply view it</h2>
+
+      <p class="govuk-body">Users mainly used mapping to check that the RPA’s understanding of their land matched their own records. Participants described:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>checking boundary updates</li>
+        <li>reviewing land cover classifications</li>
+        <li>challenging changes made by the RPA</li>
+        <li>validating information before applications or claims</li>
+        <li>comparing mapping against local knowledge or other systems</li>
+      </ul>
+
+      <h3 class="govuk-heading-s">What participants said</h3>
+
+      <p class="govuk-body">“Sometimes it comes through and we think that isn’t right.” <span class="govuk-hint govuk-!-display-inline">(P1)</span></p>
+      <p class="govuk-body">“RPA are constantly tinkering with boundaries and changing shapes.” <span class="govuk-hint govuk-!-display-inline">(P3)</span></p>
+
+      {{ govukInsetText({
+        html: "<strong>What this means for the design</strong><br>Users need tools that support validation and verification, not simply viewing."
+      }) }}
+    </section>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <section id="finding-2">
+      <span class="govuk-caption-m">Finding 2 of 5</span>
+      <h2 class="govuk-heading-l">Confidence matters more than task completion</h2>
+
+      <p class="govuk-body">The biggest usability challenge was confidence, not task completion. Most participants completed the tasks, but many were unsure whether they had:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>found all the relevant information</li>
+        <li>identified all the changes</li>
+        <li>correctly interpreted the mapping information</li>
+        <li>reached the correct conclusion</li>
+      </ul>
+
+      <h3 class="govuk-heading-s">What participants said</h3>
+
+      <p class="govuk-body">“No, not at all.” <span class="govuk-hint govuk-!-display-inline">(P8, when asked how confident they were they had found all the changes)</span></p>
+      <p class="govuk-body">“How do I know how it’s changed?” <span class="govuk-hint govuk-!-display-inline">(P2)</span></p>
+
+      {{ govukInsetText({
+        html: "<strong>What this means for the design</strong><br>Future improvements should help users feel confident in their understanding, not simply let them complete tasks."
+      }) }}
+    </section>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <section id="finding-3">
+      <span class="govuk-caption-m">Finding 3 of 5</span>
+      <h2 class="govuk-heading-l">Historic mapping solves a genuine user problem</h2>
+
+      <p class="govuk-body">Historic mapping was one of the most valued parts of the prototype. Participants understood it immediately and named real uses, including:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>auditing changes</li>
+        <li>validating mapping</li>
+        <li>challenging updates</li>
+        <li>investigating parcel history</li>
+        <li>supporting environmental applications</li>
+      </ul>
+
+      <h3 class="govuk-heading-s">What participants said</h3>
+
+      <p class="govuk-body">“That functionality was great.” <span class="govuk-hint govuk-!-display-inline">(P8)</span></p>
+      <p class="govuk-body">“I think that’s a very good thing.” <span class="govuk-hint govuk-!-display-inline">(P4)</span></p>
+
+      {{ govukInsetText({
+        html: "<strong>What this means for the design</strong><br>Historic mapping should be treated as a validated opportunity."
+      }) }}
+    </section>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <section id="finding-4">
+      <span class="govuk-caption-m">Finding 4 of 5</span>
+      <h2 class="govuk-heading-l">Users expect mapping tools to behave like mapping tools</h2>
+
+      <p class="govuk-body">Many usability issues came from missing behaviours participants expected from tools they already use: RPA mapping, GIS software such as ArcGIS and Cadcorp, Gatekeeper, Land App and other professional mapping tools. They expected:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>click to highlight</li>
+        <li>hover to highlight</li>
+        <li>measurement tools</li>
+        <li>layer controls</li>
+        <li>transparency controls</li>
+        <li>data linked to the map</li>
+      </ul>
+
+      {{ govukInsetText({
+        html: "<strong>What this means for the design</strong><br>The prototype should align more closely with established mapping interaction patterns where possible."
+      }) }}
+    </section>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <section id="finding-5">
+      <span class="govuk-caption-m">Finding 5 of 5</span>
+      <h2 class="govuk-heading-l">Adviser and agent workflows differ from farmer workflows</h2>
+
+      <p class="govuk-body">Advisers, estate managers and environmental professionals often had different needs. They were more likely to talk about:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>multiple parcels</li>
+        <li>exports</li>
+        <li>grouping parcels</li>
+        <li>bulk workflows</li>
+        <li>auditing history</li>
+        <li>GIS integration</li>
+      </ul>
+
+      {{ govukInsetText({
+        html: "<strong>What this means for the design</strong><br>Future design work should consider whether different user groups need different workflows or capabilities."
+      }) }}
+    </section>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <section id="task-outcomes">
+      <h2 class="govuk-heading-l">Task outcomes</h2>
+
+      <p class="govuk-body">Task 1: participants located one of their own parcels, reviewed its information and judged whether the mapping looked accurate. Task 2: participants located a given parcel, opened previous versions of its mapping, and explained what had changed.</p>
+    </section>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    {# govukTable can't do rowspan, so this one table is plain HTML with govuk-table classes.
+       app-status-table (application.scss) keeps the Result tags on one line. #}
+    <table class="govuk-table app-status-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Task</th>
+          <th scope="col" class="govuk-table__header">Outcome</th>
+          <th scope="col" class="govuk-table__header">Result</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header" rowspan="2">1. Review one of your own parcels</th>
+            <td class="govuk-table__cell">Users can find parcels, navigate the map and review parcel information</td>
+            <td class="govuk-table__cell">{{ govukTag({ text: "Yes", classes: "govuk-tag--green" }) }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Users can confidently interpret all the information about a parcel</td>
+            <td class="govuk-table__cell">{{ govukTag({ text: "Not always", classes: "govuk-tag--yellow" }) }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header" rowspan="4">2. Find out what has changed on a parcel</th>
+            <td class="govuk-table__cell">Users can identify changes</td>
+            <td class="govuk-table__cell">{{ govukTag({ text: "Yes", classes: "govuk-tag--green" }) }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Users can easily compare versions</td>
+            <td class="govuk-table__cell">{{ govukTag({ text: "Not yet", classes: "govuk-tag--yellow" }) }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Users are confident they have found all the changes</td>
+            <td class="govuk-table__cell">{{ govukTag({ text: "Not yet", classes: "govuk-tag--yellow" }) }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Users understand what changed and why</td>
+            <td class="govuk-table__cell">{{ govukTag({ text: "Not yet", classes: "govuk-tag--yellow" }) }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% set observedTable %}
+      {{ govukTable({
+        firstCellIsHeader: true,
+        head: [{ text: "Observation" }, { text: "Participants", format: "numeric" }],
+        rows: [
+          [{ text: "Completed the task without assistance" }, { text: "7 of 7", format: "numeric" }],
+          [{ text: "Expected stronger links between map features and information panels" }, { text: "6 of 7", format: "numeric" }],
+          [{ text: "Relied on satellite imagery to validate mapping" }, { text: "6 of 7", format: "numeric" }],
+          [{ text: "Struggled to interpret some land cover information" }, { text: "4 of 7", format: "numeric" }],
+          [{ text: "Expected measurement tools" }, { text: "4 of 7", format: "numeric" }]
+        ]
+      }) }}
+    {% endset %}
+    {{ govukDetails({
+      summaryText: "What we observed in task 1",
+      html: observedTable
+    }) }}
+
+    {% set observedTable %}
+      {{ govukTable({
+        firstCellIsHeader: true,
+        head: [{ text: "Observation" }, { text: "Participants", format: "numeric" }],
+        rows: [
+          [{ text: "Found historic mapping without assistance" }, { text: "5 of 7", format: "numeric" }],
+          [{ text: "Needed assistance to find historic mapping" }, { text: "2 of 7", format: "numeric" }],
+          [{ text: "Identified at least one change once historic mapping was open" }, { text: "7 of 7", format: "numeric" }],
+          [{ text: "Were not confident they had identified all the changes" }, { text: "5 of 7", format: "numeric" }]
+        ]
+      }) }}
+    {% endset %}
+    {{ govukDetails({
+      summaryText: "What we observed in task 2",
+      html: observedTable
+    }) }}
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <section id="recommended-actions">
+      <h2 class="govuk-heading-l">Recommended actions</h2>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <h3 class="govuk-heading-m">Immediate priorities</h3>
+          <ol class="govuk-list govuk-list--number">
+            <li>Strengthen the interactions between the map and the information panel.</li>
+            <li>Improve confidence identifying changes.</li>
+            <li>Make historic mapping easier to find.</li>
+            <li>Improve how mapping changes are explained.</li>
+          </ol>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <h3 class="govuk-heading-m">Next iteration</h3>
+          <ol class="govuk-list govuk-list--number">
+            <li>Test side by side comparison concepts.</li>
+            <li>Explore transparency controls for imagery.</li>
+            <li>Make land cover information easier to interpret.</li>
+            <li>Review layer terminology and descriptions.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {# No previous link: there is no round 9 research page. #}
+    {{ govukPagination({
+      next: {
+        labelText: "Land summary (v1.2)",
+        href: "design-history-1-2"
+      }
+    }) }}
+
+    {# Parked from the previous version of this page: sections that were already commented
+       out. Kept so the content isn't lost. #}
+    {# Detailed findings: commented out
+    <h3 class="govuk-heading-l">Detailed findings</h3>
+
+    <h4 class="govuk-heading-s">Finding and selecting land parcels</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users can successfully locate parcels</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">7 of 7 succeeded</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--grey">Low</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Users located and navigated to parcels using search, map navigation and parcel selection.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Parcel IDs are not always how users identify land</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">3 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Many users think in terms of field names, locations and land use rather than parcel IDs.</p><div class="govuk-inset-text govuk-!-margin-bottom-0"><p class="govuk-body">"We've got names for all the fields."</p><p class="govuk-body govuk-!-margin-bottom-0">"Encouraging farmers to add names might be more helpful."</p></div></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Search and filtering could better support larger holdings</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">4 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Users asked for:</p><ul class="govuk-list govuk-list--bullet"><li>field name search</li><li>land cover filtering</li><li>woodland filtering</li><li>other ways to find parcels</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Understanding parcel information</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users expect map and panel interactions to be linked</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">6 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">This was the most frequent usability finding.</p><div class="govuk-inset-text govuk-!-margin-bottom-0"><p class="govuk-body">"It'd be nice if it just highlighted it."</p><p class="govuk-body">"Which is hedgerow #1?"</p><p class="govuk-body govuk-!-margin-bottom-0">"Hover to highlight."</p></div></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Land cover information is not always easy to interpret</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">4 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants struggled to work out which mapped areas matched particular classifications.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Validating mapping accuracy</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Satellite imagery is critical</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">6 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Imagery was often used to:</p><ul class="govuk-list govuk-list--bullet"><li>validate boundaries</li><li>challenge changes</li><li>understand land cover</li><li>verify RPA data</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users want stronger validation tools</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">4 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants expected:</p><ul class="govuk-list govuk-list--bullet"><li>measurement tools</li><li>distance calculations</li><li>area calculations</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Historic mapping and identifying changes</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Historic mapping is highly valuable</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">7 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Historic mapping clearly meets a genuine user need and was the strongest positive finding.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Historic mapping could be easier to find</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">2 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--yellow">Medium</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Two participants could not find the functionality without assistance.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users want easier comparison between versions</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">4 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--orange">Medium to high</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants asked for:</p><ul class="govuk-list govuk-list--bullet"><li>side by side comparison</li><li>split screen views</li><li>easier comparison of changes</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users need more confidence that they have identified all changes</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">5 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Most users could find changes but were not confident they had found all of them.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Users want explanations of changes</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">5 of 7</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--red">High</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants wanted to understand:</p><ul class="govuk-list govuk-list--bullet"><li>what changed</li><li>why it changed</li><li>when it changed</li></ul></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s">Large holdings and adviser workflows</h4>
+
+    <div class="govuk-summary-card">
+      <div class="govuk-summary-card__title-wrapper">
+        <h5 class="govuk-summary-card__title">Multi-parcel workflows are important</h5>
+      </div>
+      <div class="govuk-summary-card__content">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Users affected</dt>
+            <dd class="govuk-summary-list__value">2 of 7 (explicitly)</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Impact</dt>
+            <dd class="govuk-summary-list__value"><strong class="govuk-tag govuk-tag--orange">Medium to high</strong></dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Detail</dt>
+            <dd class="govuk-summary-list__value"><p class="govuk-body">Participants wanted to select, review and export multiple parcels.</p><p class="govuk-body">Although only 2 participants raised this explicitly, both had complex land management roles, which suggests it is of high strategic importance.</p></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    #}
+
+    {# What this means for the design overall: commented out
+    <h3 class="govuk-heading-l">What this means for the design overall</h3>
+
+    <p>The research suggests the design should:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>support two-way interactions between information panels and mapped features</li>
+      <li>help users understand changes, not simply view them</li>
+      <li>support validation using satellite imagery</li>
+      <li>improve confidence rather than simply task completion</li>
+      <li>support complex workflows involving multiple parcels</li>
+      <li>better explain land cover information and classifications</li>
+      <li>accommodate both parcel ID and field name based workflows</li>
+    </ul>
+    #}
+
+    {# Longer-term opportunities and Areas for further research: commented out
+    <h4 class="govuk-heading-s">Longer-term opportunities</h4>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>Support multi-parcel workflows.</li>
+      <li>Explore parcel naming.</li>
+      <li>Show scheme information directly against parcels.</li>
+      <li>Improve accessibility support.</li>
+    </ol>
+
+    <h4 class="govuk-heading-s">Areas for further research</h4>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>multi-parcel workflows</li>
+      <li>large estates and holdings</li>
+      <li>measurement functionality</li>
+      <li>parcel names and identifiers</li>
+      <li>Countryside Stewardship and SFI integration</li>
+      <li>accessibility requirements</li>
+      <li>bulk parcel management</li>
+      <li>filtering and grouping concepts</li>
+      <li>visualising historic changes</li>
+    </ul>
+    #}
+
+  </div>
+</div>
+
+{% endblock %}

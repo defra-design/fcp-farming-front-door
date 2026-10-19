@@ -74,31 +74,13 @@
 
     {% from "govuk/components/table/macro.njk" import govukTable %}
 
-      {# Commented out of the table below. Nunjucks comments can't sit inside the
-         {{ govukTable() }} expression, so the rows are parked here to restore later.
-          [
-            {
-              text: "Compare versions (single map: layers panel)"
-            },
-            {
-              html: "<a href='view-land-parcel-compare-layers?parcel=SX39647821'>view-land-parcel-compare-layers?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Compare versions (single map: changes outlined)"
-            },
-            {
-              html: "<a href='view-land-parcel-compare-changes?parcel=SX39647821'>view-land-parcel-compare-changes?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-      #}
+      {# Rows come from app/data/v18-1-2-pages.js (live pages only). Add, park or rename
+         pages there, not here: the 1.2 design history reads the same list. #}
+      {% set whatsNewRows = [] %}
+      {% for p in v18_12.live %}
+        {% set linkHtml %}<a href="{{ p.href }}">{{ p.linkText }}</a>{% for l in p.extraLinks %}. <a href="{{ l.href }}">{{ l.text }}</a>{% endfor %}{% endset %}
+        {% set _ = whatsNewRows.push([{ text: p.name }, { html: linkHtml }, { text: "1.2" }]) %}
+      {% endfor %}
       {{ govukTable({
         caption: "What\'s new",
         captionClasses: "govuk-table__caption--m",
@@ -114,107 +96,7 @@
             text: "Version"
           }
         ],
-        rows: [
-          [
-            {
-              text: "View land"
-            },
-            {
-              html: "<a href='view-land'>view-land</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Historical view"
-            },
-            {
-              html: "<a href='view-land-parcel?parcel=SX39647821'>view-land-parcel?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Compare versions (side by side)"
-            },
-            {
-              html: "<a href='view-land-parcel-compare-side-by-side?parcel=SX39647821'>view-land-parcel-compare-side-by-side?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Compare versions (stacked)"
-            },
-            {
-              html: "<a href='view-land-parcel-compare-stacked?parcel=SX39647821'>view-land-parcel-compare-stacked?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Compare versions (single map: overlay radios)"
-            },
-            {
-              html: "<a href='view-land-parcel-compare-overlay?parcel=SX39647821'>view-land-parcel-compare-overlay?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Dates list (copy of single map: overlay radios)"
-            },
-            {
-              html: "<a href='view-land-parcel-dates-list?parcel=SX39647821'>view-land-parcel-dates-list?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Dates list with merges (mocked)"
-            },
-            {
-              html: "Merge: <a href='view-land-parcel-dates-list-splits-and-merge?parcel=SX39646918'>SX39646918</a> (SX3964 6418 + SX3964 7821). Grouped list: <a href='view-land-parcel-dates-list-splits-and-merge?parcel=SX39646918&splitView=grouped'>splitView=grouped</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Compare versions (single map: fade slider)"
-            },
-            {
-              html: "<a href='view-land-parcel-compare-fade?parcel=SX39647821'>view-land-parcel-compare-fade?parcel=SX39647821</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ],
-          [
-            {
-              text: "Demo start"
-            },
-            {
-              html: "<a href='demo-start'>Enter SBI and business name</a>"
-            },
-            {
-              text: "1.2"
-            }
-          ]
-        ]
+        rows: whatsNewRows
       }) }}
 
   </div>

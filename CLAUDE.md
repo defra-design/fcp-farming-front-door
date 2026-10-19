@@ -43,6 +43,8 @@ Session defaults from `app/data/session-data-defaults.js` provide the kit's stan
 
 `app/data/` contains mock data arrays (businesses, users, payments, messages, search results) that populate the prototype. These are imported and processed in `session-data-defaults.js`.
 
+`app/data/v18-1-2-pages.js` is the single list of v18/1.2 land summary pages (name, URL, `live` or `parked`). The 1.2 index's What's new table and the 1.2 design history's page links are generated from it (exposed as `v18_12` by a middleware in `app/routes/v18/1.2/routes.js`), so add, rename or park 1.2 pages there. New design history pages start from `app/views/_templates/design-history.html` (one page per iteration, organised by decision); research rounds get their own page from `app/views/_templates/research-round.html` (e.g. `v18/_design-history/research-1-1.html`). `npm run check-links` (`scripts/check-design-history-links.js`) checks design history links on the running dev server and flags broken links and links to parked pages.
+
 ### Views & Layouts
 
 - `app/views/layouts/` — Nunjucks layout templates (logged-in, GOV.UK start pages, RPS, vet visits, etc.)

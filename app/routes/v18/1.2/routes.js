@@ -1,9 +1,17 @@
 
 const csAgreements = require('../../../data/countryside-stewardship-agreements.json');
+const v18_12Pages = require('../../../data/v18-1-2-pages.js');
 
 module.exports = function (router, _myData) {
 
     var version = "v18/1.2";
+
+    // The 1.2 page list (app/data/v18-1-2-pages.js), for the index's What's new table and
+    // the 1.2 design history. The design history sits outside /v18/1.2/, so it's listed too.
+    router.use(['/' + version + '/', '/v18/_design-history/design-history-1-2'], function (req, res, next) {
+        res.locals.v18_12 = v18_12Pages
+        next()
+    });
 
     //coverts a number to a month
     function toMonth(_monthNumber) {

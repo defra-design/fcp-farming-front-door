@@ -2,7 +2,8 @@
   "scripts": {
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
-    "start": "govuk-prototype-kit start"
+    "start": "govuk-prototype-kit start",
+    "check-links": "node scripts/check-design-history-links.js"
   },
   "dependencies": {
     "@defra/interactive-map": "^0.0.22-alpha",
