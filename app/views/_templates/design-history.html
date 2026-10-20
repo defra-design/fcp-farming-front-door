@@ -6,9 +6,12 @@
   [square bracket] placeholder. Preview it at /_templates/design-history.
 
   Structure (see app/views/v18/_design-history/design-history-1-2.html for a real one):
-    1. Summary          one paragraph on what the prototype is, then the research themes
-                        this iteration responds to, linking to that round's own page
-                        (template: research-round.html). Page details sit beside it.
+    1. Contents         a numbered list of the h2 sections, with each section's h3
+                        decisions indented under it. No intro paragraph: the version's
+                        index already describes the prototype.
+       Research         the research themes this iteration responds to, linking to that
+                        round's own page (template: research-round.html). Page details
+                        sit beside the contents and research.
     2. Priorities       a full-width status table of how this iteration responds to every
                         priority and finding from the research.
     3. Decisions        grouped under UI changes (panels, controls, map interactions, the
@@ -21,7 +24,8 @@
     5. Reference        what's real and what's mocked, asks of other teams, accessibility
                         checks. Lookup material, not story.
     Right column        page details and links to the previous and next iterations, beside
-                        the summary.
+                        the contents. Labels stacked above values, so they don't wrap in
+                        the narrow column.
 
   - Delete any block an iteration doesn't need. Keep the order of the rest.
   - Research findings live on the research round page. Name the finding a decision responds
@@ -69,18 +73,38 @@
   <div class="govuk-grid-column-two-thirds">
 
     {# =================================================================================
-       1. Summary, and the research this iteration responds to. Themes only: the
-       findings, quotes and task outcomes live on the research round page. Delete the
-       research block if there was no research.
+       1. Contents: one numbered item per h2, with that section's h3 decisions indented
+       under it. Keep the link text the same as the headings, and every href matching
+       an id on the page.
        ================================================================================= #}
 
-    <p class="govuk-body">
-      [Ordinal, e.g. Fourth] iteration of a prototype that [what the prototype does] using the Defra
-      <a class="govuk-link" href="https://defra.github.io/interactive-map/" rel="noreferrer noopener" target="_blank">interactive mapping component (opens in new tab)</a>
-      (v[component version]).
-    </p>
+    <h2 class="govuk-heading-s">Contents</h2>
 
-    <h2 class="govuk-heading-l">Research findings and what we are prioritising</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li><a class="govuk-link" href="#research-findings">Research findings and what we are prioritising</a></li>
+      <li>
+        <a class="govuk-link" href="#ui-changes">UI changes</a>
+        <ul class="govuk-list govuk-!-margin-top-1 govuk-!-margin-left-4">
+          <li><a class="govuk-link" href="#[decision-id]">[Component name]</a></li>
+        </ul>
+      </li>
+      <li>
+        <a class="govuk-link" href="#layout-iterations">Layout iterations</a>
+        <ul class="govuk-list govuk-!-margin-top-1 govuk-!-margin-left-4">
+          <li><a class="govuk-link" href="#[layout-decision-id]">[Layout]</a></li>
+        </ul>
+      </li>
+      <li><a class="govuk-link" href="#testing-next">What we're testing next</a></li>
+      <li><a class="govuk-link" href="#reference">Reference</a></li>
+    </ol>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    {# The research this iteration responds to. Themes only: the findings, quotes and
+       task outcomes live on the research round page. Delete this block, and its contents
+       item, if there was no research. #}
+
+    <h2 class="govuk-heading-l" id="research-findings">Research findings and what we are prioritising</h2>
 
     <p>The <a class="govuk-link" href="research-[previous-x-y]">research on v[previous x.y]</a> found that:</p>
 
@@ -94,19 +118,14 @@
   <div class="govuk-grid-column-one-third">
     {# Page details, so readers can move between iterations without going back to the index. #}
     <aside role="complementary">
-      <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Date</dt>
-          <dd class="govuk-summary-list__value">[Month to month year]</dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Responds to</dt>
-          <dd class="govuk-summary-list__value"><a class="govuk-link" href="research-[previous-x-y]">Round [N] of user research</a></dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Status</dt>
-          <dd class="govuk-summary-list__value">[Not tested with users yet / Tested in round N]</dd>
-        </div>
+      {# Labels stacked above their values, so they don't wrap in the narrow column. #}
+      <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Date</dt>
+        <dd class="govuk-body govuk-!-margin-left-0">[Month to month year]</dd>
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Responds to</dt>
+        <dd class="govuk-body govuk-!-margin-left-0"><a class="govuk-link" href="research-[previous-x-y]">Round [N] of user research</a></dd>
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Status</dt>
+        <dd class="govuk-body govuk-!-margin-left-0">[Not tested with users yet / Tested in round N]</dd>
       </dl>
 
       <h2 class="govuk-heading-s">Other iterations</h2>
@@ -175,7 +194,7 @@
        link to it.
        ================================================================================= #}
 
-    <h2 class="govuk-heading-l">UI changes</h2>
+    <h2 class="govuk-heading-l" id="ui-changes">UI changes</h2>
 
     {# Changes to parts of the page: panels, controls, map interactions, the data tables.
        One h3 per component, named after it. Each shows the previous version beside the
@@ -266,7 +285,7 @@
 
 
 
-    <h2 class="govuk-heading-l">Layout iterations</h2>
+    <h2 class="govuk-heading-l" id="layout-iterations">Layout iterations</h2>
 
     {# How the page is arranged: e.g. side by side, stacked, single map. One h3 per
        layout decision. #}
@@ -381,7 +400,7 @@
        4. What we're testing next: the "We'll know if" lines from every decision.
        ================================================================================= #}
 
-    <h2 class="govuk-heading-l">What we're testing next</h2>
+    <h2 class="govuk-heading-l" id="testing-next">What we're testing next</h2>
 
     <p>[Whether the changes have been tested yet.] In the next round of research, we want to find out whether participants can:</p>
 
@@ -404,7 +423,7 @@
        5. Reference: lookup material.
        ================================================================================= #}
 
-    <h2 class="govuk-heading-l">Reference</h2>
+    <h2 class="govuk-heading-l" id="reference">Reference</h2>
 
     {# Tags: green Live, blue Snapshot (real data saved with the prototype), yellow Mocked. #}
     <h3 class="govuk-heading-m">What's real and what's mocked</h3>

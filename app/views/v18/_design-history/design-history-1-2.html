@@ -22,17 +22,37 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl">Design history</span>
-      Land summary (v1.2)
+      Land summary v1.2
     </h1>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
 
-    <p class="govuk-body">
-      Third iteration of a prototype that re-presents the existing land summary customer journey using the Defra
-      <a class="govuk-link" href="https://defra.github.io/interactive-map/" rel="noreferrer noopener" target="_blank">interactive mapping component (opens in new tab)</a>
-      (v0.0.22-alpha).
-    </p>
+    <h2 class="govuk-heading-s">Contents</h2>
+
+    <ol class="govuk-list govuk-list--number">
+      <li><a class="govuk-link" href="#research-findings">Research findings and what we are prioritising</a></li>
+      <li>
+        <a class="govuk-link" href="#ui-changes">UI changes</a>
+        <ul class="govuk-list govuk-!-margin-top-1 govuk-!-margin-left-4">
+          <li><a class="govuk-link" href="#land-covers-clickable">Data tables</a></li>
+          <li><a class="govuk-link" href="#layers-panel">Layers panel</a></li>
+          <li><a class="govuk-link" href="#measure-tools">Measure tools</a></li>
+          <li><a class="govuk-link" href="#change-tags">Data tables: tags and arrows</a></li>
+        </ul>
+      </li>
+      <li>
+        <a class="govuk-link" href="#layout-iterations">Layout iterations</a>
+        <ul class="govuk-list govuk-!-margin-top-1 govuk-!-margin-left-4">
+          <li><a class="govuk-link" href="#compare-two-maps">Side by side and stacked</a></li>
+          <li><a class="govuk-link" href="#compare-single-map">Comparing land parcel versions on a single map</a></li>
+        </ul>
+      </li>
+      <li><a class="govuk-link" href="#testing-next">What we're testing next</a></li>
+      <li><a class="govuk-link" href="#reference">Reference</a></li>
+    </ol>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
     {# Summary list: commented out for now.
     <p>This iteration focused on the land parcel page. We:</p>
@@ -61,7 +81,7 @@
     </ul>
     #}
 
-    <h2 class="govuk-heading-l">Research findings and what we are prioritising</h2>
+    <h2 class="govuk-heading-l" id="research-findings">Research findings and what we are prioritising</h2>
 
     <p>The <a class="govuk-link" href="research-1-1">research on v1.1</a> found that:</p>
 
@@ -79,19 +99,14 @@
   <div class="govuk-grid-column-one-third">
     <aside role="complementary">
       <!-- <h2 class="govuk-heading-s">Page details</h2> -->
-      <dl class="govuk-summary-list govuk-summary-list--no-border">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Date</dt>
-          <dd class="govuk-summary-list__value">September to October 2026</dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Responds to</dt>
-          <dd class="govuk-summary-list__value"><a class="govuk-link" href="research-1-1">Round 10 of user research</a></dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Status</dt>
-          <dd class="govuk-summary-list__value">Not tested with users yet</dd>
-        </div>
+      {# Labels stacked above their values, so they don't wrap in the narrow column. #}
+      <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Date</dt>
+        <dd class="govuk-body govuk-!-margin-left-0">September to October 2026</dd>
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Responds to</dt>
+        <dd class="govuk-body govuk-!-margin-left-0"><a class="govuk-link" href="research-1-1">Round 10 of user research</a></dd>
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Status</dt>
+        <dd class="govuk-body govuk-!-margin-left-0">Not tested with users yet</dd>
       </dl>
 
       <h2 class="govuk-heading-s">Other iterations</h2>
@@ -178,7 +193,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <h2 class="govuk-heading-l">UI changes</h2>
+    <h2 class="govuk-heading-l" id="ui-changes">UI changes</h2>
 
     <h3 class="govuk-heading-m" id="land-covers-clickable">Data tables</h3>
 
@@ -349,7 +364,7 @@
       </div>
     </details>
 
-    <h3 class="govuk-heading-m" id="change-tags">Data tables: change tags and arrows</h3>
+    <h3 class="govuk-heading-m" id="change-tags">Data tables: tags and arrows</h3>
 
     <p>When a previous version is shown, the data tables now mark every difference from the current version. Users no longer have to compare 2 sets of figures to find what changed.</p>
 
@@ -419,7 +434,7 @@
       </div>
     </details>
 
-    <h2 class="govuk-heading-l">Layout iterations</h2>
+    <h2 class="govuk-heading-l" id="layout-iterations">Layout iterations</h2>
 
     <h3 class="govuk-heading-m" id="compare-two-maps">Side by side and stacked</h3>
 
@@ -509,7 +524,7 @@
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Problem</dt>
-        <dd class="govuk-summary-list__value">Users need to compare versions. Parcels can have more than 2 versions.</dd>
+        <dd class="govuk-summary-list__value">Users need to compare land parcel versions. Parcels can have more than 2 versions.</dd>
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">We believe</dt>
@@ -623,9 +638,9 @@
     </details>
 
 
-    <h2 class="govuk-heading-l">What we're testing next</h2>
+    <h2 class="govuk-heading-l" id="testing-next">What we're testing next</h2>
 
-    <p>None of the v1.2 changes has been tested with users yet. In the next round of research, we want to find out whether participants can:</p>
+    <p>In the next round of research, we want to find out whether participants can:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>match a land cover on the map to its row in the data table without help</li>
@@ -635,7 +650,7 @@
     </ul>
 
 
-    <h2 class="govuk-heading-l">Reference</h2>
+    <h2 class="govuk-heading-l" id="reference">Reference</h2>
 
     <h3 class="govuk-heading-m">What's real and what's mocked</h3>
 
