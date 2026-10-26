@@ -8,10 +8,17 @@
 
 <p class="govuk-body-l">The sidebar of the land summary: totals for the business, a way to find a parcel, and every parcel with its land covers and area.</p>
 
-<div class="app-example">
-  <iframe src="/patterns/mapping/examples/data-panel" title="Example: land data panel" loading="lazy"></iframe>
+{#- Same width as the full-screen layout's sidebar: a third of the screen plus its 15px padding,
+    full width at 640px and below. The 2px is the example's border. -#}
+<style>
+  .app-example--data-panel { width: calc(33.3333vw + 32px); max-width: 100%; }
+  @media (max-width: 640px) { .app-example--data-panel { width: auto; } }
+</style>
+<div class="app-example app-example--data-panel">
+  <iframe src="/patterns/mapping/examples/data-panel-inline" title="Example: land data panel" loading="lazy"></iframe>
 </div>
-<p class="govuk-body"><a class="govuk-link" href="/patterns/mapping/examples/data-panel" target="_blank">Open this example in a new tab (opens in new tab)</a></p>
+<p class="govuk-body">The example has no map, so its Select a random parcel button stands in for selecting a parcel on the map.</p>
+<p class="govuk-body"><a class="govuk-link" href="/patterns/mapping/examples/data-panel" target="_blank">Open the full-screen map example, with the header and map (opens in new tab)</a></p>
 
 <h2 class="govuk-heading-l">When to use this pattern</h2>
 <p class="govuk-body">Use it in the sidebar of a <a class="govuk-link" href="/patterns/mapping/full-screen-layout">full-screen map page</a> that shows all the land parcels on a business.</p>
