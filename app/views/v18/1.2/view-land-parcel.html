@@ -32,16 +32,17 @@
 
 {% block head %}
   <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/map-key/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/draw/dist/css/index.css" rel="stylesheet" type="text/css">
 
   <link rel="prefetch" href="/v18/1.2/view-land" as="document">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/css/index.css">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/search/dist/umd/index.js">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/search/dist/css/index.css">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/search/dist/umd/index.js">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/interact/dist/umd/index.js">
 
   <style>
   /* html stays pinned to the viewport (no scroll); the body is the scroll
@@ -281,7 +282,7 @@
     border: 0;
   }
 
-  .im-c-datasets-key__group[aria-labelledby="key-heading-land-cover"] .im-c-datasets-key__item:first-child {
+  .im-c-map-key__group[aria-labelledby="key-heading-land-cover"] .im-c-map-key-list__item:first-child {
     padding-top: 10px;
   }
 
@@ -314,6 +315,11 @@
      declaration on the item would beat. */
   .im-c-datasets-layers-group:has(input[data-dataset-id="land-cover"]) .im-c-datasets-layers__item[hidden] {
     display: none;
+  }
+
+  /* Measure panel: the live figure. Tabular numbers stop it jittering as the pointer moves. */
+  .app-measure__value {
+    font-variant-numeric: tabular-nums;
   }
   </style>
 {% endblock %}
@@ -413,18 +419,24 @@
       <span class="app-map-loading__text">Loading map</span>
       <span class="app-map-loading__spinner" aria-hidden="true"></span>    
     </div>
+    <!-- Announces a measurement once a point is committed or the shape is finished — not on
+         every pointer move, which the visible panel updates on. Outside the map so it is
+         never unmounted with the panel. -->
+    <div id="measure-announce" class="govuk-visually-hidden" aria-live="polite"></div>
   </div>
 
 </main>
 {% endblock main %}
 
 {% block pageScripts %}
-  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/providers/maplibre/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/scale-bar/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/map-styles/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/map-key/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/interact/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/draw/dist/umd/index.js"></script>
 
   <script>
     // Reveal the page immediately. The DEFRA library hides the whole <body> via
@@ -901,7 +913,8 @@
         // regardless of visibility, so the absent ones have to be hidden here.
         const childInputs = [...fieldset.querySelectorAll('input[data-sublayer-id]')]
         childInputs.forEach(input => {
-          const type = lcTypeBySublayerId[input.dataset.sublayerId]
+          // 0.0.52 prefixes the checkbox's sublayer id with its dataset id ("land-cover-lc-…").
+          const type = lcTypeBySublayerId[input.dataset.sublayerId.slice(input.dataset.datasetId.length + 1)]
           const item = input.closest('.im-c-datasets-layers__item')
           if (item) item.hidden = !presentCovers.has(type)
           // The checkbox itself is the plugin's, and its handler is all the map needs. This
@@ -963,6 +976,10 @@
         order.push(LC_SELECTED_LAYER)
         order.push('parcel-hover', 'parcel-outline', 'parcel-loading', 'hedgerows')
         order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
+        // The measurement shape stays above everything.
+        ;(hedgeMap.getStyle().layers || [])
+          .filter(l => l.source && l.source.startsWith('mapbox-gl-draw'))
+          .forEach(l => hedgeMap.moveLayer(l.id))
       }
       // After a setStyle (which re-adds layers), once the map settles: re-assert z-order and
       // re-enable interaction (in case the recoloured layer was an interactive one).
@@ -1288,6 +1305,9 @@
       // this is re-run whenever the hedgerow layer is recreated or the style changes.
       function enableInteract () {
         if (!hedgeMap || !interact || !hedgeMap.getLayer('parcels-hit')) return false
+        // Measuring disabled interact; leave it off until the session ends (endMeasureSession
+        // re-runs this). Style-change and restyle paths call this too.
+        if (measuring) return false
         // Desktop parcel selection is handled by a native MapLibre click on 'parcels-hit' (see
         // map:ready) rather than the interact plugin, because the plugin re-tests a polygon click
         // with point-in-polygon against the TILE-CLIPPED geometry from queryRenderedFeatures
@@ -1357,6 +1377,239 @@
         }).catch(err => { clearParcelLoading(); console.error('Failed to switch parcel:', err) })
       }
 
+      // --- Measure (draw plugin) -----------------------------------------------
+      // A "Measure" menu on the map draws a line (distance) or polygon (area) with the draw
+      // plugin. The plugin calls onGeometryChange on every rubber-band move and committed
+      // vertex, which is where the figure is worked out and written into the results panel.
+      // One measurement at a time: starting a new one deletes the last.
+      let drawPlugin = null
+      let measuring = false        // true from starting a draw/edit until it is finished or cancelled
+      let measureEditing = false   // the current session is an edit of the committed shape
+      let measureId = null         // draw-plugin feature id of the committed measurement
+      let measureKind = null       // 'line' | 'area'
+      let measureLive = null       // feature to show right now (in-progress or committed)
+      let measureCommitted = null  // last finished feature, restored if an edit is cancelled
+      let measurePanelKind = null  // kind the panel was added for (its heading); null = not added
+
+      // Same Earth radius as Turf (which the draw plugin uses for its own area check).
+      const EARTH_RADIUS = 6371008.8
+      const toRad = (d) => d * Math.PI / 180
+
+      function lineLengthMetres (coords) {
+        let total = 0
+        for (let i = 1; i < coords.length; i++) {
+          const [lng1, lat1] = coords[i - 1]
+          const [lng2, lat2] = coords[i]
+          const dLat = toRad(lat2 - lat1)
+          const dLng = toRad(lng2 - lng1)
+          const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2
+          total += 2 * EARTH_RADIUS * Math.asin(Math.sqrt(h))
+        }
+        return total
+      }
+
+      // Close a ring if the plugin hands back an open one (preview features can be).
+      function closeRing (ring) {
+        if (ring.length < 2) return ring
+        const [f, l] = [ring[0], ring[ring.length - 1]]
+        return f[0] === l[0] && f[1] === l[1] ? ring : ring.concat([f])
+      }
+
+      // Spherical ring area — the @turf/area algorithm. Expects a closed ring.
+      function ringAreaM2 (ring) {
+        const n = ring.length - 1
+        if (n <= 2) return 0
+        let total = 0
+        for (let i = 0; i < n; i++) {
+          const lower = ring[i]
+          const middle = ring[i + 1 === n ? 0 : i + 1]
+          const upper = ring[i + 2 >= n ? (i + 2) % n : i + 2]
+          total += (toRad(upper[0]) - toRad(lower[0])) * Math.sin(toRad(middle[1]))
+        }
+        return Math.abs(total * EARTH_RADIUS * EARTH_RADIUS / 2)
+      }
+
+      // { kind:'line', metres } | { kind:'area', m2, perimeterMetres }, or null while the
+      // shape has too few points to measure.
+      function measureFromFeature (feature) {
+        const g = feature && feature.geometry
+        if (!g || !g.coordinates) return null
+        if (g.type === 'LineString') {
+          return g.coordinates.length >= 2 ? { kind: 'line', metres: lineLengthMetres(g.coordinates) } : null
+        }
+        if (g.type === 'Polygon') {
+          const ring = closeRing(g.coordinates[0] || [])
+          return ring.length >= 4 ? { kind: 'area', m2: ringAreaM2(ring), perimeterMetres: lineLengthMetres(ring) } : null
+        }
+        return null
+      }
+
+      // Units match the sidebar tables: whole metres (Hedgerows) and hectares to 4 dp (Land covers).
+      const fmtMetres = (m) => Math.round(m).toLocaleString('en-GB') + ' m'
+      const fmtHectares = (m2) => (m2 / 10000).toFixed(4) + ' ha'
+      const fmtSqMetres = (m2) => Math.round(m2).toLocaleString('en-GB') + ' m²'
+
+      function measureText () {
+        const r = measureFromFeature(measureLive)
+        const kindLabel = measureKind === 'area' ? 'Area' : 'Distance'
+        if (!r) return { kindLabel, value: '–', extra: '' }
+        if (r.kind === 'line') return { kindLabel, value: fmtMetres(r.metres), extra: '' }
+        return { kindLabel, value: fmtHectares(r.m2), extra: fmtSqMetres(r.m2) + ' · perimeter ' + fmtMetres(r.perimeterMetres) }
+      }
+
+      const MEASURE_PANEL_HTML =
+        '<p class="govuk-heading-m govuk-!-margin-bottom-1 app-measure__value" id="measure-value">–</p>' +
+        '<p class="govuk-body-s govuk-!-margin-bottom-0" id="measure-extra"></p>'
+
+      // Write the current measurement into the panel. The panel's html is static (the core
+      // renders it with dangerouslySetInnerHTML, which leaves our textContent edits alone until
+      // the panel remounts) — so this is also re-run whenever the panel is reopened.
+      function renderMeasurePanel () {
+        const valueEl = document.getElementById('measure-value')
+        if (!valueEl) return
+        const t = measureText()
+        valueEl.textContent = t.value
+        document.getElementById('measure-extra').textContent = t.extra
+      }
+
+      // Screen readers hear committed values only, not every pointer move.
+      function announceMeasure () {
+        const t = measureText()
+        if (t.value === '–') return
+        document.getElementById('measure-announce').textContent = `${t.kindLabel} ${t.value}` + (t.extra ? `, ${t.extra}` : '')
+      }
+
+      function showMeasurePanel () {
+        // The panel heading names the tool in use ("Distance" / "Area"). A panel's label is
+        // fixed when it is added, so switching tool re-adds the panel with the new heading.
+        if (measurePanelKind !== measureKind) {
+          if (measurePanelKind) interactiveMap.removePanel('measureResults')
+          measurePanelKind = measureKind
+          interactiveMap.addPanel('measureResults', {
+            label: measureKind === 'area' ? 'Area' : 'Distance',
+            html: MEASURE_PANEL_HTML,
+            focus: false,
+            mobile: { slot: 'drawer', dismissible: true },
+            tablet: { slot: 'left-top', dismissible: true, width: '240px' },
+            desktop: { slot: 'left-top', dismissible: true, width: '260px' }
+          })
+        } else {
+          interactiveMap.showPanel('measureResults', { focus: false })
+        }
+        // The panel body mounts on the next render.
+        requestAnimationFrame(renderMeasurePanel)
+      }
+
+      function onMeasureGeometryChange (e) {
+        measureLive = e.feature
+        renderMeasurePanel()
+        if (e.phase && e.phase.startsWith('commit-')) announceMeasure()
+        // undefined = valid: measuring never vetoes a vertex.
+      }
+
+      // Hand the map back to the page's own selection behaviour.
+      function endMeasureSession () {
+        measuring = false
+        measureEditing = false
+        enableInteract()
+        const hasMeasure = !!measureId
+        interactiveMap.toggleButtonState('editMeasurement', 'disabled', !hasMeasure)
+        interactiveMap.toggleButtonState('clearMeasurement', 'disabled', !hasMeasure)
+      }
+
+      function startMeasure (kind) {
+        if (!drawPlugin) return
+        if (measureId) drawPlugin.deleteFeature([measureId])
+        measureId = null
+        measureCommitted = null
+        measureLive = null
+        measureKind = kind
+        // Drop any page selection and stop interact from claiming the clicks that place vertices.
+        if (hoverNgc) clearParcelHover()
+        selectLandCover(null)
+        if (interact) { interact.clear(); interact.disable() }
+        measuring = true
+        const id = 'measure-' + Date.now()
+        const opts = { onGeometryChange: onMeasureGeometryChange, properties: { measure: kind } }
+        if (kind === 'area') drawPlugin.newPolygon(id, opts)
+        else drawPlugin.newLine(id, opts)
+        showMeasurePanel()
+      }
+
+      function editMeasurement () {
+        if (!drawPlugin || !measureId) return
+        if (!drawPlugin.editFeature(measureId, { onGeometryChange: onMeasureGeometryChange })) return
+        if (hoverNgc) clearParcelHover()
+        selectLandCover(null)
+        if (interact) { interact.clear(); interact.disable() }
+        measuring = true
+        measureEditing = true
+        showMeasurePanel()
+      }
+
+      function clearMeasurement () {
+        if (drawPlugin && measureId) drawPlugin.deleteFeature([measureId])
+        measureId = null
+        measureCommitted = null
+        measureLive = null
+        if (measurePanelKind) interactiveMap.hidePanel('measureResults')
+        document.getElementById('measure-announce').textContent = 'Measurement cleared'
+        endMeasureSession()
+      }
+
+      // Called once the map exists (see the draw:* handlers after construction).
+      function wireMeasure () {
+        const lineIcon = '<path d="M5.706 16.294L16.294 5.706"/><path d="M21 2v3c0 .549-.451 1-1 1h-3c-.549 0-1-.451-1-1V2c0-.549.451-1 1-1h3c.549 0 1 .451 1 1zM6 17v3c0 .549-.451 1-1 1H2c-.549 0-1-.451-1-1v-3c0-.549.451-1 1-1h3c.549 0 1 .451 1 1z"/>'
+        const areaIcon = '<path d="M19.5 7v10M4.5 7v10M7 19.5h10M7 4.5h10"/><path d="M22 18v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1zm0-15v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1zM7 18v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1zM7 3v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1z"/>'
+        const editIcon = '<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>'
+        const clearIcon = '<path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>'
+
+        interactiveMap.addButton('measure', {
+          label: 'Measure tools',
+          mobile: { slot: 'bottom-right' },
+          tablet: { slot: 'top-middle', showLabel: true },
+          desktop: { slot: 'top-middle', showLabel: true },
+          menuItems: [
+            { id: 'measureLine', label: 'Measure a distance', iconSvgContent: lineIcon, onClick: () => startMeasure('line') },
+            { id: 'measureArea', label: 'Measure an area', iconSvgContent: areaIcon, onClick: () => startMeasure('area') },
+            { id: 'editMeasurement', label: 'Edit measurement', iconSvgContent: editIcon, isDisabled: true, onClick: editMeasurement },
+            { id: 'clearMeasurement', label: 'Clear measurement', iconSvgContent: clearIcon, isDisabled: true, onClick: clearMeasurement }
+          ]
+        })
+
+        interactiveMap.on('draw:created', (feature) => {
+          if (!measuring) return
+          measureId = feature.id
+          measureLive = measureCommitted = feature
+          endMeasureSession()
+          renderMeasurePanel()
+          announceMeasure()
+        })
+        interactiveMap.on('draw:edited', (feature) => {
+          if (!measuring) return
+          measureLive = measureCommitted = feature
+          endMeasureSession()
+          renderMeasurePanel()
+          announceMeasure()
+        })
+        interactiveMap.on('draw:cancelled', () => {
+          if (!measuring) return
+          if (measureEditing) {
+            // The plugin puts the shape back as it was — show its committed figure again.
+            measureLive = measureCommitted
+          } else {
+            measureLive = null
+            if (measurePanelKind) interactiveMap.hidePanel('measureResults')
+          }
+          endMeasureSession()
+          renderMeasurePanel()
+        })
+        // The panel remounts its static html when reopened (e.g. after the user dismisses it).
+        interactiveMap.on('app:panelopened', (e) => {
+          if (!e || e.panelId === 'measureResults') requestAnimationFrame(renderMeasurePanel)
+        })
+      }
+
       // --- Initial load --------------------------------------------------------
       // The selected parcel's covers + hedges only need the SBI + parcel id (both known from the
       // URL), so they don't have to wait for the all-parcels response — fire all three together.
@@ -1398,11 +1651,19 @@
         // inside the library), so the map opens already framed with no visible pan/zoom.
         const parcelBounds = computeBounds(d.selectedFeature)
 
-        datasetsPlugin = defra.datasetsMaplibrePlugin({ datasets })
+        datasetsPlugin = defra.datasetsPlugin({ datasets })
         interact = defra.interactPlugin({
           interactionModes: ['selectFeature'],
           multiSelect: false,
           deselectOnClickOutside: true
+        })
+        // Measuring. GOV.UK red so the shape stands out from the blue parcel border and green
+        // hedgerows; a light fill on a finished area keeps the land covers readable beneath it.
+        drawPlugin = defra.drawPlugin({
+          strokeWidth: 3,
+          editStroke: '#d4351c',
+          shapeStroke: '#d4351c',
+          shapeFill: 'rgba(212, 53, 28, 0.12)'
         })
 
         interactiveMap = new defra.InteractiveMap('map', {
@@ -1414,10 +1675,15 @@
           maxZoom: 18,
           enableZoomControls: true,
           hasExitButton: true,
+          // While drawing, the draw plugin hides everything but its own buttons; keep the
+          // measurement panel and scale bar on screen alongside it.
+          applicationModes: { draw: { include: ['measureResults', 'scaleBar'] } },
+          // Satellite is the default base map (first in mapStyles below, which the plugin falls
+          // back to when no choice is saved); starting on it too avoids a flash of Outdoor.
           mapStyle: {
-            url: 'https://tiles.openfreemap.org/styles/liberty',
-            attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
-            backgroundColor: '#f5f5f0'
+            url: '/satellite-style.json',
+            attribution: '© Esri, Maxar, Earthstar Geographics',
+            backgroundColor: '#1a1a1a'
           },
           plugins: [
             defra.scaleBarPlugin({
@@ -1426,29 +1692,29 @@
             defra.mapStylesPlugin({
               mapStyles: [
             {
-              id: 'liberty',
-              label: 'Default',
-              url: 'https://tiles.openfreemap.org/styles/liberty',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-              appColorScheme: 'light',
-              mapColorScheme: 'light',
-              backgroundColor: '#f5f5f0'
-            },
-            {
               id: 'satellite',
               label: 'Satellite',
               url: '/satellite-style.json',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/aerial-map-thumb.jpg',
               attribution: '© Esri, Maxar, Earthstar Geographics',
               backgroundColor: '#1a1a1a',
               mapColorScheme: 'dark',
               appColorScheme: 'dark'
             },
             {
+              id: 'outdoor',
+              label: 'Outdoor',
+              url: 'https://tiles.openfreemap.org/styles/liberty',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/outdoor-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#f5f5f0'
+            },
+            {
               id: 'positron',
               label: 'Light',
               url: 'https://tiles.openfreemap.org/styles/positron',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/black-and-white-map-thumb.jpg',
               appColorScheme: 'light',
               mapColorScheme: 'light',
               backgroundColor: '#ffffff'
@@ -1456,7 +1722,10 @@
           ]
             }),
             datasetsPlugin,
-            interact
+            // 0.0.41+: the Key is its own plugin; list it after datasets so Layers comes before Key
+            defra.mapKeyPlugin(),
+            interact,
+            drawPlugin
           ]
         })
 
@@ -1474,7 +1743,10 @@
           // Hover affordance: tint whichever OTHER parcel the pointer is over. Keyed off the
           // 'parcels-hit' fill (the whole-parcel click target). Tracks hoverNgc so we only
           // setData when the hovered parcel actually changes, not on every mouse move.
+          // Every page-owned map handler below stands down while measuring, so the clicks that
+          // place vertices don't also switch parcel or select a land cover.
           hedgeMap.on('mousemove', 'parcels-hit', (ev) => {
+            if (measuring) return
             const ngc = ev.features && ev.features[0] && ev.features[0].properties.ngc
             if (ngc && ngc !== currentNgc) {
               if (ngc !== hoverNgc) {
@@ -1493,6 +1765,7 @@
           // see enableInteract for why we bypass the interact plugin here). A click that's also on
           // a hedgerow line is left to the interact plugin so hedgerow-row highlighting still works.
           hedgeMap.on('click', 'parcels-hit', (ev) => {
+            if (measuring) return
             if (hedgeMap.queryRenderedFeatures(ev.point, { layers: ['hedgerows'] }).length) return
             const ngc = ev.features && ev.features[0] && ev.features[0].properties.ngc
             if (ngc && ngc !== currentNgc) switchParcel(ngc)
@@ -1505,6 +1778,7 @@
           // bbox so both paths agree on what counts as a hedgerow click.
           const HEDGE_TOLERANCE = 10
           hedgeMap.on('click', (ev) => {
+            if (measuring) return
             const { x, y } = ev.point
             const hedgeBox = [[x - HEDGE_TOLERANCE, y - HEDGE_TOLERANCE], [x + HEDGE_TOLERANCE, y + HEDGE_TOLERANCE]]
             if (hedgeMap.getLayer('hedgerows') && hedgeMap.queryRenderedFeatures(hedgeBox, { layers: ['hedgerows'] }).length) {
@@ -1517,6 +1791,7 @@
             selectLandCover(feat ? String(feat.properties.landCoverId) : null)
           })
         })
+        interactiveMap.on('draw:ready', wireMeasure)
         interactiveMap.on('datasets:ready', () => {
           enableInteract()
           addLandCoverSelectedLayer()
@@ -1562,6 +1837,7 @@
         // is handled by the native 'parcels-hit' click in map:ready; on mobile the touch crosshair
         // selects a parcel through interact, so we also switch parcels off this event.
         interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
+          if (measuring) return
           const selectedIds = new Set(
             selectedFeatures.filter(f => f.layerId === 'hedgerows').map(f => f.featureId)
           )

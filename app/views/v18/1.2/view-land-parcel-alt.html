@@ -33,10 +33,11 @@
 
 {% block head %}
   <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/map-key/dist/css/index.css" rel="stylesheet" type="text/css">
 
   <style>
   html, body {
@@ -217,11 +218,12 @@
 {% endblock main %}
 
 {% block pageScripts %}
-  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/providers/maplibre/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/scale-bar/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/map-styles/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/map-key/dist/umd/index.js"></script>
 
   <script>
     // Land cover colour mapping
@@ -453,7 +455,7 @@
         }
 
         // Create the map with all datasets in the initial config
-        const datasetsPlugin = defra.datasetsMaplibrePlugin({ datasets })
+        const datasetsPlugin = defra.datasetsPlugin({ datasets })
 
         const interactiveMap = new defra.InteractiveMap('map', {
           mapProvider: defra.maplibreProvider(),
@@ -463,10 +465,12 @@
           maxZoom: 18,
           enableZoomControls: true,
           hasExitButton: true,
+          // Satellite is the default base map (first in mapStyles below, which the plugin falls
+          // back to when no choice is saved); starting on it too avoids a flash of Outdoor.
           mapStyle: {
-            url: 'https://tiles.openfreemap.org/styles/liberty',
-            attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
-            backgroundColor: '#f5f5f0'
+            url: '/satellite-style.json',
+            attribution: '© Esri, Maxar, Earthstar Geographics',
+            backgroundColor: '#1a1a1a'
           },
           plugins: [
             defra.scaleBarPlugin({
@@ -475,29 +479,29 @@
             defra.mapStylesPlugin({
               mapStyles: [
             {
-              id: 'liberty',
-              label: 'Default',
-              url: 'https://tiles.openfreemap.org/styles/liberty',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-              appColorScheme: 'light',
-              mapColorScheme: 'light',
-              backgroundColor: '#f5f5f0'
-            },
-            {
               id: 'satellite',
               label: 'Satellite',
               url: '/satellite-style.json',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/aerial-map-thumb.jpg',
               attribution: '© Esri, Maxar, Earthstar Geographics',
               backgroundColor: '#1a1a1a',
               mapColorScheme: 'dark',
               appColorScheme: 'dark'
             },
             {
+              id: 'outdoor',
+              label: 'Outdoor',
+              url: 'https://tiles.openfreemap.org/styles/liberty',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/outdoor-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#f5f5f0'
+            },
+            {
               id: 'positron',
               label: 'Light',
               url: 'https://tiles.openfreemap.org/styles/positron',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/black-and-white-map-thumb.jpg',
               appColorScheme: 'light',
               mapColorScheme: 'light',
               backgroundColor: '#ffffff'
@@ -506,7 +510,7 @@
             //   id: 'bright',
             //   label: 'Bright',
             //   url: 'https://tiles.openfreemap.org/styles/bright',
-            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/outdoor-map-thumb.jpg',
             //   appColorScheme: 'light',
             //   mapColorScheme: 'light',
             //   backgroundColor: '#f5f5f0'
@@ -514,7 +518,9 @@
 
           ]
             }),
-            datasetsPlugin
+            datasetsPlugin,
+            // 0.0.41+: the Key is its own plugin; list it after datasets so Layers comes before Key
+            defra.mapKeyPlugin()
           ]
         })
 

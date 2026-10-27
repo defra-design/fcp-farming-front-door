@@ -10,17 +10,18 @@
 //   linkText       What's new link text (defaults to url)
 //   extraLinks     further links shown after the main one in What's new, as [{ text, url }]
 //   designHistory  true to include the page in the design history's link list
+//   index          false to leave a live page out of the What's new table (it can still be linked)
 
 const BASE = '/v18/1.2/'
 
 const pages = [
   { id: 'view-land', name: 'View land', url: 'view-land', status: 'live' },
-  { id: 'historical-view', name: 'Historical view', url: 'view-land-parcel?parcel=SX39647821', status: 'live', designHistory: true },
-  { id: 'compare-side-by-side', name: 'Compare versions (side by side)', url: 'view-land-parcel-compare-side-by-side?parcel=SX39647821', status: 'live', designHistory: true },
-  { id: 'compare-stacked', name: 'Compare versions (stacked)', url: 'view-land-parcel-compare-stacked?parcel=SX39647821', status: 'live', designHistory: true },
+  { id: 'dates-list', name: 'Historical view (multiple previous versions)', url: 'view-land-parcel-dates-list?parcel=SX39647821', status: 'live', designHistory: true },
+  { id: 'historical-view', name: 'Historical view', url: 'view-land-parcel?parcel=SX39647821', status: 'live', designHistory: true, index: false },
+  { id: 'compare-side-by-side', name: 'Compare versions (side by side)', url: 'view-land-parcel-compare-side-by-side?parcel=SX39647821', status: 'live', designHistory: true, index: false },
+  { id: 'compare-stacked', name: 'Compare versions (stacked)', url: 'view-land-parcel-compare-stacked?parcel=SX39647821', status: 'live', designHistory: true, index: false },
   { id: 'compare-overlay', name: 'Compare versions (single map: overlay radios)', url: 'view-land-parcel-compare-overlay?parcel=SX39647821', status: 'live', designHistory: true },
   { id: 'compare-fade', name: 'Compare versions (single map: fade slider)', url: 'view-land-parcel-compare-fade?parcel=SX39647821', status: 'live', designHistory: true },
-  { id: 'dates-list', name: 'Dates list (copy of single map: overlay radios)', url: 'view-land-parcel-dates-list?parcel=SX39647821', status: 'live', designHistory: true },
   {
     id: 'dates-list-merges',
     name: 'Dates list with merges (mocked)',
@@ -32,7 +33,7 @@ const pages = [
   },
   { id: 'compare-layers', name: 'Compare versions (single map: layers panel)', url: 'view-land-parcel-compare-layers?parcel=SX39647821', status: 'parked' },
   { id: 'compare-changes', name: 'Compare versions (single map: changes outlined)', url: 'view-land-parcel-compare-changes?parcel=SX39647821', status: 'parked' },
-  { id: 'demo-start', name: 'Demo start', url: 'demo-start', linkText: 'Enter SBI and business name', status: 'live' }
+  { id: 'demo-start', name: 'Demo start', url: 'demo-start', linkText: 'Enter SBI and business name', status: 'live', index: false }
 ]
 
 pages.forEach(p => {
@@ -46,6 +47,7 @@ module.exports = {
   base: BASE,
   pages,
   live: pages.filter(p => p.status === 'live'),
+  index: pages.filter(p => p.status === 'live' && p.index !== false),
   parked: pages.filter(p => p.status === 'parked'),
   byId: Object.fromEntries(pages.map(p => [p.id, p]))
 }

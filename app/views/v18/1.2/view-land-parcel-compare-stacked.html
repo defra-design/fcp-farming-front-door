@@ -33,14 +33,14 @@
 
 {% block head %}
   <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/scale-bar/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/map-styles/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/css/index.css" rel="stylesheet" type="text/css">
+  <link href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/map-key/dist/css/index.css" rel="stylesheet" type="text/css">
 
   <link rel="prefetch" href="/v18/1.2/view-land" as="document">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/css/index.css">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/interact/dist/umd/index.js">
 
   <style>
   /* This page scrolls as a normal document (two maps on top, the comparison tables
@@ -230,7 +230,7 @@
     border: 0;
   }
 
-  .im-c-datasets-key__group[aria-labelledby^="key-heading-land-cover"] .im-c-datasets-key__item:first-child {
+  .im-c-map-key__group[aria-labelledby^="key-heading-land-cover"] .im-c-map-key-list__item:first-child {
     padding-top: 10px;
   }
 
@@ -365,12 +365,13 @@
 {% endblock main %}
 
 {% block pageScripts %}
-  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/scale-bar/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/map-styles/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/providers/maplibre/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/scale-bar/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/beta/map-styles/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/map-key/dist/umd/index.js"></script>
+  <script src="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/interact/dist/umd/index.js"></script>
 
   <script>
     // Reveal the page immediately. The DEFRA library hides the whole <body> via
@@ -532,29 +533,29 @@
     // methods onto the plugin object at mount time).
     const mapStyles = [
       {
-        id: 'liberty',
-        label: 'Default',
-        url: 'https://tiles.openfreemap.org/styles/liberty',
-        thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-        appColorScheme: 'light',
-        mapColorScheme: 'light',
-        backgroundColor: '#f5f5f0'
-      },
-      {
         id: 'satellite',
         label: 'Satellite',
         url: '/satellite-style.json',
-        thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+        thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/aerial-map-thumb.jpg',
         attribution: '© Esri, Maxar, Earthstar Geographics',
         backgroundColor: '#1a1a1a',
         mapColorScheme: 'dark',
         appColorScheme: 'dark'
       },
       {
+        id: 'outdoor',
+        label: 'Outdoor',
+        url: 'https://tiles.openfreemap.org/styles/liberty',
+        thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/outdoor-map-thumb.jpg',
+        appColorScheme: 'light',
+        mapColorScheme: 'light',
+        backgroundColor: '#f5f5f0'
+      },
+      {
         id: 'positron',
         label: 'Light',
         url: 'https://tiles.openfreemap.org/styles/positron',
-        thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+        thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/black-and-white-map-thumb.jpg',
         appColorScheme: 'light',
         mapColorScheme: 'light',
         backgroundColor: '#ffffff'
@@ -874,7 +875,8 @@
         // regardless of visibility, so the absent ones have to be hidden here.
         const childInputs = [...fieldset.querySelectorAll('input[data-sublayer-id]')]
         childInputs.forEach(input => {
-          const type = lcTypeBySublayerId[input.dataset.sublayerId]
+          // 0.0.52 prefixes the checkbox's sublayer id with its dataset id ("land-cover-lc-…").
+          const type = lcTypeBySublayerId[input.dataset.sublayerId.slice(input.dataset.datasetId.length + 1)]
           const item = input.closest('.im-c-datasets-layers__item')
           if (item) item.hidden = !presentCovers.has(type)
           // The checkbox itself is the plugin's, and its handler is all the map needs. This
@@ -966,7 +968,7 @@
         // the same feature geometry, so both maps start on the identical view.
         const parcelBounds = computeBounds(d.selectedFeature)
 
-        datasetsPlugin = perMapPlugin(defra.datasetsMaplibrePlugin({ datasets }))
+        datasetsPlugin = perMapPlugin(defra.datasetsPlugin({ datasets }))
         interact = defra.interactPlugin({
           interactionModes: ['selectFeature'],
           multiSelect: false,
@@ -986,10 +988,12 @@
           // Don't mirror this map's centre/zoom into the URL — two linked maps would write
           // two sets of position params on every move.
           urlPosition: 'none',
+          // Satellite is the default base map (first in mapStyles below, which the plugin falls
+          // back to when no choice is saved); starting on it too avoids a flash of Outdoor.
           mapStyle: {
-            url: 'https://tiles.openfreemap.org/styles/liberty',
-            attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
-            backgroundColor: '#f5f5f0'
+            url: '/satellite-style.json',
+            attribution: '© Esri, Maxar, Earthstar Geographics',
+            backgroundColor: '#1a1a1a'
           },
           plugins: [
             defra.scaleBarPlugin({
@@ -997,6 +1001,8 @@
             }),
             defra.mapStylesPlugin({ mapStyles }),
             datasetsPlugin,
+            // 0.0.41+: the Key is its own plugin; list it after datasets so Layers comes before Key
+            defra.mapKeyPlugin(),
             interact
           ]
         })

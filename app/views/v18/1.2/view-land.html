@@ -1,4 +1,4 @@
-{% extends "layouts/map-fullscreen.html" %}
+{% extends "layouts/map-fullscreen-v52.html" %}
 
 {#- Built from the mapping pattern library (/patterns/mapping): full-screen layout, map page
     header and land data panel. Only the map and its parcel layers are page-specific. -#}
@@ -11,8 +11,8 @@
 
 {% block mapHead %}
   <link rel="prefetch" href="/v18/1.2/view-land-parcel" as="document">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/css/index.css">
-  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map/plugins/beta/datasets/dist/umd/maplibre/index.js">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/css/index.css">
+  <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/umd/index.js">
 {% endblock %}
 
 {% block mapSidebar %}
@@ -269,10 +269,12 @@
       minZoom: 6,
       maxZoom: 18,
       enableZoomControls: true,
+      // Satellite is the default base map (first in mapStyles below, which the plugin falls
+      // back to when no choice is saved); starting on it too avoids a flash of Outdoor.
       mapStyle: {
-        url: 'https://tiles.openfreemap.org/styles/liberty',
-        attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap',
-        backgroundColor: '#f5f5f0'
+        url: '/satellite-style.json',
+        attribution: '© Esri, Maxar, Earthstar Geographics',
+        backgroundColor: '#1a1a1a'
       },
       plugins: [
         defra.scaleBarPlugin({
@@ -282,29 +284,29 @@
         defra.mapStylesPlugin({
           mapStyles: [
             {
-              id: 'liberty',
-              label: 'Default',
-              url: 'https://tiles.openfreemap.org/styles/liberty',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
-              appColorScheme: 'light',
-              mapColorScheme: 'light',
-              backgroundColor: '#f5f5f0'
-            },
-            {
               id: 'satellite',
               label: 'Satellite',
               url: '/satellite-style.json',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/aerial-map-thumb.jpg',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/aerial-map-thumb.jpg',
               attribution: '© Esri, Maxar, Earthstar Geographics',
               backgroundColor: '#1a1a1a',
               mapColorScheme: 'dark',
               appColorScheme: 'dark'
             },
             {
+              id: 'outdoor',
+              label: 'Outdoor',
+              url: 'https://tiles.openfreemap.org/styles/liberty',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/outdoor-map-thumb.jpg',
+              appColorScheme: 'light',
+              mapColorScheme: 'light',
+              backgroundColor: '#f5f5f0'
+            },
+            {
               id: 'positron',
               label: 'Light',
               url: 'https://tiles.openfreemap.org/styles/positron',
-              thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/black-and-white-map-thumb.jpg',
+              thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/black-and-white-map-thumb.jpg',
               appColorScheme: 'light',
               mapColorScheme: 'light',
               backgroundColor: '#ffffff'
@@ -313,7 +315,7 @@
             //   id: 'bright',
             //   label: 'Bright',
             //   url: 'https://tiles.openfreemap.org/styles/bright',
-            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map/assets/images/outdoor-map-thumb.jpg',
+            //   thumbnail: '/plugin-assets/%40defra%2Finteractive-map-v52/assets/images/outdoor-map-thumb.jpg',
             //   appColorScheme: 'light',
             //   mapColorScheme: 'light',
             //   backgroundColor: '#f5f5f0'
@@ -500,7 +502,13 @@
 
     // Sidebar: the land data panel (summary, filter, parcel list, selected parcel)
     const panel = AppMap.landDataPanel
-    panel.init({ parcelUrl: (ngc) => `/v18/1.2/view-land-parcel?parcel=${ngc}` })
+    // Parcels with previous-version data for the historical view (multiple previous versions)
+    // open it; every other parcel opens the parcel page.
+    const PARCELS_WITH_DATES_LIST = ['SX39647821', 'SX39632340']
+    const parcelUrl = (ngc) => PARCELS_WITH_DATES_LIST.includes(String(ngc))
+      ? `/v18/1.2/view-land-parcel-dates-list?parcel=${ngc}`
+      : `/v18/1.2/view-land-parcel?parcel=${ngc}`
+    panel.init({ parcelUrl })
 
     // Fetch data immediately on page load
     const sbi = '{{ myData.sbi | default("111089693") }}'
@@ -582,7 +590,7 @@
         })
         interactiveMap.on('interact:done', ({ selectedFeatures }) => {
           const ngc = selectedFeatures && selectedFeatures.length ? featureNgc(selectedFeatures[0]) : null
-          if (ngc != null) window.location.href = `/v18/1.2/view-land-parcel?parcel=${ngc}`
+          if (ngc != null) window.location.href = parcelUrl(ngc)
         })
       }
 

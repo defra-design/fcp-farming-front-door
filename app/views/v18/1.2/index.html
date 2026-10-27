@@ -49,7 +49,7 @@
 
 
     <p class="govuk-body">
-      This prototype is based on the existing land summary customer journey. It has been built using the <a href="https://defra.github.io/interactive-map/">interactive mapping component</a>. Version (v0.0.22-alpha).
+      This prototype is based on the existing land summary customer journey. It has been built using the <a href="https://defra.github.io/interactive-map/">interactive mapping component</a>. <mark style="background: #fff7bf;">Version (v0.0.52-alpha).</mark>{# Highlighted for review 27 Oct 2026: remove the mark once checked. #}
     </p>
 
     <h2 class="govuk-heading-m">
@@ -105,14 +105,14 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <p>The below list documents the new pages prototyped as part of this journey. The list does not include the entirety of pages held within service, as already documented as part of <a href="../MVP/index">MVP</a>.</p>
+    <!-- <p>The below list documents the new pages prototyped as part of this journey. The list does not include the entirety of pages held within service, as already documented as part of <a href="../MVP/index">MVP</a>.</p> -->
 
     {% from "govuk/components/table/macro.njk" import govukTable %}
 
-      {# Rows come from app/data/v18-1-2-pages.js (live pages only). Add, park or rename
+      {# Rows come from app/data/v18-1-2-pages.js (live pages not marked index: false). Add, park or rename
          pages there, not here: the 1.2 design history reads the same list. #}
       {% set whatsNewRows = [] %}
-      {% for p in v18_12.live %}
+      {% for p in v18_12.index %}
         {% set linkHtml %}<a href="{{ p.href }}">{{ p.linkText }}</a>{% for l in p.extraLinks %}. <a href="{{ l.href }}">{{ l.text }}</a>{% endfor %}{% endset %}
         {% set _ = whatsNewRows.push([{ text: p.name }, { html: linkHtml }, { text: "1.2" }]) %}
       {% endfor %}
