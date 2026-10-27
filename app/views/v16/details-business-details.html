@@ -834,16 +834,7 @@ row. View example with the query string &traderCount=0"
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Sort code
-        </dt>
-        <dd class="govuk-summary-list__value">
-          ****56
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
+        
           Account number
         </dt>
         <dd class="govuk-summary-list__value">
@@ -855,29 +846,7 @@ row. View example with the query string &traderCount=0"
       {% if data['bankBuildbus'] %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Building society roll number (if you have one)
-        </dt>
-        <dd class="govuk-summary-list__value">
-          *******89
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      {% else %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Building society roll number (if you have one)
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <span style="color:#505a5f">No number added</span>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      {% endif %}
-      {% else %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
+        
           First and last name
         </dt>
         <dd class="govuk-summary-list__value">
@@ -892,16 +861,7 @@ row. View example with the query string &traderCount=0"
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Sort code
-        </dt>
-        <dd class="govuk-summary-list__value">
-          ****12
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
+          
           Account number
         </dt>
         <dd class="govuk-summary-list__value">
@@ -912,20 +872,7 @@ row. View example with the query string &traderCount=0"
       </div>
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          Building society roll number (if you have one)
-        </dt>
-        <dd class="govuk-summary-list__value">
-          {% set _bankRollValue = myData.bankRollBus %}
-          {% if _bankRollValue and _bankRollValue != "" %}
-          ****{{_bankRollValue.slice(_bankRollValue|length - 2)}}
-          {% else %}
-          <span style="color:#505a5f">No number added</span>
-          {% endif %}
-        </dd>
-        <dd class="govuk-summary-list__actions">
-        </dd>
-      </div>
-      {% endif %}
+         
     </dl>
     <p>
       To update bank account details sign in to the <a href="https://www.ruralpayments.service.gov.uk" class="govuk-link">Rural Payments service</a>. 
