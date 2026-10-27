@@ -1,0 +1,65 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{#- Example: the land data panel on its own, for the inline iframe on /patterns/mapping/data-panel.
+    No header or map: the page links to examples/data-panel, which has both.
+    The panel styles are scoped to html.app-map-page, so set the class here as the map layout does. -#}
+
+{% set htmlClasses = "app-map-page" %}
+
+{% block pageTitle %}
+  Example: land data panel on its own – Mapping pattern library
+{% endblock %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block main %}
+<main id="main-content" style="padding:0 15px 15px">
+  {#- Stands in for a click on the map, which this example doesn't have -#}
+  <button type="button" class="govuk-button govuk-button--secondary govuk-!-margin-top-4 govuk-!-margin-bottom-0" id="select-random-parcel" data-module="govuk-button">Select a random parcel</button>
+  {% include "_common/map/land-data-panel.html" %}
+</main>
+{% endblock %}
+
+{% block pageScripts %}
+  <script src="/public/javascripts/map/land-data-panel.js"></script>
+  <script>
+    const sbi = '{{ myData.sbi | default("111089693") }}'
+    const wfs = (type) => `https://environment.data.gov.uk/data-services/RPA/${type}/wfs?version=2.0.0&request=GetFeature&typeNames=RPA:${type}&cql_filter=${encodeURIComponent('SBI=' + sbi)}&srsname=EPSG:4326&outputFormat=application/json`
+
+    // sessionStorage cache keyed on the request URL (shared with the full-screen example, same URLs)
+    function cachedFetchJson (url) {
+      try {
+        const hit = sessionStorage.getItem(url)
+        if (hit) return Promise.resolve(JSON.parse(hit))
+      } catch (e) { /* ignore */ }
+      return fetch(url).then(r => r.json()).then(data => {
+        try { sessionStorage.setItem(url, JSON.stringify(data)) } catch (e) { /* quota */ }
+        return data
+      })
+    }
+
+    const panel = AppMap.landDataPanel
+    panel.init({ parcelUrl: (ngc) => `/v18/1.2/view-land-parcel?parcel=${ngc}` })
+
+    Promise.all([cachedFetchJson(wfs('LandParcels')), cachedFetchJson(wfs('LandCovers'))])
+      .then(([parcels, covers]) => {
+        parcels.features.forEach(f => { f.properties.ngc = f.properties.SHEET_ID + f.properties.PARCEL_ID })
+        panel.render(parcels, covers)
+
+        // Map stand-in: select any parcel, as a map click would (even one the filter hides)
+        const ngcs = parcels.features.map(f => f.properties.ngc)
+        let selected = null
+        document.getElementById('select-random-parcel').addEventListener('click', () => {
+          const others = ngcs.filter(ngc => ngc !== selected)
+          if (!others.length) return
+          selected = others[Math.floor(Math.random() * others.length)]
+          panel.select(selected)
+        })
+      })
+      .catch(err => {
+        console.error('Failed to load land parcels:', err)
+        panel.renderError()
+      })
+  </script>
+{% endblock %}

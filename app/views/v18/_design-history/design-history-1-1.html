@@ -22,108 +22,288 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
       <span class="govuk-caption-xl">Design history</span>
-      Land summary (v1.1)
+      Land summary v1.1
     </h1>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
 
-    <p class="govuk-body">
-      Second iteration of a prototype that re-presents the existing land summary customer journey using the Defra
-      <a class="govuk-link" href="https://defra.github.io/interactive-map/" rel="noreferrer noopener" target="_blank">interactive mapping component (opens in new tab)</a>
-      (v0.0.22-alpha).
-    </p>
+    {# Structure follows app/views/_templates/design-history.html. #}
 
-    <p>We continued to re-present the existing land customer journey, introducing an historical view for two land parcels.</p>
+    <h2 class="govuk-heading-s">Contents</h2>
 
-    <h2 class="govuk-heading-l">Design review</h2>
-    <p>We shared the first iteration of the prototype with the wider team. This gave the team the opportunity to review and give feedback on the designs. We also collated all the business requirements, user needs and pain points from a previous workshop.</p>
-    <p>The design review resulted in the removal of the specific date search functionality. Research had indicated it confused users. We made the assumption that users would come to the service knowing the land parcel they were looking for.</p>
-    
+    <ol class="govuk-list govuk-list--number">
+      <li><a class="govuk-link" href="#design-review">Design review</a></li>
+      <li>
+        <a class="govuk-link" href="#ui-changes">UI changes</a>
+        <ul class="govuk-list govuk-!-margin-top-1 govuk-!-margin-left-4">
+          <li><a class="govuk-link" href="#historical-view">Historical view</a></li>
+          <li><a class="govuk-link" href="#header">Header</a></li>
+          <li><a class="govuk-link" href="#hedgerows">Hedgerows</a></li>
+          <li><a class="govuk-link" href="#layers-panel">Layers panel</a></li>
+          <li><a class="govuk-link" href="#land-cover-colours">Land cover colours</a></li>
+        </ul>
+      </li>
+      <li><a class="govuk-link" href="#testing-next">What we're testing next</a></li>
+      <li><a class="govuk-link" href="#reference">Reference</a></li>
+    </ol>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="design-review">Design review</h2>
+
+    <p>The review of v1.0 led us to remove the specific date search, as research had shown it confused users. We assumed users would come to the service knowing the land parcel they were looking for.</p>
+
+    <p>We shared v1.0 with the wider team so they could review and give feedback on the designs. We also collated the business requirements, user needs and pain points from a previous workshop.</p>
+
     <img src="/public/images/design-history/v18/1-1/design-review.webp" alt="" class="design-history">
-  
-    <h2 class="govuk-heading-l">Historical view of land parcels</h2>
-    <p>Because no historical data is available from the public API, we obtained historical data for two land parcels from the LMS team. The two land parcel IDs are: SX3963 2340 and SX3964 7821.</p>
-        <img src="/public/images/design-history/v18/1-1/historical-current.webp" alt="" class="design-history">
-        <p>We included a link to the historical view of the land parcel.</p>
-        <img src="/public/images/design-history/v18/1-1/historical-previous.webp" alt="" class="design-history">
-        <p>We included some inset copy highlighting the dates for which the historical view was relevant. We included a link for a user to navigate to the current version of the land parcel.</p>
-    <h2 class="govuk-heading-l">UI iterations</h2>
-    <h3 class="govuk-heading-m">Header</h3>
-    <p>The header was redesigned to align it with the rest of the service. The sub navigation was removed. The phase banner introduced. The business name, SBI, customer name and sign out link added.</p>
-    <img src="/public/images/design-history/v18/1-1/updated-header.webp" alt="" class="design-history">
-    <h2 class="govuk-heading-l">Map component updates</h2>
 
-    <h3 class="govuk-heading-m">Hedgerows</h3>
-    <p>We re-presented the existing highlighting of hedgerow data. When a user clicks on a hedgerow on the map the corresponding hedgerow data is highlighted in data column. </p>
-    <img src="/public/images/design-history/v18/1-1/hedgerows-screenshot.webp" alt="" class="design-history">
-    <h3 class="govuk-heading-m">Layers</h3>
-    <p>We re-presented the existing layer toggle functionality. The user has the ability to toggle on / off the following layers: Land covers, Land parcel outlines and Hedgerows.</p>
-    <img src="/public/images/design-history/v18/1-1/layers-screenshot.webp" alt="" class="design-history">
+  </div>
 
+  <div class="govuk-grid-column-one-third">
+    <aside role="complementary">
+      {# Labels stacked above their values, so they don't wrap in the narrow column. #}
+      <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Date</dt>
+        <dd class="govuk-body govuk-!-margin-left-0">[Month year]</dd>
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Responds to</dt>
+        <dd class="govuk-body govuk-!-margin-left-0"><a class="govuk-link" href="#design-review">Design review of v1.0</a></dd>
+        <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Status</dt>
+        <dd class="govuk-body govuk-!-margin-left-0">Tested in <a class="govuk-link" href="research-1-1">round 10 of user research</a></dd>
+      </dl>
 
-    <h2 class="govuk-heading-l">Demo</h2>
-    <p>To enable us to design a layout that works for different quantities of land parcels and business sizes we built out a demo that allows us to load any individual SBI data in the view land summary prototype. </p>
-
-    <p>Another benefit of producing the demo is that it can be used during research to enable participants to view their own land during research sessions.</p>
-
-    <h3 class="govuk-heading-m">Demo start screen</h3>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link" href="../1.1/demo-start">demo start screen</a></li>
+      <h2 class="govuk-heading-s">Other iterations</h2>
+      <ul class="govuk-list">
+        <li><a class="govuk-link" href="design-history-1-0">Previous: v1.0</a></li>
+        <li><a class="govuk-link" href="design-history-1-2">Next: v1.2</a></li>
       </ul>
+    </aside>
+  </div>
+</div>
 
-    <img src="/public/images/design-history/v18/1-1/demo-start.webp" alt="" class="design-history">
-    <h2 class="govuk-heading-l">Choosing land cover colours</h2>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
 
-    <p>
-      We built a colour tuning tool into the prototype so we could try different colour combinations, for land parcel boundries and land covers, live on the map
-      during design sessions. Adding a colours flag to the URL.</p>
+    <h2 class="govuk-heading-l" id="ui-changes">UI changes</h2>
 
-    <img src="/public/images/design-history/v18/1-1/colour-picker.webp" alt="" class="design-history">
+    <h3 class="govuk-heading-m" id="historical-view">Historical view</h3>
 
-    <p class="govuk-body">
-      Each land cover type on the map is drawn in its own colour. We grouped the palette greens for
-      grassland and woodland, blues for water (drains, rivers, ponds), greys for hard surfaces and roads, and warmer tones for buildings and
-      farmyards.
-    </p>
+    <p>We added a historical view for 2 land parcels, SX3963 2340 and SX3964 7821, so users can see a parcel as it was before its latest update.</p>
 
-
-
-
+    <h4 class="govuk-heading-s">Current version</h4>
+    <img src="/public/images/design-history/v18/1-1/historical-current.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
     <ul class="govuk-list govuk-list--bullet">
-      <li>Each map element and land cover type has its own colour picker, plus
-        a slider for the hover tint, and changes apply to the map instantly.</li>
-      <li>A chosen palette is remembered in the browser, so it persists between
-        page loads.</li>
-      <li>Copy share link produces a URL that reproduces the
-        exact palette, so a combination can be shared with the team for
-        feedback without changing any code.</li>
-      <li>Copy palette exports the values as JSON, ready to
-        paste in as the new default once a palette is agreed.</li>
+      <li>a link goes to the historical view of the land parcel</li>
     </ul>
 
-    <h2 class="govuk-heading-m">Colour tuning tool</h2>
+    <h4 class="govuk-heading-s">Historical version</h4>
+    <img src="/public/images/design-history/v18/1-1/historical-previous.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
+    <ul class="govuk-list govuk-list--bullet">
+      <li>inset text gives the dates the historical view covers</li>
+      <li>a link goes back to the current version of the land parcel</li>
+    </ul>
 
-          <ul class="govuk-list govuk-list--bullet">
-        <li><a class="govuk-link" href="../1.1/view-land?colours">view-land</a></li>
-        <li><a class="govuk-link" href="../1.1/view-land-parcel?parcel=SX39647821&colours">view-land-parcel</a></li>
-      </ul>
+    <h4 class="govuk-heading-m">Why we changed it</h4>
 
-    <p class="govuk-body">
-      The panel only appears when ?colours is present in the URL, it is a design and research aid, not part of the user facing journey.
-    </p>
+    {# Draft hypothesis, written from the existing copy: check before sharing. #}
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Problem</dt>
+        <dd class="govuk-summary-list__value">Users need to see how a land parcel has changed, which the existing journey doesn't show.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We believe</dt>
+        <dd class="govuk-summary-list__value">A historical view of a parcel, with the dates it covers, will help users understand what changed and when.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We'll know if</dt>
+        <dd class="govuk-summary-list__value">Participants can find the historical view and identify at least one change on a parcel.</dd>
+      </div>
+    </dl>
 
-    <p class="govuk-body">
-      In v1.2 the tool gained a "Land cover selected" colour for the outline drawn around a selected land cover.
-    </p>
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Technical notes</span>
+      </summary>
+      <div class="govuk-details__text">
+        <p>The public API has no historical data, so we obtained historical data for the 2 land parcels from the LMS team.</p>
+      </div>
+    </details>
+
+    <h3 class="govuk-heading-m" id="header">Header</h3>
+
+    <p>We redesigned the header to match the rest of the service.</p>
+
+    <img src="/public/images/design-history/v18/1-1/updated-header.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the sub navigation has been removed</li>
+      <li>a phase banner has been added</li>
+      <li>the business name, SBI, customer name and a sign out link have been added</li>
+    </ul>
+
+    <h4 class="govuk-heading-m">Why we changed it</h4>
+
+    {# Draft hypothesis, written from the existing copy: check before sharing. #}
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Problem</dt>
+        <dd class="govuk-summary-list__value">The v1.0 header didn't match the rest of the service, and didn't show whose land the user was looking at.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We believe</dt>
+        <dd class="govuk-summary-list__value">A header that matches the service, with the business and customer details, will help users trust they are looking at the right land.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We'll know if</dt>
+        <dd class="govuk-summary-list__value">Participants can say which business they are viewing without help.</dd>
+      </div>
+    </dl>
+
+    <h3 class="govuk-heading-m" id="hedgerows">Hedgerows</h3>
+
+    <p>We re-presented the existing hedgerow highlighting. Clicking a hedgerow on the map highlights its data in the data column.</p>
+
+    <img src="/public/images/design-history/v18/1-1/hedgerows-screenshot.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
+
+    <h4 class="govuk-heading-m">Why we changed it</h4>
+
+    {# Draft hypothesis, written from the existing copy: check before sharing. #}
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Problem</dt>
+        <dd class="govuk-summary-list__value">Users of the existing service can highlight a hedgerow's data from the map, and v1.0 didn't do this.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We believe</dt>
+        <dd class="govuk-summary-list__value">Keeping hedgerow highlighting will help users match a hedgerow on the map to its length.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We'll know if</dt>
+        <dd class="govuk-summary-list__value">Participants can match a hedgerow on the map to its row in the data column without help.</dd>
+      </div>
+    </dl>
+
+    <h3 class="govuk-heading-m" id="layers-panel">Layers panel</h3>
+
+    <p>We re-presented the existing layer toggles. Users can switch Land covers, Land parcel outlines and Hedgerows on and off.</p>
+
+    <img src="/public/images/design-history/v18/1-1/layers-screenshot.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
+
+    <h4 class="govuk-heading-m">Why we changed it</h4>
+
+    {# Draft hypothesis, written from the existing copy: check before sharing. #}
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Problem</dt>
+        <dd class="govuk-summary-list__value">With every layer showing, the map can be hard to read, and the existing service lets users switch layers off.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We believe</dt>
+        <dd class="govuk-summary-list__value">Switching layers on and off will help users focus on the land information they need.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We'll know if</dt>
+        <dd class="govuk-summary-list__value">Participants find and use the layer toggles when the map gets busy.</dd>
+      </div>
+    </dl>
+
+    <h3 class="govuk-heading-m" id="land-cover-colours">Land cover colours</h3>
+
+    <p>Each land cover type on the map is drawn in its own colour, grouped by kind:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>greens for grassland and woodland</li>
+      <li>blues for water (drains, rivers, ponds)</li>
+      <li>greys for hard surfaces and roads</li>
+      <li>warmer tones for buildings and farmyards</li>
+    </ul>
+
+    <p>We chose the palette with a colour tuning tool built into the prototype. It let us try colour combinations for land parcel boundaries and land covers live on the map during design sessions.</p>
+
+    <img src="/public/images/design-history/v18/1-1/colour-picker.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
+
+    <h4 class="govuk-heading-s">Colour tuning tool</h4>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>each map element and land cover type has its own colour picker, plus a slider for the hover tint, and changes apply to the map instantly</li>
+      <li>a chosen palette is remembered in the browser, so it persists between page loads</li>
+      <li>Copy share link produces a URL that reproduces the exact palette, so a combination can be shared with the team for feedback without changing any code</li>
+      <li>Copy palette exports the values as JSON, ready to paste in as the new default once a palette is agreed</li>
+    </ul>
+
+    <p>The panel only appears when <code>?colours</code> is in the URL. It is a design and research aid, not part of the user journey.</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link" href="../1.1/view-land?colours">view-land</a></li>
+      <li><a class="govuk-link" href="../1.1/view-land-parcel?parcel=SX39647821&colours">view-land-parcel</a></li>
+    </ul>
+
+    <p>In v1.2 the tool gained a Land cover selected colour, for the outline drawn around a selected land cover.</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li><a class="govuk-link" href="../1.2/view-land-parcel?parcel=SX39647821&colours">view-land-parcel (v1.2)</a></li>
     </ul>
 
-  <!-- right third of page to link to relevant mural boards and UR findings -->
-  <div class="govuk-grid-column-one-third">
+    <h4 class="govuk-heading-m">Why we changed it</h4>
+
+    {# Draft hypothesis, written from the existing copy: check before sharing. #}
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Problem</dt>
+        <dd class="govuk-summary-list__value">With many land cover types on one parcel, unrelated colours make the map hard to read.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We believe</dt>
+        <dd class="govuk-summary-list__value">Grouping colours by kind of land cover will help users read the map at a glance.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We'll know if</dt>
+        <dd class="govuk-summary-list__value">Participants can match land cover classifications to areas on the map without help.</dd>
+      </div>
+    </dl>
+
+    <h2 class="govuk-heading-l" id="testing-next">What we're testing next</h2>
+
+    <p>We tested v1.1 in round 10 of user research. The <a class="govuk-link" href="research-1-1">research on v1.1</a> has what we found, and the <a class="govuk-link" href="design-history-1-2">v1.2 design history</a> has how we responded.</p>
+
+    <h2 class="govuk-heading-l" id="reference">Reference</h2>
+
+    <h3 class="govuk-heading-m">What's real and what's mocked</h3>
+
+    <table class="govuk-table app-status-table">
+      <colgroup>
+        <col style="width: 33%">
+        <col>
+        <col style="width: 1%">
+      </colgroup>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Data</th>
+          <th scope="col" class="govuk-table__header">Source</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Historical land parcels</th>
+          <td class="govuk-table__cell">Historical data for SX3963 2340 and SX3964 7821, obtained from the LMS team</td>
+          <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Snapshot</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="govuk-heading-m" id="demo">Demo</h3>
+
+    <p>We built a demo that loads any SBI's data into the land summary. It helps us design a layout that works for different numbers of land parcels and sizes of business.</p>
+
+    <p>It can also be used in research, so participants can view their own land.</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link" href="../1.1/demo-start">demo start screen</a></li>
+    </ul>
+
+    <img src="/public/images/design-history/v18/1-1/demo-start.webp" alt="" class="design-history">
 
   </div>
 </div>

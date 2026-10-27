@@ -20,7 +20,7 @@ Design history pages record what changed in a prototype iteration and why, for d
 
 ## Workflow
 
-For a new design history page, start from `app/views/_templates/design-history.html` (preview at `/_templates/design-history`): copy it to `app/views/<version>/_design-history/design-history-<x-y>.html`, replace the [square bracket] placeholders and delete the blocks the iteration doesn't need. It is organised around decisions: each problem keeps its finding, hypothesis, options, accessibility and technical notes together. Research findings go on their own page, from `app/views/_templates/research-round.html`, filed with the version tested (e.g. `research-1-1.html`); design histories link to it rather than repeating it. The template comments explain the page list, screenshots and link check.
+For a new design history page, start from `app/views/_templates/design-history.html` (preview at `/_templates/design-history`): copy it to `app/views/<version>/_design-history/design-history-<x-y>.html`, replace the [square bracket] placeholders and delete the blocks the iteration doesn't need. It is organised around decisions: each problem keeps its finding, hypothesis, accessibility and technical notes together. Research findings go on their own page, from `app/views/_templates/research-round.html`, filed with the version tested (e.g. `research-1-1.html`); design histories link to it rather than repeating it. The template comments explain the page list, screenshots and link check.
 
 1. Read the whole file first, so you know what is said where (rule 4 depends on it).
 2. Note the word count of the visible copy per `h2` section (strip tags; a quick Python script is fine).
