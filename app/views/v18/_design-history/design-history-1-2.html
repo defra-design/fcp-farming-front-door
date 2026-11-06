@@ -18,14 +18,6 @@
 
 {% block content %}
 
-{# Review highlights: copy added or changed on 27 October 2026 (1.2 moved to map 0.0.52, Measure
-   tools, Satellite default, land summary routing). app-dh-new marks a new block, <mark> a change
-   inside existing copy. Once checked, remove the class / unwrap the <mark>, then this style. #}
-<style>
-  .app-dh-new { background: #fff7bf; border-left: 5px solid #ffdd00; padding: 15px 15px 1px; margin-bottom: 20px; }
-  mark.app-dh-new { padding: 0 2px; border-left: 0; margin: 0; }
-</style>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
@@ -46,7 +38,7 @@
           <li><a class="govuk-link" href="#land-covers-clickable">Data tables</a></li>
           <li><a class="govuk-link" href="#layers-panel">Layers panel</a></li>
           <li><a class="govuk-link" href="#measure-tools">Measure tools</a></li>
-          <li><mark class="app-dh-new"><a class="govuk-link" href="#base-map">Base map</a></mark></li>
+          <li><a class="govuk-link" href="#base-map">Base map</a></li>
           <li><a class="govuk-link" href="#change-tags">Data tables: tags and arrows</a></li>
         </ul>
       </li>
@@ -62,7 +54,7 @@
         <a class="govuk-link" href="#reference">Reference</a>
         <ul class="govuk-list govuk-!-margin-top-1 govuk-!-margin-left-4">
           <li><a class="govuk-link" href="#real-and-mocked">What's real and what's mocked</a></li>
-          <li><mark class="app-dh-new"><a class="govuk-link" href="#map-component">Map component version</a></mark></li>
+          <li><a class="govuk-link" href="#map-component">Map component version</a></li>
           <li><a class="govuk-link" href="#land-cover-colours">Land cover colours</a></li>
           <li><a class="govuk-link" href="#asks-of-other-teams">Asks of other teams</a></li>
         </ul>
@@ -119,7 +111,7 @@
       {# Labels stacked above their values, so they don't wrap in the narrow column. #}
       <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
         <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Date</dt>
-        <dd class="govuk-body govuk-!-margin-left-0">September to October 2026</dd>
+        <dd class="govuk-body govuk-!-margin-left-0">September to November 2026</dd>
         <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Responds to</dt>
         <dd class="govuk-body govuk-!-margin-left-0"><a class="govuk-link" href="research-1-1">Round 10 of user research</a></dd>
         <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Status</dt>
@@ -164,7 +156,7 @@
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Improve the discoverability of historic mapping</th>
-          <td class="govuk-table__cell">Tabs added to the data table to separate current and previous versions of a land parcel data.</td>
+          <td class="govuk-table__cell">Tabs added to the data table to separate current and historical versions of a land parcel data.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Partly addressed</strong></td>
         </tr>
         <tr class="govuk-table__row">
@@ -174,17 +166,17 @@
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Improve support for validation using satellite imagery</th>
-          <td class="govuk-table__cell"><mark class="app-dh-new">Maps open on satellite imagery. See <a class="govuk-link" href="#base-map">Base map</a>.</mark></td>
+          <td class="govuk-table__cell">Maps open on satellite imagery. See <a class="govuk-link" href="#base-map">Base map</a>.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Done</strong></td>
         </tr>
-        <tr class="govuk-table__row">
+        <!-- <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Why and when changes were made</th>
           <td class="govuk-table__cell">[What v1.2 does about this]</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Work in progress</strong></td>
-        </tr>
+        </tr> -->
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Measurement tools for distance and area</th>
-          <td class="govuk-table__cell"><a class="govuk-link" href="#measure-tools">Measure tools</a> on the map measure a distance or an area as the user draws.</td>
+          <td class="govuk-table__cell"><a class="govuk-link" href="#measure-tools">Measure tools</a> on a map measure a distance or an area as the user draws.</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Done</strong></td>
         </tr>
         <tr class="govuk-table__row">
@@ -214,7 +206,7 @@
 
     <h3 class="govuk-heading-m" id="land-covers-clickable">Data tables</h3>
 
-    <p>In v1.1, only hedgerows on the map were clickable. Land covers are now clickable too, so clicking either highlights its row in the data table.</p>
+    <p>In v1.1, only hedgerows on the map were clickable. Land covers are now clickable, so clicking either highlights its row in the data table.</p>
 
     <h4 class="govuk-heading-s">Before: v1.1</h4>
     <img src="/public/images/design-history/v18/1-2/hedgerow-highlight.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4">
@@ -270,7 +262,7 @@
     <img src="/public/images/design-history/v18/1-1/layers-panel.webp" alt="" class="design-history govuk-!-margin-top-0 govuk-!-margin-bottom-4" style="width: 50%;">
     <ul class="govuk-list govuk-list--bullet">
       <li>4 checkboxes: Other parcels, Land cover, Land parcel and Hedgerow</li>
-      <li>Land cover switched every land cover type on or off together</li>
+      <li>land cover switched every land cover type on or off together</li>
     </ul>
 
     <h4 class="govuk-heading-s">After: v1.2</h4>
@@ -311,10 +303,8 @@
 
     <h3 class="govuk-heading-m" id="measure-tools">Measure tools</h3>
 
-    <div class="app-dh-new">
       <p>The map on the <a class="govuk-link" href="{{ v18_12.byId['historical-view'].href }}">land parcel page</a> now has a Measure tools menu, so users can measure a distance or an area themselves.</p>
-      <p>The menu is also on the <a class="govuk-link" href="{{ v18_12.byId['compare-overlay'].href }}">overlay radios</a>, <a class="govuk-link" href="{{ v18_12.byId['compare-fade'].href }}">fade slider</a> and <a class="govuk-link" href="{{ v18_12.byId['dates-list'].href }}">historical view (multiple previous versions)</a> pages.</p>
-    </div>
+      <!-- <p>The menu is also on the <a class="govuk-link" href="{{ v18_12.byId['compare-overlay'].href }}">overlay radios</a>, <a class="govuk-link" href="{{ v18_12.byId['compare-fade'].href }}">fade slider</a> and <a class="govuk-link" href="{{ v18_12.byId['dates-list'].href }}">historical view (multiple previous versions)</a> pages.</p> -->
 
 
     <h4 class="govuk-heading-s">Distance</h4>
@@ -377,12 +367,11 @@
         <span class="govuk-details__summary-text">Technical notes</span>
       </summary>
       <div class="govuk-details__text">
-        <p>Measure tools use the interactive map's draw plugin, <mark class="app-dh-new">which came with the move to map version 0.0.52 (see <a class="govuk-link" href="#map-component">Map component version</a>)</mark>. Figures are worked out on the curved surface of the Earth, using the same formula as the map component's own area check (<code>@turf/area</code>).</p>
+        <p>Measure tools use the interactive map's draw plugin, which came with the move to map version 0.0.52 (see <a class="govuk-link" href="#map-component">Map component version</a>). Figures are worked out on the curved surface of the Earth, using the same formula as the map component's own area check (<code>@turf/area</code>).</p>
         <p>RPA's published areas are usually measured on the flat British National Grid, so tracing an existing land cover may differ slightly in the last decimal place. Most of the difference comes from where the user places the points, not the maths.</p>
       </div>
     </details>
 
-    <div class="app-dh-new">
       <h3 class="govuk-heading-m" id="base-map">Base map</h3>
 
       <p>Maps now open on satellite imagery, because users rely on it to check the mapping. This applies to every map page in v1.2.</p>
@@ -408,7 +397,6 @@
           <dd class="govuk-summary-list__value">Participants check land covers against the imagery without switching base map.</dd>
         </div>
       </dl>
-    </div>
 
     <h3 class="govuk-heading-m" id="change-tags">Data tables: tags and arrows</h3>
 
@@ -597,7 +585,7 @@
 
     <h4 class="govuk-heading-s">The three variants</h4>
 
-    <p>We built 3 variants to test different ways of switching between current and previous versions of land parcels. They share one map and one set of data, and differ in the control used.</p>
+    <p>We built 3 variants to test different ways of switching between current and historical versions of land parcels. They share one map and one set of data, and differ in the control used.</p>
 
     <h4 class="govuk-heading-s">Updated UI</h4>
 
@@ -638,8 +626,8 @@
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{ v18_12.byId['dates-list'].href }}">Historical view (multiple previous versions)</a></th>
-          <td class="govuk-table__cell">The same radios as the overlay radios page. Choosing a date also switches the map to that previous version.</td>
-          <td class="govuk-table__cell"><p>The Previous tab lists the dates the parcel was updated. Choosing one shows that version's data table, the last day it was valid and a Back to dates link. Tests how to handle more than 2 versions.</p><p>Older versions are using mocked data.</p> </td>
+          <td class="govuk-table__cell">The same radios as the overlay radios page. Choosing a date also switches the map to the previous version. </p> Choosing a date shows that version's data table, the last day it was valid and a Back to dates link.</p><p>This is the first iteration of the design to handle more than 2 versions of a land parcel.</p><p>On <a class="govuk-link" href="{{ v18_12.byId['view-land'].href }}">View land</a>, choosing SX3964 7821 or SX3963 2340 now opens the <a class="govuk-link" href="{{ v18_12.byId['dates-list'].href }}">historical view (multiple previous versions)</a>.</p></td>
+          <td class="govuk-table__cell"><p>The Previous tab lists the dates the parcel was updated.</p><p>Older versions of land parcels are using mocked data.</p></td>
         </tr>
       </tbody>
     </table>
@@ -648,11 +636,6 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-    <div class="app-dh-new">
-      <h4 class="govuk-heading-s">Getting to the historical view</h4>
-      <p>On <a class="govuk-link" href="{{ v18_12.byId['view-land'].href }}">View land</a>, choosing SX3964 7821 or SX3963 2340 now opens the <a class="govuk-link" href="{{ v18_12.byId['dates-list'].href }}">historical view (multiple previous versions)</a>. These are the only parcels with previous versions in the prototype. Other parcels open the land parcel page.</p>
-    </div>
 
     {# Options we considered: commented out for now.
     <h4 class="govuk-heading-s">Options we considered</h4>
@@ -700,6 +683,7 @@
       <li>match a land cover classification to its area on the map</li>
       <li>say they are confident they have found all the changes on a parcel</li>
       <li>tell what changed between versions using one map, without help</li>
+      <li>can measure a distance or an area without help</li>
     </ul>
 
 
@@ -744,7 +728,6 @@
       </tbody>
     </table>
 
-    <div class="app-dh-new">
       <h3 class="govuk-heading-m" id="map-component">Map component version</h3>
 
       <p>v1.2 now uses version 0.0.52-alpha of the <a class="govuk-link" href="https://defra.github.io/interactive-map/">interactive map</a>, up from 0.0.22-alpha. We moved to it for the draw plugin, which the <a class="govuk-link" href="#measure-tools">Measure tools</a> are built on.</p>
@@ -758,11 +741,10 @@
           <p>v1.0 and v1.1 stay on 0.0.22-alpha. Both versions are installed side by side, so earlier iterations are unchanged.</p>
         </div>
       </details>
-    </div>
 
     <h3 class="govuk-heading-m" id="land-cover-colours">Land cover colours</h3>
 
-    <p>The <a class="govuk-link" href="land-cover-colours">land cover colours (LSM) reference</a> lists all 169 land cover classifications with their codes and map fill colours. Search it by code or name.</p>
+    <p>The <a class="govuk-link" href="land-cover-colours">land cover colours (LSM) reference</a> lists all 169 land cover classifications with their codes and map fill colours.</p>
 
     <h3 class="govuk-heading-m" id="asks-of-other-teams">Asks of other teams</h3>
 
@@ -790,7 +772,7 @@
         </tr>
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">Stable identifiers for land covers and hedgerows between versions</th>
-          <td class="govuk-table__cell">[RPA land data]</td>
+          <td class="govuk-table__cell">RPA land data</td>
           <td class="govuk-table__cell">The change tags match covers by name and area, and hedgerows by position</td>
           <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Not raised</strong></td>
         </tr>

@@ -9,6 +9,9 @@
     <li class="govuk-breadcrumbs__list-item">
       <a class="govuk-breadcrumbs__link" href="/index">Single front door prototypes</a>
     </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="../index">V18</a>
+    </li>
   </ol>
 </nav>
 {% endblock %}
@@ -20,7 +23,7 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-xl">
-      Land summary (v1.1)
+      Land summary v1.1
       <!-- <span class="govuk-caption-xl">Private Beta. Round 1: 16 to 20 December 2024</span> -->
     </h1>
 
@@ -42,20 +45,35 @@
   <div class="govuk-grid-column-two-thirds">
 
     <!-- <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"> -->
-    <h2 class="govuk-heading-m">
-      Design history
-    </h2>
+
 
     <p class="govuk-body">
       This prototype is based on the existing land summary customer journey. It has been built using the <a href="https://defra.github.io/interactive-map/">interactive mapping component</a>. Version (v0.0.22-alpha).
     </p>
 
-    <h3 class="govuk-heading-m">
-      What's unique in this version
-    </h3>    
+    <h2 class="govuk-heading-m">
+      Design history
+    </h2>
+
+    <h3 class="govuk-heading-s">
+      What we prioritised in this version
+    </h3>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        UI changes
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-1">
+          <li>Historical view</li>
+          <li>Header</li>
+          <li>Hedgerows</li>
+          <li>Layers panel</li>
+          <li>Land cover colours</li>
+        </ul>
+      </li>
+    </ul>
 
     <p class="govuk-body">
-      <a href="../_design-history/design-history-1-1">View design history</a>
+      <a href="../_design-history/design-history-1-1">Go to design history</a>
     </p>
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
@@ -66,7 +84,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <p>The below list documents the new pages prototyped as part of this journey. The list does not include the entirety of pages held within Business and Personal details, as already documented as part of <a href="../MVP/index">MVP</a>.</p>
+    <!-- <p>The below list documents the new pages prototyped as part of this journey. The list does not include the entirety of pages held within Business and Personal details, as already documented as part of <a href="../MVP/index">MVP</a>.</p> -->
 
     {% from "govuk/components/table/macro.njk" import govukTable %}
 

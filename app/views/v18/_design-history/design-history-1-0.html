@@ -40,13 +40,13 @@
           <li><a class="govuk-link" href="#land-summary-page">Land summary page</a></li>
           <li><a class="govuk-link" href="#parcel-details-page">Parcel details page</a></li>
           <li><a class="govuk-link" href="#fill-patterns">Fill patterns</a></li>
-          <li><a class="govuk-link" href="#fullscreen-map-controls">Fullscreen map controls</a></li>
+          <li><a class="govuk-link" href="#mobile-layout">Mobile layout</a></li>
+          <!-- <li><a class="govuk-link" href="#fullscreen-map-controls">Fullscreen map controls</a></li> -->
         </ul>
       </li>
       <li>
         <a class="govuk-link" href="#layout-iterations">Layout iterations</a>
         <ul class="govuk-list govuk-!-margin-top-1 govuk-!-margin-left-4">
-          <li><a class="govuk-link" href="#map-and-sidebar">Map and sidebar layout</a></li>
           <li><a class="govuk-link" href="#alternative-layouts">Default and alternative layouts</a></li>
         </ul>
       </li>
@@ -76,7 +76,7 @@
       {# Labels stacked above their values, so they don't wrap in the narrow column. #}
       <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
         <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Date</dt>
-        <dd class="govuk-body govuk-!-margin-left-0">[Month year]</dd>
+        <dd class="govuk-body govuk-!-margin-left-0">April to July 2026</dd>
         <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Responds to</dt>
         <dd class="govuk-body govuk-!-margin-left-0"><a class="govuk-link" href="https://eaflood.atlassian.net/wiki/spaces/MI/pages/5648482375/Round+4+Scenario+testing+for+Viewing+Historical+Changes+Made+to+Land+Parcels" rel="noreferrer noopener" target="_blank">Round 4 of user research (opens in new tab)</a></dd>
         <dt class="govuk-body govuk-!-font-weight-bold govuk-!-margin-bottom-1">Status</dt>
@@ -180,6 +180,30 @@
       </div>
     </dl>
 
+    <h3 class="govuk-heading-l" id="mobile-layout">Mobile layout</h3>
+
+    <p>On screens narrower than 640px, the map column collapses, the sidebar takes the full width and a Map view button opens the map fullscreen.</p>
+
+    <img src="/public/images/design-history/v18/mobile-view.webp" alt="Diagram showing 4 screenshots of the mobile view of the land summary customer journey" class="design-history">
+
+    <!-- <h4 class="govuk-heading-m">Why we changed it</h4>
+
+    {# Draft hypothesis, written from the existing copy: check before sharing. #}
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Problem</dt>
+        <dd class="govuk-summary-list__value">The existing journey shows the land data and the map on separate pages.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We believe</dt>
+        <dd class="govuk-summary-list__value">A single view with the data beside the map, and a toggle between them on mobile, will make it easier to check land information against the map.</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">We'll know if</dt>
+        <dd class="govuk-summary-list__value">Participants can move between the data and the map on desktop and mobile without help.</dd>
+      </div>
+    </dl> -->
+
     <h3 class="govuk-heading-m" id="fullscreen-map-controls">Fullscreen map controls</h3>
 
     <p>We added controls so users can move in and out of the fullscreen map without losing their place.</p>
@@ -209,32 +233,6 @@
     </dl>
 
     <h2 class="govuk-heading-l" id="layout-iterations">Layout iterations</h2>
-
-    <h3 class="govuk-heading-m" id="map-and-sidebar">Map and sidebar layout</h3>
-
-    <p>Both pages share a fullscreen 2-column layout. Below the GOV.UK header and service navigation, the screen is split between a scrolling sidebar (one third) and the map (two thirds).</p>
-
-    <p>On screens narrower than 640px, the map column collapses, the sidebar takes the full width and a Map view button opens the map fullscreen.</p>
-
-    <img src="/public/images/design-history/v18/mobile-view.webp" alt="Diagram showing 4 screenshots of the mobile view of the land summary customer journey" class="design-history">
-
-    <h4 class="govuk-heading-m">Why we changed it</h4>
-
-    {# Draft hypothesis, written from the existing copy: check before sharing. #}
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Problem</dt>
-        <dd class="govuk-summary-list__value">The existing journey shows the land data and the map on separate pages.</dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">We believe</dt>
-        <dd class="govuk-summary-list__value">A single view with the data beside the map, and a toggle between them on mobile, will make it easier to check land information against the map.</dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">We'll know if</dt>
-        <dd class="govuk-summary-list__value">Participants can move between the data and the map on desktop and mobile without help.</dd>
-      </div>
-    </dl>
 
     <h3 class="govuk-heading-m" id="alternative-layouts">Default and alternative layouts</h3>
 
