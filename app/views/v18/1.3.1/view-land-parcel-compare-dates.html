@@ -1,0 +1,442 @@
+{# A parcel with history. Current is the default tab: the live version alone on the map.
+   Historical shows one date or compares two. One ticked date shows straight away, alone on the
+   map with its own details. Tick a second and press Compare (disabled until then) to get the
+   slider, which fades between the two on one map. The map follows the open tab, and returning to
+   Historical restores the pair and the slider. The later date goes in the base's "current"
+   slot and the earlier in its "previous" slot, whichever order they were ticked in.
+   The tab opens on the newest past date, ticked alone. See _compare-single-map.html. #}
+{% set compareMode = "fade" %}
+{% set compareModeLabel = "dates" %}
+{% set compareLayout = "sidebar" %}
+{% set pairByOverlap = true %}
+
+{% extends "v18/1.3.1/_compare-single-map.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    /* These classes set display, which beats the hidden attribute. */
+    #compare-dates-error[hidden],
+    .app-compare__fade[hidden],
+    .app-compare-summary[hidden],
+    #compare-single-date[hidden] {
+      display: none;
+    }
+    .app-dates-table {
+      margin-bottom: 15px;
+    }
+    .app-dates-table__tick {
+      width: 34px;
+      padding-right: 5px;
+    }
+    /* A label-less small checkbox in a table cell. The 44px touch target has 10px above and below
+       the visible box. Negative margins stop that space pushing the box below the row's text line
+       and making the row taller. The target still fits within the row. */
+    .app-dates-table .govuk-checkboxes__item {
+      float: none;
+      margin: -10px 0;
+      flex-wrap: nowrap;
+    }
+    /* Its text is visually hidden, so the label takes no space. Otherwise it wraps to a second
+       line in this narrow cell and makes the row taller. It must stay unpositioned: the box it
+       draws is placed against the item, not the label. */
+    .app-dates-table .govuk-checkboxes__label {
+      width: 0;
+      padding: 0;
+    }
+    /* Keep each date on one line wherever the table has room for the longest dates. */
+    @media (min-width: 26.25em) {
+      .app-dates-table .govuk-table__cell {
+        white-space: nowrap;
+      }
+    }
+    /* On a phone, closer columns are what make that fit. */
+    @media (max-width: 30em) {
+      .app-dates-table .govuk-table__cell {
+        padding-right: 10px;
+      }
+      .app-dates-table .govuk-table__cell:last-child {
+        padding-right: 0;
+      }
+      .app-dates-table .app-dates-table__tick {
+        padding-right: 5px;
+      }
+    }
+    .app-compare-summary {
+      margin: 25px 0 10px;
+    }
+    #compare-single-date {
+      margin: 25px 0 10px;
+    }
+    /* Inside a tab panel, the date ends sit closer to the details table below. */
+    #pair-details .govuk-table {
+      margin-top: 20px;
+    }
+    #pair-details .govuk-heading-s + .govuk-table {
+      margin-top: 0;
+    }
+    /* The 1.2 fade slider with its dates below it, one under each end. 360px still fits
+       the two longest dates on one line each. */
+    .app-compare__fade {
+      justify-content: space-between;
+      gap: 0 15px;
+      max-width: 360px;
+    }
+    .app-compare__fade-range {
+      flex: 0 0 100%;
+      min-width: 0;
+    }
+    .app-fade__end--later {
+      text-align: right;
+    }
+  </style>
+{% endblock %}
+
+{% block compareControls %}
+  <form id="compare-dates-form" novalidate hidden>
+    <div class="govuk-form-group govuk-!-margin-bottom-0" id="compare-dates-group">
+      <fieldset class="govuk-fieldset" aria-describedby="compare-dates-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-visually-hidden">Dates</legend>
+        <p class="govuk-error-message" id="compare-dates-error" role="alert" hidden></p>
+        <table class="govuk-table app-dates-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row" id="compare-dates-head"></tr>
+          </thead>
+          <tbody class="govuk-table__body" id="compare-dates-rows"></tbody>
+        </table>
+        <div class="govuk-hint" id="compare-dates-hint">Select 2 options to compare land parcels</div>
+      </fieldset>
+    </div>
+    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" id="compare-dates-go" disabled>Compare</button>
+  </form>
+
+  {# What is on show: the comparison's heading, or one date's inset, worded as on the Current tab. #}
+  <div role="status">
+    <h2 class="govuk-heading-s app-compare-summary" id="compare-summary" hidden></h2>
+    <div class="govuk-inset-text guidance-panel" id="compare-single-date" hidden>
+      <p class="govuk-!-margin-bottom-0" id="compare-single-date-text"></p>
+    </div>
+  </div>
+
+  {# No visible label: the dates under each end carry the meaning, as on the 1.2 fade page. #}
+  <label class="govuk-label govuk-visually-hidden" for="compare-fade">Fade between dates</label>
+  <div class="app-compare__fade" id="compare-fade-control" hidden>
+    <input class="app-compare__fade-range" id="compare-fade" type="range" min="0" max="100" step="5" value="50">
+    <span class="govuk-body govuk-!-margin-bottom-0 app-fade__end" id="compare-fade-earlier" aria-hidden="true"></span>
+    <span class="govuk-body govuk-!-margin-bottom-0 app-fade__end app-fade__end--later" id="compare-fade-later" aria-hidden="true"></span>
+  </div>
+{% endblock %}
+
+{% block pageScripts %}
+  {{ super() }}
+  <script>
+    (function () {
+      // Previous versions per parcel, newest first. `file: null` means HISTORY[ngc].beforeFile.
+      const DATE_VERSIONS = {{ parcelHistory.dateVersions | dump | safe }}
+      const previous = (DATE_VERSIONS[selectedNgc] || []).map(v => ({ file: v.file || (parcelEntry && parcelEntry.beforeFile) }))
+
+      const form = document.getElementById('compare-dates-form')
+      const group = document.getElementById('compare-dates-group')
+      const error = document.getElementById('compare-dates-error')
+      const head = document.getElementById('compare-dates-head')
+      const rowsBody = document.getElementById('compare-dates-rows')
+      const button = document.getElementById('compare-dates-go')
+      const summary = document.getElementById('compare-summary')
+      const singleInset = document.getElementById('compare-single-date')
+      const details = document.getElementById('pair-details')
+      const slider = document.getElementById('compare-fade')
+      const sliderControl = document.getElementById('compare-fade-control')
+      const historicalPanel = document.getElementById('tab-historical')
+      const HIDDEN_PANEL = 'govuk-tabs__panel--hidden'
+      // What the tab is showing. `single` means one date: it sits in the base's "current" slot, and
+      // the "previous" slot just holds any snapshot, faded right out. It opens on the newest past date.
+      const newestPast = parcelEntry && parcelEntry.beforeFile
+      let shown = { earlier: newestPast, later: newestPast, single: true }
+      let mapView = 'current' // what the map is showing: 'current' or 'historical'
+      let dates = null // newest first: { file (null = Current), from, to, area }
+
+      // YYYYMMDD... to "1 January 2016": shown exactly as supplied.
+      function longDate (v) {
+        if (!v || v.length < 8) return ''
+        const dt = new Date(v.slice(0, 4) + '-' + v.slice(4, 6) + '-' + v.slice(6, 8))
+        return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+      }
+      const latestValidFrom = (d) => d.parcelCovers.reduce((max, f) => (f.properties.VALID_FROM || '') > max ? f.properties.VALID_FROM : max, '')
+      const dateOf = (d) => longDate(latestValidFrom(d))
+      const ha = (v) => parseFloat(v).toFixed(4)
+
+      function cell (tr, tag, text, numeric) {
+        const c = document.createElement(tag)
+        c.className = (tag === 'th' ? 'govuk-table__header' : 'govuk-table__cell') + (numeric ? (tag === 'th' ? ' govuk-table__header--numeric' : ' govuk-table__cell--numeric') : '')
+        if (tag === 'th') c.scope = 'col'
+        c.textContent = text
+        tr.appendChild(c)
+        return c
+      }
+
+      // --- The dates table: built once, when the first pair has loaded -----------------
+      function buildDatesTable (current) {
+        dates = [{ file: null, from: latestValidFrom(current), to: 'Current', area: current.selectedFeature.properties.AREA_HA }]
+        Promise.all(previous.map(v => cachedFetchJson(v.file)
+          .then(s => dates.push({ file: v.file, from: s.parcel.properties.VALID_FROM, to: longDate(s.parcel.properties.VALID_TO), area: s.parcel.properties.AREA_HA }))
+          .catch(err => console.error('Could not read this date:', v.file, err))
+        )).then(() => {
+          // Pushed in arrival order, so put them back newest first.
+          const [live, ...past] = dates
+          past.sort((a, b) => b.from.localeCompare(a.from))
+          dates = [live, ...past]
+
+          const headRow = head
+          // Valid from starts above the checkboxes. Each checkbox has its own hidden label.
+          cell(headRow, 'th', 'Valid from').colSpan = 2
+          cell(headRow, 'th', 'Valid to')
+          cell(headRow, 'th', 'Area (ha)', true)
+
+          dates.forEach((date, i) => {
+            const tr = document.createElement('tr')
+            tr.className = 'govuk-table__row'
+            const td = cell(tr, 'td', '')
+            td.className += ' app-dates-table__tick'
+            td.innerHTML = '<div class="govuk-checkboxes govuk-checkboxes--small"><div class="govuk-checkboxes__item">' +
+              '<input class="govuk-checkboxes__input" type="checkbox" id="compare-date-' + i + '" data-date-index="' + i + '"' + (i === 1 ? ' checked' : '') + '>' +
+              '<label class="govuk-label govuk-checkboxes__label" for="compare-date-' + i + '"><span class="govuk-visually-hidden"></span></label>' +
+              '</div></div>'
+            td.querySelector('.govuk-visually-hidden').textContent = 'Compare ' + longDate(date.from) + ' to ' + date.to
+            cell(tr, 'td', longDate(date.from))
+            cell(tr, 'td', date.to)
+            cell(tr, 'td', ha(date.area), true)
+            rowsBody.appendChild(tr)
+          })
+          form.hidden = false
+          showOpeningDate(dates[1])
+        })
+      }
+
+      // The tab's details only: the map stays on the live version until the Historical tab is opened.
+      function showOpeningDate (date) {
+        cachedFetchJson(date.file).then(snapshot => {
+          const d = parcelDataFromSnapshot(snapshot)
+          stampIds(d)
+          renderSingleDate(d, date)
+        }).catch(err => {
+          console.error('Could not load this date:', err)
+          showError('This date could not be loaded. Try again.')
+        })
+      }
+
+      function showError (message) {
+        error.hidden = !message
+        error.textContent = ''
+        if (message) {
+          const prefix = document.createElement('span')
+          prefix.className = 'govuk-visually-hidden'
+          prefix.textContent = 'Error: '
+          error.append(prefix, message)
+        }
+        group.classList.toggle('govuk-form-group--error', !!message)
+      }
+
+      const tickedIndexes = () => [...rowsBody.querySelectorAll('input:checked')].map(i => Number(i.dataset.dateIndex))
+
+      // One tick shows that date straight away. Any other number leaves the map and details as they
+      // are: two wait for Compare, and none has nothing to show.
+      rowsBody.addEventListener('change', () => {
+        showError('')
+        const ticked = tickedIndexes()
+        button.disabled = ticked.length < 2
+        if (ticked.length === 1) showSingleDate(dates[ticked[0]])
+      })
+
+      function showSingleDate (date) {
+        const earlier = date.file || shown.earlier
+        mapView = 'historical'
+        loadComparedPair(earlier, date.file, { fade: 1, announce: false, frame: 'current' }).then(applied => {
+          if (!applied) return
+          shown = { earlier, later: date.file, single: true }
+          renderSingleDate(data.current, date)
+        }).catch(err => {
+          console.error('Could not load this date:', err)
+          showError('This date could not be loaded. Try again.')
+        })
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const ticked = tickedIndexes()
+        if (ticked.length !== 2) {
+          showError('Select 2 dates')
+          const first = rowsBody.querySelector('input')
+          if (first) first.focus()
+          return
+        }
+        showError('')
+        // Newest first, so the higher index is the earlier date, whichever was ticked first.
+        const [later, earlier] = ticked.sort((a, b) => a - b).map(i => dates[i])
+        mapView = 'historical'
+        // A new pair starts with both dates showing.
+        loadComparedPair(earlier.file, later.file).then(applied => {
+          if (!applied) return
+          shown = { earlier: earlier.file, later: later.file, single: false }
+          slider.value = 50
+        }).catch(loadFailed)
+      })
+
+      function loadFailed (err) {
+        console.error('Could not load these dates:', err)
+        showError('These dates could not be loaded. Try again.')
+      }
+
+      // --- The map follows the open tab -------------------------------------------------
+      function syncMapToTab () {
+        if (!datasetsReady) return
+        // On narrow screens the Tabs component shows every panel, so no tab is "open": the map
+        // stays on what it was showing, until Compare is pressed.
+        if (!document.querySelector('.' + HIDDEN_PANEL)) return
+        const wanted = historicalPanel.classList.contains(HIDDEN_PANEL) ? 'current' : 'historical'
+        if (wanted === mapView) return
+        mapView = wanted
+        const load = wanted === 'current'
+          ? loadComparedPair(shown.earlier, null, { fade: 1, announce: false, frame: 'current' })
+          : shown.single
+            ? loadComparedPair(shown.earlier, shown.later, { fade: 1, announce: false, frame: 'current' })
+            : loadComparedPair(shown.earlier, shown.later, { fade: Number(slider.value) / 100, announce: false })
+        load.catch(loadFailed)
+      }
+      // Watch the panel, not the tab links: arrow keys and the URL hash switch tabs without a click.
+      new MutationObserver(syncMapToTab).observe(historicalPanel, { attributes: true, attributeFilter: ['class'] })
+      if (datasetsReady) syncMapToTab()
+      else document.addEventListener('compare:datasets-ready', syncMapToTab, { once: true })
+
+      // --- One date's details: the same tables as the Current tab --------------------------
+      function renderSingleDate (d, date) {
+        const hedgesKnown = !d.hedgesUnavailable
+        const table = (headings) => {
+          const t = document.createElement('table')
+          t.className = 'govuk-table'
+          if (headings) {
+            const head = t.createTHead()
+            head.className = 'govuk-table__head'
+            const row = head.insertRow()
+            row.className = 'govuk-table__row'
+            headings.forEach((text, i) => cell(row, 'th', text, i === 1))
+          }
+          const body = t.createTBody()
+          body.className = 'govuk-table__body'
+          return t
+        }
+        const heading = (text, topMargin) => {
+          const h = document.createElement('h3')
+          h.className = 'govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-' + topMargin
+          h.textContent = text
+          return h
+        }
+
+        const totals = table()
+        ;[
+          ['Total area (ha)', ha(d.selectedFeature.properties.AREA_HA)],
+          ['Land covers', String(d.parcelCovers.length)],
+          ['Hedgerows', hedgesKnown ? String(d.parcelHedges.length) : 'Not available']
+        ].forEach(([label, value]) => {
+          const tr = totals.tBodies[0].insertRow()
+          tr.className = 'govuk-table__row'
+          cell(tr, 'td', label)
+          cell(tr, 'td', value, true)
+        })
+
+        const covers = table(['Land cover', 'Area (ha)'])
+        d.parcelCovers.forEach(f => covers.tBodies[0].appendChild(coverRow(f, 'current', { note: false })))
+        if (d.parcelCovers.length === 0) covers.tBodies[0].appendChild(emptyRow('No land covers recorded.'))
+        else covers.tBodies[0].appendChild(totalRow('land-covers', sumArea(d.parcelCovers).toFixed(4)))
+
+        details.innerHTML = ''
+        details.append(heading('Summary', 2), totals, covers)
+        // A snapshot holds no hedgerows, so only the live version has this table.
+        if (hedgesKnown) {
+          const hedges = table(['Number', 'Length (m)'])
+          d.parcelHedges.forEach((f, i) => hedges.tBodies[0].appendChild(hedgeRow(f, i, 'current', { note: false })))
+          hedges.tBodies[0].appendChild(totalRow('hedgerows', String(sumLength(d.parcelHedges))))
+          details.append(heading('Hedgerows', 4), hedges)
+        }
+
+        // The live version says what the Current tab says, which has no inset if the date is unknown.
+        const updated = document.getElementById('current-tab-last-updated-date').textContent
+        const insetText = date.file ? 'Valid to ' + date.to : (updated ? 'Updated ' + updated : '')
+        document.getElementById('compare-single-date-text').textContent = insetText
+        singleInset.hidden = !insetText
+        summary.textContent = ''
+        summary.hidden = true
+        sliderControl.hidden = true
+      }
+
+      // --- The details table: rebuilt for every pair ----------------------------------------
+      function renderDetails (earlier, later) {
+        const earlierDate = dateOf(earlier)
+        const laterDate = dateOf(later)
+        const sumByCover = (d) => d.parcelCovers.reduce((m, f) => m.set(f.properties.DESCRIPTION, (m.get(f.properties.DESCRIPTION) || 0) + parseFloat(f.properties.AREA_HA)), new Map())
+        const a = sumByCover(earlier)
+        const b = sumByCover(later)
+        const names = [...new Set([...a.keys(), ...b.keys()])].sort()
+        const same = (x, y) => x !== undefined && y !== undefined && x.toFixed(4) === y.toFixed(4)
+        const noDifference = names.every(n => same(a.get(n), b.get(n))) &&
+          ha(earlier.selectedFeature.properties.AREA_HA) === ha(later.selectedFeature.properties.AREA_HA)
+
+        details.innerHTML = ''
+        if (noDifference) {
+          const inset = document.createElement('div')
+          inset.className = 'govuk-inset-text guidance-panel govuk-!-margin-top-0'
+          inset.textContent = 'No differences in area or land cover between these dates.'
+          details.appendChild(inset)
+        }
+        const table = document.createElement('table')
+        table.className = 'govuk-table govuk-!-margin-top-4'
+        const thead = table.createTHead()
+        thead.className = 'govuk-table__head'
+        const hr = thead.insertRow()
+        hr.className = 'govuk-table__row'
+        cell(hr, 'th', 'Land cover')
+        cell(hr, 'th', earlierDate, true)
+        cell(hr, 'th', laterDate, true)
+        const tbody = table.createTBody()
+        tbody.className = 'govuk-table__body'
+        const addRow = (label, left, right, bold) => {
+          const tr = tbody.insertRow()
+          tr.className = 'govuk-table__row'
+          const c1 = cell(tr, 'td', label)
+          const c2 = cell(tr, 'td', left, true)
+          const c3 = cell(tr, 'td', right, true)
+          if (bold) [c1, c2, c3].forEach(c => c.classList.add('govuk-!-font-weight-bold'))
+        }
+        const orDash = (v) => v === undefined ? '–' : v.toFixed(4)
+        names.forEach(n => addRow(n, orDash(a.get(n)), orDash(b.get(n))))
+        addRow('Total area', ha(earlier.selectedFeature.properties.AREA_HA), ha(later.selectedFeature.properties.AREA_HA), true)
+        const hedges = (d) => d.hedgesUnavailable ? 'Not available' : String(d.parcelHedges.length)
+        addRow('Hedgerows', hedges(earlier), hedges(later))
+        details.appendChild(table)
+
+        // The dates are for screen readers: this heading is what gets announced when a comparison
+        // loads, and the dates under the slider are hidden from them.
+        const summaryDates = document.createElement('span')
+        summaryDates.className = 'govuk-visually-hidden'
+        summaryDates.textContent = ': ' + earlierDate + ' with ' + laterDate
+        summary.textContent = 'Land parcel comparison'
+        summary.appendChild(summaryDates)
+        summary.hidden = false
+        singleInset.hidden = true
+        sliderControl.hidden = false
+        document.getElementById('compare-fade-earlier').textContent = earlierDate
+        document.getElementById('compare-fade-later').textContent = laterDate
+        pairLabels = { previous: earlierDate, current: laterDate }
+      }
+
+      // The first pair only starts the dates table: the tab opens on one date, not a comparison.
+      function onRendered (earlier, later) {
+        if (dates) renderDetails(earlier, later)
+        else buildDatesTable(later)
+      }
+      document.addEventListener('compare:rendered', (e) => onRendered(e.detail.previous, e.detail.current))
+      // On a repeat visit the data comes from sessionStorage, so the first pair can have rendered
+      // between the base's script and this one, before the listener above existed.
+      if (data) onRendered(data.previous, data.current)
+    })()
+  </script>
+{% endblock %}

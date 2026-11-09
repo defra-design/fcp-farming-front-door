@@ -1,0 +1,249 @@
+{# Dates list: the single-map overlay compare (one map, radios choosing which version it
+   shows) with a different Previous tab. Instead of showing the previous version's tables
+   straight away, the tab lists the dates of the previous versions; choosing a date swaps
+   the list for that version's parcel data (and switches the map to the previous version),
+   with a link to return to the list.
+   Two-column layout like view-land-parcel — heading, radios and the two versions' tables
+   (in Current / Previous tabs) in a sidebar beside a full-height map.
+   See _compare-single-map.html for everything shared with the other compare variants.
+
+   Each listed date is a version's VALID_FROM, and the tab's inset says "Valid to <its VALID_TO>".
+   Both are read from the version's snapshot file and shown exactly as the data snapshot has them:
+   a version's VALID_TO is usually the same date as the next version's VALID_FROM.
+   Choosing a date calls the base's loadPreviousSnapshot. #}
+{% set compareMode = "overlay" %}
+{% set compareModeLabel = "overlay" %}
+{% set compareLayout = "sidebar" %}
+{# The Previous tab's inset gives the chosen version's VALID_TO: "Valid to <date>". #}
+{% set previousDateInsetPrefix = "Valid to" %}
+{# Pair covers by where they lie, so a field that changed type reads as Changed, not Removed + Added. #}
+{% set pairByOverlap = true %}
+
+{# The Previous tab: a list of dates first; the base's inset + tables sit in a hidden
+   wrapper that the script reveals when a date is chosen. These captures are set BEFORE
+   extends (like compareMode) because the base drops them into its own `set` capture,
+   where a block would not be registered by Nunjucks. #}
+{% set previousPanelBefore %}
+  <div id="previous-dates" tabindex="-1">
+    <p class="govuk-error-message" id="previous-dates-error" role="alert" hidden>
+      <span class="govuk-visually-hidden">Error:</span> This version could not be loaded. Try again.
+    </p>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Parcel updated</th>
+        </tr>
+      </thead>
+      {# One row per date, built by the script below. #}
+      <tbody class="govuk-table__body" id="previous-dates-list"></tbody>
+    </table>
+  </div>
+  <div id="previous-detail" tabindex="-1" hidden>
+    {# Styled as the GOV.UK back link (chevron, 16px) to match "Back to land summary" above,
+       but a button: it changes in-page state only. #}
+    <button type="button" class="govuk-back-link app-back-button govuk-!-margin-top-0 govuk-!-margin-bottom-2" id="previous-dates-return">Back to dates</button>
+{% endset %}
+{% set previousPanelAfter %}
+  </div>
+{% endset %}
+
+{% extends "v18/1.3/_compare-single-map.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    /* A button that looks like a govuk-link: the date and return controls change in-page
+       state only, so they are buttons, not links. govuk-link supplies colour, underline,
+       hover and the focus state; this just strips the button chrome. */
+    .app-link-button {
+      background: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+    }
+    /* Same for the back-link button: keep govuk-back-link's left padding (chevron space)
+       and font, strip only the button chrome. */
+    .app-back-button {
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+    /* govuk-error-message sets display: block, which beats the hidden attribute. */
+    #previous-dates-error[hidden] {
+      display: none;
+    }
+  </style>
+{% endblock %}
+
+{% block compareControls %}
+  <div class="govuk-form-group govuk-!-margin-bottom-2">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-1">Show on the map</legend>
+      {# One version at a time: the radio's version is shown, the other hidden. #}
+      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-current" name="show-version" type="radio" value="current" checked data-version-radio="current">
+          <label class="govuk-label govuk-radios__label" for="show-current">Current details</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="show-previous" name="show-version" type="radio" value="previous" data-version-radio="previous">
+          <label class="govuk-label govuk-radios__label" for="show-previous">Previous details</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+{% endblock %}
+
+{% block pageScripts %}
+  {{ super() }}
+  <script>
+    // Runs after the base's script, which is a plain classic script: its top-level
+    // declarations (selectedNgc, the radios' wiring, showOnlyVersion...) are reachable from
+    // here, and must NOT be redeclared — hence the IIFE.
+    (function () {
+      // Previous versions per parcel, newest first, from the snapshot manifest
+      // (scripts/parcel-snapshot/generate.js). `file: null` means the base's HISTORY[ngc].beforeFile.
+      // The ?v= marker in each file's URL is a cache-buster for cachedFetchJson.
+      const DATE_VERSIONS = {{ parcelHistory.dateVersions | dump | safe }}
+      const versions = DATE_VERSIONS[selectedNgc] || []
+
+      const list = document.getElementById('previous-dates')
+      const listBody = document.getElementById('previous-dates-list')
+      const detail = document.getElementById('previous-detail')
+      const returnButton = document.getElementById('previous-dates-return')
+      const loadError = document.getElementById('previous-dates-error')
+      const dateText = document.getElementById('previous-tab-date-range-text')
+      let lastDateButton = null // where focus returns to after "Back to dates"
+      // The snapshot file the base currently has as the previous version. It starts on the
+      // real snapshot (what the base fetched at load), so choosing the newest date is a no-op.
+      let loadedFile = history ? history.beforeFile : null
+      let loading = false
+
+      // No dates for this parcel: behave like the overlay page (tables shown straight away).
+      if (!versions.length) {
+        list.hidden = true
+        detail.hidden = false
+        return
+      }
+
+      // Check a version radio and fire change so the base's wiring shows that version on the
+      // map. Before the data loads the listener is not attached yet, but the base re-reads
+      // the checked radio once the map's datasets are ready, so the state still applies.
+      function setRadio (version) {
+        const radio = document.querySelector('[data-version-radio="' + version + '"]')
+        if (!radio || radio.checked) return
+        radio.checked = true
+        radio.dispatchEvent(new Event('change', { bubbles: true }))
+      }
+
+      // Swapping the list for the tables keeps the sidebar's scroll position, so a date picked
+      // from low in a long list would open the tables halfway down. Start them at the top, as a
+      // new page would: the sidebar scrolls itself on desktop; on mobile it does not (the page
+      // scrolls), so bring the tabs into view if they are above the viewport.
+      function scrollToTop () {
+        const sidebar = document.querySelector('.app-map-fullscreen__sidebar')
+        const tabs = document.querySelector('.app-compare__tabs')
+        if (sidebar) sidebar.scrollTop = 0
+        if (tabs && tabs.getBoundingClientRect().top < 0) tabs.scrollIntoView({ block: 'start' })
+      }
+
+      function reveal (version, button) {
+        dateText.textContent = version.validTo
+        list.hidden = true
+        detail.hidden = false
+        lastDateButton = button || null
+        setRadio('previous')
+        scrollToTop()
+        detail.focus({ preventScroll: true })
+      }
+
+      // Load the chosen date's snapshot (if it is not the one already on the page), then
+      // reveal the tables. One load at a time: the list is marked busy and clicks are ignored
+      // while a fetch is in flight, so two quick clicks cannot interleave. A failed load stays
+      // on the list with an error, so a date is never shown above another version's data.
+      function showDetail (version, button) {
+        const file = version.file || (history && history.beforeFile)
+        if (loading) return
+        if (!file || file === loadedFile) {
+          reveal(version, button)
+          return
+        }
+        loading = true
+        list.setAttribute('aria-busy', 'true')
+        loadError.hidden = true
+        loadPreviousSnapshot(file, version.validTo)
+          .then(() => {
+            loadedFile = file
+            reveal(version, button)
+          })
+          .catch(err => {
+            console.error('Failed to load previous snapshot:', err)
+            loadError.hidden = false
+          })
+          .then(() => {
+            loading = false
+            list.removeAttribute('aria-busy')
+          })
+      }
+
+      function showList () {
+        detail.hidden = true
+        list.hidden = false
+        setRadio('current')
+        ;(lastDateButton || list).focus()
+      }
+
+      // Read a date property (YYYYMMDDhhmmss) off a snapshot's features — the earliest, though
+      // every cover in a snapshot carries the same one.
+      function snapshotDate (snapshot, prop) {
+        const values = (snapshot.features || []).map(f => f.properties && f.properties[prop]).filter(Boolean)
+        return values.length ? values.sort()[0] : ''
+      }
+
+      function addRow (version, i) {
+        const tr = document.createElement('tr')
+        tr.className = 'govuk-table__row'
+        const td = document.createElement('td')
+        td.className = 'govuk-table__cell'
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.className = 'govuk-link app-link-button'
+        button.dataset.dateVersion = String(i)
+        button.textContent = version.label
+        td.appendChild(button)
+        tr.appendChild(td)
+        listBody.appendChild(tr)
+      }
+
+      // Each row's date is the version's VALID_FROM and its inset text its VALID_TO, read from its
+      // snapshot file. The files go through the base's cache (the first is already in it), and the
+      // list is built once they have all settled so the rows land in order. A file that cannot be
+      // read is logged and left out: choosing it would fail in the same way.
+      // No rows until the map can take a version: choosing a date before then has nothing to load into.
+      const parcelLoaded = new Promise(resolve => {
+        if (datasetsReady) resolve()
+        else document.addEventListener('compare:datasets-ready', () => resolve(), { once: true })
+      })
+      Promise.all(versions.map(version => {
+        const file = version.file || (history && history.beforeFile)
+        return cachedFetchJson(file)
+          .then(snapshot => {
+            version.label = fmtValidFrom(snapshotDate(snapshot, 'VALID_FROM'))
+            version.validTo = fmtValidFrom(snapshotDate(snapshot, 'VALID_TO'))
+          })
+          .catch(err => console.error('Failed to read snapshot for the dates list:', file, err))
+      })).then(() => parcelLoaded).then(() => {
+        versions.forEach((version, i) => { if (version.label) addRow(version, i) })
+      })
+
+      listBody.addEventListener('click', (e) => {
+        const button = e.target.closest('[data-date-version]')
+        if (button) showDetail(versions[Number(button.dataset.dateVersion)], button)
+      })
+      returnButton.addEventListener('click', showList)
+    })()
+  </script>
+{% endblock %}

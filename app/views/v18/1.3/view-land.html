@@ -614,7 +614,12 @@
 
     // Sidebar: the land data panel (summary, filter, parcel list, selected parcel)
     const panel = AppMap.landDataPanel
-    panel.init({ parcelUrl: (ngc) => `/v18/1.3/view-land-parcel?parcel=${ngc}` })
+    // Parcels with snapshot history open the dates list; the rest use the API-only page.
+    const PARCELS_WITH_HISTORY = {{ parcelHistory.history | dump | safe }}
+    const parcelUrl = (ngc) => PARCELS_WITH_HISTORY[ngc]
+      ? `/v18/1.3/view-land-parcel-dates-list?parcel=${ngc}`
+      : `/v18/1.3/view-land-parcel?parcel=${ngc}`
+    panel.init({ parcelUrl })
 
     // Fetch data immediately on page load
     const sbi = '{{ myData.sbi | default("112965195") }}'
@@ -696,7 +701,7 @@
         })
         interactiveMap.on('interact:done', ({ selectedFeatures }) => {
           const ngc = selectedFeatures && selectedFeatures.length ? featureNgc(selectedFeatures[0]) : null
-          if (ngc != null) window.location.href = `/v18/1.3/view-land-parcel?parcel=${ngc}`
+          if (ngc != null) window.location.href = parcelUrl(ngc)
         })
       }
 

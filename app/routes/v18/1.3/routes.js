@@ -1,3 +1,5 @@
+const { loadParcelHistory } = require('../../../data/v18-1-3-parcel-history.js');
+
 module.exports = function (router, _myData) {
 
     var version = "v18/1.3";
@@ -119,6 +121,7 @@ module.exports = function (router, _myData) {
             req.session.sbiV18_13 = '112965195'
         }
         res.locals.myData13 = Object.assign({}, req.session.myData, { sbi: req.session.sbiV18_13 })
+        res.locals.parcelHistory = loadParcelHistory(req.session.sbiV18_13)
         next()
     });
 
@@ -132,6 +135,16 @@ module.exports = function (router, _myData) {
     //view land parcel
     router.get('/' + version + '/view-land-parcel', function (req, res) {
         res.render(version + '/view-land-parcel', {
+            myData: res.locals.myData13
+        });
+    });
+
+    //previous versions of a parcel from the data snapshot; a parcel without any uses the API-only page
+    router.get('/' + version + '/view-land-parcel-dates-list', function (req, res) {
+        if (!Object.prototype.hasOwnProperty.call(res.locals.parcelHistory.history, req.query.parcel || '')) {
+            return res.redirect('/' + version + '/view-land-parcel?parcel=' + encodeURIComponent(req.query.parcel || ''))
+        }
+        res.render(version + '/view-land-parcel-dates-list', {
             myData: res.locals.myData13
         });
     });
