@@ -44,23 +44,22 @@
       width: 0;
       padding: 0;
     }
-    /* Keep each date on one line wherever the table has room for the longest dates. */
-    @media (min-width: 26.25em) {
-      .app-dates-table .govuk-table__cell {
-        white-space: nowrap;
-      }
+    /* GOV.UK's 16px size, as tables already use on phones, so the longest dates fit on one line
+       in the sidebar. Cells still wrap where it is narrower, rather than spilling out of the panel. */
+    .app-dates-table .govuk-table__header,
+    .app-dates-table .govuk-table__cell {
+      font-size: 1rem;
+      line-height: 1.25;
     }
-    /* On a phone, closer columns are what make that fit. */
-    @media (max-width: 30em) {
-      .app-dates-table .govuk-table__cell {
-        padding-right: 10px;
-      }
-      .app-dates-table .govuk-table__cell:last-child {
-        padding-right: 0;
-      }
-      .app-dates-table .app-dates-table__tick {
-        padding-right: 5px;
-      }
+    /* Closer columns, so it still fits a narrow sidebar or a phone. */
+    .app-dates-table .govuk-table__cell {
+      padding-right: 10px;
+    }
+    .app-dates-table .govuk-table__cell:last-child {
+      padding-right: 0;
+    }
+    .app-dates-table .app-dates-table__tick {
+      padding-right: 5px;
     }
     .app-compare-summary {
       margin: 25px 0 10px;
