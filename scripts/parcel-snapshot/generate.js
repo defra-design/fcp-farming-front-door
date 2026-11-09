@@ -1,7 +1,7 @@
 // Builds the local parcel history files for v18/1.3 from the RPA snapshot:
 //   node scripts/parcel-snapshot/generate.js --outputs <dir> --adjacent <dir>
 // Only parcels the API lists under the SBI are converted, so neighbours' data is never written.
-// The output folder is gitignored until the data provider clears the data for publication.
+// The output folder is committed: the data provider cleared the data for publication.
 
 const fs = require('node:fs')
 const path = require('node:path')

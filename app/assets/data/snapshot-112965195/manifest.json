@@ -1,0 +1,134 @@
+{
+  "sbi": "112965195",
+  "generatedAt": "20261102155107",
+  "history": {
+    "SK40611696": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40611696-20170501.json?v=20261102155107",
+      "dateLabel": "1 May 2017 to 1 January 2019"
+    },
+    "SK40622425": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40622425-20190101.json?v=20261102155107",
+      "dateLabel": "1 January 2019 to 1 January 2020"
+    },
+    "SK40623814": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40623814-20160101.json?v=20261102155107",
+      "dateLabel": "1 January 2016 to 1 May 2017"
+    },
+    "SK40623931": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40623931-20100101.json?v=20261102155107",
+      "dateLabel": "1 January 2010 to 1 January 2021"
+    },
+    "SK40624821": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40624821-20170501.json?v=20261102155107",
+      "dateLabel": "1 May 2017 to 1 January 2019"
+    },
+    "SK40625920": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40625920-20170501.json?v=20261102155107",
+      "dateLabel": "1 May 2017 to 1 January 2019"
+    },
+    "SK40626919": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40626919-20210101.json?v=20261102155107",
+      "dateLabel": "1 January 2021 to 14 April 2026"
+    },
+    "SK52626283": {
+      "beforeFile": "/public/data/snapshot-112965195/SK52626283-20170101.json?v=20261102155107",
+      "dateLabel": "1 January 2017 to 1 January 2019"
+    },
+    "SK52635702": {
+      "beforeFile": "/public/data/snapshot-112965195/SK52635702-20170101.json?v=20261102155107",
+      "dateLabel": "1 January 2017 to 1 January 2020"
+    },
+    "SK40621602": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40621602-20170501.json?v=20261102155107",
+      "dateLabel": "1 May 2017 to 1 January 2019"
+    },
+    "SK40622501": {
+      "beforeFile": "/public/data/snapshot-112965195/SK40622501-20170501.json?v=20261102155107",
+      "dateLabel": "1 May 2017 to 1 January 2019"
+    }
+  },
+  "dateVersions": {
+    "SK40611696": [
+      {
+        "file": null
+      }
+    ],
+    "SK40622425": [
+      {
+        "file": null
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK40622425-20170501.json?v=20261102155107"
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK40622425-20160101.json?v=20261102155107"
+      }
+    ],
+    "SK40623814": [
+      {
+        "file": null
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK40623814-20150101.json?v=20261102155107"
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK40623814-20100101.json?v=20261102155107"
+      }
+    ],
+    "SK40623931": [
+      {
+        "file": null
+      }
+    ],
+    "SK40624821": [
+      {
+        "file": null
+      }
+    ],
+    "SK40625920": [
+      {
+        "file": null
+      }
+    ],
+    "SK40626919": [
+      {
+        "file": null
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK40626919-20171109.json?v=20261102155107"
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK40626919-20160101.json?v=20261102155107"
+      }
+    ],
+    "SK52626283": [
+      {
+        "file": null
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK52626283-20160101.json?v=20261102155107"
+      }
+    ],
+    "SK52635702": [
+      {
+        "file": null
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK52635702-20160101.json?v=20261102155107"
+      },
+      {
+        "file": "/public/data/snapshot-112965195/SK52635702-20091030.json?v=20261102155107"
+      }
+    ],
+    "SK40621602": [
+      {
+        "file": null
+      }
+    ],
+    "SK40622501": [
+      {
+        "file": null
+      }
+    ]
+  }
+}

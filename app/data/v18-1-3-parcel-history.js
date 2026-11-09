@@ -1,6 +1,6 @@
 // The parcels with snapshot history on v18/1.3. The manifest comes from
-// scripts/parcel-snapshot/generate.js and is gitignored until the data is cleared for
-// publication, so a copy without it, or another SBI, gets no history: every parcel then uses
+// scripts/parcel-snapshot/generate.js and is committed with the snapshot files. Without it,
+// or for another SBI, there is no history: every parcel then uses
 // the API-only page. Read on each request, so regenerating needs no restart.
 
 const fs = require('node:fs')

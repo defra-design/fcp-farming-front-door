@@ -2,6 +2,3 @@
 .vscode/
 *.pdf
 .DS_Store
-
-# RPA parcel snapshot output: not cleared for publication
-app/assets/data/snapshot-112965195/
