@@ -1637,11 +1637,17 @@
     // Show one date's split and merge pieces (pass [] to clear them). frame: fit the map to the
     // parcel and every piece. Before datasets:ready this only stores them: buildMap draws them,
     // and datasets:ready re-applies them (which also covers phones, where the map mounts later).
+    // A frame asked for before then is remembered and done on datasets:ready.
+    let lineageFramePending = false
     function setLineagePieces (features, { frame = false } = {}) {
       lineagePieces = Array.isArray(features) ? features : []
+      lineageFramePending = !datasetsReady && frame && lineagePieces.length > 0
       if (!datasetsReady) return
       applyLineagePieces()
-      if (frame && hedgeMap) {
+      if (frame) frameLineagePieces()
+    }
+    function frameLineagePieces () {
+      if (hedgeMap) {
         const boxes = lineagePieces.map(computeBounds)
         if (data && data.current && data.current.selectedFeature) boxes.push(computeBounds(data.current.selectedFeature))
         if (!boxes.length) return
@@ -2839,6 +2845,10 @@
         // now, not what the map was built with. This also hides the land cover types not present
         // on the parcel from the Key/Layers, and runs the first enhanceLayersPanel pass.
         swapParcelDatasets()
+        if (lineageFramePending) {
+          lineageFramePending = false
+          frameLineagePieces()
+        }
         if (COMPARE_MODE === 'fade') applyFade(fadePosition)
         applyVersionRadio()
         // Re-apply the injected parent checkboxes whenever the panel's DOM changes. Two

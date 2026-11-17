@@ -88,6 +88,50 @@
     .app-fade__end--later {
       text-align: right;
     }
+    /* Splits and merges */
+    .app-secondary {
+      color: #505a5f;
+    }
+    /* A button that looks like a govuk-link. The link colours only apply to :link and :visited,
+       so a button needs its own; .govuk-link:focus still gives it the focus style. */
+    .app-link-button {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      text-align: inherit;
+      color: #1d70b8;
+      cursor: pointer;
+    }
+    .app-link-button:hover:not(:focus) {
+      color: #003078;
+    }
+    .app-lineage {
+      margin-top: 30px;
+    }
+    /* As the dates table: 16px text and closer columns, and cells wrap rather than spill out of
+       the sidebar. */
+    .app-lineage-table .govuk-table__header,
+    .app-lineage-table .govuk-table__cell {
+      font-size: 1rem;
+      line-height: 1.25;
+      padding-right: 10px;
+    }
+    .app-lineage-table .govuk-table__header:last-child,
+    .app-lineage-table .govuk-table__cell:last-child {
+      padding-right: 0;
+    }
+    .app-lineage-table__change .govuk-table__header,
+    .app-lineage-table__change .govuk-table__cell {
+      background-color: #f3f2f1;
+    }
+    .app-lineage-table__change .govuk-table__header {
+      padding-left: 10px;
+    }
+    .app-lineage-table__change .govuk-table__cell:last-child {
+      padding-right: 10px;
+    }
   </style>
 {% endblock %}
 
@@ -132,7 +176,16 @@
     (function () {
       // Previous versions per parcel, newest first. `file: null` means HISTORY[ngc].beforeFile.
       const DATE_VERSIONS = {{ parcelHistory.dateVersions | dump | safe }}
+      // Splits and merges, worked out from the snapshot by scripts/parcel-snapshot. This LINEAGE
+      // (one parcel's changes) shadows the base's LINEAGE (its map datasets) inside this function.
+      const LINEAGE_ALL = {{ parcelHistory.lineage | dump | safe }}
+      const LINEAGE = LINEAGE_ALL[selectedNgc] || { file: null, groups: [], earlierVersions: [] }
+      // The parcels with history, so a link to one can go to its compare-dates page.
+      const HISTORY_REFS = {{ parcelHistory.history | dump | safe }}
+      // A version from before the reference changed (SK4062 6719's, for SK4062 6919) is one more
+      // date, with the reference it had then.
       const previous = (DATE_VERSIONS[selectedNgc] || []).map(v => ({ file: v.file || (parcelEntry && parcelEntry.beforeFile) }))
+        .concat(LINEAGE.earlierVersions.map(v => ({ file: v.file, ref: v.ref })))
 
       const form = document.getElementById('compare-dates-form')
       const group = document.getElementById('compare-dates-group')
@@ -177,7 +230,7 @@
       function buildDatesTable (current) {
         dates = [{ file: null, from: latestValidFrom(current), to: 'Current', area: current.selectedFeature.properties.AREA_HA }]
         Promise.all(previous.map(v => cachedFetchJson(v.file)
-          .then(s => dates.push({ file: v.file, from: s.parcel.properties.VALID_FROM, to: longDate(s.parcel.properties.VALID_TO), area: s.parcel.properties.AREA_HA }))
+          .then(s => dates.push({ file: v.file, from: s.parcel.properties.VALID_FROM, to: longDate(s.parcel.properties.VALID_TO), area: s.parcel.properties.AREA_HA, ref: v.ref }))
           .catch(err => console.error('Could not read this date:', v.file, err))
         )).then(() => {
           // Pushed in arrival order, so put them back newest first.
@@ -208,6 +261,7 @@
           })
           form.hidden = false
           showOpeningDate(dates[1])
+          buildLineageSection()
         })
       }
 
@@ -240,6 +294,7 @@
       // One tick shows that date straight away. Any other number leaves the map and details as they
       // are: two wait for Compare, and none has nothing to show.
       rowsBody.addEventListener('change', () => {
+        hideLineage()
         showError('')
         const ticked = tickedIndexes()
         button.disabled = ticked.length < 2
@@ -261,6 +316,7 @@
 
       form.addEventListener('submit', (e) => {
         e.preventDefault()
+        hideLineage()
         const ticked = tickedIndexes()
         if (ticked.length !== 2) {
           showError('Select 2 dates')
@@ -285,6 +341,231 @@
         showError('These dates could not be loaded. Try again.')
       }
 
+      // --- Splits and merges ------------------------------------------------------------
+      // One table under everything else on the tab, a tbody per change, oldest first. It always
+      // lists every change, whatever is ticked. Show on map puts one change on the map: the
+      // version it applies to (just before land left, or from the date land arrived), with the
+      // pieces from lineage-<ngc>.json. The ticks stay as they are, but the compare heading, the
+      // inset, the fade and the details are hidden while the map shows something else. Hide, a
+      // tick, Compare or a tab switch takes the change off and puts back what the tab showed.
+      const lineageFeatures = LINEAGE.groups.length && LINEAGE.file
+        ? cachedFetchJson(LINEAGE.file).then(fc => fc.features || []).catch(err => {
+          console.error('Could not read the splits and merges:', LINEAGE.file, err)
+          return []
+        })
+        : Promise.resolve([])
+      const lineageControls = [] // per group: the heading row's control cell (null: no control)
+      let activeLineage = null // { index, before }: the change on the map, and what it hid
+      let lineageRequest = 0 // only the latest Show on map draws its pieces
+      let lineageStatus = null
+
+      function lineageHeading (g) {
+        const n = g.links.length
+        const one = n === 1 ? fmtNgc(g.links[0].ref) : n + ' parcels'
+        const wording = {
+          split: 'split into ' + (n + 1) + ' parcels',
+          moved: 'land moved to ' + one,
+          created: 'created from ' + one,
+          merged: 'merged with ' + n + (n === 1 ? ' parcel' : ' parcels'),
+          added: 'land added from ' + one,
+          reference: 'reference changed'
+        }[g.kind]
+        return longDate(g.date) + ': ' + wording
+      }
+
+      function withSecondLine (td, text, note) {
+        const span = document.createElement('span')
+        span.className = 'govuk-body-s app-secondary'
+        span.textContent = note
+        td.append(text, document.createElement('br'), span)
+      }
+
+      // A parcel in this business links to its own 1.3.2 page: compare-dates if it has history.
+      function parcelCell (td, link) {
+        if (!link.inBusiness) return withSecondLine(td, fmtNgc(link.ref), 'Not in this business')
+        const a = document.createElement('a')
+        a.className = 'govuk-link'
+        const page = Object.prototype.hasOwnProperty.call(HISTORY_REFS, link.ref) ? 'view-land-parcel-compare-dates' : 'view-land-parcel'
+        a.href = '/v18/1.3.2/' + page + '?parcel=' + encodeURIComponent(link.ref)
+        a.textContent = fmtNgc(link.ref)
+        td.appendChild(a)
+      }
+
+      function buildLineageSection () {
+        if (!LINEAGE.groups.length) return
+        const newRow = (parent) => {
+          const tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          parent.appendChild(tr)
+          return tr
+        }
+        const table = document.createElement('table')
+        table.className = 'govuk-table app-lineage-table'
+        const thead = table.createTHead()
+        thead.className = 'govuk-table__head'
+        const headRow = newRow(thead)
+        cell(headRow, 'th', 'Parcel')
+        cell(headRow, 'th', 'Area (ha)', true)
+
+        LINEAGE.groups.forEach((g, i) => {
+          const body = document.createElement('tbody')
+          body.className = 'govuk-table__body'
+          const changeRow = newRow(body)
+          changeRow.classList.add('app-lineage-table__change')
+          const th = document.createElement('th')
+          th.className = 'govuk-table__header'
+          th.scope = 'rowgroup'
+          th.textContent = lineageHeading(g)
+          changeRow.appendChild(th)
+          // The shape didn't change with the reference, so there is nothing to show on the map.
+          const control = cell(changeRow, 'td', '', true)
+          lineageControls[i] = g.kind === 'reference' ? null : control
+
+          if (g.kind === 'reference') {
+            g.links.forEach(link => {
+              const tr = newRow(body)
+              withSecondLine(cell(tr, 'td', ''), fmtNgc(link.ref), 'Old reference for this land')
+              cell(tr, 'td', ha(link.ha), true)
+            })
+          } else {
+            g.links.slice().sort((a, b) => b.ha - a.ha).forEach(link => {
+              const tr = newRow(body)
+              parcelCell(cell(tr, 'td', ''), link)
+              cell(tr, 'td', ha(link.ha), true)
+            })
+            // This parcel's own share. A new parcel had nothing before, so it has no row.
+            const own = g.direction === 'out' ? 'Stayed in this parcel'
+              : (g.kind === 'merged' || g.kind === 'added') ? 'Already in this parcel' : null
+            if (own && g.ownHa !== undefined && g.ownHa !== null) {
+              const tr = newRow(body)
+              cell(tr, 'td', own)
+              cell(tr, 'td', ha(g.ownHa), true)
+            }
+          }
+          table.appendChild(body)
+        })
+
+        const heading = document.createElement('h2')
+        heading.className = 'govuk-heading-m'
+        heading.textContent = 'Splits and merges'
+        const note = document.createElement('p')
+        note.className = 'govuk-body-s app-secondary'
+        note.textContent = 'We worked these out by comparing parcel shapes and dates. RPA does not keep a record of them, so areas are approximate and may not add up.'
+        lineageStatus = document.createElement('div')
+        lineageStatus.id = 'lineage-status'
+        lineageStatus.className = 'govuk-visually-hidden'
+        lineageStatus.setAttribute('role', 'status')
+        const section = document.createElement('div')
+        section.className = 'app-lineage'
+        section.append(heading, table, note, lineageStatus)
+        details.after(section)
+        renderLineageControls()
+
+        section.addEventListener('click', (e) => {
+          const b = e.target.closest('button[data-lineage-index]')
+          if (!b) return
+          const i = Number(b.dataset.lineageIndex)
+          if (b.dataset.lineageAction === 'show') showLineage(i)
+          else hideLineage({ announce: true })
+          // The button pressed has been replaced: keep focus in the same cell.
+          const next = lineageControls[i] && lineageControls[i].querySelector('button')
+          if (next) next.focus()
+        })
+      }
+
+      function renderLineageControls () {
+        lineageControls.forEach((td, i) => {
+          if (!td) return
+          const active = !!activeLineage && activeLineage.index === i
+          td.textContent = ''
+          if (active) {
+            const showing = document.createElement('span')
+            showing.className = 'govuk-body-s app-secondary'
+            showing.textContent = 'Showing on map'
+            td.append(showing, document.createElement('br'))
+          }
+          const b = document.createElement('button')
+          b.type = 'button'
+          b.className = 'govuk-link app-link-button'
+          b.dataset.lineageIndex = i
+          b.dataset.lineageAction = active ? 'hide' : 'show'
+          const hidden = document.createElement('span')
+          hidden.className = 'govuk-visually-hidden'
+          hidden.textContent = ' ' + lineageHeading(LINEAGE.groups[i])
+          b.append(active ? 'Hide' : 'Show on map', hidden)
+          td.appendChild(b)
+        })
+      }
+
+      function showLineage (i) {
+        const g = LINEAGE.groups[i]
+        // The version to show: matched on its first day, as the dates table has it.
+        const date = dates.find(d => d.from && d.from.slice(0, 8) === g.mapDate)
+        if (!date) {
+          console.error('No version on this date for this change:', g.mapDate)
+          return
+        }
+        if (!activeLineage) {
+          activeLineage = {
+            before: { mapView, summary: summary.hidden, inset: singleInset.hidden, slider: sliderControl.hidden, details: details.hidden }
+          }
+        }
+        activeLineage.index = i
+        const request = ++lineageRequest
+        summary.hidden = true
+        singleInset.hidden = true
+        sliderControl.hidden = true
+        details.hidden = true
+        setLineagePieces([])
+        renderLineageControls()
+        lineageStatus.textContent = 'Showing ' + lineageHeading(g) + ' on the map'
+        mapView = 'historical'
+        loadComparedPair(date.file || shown.earlier, date.file, { fade: 1, announce: false, frame: 'current' })
+          .then(applied => applied ? lineageFeatures : null)
+          .then(features => {
+            if (!features || request !== lineageRequest) return
+            const pieces = features.filter(f => f.properties.date === g.date &&
+              (f.properties.direction === g.direction || (g.direction === 'out' && f.properties.direction === 'stayed')))
+            setLineagePieces(pieces, { frame: true })
+          })
+          .catch(err => {
+            console.error('Could not show this change on the map:', err)
+            showError('This change could not be shown on the map. Try again.')
+          })
+      }
+
+      // Takes the change off the map and puts back what the tab showed for the ticks, which
+      // can't have changed while it was on. announce: false when a tick, Compare or a tab switch
+      // did it (they then carry on and may load something else, which wins).
+      function hideLineage ({ announce = false } = {}) {
+        if (!activeLineage) return
+        const { index, before } = activeLineage
+        activeLineage = null
+        lineageRequest++
+        setLineagePieces([])
+        renderLineageControls()
+        lineageStatus.textContent = announce ? 'Removed ' + lineageHeading(LINEAGE.groups[index]) + ' from the map' : ''
+        summary.hidden = before.summary
+        singleInset.hidden = before.inset
+        sliderControl.hidden = before.slider
+        details.hidden = before.details
+
+        const s = shown
+        mapView = before.mapView
+        // On a phone the map can still be on the live version (nothing pressed before).
+        const load = mapView === 'current'
+          ? loadComparedPair(s.earlier, null, { fade: 1, announce: false, frame: 'current' })
+          : s.single
+            ? loadComparedPair(s.earlier, s.later, { fade: 1, announce: false, frame: 'current' })
+            : loadComparedPair(s.earlier, s.later, { fade: Number(slider.value) / 100, announce: false })
+        load.then(applied => {
+          if (!applied || mapView === 'current') return
+          if (!s.single) return renderDetails(data.previous, data.current)
+          const date = dates.find(d => d.file === s.later)
+          if (date) renderSingleDate(data.current, date)
+        }).catch(loadFailed)
+      }
+
       // --- The map follows the open tab -------------------------------------------------
       function syncMapToTab () {
         if (!datasetsReady) return
@@ -302,7 +583,11 @@
         load.catch(loadFailed)
       }
       // Watch the panel, not the tab links: arrow keys and the URL hash switch tabs without a click.
-      new MutationObserver(syncMapToTab).observe(historicalPanel, { attributes: true, attributeFilter: ['class'] })
+      // A tab switch (only possible while a panel is hidden) first takes a change off the map.
+      new MutationObserver(() => {
+        if (document.querySelector('.' + HIDDEN_PANEL)) hideLineage()
+        syncMapToTab()
+      }).observe(historicalPanel, { attributes: true, attributeFilter: ['class'] })
       if (datasetsReady) syncMapToTab()
       else document.addEventListener('compare:datasets-ready', syncMapToTab, { once: true })
 
@@ -359,7 +644,9 @@
 
         // The live version says what the Current tab says, which has no inset if the date is unknown.
         const updated = document.getElementById('current-tab-last-updated-date').textContent
-        const insetText = date.file ? 'Valid to ' + date.to : (updated ? 'Updated ' + updated : '')
+        const insetText = date.file
+          ? 'Valid to ' + date.to + (date.ref ? '. Reference at the time: ' + fmtNgc(date.ref) + '.' : '')
+          : (updated ? 'Updated ' + updated : '')
         document.getElementById('compare-single-date-text').textContent = insetText
         singleInset.hidden = !insetText
         summary.textContent = ''
