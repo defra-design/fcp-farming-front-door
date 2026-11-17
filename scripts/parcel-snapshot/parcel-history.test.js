@@ -5,7 +5,7 @@ const os = require('node:os')
 const path = require('node:path')
 const { loadParcelHistory } = require('../../app/data/v18-1-3-parcel-history')
 
-const EMPTY = { history: {}, dateVersions: {} }
+const EMPTY = { history: {}, dateVersions: {}, lineage: {} }
 
 function writeManifest (contents) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'parcel-history-'))
@@ -27,7 +27,7 @@ test('a matching manifest gives its history and date versions', () => {
   const history = { AA00001234: { beforeFile: '/a.json', dateLabel: 'x' } }
   const dateVersions = { AA00001234: [{ file: null }] }
   const file = writeManifest({ sbi: '112965195', generatedAt: 'abc', history, dateVersions })
-  assert.deepEqual(loadParcelHistory('112965195', file), { history, dateVersions })
+  assert.deepEqual(loadParcelHistory('112965195', file), { history, dateVersions, lineage: {} })
 })
 
 test('an unreadable manifest gives no history and does not throw', () => {
@@ -35,4 +35,19 @@ test('an unreadable manifest gives no history and does not throw', () => {
   const file = path.join(dir, 'manifest.json')
   fs.writeFileSync(file, '{ not json')
   assert.deepEqual(loadParcelHistory('112965195', file), EMPTY)
+})
+
+test('a matching manifest gives its lineage', () => {
+  const history = { AA00001234: { beforeFile: '/a.json', dateLabel: 'x' } }
+  const dateVersions = { AA00001234: [{ file: null }] }
+  const lineage = { AA00001234: { file: '/lineage-AA00001234.json', groups: [], earlierVersions: [] } }
+  const file = writeManifest({ sbi: '112965195', generatedAt: 'abc', history, dateVersions, lineage })
+  assert.deepEqual(loadParcelHistory('112965195', file), { history, dateVersions, lineage })
+})
+
+test('a manifest without lineage gives an empty lineage', () => {
+  const history = { AA00001234: { beforeFile: '/a.json', dateLabel: 'x' } }
+  const dateVersions = { AA00001234: [{ file: null }] }
+  const file = writeManifest({ sbi: '112965195', generatedAt: 'abc', history, dateVersions })
+  assert.deepEqual(loadParcelHistory('112965195', file).lineage, {})
 })

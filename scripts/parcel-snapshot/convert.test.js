@@ -141,3 +141,85 @@ test('buildManifest lists previous versions newest first and never the current o
     { file: base + '20100101.json?v=abc' }
   ])
 })
+
+test('buildManifest adds lineage without changing history or dateVersions', () => {
+  const selected = new Map([['AA00001234', [
+    version('AA00001234', '20100101', '20170501'),
+    version('AA00001234', '20170501', '99991231')
+  ]]])
+  const lineage = {
+    AA00001234: {
+      file: '/public/data/snapshot-112965195/lineage-AA00001234.json?v=abc',
+      groups: [{ date: '20170501', direction: 'out', kind: 'split', links: [{ ref: 'AA00005678', ha: 1.5, inBusiness: true }], ownHa: 2, mapDate: '20100101' }],
+      earlierVersions: [{ file: '/x.json?v=abc', ref: 'AA00009999', validFrom: '20050101', validTo: '20100101' }]
+    }
+  }
+  const without = buildManifest(selected, { sbi: '112965195', stamp: 'abc' })
+  const withLineage = buildManifest(selected, { sbi: '112965195', stamp: 'abc', lineage })
+  assert.deepEqual(withLineage.history, without.history)
+  assert.deepEqual(withLineage.dateVersions, without.dateVersions)
+  assert.deepEqual(withLineage.lineage, lineage)
+  assert.deepEqual(without.lineage, {})
+})
+
+test('toSnapshotFile with asNgc files the version under the new reference', () => {
+  const file = toSnapshotFile(
+    version('AA00001234', '20100101', '20151231', [
+      cover('AA00001234', '20100101', '20151231', rect(-1.4, LAT, -1.399, LAT + 0.001), 5000),
+      cover('AA00001234', '20100101', '20151231', rect(-1.399, LAT, -1.398, LAT + 0.001), 5000)
+    ]),
+    { sbi: '112965195', offset: { dLng: 0, dLat: 0 }, asNgc: 'BB00005678' }
+  )
+  file.features.forEach(f => {
+    assert.equal(f.properties.SHEET_ID, 'BB0000')
+    assert.equal(f.properties.PARCEL_ID, '5678')
+  })
+  assert.equal(file.parcel.properties.SHEET_ID, 'BB0000')
+  assert.equal(file.parcel.properties.PARCEL_ID, '5678')
+  assert.equal(file.parcel.properties.REFERENCE, 'AA00001234')
+  assert.equal(file.parcel.properties.VALID_FROM, '20100101')
+  assert.equal(file.parcel.properties.VALID_TO, '20151231')
+})
+
+test('toSnapshotFile without asNgc is unchanged', () => {
+  const v = version('AA00001234', '20170501', '20190101', [
+    cover('AA00001234', '20170501', '20190101', rect(-1.4, LAT, -1.399, LAT + 0.001), 5000)
+  ])
+  const file = toSnapshotFile(v, { sbi: '112965195', offset: { dLng: 0, dLat: 0 } })
+  assert.deepEqual(file, {
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: rect(-1.4, LAT, -1.399, LAT + 0.001),
+      properties: {
+        ID: '100',
+        SHEET_ID: 'AA0000',
+        PARCEL_ID: '1234',
+        REFERENCE_PARCELS_ID: '200',
+        LAND_COVER_CLASS_CODE: '130',
+        DESCRIPTION: 'Permanent Grassland',
+        AREA_HA: '0.5',
+        SHAPE_AREA: 5000,
+        VALID_FROM: '20170501',
+        VALID_TO: '20190101',
+        SBI: '112965195'
+      }
+    }],
+    parcel: {
+      type: 'Feature',
+      geometry: rect(-1.4, LAT, -1.399, LAT + 0.001),
+      properties: {
+        ID: '200',
+        SHEET_ID: 'AA0000',
+        PARCEL_ID: '1234',
+        VALID_FROM: '20170501',
+        VALID_TO: '20190101',
+        AREA_HA: '0.5',
+        SBI: '112965195',
+        SHAPE_AREA: 5000
+      }
+    },
+    hedgesUnavailable: true
+  })
+  assert.equal('REFERENCE' in file.parcel.properties, false)
+})

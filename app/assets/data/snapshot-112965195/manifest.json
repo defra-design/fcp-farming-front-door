@@ -1,49 +1,49 @@
 {
   "sbi": "112965195",
-  "generatedAt": "20261102155107",
+  "generatedAt": "20261117143423",
   "history": {
     "SK40611696": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40611696-20170501.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40611696-20170501.json?v=20261117143423",
       "dateLabel": "1 May 2017 to 1 January 2019"
     },
     "SK40622425": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40622425-20190101.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40622425-20190101.json?v=20261117143423",
       "dateLabel": "1 January 2019 to 1 January 2020"
     },
     "SK40623814": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40623814-20160101.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40623814-20160101.json?v=20261117143423",
       "dateLabel": "1 January 2016 to 1 May 2017"
     },
     "SK40623931": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40623931-20100101.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40623931-20100101.json?v=20261117143423",
       "dateLabel": "1 January 2010 to 1 January 2021"
     },
     "SK40624821": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40624821-20170501.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40624821-20170501.json?v=20261117143423",
       "dateLabel": "1 May 2017 to 1 January 2019"
     },
     "SK40625920": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40625920-20170501.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40625920-20170501.json?v=20261117143423",
       "dateLabel": "1 May 2017 to 1 January 2019"
     },
     "SK40626919": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40626919-20210101.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40626919-20210101.json?v=20261117143423",
       "dateLabel": "1 January 2021 to 14 April 2026"
     },
     "SK52626283": {
-      "beforeFile": "/public/data/snapshot-112965195/SK52626283-20170101.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK52626283-20170101.json?v=20261117143423",
       "dateLabel": "1 January 2017 to 1 January 2019"
     },
     "SK52635702": {
-      "beforeFile": "/public/data/snapshot-112965195/SK52635702-20170101.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK52635702-20170101.json?v=20261117143423",
       "dateLabel": "1 January 2017 to 1 January 2020"
     },
     "SK40621602": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40621602-20170501.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40621602-20170501.json?v=20261117143423",
       "dateLabel": "1 May 2017 to 1 January 2019"
     },
     "SK40622501": {
-      "beforeFile": "/public/data/snapshot-112965195/SK40622501-20170501.json?v=20261102155107",
+      "beforeFile": "/public/data/snapshot-112965195/SK40622501-20170501.json?v=20261117143423",
       "dateLabel": "1 May 2017 to 1 January 2019"
     }
   },
@@ -58,10 +58,10 @@
         "file": null
       },
       {
-        "file": "/public/data/snapshot-112965195/SK40622425-20170501.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK40622425-20170501.json?v=20261117143423"
       },
       {
-        "file": "/public/data/snapshot-112965195/SK40622425-20160101.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK40622425-20160101.json?v=20261117143423"
       }
     ],
     "SK40623814": [
@@ -69,10 +69,10 @@
         "file": null
       },
       {
-        "file": "/public/data/snapshot-112965195/SK40623814-20150101.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK40623814-20150101.json?v=20261117143423"
       },
       {
-        "file": "/public/data/snapshot-112965195/SK40623814-20100101.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK40623814-20100101.json?v=20261117143423"
       }
     ],
     "SK40623931": [
@@ -95,10 +95,10 @@
         "file": null
       },
       {
-        "file": "/public/data/snapshot-112965195/SK40626919-20171109.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK40626919-20171109.json?v=20261117143423"
       },
       {
-        "file": "/public/data/snapshot-112965195/SK40626919-20160101.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK40626919-20160101.json?v=20261117143423"
       }
     ],
     "SK52626283": [
@@ -106,7 +106,7 @@
         "file": null
       },
       {
-        "file": "/public/data/snapshot-112965195/SK52626283-20160101.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK52626283-20160101.json?v=20261117143423"
       }
     ],
     "SK52635702": [
@@ -114,10 +114,10 @@
         "file": null
       },
       {
-        "file": "/public/data/snapshot-112965195/SK52635702-20160101.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK52635702-20160101.json?v=20261117143423"
       },
       {
-        "file": "/public/data/snapshot-112965195/SK52635702-20091030.json?v=20261102155107"
+        "file": "/public/data/snapshot-112965195/SK52635702-20091030.json?v=20261117143423"
       }
     ],
     "SK40621602": [
@@ -130,5 +130,416 @@
         "file": null
       }
     ]
+  },
+  "lineage": {
+    "SK40611696": {
+      "file": "/public/data/snapshot-112965195/lineage-SK40611696.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20170501",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK40623814",
+              "ha": 0.6437,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20170501",
+          "kind": "created"
+        },
+        {
+          "date": "20190101",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK40621602",
+              "ha": 0.1464,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20190101",
+          "kind": "added",
+          "ownHa": 0.644
+        }
+      ],
+      "earlierVersions": []
+    },
+    "SK40622425": {
+      "file": "/public/data/snapshot-112965195/lineage-SK40622425.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20160101",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK40623814",
+              "ha": 4.8654,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20160101",
+          "kind": "created"
+        },
+        {
+          "date": "20170501",
+          "direction": "out",
+          "kind": "split",
+          "links": [
+            {
+              "ref": "SK40621823",
+              "ha": 0.2609,
+              "inBusiness": true
+            }
+          ],
+          "ownHa": 4.4904,
+          "mapDate": "20160101"
+        }
+      ],
+      "earlierVersions": []
+    },
+    "SK40623814": {
+      "file": "/public/data/snapshot-112965195/lineage-SK40623814.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20160101",
+          "direction": "out",
+          "kind": "split",
+          "links": [
+            {
+              "ref": "SK40622425",
+              "ha": 4.8654,
+              "inBusiness": true
+            }
+          ],
+          "ownHa": 13.1932,
+          "mapDate": "20150101"
+        },
+        {
+          "date": "20170501",
+          "direction": "out",
+          "kind": "split",
+          "links": [
+            {
+              "ref": "SK40622501",
+              "ha": 3.0414,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK40625920",
+              "ha": 2.9817,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK40624821",
+              "ha": 1.6386,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK40611696",
+              "ha": 0.6437,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK40625401",
+              "ha": 0.4558,
+              "inBusiness": false
+            },
+            {
+              "ref": "SK40621602",
+              "ha": 0.3571,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK40623714",
+              "ha": 0.1461,
+              "inBusiness": false
+            },
+            {
+              "ref": "SK40611699",
+              "ha": 0.0574,
+              "inBusiness": false
+            }
+          ],
+          "ownHa": 3.8715,
+          "mapDate": "20160101"
+        }
+      ],
+      "earlierVersions": []
+    },
+    "SK40623931": {
+      "file": null,
+      "groups": [],
+      "earlierVersions": []
+    },
+    "SK40624821": {
+      "file": "/public/data/snapshot-112965195/lineage-SK40624821.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20170501",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK40623814",
+              "ha": 1.6386,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20170501",
+          "kind": "created"
+        },
+        {
+          "date": "20190101",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK40625401",
+              "ha": 0.4558,
+              "inBusiness": false
+            },
+            {
+              "ref": "SK40623714",
+              "ha": 0.1461,
+              "inBusiness": false
+            }
+          ],
+          "mapDate": "20190101",
+          "kind": "merged",
+          "ownHa": 1.6386
+        }
+      ],
+      "earlierVersions": []
+    },
+    "SK40625920": {
+      "file": "/public/data/snapshot-112965195/lineage-SK40625920.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20170501",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK40623814",
+              "ha": 2.9817,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20170501",
+          "kind": "created"
+        }
+      ],
+      "earlierVersions": []
+    },
+    "SK40626919": {
+      "file": null,
+      "groups": [
+        {
+          "date": "20160101",
+          "direction": "reference",
+          "kind": "reference",
+          "links": [
+            {
+              "ref": "SK40626719",
+              "ha": 1.2702,
+              "inBusiness": false
+            }
+          ],
+          "mapDate": "20160101"
+        }
+      ],
+      "earlierVersions": [
+        {
+          "file": "/public/data/snapshot-112965195/SK40626919-20131216.json?v=20261117143423",
+          "ref": "SK40626719",
+          "validFrom": "20131216",
+          "validTo": "20151231"
+        }
+      ]
+    },
+    "SK52626283": {
+      "file": "/public/data/snapshot-112965195/lineage-SK52626283.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20160101",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK52627478",
+              "ha": 3.8647,
+              "inBusiness": false
+            },
+            {
+              "ref": "SK52635702",
+              "ha": 0.7455,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20160101",
+          "kind": "created"
+        },
+        {
+          "date": "20170101",
+          "direction": "out",
+          "kind": "moved",
+          "links": [
+            {
+              "ref": "SK52625098",
+              "ha": 0.7456,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK52635702",
+              "ha": 0.1938,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK52627297",
+              "ha": 0.0589,
+              "inBusiness": true
+            }
+          ],
+          "ownHa": 3.6119,
+          "mapDate": "20160101"
+        },
+        {
+          "date": "20170101",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK52635702",
+              "ha": 0.736,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20170101",
+          "kind": "added",
+          "ownHa": 3.6119
+        }
+      ],
+      "earlierVersions": []
+    },
+    "SK52635702": {
+      "file": "/public/data/snapshot-112965195/lineage-SK52635702.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20160101",
+          "direction": "out",
+          "kind": "split",
+          "links": [
+            {
+              "ref": "SK52626283",
+              "ha": 0.7455,
+              "inBusiness": true
+            }
+          ],
+          "ownHa": 3.5895,
+          "mapDate": "20091030"
+        },
+        {
+          "date": "20160101",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK52627478",
+              "ha": 3.4822,
+              "inBusiness": false
+            }
+          ],
+          "mapDate": "20160101",
+          "kind": "merged",
+          "ownHa": 3.5895
+        },
+        {
+          "date": "20170101",
+          "direction": "out",
+          "kind": "moved",
+          "links": [
+            {
+              "ref": "SK52627297",
+              "ha": 0.7565,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK52626283",
+              "ha": 0.736,
+              "inBusiness": true
+            },
+            {
+              "ref": "SK52625098",
+              "ha": 0.6229,
+              "inBusiness": true
+            }
+          ],
+          "ownHa": 4.9564,
+          "mapDate": "20160101"
+        },
+        {
+          "date": "20170101",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK52626283",
+              "ha": 0.1938,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20170101",
+          "kind": "added",
+          "ownHa": 4.9564
+        }
+      ],
+      "earlierVersions": []
+    },
+    "SK40621602": {
+      "file": "/public/data/snapshot-112965195/lineage-SK40621602.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20170501",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK40623814",
+              "ha": 0.3571,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20170501",
+          "kind": "created"
+        },
+        {
+          "date": "20190101",
+          "direction": "out",
+          "kind": "moved",
+          "links": [
+            {
+              "ref": "SK40611696",
+              "ha": 0.1464,
+              "inBusiness": true
+            }
+          ],
+          "ownHa": 0.2116,
+          "mapDate": "20170501"
+        }
+      ],
+      "earlierVersions": []
+    },
+    "SK40622501": {
+      "file": "/public/data/snapshot-112965195/lineage-SK40622501.json?v=20261117143423",
+      "groups": [
+        {
+          "date": "20170501",
+          "direction": "in",
+          "links": [
+            {
+              "ref": "SK40623814",
+              "ha": 3.0414,
+              "inBusiness": true
+            }
+          ],
+          "mapDate": "20170501",
+          "kind": "created"
+        }
+      ],
+      "earlierVersions": []
+    }
   }
 }
