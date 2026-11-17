@@ -151,5 +151,6 @@ module.exports = {
   registrationOffset,
   toSnapshotFile,
   buildManifest,
-  fileName
+  fileName,
+  shift
 }

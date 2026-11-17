@@ -15,5 +15,10 @@
     "govuk-frontend": "5.11.2",
     "govuk-prototype-kit": "13.18.1",
     "hmrc-frontend": "^6.78.0"
+  },
+  "devDependencies": {
+    "@turf/area": "^7.3.4",
+    "@turf/intersect": "^7.4.0",
+    "@turf/union": "^7.4.0"
   }
 }
