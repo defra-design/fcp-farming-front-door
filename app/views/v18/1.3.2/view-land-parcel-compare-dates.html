@@ -497,10 +497,25 @@
         })
       }
 
+      // The dates table row a change is shown on. The live row's date is its newest land cover's
+      // VALID_FROM, and a change worked out from the other parcel can be a day off, so a row
+      // matches on the same day or a day either side (exact first). A date later than every
+      // earlier version can only be the live one.
+      const dayNumber = (v) => Date.UTC(+v.slice(0, 4), +v.slice(4, 6) - 1, +v.slice(6, 8)) / 86400000
+      function versionFor (mapDate) {
+        const rows = dates.filter(d => d.from)
+        const exact = rows.find(d => d.from.slice(0, 8) === mapDate)
+        if (exact) return exact
+        const near = rows.find(d => Math.abs(dayNumber(d.from) - dayNumber(mapDate)) <= 1)
+        if (near) return near
+        const past = dates.slice(1)
+        if (past.every(d => d.from && d.from.slice(0, 8) < mapDate)) return dates[0]
+        return null
+      }
+
       function showLineage (i) {
         const g = LINEAGE.groups[i]
-        // The version to show: matched on its first day, as the dates table has it.
-        const date = dates.find(d => d.from && d.from.slice(0, 8) === g.mapDate)
+        const date = versionFor(g.mapDate)
         if (!date) {
           console.error('No version on this date for this change:', g.mapDate)
           return
@@ -530,7 +545,8 @@
           })
           .catch(err => {
             console.error('Could not show this change on the map:', err)
-            showError('This change could not be shown on the map. Try again.')
+            // Put the controls and the rest of the tab back, unless something newer took over.
+            if (request === lineageRequest) hideLineage()
           })
       }
 
