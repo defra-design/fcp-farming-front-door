@@ -567,7 +567,11 @@
         details.hidden = before.details
 
         const s = shown
-        mapView = before.mapView
+        // On wider screens the map follows the open tab. That beats what was saved, which can be
+        // out of date if Show on map was pressed before the map was ready to follow the tab.
+        mapView = document.querySelector('.' + HIDDEN_PANEL)
+          ? (historicalPanel.classList.contains(HIDDEN_PANEL) ? 'current' : 'historical')
+          : before.mapView
         // On a phone the map can still be on the live version (nothing pressed before).
         const load = mapView === 'current'
           ? loadComparedPair(s.earlier, null, { fade: 1, announce: false, frame: 'current' })
