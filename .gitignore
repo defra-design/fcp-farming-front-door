@@ -2,3 +2,6 @@
 .vscode/
 *.pdf
 .DS_Store
+
+# Brainstorm companion session files
+.superpowers/
