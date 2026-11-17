@@ -1,0 +1,748 @@
+{# A parcel with history. Current is the default tab: the live version alone on the map.
+   Historical shows one date or compares two. One ticked date shows straight away, alone on the
+   map with its own details. Tick a second and press Compare (disabled until then) to get the
+   slider, which fades between the two on one map. The map follows the open tab, and returning to
+   Historical restores the pair and the slider. The later date goes in the base's "current"
+   slot and the earlier in its "previous" slot, whichever order they were ticked in.
+   The tab opens on the newest past date, ticked alone. See _compare-single-map.html. #}
+{% set compareMode = "fade" %}
+{% set compareModeLabel = "dates" %}
+{% set compareLayout = "sidebar" %}
+{% set pairByOverlap = true %}
+
+{% extends "v18/1.3.2/_compare-single-map.html" %}
+
+{% block head %}
+  {{ super() }}
+  <style>
+    /* These classes set display, which beats the hidden attribute. */
+    #compare-dates-error[hidden],
+    .app-compare__fade[hidden],
+    .app-compare-summary[hidden],
+    #compare-single-date[hidden] {
+      display: none;
+    }
+    .app-dates-table {
+      margin-bottom: 15px;
+    }
+    .app-dates-table__tick {
+      width: 34px;
+      padding-right: 5px;
+    }
+    /* A label-less small checkbox in a table cell. The 44px touch target has 10px above and below
+       the visible box. Negative margins stop that space pushing the box below the row's text line
+       and making the row taller. The target still fits within the row. */
+    .app-dates-table .govuk-checkboxes__item {
+      float: none;
+      margin: -10px 0;
+      flex-wrap: nowrap;
+    }
+    /* Its text is visually hidden, so the label takes no space. Otherwise it wraps to a second
+       line in this narrow cell and makes the row taller. It must stay unpositioned: the box it
+       draws is placed against the item, not the label. */
+    .app-dates-table .govuk-checkboxes__label {
+      width: 0;
+      padding: 0;
+    }
+    /* GOV.UK's 16px size, as tables already use on phones, so the longest dates fit on one line
+       in the sidebar. Cells still wrap where it is narrower, rather than spilling out of the panel. */
+    .app-dates-table .govuk-table__header,
+    .app-dates-table .govuk-table__cell {
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+    /* Closer columns, so it still fits a narrow sidebar or a phone. */
+    .app-dates-table .govuk-table__cell {
+      padding-right: 10px;
+    }
+    .app-dates-table .govuk-table__cell:last-child {
+      padding-right: 0;
+    }
+    .app-dates-table .app-dates-table__tick {
+      padding-right: 5px;
+    }
+    .app-compare-summary {
+      margin: 25px 0 10px;
+    }
+    #compare-single-date {
+      margin: 25px 0 10px;
+    }
+    /* Inside a tab panel, the date ends sit closer to the details table below. */
+    #pair-details .govuk-table {
+      margin-top: 20px;
+    }
+    #pair-details .govuk-heading-s + .govuk-table {
+      margin-top: 0;
+    }
+    /* The 1.2 fade slider with its dates below it, one under each end. 360px still fits
+       the two longest dates on one line each. */
+    .app-compare__fade {
+      justify-content: space-between;
+      gap: 0 15px;
+      max-width: 360px;
+    }
+    .app-compare__fade-range {
+      flex: 0 0 100%;
+      min-width: 0;
+    }
+    .app-fade__end--later {
+      text-align: right;
+    }
+    /* Splits and merges */
+    .app-secondary {
+      color: #505a5f;
+    }
+    /* A button that looks like a govuk-link. The link colours only apply to :link and :visited,
+       so a button needs its own; .govuk-link:focus still gives it the focus style. */
+    .app-link-button {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      text-align: inherit;
+      color: #1d70b8;
+      cursor: pointer;
+    }
+    .app-link-button:hover:not(:focus) {
+      color: #003078;
+    }
+    .app-lineage {
+      margin-top: 30px;
+    }
+    /* As the dates table: 16px text and closer columns, and cells wrap rather than spill out of
+       the sidebar. */
+    .app-lineage-table .govuk-table__header,
+    .app-lineage-table .govuk-table__cell {
+      font-size: 1rem;
+      line-height: 1.25;
+      padding-right: 10px;
+    }
+    .app-lineage-table .govuk-table__header:last-child,
+    .app-lineage-table .govuk-table__cell:last-child {
+      padding-right: 0;
+    }
+    .app-lineage-table__change .govuk-table__header,
+    .app-lineage-table__change .govuk-table__cell {
+      background-color: #f3f2f1;
+    }
+    .app-lineage-table__change .govuk-table__header {
+      padding-left: 10px;
+    }
+    .app-lineage-table__change .govuk-table__cell:last-child {
+      padding-right: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block compareControls %}
+  <form id="compare-dates-form" novalidate hidden>
+    <div class="govuk-form-group govuk-!-margin-bottom-0" id="compare-dates-group">
+      <fieldset class="govuk-fieldset" aria-describedby="compare-dates-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-visually-hidden">Dates</legend>
+        <p class="govuk-error-message" id="compare-dates-error" role="alert" hidden></p>
+        <table class="govuk-table app-dates-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row" id="compare-dates-head"></tr>
+          </thead>
+          <tbody class="govuk-table__body" id="compare-dates-rows"></tbody>
+        </table>
+        <div class="govuk-hint" id="compare-dates-hint">Select 2 options to compare land parcels</div>
+      </fieldset>
+    </div>
+    <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" id="compare-dates-go" disabled>Compare</button>
+  </form>
+
+  {# What is on show: the comparison's heading, or one date's inset, worded as on the Current tab. #}
+  <div role="status">
+    <h2 class="govuk-heading-s app-compare-summary" id="compare-summary" hidden></h2>
+    <div class="govuk-inset-text guidance-panel" id="compare-single-date" hidden>
+      <p class="govuk-!-margin-bottom-0" id="compare-single-date-text"></p>
+    </div>
+  </div>
+
+  {# No visible label: the dates under each end carry the meaning, as on the 1.2 fade page. #}
+  <label class="govuk-label govuk-visually-hidden" for="compare-fade">Fade between dates</label>
+  <div class="app-compare__fade" id="compare-fade-control" hidden>
+    <input class="app-compare__fade-range" id="compare-fade" type="range" min="0" max="100" step="5" value="50">
+    <span class="govuk-body govuk-!-margin-bottom-0 app-fade__end" id="compare-fade-earlier" aria-hidden="true"></span>
+    <span class="govuk-body govuk-!-margin-bottom-0 app-fade__end app-fade__end--later" id="compare-fade-later" aria-hidden="true"></span>
+  </div>
+{% endblock %}
+
+{% block pageScripts %}
+  {{ super() }}
+  <script>
+    (function () {
+      // Previous versions per parcel, newest first. `file: null` means HISTORY[ngc].beforeFile.
+      const DATE_VERSIONS = {{ parcelHistory.dateVersions | dump | safe }}
+      // Splits and merges, worked out from the snapshot by scripts/parcel-snapshot. This LINEAGE
+      // (one parcel's changes) shadows the base's LINEAGE (its map datasets) inside this function.
+      const LINEAGE_ALL = {{ parcelHistory.lineage | dump | safe }}
+      const LINEAGE = LINEAGE_ALL[selectedNgc] || { file: null, groups: [], earlierVersions: [] }
+      // The parcels with history, so a link to one can go to its compare-dates page.
+      const HISTORY_REFS = {{ parcelHistory.history | dump | safe }}
+      // A version from before the reference changed (SK4062 6719's, for SK4062 6919) is one more
+      // date, with the reference it had then.
+      const previous = (DATE_VERSIONS[selectedNgc] || []).map(v => ({ file: v.file || (parcelEntry && parcelEntry.beforeFile) }))
+        .concat(LINEAGE.earlierVersions.map(v => ({ file: v.file, ref: v.ref })))
+
+      const form = document.getElementById('compare-dates-form')
+      const group = document.getElementById('compare-dates-group')
+      const error = document.getElementById('compare-dates-error')
+      const head = document.getElementById('compare-dates-head')
+      const rowsBody = document.getElementById('compare-dates-rows')
+      const button = document.getElementById('compare-dates-go')
+      const summary = document.getElementById('compare-summary')
+      const singleInset = document.getElementById('compare-single-date')
+      const details = document.getElementById('pair-details')
+      const slider = document.getElementById('compare-fade')
+      const sliderControl = document.getElementById('compare-fade-control')
+      const historicalPanel = document.getElementById('tab-historical')
+      const HIDDEN_PANEL = 'govuk-tabs__panel--hidden'
+      // What the tab is showing. `single` means one date: it sits in the base's "current" slot, and
+      // the "previous" slot just holds any snapshot, faded right out. It opens on the newest past date.
+      const newestPast = parcelEntry && parcelEntry.beforeFile
+      let shown = { earlier: newestPast, later: newestPast, single: true }
+      let mapView = 'current' // what the map is showing: 'current' or 'historical'
+      let dates = null // newest first: { file (null = Current), from, to, area }
+
+      // YYYYMMDD... to "1 January 2016": shown exactly as supplied.
+      function longDate (v) {
+        if (!v || v.length < 8) return ''
+        const dt = new Date(v.slice(0, 4) + '-' + v.slice(4, 6) + '-' + v.slice(6, 8))
+        return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+      }
+      const latestValidFrom = (d) => d.parcelCovers.reduce((max, f) => (f.properties.VALID_FROM || '') > max ? f.properties.VALID_FROM : max, '')
+      const dateOf = (d) => longDate(latestValidFrom(d))
+      const ha = (v) => parseFloat(v).toFixed(4)
+
+      function cell (tr, tag, text, numeric) {
+        const c = document.createElement(tag)
+        c.className = (tag === 'th' ? 'govuk-table__header' : 'govuk-table__cell') + (numeric ? (tag === 'th' ? ' govuk-table__header--numeric' : ' govuk-table__cell--numeric') : '')
+        if (tag === 'th') c.scope = 'col'
+        c.textContent = text
+        tr.appendChild(c)
+        return c
+      }
+
+      // --- The dates table: built once, when the first pair has loaded -----------------
+      function buildDatesTable (current) {
+        dates = [{ file: null, from: latestValidFrom(current), to: 'Current', area: current.selectedFeature.properties.AREA_HA }]
+        Promise.all(previous.map(v => cachedFetchJson(v.file)
+          .then(s => dates.push({ file: v.file, from: s.parcel.properties.VALID_FROM, to: longDate(s.parcel.properties.VALID_TO), area: s.parcel.properties.AREA_HA, ref: v.ref }))
+          .catch(err => console.error('Could not read this date:', v.file, err))
+        )).then(() => {
+          // Pushed in arrival order, so put them back newest first.
+          const [live, ...past] = dates
+          past.sort((a, b) => b.from.localeCompare(a.from))
+          dates = [live, ...past]
+
+          const headRow = head
+          // Valid from starts above the checkboxes. Each checkbox has its own hidden label.
+          cell(headRow, 'th', 'Valid from').colSpan = 2
+          cell(headRow, 'th', 'Valid to')
+          cell(headRow, 'th', 'Area (ha)', true)
+
+          dates.forEach((date, i) => {
+            const tr = document.createElement('tr')
+            tr.className = 'govuk-table__row'
+            const td = cell(tr, 'td', '')
+            td.className += ' app-dates-table__tick'
+            td.innerHTML = '<div class="govuk-checkboxes govuk-checkboxes--small"><div class="govuk-checkboxes__item">' +
+              '<input class="govuk-checkboxes__input" type="checkbox" id="compare-date-' + i + '" data-date-index="' + i + '"' + (i === 1 ? ' checked' : '') + '>' +
+              '<label class="govuk-label govuk-checkboxes__label" for="compare-date-' + i + '"><span class="govuk-visually-hidden"></span></label>' +
+              '</div></div>'
+            td.querySelector('.govuk-visually-hidden').textContent = 'Compare ' + longDate(date.from) + ' to ' + date.to
+            cell(tr, 'td', longDate(date.from))
+            cell(tr, 'td', date.to)
+            cell(tr, 'td', ha(date.area), true)
+            rowsBody.appendChild(tr)
+          })
+          form.hidden = false
+          showOpeningDate(dates[1])
+          buildLineageSection()
+        })
+      }
+
+      // The tab's details only: the map stays on the live version until the Historical tab is opened.
+      function showOpeningDate (date) {
+        cachedFetchJson(date.file).then(snapshot => {
+          const d = parcelDataFromSnapshot(snapshot)
+          stampIds(d)
+          renderSingleDate(d, date)
+        }).catch(err => {
+          console.error('Could not load this date:', err)
+          showError('This date could not be loaded. Try again.')
+        })
+      }
+
+      function showError (message) {
+        error.hidden = !message
+        error.textContent = ''
+        if (message) {
+          const prefix = document.createElement('span')
+          prefix.className = 'govuk-visually-hidden'
+          prefix.textContent = 'Error: '
+          error.append(prefix, message)
+        }
+        group.classList.toggle('govuk-form-group--error', !!message)
+      }
+
+      const tickedIndexes = () => [...rowsBody.querySelectorAll('input:checked')].map(i => Number(i.dataset.dateIndex))
+
+      // One tick shows that date straight away. Any other number leaves the map and details as they
+      // are: two wait for Compare, and none has nothing to show.
+      rowsBody.addEventListener('change', () => {
+        hideLineage()
+        showError('')
+        const ticked = tickedIndexes()
+        button.disabled = ticked.length < 2
+        if (ticked.length === 1) showSingleDate(dates[ticked[0]])
+      })
+
+      function showSingleDate (date) {
+        const earlier = date.file || shown.earlier
+        mapView = 'historical'
+        loadComparedPair(earlier, date.file, { fade: 1, announce: false, frame: 'current' }).then(applied => {
+          if (!applied) return
+          shown = { earlier, later: date.file, single: true }
+          renderSingleDate(data.current, date)
+        }).catch(err => {
+          console.error('Could not load this date:', err)
+          showError('This date could not be loaded. Try again.')
+        })
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        hideLineage()
+        const ticked = tickedIndexes()
+        if (ticked.length !== 2) {
+          showError('Select 2 dates')
+          const first = rowsBody.querySelector('input')
+          if (first) first.focus()
+          return
+        }
+        showError('')
+        // Newest first, so the higher index is the earlier date, whichever was ticked first.
+        const [later, earlier] = ticked.sort((a, b) => a - b).map(i => dates[i])
+        mapView = 'historical'
+        // A new pair starts with both dates showing.
+        loadComparedPair(earlier.file, later.file).then(applied => {
+          if (!applied) return
+          shown = { earlier: earlier.file, later: later.file, single: false }
+          slider.value = 50
+        }).catch(loadFailed)
+      })
+
+      function loadFailed (err) {
+        console.error('Could not load these dates:', err)
+        showError('These dates could not be loaded. Try again.')
+      }
+
+      // --- Splits and merges ------------------------------------------------------------
+      // One table under everything else on the tab, a tbody per change, oldest first. It always
+      // lists every change, whatever is ticked. Show on map puts one change on the map: the
+      // version it applies to (just before land left, or from the date land arrived), with the
+      // pieces from lineage-<ngc>.json. The ticks stay as they are, but the compare heading, the
+      // inset, the fade and the details are hidden while the map shows something else. Hide, a
+      // tick, Compare or a tab switch takes the change off and puts back what the tab showed.
+      const lineageFeatures = LINEAGE.groups.length && LINEAGE.file
+        ? cachedFetchJson(LINEAGE.file).then(fc => fc.features || []).catch(err => {
+          console.error('Could not read the splits and merges:', LINEAGE.file, err)
+          return []
+        })
+        : Promise.resolve([])
+      const lineageControls = [] // per group: the heading row's control cell (null: no control)
+      let activeLineage = null // { index, before }: the change on the map, and what it hid
+      let lineageRequest = 0 // only the latest Show on map draws its pieces
+      let lineageStatus = null
+
+      function lineageHeading (g) {
+        const n = g.links.length
+        const one = n === 1 ? fmtNgc(g.links[0].ref) : n + ' parcels'
+        const wording = {
+          split: 'split into ' + (n + 1) + ' parcels',
+          moved: 'land moved to ' + one,
+          created: 'created from ' + one,
+          merged: 'merged with ' + n + (n === 1 ? ' parcel' : ' parcels'),
+          added: 'land added from ' + one,
+          reference: 'reference changed'
+        }[g.kind]
+        return longDate(g.date) + ': ' + wording
+      }
+
+      function withSecondLine (td, text, note) {
+        const span = document.createElement('span')
+        span.className = 'govuk-body-s app-secondary'
+        span.textContent = note
+        td.append(text, document.createElement('br'), span)
+      }
+
+      // A parcel in this business links to its own 1.3.2 page: compare-dates if it has history.
+      function parcelCell (td, link) {
+        if (!link.inBusiness) return withSecondLine(td, fmtNgc(link.ref), 'Not in this business')
+        const a = document.createElement('a')
+        a.className = 'govuk-link'
+        const page = Object.prototype.hasOwnProperty.call(HISTORY_REFS, link.ref) ? 'view-land-parcel-compare-dates' : 'view-land-parcel'
+        a.href = '/v18/1.3.2/' + page + '?parcel=' + encodeURIComponent(link.ref)
+        a.textContent = fmtNgc(link.ref)
+        td.appendChild(a)
+      }
+
+      function buildLineageSection () {
+        if (!LINEAGE.groups.length) return
+        const newRow = (parent) => {
+          const tr = document.createElement('tr')
+          tr.className = 'govuk-table__row'
+          parent.appendChild(tr)
+          return tr
+        }
+        const table = document.createElement('table')
+        table.className = 'govuk-table app-lineage-table'
+        const thead = table.createTHead()
+        thead.className = 'govuk-table__head'
+        const headRow = newRow(thead)
+        cell(headRow, 'th', 'Parcel')
+        cell(headRow, 'th', 'Area (ha)', true)
+
+        LINEAGE.groups.forEach((g, i) => {
+          const body = document.createElement('tbody')
+          body.className = 'govuk-table__body'
+          const changeRow = newRow(body)
+          changeRow.classList.add('app-lineage-table__change')
+          const th = document.createElement('th')
+          th.className = 'govuk-table__header'
+          th.scope = 'rowgroup'
+          th.textContent = lineageHeading(g)
+          changeRow.appendChild(th)
+          // The shape didn't change with the reference, so there is nothing to show on the map.
+          const control = cell(changeRow, 'td', '', true)
+          lineageControls[i] = g.kind === 'reference' ? null : control
+
+          if (g.kind === 'reference') {
+            g.links.forEach(link => {
+              const tr = newRow(body)
+              withSecondLine(cell(tr, 'td', ''), fmtNgc(link.ref), 'Old reference for this land')
+              cell(tr, 'td', ha(link.ha), true)
+            })
+          } else {
+            g.links.slice().sort((a, b) => b.ha - a.ha).forEach(link => {
+              const tr = newRow(body)
+              parcelCell(cell(tr, 'td', ''), link)
+              cell(tr, 'td', ha(link.ha), true)
+            })
+            // This parcel's own share. A new parcel had nothing before, so it has no row.
+            const own = g.direction === 'out' ? 'Stayed in this parcel'
+              : (g.kind === 'merged' || g.kind === 'added') ? 'Already in this parcel' : null
+            if (own && g.ownHa !== undefined && g.ownHa !== null) {
+              const tr = newRow(body)
+              cell(tr, 'td', own)
+              cell(tr, 'td', ha(g.ownHa), true)
+            }
+          }
+          table.appendChild(body)
+        })
+
+        const heading = document.createElement('h2')
+        heading.className = 'govuk-heading-m'
+        heading.textContent = 'Splits and merges'
+        const note = document.createElement('p')
+        note.className = 'govuk-body-s app-secondary'
+        note.textContent = 'We worked these out by comparing parcel shapes and dates. RPA does not keep a record of them, so areas are approximate and may not add up.'
+        lineageStatus = document.createElement('div')
+        lineageStatus.id = 'lineage-status'
+        lineageStatus.className = 'govuk-visually-hidden'
+        lineageStatus.setAttribute('role', 'status')
+        const section = document.createElement('div')
+        section.className = 'app-lineage'
+        section.append(heading, table, note, lineageStatus)
+        details.after(section)
+        renderLineageControls()
+
+        section.addEventListener('click', (e) => {
+          const b = e.target.closest('button[data-lineage-index]')
+          if (!b) return
+          const i = Number(b.dataset.lineageIndex)
+          if (b.dataset.lineageAction === 'show') showLineage(i)
+          else hideLineage({ announce: true })
+          // The button pressed has been replaced: keep focus in the same cell.
+          const next = lineageControls[i] && lineageControls[i].querySelector('button')
+          if (next) next.focus()
+        })
+      }
+
+      function renderLineageControls () {
+        lineageControls.forEach((td, i) => {
+          if (!td) return
+          const active = !!activeLineage && activeLineage.index === i
+          td.textContent = ''
+          if (active) {
+            const showing = document.createElement('span')
+            showing.className = 'govuk-body-s app-secondary'
+            showing.textContent = 'Showing on map'
+            td.append(showing, document.createElement('br'))
+          }
+          const b = document.createElement('button')
+          b.type = 'button'
+          b.className = 'govuk-link app-link-button'
+          b.dataset.lineageIndex = i
+          b.dataset.lineageAction = active ? 'hide' : 'show'
+          const hidden = document.createElement('span')
+          hidden.className = 'govuk-visually-hidden'
+          hidden.textContent = ' ' + lineageHeading(LINEAGE.groups[i])
+          b.append(active ? 'Hide' : 'Show on map', hidden)
+          td.appendChild(b)
+        })
+      }
+
+      // The dates table row a change is shown on. The live row's date is its newest land cover's
+      // VALID_FROM, and a change worked out from the other parcel can be a day off, so a row
+      // matches on the same day or a day either side (exact first). A date later than every
+      // earlier version can only be the live one.
+      const dayNumber = (v) => Date.UTC(+v.slice(0, 4), +v.slice(4, 6) - 1, +v.slice(6, 8)) / 86400000
+      function versionFor (mapDate) {
+        const rows = dates.filter(d => d.from)
+        const exact = rows.find(d => d.from.slice(0, 8) === mapDate)
+        if (exact) return exact
+        const near = rows.find(d => Math.abs(dayNumber(d.from) - dayNumber(mapDate)) <= 1)
+        if (near) return near
+        const past = dates.slice(1)
+        if (past.every(d => d.from && d.from.slice(0, 8) < mapDate)) return dates[0]
+        return null
+      }
+
+      function showLineage (i) {
+        const g = LINEAGE.groups[i]
+        const date = versionFor(g.mapDate)
+        if (!date) {
+          console.error('No version on this date for this change:', g.mapDate)
+          return
+        }
+        if (!activeLineage) {
+          activeLineage = {
+            before: { mapView, summary: summary.hidden, inset: singleInset.hidden, slider: sliderControl.hidden, details: details.hidden }
+          }
+        }
+        activeLineage.index = i
+        const request = ++lineageRequest
+        summary.hidden = true
+        singleInset.hidden = true
+        sliderControl.hidden = true
+        details.hidden = true
+        setLineagePieces([])
+        renderLineageControls()
+        lineageStatus.textContent = 'Showing ' + lineageHeading(g) + ' on the map'
+        mapView = 'historical'
+        loadComparedPair(date.file || shown.earlier, date.file, { fade: 1, announce: false, frame: 'current' })
+          .then(applied => applied ? lineageFeatures : null)
+          .then(features => {
+            if (!features || request !== lineageRequest) return
+            const pieces = features.filter(f => f.properties.date === g.date &&
+              (f.properties.direction === g.direction || (g.direction === 'out' && f.properties.direction === 'stayed')))
+            setLineagePieces(pieces, { frame: true })
+          })
+          .catch(err => {
+            console.error('Could not show this change on the map:', err)
+            // Put the controls and the rest of the tab back, unless something newer took over.
+            if (request === lineageRequest) hideLineage()
+          })
+      }
+
+      // Takes the change off the map and puts back what the tab showed for the ticks, which
+      // can't have changed while it was on. announce: false when a tick, Compare or a tab switch
+      // did it (they then carry on and may load something else, which wins).
+      function hideLineage ({ announce = false } = {}) {
+        if (!activeLineage) return
+        const { index, before } = activeLineage
+        activeLineage = null
+        lineageRequest++
+        setLineagePieces([])
+        renderLineageControls()
+        lineageStatus.textContent = announce ? 'Removed ' + lineageHeading(LINEAGE.groups[index]) + ' from the map' : ''
+        summary.hidden = before.summary
+        singleInset.hidden = before.inset
+        sliderControl.hidden = before.slider
+        details.hidden = before.details
+
+        const s = shown
+        // On wider screens the map follows the open tab. That beats what was saved, which can be
+        // out of date if Show on map was pressed before the map was ready to follow the tab.
+        mapView = document.querySelector('.' + HIDDEN_PANEL)
+          ? (historicalPanel.classList.contains(HIDDEN_PANEL) ? 'current' : 'historical')
+          : before.mapView
+        // On a phone the map can still be on the live version (nothing pressed before).
+        const load = mapView === 'current'
+          ? loadComparedPair(s.earlier, null, { fade: 1, announce: false, frame: 'current' })
+          : s.single
+            ? loadComparedPair(s.earlier, s.later, { fade: 1, announce: false, frame: 'current' })
+            : loadComparedPair(s.earlier, s.later, { fade: Number(slider.value) / 100, announce: false })
+        load.then(applied => {
+          if (!applied || mapView === 'current') return
+          if (!s.single) return renderDetails(data.previous, data.current)
+          const date = dates.find(d => d.file === s.later)
+          if (date) renderSingleDate(data.current, date)
+        }).catch(loadFailed)
+      }
+
+      // --- The map follows the open tab -------------------------------------------------
+      function syncMapToTab () {
+        if (!datasetsReady) return
+        // On narrow screens the Tabs component shows every panel, so no tab is "open": the map
+        // stays on what it was showing, until Compare is pressed.
+        if (!document.querySelector('.' + HIDDEN_PANEL)) return
+        const wanted = historicalPanel.classList.contains(HIDDEN_PANEL) ? 'current' : 'historical'
+        if (wanted === mapView) return
+        mapView = wanted
+        const load = wanted === 'current'
+          ? loadComparedPair(shown.earlier, null, { fade: 1, announce: false, frame: 'current' })
+          : shown.single
+            ? loadComparedPair(shown.earlier, shown.later, { fade: 1, announce: false, frame: 'current' })
+            : loadComparedPair(shown.earlier, shown.later, { fade: Number(slider.value) / 100, announce: false })
+        load.catch(loadFailed)
+      }
+      // Watch the panel, not the tab links: arrow keys and the URL hash switch tabs without a click.
+      // A tab switch (only possible while a panel is hidden) first takes a change off the map.
+      new MutationObserver(() => {
+        if (document.querySelector('.' + HIDDEN_PANEL)) hideLineage()
+        syncMapToTab()
+      }).observe(historicalPanel, { attributes: true, attributeFilter: ['class'] })
+      if (datasetsReady) syncMapToTab()
+      else document.addEventListener('compare:datasets-ready', syncMapToTab, { once: true })
+
+      // --- One date's details: the same tables as the Current tab --------------------------
+      function renderSingleDate (d, date) {
+        const hedgesKnown = !d.hedgesUnavailable
+        const table = (headings) => {
+          const t = document.createElement('table')
+          t.className = 'govuk-table'
+          if (headings) {
+            const head = t.createTHead()
+            head.className = 'govuk-table__head'
+            const row = head.insertRow()
+            row.className = 'govuk-table__row'
+            headings.forEach((text, i) => cell(row, 'th', text, i === 1))
+          }
+          const body = t.createTBody()
+          body.className = 'govuk-table__body'
+          return t
+        }
+        const heading = (text, topMargin) => {
+          const h = document.createElement('h3')
+          h.className = 'govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-' + topMargin
+          h.textContent = text
+          return h
+        }
+
+        const totals = table()
+        ;[
+          ['Total area (ha)', ha(d.selectedFeature.properties.AREA_HA)],
+          ['Land covers', String(d.parcelCovers.length)],
+          ['Hedgerows', hedgesKnown ? String(d.parcelHedges.length) : 'Not available']
+        ].forEach(([label, value]) => {
+          const tr = totals.tBodies[0].insertRow()
+          tr.className = 'govuk-table__row'
+          cell(tr, 'td', label)
+          cell(tr, 'td', value, true)
+        })
+
+        const covers = table(['Land cover', 'Area (ha)'])
+        d.parcelCovers.forEach(f => covers.tBodies[0].appendChild(coverRow(f, 'current', { note: false })))
+        if (d.parcelCovers.length === 0) covers.tBodies[0].appendChild(emptyRow('No land covers recorded.'))
+        else covers.tBodies[0].appendChild(totalRow('land-covers', sumArea(d.parcelCovers).toFixed(4)))
+
+        details.innerHTML = ''
+        details.append(heading('Summary', 2), totals, covers)
+        // A snapshot holds no hedgerows, so only the live version has this table.
+        if (hedgesKnown) {
+          const hedges = table(['Number', 'Length (m)'])
+          d.parcelHedges.forEach((f, i) => hedges.tBodies[0].appendChild(hedgeRow(f, i, 'current', { note: false })))
+          hedges.tBodies[0].appendChild(totalRow('hedgerows', String(sumLength(d.parcelHedges))))
+          details.append(heading('Hedgerows', 4), hedges)
+        }
+
+        // The live version says what the Current tab says, which has no inset if the date is unknown.
+        const updated = document.getElementById('current-tab-last-updated-date').textContent
+        const insetText = date.file
+          ? 'Valid to ' + date.to + (date.ref ? '. Reference at the time: ' + fmtNgc(date.ref) + '.' : '')
+          : (updated ? 'Updated ' + updated : '')
+        document.getElementById('compare-single-date-text').textContent = insetText
+        singleInset.hidden = !insetText
+        summary.textContent = ''
+        summary.hidden = true
+        sliderControl.hidden = true
+      }
+
+      // --- The details table: rebuilt for every pair ----------------------------------------
+      function renderDetails (earlier, later) {
+        const earlierDate = dateOf(earlier)
+        const laterDate = dateOf(later)
+        const sumByCover = (d) => d.parcelCovers.reduce((m, f) => m.set(f.properties.DESCRIPTION, (m.get(f.properties.DESCRIPTION) || 0) + parseFloat(f.properties.AREA_HA)), new Map())
+        const a = sumByCover(earlier)
+        const b = sumByCover(later)
+        const names = [...new Set([...a.keys(), ...b.keys()])].sort()
+        const same = (x, y) => x !== undefined && y !== undefined && x.toFixed(4) === y.toFixed(4)
+        const noDifference = names.every(n => same(a.get(n), b.get(n))) &&
+          ha(earlier.selectedFeature.properties.AREA_HA) === ha(later.selectedFeature.properties.AREA_HA)
+
+        details.innerHTML = ''
+        if (noDifference) {
+          const inset = document.createElement('div')
+          inset.className = 'govuk-inset-text guidance-panel govuk-!-margin-top-0'
+          inset.textContent = 'No differences in area or land cover between these dates.'
+          details.appendChild(inset)
+        }
+        const table = document.createElement('table')
+        table.className = 'govuk-table govuk-!-margin-top-4'
+        const thead = table.createTHead()
+        thead.className = 'govuk-table__head'
+        const hr = thead.insertRow()
+        hr.className = 'govuk-table__row'
+        cell(hr, 'th', 'Land cover')
+        cell(hr, 'th', earlierDate, true)
+        cell(hr, 'th', laterDate, true)
+        const tbody = table.createTBody()
+        tbody.className = 'govuk-table__body'
+        const addRow = (label, left, right, bold) => {
+          const tr = tbody.insertRow()
+          tr.className = 'govuk-table__row'
+          const c1 = cell(tr, 'td', label)
+          const c2 = cell(tr, 'td', left, true)
+          const c3 = cell(tr, 'td', right, true)
+          if (bold) [c1, c2, c3].forEach(c => c.classList.add('govuk-!-font-weight-bold'))
+        }
+        const orDash = (v) => v === undefined ? '–' : v.toFixed(4)
+        names.forEach(n => addRow(n, orDash(a.get(n)), orDash(b.get(n))))
+        addRow('Total area', ha(earlier.selectedFeature.properties.AREA_HA), ha(later.selectedFeature.properties.AREA_HA), true)
+        const hedges = (d) => d.hedgesUnavailable ? 'Not available' : String(d.parcelHedges.length)
+        addRow('Hedgerows', hedges(earlier), hedges(later))
+        details.appendChild(table)
+
+        // The dates are for screen readers: this heading is what gets announced when a comparison
+        // loads, and the dates under the slider are hidden from them.
+        const summaryDates = document.createElement('span')
+        summaryDates.className = 'govuk-visually-hidden'
+        summaryDates.textContent = ': ' + earlierDate + ' with ' + laterDate
+        summary.textContent = 'Land parcel comparison'
+        summary.appendChild(summaryDates)
+        summary.hidden = false
+        singleInset.hidden = true
+        sliderControl.hidden = false
+        document.getElementById('compare-fade-earlier').textContent = earlierDate
+        document.getElementById('compare-fade-later').textContent = laterDate
+        pairLabels = { previous: earlierDate, current: laterDate }
+      }
+
+      // The first pair only starts the dates table: the tab opens on one date, not a comparison.
+      function onRendered (earlier, later) {
+        if (dates) renderDetails(earlier, later)
+        else buildDatesTable(later)
+      }
+      document.addEventListener('compare:rendered', (e) => onRendered(e.detail.previous, e.detail.current))
+      // On a repeat visit the data comes from sessionStorage, so the first pair can have rendered
+      // between the base's script and this one, before the listener above existed.
+      if (data) onRendered(data.previous, data.current)
+    })()
+  </script>
+{% endblock %}

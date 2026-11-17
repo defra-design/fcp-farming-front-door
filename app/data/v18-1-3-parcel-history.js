@@ -12,12 +12,12 @@ function loadParcelHistory (sbi, manifestPath = MANIFEST) {
   try {
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
     if (manifest.sbi === sbi) {
-      return { history: manifest.history, dateVersions: manifest.dateVersions }
+      return { history: manifest.history, dateVersions: manifest.dateVersions, lineage: manifest.lineage || {} }
     }
   } catch (err) {
     if (err.code !== 'ENOENT') console.error('Could not read the parcel history manifest:', err.message)
   }
-  return { history: {}, dateVersions: {} }
+  return { history: {}, dateVersions: {}, lineage: {} }
 }
 
 module.exports = { loadParcelHistory }

@@ -71,9 +71,12 @@ function shift (geometry, { dLng, dLat }) {
   return { type: geometry.type, coordinates: move(geometry.coordinates) }
 }
 
-function toSnapshotFile (version, { sbi, offset }) {
-  const sheetId = version.ngc.substring(0, 6)
-  const parcelId = version.ngc.substring(6)
+// With asNgc, a renumbered predecessor's version is filed under the current reference, and the
+// parcel keeps the reference it had then as REFERENCE.
+function toSnapshotFile (version, { sbi, offset, asNgc }) {
+  const ngc = asNgc || version.ngc
+  const sheetId = ngc.substring(0, 6)
+  const parcelId = ngc.substring(6)
   const features = version.features.map(f => {
     const p = f.properties
     return {
@@ -112,7 +115,8 @@ function toSnapshotFile (version, { sbi, offset }) {
         VALID_TO: version.validTo,
         AREA_HA: String(areaSqm / 10000),
         SBI: sbi,
-        SHAPE_AREA: areaSqm
+        SHAPE_AREA: areaSqm,
+        ...(asNgc ? { REFERENCE: version.ngc } : {})
       }
     },
     hedgesUnavailable: true
@@ -129,7 +133,8 @@ function fileName (ngc, validFrom) {
   return `${ngc}-${validFrom}.json`
 }
 
-function buildManifest (selected, { sbi, stamp }) {
+// `lineage` is passed through as given: { [ngc]: { file, groups, earlierVersions } }.
+function buildManifest (selected, { sbi, stamp, lineage = {} }) {
   const history = {}
   const dateVersions = {}
   selected.forEach((list, ngc) => {
@@ -141,7 +146,7 @@ function buildManifest (selected, { sbi, stamp }) {
     }
     dateVersions[ngc] = [{ file: null }, ...previous.slice(1).map(v => ({ file: url(v) }))]
   })
-  return { sbi, generatedAt: stamp, history, dateVersions }
+  return { sbi, generatedAt: stamp, history, dateVersions, lineage }
 }
 
 module.exports = {
@@ -151,5 +156,7 @@ module.exports = {
   registrationOffset,
   toSnapshotFile,
   buildManifest,
-  fileName
+  fileName,
+  shift,
+  OUTPUT_URL
 }
