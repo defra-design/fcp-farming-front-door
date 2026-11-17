@@ -25,7 +25,7 @@ The prototype uses a versioning pattern where each design iteration lives in its
 - **Views:** `app/views/<version>/` — Nunjucks templates for that version
 - Main router (`app/routes.js`) wires all versions together, passing a deep-cloned `_myData` object to each
 
-Active versions (as wired up in `app/routes.js`): `v6`–`v11`, `v14`, `v15-DAL`, `v16`, `v18/1.0`, `v18/1.1`, `v18/1.2`, `v18/1.3`, `v18/1.3.1`, `v18/1.3.2`, `MVP`, `MVP-integration`, `AHWP`, `AHWP-v2`, `IAHW`
+Active versions (as wired up in `app/routes.js`): `v6`–`v11`, `v14`, `v15-DAL`, `v16`, `v18/1.0`, `v18/1.1`, `v18/1.2`, `v18/1.3`, `v18/1.3.1`, `v18/1.3.2`, `v18/ur-1`, `MVP`, `MVP-integration`, `AHWP`, `AHWP-v2`, `IAHW`
 
 `v18` nests its iterations one level deeper (`app/routes/v18/1.0/routes.js`, views in `app/views/v18/1.0/`), so its URL prefix is `/v18/1.0/`. Because the kit's auto-routing 404s on URLs containing a dot, each `v18` sub-version registers a catch-all render route in its own `routes.js`.
 
@@ -34,6 +34,8 @@ Active versions (as wired up in `app/routes.js`): `v6`–`v11`, `v14`, `v15-DAL`
 `v18/1.3.1` is a copy of 1.3 for comparing any two dates of a parcel: `view-land-parcel-compare-dates` replaces the dates list, with a default Current tab and a Historical tab that shows one ticked date, or compares two and fades between them on one map. The map follows the open tab. Its `_compare-single-map.html` uses the "current" slot for the live version or later date and the "previous" slot for the earlier date (`loadComparedPair`). `?fill=pattern` (and `?fill=solid` to switch back, remembered in sessionStorage) draws 1.3.1 land covers as coloured patterns on a transparent background instead of solid fills; the patterns and their Satellite/light-map colour pairs live in `app/assets/javascripts/map/land-cover-fill.js`.
 
 `v18/1.3.2` is a copy of 1.3.1 that adds a Splits and merges table to the Historical tab, listing where land moved to or came from, with a layer on the map for each (Land now in another parcel, Land added from another parcel, and This parcel after the change). `scripts/parcel-snapshot/generate.js` writes a `lineage` key in the manifest and a `lineage-<ngc>.json` file per parcel, dropping links under 0.01 ha and counting a reference change only when 99% of both versions' areas overlap; the map pieces are intersections with the parcel's own versions and carry no labels. The `sbi`, `history` and `dateVersions` manifest keys that 1.3 and 1.3.1 read are unchanged.
+
+`v18/ur-1` is a user research build of 1.3's `view-land` and `view-land-parcel` with the parcel history removed (Measure tool and the map ↔ Land covers / Hedgerows tables only). Start at `/v18/ur-1/demo-start`, which takes the participant's SBI and business name by POST and keeps them in `req.session.urV18`, so the SBI never appears in a URL. Because sessions are recorded, the sub-header shows a made-up SBI (`123456789`, set via `_sbiDisplay`) while the real one drives the WFS requests.
 
 Not wired into the router: `app/routes/V15/` (note the capital V) and the `app/views/v1/` and `app/views/to-be/` view folders.
 

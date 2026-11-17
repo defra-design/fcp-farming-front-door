@@ -1,0 +1,77 @@
+{% extends "layouts/main-rebrand.html" %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block pageTitle %}
+  User research setup – View land – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    rebrand: true
+  }) }}
+{% endblock %}
+
+{% set excludeBackLink = true %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">User research setup</span>
+        View land
+      </h1>
+
+      <p class="govuk-body">Enter the participant's business name and SBI. Leave blank to use the defaults.</p>
+      <p class="govuk-body">Fill this in before you start recording. The prototype shows a made-up SBI (123456789) on screen and keeps the real one out of the address bar.</p>
+
+      <form method="post">
+
+        {{ govukInput({
+          label: {
+            text: "Business name",
+            classes: "govuk-label--m govuk-!-static-margin-bottom-0"
+          },
+          hint: {
+            text: "Default: Agile Farm Ltd"
+          },
+          id: "business-name",
+          name: "business-name",
+          classes: "govuk-input--width-20"
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: "Single business identifier (SBI)",
+            classes: "govuk-label--m govuk-!-static-margin-bottom-0"
+          },
+          hint: {
+            text: "Default: 112965195"
+          },
+          id: "sbi",
+          name: "sbi",
+          autocomplete: "off",
+          inputmode: "numeric",
+          spellcheck: false,
+          classes: "govuk-input--width-10"
+        }) }}
+
+        {{ govukButton({
+          text: "Continue",
+          isStartButton: true
+        }) }}
+
+      </form>
+
+<script>
+  // Clear the previous participant's cached land data (view-land caches WFS responses in sessionStorage).
+  try { sessionStorage.clear() } catch (e) { /* storage unavailable */ }
+</script>
+
+    </div>
+  </div>
+
+{% endblock %}
