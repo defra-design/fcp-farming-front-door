@@ -1949,13 +1949,15 @@
           order.push(id, id + '-stroke')
         })
       })
-      VERSIONS.forEach(v => order.push(LC_SELECTED(v)))
       CHANGE_KINDS.forEach(kind => order.push(CHANGE_LAYER(kind)))
       if (COMPARE_SPLITS) {
         order.push(DS.surrounding, DS.surrounding + '-stroke', DS.parcelHover, DS.parcelHover + '-stroke', DS.parcelLoading, DS.parcelLoading + '-stroke',
           DS.elsewhere, DS.elsewhere + '-stroke')
       }
       order.push(DS.outlinePrevious, DS.outline, DS.hedgerows)
+      // The selected land cover's outline goes above the parcel borders and hedgerows, so an
+      // edge that runs along either is not hidden under them.
+      VERSIONS.forEach(v => order.push(LC_SELECTED(v)))
       // The surrounding parcels' click targets go to the very bottom (moveLayer to the top in
       // order, so first is lowest).
       if (COMPARE_SPLITS) order.unshift(DS.surroundingHit, DS.surroundingHit + '-stroke')

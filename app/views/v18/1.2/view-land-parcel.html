@@ -973,8 +973,10 @@
           const id = 'land-cover-' + lcSublayerId(type)
           order.push(id, id + '-stroke')
         })
-        order.push(LC_SELECTED_LAYER)
         order.push('parcel-hover', 'parcel-outline', 'parcel-loading', 'hedgerows')
+        // The selected land cover's outline goes above the parcel border and hedgerows, so an
+        // edge that runs along either is not hidden under them.
+        order.push(LC_SELECTED_LAYER)
         order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
         // The measurement shape stays above everything.
         ;(hedgeMap.getStyle().layers || [])
@@ -1319,7 +1321,11 @@
         // — accepting the seam-bug risk, matching view-land's mobile behaviour.
         const layers = []
         if (hedgeMap.getLayer('hedgerows')) layers.push({ layerId: 'hedgerows', idProperty: 'hedgeId' })
-        if (hedgeMap.getLayer('parcels-hit')) layers.push({ layerId: 'parcels-hit', idProperty: 'ngc' })
+        // selectedStroke 'transparent': when interact's hit-test misses a land cover it falls
+        // through to 'parcels-hit' (the whole current parcel), and its own highlight would draw
+        // a white outline round the parcel on satellite. Selecting a parcel only switches to it
+        // (the loading tint is the feedback), so the highlight is never wanted here.
+        if (hedgeMap.getLayer('parcels-hit')) layers.push({ layerId: 'parcels-hit', idProperty: 'ngc', selectedStroke: 'transparent' })
         // Land cover fills are registered so the mobile touch crosshair can select them; the
         // reliable path is the native map click in map:ready (same seam caveat as above, and
         // worse here — sub-parcel polygons at a parcel-fitted zoom). They sit above

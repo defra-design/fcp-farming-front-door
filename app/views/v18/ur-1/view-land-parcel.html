@@ -265,7 +265,7 @@
 
   /* Map -> sidebar: highlight a land cover's row when its polygon is clicked on the map */
   #land-covers-table-body tr.app-land-cover--selected {
-    background: #f4f8fb;
+    background: #ffdd00;
   }
 
   #land-covers-table-body tr.app-land-cover--selected td {
@@ -509,7 +509,7 @@
       patternLine: '#0b0c0c',     // fillPatternForegroundColor on patterned land covers
       parcelBorder: '#1d70b8',    // selected outline + every-other-parcel outline stroke
       hedgerow: '#00703c',        // hedgerow line
-      landCoverSelected: '#0b0c0c',  // outline on the land cover selected by a map click
+      landCoverSelected: '#ffdd00',  // outline on the land cover selected by a map click
       hoverFill: '#1d70b8',       // tint on the parcel under the pointer
       hoverOpacity: 0.15,
       loadingFill: '#1d70b8',     // tint on a just-clicked parcel while it loads
@@ -1015,8 +1015,10 @@
           const id = 'land-cover-' + lcSublayerId(type)
           order.push(id, id + '-stroke')
         })
-        order.push(LC_SELECTED_LAYER)
         order.push('parcel-hover', 'parcel-outline', 'parcel-loading', 'hedgerows')
+        // The selected land cover's outline goes above the parcel border and hedgerows, so an
+        // edge that runs along either is not hidden under them.
+        order.push(LC_SELECTED_LAYER)
         order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
         // The measurement shape stays above everything.
         ;(hedgeMap.getStyle().layers || [])
@@ -1370,7 +1372,11 @@
         // — accepting the seam-bug risk, matching view-land's mobile behaviour.
         const layers = []
         if (hedgeMap.getLayer('hedgerows')) layers.push({ layerId: 'hedgerows', idProperty: 'hedgeId' })
-        if (hedgeMap.getLayer('parcels-hit')) layers.push({ layerId: 'parcels-hit', idProperty: 'ngc' })
+        // selectedStroke 'transparent': when interact's hit-test misses a land cover it falls
+        // through to 'parcels-hit' (the whole current parcel), and its own highlight would draw
+        // a white outline round the parcel on satellite. Selecting a parcel only switches to it
+        // (the loading tint is the feedback), so the highlight is never wanted here.
+        if (hedgeMap.getLayer('parcels-hit')) layers.push({ layerId: 'parcels-hit', idProperty: 'ngc', selectedStroke: 'transparent' })
         // Land cover fills are registered so the mobile touch crosshair can select them; the
         // reliable path is the native map click in map:ready (same seam caveat as above, and
         // worse here — sub-parcel polygons at a parcel-fitted zoom). They sit above

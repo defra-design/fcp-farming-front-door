@@ -905,8 +905,10 @@
           const id = 'land-cover-' + lcSublayerId(type)
           order.push(id, id + '-stroke')
         })
-        order.push(LC_SELECTED_LAYER)
         order.push('parcel-outline', 'hedgerows')
+        // The selected land cover's outline goes above the parcel border and hedgerows, so an
+        // edge that runs along either is not hidden under them.
+        order.push(LC_SELECTED_LAYER)
         order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
       }
       // After a setStyle (which re-adds layers), once the map settles: re-assert z-order and
