@@ -254,9 +254,9 @@
   }
 
   /* Map -> sidebar: highlight a hedgerow's row when its line is clicked on the map
-     (mirrors view-land's .app-parcel--selected treatment) */
+     (same yellow as the selected land cover's row and the hedgerow's map highlight) */
   #hedgerows-table-body tr.app-hedge--selected {
-    background: #f4f8fb;
+    background: #ffdd00;
   }
 
   #hedgerows-table-body tr.app-hedge--selected td {
@@ -1383,7 +1383,8 @@
         // interact (its touch crosshair owns selection), so 'parcels-hit' is also registered below
         // — accepting the seam-bug risk, matching view-land's mobile behaviour.
         const layers = []
-        if (hedgeMap.getLayer('hedgerows')) layers.push({ layerId: 'hedgerows', idProperty: 'hedgeId' })
+        // A selected hedgerow is highlighted in the same yellow as a selected land cover.
+        if (hedgeMap.getLayer('hedgerows')) layers.push({ layerId: 'hedgerows', idProperty: 'hedgeId', selectedStroke: palette.landCoverSelected })
         // selectedStroke 'transparent': when interact's hit-test misses a land cover it falls
         // through to 'parcels-hit' (the whole current parcel), and its own highlight would draw
         // a white outline round the parcel on satellite. Selecting a parcel only switches to it
