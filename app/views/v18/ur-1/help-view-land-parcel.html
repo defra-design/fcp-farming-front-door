@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help: parcel details</title>
+  <style>
+    :root {
+      --text: #0b0c0c;
+      --secondary: #505a5f;
+      --border: #b1b4b6;
+      --border-light: #f3f2f1;
+      --link: #1d70b8;
+      --link-visited: #4c2c92;
+      --focus: #ffdd00;
+      --panel: #f3f2f1;
+      --blue: #1d70b8;
+      --yellow: #ffdd00;
+      --green: #00703c;
+      --red: #d4351c;
+      --bg: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "GDS Transport", arial, sans-serif;
+      font-size: 19px;
+      line-height: 1.32;
+    }
+    a { color: var(--link); text-underline-offset: 0.1578em; text-decoration-thickness: max(1px, .0625rem); }
+    a:visited { color: var(--link-visited); }
+    a:hover { text-decoration-thickness: max(3px, .1875rem); }
+    a:focus { outline: 3px solid transparent; color: var(--text); background: var(--focus); box-shadow: 0 -2px var(--focus), 0 4px var(--text); text-decoration: none; }
+
+    .header { background: #0b0c0c; color: #fff; border-bottom: 10px solid var(--blue); }
+    .header__inner, .wrapper { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+    .header__inner { display: flex; align-items: center; gap: 12px; padding-top: 12px; padding-bottom: 10px; }
+    .header__service { font-weight: 700; font-size: 20px; }
+    .header__tag { font-size: 16px; color: #fff; border: 1px solid #fff; padding: 2px 8px; }
+
+    .wrapper { padding-top: 24px; padding-bottom: 48px; }
+    .caption { color: var(--secondary); font-size: 19px; margin: 0 0 4px; }
+    h1 { font-size: 40px; line-height: 1.1; margin: 0 0 24px; }
+    h2 { font-size: 27px; line-height: 1.15; margin: 48px 0 16px; padding-top: 8px; border-top: 1px solid var(--border); }
+    h3 { font-size: 22px; line-height: 1.2; margin: 32px 0 12px; }
+    p, ul, ol { margin: 0 0 20px; }
+    ul, ol { padding-left: 20px; }
+    li { margin-bottom: 6px; }
+    .lead { font-size: 22px; }
+    .hint { color: var(--secondary); }
+
+    .contents { border-left: 5px solid var(--border); padding: 4px 0 4px 16px; margin-bottom: 32px; }
+    .contents h2 { border: 0; margin: 0 0 8px; padding: 0; font-size: 19px; }
+    .contents ol { list-style: none; padding: 0; margin: 0; }
+    .contents li { margin: 0 0 4px; }
+
+    .inset { border-left: 10px solid var(--border); padding: 12px 16px; margin: 24px 0; }
+    .inset p:last-child { margin-bottom: 0; }
+
+    /* Key tables */
+    .key { width: 100%; border-collapse: collapse; margin: 0 0 24px; }
+    .key caption { text-align: left; font-weight: 700; font-size: 22px; margin-bottom: 8px; }
+    .key th, .key td { text-align: left; vertical-align: top; padding: 10px 16px 10px 0; border-bottom: 1px solid var(--border); }
+    .key thead th { font-weight: 700; font-size: 16px; color: var(--secondary); }
+    .key td:first-child, .key th:first-child { width: 64px; padding-right: 12px; }
+    .key td:nth-child(2) { width: 30%; font-weight: 700; }
+
+    /* A map control as it looks on the map: white square button, black icon */
+    .btn-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; background: #fff; color: var(--text);
+      border-radius: 4px; box-shadow: 0 0 0 1px var(--border), 0 2px 3px rgba(11,12,12,.15);
+    }
+    .btn-icon--wide { width: auto; padding: 0 10px; gap: 6px; font-size: 16px; font-weight: 700; white-space: nowrap; }
+    .btn-icon--primary { background: #00703c; color: #fff; box-shadow: 0 2px 0 #002d18; }
+    .btn-icon svg { flex: none; }
+    .inline-icon { display: inline-flex; vertical-align: -4px; }
+    .inline-icon svg { width: 18px; height: 18px; }
+
+    /* Map symbol swatches */
+    .swatch { display: block; width: 40px; height: 40px; }
+    .swatch-sm { flex: none; display: block; width: 32px; height: 32px; margin-right: 12px; }
+    .covers { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(10, auto); grid-auto-flow: column; column-gap: 32px; row-gap: 10px; list-style: none; padding: 0; }
+    .covers li { display: flex; align-items: center; margin: 0; font-size: 16px; }
+
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+    .steps > li { counter-increment: step; position: relative; padding-left: 44px; margin-bottom: 14px; }
+    .steps > li::before {
+      content: counter(step); position: absolute; left: 0; top: -2px;
+      width: 30px; height: 30px; border-radius: 50%; background: var(--text); color: #fff;
+      font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center;
+    }
+
+    .footer { border-top: 1px solid var(--border); background: var(--panel); font-size: 16px; color: var(--secondary); }
+    .footer .wrapper { padding-top: 20px; padding-bottom: 24px; }
+    .footer p { margin: 0 0 8px; }
+
+    @media (max-width: 640px) {
+      body { font-size: 16px; }
+      h1 { font-size: 32px; }
+      h2 { font-size: 24px; }
+      h3 { font-size: 19px; }
+      .lead { font-size: 19px; }
+      .covers { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; }
+      .key td:nth-child(2) { width: auto; }
+      .key thead { display: none; }
+      .key tr { display: grid; grid-template-columns: 52px 1fr; column-gap: 12px; border-bottom: 1px solid var(--border); padding: 10px 0; }
+      .key td { border: 0; padding: 0; }
+      .key td:first-child { grid-row: span 2; width: auto; }
+    }
+    @media print {
+      .header { background: none; color: var(--text); border-bottom: 2px solid var(--text); }
+      .header__tag { border-color: var(--text); color: var(--text); }
+      h2 { break-after: avoid; }
+      .key tr { break-inside: avoid; }
+      a { color: var(--text); }
+    }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header__inner">
+    <span class="header__service">Single front door</span>
+    <span class="header__tag">Help</span>
+  </div>
+</header>
+
+<main class="wrapper" id="main-content">
+  <p class="caption">Help with your land</p>
+  <h1>Parcel details</h1>
+
+  <p class="lead">The parcel details page shows one land parcel: its land covers and hedgerows, on a map and in tables. You can also measure distances and areas on the map.</p>
+
+  <nav class="contents" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#page">What the page shows</a></li>
+      <li><a href="#select">Find a land cover or hedgerow on the map</a></li>
+      <li><a href="#another">Look at another parcel</a></li>
+      <li><a href="#measure">Measure a distance or area</a></li>
+      <li><a href="#controls">Map controls</a></li>
+      <li><a href="#symbols">What the map shows</a></li>
+      <li><a href="#covers">Land cover colours</a></li>
+      <li><a href="#mobile">Using a mobile phone</a></li>
+      <li><a href="#print">Print or save the map</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="page">What the page shows</h2>
+  <p>The parcel ID is in the heading, for example <strong>Parcel details: SX6795 2763</strong>.</p>
+  <ul>
+    <li><strong>Last updated</strong> – the last date a mapping change was recorded for the parcel</li>
+    <li><strong>Total area (ha)</strong> – the area of the parcel, in hectares</li>
+    <li><strong>Land covers</strong> – how many land covers the parcel has</li>
+    <li><strong>Hedgerows</strong> – how many hedgerows the parcel has</li>
+  </ul>
+  <p>The <strong>Land covers</strong> table lists each land cover on the parcel and its area in hectares.</p>
+  <p>The <strong>Hedgerows</strong> table lists each hedgerow by number and its length in metres. Hedgerows are numbered from longest to shortest, so if a hedgerow’s length changes, the numbers may change too.</p>
+
+  <h2 id="select">Find a land cover or hedgerow on the map</h2>
+  <p>Select a row in the <strong>Land covers</strong> table to highlight that land cover on the map with a yellow outline. The row turns yellow too.</p>
+  <p>It also works the other way round. Select a land cover on the map to highlight its row in the table.</p>
+  <p>Hedgerows work in the same way. Select a row in the <strong>Hedgerows</strong> table, or select a green hedgerow line on the map, to highlight it in both.</p>
+  <p>To clear your selection, select an area of the map outside the parcel’s land covers.</p>
+
+  <h2 id="another">Look at another parcel</h2>
+  <p>Your other parcels are shown on the map with a thin blue outline. Select one to show its details. The page stays open and the map moves to that parcel.</p>
+  <p>To go back to the list of all your parcels, select <strong>Back to land summary</strong> at the top of the page.</p>
+
+  <h2 id="measure">Measure a distance or area</h2>
+  <p>Use <strong>Measure tools</strong> <span class="inline-icon"><svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m6 9 6 6 6-6" /></svg></span> at the top of the map. You can have one measurement on the map at a time. Starting a new one removes the last one.</p>
+
+  <h3>Measure a distance</h3>
+  <ol class="steps">
+    <li>Select <strong>Measure tools</strong>, then <strong>Measure a distance</strong>.</li>
+    <li>Select a point on the map to start the line.</li>
+    <li>Select more points along the line. The distance updates as you go.</li>
+    <li>Select <strong>Done</strong> when you have finished.</li>
+  </ol>
+
+  <h3>Measure an area</h3>
+  <ol class="steps">
+    <li>Select <strong>Measure tools</strong>, then <strong>Measure an area</strong>.</li>
+    <li>Select points on the map around the edge of the area you want to measure.</li>
+    <li>Select <strong>Done</strong> when you have finished. The shape closes for you.</li>
+  </ol>
+
+  <h3>Reading the result</h3>
+  <p>The result is shown in a panel on the map.</p>
+  <ul>
+    <li>A distance is in metres (m).</li>
+    <li>An area is in hectares (ha), the same as the Land covers table. Underneath it is the area in square metres (m²) and the distance around the edge (the perimeter).</li>
+  </ul>
+  <p>The figures are worked out from the points you placed, so they are a guide. They will not exactly match the areas and lengths in the tables.</p>
+  <p>Measurements are for information only. They are not saved to your parcel details or land summary.</p>
+
+  <h3>Change or remove a measurement</h3>
+  <p>Select <strong>Measure tools</strong>, then:</p>
+  <ul>
+    <li><strong>Edit measurement</strong> to move its points – drag a point to a new place, or select it and then <strong>Delete point</strong></li>
+    <li><strong>Clear measurement</strong> to remove it from the map</li>
+  </ul>
+  <p>These are only available once you have a measurement on the map.</p>
+
+  <table class="key">
+    <caption>Key to measure tools</caption>
+    <thead>
+      <tr><th scope="col">Control</th><th scope="col">Name</th><th scope="col">What it does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m6 9 6 6 6-6" /></svg></span></td>
+        <td>Measure tools</td>
+        <td>Opens the measure menu.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-measure" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.706 16.294L16.294 5.706"/><path d="M21 2v3c0 .549-.451 1-1 1h-3c-.549 0-1-.451-1-1V2c0-.549.451-1 1-1h3c.549 0 1 .451 1 1zM6 17v3c0 .549-.451 1-1 1H2c-.549 0-1-.451-1-1v-3c0-.549.451-1 1-1h3c.549 0 1 .451 1 1z"/></svg></span></td>
+        <td>Measure a distance</td>
+        <td>Draws a line and shows its length.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-measure" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 7v10M4.5 7v10M7 19.5h10M7 4.5h10"/><path d="M22 18v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1zm0-15v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1zM7 18v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1zM7 3v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1z"/></svg></span></td>
+        <td>Measure an area</td>
+        <td>Draws a shape and shows its area and perimeter.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /><path d="m15 5 4 4" /></svg></span></td>
+        <td>Edit measurement</td>
+        <td>Lets you move or delete the points of your measurement.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg></span></td>
+        <td>Clear measurement</td>
+        <td>Removes your measurement from the map.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-undo-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M9 14 4 9l5-5" /><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" /></svg></span></td>
+        <td>Undo</td>
+        <td>While measuring, removes the last point you placed.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon btn-icon--wide btn-icon--primary"><svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 6 9 17l-5-5" /></svg> Done</span></td>
+        <td>Done</td>
+        <td>Finishes the line or shape and keeps the measurement on the map.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon btn-icon--wide"><svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg> Cancel</span></td>
+        <td>Cancel</td>
+        <td>Stops measuring without keeping the line or shape. If you were editing, your measurement goes back to how it was.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="controls">Map controls</h2>
+  <p>The controls are at the edges of the map. Select <strong>Map controls</strong> in the top right corner of the map to show the buttons for moving and zooming.</p>
+
+  <table class="key">
+    <caption>Key to map controls</caption>
+    <thead>
+      <tr><th scope="col">Control</th><th scope="col">Name</th><th scope="col">What it does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-gamepad-directional" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M11.146 15.854a1.207 1.207 0 0 1 1.708 0l1.56 1.56A2 2 0 0 1 15 18.828V21a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2.172a2 2 0 0 1 .586-1.414z" /><path d="M18.828 15a2 2 0 0 1-1.414-.586l-1.56-1.56a1.207 1.207 0 0 1 0-1.708l1.56-1.56A2 2 0 0 1 18.828 9H21a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z" /><path d="M6.586 14.414A2 2 0 0 1 5.172 15H3a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2.172a2 2 0 0 1 1.414.586l1.56 1.56a1.207 1.207 0 0 1 0 1.708z" /><path d="M9 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2.172a2 2 0 0 1-.586 1.414l-1.56 1.56a1.207 1.207 0 0 1-1.708 0l-1.56-1.56A2 2 0 0 1 9 5.172z" /></svg></span></td>
+        <td>Map controls</td>
+        <td>Shows or hides the buttons for moving and zooming the map. They appear at the bottom of the map, with a target in the middle of the map.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-chevron-up" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m18 15-6-6-6 6" /></svg></span></td>
+        <td>Move up</td>
+        <td>Moves the map up. The arrow buttons let you move the map without dragging it.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m6 9 6 6 6-6" /></svg></span></td>
+        <td>Move down</td>
+        <td>Moves the map down.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m15 18-6-6 6-6" /></svg></span></td>
+        <td>Move left</td>
+        <td>Moves the map left.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 18 6-6-6-6" /></svg></span></td>
+        <td>Move right</td>
+        <td>Moves the map right.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-crosshair" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><line x1="22" x2="18" y1="12" y2="12" /><line x1="6" x2="2" y1="12" y2="12" /><line x1="12" x2="12" y1="6" y2="2" /><line x1="12" x2="12" y1="22" y2="18" /></svg></span></td>
+        <td>Precision</td>
+        <td>Turns small steps on or off. When it is on, the arrow buttons move the map a shorter distance (Nudge), so you can line the target up exactly.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></td>
+        <td>Zoom in</td>
+        <td>Shows a smaller area in more detail. You can also scroll up with your mouse, or pinch out on a touch screen.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-minus" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /></svg></span></td>
+        <td>Zoom out</td>
+        <td>Shows a larger area in less detail. You can also scroll down with your mouse, or pinch in on a touch screen.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-map" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" /><path d="M15 5.764v15" /><path d="M9 3.236v15" /></svg></span></td>
+        <td>Map styles</td>
+        <td>Changes the background map: <strong>Satellite</strong> (aerial photography, shown first), <strong>Outdoor</strong> (roads, paths and contours) or <strong>Light</strong> (a plain map that makes land covers easier to see). You can also choose a <strong>Map size</strong> – <strong>Small</strong>, <strong>Medium</strong> or <strong>Large</strong> – to make the text on the map smaller or larger.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-layers" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" /><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" /><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" /></svg></span></td>
+        <td>Layers</td>
+        <td>Turns things on the map on or off. Untick <strong>Land cover</strong> to hide all land covers, or untick a single land cover or <strong>Hedgerow</strong>.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-list" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 12h.01" /><path d="M3 18h.01" /><path d="M3 6h.01" /><path d="M8 12h13" /><path d="M8 18h13" /><path d="M8 6h13" /></svg></span></td>
+        <td>Key</td>
+        <td>Shows the colour of each land cover on this parcel, and the hedgerow line.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-hand" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2" /><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2" /><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8" /><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" /></svg></span></td>
+        <td>Drag the map</td>
+        <td>You can also drag the map to move around it. With a keyboard, select the map and use the arrow keys.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="symbols">What the map shows</h2>
+
+  <table class="key">
+    <caption>Key to the map</caption>
+    <thead>
+      <tr><th scope="col">Symbol</th><th scope="col">Name</th><th scope="col">What it means</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><svg class="swatch" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="6" width="32" height="28" fill="#e8f1e4"/><rect x="4" y="6" width="32" height="28" fill="none" stroke="#1d70b8" stroke-width="4"/></svg></td>
+        <td>This parcel</td>
+        <td>The edge of the parcel you are looking at.</td>
+      </tr>
+      <tr>
+        <td><svg class="swatch" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="6" width="32" height="28" fill="#e8f1e4"/><rect x="4" y="6" width="32" height="28" fill="none" stroke="#1d70b8" stroke-width="1.25"/></svg></td>
+        <td>Your other parcels</td>
+        <td>Your business’s other land parcels. Select one to show its details.</td>
+      </tr>
+      <tr>
+        <td><svg class="swatch" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="6" width="32" height="28" fill="#1d70b8" fill-opacity=".15" stroke="#1d70b8" stroke-width="1.25"/></svg></td>
+        <td>Parcel under the pointer</td>
+        <td>The other parcel your pointer is over. It also shows while that parcel’s details are loading.</td>
+      </tr>
+      <tr>
+        <td><svg class="swatch" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="6" width="32" height="28" fill="#DEFADE"/><rect x="4" y="6" width="32" height="28" fill="none" stroke="#ffdd00" stroke-width="4"/></svg></td>
+        <td>Selected land cover</td>
+        <td>The land cover you selected on the map or in the Land covers table.</td>
+      </tr>
+      <tr>
+        <td><svg class="swatch" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 30 C 14 26, 18 14, 36 10" fill="none" stroke="#00703c" stroke-width="5" stroke-linecap="round"/></svg></td>
+        <td>Hedgerow</td>
+        <td>A hedgerow on the parcel. Select it to find it in the Hedgerows table.</td>
+      </tr>
+      <tr>
+        <td><svg class="swatch" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 32 L18 14 L34 20" fill="none" stroke="#d4351c" stroke-width="3" stroke-linejoin="round"/><circle cx="6" cy="32" r="3" fill="#fff" stroke="#d4351c" stroke-width="2"/><circle cx="18" cy="14" r="3" fill="#fff" stroke="#d4351c" stroke-width="2"/><circle cx="34" cy="20" r="3" fill="#fff" stroke="#d4351c" stroke-width="2"/></svg></td>
+        <td>Measured distance</td>
+        <td>A line you drew with Measure a distance.</td>
+      </tr>
+      <tr>
+        <td><svg class="swatch" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 30 L10 8 L32 6 L34 32 Z" fill="#d4351c" fill-opacity=".12" stroke="#d4351c" stroke-width="3" stroke-linejoin="round"/></svg></td>
+        <td>Measured area</td>
+        <td>A shape you drew with Measure an area.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="covers">Land cover colours</h2>
+  <p>Each land cover has its own colour. Some also have a pattern of lines or dots, so you can tell them apart without relying on colour.</p>
+  <p>Only the land covers on the parcel you are looking at are shown in the map’s <strong>Key</strong>. These are the most common ones.</p>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="p-vert" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M3 0 V6" stroke="#0b0c0c" stroke-width="1"/></pattern>
+      <pattern id="p-horiz" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 3 H6" stroke="#0b0c0c" stroke-width="1"/></pattern>
+      <pattern id="p-cross" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 0 L6 6 M6 0 L0 6" stroke="#0b0c0c" stroke-width=".8"/></pattern>
+      <pattern id="p-dot" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#0b0c0c"/></pattern>
+    </defs>
+  </svg>
+
+  <ul class="covers">
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#DEFADE"/><rect width="32" height="32" fill="url(#p-vert)"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Permanent Grassland</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#85994B"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Temporary Grass</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#FAF0B9"/><rect width="32" height="32" fill="url(#p-horiz)"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Arable Land</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#F3F2F1"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Land Lying Fallow</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#7B2D8E"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Permanent Crops</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#E4EFDF"/><rect width="32" height="32" fill="url(#p-cross)"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Woodland</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#F8CDBC"/><rect width="32" height="32" fill="url(#p-dot)"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Scrub - Ungrazeable</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#D6CABD"/><rect width="32" height="32" fill="url(#p-cross)"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Farm Building</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#C4B8A8"/><rect width="32" height="32" fill="url(#p-cross)"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Farmyards</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#F2E6D4"/><rect width="32" height="32" fill="url(#p-cross)"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Hard Standings</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#E8927C"/><rect width="32" height="32" fill="url(#p-cross)"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Residential dwelling, House</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#90C87C"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Residential Gardens</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#5CACEE"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Drain/Ditch/Dyke</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#4A7FB5"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Rivers and streams type 2</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#3D6699"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Rivers and streams type 3</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#4A90D9"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Pond</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#787878"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Roads</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#505A5F"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Metalled track</li>
+    <li><svg class="swatch-sm" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#B58840"/><rect x=".5" y=".5" width="31" height="31" fill="none" stroke="#b1b4b6"/></svg>Track - Natural Surface</li>
+  </ul>
+
+  <h2 id="mobile">Using a mobile phone</h2>
+  <p>On a mobile phone the parcel details fill the screen and the map opens on its own.</p>
+
+  <table class="key">
+    <caption>Key to mobile controls</caption>
+    <thead>
+      <tr><th scope="col">Control</th><th scope="col">Name</th><th scope="col">What it does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="btn-icon btn-icon--wide"><svg class="lucide lucide-map" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" /><path d="M15 5.764v15" /><path d="M9 3.236v15" /></svg> Map view</span></td>
+        <td>Map view</td>
+        <td>Opens the map full screen. It is below the Summary.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m6 9 6 6 6-6" /></svg></span></td>
+        <td>Measure tools</td>
+        <td>At the bottom right of the map on a phone.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-crosshair" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><line x1="22" x2="18" y1="12" y2="12" /><line x1="6" x2="2" y1="12" y2="12" /><line x1="12" x2="12" y1="6" y2="2" /><line x1="12" x2="12" y1="22" y2="18" /></svg></span></td>
+        <td>Crosshair</td>
+        <td>Marks the centre of the map. Move the map until the crosshair is where you want it.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon btn-icon--wide btn-icon--primary">Select</span></td>
+        <td>Select</td>
+        <td>Selects the land cover or hedgerow under the crosshair. If the crosshair is over another of your parcels, it shows that parcel’s details.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon btn-icon--wide btn-icon--primary"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg> Add point</span></td>
+        <td>Add point</td>
+        <td>While measuring, adds a point where the crosshair is.</td>
+      </tr>
+      <tr>
+        <td><span class="btn-icon"><svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></span></td>
+        <td>Close map view</td>
+        <td>Closes the map and takes you back to the parcel details.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="print">Print or save the map</h2>
+  <p>Under <strong>Print map</strong>, click <strong>Print or save</strong> to open a copy of the parcel map and its details that you can print or save.</p>
+
+  <div class="inset">
+    <p>For help finding a parcel, read <a href="help-view-land">help with viewing your land</a>.</p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrapper">
+    <p>This help is for a prototype used in user research. Some features may not work as described.</p>
+  </div>
+</footer>
+
+</body>
+</html>
