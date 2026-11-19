@@ -3,7 +3,9 @@
     selected parcel and the parcel list. Filled in by /public/javascripts/map/land-data-panel.js.
     Optional variables, set before including:
       dataPanelBackHref  back link href (default "#")
-      dataPanelBackText  back link text (default "Back to <business name>") -#}
+      dataPanelBackText  back link text (default "Back to <business name>")
+      dataPanelSelectedHeading  one heading over the selected parcel instead of the ID / Land cover /
+                                Area (ha) column headers (e.g. "Selected land parcel") -#}
 <a class="govuk-back-link govuk-!-margin-top-4" href="{{ dataPanelBackHref | default('#') }}">{{ dataPanelBackText | default('Back to ' + (myData.businessName | default('Agile Farm Ltd'))) }}</a>
 <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-0">Summary</h2>
 <table class="govuk-table govuk-!-margin-bottom-4">
@@ -28,6 +30,13 @@
   <input class="govuk-input govuk-input--width-10" id="parcel-filter" name="parcel-filter" type="text" aria-describedby="parcel-filter-hint" autocomplete="off" autocapitalize="characters" spellcheck="false">
 </div>
 <table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet app-data-panel__selected" hidden aria-live="polite">
+  {%- if dataPanelSelectedHeading %}
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="colgroup" colspan="3" class="govuk-table__header">{{ dataPanelSelectedHeading }}</th>
+    </tr>
+  </thead>
+  {%- else %}
   <caption class="govuk-table__caption govuk-visually-hidden">Selected land parcel</caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
@@ -36,9 +45,10 @@
       <th scope="col" class="govuk-table__header govuk-table__header--numeric" style="width:20%;white-space:nowrap">Area (ha)</th>
     </tr>
   </thead>
+  {%- endif %}
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell" style="white-space:nowrap"><a class="govuk-link" id="selected-parcel-link" href="#"></a></td>
+      <td class="govuk-table__cell" style="white-space:nowrap{{ ';width:25%' if dataPanelSelectedHeading }}"><a class="govuk-link" id="selected-parcel-link" href="#"></a></td>
       <td class="govuk-table__cell" id="selected-parcel-cover"></td>
       <td class="govuk-table__cell govuk-table__cell--numeric" style="white-space:nowrap" id="selected-parcel-area"></td>
     </tr>

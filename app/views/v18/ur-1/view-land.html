@@ -12,12 +12,19 @@
 
 {% block mapHead %}
   <style>
-    /* ur-1 only: the selected parcel's row uses the same yellow as its map outline and as the
-       selected land cover on view-land-parcel. The shared panel styles stay pale blue for the
-       other versions. Doubled class so it also beats the shared row :hover. */
+    /* The selected parcel's row and table use the same yellow as its map outline and as the
+       selected land cover on view-land-parcel. Set on this page so the shared panel styles
+       (used by the mapping pattern library) are unchanged. Doubled class so the row also
+       beats the shared row :hover. */
     .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected,
     .app-map-page .app-data-panel__selected tbody tr {
       background: #ffdd00;
+    }
+    /* ur-1 only: the selected parcel's link is black on the yellow row (focus keeps the GOV.UK style). */
+    .app-map-page #selected-parcel-link:not(:focus),
+    .app-map-page #selected-parcel-link:not(:focus):visited,
+    .app-map-page #selected-parcel-link:not(:focus):hover {
+      color: #0b0c0c;
     }
   </style>
   <link rel="prefetch" href="/v18/ur-1/view-land-parcel" as="document">
@@ -26,6 +33,7 @@
 {% endblock %}
 
 {% block mapSidebar %}
+  {% set dataPanelSelectedHeading = "Selected land parcel" %}
   {% include "_common/map/land-data-panel.html" %}
 {% endblock %}
 
