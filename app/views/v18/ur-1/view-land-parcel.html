@@ -508,7 +508,7 @@
       landCover: buildLandCoverPalette(),
       patternLine: '#0b0c0c',     // fillPatternForegroundColor on patterned land covers
       parcelBorder: '#1d70b8',    // selected outline + every-other-parcel outline stroke
-      hedgerow: '#00703c',        // hedgerow line
+      hedgerow: '#425F42',        // hedgerow line
       landCoverSelected: '#ffdd00',  // outline on the land cover selected by a map click
       hoverFill: '#1d70b8',       // tint on the parcel under the pointer
       hoverOpacity: 0.15,
@@ -574,6 +574,11 @@
       let interact = null
       let interactiveMap = null
       let hedgeMap = null        // raw MapLibre map (from the map:ready payload; no public accessor)
+      // ur-1: the Hedgerow layer starts switched off. The user turns it on or off in the Layers
+      // panel (or by clicking a Hedgerows table row), and that choice is kept across parcel
+      // switches. The layer is still hidden for a parcel with no hedges.
+      let hedgerowsOn = false
+      let hedgerowsHaveData = false
       let currentNgc = selectedNgc
       let currentData = null     // last-loaded parcel data, re-applied after a base-map style change
       let hoverNgc = null        // parcel currently tinted under the pointer (hover affordance)
@@ -893,6 +898,12 @@
       // native map click where a hedgerow wins.
       function selectHedgerow (id) {
         if (!interact || id == null) return
+        // Selecting a hedgerow from its row turns the Hedgerow layer on, so it can be seen.
+        if (datasetsPlugin && hedgeMap && hedgeMap.getLayer('hedgerows') &&
+            hedgeMap.getLayoutProperty('hedgerows', 'visibility') === 'none') {
+          hedgerowsOn = true
+          datasetsPlugin.setDatasetVisibility(true, { datasetId: 'hedgerows' })
+        }
         selectLandCover(null)
         if (selectedHedgeIds.has(id) && selectedHedgeIds.size === 1) return
         interact.selectFeature({ featureId: id, layerId: 'hedgerows', idProperty: 'hedgeId' })
@@ -1265,6 +1276,7 @@
       // it from the Key) rather than the dataset being removed.
       function buildHedgerowDataset (parcelHedges) {
         const hasHedges = parcelHedges.length > 0
+        hedgerowsHaveData = hasHedges
         return {
           id: 'hedgerows',
           label: 'Hedgerow',
@@ -1272,7 +1284,7 @@
           style: { stroke: palette.hedgerow, strokeWidth: 6, keySymbolShape: 'line' },
           showInKey: true,
           showInMenu: true,
-          visibility: hasHedges ? 'visible' : 'hidden'
+          visibility: hasHedges && hedgerowsOn ? 'visible' : 'hidden'
         }
       }
 
@@ -1403,8 +1415,14 @@
         syncLandCoverKey(d.parcelCovers, { preserveSelection })
         if (urlParams.has('colours')) refreshPanel()   // its land cover rows follow the parcel
         datasetsPlugin.setData({ type: 'FeatureCollection', features: [d.selectedFeature] }, { datasetId: 'parcel-outline' })
+        // Read the user's Layers choice before it's overwritten (only meaningful while the
+        // layer had hedges; for a parcel without them it was hidden by this code, not the user).
+        if (hedgerowsHaveData && hedgeMap && hedgeMap.getLayer('hedgerows')) {
+          hedgerowsOn = hedgeMap.getLayoutProperty('hedgerows', 'visibility') !== 'none'
+        }
+        hedgerowsHaveData = d.parcelHedges.length > 0
         datasetsPlugin.setData({ type: 'FeatureCollection', features: d.parcelHedges }, { datasetId: 'hedgerows' })
-        datasetsPlugin.setDatasetVisibility(d.parcelHedges.length > 0, { datasetId: 'hedgerows' })
+        datasetsPlugin.setDatasetVisibility(hedgerowsHaveData && hedgerowsOn, { datasetId: 'hedgerows' })
       }
 
       // Load + show a different parcel in place (no page reload). The clicked parcel is
