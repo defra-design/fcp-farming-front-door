@@ -2,9 +2,12 @@
 
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% set hasErrors = errors and errors.sbi %}
 
 {% block pageTitle %}
-  User research setup – View land – GOV.UK Prototype Kit
+  {{ "Error: " if hasErrors }}Enter your business details – View land – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block header %}
@@ -20,48 +23,55 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l">User research setup</span>
-        View land
-      </h1>
+      {% if hasErrors %}
+        {% set errorList = [] %}
+        {% if errors.sbi %}
+          {% set errorList = (errorList.push({ text: errors.sbi, href: "#sbi" }), errorList) %}
+        {% endif %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorList
+        }) }}
+      {% endif %}
 
-      <p class="govuk-body">Enter the participant's business name and SBI. Leave blank to use the defaults.</p>
-      <p class="govuk-body">Fill this in before you start recording. The prototype shows a made-up SBI (123456789) on screen and keeps the real one out of the address bar.</p>
+      <h1 class="govuk-heading-l">Enter your business details</h1>
 
-      <form method="post">
+      <p class="govuk-body">We'll use these to show you the land registered to your business.</p>
+
+      <form method="post" novalidate>
 
         {{ govukInput({
           label: {
-            text: "Business name",
-            classes: "govuk-label--m govuk-!-static-margin-bottom-0"
-          },
-          hint: {
-            text: "Default: Agile Farm Ltd"
+            text: "Business name (optional)",
+            classes: "govuk-label--m"
           },
           id: "business-name",
           name: "business-name",
+          value: values.businessName,
+          autocomplete: "organization",
           classes: "govuk-input--width-20"
         }) }}
 
         {{ govukInput({
           label: {
             text: "Single business identifier (SBI)",
-            classes: "govuk-label--m govuk-!-static-margin-bottom-0"
+            classes: "govuk-label--m"
           },
           hint: {
-            text: "Default: 112965195"
+            text: "This is 9 digits. You can find it on letters and emails from the Rural Payments Agency."
           },
           id: "sbi",
           name: "sbi",
+          value: values.sbi,
           autocomplete: "off",
           inputmode: "numeric",
           spellcheck: false,
+          errorMessage: { text: errors.sbi } if errors.sbi,
           classes: "govuk-input--width-10"
         }) }}
 
         {{ govukButton({
-          text: "Continue",
-          isStartButton: true
+          text: "Continue"
         }) }}
 
       </form>

@@ -129,23 +129,39 @@ module.exports = function (router, _myData) {
         next()
     });
 
-    //demo-start - researcher enters the participant's SBI and business name
+    //demo-start - the participant enters their own business name and SBI
     router.get('/' + version + '/demo-start', function (req, res) {
         res.render(version + '/demo-start', {
-            myData: res.locals.myDataUr
+            myData: res.locals.myDataUr,
+            errors: {},
+            values: {}
         });
     });
 
     router.post('/' + version + '/demo-start', function (req, res) {
-        var sbi = (req.session.data['sbi'] || '').toString().replace(/\s+/g, '')
+        var rawSbi = (req.session.data['sbi'] || '').toString()
+        var sbi = rawSbi.replace(/\s+/g, '')
         var businessName = (req.session.data['business-name'] || '').toString().trim()
-        req.session.urV18 = {
-            sbi: /^\d+$/.test(sbi) ? sbi : DEFAULT_SBI,
-            businessName: businessName || DEFAULT_BUSINESS_NAME
-        }
         // Don't leave the real values in the kit's shared data store
         delete req.session.data['sbi']
         delete req.session.data['business-name']
+
+        var errors = {}
+        if (!sbi) {
+            errors.sbi = 'Enter your SBI'
+        } else if (!/^\d{9}$/.test(sbi)) {
+            errors.sbi = 'Your SBI must be 9 digits'
+        }
+
+        if (Object.keys(errors).length) {
+            return res.render(version + '/demo-start', {
+                myData: res.locals.myDataUr,
+                errors: errors,
+                values: { businessName: businessName, sbi: rawSbi }
+            });
+        }
+
+        req.session.urV18 = { sbi: sbi, businessName: businessName || DEFAULT_BUSINESS_NAME }
         res.redirect('/' + version + '/view-land')
     });
 
