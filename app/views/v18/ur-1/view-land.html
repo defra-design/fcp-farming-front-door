@@ -34,11 +34,14 @@
 
 {% block mapSidebar %}
   {% set dataPanelSelectedHeading = "Selected land parcel" %}
+  {% set dataPanelHelpHref = "/v18/ur-1/help-view-land" %}
+  {% set dataPanelHelpTitle = "Help with viewing your land" %}
   {% include "_common/map/land-data-panel.html" %}
 {% endblock %}
 
 {% block mapScripts %}
   <script src="/public/javascripts/map/land-data-panel.js"></script>
+  <script src="/public/javascripts/map/help-panel.js"></script>
 
   <script>
     // ── Map colours: live-tuneable palette + panel (open with ?colours) ──────────

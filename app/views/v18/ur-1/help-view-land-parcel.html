@@ -98,7 +98,7 @@
     .footer .wrapper { padding-top: 20px; padding-bottom: 24px; }
     .footer p { margin: 0 0 8px; }
 
-    @media (max-width: 640px) {
+    @media (max-width: 600px) {
       body { font-size: 16px; }
       h1 { font-size: 32px; }
       h2 { font-size: 24px; }
@@ -118,7 +118,13 @@
       .key tr { break-inside: avoid; }
       a { color: var(--text); }
     }
+
+    /* Shown inside a prototype page (?embed): no header or footer, tighter top padding */
+    .is-embedded .header, .is-embedded .footer { display: none; }
+    .is-embedded .wrapper { padding-top: 8px; padding-bottom: 24px; }
+    .is-embedded h1 { padding-right: 140px; }
 </style>
+  <script>if (/[?&]embed(=|&|$)/.test(location.search)) document.documentElement.classList.add('is-embedded')</script>
 </head>
 <body>
 
@@ -130,7 +136,6 @@
 </header>
 
 <main class="wrapper" id="main-content">
-  <p class="caption">Help with your land</p>
   <h1>Parcel details</h1>
 
   <p class="lead">The parcel details page shows one land parcel: its land covers and hedgerows, on a map and in tables. You can also measure distances and areas on the map.</p>
@@ -452,10 +457,6 @@
 
   <h2 id="print">Print or save the map</h2>
   <p>Under <strong>Print map</strong>, click <strong>Print or save</strong> to open a copy of the parcel map and its details that you can print or save.</p>
-
-  <div class="inset">
-    <p>For help finding a parcel, read <a href="help-view-land">help with viewing your land</a>.</p>
-  </div>
 </main>
 
 <footer class="footer">
@@ -463,6 +464,35 @@
     <p>This help is for a prototype used in user research. Some features may not work as described.</p>
   </div>
 </footer>
+
+<script>
+  // Inside a prototype page (?embed): Escape closes the help, contents links scroll the
+  // parent page (the frame is sized to its content so it never scrolls itself) and links
+  // to other pages open in a new tab, so the panel always shows help for the current page.
+  (function () {
+    if (!document.documentElement.classList.contains('is-embedded') || window.parent === window) return
+    var send = function (msg) { window.parent.postMessage(msg, location.origin) }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a')
+      if (!a) return
+      var href = a.getAttribute('href') || ''
+      if (href.charAt(0) === '#') {
+        var target = document.getElementById(href.slice(1))
+        if (!target) return
+        e.preventDefault()
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1')
+        target.focus({ preventScroll: true })
+        send({ type: 'help:scroll', top: target.getBoundingClientRect().top + window.scrollY })
+      } else if (!a.target) {
+        a.target = '_blank'
+        a.rel = 'noopener'
+      }
+    })
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') send({ type: 'help:close' })
+    })
+  })()
+</script>
 
 </body>
 </html>

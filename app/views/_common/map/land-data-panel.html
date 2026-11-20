@@ -5,7 +5,10 @@
       dataPanelBackHref  back link href (default "#")
       dataPanelBackText  back link text (default "Back to <business name>")
       dataPanelSelectedHeading  one heading over the selected parcel instead of the ID / Land cover /
-                                Area (ha) column headers (e.g. "Selected land parcel") -#}
+                                Area (ha) column headers (e.g. "Selected land parcel")
+      dataPanelHelpHref   a help page to show in the panel (no link when unset; needs
+                          /public/javascripts/map/help-panel.js on the page)
+      dataPanelHelpTitle  the help's accessible title (default "Help") -#}
 <a class="govuk-back-link govuk-!-margin-top-4" href="{{ dataPanelBackHref | default('#') }}">{{ dataPanelBackText | default('Back to ' + (myData.businessName | default('Agile Farm Ltd'))) }}</a>
 <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-0">Summary</h2>
 <table class="govuk-table govuk-!-margin-bottom-4">
@@ -23,6 +26,9 @@
 
 <div id="map-button-slot"></div>
 
+{% if dataPanelHelpHref %}
+<p class="govuk-body govuk-!-margin-bottom-4"><a class="govuk-link" href="{{ dataPanelHelpHref }}" data-help-panel data-help-title="{{ dataPanelHelpTitle | default('Help') }}">Help</a></p>
+{% endif %}
 <div class="govuk-form-group govuk-!-margin-bottom-0">
   <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="parcel-filter">Find a land parcel</label>
   <div id="parcel-filter-hint" class="govuk-hint">Enter all or part of a parcel ID to filter the list</div>
