@@ -12,13 +12,22 @@
 
 {% block mapHead %}
   <style>
-    /* The selected parcel's row and table use the same yellow as its map outline and as the
-       selected land cover on view-land-parcel. Set on this page so the shared panel styles
-       (used by the mapping pattern library) are unchanged. Doubled class so the row also
-       beats the shared row :hover. */
-    .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected,
-    .app-map-page .app-data-panel__selected tbody tr {
-      background: #ffdd00;
+    /* ur-1 only: no highlight on the selected parcel's row in the list. It is already yellow on
+       the map and in the Selected table, and research found two highlights could
+       confuse. Doubled class to beat the shared row--selected styles; hover still works. */
+    .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected {
+      background: transparent;
+    }
+    .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected:hover {
+      background: #f3f2f1;
+    }
+    .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected td {
+      font-weight: 400;
+    }
+    /* ur-1 only: no gap under the selected parcel, so the list header has the same space above
+       and below its text (the line above it is the selected row's border or the filter divider). */
+    .app-map-page #selected-parcel-panel {
+      margin-bottom: 0;
     }
     /* ur-1 only: the selected parcel's link is black on the yellow row (focus keeps the GOV.UK style). */
     .app-map-page #selected-parcel-link:not(:focus),
@@ -33,7 +42,8 @@
 {% endblock %}
 
 {% block mapSidebar %}
-  {% set dataPanelSelectedHeading = "Selected land parcel" %}
+  {% set dataPanelSelectedHeading = "Selected" %}
+  {% set dataPanelFilterDivider = true %}
   {% set dataPanelHelpHref = "/v18/ur-1/help-view-land" %}
   {% set dataPanelHelpTitle = "Help with viewing your land" %}
   {% include "_common/map/land-data-panel.html" %}

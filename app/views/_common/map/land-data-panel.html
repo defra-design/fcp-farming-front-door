@@ -8,7 +8,8 @@
                                 Area (ha) column headers (e.g. "Selected land parcel")
       dataPanelHelpHref   a help page to show in the panel (no link when unset; needs
                           /public/javascripts/map/help-panel.js on the page)
-      dataPanelHelpTitle  the help's accessible title (default "Help") -#}
+      dataPanelHelpTitle  the help's accessible title (default "Help")
+      dataPanelFilterDivider  true to draw a line under the parcel filter -#}
 <a class="govuk-back-link govuk-!-margin-top-4" href="{{ dataPanelBackHref | default('#') }}">{{ dataPanelBackText | default('Back to ' + (myData.businessName | default('Agile Farm Ltd'))) }}</a>
 <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-0">Summary</h2>
 <table class="govuk-table govuk-!-margin-bottom-4">
@@ -35,6 +36,9 @@
   <p class="govuk-body govuk-!-margin-bottom-2 app-data-panel__filter-status" id="parcel-filter-status" aria-live="polite"></p>
   <input class="govuk-input govuk-input--width-10" id="parcel-filter" name="parcel-filter" type="text" aria-describedby="parcel-filter-hint" autocomplete="off" autocapitalize="characters" spellcheck="false">
 </div>
+{% if dataPanelFilterDivider %}
+<hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-4 govuk-!-margin-bottom-0">
+{% endif %}
 <table id="selected-parcel-panel" class="govuk-table govuk-table--small-text-until-tablet app-data-panel__selected" hidden aria-live="polite">
   {%- if dataPanelSelectedHeading %}
   <thead class="govuk-table__head">

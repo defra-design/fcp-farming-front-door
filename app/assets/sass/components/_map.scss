@@ -232,8 +232,10 @@ html.app-map-page.im-is-fullscreen .govuk-service-navigation {
   background: #f3f2f1;
 }
 
+// The selected parcel is yellow (#ffdd00) everywhere it shows: its row, the selected parcel
+// table and its outline on the map. Comes after the row :hover so it keeps its colour.
 .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected {
-  background: #f4f8fb;
+  background: #ffdd00;
 }
 
 .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected td {
@@ -241,7 +243,7 @@ html.app-map-page.im-is-fullscreen .govuk-service-navigation {
 }
 
 .app-map-page .app-data-panel__selected tbody tr {
-  background: #f4f8fb;
+  background: #ffdd00;
 }
 
 .app-map-page .app-data-panel__selected tbody td {

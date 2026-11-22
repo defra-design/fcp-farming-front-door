@@ -67,7 +67,7 @@
         map.addSource('parcels', { type: 'geojson', data: parcels, promoteId: 'ngc' })
         map.addLayer({ id: 'parcels-fill', type: 'fill', source: 'parcels', paint: { 'fill-color': '#1d70b8', 'fill-opacity': 0 } })
         map.addLayer({ id: 'parcels-outline', type: 'line', source: 'parcels', paint: { 'line-color': '#1d70b8', 'line-width': 2 } })
-        map.addLayer({ id: 'parcels-selected', type: 'line', source: 'parcels', paint: { 'line-color': '#0b0c0c', 'line-width': 3 }, filter: ['==', ['get', 'ngc'], NO_PARCEL] })
+        map.addLayer({ id: 'parcels-selected', type: 'line', source: 'parcels', paint: { 'line-color': '#ffdd00', 'line-width': 3 }, filter: ['==', ['get', 'ngc'], NO_PARCEL] })
 
         // Map -> panel: a parcel click selects it, a click elsewhere clears
         map.on('click', (e) => {

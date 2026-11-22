@@ -10,16 +10,6 @@
 {% endblock %}
 
 {% block mapHead %}
-  <style>
-    /* The selected parcel's row and table use the same yellow as its map outline and as the
-       selected land cover on view-land-parcel. Set on this page so the shared panel styles
-       (used by the mapping pattern library) are unchanged. Doubled class so the row also
-       beats the shared row :hover. */
-    .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected,
-    .app-map-page .app-data-panel__selected tbody tr {
-      background: #ffdd00;
-    }
-  </style>
   <link rel="prefetch" href="/v18/1.2/view-land-parcel" as="document">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/css/index.css">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/umd/index.js">
