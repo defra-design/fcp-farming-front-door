@@ -11,38 +11,15 @@
 {% endblock %}
 
 {% block mapHead %}
-  <style>
-    /* ur-1 only: no highlight on the selected parcel's row in the list. It is already yellow on
-       the map and in the Selected table, and research found two highlights could
-       confuse. Doubled class to beat the shared row--selected styles; hover still works. */
-    .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected {
-      background: transparent;
-    }
-    .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected:hover {
-      background: #f3f2f1;
-    }
-    .app-map-page .app-data-panel__parcels tr.app-data-panel__row--selected.app-data-panel__row--selected td {
-      font-weight: 400;
-    }
-    /* ur-1 only: no gap under the selected parcel, so the list header has the same space above
-       and below its text (the line above it is the selected row's border or the filter divider). */
-    .app-map-page #selected-parcel-panel {
-      margin-bottom: 0;
-    }
-    /* ur-1 only: the selected parcel's link is black on the yellow row (focus keeps the GOV.UK style). */
-    .app-map-page #selected-parcel-link:not(:focus),
-    .app-map-page #selected-parcel-link:not(:focus):visited,
-    .app-map-page #selected-parcel-link:not(:focus):hover {
-      color: #0b0c0c;
-    }
-  </style>
   <link rel="prefetch" href="/v18/ur-1/view-land-parcel" as="document">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/css/index.css">
   <link rel="prefetch" href="/plugin-assets/%40defra%2Finteractive-map-v52/plugins/datasets/dist/umd/index.js">
 {% endblock %}
 
 {% block mapSidebar %}
-  {% set dataPanelSelectedHeading = "Selected" %}
+  {#- ur-1: no Selected table. Research found people selecting a parcel on the map expected
+      its page to open, and did not notice it shown above the list, so selecting opens it. #}
+  {% set dataPanelHideSelected = true %}
   {% set dataPanelFilterDivider = true %}
   {% set dataPanelHelpHref = "/v18/ur-1/help-view-land" %}
   {% set dataPanelHelpTitle = "Help with viewing your land" %}
@@ -79,31 +56,33 @@
     // Sentinel filter value that matches no parcel (ngc is always a non-empty grid code).
     const NO_PARCEL = '__none__'
 
-    // Select a parcel: highlight its outline on the map (parcels-selected layer) and surface its
-    // row + details in the sidebar. Driven by a native MapLibre click (see wireParcelSelect)
-    // rather than the interact plugin, whose polygon hit-test misses clicks at vector-tile seams.
+    // Select a parcel: open its parcel details page. ur-1 only: research found people expected
+    // selecting a parcel on the map to open it, and missed the old Selected table above the
+    // list. The yellow outline (parcels-selected layer) shows while the next page loads.
+    // Driven by a native MapLibre click (see wireParcelSelect) rather than the interact plugin,
+    // whose polygon hit-test misses clicks at vector-tile seams.
     function selectParcel (ngc) {
-      selectedNgc = ngc
-      if (mapInstance && mapInstance.getLayer('parcels-selected')) {
-        mapInstance.setFilter('parcels-selected', ['==', ['get', 'ngc'], ngc])
-      }
-      panel.select(ngc)
+      if (ngc == null) return
+      setSelectedOutline(ngc)
+      window.location.href = parcelUrl(ngc)
     }
 
-    // Clear the current selection (click on empty map / no parcel under the pointer).
-    function clearParcelSelection () {
-      selectedNgc = null
+    function setSelectedOutline (ngc) {
+      selectedNgc = ngc
       if (mapInstance && mapInstance.getLayer('parcels-selected')) {
-        mapInstance.setFilter('parcels-selected', ['==', ['get', 'ngc'], NO_PARCEL])
+        mapInstance.setFilter('parcels-selected', ['==', ['get', 'ngc'], ngc == null ? NO_PARCEL : ngc])
       }
-      panel.clear()
     }
+
+    // Back from the parcel page can restore this page from the back/forward cache with the
+    // outline still drawn, so clear it.
+    window.addEventListener('pageshow', (e) => { if (e.persisted) setSelectedOutline(null) })
 
     // ── Mobile crosshair selection (DEFRA interact plugin) ───────────────────────
     // On mobile the map is fullscreen-only; the interact plugin renders a centre
     // crosshair plus its own Back / Select / Done action bar on touch (parity with
-    // view-land-parcel). Select picks the parcel under the crosshair, Done continues
-    // to that parcel's page, Back exits. Enabled only on small viewports so the
+    // view-land-parcel). Select picks the parcel under the crosshair and opens its page,
+    // Back exits. Enabled only on small viewports so the
     // reliable native click selection still drives the inline desktop map (the
     // interact plugin's polygon hit-test misses clicks at vector-tile seams).
     // useInteract is a load-time snapshot (map-fullscreen.js reloads the page if the viewport
@@ -493,12 +472,6 @@
         const ngc = e.features && e.features[0] && e.features[0].id
         if (ngc != null) selectParcel(ngc)
       })
-      // A click that isn't on a parcel deselects (mirrors the old deselectOnClickOutside).
-      map.on('click', (e) => {
-        const layers = ['parcels-fill', 'parcel-clusters'].filter(id => map.getLayer(id))
-        if (map.queryRenderedFeatures(e.point, { layers }).length) return
-        clearParcelSelection()
-      })
     }
 
     // Tint the hovered parcel via feature-state. Attached once; the delegated listeners
@@ -609,8 +582,9 @@
         const [west, south, east, north] = computeBounds(features)
         map.fitBounds([[west, south], [east, north]], { padding: 40, maxZoom: 16 })
       }
-      // A group zooms to fit its parcels (a wide group may split into smaller discs); a lone
-      // parcel zooms to it and selects it.
+      // A group zooms to fit its parcels (a wide group may split into smaller discs). A lone
+      // parcel zooms to it too, without opening it, so people can check it is the right one
+      // before selecting it.
       map.on('click', 'parcel-clusters', (e) => {
         const f = e.features && e.features[0]
         if (!f) return
@@ -622,7 +596,6 @@
         } else {
           const ngc = f.properties.ngc
           fitParcels(landParcelsData.features.filter(p => p.properties.ngc === ngc))
-          selectParcel(ngc)
         }
       })
       map.on('mouseenter', 'parcel-clusters', () => { map.getCanvas().style.cursor = 'pointer' })
@@ -711,6 +684,8 @@
       // otherwise the fetch handler calls applyParcelsIfReady once it lands. Either order works.
       interactiveMap.on('map:ready', (e) => {
         mapInstance = e.map
+        // Help button on the map, after Styles, Layers and Key (help-panel.js).
+        if (window.AppMap && AppMap.helpPanel) AppMap.helpPanel.addMapButton(interactiveMap)
         // Build the colour panel first — it's independent of the parcel layers, so it must not
         // be blocked if addParcelsToMap throws (only shown when ?colours is set).
         buildColourPanel()
@@ -718,20 +693,19 @@
       })
 
       // Desktop: Map -> Sidebar selection is driven by the native 'parcels-fill' click in
-      // wireParcelSelect. Mobile: the interact plugin's crosshair owns selection — mirror its
-      // changes into the sidebar/highlight, and treat "Continue" as opening the parcel page.
+      // wireParcelSelect. Mobile: the interact plugin's crosshair owns selection — selecting a
+      // parcel opens its page (Done does too, in case it is pressed first).
       if (useInteract) {
         // Enable interact whenever the fullscreen map opens (see enableInteractWhenReady for why
         // a single enable() on open races the map/bar mount and silently fails).
         interactiveMap.on('app:opened', enableInteractWhenReady)
         interactiveMap.on('interact:selectionchange', ({ selectedFeatures }) => {
           const ngc = selectedFeatures && selectedFeatures.length ? featureNgc(selectedFeatures[0]) : null
-          if (ngc != null) selectParcel(ngc)
-          else clearParcelSelection()
+          selectParcel(ngc)
         })
         interactiveMap.on('interact:done', ({ selectedFeatures }) => {
           const ngc = selectedFeatures && selectedFeatures.length ? featureNgc(selectedFeatures[0]) : null
-          if (ngc != null) window.location.href = parcelUrl(ngc)
+          selectParcel(ngc)
         })
       }
 

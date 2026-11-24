@@ -346,7 +346,9 @@
 
     <h1 class="govuk-heading-m govuk-!-margin-bottom-2" id="parcel-heading">Parcel details:</h1>
 
-    <p class="govuk-body govuk-!-margin-bottom-2"><a class="govuk-link" href="/v18/ur-1/help-view-land-parcel" data-help-panel data-help-title="Help with parcel details">Help</a></p>
+    {#- The help for the map's Help button (help-panel.js). No link in the sidebar: ur-1 research
+        moved help to the map. #}
+    <div hidden data-help-panel data-help-href="/v18/ur-1/help-view-land-parcel" data-help-title="Help with parcel details"></div>
 
     <!-- <h2 class="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-4">Date</h2> -->
     <table class="govuk-table govuk-!-margin-bottom-4">
@@ -512,6 +514,9 @@
       parcelBorder: '#1d70b8',    // selected outline + every-other-parcel outline stroke
       hedgerow: '#425F42',        // hedgerow line
       landCoverSelected: '#ffdd00',  // outline on the land cover selected by a map click
+      // Land cover fill opacity. ur-1 research: people wanted to see the ground under the land
+      // covers. Applies to the fill only; the outlines between covers stay at full strength.
+      landCoverOpacity: 0.5,
       hoverFill: '#1d70b8',       // tint on the parcel under the pointer
       hoverOpacity: 0.15,
       loadingFill: '#1d70b8',     // tint on a just-clicked parcel while it loads
@@ -1033,6 +1038,7 @@
         // edge that runs along either is not hidden under them.
         order.push(LC_SELECTED_LAYER)
         order.forEach(id => { if (hedgeMap.getLayer(id)) hedgeMap.moveLayer(id) })
+        applyColour('landCoverOpacity')
         // The measurement shape stays above everything.
         ;(hedgeMap.getStyle().layers || [])
           .filter(l => l.source && l.source.startsWith('mapbox-gl-draw'))
@@ -1040,6 +1046,8 @@
       }
       // After a setStyle (which re-adds layers), once the map settles: re-assert z-order and
       // re-enable interaction (in case the recoloured layer was an interactive one).
+      // restoreZOrder also re-applies the land cover fill opacity, as setStyle re-adds the
+      // fill layers at the plugin's opacity.
       function scheduleRestore () { if (hedgeMap) hedgeMap.once('idle', () => { restoreZOrder(); enableInteract() }) }
 
       // setStyle is async (removes+re-adds layers), so rapid colour-picker drags can race and
@@ -1100,13 +1108,18 @@
           case 'hoverOpacity': paintFillOpacity('parcel-hover', palette.hoverOpacity); break
           case 'loadingFill': paintFill('parcel-loading', palette.loadingFill); break
           case 'loadingOpacity': paintFillOpacity('parcel-loading', palette.loadingOpacity); break
+          case 'landCoverOpacity':
+            // Set on the fill layers directly, not through the plugin's opacity, which would
+            // fade the cover outlines too. Patterned fills fade with it.
+            lcFillLayerIds().forEach(id => paintFillOpacity(id, palette.landCoverOpacity))
+            break
         }
       }
 
       // Re-apply the entire palette (used after a preset/reset/share-link load).
       function applyAllColours () {
         Object.keys(palette.landCover).forEach(applyLandCover)
-        ;['parcelBorder', 'hedgerow', 'landCoverSelected', 'patternLine', 'hoverFill', 'hoverOpacity', 'loadingFill', 'loadingOpacity'].forEach(applyColour)
+        ;['parcelBorder', 'hedgerow', 'landCoverSelected', 'patternLine', 'hoverFill', 'hoverOpacity', 'loadingFill', 'loadingOpacity', 'landCoverOpacity'].forEach(applyColour)
       }
 
       // --- Persistence / sharing ----------------------------------------------
@@ -1125,7 +1138,7 @@
       // re-apply to the live map and persist. Used by presets, reset and share-link loads.
       function setPalette (next) {
         Object.assign(palette.landCover, next.landCover)
-        ;['patternLine', 'parcelBorder', 'hedgerow', 'landCoverSelected', 'hoverFill', 'hoverOpacity', 'loadingFill', 'loadingOpacity']
+        ;['patternLine', 'parcelBorder', 'hedgerow', 'landCoverSelected', 'hoverFill', 'hoverOpacity', 'loadingFill', 'loadingOpacity', 'landCoverOpacity']
           .forEach(k => { palette[k] = next[k] })
         applyAllColours()
         persistPalette()
@@ -1196,6 +1209,7 @@
 
         // Only the types on this parcel: the palette holds every RPA land cover (~160).
         heading('Land cover (this parcel)')
+        opacityRow('Land cover opacity', () => palette.landCoverOpacity, (v) => { palette.landCoverOpacity = v; applyColour('landCoverOpacity') })
         Object.keys(palette.landCover).filter(type => presentCovers.has(type)).forEach(type => {
           colourRow(type, () => palette.landCover[type], (v) => { palette.landCover[type] = v; applyLandCover(type) })
         })
@@ -1814,6 +1828,8 @@
         interactiveMap.on('map:ready', (e) => {
           hedgeMap = e.map
           enableInteract()
+          // Help button on the map, after Styles, Layers and Key (help-panel.js).
+          if (window.AppMap && AppMap.helpPanel) AppMap.helpPanel.addMapButton(interactiveMap)
 
           // The map is constructed already framed on the parcel, so the first idle = the framed
           // view's tiles have rendered. Reveal the map then, fading out the loading overlay.
