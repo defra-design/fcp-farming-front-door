@@ -810,7 +810,7 @@
       // (8 on load). A different foreground colour gives the previous version its own images.
       patternLinePrevious: '#505a5f',
       parcelBorder: '#1d70b8',    // the live or later outline (solid)
-      parcelBorderEarlier: '#912b88',   // the earlier date's outline (dashed)
+      parcelBorderEarlier: '#912b88',   // the earlier date's outline (solid)
       hedgerow: '#00703c',        // hedgerow line
       landCoverSelected: '#0b0c0c',   // outline on the land cover selected by a map click
       // Change outlines (mode 'changes'). GOV.UK green / red / orange, matching the
@@ -977,7 +977,7 @@
     // previousOutlineFeatures) — most snapshots share the live outline and draw nothing.
     // ───────────────────────────────────────────────────────────────────────────
     const VERSIONS = ['previous', 'current']
-    const VERSION_LABEL = { previous: 'Land cover, earlier date', current: 'Land cover' }
+    const VERSION_LABEL = { previous: 'Historical land parcel', current: 'Land cover' }
     const DS = {
       landCover: (version) => 'land-cover-' + version,
       outline: 'parcel-outline',
@@ -1535,16 +1535,16 @@
       }
     }
 
-    // The previous version's parcel outline: dashed, in the outline colour, faded like the
+    // The previous version's parcel outline: solid, in the outline colour, faded like the
     // previous covers. Permanent, like the others; its data is the previous boundary when
     // that differs from the current one and empty otherwise (previousOutlineFeatures), and
     // it shows/hides with the previous version (setVersionVisibility).
     function buildPreviousOutlineDataset (features) {
       return {
         id: DS.outlinePrevious,
-        label: 'Land parcel, earlier date',
+        label: 'Historical land parcel',
         geojson: { type: 'FeatureCollection', features },
-        style: { fill: 'transparent', stroke: palette.parcelBorderEarlier, strokeWidth: 3, strokeDashArray: [3, 2] },
+        style: { fill: 'transparent', stroke: palette.parcelBorderEarlier, strokeWidth: 3 },
         showInKey: false,
         showInMenu: false
       }
@@ -2669,9 +2669,9 @@
           stroke: palette.parcelBorder, strokeWidth: 3,
           symbolDescription: 'solid blue outline'
         }),
-        buildKeyOnlyDataset(DS.keyPrevious, 'Land parcel, earlier date', {
-          stroke: palette.parcelBorderEarlier, strokeWidth: 3, strokeDashArray: [3, 2],
-          symbolDescription: 'dashed purple outline'
+        buildKeyOnlyDataset(DS.keyPrevious, 'Historical land parcel', {
+          stroke: palette.parcelBorderEarlier, strokeWidth: 3,
+          symbolDescription: 'solid purple outline'
         })
       ]
       if (COMPARE_MODE === 'changes') {
